@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c5bansrqmcbnx"]
+
+[ext_resource type="Texture2D" uid="uid://cxxdqsqdvlmo" path="res://assets/Trees/Small_Oak_Tree.png" id="1_tree"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trunk"]
+size = Vector2(6, 1)
+
+[node name="SmallOakTree" type="StaticBody2D" unique_id=1764745243]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1978598630]
+position = Vector2(0, -16)
+texture = ExtResource("1_tree")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=967574343]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_trunk")

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://doyfp647dvswg"]
+
+[ext_resource type="Texture2D" uid="uid://dthq1gqja6rb1" path="res://assets/Buildings/Buildings/Unique_Buildings/Silo/Silo.png" id="1_texture"]
+[ext_resource type="Script" uid="uid://qeuv3tdekovu" path="res://scenes/buildings/unique_buildings/silo.gd" id="2_variant"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
+resource_local_to_scene = true
+size = Vector2(30, 11)
+
+[node name="Silo" type="StaticBody2D" unique_id=1433305748]
+texture_filter = 1
+script = ExtResource("2_variant")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2021593408]
+position = Vector2(0, -35)
+texture = ExtResource("1_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=329969140]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_building")

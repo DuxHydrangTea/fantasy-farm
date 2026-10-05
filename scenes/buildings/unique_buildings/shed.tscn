@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/Buildings/Unique_Buildings/Shed/Shed_Base_Black.png" id="1_texture"]
+[ext_resource type="Script" path="res://scenes/buildings/unique_buildings/shed.gd" id="2_variant"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
+resource_local_to_scene = true
+size = Vector2(64, 20)
+
+[node name="Shed" type="StaticBody2D"]
+texture_filter = 1
+script = ExtResource("2_variant")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -41)
+texture = ExtResource("1_texture")
+hframes = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_building")

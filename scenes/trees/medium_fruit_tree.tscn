@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://wvcr0ryy3qku"]
+
+[ext_resource type="Texture2D" uid="uid://drnjjhdt3iokc" path="res://assets/Trees/Medium_Fruit_Tree.png" id="1_tree"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trunk"]
+size = Vector2(6, 2)
+
+[node name="MediumFruitTree" type="StaticBody2D" unique_id=288132799]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1743860525]
+position = Vector2(0, -16)
+texture = ExtResource("1_tree")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1787702346]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_trunk")

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b6m84128fb2b3"]
+
+[ext_resource type="Texture2D" uid="uid://ch4jl3kcdeia5" path="res://assets/Trees/Small_Spruce_Tree.png" id="1_tree"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trunk"]
+size = Vector2(6, 1)
+
+[node name="SmallSpruceTree" type="StaticBody2D" unique_id=688230186]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=614258490]
+position = Vector2(0, -16)
+texture = ExtResource("1_tree")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9149422]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_trunk")

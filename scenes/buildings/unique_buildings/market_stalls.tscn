@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c03235u8r5px3"]
+
+[ext_resource type="Texture2D" uid="uid://bk1ntcoa7ftck" path="res://assets/Buildings/Buildings/Unique_Buildings/Stalls/Market_Stalls.png" id="1_texture"]
+[ext_resource type="Script" uid="uid://bl2qy5gjov5bk" path="res://scenes/buildings/unique_buildings/market_stalls.gd" id="2_variant"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
+resource_local_to_scene = true
+size = Vector2(42, 8)
+
+[node name="Stalls" type="StaticBody2D" unique_id=1381961398]
+texture_filter = 1
+script = ExtResource("2_variant")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=148442665]
+position = Vector2(0, -23)
+texture = ExtResource("1_texture")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=121301189]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_building")

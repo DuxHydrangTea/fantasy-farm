@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cxk50akhu73dt"]
+
+[ext_resource type="Texture2D" uid="uid://cfkj76osp3mvr" path="res://assets/Buildings/Buildings/Unique_Buildings/Blacksmith_House/Blacksmith_House_Black.png" id="1_texture"]
+[ext_resource type="Script" uid="uid://hysbq0q5q86f" path="res://scenes/buildings/unique_buildings/blacksmith_house.gd" id="2_variant"]
+
+[node name="Blacksmith_House" type="StaticBody2D" unique_id=1530919486]
+texture_filter = 1
+script = ExtResource("2_variant")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1736135035]
+position = Vector2(0, -33)
+texture = ExtResource("1_texture")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=925055846]
+position = Vector2(0, 15)
+polygon = PackedVector2Array(68, -31, 68, -15, 59, -15, 57, -6, 47, -6, 40, -8, 18, -8, 18, -3, 1, -3, 1, 6, -13, 6, -16, 5, -29, 5, -29, 0, -52, 0, -52, 7, -64, 7, -64, -31)

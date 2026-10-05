@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b0ipw1vudp5ew"]
+
+[ext_resource type="Texture2D" uid="uid://cxpnb4w6f8prx" path="res://assets/Buildings/Buildings/Unique_Buildings/Greenhouse/GreenHouse_Green.png" id="1_texture"]
+[ext_resource type="Script" uid="uid://ca75en8p0rvl3" path="res://scenes/buildings/unique_buildings/greenhouse.gd" id="2_variant"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
+resource_local_to_scene = true
+size = Vector2(64, 20)
+
+[node name="Greenhouse" type="StaticBody2D" unique_id=1309444274]
+texture_filter = 1
+script = ExtResource("2_variant")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1568454106]
+position = Vector2(0, -51)
+texture = ExtResource("1_texture")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1511484326]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_building")
