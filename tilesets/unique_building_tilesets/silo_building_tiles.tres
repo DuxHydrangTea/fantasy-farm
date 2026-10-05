@@ -1,0 +1,14 @@
+[gd_resource type="TileSet" format=3 uid="uid://rcysvgaq5ukc"]
+
+[ext_resource type="Texture2D" uid="uid://dthq1gqja6rb1" path="res://assets/Buildings/Buildings/Unique_Buildings/Silo/Silo.png" id="1_n2i1w"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_afcnt"]
+texture = ExtResource("1_n2i1w")
+0:0/size_in_atlas = Vector2i(3, 5)
+0:0/0 = 0
+0:0/0/y_sort_origin = 26
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.298767, 18.345596, 14.658493, 17.446297, 14.838348, 29.856552, 4.40654, 34.892593, -5.305832, 34.532883, -14.658485, 30.21627)
+
+[resource]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_afcnt")

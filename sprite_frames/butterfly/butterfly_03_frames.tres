@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bfoyl6aj27v4m"]
+
+[ext_resource type="Texture2D" uid="uid://niy44ps14t8h" path="res://assets/Animals/Butterfly/Butterfly.png" id="1_jovio"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpus3"]
+atlas = ExtResource("1_jovio")
+region = Rect2(0, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0yqi"]
+atlas = ExtResource("1_jovio")
+region = Rect2(8, 16, 8, 8)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpus3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0yqi")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 12.0
+}]

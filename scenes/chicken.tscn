@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://4n5qh8k20wjq"]
+
+[ext_resource type="Script" uid="uid://cw7w11202lxp4" path="res://scenes/chicken.gd" id="1_1yv3s"]
+[ext_resource type="SpriteFrames" uid="uid://bsb7fgp03fsqq" path="res://sprite_frames/chicken/chicken_01_frames.tres" id="1_8lku0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
+size = Vector2(6, 3)
+
+[node name="chicken" type="CharacterBody2D" unique_id=1135842981]
+y_sort_enabled = true
+script = ExtResource("1_1yv3s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1479713037]
+y_sort_enabled = true
+position = Vector2(0, -6)
+sprite_frames = ExtResource("1_8lku0")
+animation = &"idle_down_left"
+frame_progress = 0.7277071
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1918769064]
+y_sort_enabled = true
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_vgjnj")
+
+[node name="Timer" type="Timer" parent="." unique_id=1375814286]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,116 @@
+[gd_resource type="TileSet" format=3 uid="uid://b4y771o4srv0y"]
+
+[ext_resource type="Texture2D" uid="uid://b2324ius5fh6x" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_1_Anim.png" id="1_ws4wa"]
+[ext_resource type="Texture2D" uid="uid://cupxhq46h10rf" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_2_Anim.png" id="2_tyyv7"]
+[ext_resource type="Texture2D" uid="uid://ghqewliwb76m" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_3_Anim.png" id="3_3e5cl"]
+[ext_resource type="Texture2D" uid="uid://d1x8kgwjb4fql" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_4_Anim.png" id="4_eo6t2"]
+[ext_resource type="Texture2D" uid="uid://be1mauorhgjs" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_5_Anim.png" id="5_3qn45"]
+[ext_resource type="Texture2D" uid="uid://cpba2uxn71q82" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_6_Anim.png" id="6_dxg40"]
+[ext_resource type="Texture2D" uid="uid://bbu5qe3u76ru3" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_7_Anim.png" id="7_8u8sw"]
+[ext_resource type="Texture2D" uid="uid://bbra1hh4n3c6q" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Muschroom_Animations/muschroom_8_Anim.png" id="8_jne30"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eoaj5"]
+texture = ExtResource("1_ws4wa")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bkqur"]
+texture = ExtResource("2_tyyv7")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l5l1w"]
+texture = ExtResource("3_3e5cl")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gsexa"]
+texture = ExtResource("4_eo6t2")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7r4nr"]
+texture = ExtResource("5_3qn45")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ammek"]
+texture = ExtResource("6_dxg40")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_76quw"]
+texture = ExtResource("7_8u8sw")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gbvfx"]
+texture = ExtResource("8_jne30")
+0:0/animation_columns = 6
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/animation_frame_5/duration = 1.0
+0:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_eoaj5")
+sources/1 = SubResource("TileSetAtlasSource_bkqur")
+sources/2 = SubResource("TileSetAtlasSource_l5l1w")
+sources/3 = SubResource("TileSetAtlasSource_gsexa")
+sources/4 = SubResource("TileSetAtlasSource_7r4nr")
+sources/5 = SubResource("TileSetAtlasSource_ammek")
+sources/6 = SubResource("TileSetAtlasSource_76quw")
+sources/7 = SubResource("TileSetAtlasSource_gbvfx")

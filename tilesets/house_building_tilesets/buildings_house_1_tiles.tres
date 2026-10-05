@@ -1,0 +1,194 @@
+[gd_resource type="TileSet" format=3 uid="uid://cubprpjg5h45l"]
+
+[ext_resource type="Texture2D" uid="uid://d17qh8n15xj8a" path="res://assets/Buildings/Buildings/Houses/Limestone/House_1_Limestone_Base_Black.png" id="1_oxsh2"]
+[ext_resource type="Texture2D" uid="uid://mjgd5aw6vbyy" path="res://assets/Buildings/Buildings/Houses/Limestone/House_1_Limestone_Base_Blue.png" id="2_u5wjl"]
+[ext_resource type="Texture2D" uid="uid://dxui7m7t3dmi4" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Red_Blue.png" id="3_1c4bm"]
+[ext_resource type="Texture2D" uid="uid://l0x2j17bk2os" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Red_Red.png" id="4_jqbhj"]
+[ext_resource type="Texture2D" uid="uid://dkquuveqocfcb" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Base_Black.png" id="5_1s4uv"]
+[ext_resource type="Texture2D" uid="uid://hcnwrenhd7x" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Base_Blue.png" id="6_jgpt5"]
+[ext_resource type="Texture2D" uid="uid://drn6d2c0edce2" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Base_Red.png" id="7_ngodk"]
+[ext_resource type="Texture2D" uid="uid://gu45ch8yjtq0" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Green_Black.png" id="8_oo452"]
+[ext_resource type="Texture2D" uid="uid://cj4eoqtqnt5pd" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Green_Blue.png" id="9_8jqs7"]
+[ext_resource type="Texture2D" uid="uid://bj5wlub58vmml" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Green_Red.png" id="10_dpvxh"]
+[ext_resource type="Texture2D" uid="uid://b6j1gf4no42aa" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Black.png" id="11_a88o1"]
+[ext_resource type="Texture2D" uid="uid://c6fol24ygdykj" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Blue.png" id="12_km2ia"]
+[ext_resource type="Texture2D" uid="uid://dj6qyds6n4cu" path="res://assets/Buildings/Buildings/Houses/Limestone/House_1_Limestone_Base_Red.png" id="13_rds57"]
+[ext_resource type="Texture2D" uid="uid://55shy7jojmye" path="res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Red.png" id="14_ehv4a"]
+[ext_resource type="Texture2D" uid="uid://vctem0ualclx" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Base_Black.png" id="15_qfcvs"]
+[ext_resource type="Texture2D" uid="uid://dkp7kym2q0aun" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Base_Blue.png" id="16_11p3t"]
+[ext_resource type="Texture2D" uid="uid://cw3ili2bnae76" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Base_Red.png" id="17_avmps"]
+[ext_resource type="Texture2D" uid="uid://cq2um0lsu75f1" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Green_Black.png" id="18_4qjo5"]
+[ext_resource type="Texture2D" uid="uid://0itj2xxal0fj" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Green_Blue.png" id="19_t3etm"]
+[ext_resource type="Texture2D" uid="uid://s6tcnwfhkolx" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Green_Red.png" id="20_ff7nb"]
+[ext_resource type="Texture2D" uid="uid://u7v7558jd5a7" path="res://assets/Buildings/Buildings/Houses/Stone/House_1_Stone_Red_Black.png" id="21_elh7i"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dupoo"]
+texture = ExtResource("1_oxsh2")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xecqc"]
+texture = ExtResource("2_u5wjl")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1obi"]
+texture = ExtResource("3_1c4bm")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s7qsj"]
+texture = ExtResource("4_jqbhj")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nskyd"]
+texture = ExtResource("5_1s4uv")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00fwk"]
+texture = ExtResource("6_jgpt5")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wvo6"]
+texture = ExtResource("7_ngodk")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c311t"]
+texture = ExtResource("8_oo452")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ti0lo"]
+texture = ExtResource("9_8jqs7")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w3bfb"]
+texture = ExtResource("10_dpvxh")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b2o30"]
+texture = ExtResource("11_a88o1")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vinmy"]
+texture = ExtResource("12_km2ia")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qyhm0"]
+texture = ExtResource("13_rds57")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nl4pn"]
+texture = ExtResource("14_ehv4a")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_27hti"]
+texture = ExtResource("15_qfcvs")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mffyh"]
+texture = ExtResource("16_11p3t")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_12u4h"]
+texture = ExtResource("17_avmps")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sco10"]
+texture = ExtResource("18_4qjo5")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3qfd4"]
+texture = ExtResource("19_t3etm")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rinqd"]
+texture = ExtResource("20_ff7nb")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3scns"]
+texture = ExtResource("21_elh7i")
+0:0/size_in_atlas = Vector2i(6, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 43
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-31.924927, 24.640648, 31.745068, 24.820505, 31.924923, 51.07988, -31.924925, 50.90002)
+
+[resource]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_xecqc")
+sources/2 = SubResource("TileSetAtlasSource_qyhm0")
+sources/3 = SubResource("TileSetAtlasSource_27hti")
+sources/4 = SubResource("TileSetAtlasSource_mffyh")
+sources/5 = SubResource("TileSetAtlasSource_12u4h")
+sources/6 = SubResource("TileSetAtlasSource_sco10")
+sources/7 = SubResource("TileSetAtlasSource_3qfd4")
+sources/8 = SubResource("TileSetAtlasSource_rinqd")
+sources/9 = SubResource("TileSetAtlasSource_3scns")
+sources/10 = SubResource("TileSetAtlasSource_u1obi")
+sources/11 = SubResource("TileSetAtlasSource_s7qsj")
+sources/12 = SubResource("TileSetAtlasSource_nskyd")
+sources/13 = SubResource("TileSetAtlasSource_00fwk")
+sources/14 = SubResource("TileSetAtlasSource_0wvo6")
+sources/15 = SubResource("TileSetAtlasSource_c311t")
+sources/16 = SubResource("TileSetAtlasSource_ti0lo")
+sources/17 = SubResource("TileSetAtlasSource_w3bfb")
+sources/18 = SubResource("TileSetAtlasSource_b2o30")
+sources/19 = SubResource("TileSetAtlasSource_vinmy")
+sources/20 = SubResource("TileSetAtlasSource_nl4pn")
+sources/0 = SubResource("TileSetAtlasSource_dupoo")

@@ -1,0 +1,26 @@
+[gd_resource type="TileSet" format=3 uid="uid://mt2dmvuja26f"]
+
+[ext_resource type="Texture2D" uid="uid://bk1ntcoa7ftck" path="res://assets/Buildings/Buildings/Unique_Buildings/Stalls/Market_Stalls.png" id="1_pvny3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ra4y"]
+texture = ExtResource("1_pvny3")
+0:0/size_in_atlas = Vector2i(3, 3)
+0:0/0 = 0
+0:0/0/y_sort_origin = 17
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.234108, 11.510963, 20.054245, 10.971382, 20.593826, 21.942772, -20.234108, 21.762909)
+3:0/size_in_atlas = Vector2i(3, 3)
+3:0/0 = 0
+3:0/0/y_sort_origin = 17
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.234108, 11.510963, 20.054245, 10.971382, 20.593826, 21.942772, -20.234108, 21.762909)
+6:0/size_in_atlas = Vector2i(3, 3)
+6:0/0 = 0
+6:0/0/y_sort_origin = 17
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.234108, 11.510963, 20.054245, 10.971382, 20.593826, 21.942772, -20.234108, 21.762909)
+9:0/size_in_atlas = Vector2i(3, 3)
+9:0/0 = 0
+9:0/0/y_sort_origin = 17
+9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-20.234108, 11.510963, 20.054245, 10.971382, 20.593826, 21.942772, -20.234108, 21.762909)
+
+[resource]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_0ra4y")

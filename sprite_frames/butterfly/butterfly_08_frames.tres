@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ds4iu5w3spj85"]
+
+[ext_resource type="Texture2D" uid="uid://niy44ps14t8h" path="res://assets/Animals/Butterfly/Butterfly.png" id="1_d71ss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p07mo"]
+atlas = ExtResource("1_d71ss")
+region = Rect2(0, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3brlp"]
+atlas = ExtResource("1_d71ss")
+region = Rect2(8, 56, 8, 8)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p07mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3brlp")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 12.0
+}]

@@ -1,0 +1,72 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://clvw2yst4neth"]
+
+[ext_resource type="Texture2D" uid="uid://dgdm8s0jviusp" path="res://assets/Animals/Bee/Bee_Flying_Animation.png" id="1_lo1jl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlg7k"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd8cj"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m8lw"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjx1v"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cewis"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv0h7"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4rwp"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4dqu"]
+atlas = ExtResource("1_lo1jl")
+region = Rect2(48, 16, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlg7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd8cj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7m8lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjx1v")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cewis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vv0h7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4rwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4dqu")
+}],
+"loop": 1,
+"name": &"fly_alt",
+"speed": 12.0
+}]

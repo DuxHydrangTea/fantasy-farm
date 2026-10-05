@@ -1,0 +1,15 @@
+[gd_resource type="TileSet" format=3 uid="uid://etrwggsm4jtf"]
+
+[ext_resource type="Texture2D" uid="uid://c464iwm64lieb" path="res://assets/Buildings/Buildings/Unique_Buildings/Windmill/Windmill.png" id="1_33aha"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6fxeb"]
+texture = ExtResource("1_33aha")
+0:0/size_in_atlas = Vector2i(4, 7)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-18.255661, 34.173164, 18.255661, 34.712738, 18.615372, 53.23819, -18.075806, 53.058334)
+4:0/size_in_atlas = Vector2i(4, 7)
+4:0/0 = 0
+
+[resource]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_6fxeb")
