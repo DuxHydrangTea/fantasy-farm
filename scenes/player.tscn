@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://scripts/states/idle_state.gd" id="5_fjrip"]
 [ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="6_smehm"]
+[ext_resource type="Script" uid="uid://dg7u7sowt6pqe" path="res://scripts/states/tool_state.gd" id="7_ur7pv"]
 [ext_resource type="Script" uid="uid://c0crv1w8dmqwu" path="res://components/controllers/player_input_controller.gd" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
@@ -18,7 +19,9 @@ script = ExtResource("1_qhqgy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=331025468]
 position = Vector2(1, -6)
 sprite_frames = ExtResource("1_3vyb7")
-animation = &"idle_down"
+animation = &"faint"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2145265505]
 position = Vector2(0.5, 0)
@@ -37,6 +40,11 @@ script = ExtResource("5_fjrip")
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=2400552]
 script = ExtResource("6_smehm")
+
+[node name="ToolState" type="Node" parent="StateMachine" unique_id=1703147333]
+script = ExtResource("7_ur7pv")
+
+[node name="WaterState" type="Node" parent="StateMachine" unique_id=1986661763]
 
 [node name="AnimationComponent" type="Node" parent="." unique_id=1965887219 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("5_qlg0r")
