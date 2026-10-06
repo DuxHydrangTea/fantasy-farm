@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_19/stage_01.tres" id="1_ns553"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_19/stage_02.tres" id="2_5v1ko"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_19/stage_03.tres" id="3_oimy4"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_19/stage_04.tres" id="4_i8hcp"]
+
+[node name="Radish" type="StaticBody2D" unique_id=765013866]
+texture_filter = 1
+metadata/object_id = "radish"
+metadata/object_kind = "crop"
+metadata/source_visual = "res://crops/field/crop_19/stage_01.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_ns553"), ExtResource("2_5v1ko"), ExtResource("3_oimy4"), ExtResource("4_i8hcp")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1222428008]
+position = Vector2(0, -12)
+texture = ExtResource("1_ns553")
+

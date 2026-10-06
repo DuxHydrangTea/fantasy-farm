@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/chef_chloe_frames.tres" id="1_kpp7r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_556rh"]
+size = Vector2(10, 4)
+
+[node name="ChefChloe" type="CharacterBody2D" unique_id=81119749]
+texture_filter = 1
+metadata/object_kind = "chef_chloe"
+metadata/source_visual = "res://sprite_frames/character/chef_chloe_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1299705767]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_kpp7r")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1286044299]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_556rh")
+disabled = true

@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Crops/Crops.png" id="1_dh53x"]
+
+[resource]
+resource_name = "field_crop_06_stage_04"
+atlas = ExtResource("1_dh53x")
+region = Rect2(80, 160, 16, 32)
+filter_clip = true

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Furniture_Other.png" id="1_bj510"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdvn3"]
+atlas = ExtResource("1_bj510")
+region = Rect2(128, 272, 32, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x83bc"]
+size = Vector2(22.4, 4.2)
+
+[node name="WideCabinet017" type="StaticBody2D" unique_id=414300581]
+texture_filter = 1
+metadata/object_kind = "wide_cabinet"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Furniture_Other.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=557194686]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_kdvn3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1139469648]
+position = Vector2(0, -2.1)
+shape = SubResource("RectangleShape2D_x83bc")
+disabled = true

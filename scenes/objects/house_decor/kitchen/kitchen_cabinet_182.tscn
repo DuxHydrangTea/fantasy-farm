@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Kitchen.png" id="1_wl011"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2a21"]
+atlas = ExtResource("1_wl011")
+region = Rect2(816, 240, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1vxa"]
+size = Vector2(11.2, 3.8)
+
+[node name="KitchenCabinet182" type="StaticBody2D" unique_id=1805224082]
+texture_filter = 1
+metadata/object_kind = "kitchen_cabinet"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Kitchen.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=936275923]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_f2a21")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=905188271]
+position = Vector2(0, -1.9)
+shape = SubResource("RectangleShape2D_u1vxa")
+disabled = true

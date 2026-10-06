@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>House Decor v2 — Ma trận vùng chọn</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#15191e;color:#ecf0f4;font:15px system-ui,sans-serif}header{padding:22px 28px;border-bottom:1px solid #36414d}h1{margin:0 0 8px;font-size:24px}p{margin:6px 0;color:#b9c4cf;line-height:1.5}.controls{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:18px}select,button{font:inherit;background:#252d36;color:inherit;border:1px solid #596877;border-radius:6px;padding:8px}main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;padding:24px 28px}.viewport{overflow:auto;max-height:75vh;background:#222a32;border:1px solid #36414d;border-radius:8px}canvas{display:block;image-rendering:pixelated}aside{padding:16px;background:#222a32;border-radius:8px}aside h2{font-size:18px;margin-top:0}#detail{white-space:pre-line;line-height:1.7}#crop{margin-top:15px;max-width:100%;height:auto}#legend{font-size:13px;margin-bottom:12px}button{cursor:pointer}@media(max-width:850px){main{grid-template-columns:1fr}.viewport{max-height:65vh}}
+</style>
+<header>
+<h1>House Decor v2 · Ma trận vùng chọn</h1>
+<p>Mỗi viền là một tile Godot chứa nguyên vùng ảnh. Chọn sheet, rồi bấm vào đồ vật để xem tọa độ và kích thước.</p>
+<p>Đơn vị: ô atlas 16 × 16, tọa độ bắt đầu từ 0. Mặt bếp ghép module và đồ nhỏ có vùng 1 × 1.</p>
+<div class="controls"><label>Sheet <select id="sheet"></select></label><label>Phóng <input id="zoom" type="range" min="1" max="6" value="3"> <span id="zoomValue">3×</span></label><label><input id="outlines" type="checkbox" checked> Viền vùng chọn</label><button id="clear">Bỏ chọn</button></div>
+</header>
+<main><section><p id="legend"></p><div class="viewport"><canvas id="atlas" aria-label="Atlas và các vùng chọn"></canvas></div></section><aside><h2>Vùng đang chọn</h2><p id="detail">Bấm vào một vùng trên atlas.</p><canvas id="crop"></canvas></aside></main>
+<script>
+const matrix = __MATRIX_JSON__;
+const images = __IMAGES_JSON__;
+const picker=document.getElementById('sheet'),slider=document.getElementById('zoom'),outlines=document.getElementById('outlines'),atlas=document.getElementById('atlas'),crop=document.getElementById('crop'),detail=document.getElementById('detail');
+const colors=['#ffd166','#06d6a0','#ef476f','#70b7ff'];
+let config,regions=[],image,selected=-1;
+for(const source of matrix.sources){const option=document.createElement('option');option.value=source.source_id;option.textContent=source.file;picker.append(option);}
+function checker(ctx,w,h){ctx.fillStyle='#333a42';ctx.fillRect(0,0,w,h);ctx.fillStyle='#414a54';for(let y=0;y<h;y+=8)for(let x=0;x<w;x+=8)if(((x/8+y/8)%2)===0)ctx.fillRect(x,y,8,8);}
+function draw(){if(!image?.complete)return;const z=Number(slider.value);document.getElementById('zoomValue').textContent=z+'×';atlas.width=config.size_px[0]*z;atlas.height=config.size_px[1]*z;const ctx=atlas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.scale(z,z);checker(ctx,...config.size_px);ctx.drawImage(image,0,0);for(let i=0;i<regions.length;i++){if(!outlines.checked&&i!==selected)continue;const [x,y,w,h]=regions[i].rect;ctx.strokeStyle=i===selected?'#fff':colors[i%4];ctx.lineWidth=(i===selected?3:1)/z;ctx.strokeRect(x*16+.5/z,y*16+.5/z,w*16-1/z,h*16-1/z);}showDetail();}
+function showDetail(){if(selected<0){detail.textContent='Bấm vào một vùng trên atlas.';crop.width=0;crop.height=0;return;}const r=regions[selected],[x,y,w,h]=r.rect;detail.textContent=`${config.file}\nNhóm: ${r.group}\nVùng #${selected+1}: [${x}, ${y}, ${w}, ${h}]\nAtlas coords: (${x}, ${y})\nSize in atlas: ${w} × ${h} ô\nẢnh: ${w*16} × ${h*16} px\nSource ID: ${config.source_id}`;const z=Math.min(6,Math.max(1,Math.floor(270/(w*16))));crop.width=w*16*z;crop.height=h*16*z;const ctx=crop.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.scale(z,z);checker(ctx,w*16,h*16);ctx.drawImage(image,x*16,y*16,w*16,h*16,0,0,w*16,h*16);}
+function loadSheet(){config=matrix.sources[Number(picker.value)];regions=config.groups.flatMap(g=>g.rects.map(rect=>({rect,group:g.name})));selected=-1;document.getElementById('legend').textContent=`Source ${config.source_id} · ${config.size_px.join(' × ')} px · ${regions.length} vùng chọn`;const next=new Image();image=next;next.onload=()=>{if(image===next)draw();};next.src=images[config.file];}
+atlas.addEventListener('click',e=>{const b=atlas.getBoundingClientRect();const x=(e.clientX-b.left)*config.size_px[0]/b.width,y=(e.clientY-b.top)*config.size_px[1]/b.height;selected=regions.findIndex(r=>{const [cx,cy,w,h]=r.rect;return x>=cx*16&&y>=cy*16&&x<(cx+w)*16&&y<(cy+h)*16;});draw();});
+picker.addEventListener('change',loadSheet);slider.addEventListener('input',draw);outlines.addEventListener('change',draw);document.getElementById('clear').addEventListener('click',()=>{selected=-1;draw();});picker.value='6';loadSheet();
+</script>
+</html>

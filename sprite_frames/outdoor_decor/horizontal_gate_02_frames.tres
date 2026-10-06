@@ -1,0 +1,123 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://d1g4lw4i478jr"]
+
+[ext_resource type="Texture2D" uid="uid://b56121sds2f2" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Other_Animations/Fence_Big_Gate.png" id="1_cqwy8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp8kv"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(192, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6e0g"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(144, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quy0s"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(96, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ean7"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(48, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nn5j"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(0, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fhbj"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(0, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1poxr"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(0, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3it1"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(48, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb5fb"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(96, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73tmb"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(144, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gq40t"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(192, 32, 48, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w26fc"]
+atlas = ExtResource("1_cqwy8")
+region = Rect2(192, 32, 48, 32)
+filter_clip = true
+
+[resource]
+resource_name = "horizontal_gate_02"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cp8kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6e0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quy0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ean7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nn5j")
+}],
+"loop": 0,
+"name": &"close",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fhbj")
+}],
+"loop": 1,
+"name": &"closed",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1poxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3it1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb5fb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73tmb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gq40t")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w26fc")
+}],
+"loop": 1,
+"name": &"opened",
+"speed": 8.0
+}]

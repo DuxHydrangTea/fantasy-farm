@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/BookShelves.png" id="1_qginr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71jc7"]
+atlas = ExtResource("1_qginr")
+region = Rect2(64, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmpql"]
+size = Vector2(21, 6)
+
+[node name="Bookshelf004" type="StaticBody2D" unique_id=2074683087]
+texture_filter = 1
+metadata/object_kind = "bookshelf"
+metadata/source_visual = "res://assets/Buildings/House_Decor/BookShelves.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1464001076]
+position = Vector2(0, -15)
+texture = SubResource("AtlasTexture_71jc7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1247001305]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_wmpql")
+disabled = true

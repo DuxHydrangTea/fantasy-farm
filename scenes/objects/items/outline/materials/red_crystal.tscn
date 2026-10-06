@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/materials/materials_r03_c05.tres" id="1_nmwnn"]
+
+[node name="RedCrystal" type="StaticBody2D" unique_id=812341111]
+texture_filter = 1
+metadata/object_id = "red_crystal"
+metadata/object_kind = "materials"
+metadata/source_visual = "res://icons/outline/materials/materials_r03_c05.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=380578543]
+position = Vector2(0, -7)
+texture = ExtResource("1_nmwnn")
+

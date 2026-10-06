@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Chairs.png" id="1_w75ov"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mdx1"]
+atlas = ExtResource("1_w75ov")
+region = Rect2(0, 32, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5r4g"]
+size = Vector2(8.4, 4.6)
+
+[node name="WoodenChair013" type="StaticBody2D" unique_id=539137153]
+texture_filter = 1
+metadata/object_kind = "wooden_chair"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Chairs.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1343687754]
+position = Vector2(0, -15)
+texture = SubResource("AtlasTexture_2mdx1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1322537986]
+position = Vector2(0, -2.3)
+shape = SubResource("RectangleShape2D_r5r4g")
+disabled = true

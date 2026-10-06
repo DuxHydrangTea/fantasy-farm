@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_04/seed_icon.tres" id="1_riqm8"]
+
+[node name="BeetrootSeed" type="StaticBody2D" unique_id=1985841014]
+texture_filter = 1
+metadata/object_id = "beetroot_seed"
+metadata/object_kind = "seed"
+metadata/source_visual = "res://crops/field/crop_04/seed_icon.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=316362182]
+position = Vector2(0, -8)
+texture = ExtResource("1_riqm8")
+

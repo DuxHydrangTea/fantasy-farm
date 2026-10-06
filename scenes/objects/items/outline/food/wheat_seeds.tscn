@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r04_c02.tres" id="1_6wim0"]
+
+[node name="WheatSeeds" type="StaticBody2D" unique_id=1389108973]
+texture_filter = 1
+metadata/object_id = "wheat_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r04_c02.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=262369073]
+position = Vector2(0, -8)
+texture = ExtResource("1_6wim0")
+

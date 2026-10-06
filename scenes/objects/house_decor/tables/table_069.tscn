@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Tables.png" id="1_ko4ka"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehvhb"]
+atlas = ExtResource("1_ko4ka")
+region = Rect2(112, 704, 48, 64)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hohr"]
+size = Vector2(23.8, 9.8)
+
+[node name="Table069" type="StaticBody2D" unique_id=2035419172]
+texture_filter = 1
+metadata/object_kind = "table"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Tables.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=215894718]
+position = Vector2(0, -25)
+texture = SubResource("AtlasTexture_ehvhb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1892151933]
+position = Vector2(0, -4.9)
+shape = SubResource("RectangleShape2D_3hohr")
+disabled = true

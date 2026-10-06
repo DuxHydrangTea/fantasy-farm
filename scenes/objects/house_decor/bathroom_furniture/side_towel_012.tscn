@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_h566y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n47n5"]
+atlas = ExtResource("1_h566y")
+region = Rect2(80, 400, 16, 32)
+filter_clip = true
+
+[node name="SideTowel012" type="StaticBody2D" unique_id=1996754364]
+texture_filter = 1
+metadata/object_kind = "side_towel"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=23174492]
+position = Vector2(0, -2)
+texture = SubResource("AtlasTexture_n47n5")
+

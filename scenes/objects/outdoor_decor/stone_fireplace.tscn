@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/outdoor_decor/fireplace_01_frames.tres" id="1_8onpn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7gpx"]
+size = Vector2(22.4, 9.6)
+
+[node name="StoneFireplace" type="StaticBody2D" unique_id=2096086324]
+texture_filter = 1
+metadata/object_id = "stone_fireplace"
+metadata/object_kind = "stone_fireplace"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/fireplace_01_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=789078641]
+position = Vector2(0, -24)
+sprite_frames = ExtResource("1_8onpn")
+animation = &"burn"
+autoplay = "burn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1770493275]
+position = Vector2(0, -4.8)
+shape = SubResource("RectangleShape2D_m7gpx")
+disabled = true

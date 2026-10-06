@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Beds.png" id="1_cyt8c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_527gm"]
+atlas = ExtResource("1_cyt8c")
+region = Rect2(80, 128, 32, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gabgd"]
+size = Vector2(17.5, 4)
+
+[node name="Bed020" type="StaticBody2D" unique_id=2098552259]
+texture_filter = 1
+metadata/object_kind = "bed"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Beds.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=477894783]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_527gm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=659615543]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_gabgd")
+disabled = true

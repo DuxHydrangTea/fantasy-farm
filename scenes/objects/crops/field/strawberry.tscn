@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_18/stage_01.tres" id="1_f3bh1"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_18/stage_02.tres" id="2_26wbl"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_18/stage_03.tres" id="3_wpblp"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_18/stage_04.tres" id="4_rd616"]
+
+[node name="Strawberry" type="StaticBody2D" unique_id=1575547800]
+texture_filter = 1
+metadata/object_id = "strawberry"
+metadata/object_kind = "crop"
+metadata/source_visual = "res://crops/field/crop_18/stage_01.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_f3bh1"), ExtResource("2_26wbl"), ExtResource("3_wpblp"), ExtResource("4_rd616")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=6158409]
+position = Vector2(0, -12)
+texture = ExtResource("1_f3bh1")
+

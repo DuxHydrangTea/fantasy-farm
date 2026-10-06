@@ -1,0 +1,76 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dlf4sdqb0snda"]
+
+[ext_resource type="Texture2D" uid="uid://dv8410tk571l3" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Other_Animations/Fireplace_Anim.png" id="1_hiagi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iaxur"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(0, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqdjv"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(32, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1qrc"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(64, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idwkj"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(96, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4doei"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(128, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l53vr"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(160, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jck1p"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(192, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f6re"]
+atlas = ExtResource("1_hiagi")
+region = Rect2(224, 0, 32, 48)
+filter_clip = true
+
+[resource]
+resource_name = "fireplace_01"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iaxur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqdjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1qrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idwkj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4doei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l53vr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jck1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f6re")
+}],
+"loop": 0,
+"name": &"burn",
+"speed": 8.0
+}]

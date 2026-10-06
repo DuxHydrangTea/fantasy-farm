@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Planters.png" id="1_ebpud"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypfta"]
+atlas = ExtResource("1_ebpud")
+region = Rect2(0, 48, 48, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2ipx"]
+size = Vector2(21.7, 3.2)
+
+[node name="FrontPlantedPlanter001" type="StaticBody2D" unique_id=147594857]
+texture_filter = 1
+metadata/object_kind = "front_planted_planter"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Planters.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1392677204]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_ypfta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=457398314]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_m2ipx")
+disabled = true

@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_11/sign.tres" id="1_04m6a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lk143"]
+size = Vector2(9.8, 3.2)
+
+[node name="BellPepperSign" type="StaticBody2D" unique_id=828189505]
+texture_filter = 1
+metadata/object_id = "bell_pepper_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_11/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1603230203]
+position = Vector2(0, -8)
+texture = ExtResource("1_04m6a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=961913856]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_lk143")
+disabled = true

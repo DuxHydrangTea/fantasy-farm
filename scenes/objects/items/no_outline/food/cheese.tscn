@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r09_c07.tres" id="1_528ch"]
+
+[node name="Cheese" type="StaticBody2D" unique_id=92358361]
+texture_filter = 1
+metadata/object_id = "cheese"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/no_outline/food/food_r09_c07.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=544057355]
+position = Vector2(0, -7)
+texture = ExtResource("1_528ch")
+

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/no_outline/tools/tools_r01_c05.tres" id="1_x41bb"]
+
+[node name="Sword" type="StaticBody2D" unique_id=770858520]
+texture_filter = 1
+metadata/object_id = "sword"
+metadata/object_kind = "tools"
+metadata/source_visual = "res://icons/no_outline/tools/tools_r01_c05.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1169245027]
+position = Vector2(0, -7)
+texture = ExtResource("1_x41bb")
+

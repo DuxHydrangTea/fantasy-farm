@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Kitchen_Furniture.png" id="1_t1xlv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u0en"]
+atlas = ExtResource("1_t1xlv")
+region = Rect2(96, 64, 16, 32)
+filter_clip = true
+
+[node name="PotRack002" type="StaticBody2D" unique_id=691186773]
+texture_filter = 1
+metadata/object_kind = "pot_rack"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Kitchen_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=175267853]
+position = Vector2(0, -6)
+texture = SubResource("AtlasTexture_2u0en")
+

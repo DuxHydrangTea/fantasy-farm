@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r03_c07.tres" id="1_qe2mw"]
+
+[node name="GoldenFish" type="StaticBody2D" unique_id=92619712]
+texture_filter = 1
+metadata/object_id = "golden_fish"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r03_c07.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=129403003]
+position = Vector2(0, -8)
+texture = ExtResource("1_qe2mw")
+

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/no_outline/materials/materials_r05_c03.tres" id="1_b70tr"]
+
+[node name="Branch" type="StaticBody2D" unique_id=1155839737]
+texture_filter = 1
+metadata/object_id = "branch"
+metadata/object_kind = "materials"
+metadata/source_visual = "res://icons/no_outline/materials/materials_r05_c03.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=843292759]
+position = Vector2(0, -7)
+texture = ExtResource("1_b70tr")
+

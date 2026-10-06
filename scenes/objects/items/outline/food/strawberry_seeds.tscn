@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r12_c02.tres" id="1_qg5g0"]
+
+[node name="StrawberrySeeds" type="StaticBody2D" unique_id=680446005]
+texture_filter = 1
+metadata/object_id = "strawberry_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r12_c02.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2006711108]
+position = Vector2(0, -8)
+texture = ExtResource("1_qg5g0")
+

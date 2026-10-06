@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/house_decor/chest_frames.tres" id="1_l1mps"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_og0eu"]
+size = Vector2(11.2, 3.2)
+
+[node name="Chest" type="StaticBody2D" unique_id=137484157]
+texture_filter = 1
+metadata/object_kind = "chest"
+metadata/source_visual = "res://sprite_frames/house_decor/chest_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=605640919]
+position = Vector2(0, -8)
+sprite_frames = ExtResource("1_l1mps")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1562586996]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_og0eu")
+disabled = true

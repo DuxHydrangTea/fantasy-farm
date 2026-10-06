@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/outdoor_decor/horizontal_gate_01_frames.tres" id="1_ksmrb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_urob8"]
+size = Vector2(33.6, 3.2)
+
+[node name="HorizontalGateLeftHinge" type="StaticBody2D" unique_id=936776351]
+texture_filter = 1
+metadata/object_id = "horizontal_gate_left_hinge"
+metadata/object_kind = "horizontal_gate_left_hinge"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/horizontal_gate_01_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2091069497]
+position = Vector2(0, -16)
+sprite_frames = ExtResource("1_ksmrb")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1229969849]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_urob8")
+disabled = true

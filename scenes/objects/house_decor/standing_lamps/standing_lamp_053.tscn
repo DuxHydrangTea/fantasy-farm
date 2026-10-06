@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Standing_Lamps.png" id="1_esyj2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7kqh"]
+atlas = ExtResource("1_esyj2")
+region = Rect2(32, 160, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awsl7"]
+size = Vector2(7.7, 5.4)
+
+[node name="StandingLamp053" type="StaticBody2D" unique_id=2113218129]
+texture_filter = 1
+metadata/object_kind = "standing_lamp"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Standing_Lamps.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=564829204]
+position = Vector2(0, -15)
+texture = SubResource("AtlasTexture_p7kqh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=453192497]
+position = Vector2(0, -2.7)
+shape = SubResource("RectangleShape2D_awsl7")
+disabled = true

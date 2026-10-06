@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r08_c04.tres" id="1_5nmt3"]
+
+[node name="ParsnipSeeds" type="StaticBody2D" unique_id=1685869052]
+texture_filter = 1
+metadata/object_id = "parsnip_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r08_c04.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=931242410]
+position = Vector2(0, -8)
+texture = ExtResource("1_5nmt3")
+

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_11/harvest_icon.tres" id="1_kq5um"]
+
+[node name="BellPepperHarvest" type="StaticBody2D" unique_id=100319778]
+texture_filter = 1
+metadata/object_id = "bell_pepper_harvest"
+metadata/object_kind = "harvest"
+metadata/source_visual = "res://crops/field/crop_11/harvest_icon.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1566522407]
+position = Vector2(0, -8)
+texture = ExtResource("1_kq5um")
+

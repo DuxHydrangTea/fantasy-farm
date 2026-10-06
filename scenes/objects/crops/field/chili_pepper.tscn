@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_10/stage_01.tres" id="1_gy8ij"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_10/stage_02.tres" id="2_1v6on"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_10/stage_03.tres" id="3_o0gly"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_10/stage_04.tres" id="4_j5jr4"]
+
+[node name="ChiliPepper" type="StaticBody2D" unique_id=1857289490]
+texture_filter = 1
+metadata/object_id = "chili_pepper"
+metadata/object_kind = "crop"
+metadata/source_visual = "res://crops/field/crop_10/stage_01.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_gy8ij"), ExtResource("2_1v6on"), ExtResource("3_o0gly"), ExtResource("4_j5jr4")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2071828817]
+position = Vector2(0, -12)
+texture = ExtResource("1_gy8ij")
+

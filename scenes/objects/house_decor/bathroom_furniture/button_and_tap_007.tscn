@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_fhbki"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbtq1"]
+atlas = ExtResource("1_fhbki")
+region = Rect2(112, 176, 16, 16)
+filter_clip = true
+
+[node name="ButtonAndTap007" type="StaticBody2D" unique_id=2059053178]
+texture_filter = 1
+metadata/object_kind = "button_and_tap"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1864880905]
+position = Vector2(0, -4)
+texture = SubResource("AtlasTexture_kbtq1")
+

@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Carpets.png" id="1_fbaxa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs21l"]
+atlas = ExtResource("1_fbaxa")
+region = Rect2(32, 208, 32, 32)
+filter_clip = true
+
+[node name="RoundAndOblongCarpet016" type="StaticBody2D" unique_id=337682928]
+texture_filter = 1
+metadata/object_kind = "round_and_oblong_carpet"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Carpets.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=231909702]
+position = Vector2(0, -12)
+texture = SubResource("AtlasTexture_vs21l")
+

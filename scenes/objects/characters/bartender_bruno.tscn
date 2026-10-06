@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/bartender_bruno_frames.tres" id="1_0jugg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_680km"]
+size = Vector2(10, 4)
+
+[node name="BartenderBruno" type="CharacterBody2D" unique_id=495516039]
+texture_filter = 1
+metadata/object_kind = "bartender_bruno"
+metadata/source_visual = "res://sprite_frames/character/bartender_bruno_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=715031491]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_0jugg")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1382409430]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_680km")
+disabled = true

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Indoor_Decor.png" id="1_goqjr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iejkc"]
+atlas = ExtResource("1_goqjr")
+region = Rect2(80, 192, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gd7n"]
+size = Vector2(11.2, 6)
+
+[node name="Plant009" type="StaticBody2D" unique_id=2134007400]
+texture_filter = 1
+metadata/object_kind = "plant"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Indoor_Decor.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1722941716]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_iejkc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=17771268]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_4gd7n")
+disabled = true

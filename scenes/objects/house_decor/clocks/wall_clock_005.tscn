@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Clocks.png" id="1_7d6k2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2j7nv"]
+atlas = ExtResource("1_7d6k2")
+region = Rect2(32, 16, 16, 16)
+filter_clip = true
+
+[node name="WallClock005" type="StaticBody2D" unique_id=657056590]
+texture_filter = 1
+metadata/object_kind = "wall_clock"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Clocks.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=614409496]
+position = Vector2(0, -6)
+texture = SubResource("AtlasTexture_2j7nv")
+

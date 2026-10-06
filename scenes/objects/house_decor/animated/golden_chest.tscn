@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/house_decor/golden_chest_frames.tres" id="1_ynskm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jy8bp"]
+size = Vector2(11.2, 3.2)
+
+[node name="GoldenChest" type="StaticBody2D" unique_id=1071574050]
+texture_filter = 1
+metadata/object_kind = "golden_chest"
+metadata/source_visual = "res://sprite_frames/house_decor/golden_chest_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1734784653]
+position = Vector2(0, -8)
+sprite_frames = ExtResource("1_ynskm")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1526920841]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_jy8bp")
+disabled = true

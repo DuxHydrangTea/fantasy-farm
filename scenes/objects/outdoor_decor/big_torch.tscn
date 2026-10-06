@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/outdoor_decor/big_torch_frames.tres" id="1_45nbb"]
+
+[node name="BigTorch" type="StaticBody2D" unique_id=1771846044]
+texture_filter = 1
+metadata/object_id = "big_torch"
+metadata/object_kind = "big_torch"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/big_torch_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=247137451]
+position = Vector2(0, -11)
+sprite_frames = ExtResource("1_45nbb")
+animation = &"burn"
+autoplay = "burn"
+

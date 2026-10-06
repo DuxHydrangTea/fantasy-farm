@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_18/sign.tres" id="1_rdr25"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2q8x"]
+size = Vector2(9.8, 3.2)
+
+[node name="StrawberrySign" type="StaticBody2D" unique_id=1812058702]
+texture_filter = 1
+metadata/object_id = "strawberry_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_18/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1405950351]
+position = Vector2(0, -8)
+texture = ExtResource("1_rdr25")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1830045463]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_g2q8x")
+disabled = true

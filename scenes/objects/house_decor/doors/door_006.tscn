@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Doors.png" id="1_o1qnl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o33dq"]
+atlas = ExtResource("1_o1qnl")
+region = Rect2(160, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6tf7d"]
+size = Vector2(11.2, 4.6)
+
+[node name="Door006" type="StaticBody2D" unique_id=168056806]
+texture_filter = 1
+metadata/object_kind = "door"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Doors.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1804525965]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_o33dq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1359370629]
+position = Vector2(0, -2.3)
+shape = SubResource("RectangleShape2D_6tf7d")
+disabled = true

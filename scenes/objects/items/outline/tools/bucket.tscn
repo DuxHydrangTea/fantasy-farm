@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/tools/tools_r01_c08.tres" id="1_xmv76"]
+
+[node name="Bucket" type="StaticBody2D" unique_id=1515745771]
+texture_filter = 1
+metadata/object_id = "bucket"
+metadata/object_kind = "tools"
+metadata/source_visual = "res://icons/outline/tools/tools_r01_c08.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1629128254]
+position = Vector2(0, -8)
+texture = ExtResource("1_xmv76")
+

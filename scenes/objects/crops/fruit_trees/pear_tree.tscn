@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_01.tres" id="1_q2xty"]
+[ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_02.tres" id="2_wchhc"]
+[ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_03.tres" id="3_obw2d"]
+[ext_resource type="Texture2D" path="res://crops/fruit_trees/pear/ready.tres" id="4_xknor"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irwle"]
+size = Vector2(18.9, 9.2)
+
+[node name="PearTree" type="StaticBody2D" unique_id=1350162423]
+texture_filter = 1
+metadata/object_id = "pear_tree"
+metadata/object_kind = "fruit_tree"
+metadata/source_visual = "res://crops/fruit_trees/pear/ready.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_q2xty"), ExtResource("2_wchhc"), ExtResource("3_obw2d"), ExtResource("4_xknor")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1958001226]
+position = Vector2(0, -21)
+texture = ExtResource("4_xknor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1976270618]
+position = Vector2(0, -4.6)
+shape = SubResource("RectangleShape2D_irwle")
+disabled = true

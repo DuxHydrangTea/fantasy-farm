@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Indoor_Decor.png" id="1_4q1vv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mg70t"]
+atlas = ExtResource("1_4q1vv")
+region = Rect2(0, 112, 32, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82o0y"]
+size = Vector2(21, 3)
+
+[node name="Bench002" type="StaticBody2D" unique_id=1004367245]
+texture_filter = 1
+metadata/object_kind = "bench"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Indoor_Decor.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1084935010]
+position = Vector2(0, -7)
+texture = SubResource("AtlasTexture_mg70t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74290721]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_82o0y")
+disabled = true

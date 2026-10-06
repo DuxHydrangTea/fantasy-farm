@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/materials/materials_r05_c06.tres" id="1_28scu"]
+
+[node name="MagicOrb" type="StaticBody2D" unique_id=1682991024]
+texture_filter = 1
+metadata/object_id = "magic_orb"
+metadata/object_kind = "materials"
+metadata/source_visual = "res://icons/outline/materials/materials_r05_c06.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1881473443]
+position = Vector2(0, -8)
+texture = ExtResource("1_28scu")
+

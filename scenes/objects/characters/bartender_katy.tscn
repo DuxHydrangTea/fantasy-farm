@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/bartender_katy_frames.tres" id="1_fmcxp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p302s"]
+size = Vector2(10, 4)
+
+[node name="BartenderKaty" type="CharacterBody2D" unique_id=1558242086]
+texture_filter = 1
+metadata/object_kind = "bartender_katy"
+metadata/source_visual = "res://sprite_frames/character/bartender_katy_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=875721566]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_fmcxp")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1148908308]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_p302s")
+disabled = true

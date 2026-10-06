@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Carpets.png" id="1_fs7cs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4gka"]
+atlas = ExtResource("1_fs7cs")
+region = Rect2(192, 96, 16, 16)
+filter_clip = true
+
+[node name="SmallCarpet003" type="StaticBody2D" unique_id=1786630782]
+texture_filter = 1
+metadata/object_kind = "small_carpet"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Carpets.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=394703747]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_d4gka")
+

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Furniture_Other.png" id="1_5higt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lato"]
+atlas = ExtResource("1_5higt")
+region = Rect2(48, 240, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x06s0"]
+size = Vector2(11.2, 4.2)
+
+[node name="DrawerUnit010" type="StaticBody2D" unique_id=1932106741]
+texture_filter = 1
+metadata/object_kind = "drawer_unit"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Furniture_Other.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=343074231]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_3lato")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715420771]
+position = Vector2(0, -2.1)
+shape = SubResource("RectangleShape2D_x06s0")
+disabled = true

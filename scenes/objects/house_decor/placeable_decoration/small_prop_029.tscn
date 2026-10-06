@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Placeable_Decoration.png" id="1_wjkao"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci13r"]
+atlas = ExtResource("1_wjkao")
+region = Rect2(32, 48, 16, 16)
+filter_clip = true
+
+[node name="SmallProp029" type="StaticBody2D" unique_id=2103028140]
+texture_filter = 1
+metadata/object_kind = "small_prop"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Placeable_Decoration.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1457702457]
+position = Vector2(0, -6)
+texture = SubResource("AtlasTexture_ci13r")
+

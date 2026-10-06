@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/farmer_bob_frames.tres" id="1_8nupg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j51u5"]
+size = Vector2(10, 4)
+
+[node name="FarmerBob" type="CharacterBody2D" unique_id=146752700]
+texture_filter = 1
+metadata/object_kind = "farmer_bob"
+metadata/source_visual = "res://sprite_frames/character/farmer_bob_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1575517027]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_8nupg")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=972584721]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_j51u5")
+disabled = true

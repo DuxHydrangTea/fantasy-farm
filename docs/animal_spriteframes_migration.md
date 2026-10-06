@@ -1,5 +1,9 @@
 # Danh sách animation động vật để chuẩn bị migrate SpriteFrames
 
+**Cập nhật 06/10/2026:** 93 SpriteFrames động vật hiện nằm trực tiếp trong
+`res://sprite_frames/animals`. Generator `setup_animal_sprite_frames.gd` đã cập nhật
+đường dẫn này. Các ghi chú đề xuất bên dưới giữ lại theo thời điểm rà soát ban đầu.
+
 Ngày rà soát: 04/10/2026. Nguồn: `res://assets/Animals`.
 
 Đây là bản đề xuất để review, chưa phải cấu hình generator đã chốt. Chưa tạo `.tres`, chưa đổi script hoặc scene.

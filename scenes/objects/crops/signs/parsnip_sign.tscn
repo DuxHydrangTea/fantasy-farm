@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_07/sign.tres" id="1_yld3c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vgwg"]
+size = Vector2(9.8, 3.2)
+
+[node name="ParsnipSign" type="StaticBody2D" unique_id=1683195620]
+texture_filter = 1
+metadata/object_id = "parsnip_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_07/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2076498574]
+position = Vector2(0, -8)
+texture = ExtResource("1_yld3c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=108152365]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_3vgwg")
+disabled = true

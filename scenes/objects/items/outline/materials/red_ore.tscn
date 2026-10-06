@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/materials/materials_r03_c04.tres" id="1_c1wbr"]
+
+[node name="RedOre" type="StaticBody2D" unique_id=797425332]
+texture_filter = 1
+metadata/object_id = "red_ore"
+metadata/object_kind = "materials"
+metadata/source_visual = "res://icons/outline/materials/materials_r03_c04.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=874559080]
+position = Vector2(0, -7)
+texture = ExtResource("1_c1wbr")
+

@@ -1,0 +1,78 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Break_Animations/Sign_1_Anim.png" id="1_lr0os"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4iwsa"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8jd4"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(48, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiq01"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(96, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n68b0"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(144, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4cno"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(192, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awf4o"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(192, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbuw6"]
+atlas = ExtResource("1_lr0os")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[resource]
+resource_name = "sign_01"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4iwsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8jd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uiq01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n68b0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4cno")
+}],
+"loop": 0,
+"name": &"break",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awf4o")
+}],
+"loop": 1,
+"name": &"broken",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbuw6")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]

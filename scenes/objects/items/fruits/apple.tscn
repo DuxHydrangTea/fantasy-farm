@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/fruit_objects/apple.tres" id="1_tho7l"]
+
+[node name="Apple" type="StaticBody2D" unique_id=1856908738]
+texture_filter = 1
+metadata/object_id = "apple"
+metadata/object_kind = "fruit"
+metadata/source_visual = "res://crops/fruit_objects/apple.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2091047634]
+position = Vector2(0, -3)
+texture = ExtResource("1_tho7l")
+

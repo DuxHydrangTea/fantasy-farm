@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Indoor_Decor.png" id="1_witvl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jenjv"]
+atlas = ExtResource("1_witvl")
+region = Rect2(64, 0, 16, 16)
+filter_clip = true
+
+[node name="SmallProp002" type="StaticBody2D" unique_id=1367974460]
+texture_filter = 1
+metadata/object_kind = "small_prop"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Indoor_Decor.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=263087886]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_jenjv")
+

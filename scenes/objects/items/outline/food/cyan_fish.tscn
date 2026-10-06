@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r03_c02.tres" id="1_11y1p"]
+
+[node name="CyanFish" type="StaticBody2D" unique_id=2121280175]
+texture_filter = 1
+metadata/object_id = "cyan_fish"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r03_c02.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2122926431]
+position = Vector2(0, -8)
+texture = ExtResource("1_11y1p")
+

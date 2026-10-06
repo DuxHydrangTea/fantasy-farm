@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/grapes_bower/stage_01.tres" id="1_3htd0"]
+[ext_resource type="Texture2D" path="res://crops/grapes_bower/stage_02.tres" id="2_7frgl"]
+[ext_resource type="Texture2D" path="res://crops/grapes_bower/stage_03.tres" id="3_cykoj"]
+[ext_resource type="Texture2D" path="res://crops/grapes_bower/stage_04.tres" id="4_sqqsm"]
+[ext_resource type="Texture2D" path="res://crops/grapes_bower/stage_05.tres" id="5_gnfrm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4p38f"]
+size = Vector2(53.2, 11.2)
+
+[node name="GrapesBower" type="StaticBody2D" unique_id=1335875126]
+texture_filter = 1
+metadata/object_id = "grapes_bower"
+metadata/object_kind = "grapes_bower"
+metadata/source_visual = "res://crops/grapes_bower/stage_05.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_3htd0"), ExtResource("2_7frgl"), ExtResource("3_cykoj"), ExtResource("4_sqqsm"), ExtResource("5_gnfrm")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1162652139]
+position = Vector2(0, -29)
+texture = ExtResource("5_gnfrm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=866120551]
+position = Vector2(0, -5.6)
+shape = SubResource("RectangleShape2D_4p38f")
+disabled = true

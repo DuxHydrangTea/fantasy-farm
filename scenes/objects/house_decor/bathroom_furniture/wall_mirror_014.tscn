@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_k3e51"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlagh"]
+atlas = ExtResource("1_k3e51")
+region = Rect2(48, 288, 32, 32)
+filter_clip = true
+
+[node name="WallMirror014" type="StaticBody2D" unique_id=1291731958]
+texture_filter = 1
+metadata/object_kind = "wall_mirror"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=989650484]
+position = Vector2(0, -12)
+texture = SubResource("AtlasTexture_nlagh")
+

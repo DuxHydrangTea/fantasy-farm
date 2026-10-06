@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r06_c08.tres" id="1_rynca"]
+
+[node name="PearSeeds" type="StaticBody2D" unique_id=1205985801]
+texture_filter = 1
+metadata/object_id = "pear_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r06_c08.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1275262819]
+position = Vector2(0, -8)
+texture = ExtResource("1_rynca")
+

@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Fireplaces.png" id="1_pt4im"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1npdq"]
+atlas = ExtResource("1_pt4im")
+region = Rect2(64, 0, 16, 48)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yp5h4"]
+size = Vector2(11.2, 7.8)
+
+[node name="Fireplace003" type="StaticBody2D" unique_id=796804414]
+texture_filter = 1
+metadata/object_kind = "fireplace"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Fireplaces.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1924575590]
+position = Vector2(0, -23)
+texture = SubResource("AtlasTexture_1npdq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1444465037]
+position = Vector2(0, -3.9)
+shape = SubResource("RectangleShape2D_yp5h4")
+disabled = true

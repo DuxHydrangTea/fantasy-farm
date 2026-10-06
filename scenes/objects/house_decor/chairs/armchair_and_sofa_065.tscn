@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Chairs.png" id="1_42p5x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c03nh"]
+atlas = ExtResource("1_42p5x")
+region = Rect2(0, 384, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5yyh"]
+size = Vector2(8.4, 3.8)
+
+[node name="ArmchairAndSofa065" type="StaticBody2D" unique_id=282639150]
+texture_filter = 1
+metadata/object_kind = "armchair_and_sofa"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Chairs.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1688692268]
+position = Vector2(0, -15)
+texture = SubResource("AtlasTexture_c03nh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1344578541]
+position = Vector2(0, -1.9)
+shape = SubResource("RectangleShape2D_a5yyh")
+disabled = true

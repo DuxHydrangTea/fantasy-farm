@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Chairs.png" id="1_wsr2i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qv1k"]
+atlas = ExtResource("1_wsr2i")
+region = Rect2(160, 272, 16, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bufgw"]
+size = Vector2(7, 3)
+
+[node name="Stool009" type="StaticBody2D" unique_id=1005789979]
+texture_filter = 1
+metadata/object_kind = "stool"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Chairs.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1223598028]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_2qv1k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=16278307]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_bufgw")
+disabled = true

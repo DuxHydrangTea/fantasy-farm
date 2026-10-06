@@ -2,7 +2,7 @@
 extends EditorScript
 
 const SOURCE_ROOT := "res://assets/Animals"
-const OUTPUT_ROOT := "res://sprite_frames"
+const OUTPUT_ROOT := "res://sprite_frames/animals"
 
 const DEFAULT_FPS := 8.0
 const FLY_FPS := 12.0
@@ -438,7 +438,7 @@ func _save_frames(
 	species: String,
 	variant: String
 ) -> void:
-	var output_dir := OUTPUT_ROOT.path_join(species)
+	var output_dir := OUTPUT_ROOT
 	var mkdir_error := DirAccess.make_dir_recursive_absolute(output_dir)
 
 	if mkdir_error != OK:

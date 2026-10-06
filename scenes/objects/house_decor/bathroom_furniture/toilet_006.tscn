@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_y6wpw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruccc"]
+atlas = ExtResource("1_y6wpw")
+region = Rect2(80, 160, 16, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tk4xp"]
+size = Vector2(8.4, 3)
+
+[node name="Toilet006" type="StaticBody2D" unique_id=26642995]
+texture_filter = 1
+metadata/object_kind = "toilet"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=995284453]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_ruccc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1684647474]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_tk4xp")
+disabled = true

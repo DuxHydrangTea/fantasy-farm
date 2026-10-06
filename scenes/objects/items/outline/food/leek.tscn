@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r11_c03.tres" id="1_dvayx"]
+
+[node name="Leek" type="StaticBody2D" unique_id=988889204]
+texture_filter = 1
+metadata/object_id = "leek"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r11_c03.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=889202836]
+position = Vector2(0, -8)
+texture = ExtResource("1_dvayx")
+

@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_04/stage_01.tres" id="1_gkw0p"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_04/stage_02.tres" id="2_7dtic"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_04/stage_03.tres" id="3_fis18"]
+[ext_resource type="Texture2D" path="res://crops/field/crop_04/stage_04.tres" id="4_ac246"]
+
+[node name="Beetroot" type="StaticBody2D" unique_id=531731002]
+texture_filter = 1
+metadata/object_id = "beetroot"
+metadata/object_kind = "crop"
+metadata/source_visual = "res://crops/field/crop_04/stage_01.tres"
+metadata/growth_textures = Array[Texture2D]([ExtResource("1_gkw0p"), ExtResource("2_7dtic"), ExtResource("3_fis18"), ExtResource("4_ac246")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=449891589]
+position = Vector2(0, -13)
+texture = ExtResource("1_gkw0p")
+

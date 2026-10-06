@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Icons/Outline/Food_Icons_Outline.png" id="1_tvf5m"]
+
+[resource]
+resource_name = "food_r03_c06"
+atlas = ExtResource("1_tvf5m")
+region = Rect2(80, 32, 16, 16)
+filter_clip = true

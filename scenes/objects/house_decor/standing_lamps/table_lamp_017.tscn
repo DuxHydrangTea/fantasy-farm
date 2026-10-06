@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Standing_Lamps.png" id="1_psd80"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5pw2"]
+atlas = ExtResource("1_psd80")
+region = Rect2(96, 224, 16, 32)
+filter_clip = true
+
+[node name="TableLamp017" type="StaticBody2D" unique_id=1478847152]
+texture_filter = 1
+metadata/object_kind = "table_lamp"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Standing_Lamps.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=777378713]
+position = Vector2(0, -15)
+texture = SubResource("AtlasTexture_l5pw2")
+

@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/lumberjack_jack_frames.tres" id="1_ib0do"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7j4b"]
+size = Vector2(10, 4)
+
+[node name="LumberjackJack" type="CharacterBody2D" unique_id=780214389]
+texture_filter = 1
+metadata/object_kind = "lumberjack_jack"
+metadata/source_visual = "res://sprite_frames/character/lumberjack_jack_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1859340797]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_ib0do")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1938768779]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_t7j4b")
+disabled = true

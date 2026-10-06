@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Icons/No Outline/Food_Icons_NO_Outline.png" id="1_0d3n1"]
+
+[resource]
+resource_name = "food_r08_c02"
+atlas = ExtResource("1_0d3n1")
+region = Rect2(16, 112, 16, 16)
+filter_clip = true

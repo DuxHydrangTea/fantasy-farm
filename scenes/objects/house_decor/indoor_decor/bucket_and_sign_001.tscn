@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Indoor_Decor.png" id="1_0jeji"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jih23"]
+atlas = ExtResource("1_0jeji")
+region = Rect2(0, 128, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gqjd"]
+size = Vector2(10.5, 4.4)
+
+[node name="BucketAndSign001" type="StaticBody2D" unique_id=225121581]
+texture_filter = 1
+metadata/object_kind = "bucket_and_sign"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Indoor_Decor.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1266342726]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_jih23")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=674983671]
+position = Vector2(0, -2.2)
+shape = SubResource("RectangleShape2D_4gqjd")
+disabled = true

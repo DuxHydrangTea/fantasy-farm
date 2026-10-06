@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r08_c05.tres" id="1_j436s"]
+
+[node name="Beetroot" type="StaticBody2D" unique_id=227127413]
+texture_filter = 1
+metadata/object_id = "beetroot"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r08_c05.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1038974955]
+position = Vector2(0, -8)
+texture = ExtResource("1_j436s")
+

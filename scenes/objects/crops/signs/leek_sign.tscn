@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_21/sign.tres" id="1_esrbp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5ttk"]
+size = Vector2(9.8, 3.2)
+
+[node name="LeekSign" type="StaticBody2D" unique_id=490342822]
+texture_filter = 1
+metadata/object_id = "leek_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_21/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2013903128]
+position = Vector2(0, -8)
+texture = ExtResource("1_esrbp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1097254821]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_i5ttk")
+disabled = true

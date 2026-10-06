@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/House_Plants.png" id="1_s6k5s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gddtg"]
+atlas = ExtResource("1_s6k5s")
+region = Rect2(16, 128, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p3sca"]
+size = Vector2(9.1, 5.8)
+
+[node name="PottedPlant034" type="StaticBody2D" unique_id=222882073]
+texture_filter = 1
+metadata/object_kind = "potted_plant"
+metadata/source_visual = "res://assets/Buildings/House_Decor/House_Plants.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1155657782]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_gddtg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1044297054]
+position = Vector2(0, -2.9)
+shape = SubResource("RectangleShape2D_p3sca")
+disabled = true

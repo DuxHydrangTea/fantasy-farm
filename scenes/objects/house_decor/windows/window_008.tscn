@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/windows.png" id="1_eouyb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0h4b"]
+atlas = ExtResource("1_eouyb")
+region = Rect2(48, 32, 32, 32)
+filter_clip = true
+
+[node name="Window008" type="StaticBody2D" unique_id=130091624]
+texture_filter = 1
+metadata/object_kind = "window"
+metadata/source_visual = "res://assets/Buildings/House_Decor/windows.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=997371434]
+position = Vector2(0, -10)
+texture = SubResource("AtlasTexture_o0h4b")
+

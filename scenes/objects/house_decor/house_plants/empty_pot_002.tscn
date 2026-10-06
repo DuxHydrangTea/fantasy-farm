@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/House_Plants.png" id="1_ks52v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks3pn"]
+atlas = ExtResource("1_ks52v")
+region = Rect2(176, 48, 16, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u463g"]
+size = Vector2(7.7, 3)
+
+[node name="EmptyPot002" type="StaticBody2D" unique_id=1149046613]
+texture_filter = 1
+metadata/object_kind = "empty_pot"
+metadata/source_visual = "res://assets/Buildings/House_Decor/House_Plants.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=783234601]
+position = Vector2(0, -7)
+texture = SubResource("AtlasTexture_ks3pn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=306365013]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_u463g")
+disabled = true

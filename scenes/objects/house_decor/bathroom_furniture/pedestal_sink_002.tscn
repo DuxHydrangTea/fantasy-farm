@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_wsh7b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va5ql"]
+atlas = ExtResource("1_wsh7b")
+region = Rect2(16, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qdps"]
+size = Vector2(11.2, 4.4)
+
+[node name="PedestalSink002" type="StaticBody2D" unique_id=1607048239]
+texture_filter = 1
+metadata/object_kind = "pedestal_sink"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1874013464]
+position = Vector2(0, -16)
+texture = SubResource("AtlasTexture_va5ql")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1890857151]
+position = Vector2(0, -2.2)
+shape = SubResource("RectangleShape2D_5qdps")
+disabled = true

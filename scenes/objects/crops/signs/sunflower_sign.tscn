@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://521m3yem0fll"]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_15/sign.tres" id="1_1h2ue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4y8ym"]
+size = Vector2(9.8, 3.2)
+
+[node name="SunflowerSign" type="StaticBody2D" unique_id=75973636]
+texture_filter = 1
+metadata/object_id = "sunflower_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_15/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=506009361]
+position = Vector2(0, -8)
+texture = ExtResource("1_1h2ue")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1698328256]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_4y8ym")
+disabled = true

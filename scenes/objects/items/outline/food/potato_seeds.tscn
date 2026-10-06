@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r11_c02.tres" id="1_uq2yw"]
+
+[node name="PotatoSeeds" type="StaticBody2D" unique_id=1798999858]
+texture_filter = 1
+metadata/object_id = "potato_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r11_c02.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1134255283]
+position = Vector2(0, -8)
+texture = ExtResource("1_uq2yw")
+

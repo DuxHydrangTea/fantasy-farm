@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Planters.png" id="1_y7q5r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t01p2"]
+atlas = ExtResource("1_y7q5r")
+region = Rect2(0, 16, 48, 16)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1x3d"]
+size = Vector2(21.7, 3)
+
+[node name="EmptyPlanter003" type="StaticBody2D" unique_id=373273185]
+texture_filter = 1
+metadata/object_kind = "empty_planter"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Planters.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=491508952]
+position = Vector2(0, -7)
+texture = SubResource("AtlasTexture_t01p2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=701817912]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_x1x3d")
+disabled = true

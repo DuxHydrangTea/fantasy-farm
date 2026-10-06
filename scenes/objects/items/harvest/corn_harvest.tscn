@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_05/harvest_icon.tres" id="1_8bubc"]
+
+[node name="CornHarvest" type="StaticBody2D" unique_id=524959204]
+texture_filter = 1
+metadata/object_id = "corn_harvest"
+metadata/object_kind = "harvest"
+metadata/source_visual = "res://crops/field/crop_05/harvest_icon.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1003779917]
+position = Vector2(0, -8)
+texture = ExtResource("1_8bubc")
+

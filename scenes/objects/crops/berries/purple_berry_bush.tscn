@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/berries/purple/appearance_01.tres" id="1_rl4bw"]
+[ext_resource type="Texture2D" path="res://crops/berries/purple/appearance_02.tres" id="2_fi7pi"]
+[ext_resource type="Texture2D" path="res://crops/berries/purple/appearance_03.tres" id="3_id1ux"]
+[ext_resource type="Texture2D" path="res://crops/berries/purple/appearance_04.tres" id="4_4duej"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5lpy"]
+size = Vector2(10.5, 3.2)
+
+[node name="PurpleBerryBush" type="StaticBody2D" unique_id=1473174935]
+texture_filter = 1
+metadata/object_id = "purple_berry_bush"
+metadata/object_kind = "berry_bush"
+metadata/source_visual = "res://crops/berries/purple/appearance_01.tres"
+metadata/appearance_textures = Array[Texture2D]([ExtResource("1_rl4bw"), ExtResource("2_fi7pi"), ExtResource("3_id1ux"), ExtResource("4_4duej")])
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=136418770]
+position = Vector2(0, -8)
+texture = ExtResource("1_rl4bw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=160496076]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_d5lpy")
+disabled = true

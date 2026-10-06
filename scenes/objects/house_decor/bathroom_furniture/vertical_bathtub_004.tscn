@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Bathroom_Furniture.png" id="1_c8xlp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qpb7"]
+atlas = ExtResource("1_c8xlp")
+region = Rect2(48, 96, 16, 48)
+filter_clip = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wxw0h"]
+size = Vector2(11.2, 7.4)
+
+[node name="VerticalBathtub004" type="StaticBody2D" unique_id=1309602902]
+texture_filter = 1
+metadata/object_kind = "vertical_bathtub"
+metadata/source_visual = "res://assets/Buildings/House_Decor/Bathroom_Furniture.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=99467356]
+position = Vector2(0, -24)
+texture = SubResource("AtlasTexture_5qpb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1396227853]
+position = Vector2(0, -3.7)
+shape = SubResource("RectangleShape2D_wxw0h")
+disabled = true

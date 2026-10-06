@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/outdoor_decor/vertical_gate_frames.tres" id="1_uew1k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vb0xq"]
+size = Vector2(5.6, 9.6)
+
+[node name="VerticalGate" type="StaticBody2D" unique_id=1438618353]
+texture_filter = 1
+metadata/object_id = "vertical_gate"
+metadata/object_kind = "vertical_gate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/vertical_gate_frames.tres"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=924357349]
+position = Vector2(0, -24)
+sprite_frames = ExtResource("1_uew1k")
+animation = &"closed"
+autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=663977094]
+position = Vector2(0, -4.8)
+shape = SubResource("RectangleShape2D_vb0xq")
+disabled = true

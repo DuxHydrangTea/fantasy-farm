@@ -1,0 +1,78 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b0658y14j2tla"]
+
+[ext_resource type="Texture2D" uid="uid://cd2pruhxl3twj" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Break_Animations/Barrel_1_Anim.png" id="1_psbbv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpddl"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2pan"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(48, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3m7s"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(96, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vo7q"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(144, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tkx55"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(192, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hjqs"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(192, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq5r7"]
+atlas = ExtResource("1_psbbv")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[resource]
+resource_name = "barrel"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wpddl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2pan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3m7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vo7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tkx55")
+}],
+"loop": 0,
+"name": &"break",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1hjqs")
+}],
+"loop": 1,
+"name": &"broken",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq5r7")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]

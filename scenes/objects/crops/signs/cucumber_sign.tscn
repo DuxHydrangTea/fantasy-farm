@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/crop_09/sign.tres" id="1_hyl24"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7k3u"]
+size = Vector2(9.8, 3.2)
+
+[node name="CucumberSign" type="StaticBody2D" unique_id=1167077704]
+texture_filter = 1
+metadata/object_id = "cucumber_sign"
+metadata/object_kind = "crop_sign"
+metadata/source_visual = "res://crops/field/crop_09/sign.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1835923989]
+position = Vector2(0, -8)
+texture = ExtResource("1_hyl24")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1051697663]
+position = Vector2(0, -1.6)
+shape = SubResource("RectangleShape2D_o7k3u")
+disabled = true

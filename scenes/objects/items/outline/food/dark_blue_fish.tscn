@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r03_c03.tres" id="1_yh5j6"]
+
+[node name="DarkBlueFish" type="StaticBody2D" unique_id=2075589247]
+texture_filter = 1
+metadata/object_id = "dark_blue_fish"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r03_c03.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=851915306]
+position = Vector2(0, -8)
+texture = ExtResource("1_yh5j6")
+

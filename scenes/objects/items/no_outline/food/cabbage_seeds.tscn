@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r06_c04.tres" id="1_w6svi"]
+
+[node name="CabbageSeeds" type="StaticBody2D" unique_id=1805206463]
+texture_filter = 1
+metadata/object_id = "cabbage_seeds"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/no_outline/food/food_r06_c04.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1044597503]
+position = Vector2(0, -7)
+texture = ExtResource("1_w6svi")
+

@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/other/other_r02_c02.tres" id="1_s62qj"]
+
+[node name="OrangeRose" type="StaticBody2D" unique_id=1113130992]
+texture_filter = 1
+metadata/object_id = "orange_rose"
+metadata/object_kind = "other"
+metadata/source_visual = "res://icons/outline/other/other_r02_c02.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395874789]
+position = Vector2(0, -8)
+texture = ExtResource("1_s62qj")
+

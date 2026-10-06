@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://icons/outline/food/food_r08_c01.tres" id="1_wvck6"]
+
+[node name="Corn" type="StaticBody2D" unique_id=2063569967]
+texture_filter = 1
+metadata/object_id = "corn"
+metadata/object_kind = "food"
+metadata/source_visual = "res://icons/outline/food/food_r08_c01.tres"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1424143449]
+position = Vector2(0, -8)
+texture = ExtResource("1_wvck6")
+
