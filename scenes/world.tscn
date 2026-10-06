@@ -30,6 +30,13 @@
 [ext_resource type="PackedScene" uid="uid://ihf1oply32n1" path="res://scenes/buildings/unique_buildings/windmill.tscn" id="29_l8ah6"]
 [ext_resource type="SpriteFrames" uid="uid://dlf4sdqb0snda" path="res://sprite_frames/outdoor_decor/fireplace_01_frames.tres" id="30_luhhm"]
 [ext_resource type="PackedScene" uid="uid://6k0npaj73au5" path="res://scenes/buildings/houses/house_3.tscn" id="30_navra"]
+[ext_resource type="Script" uid="uid://blehcnoynshbt" path="res://addons/scatter2d/src/scatter2d.gd" id="31_817gm"]
+[ext_resource type="Script" uid="uid://xn7w5wbnwdme" path="res://addons/scatter2d/src/stack/modifier_stack.gd" id="32_ggc52"]
+[ext_resource type="Script" uid="uid://mvkmr4qqe3h0" path="res://addons/scatter2d/src/modifiers/modifier_base.gd" id="33_l8ah6"]
+[ext_resource type="Script" uid="uid://dud2pkt70o4ui" path="res://addons/scatter2d/src/modifiers/mod_create_inside_random.gd" id="34_e75v4"]
+[ext_resource type="Script" uid="uid://h0re0ckmxr17" path="res://addons/scatter2d/src/scatter_shape.gd" id="35_8u370"]
+[ext_resource type="Script" uid="uid://1wbh6o12u2v4" path="res://addons/scatter2d/src/shapes/shape_box.gd" id="36_rga7q"]
+[ext_resource type="Script" uid="uid://8wl6weshukhx" path="res://addons/scatter2d/src/scatter_item.gd" id="37_6oujy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlwt5"]
 texture = ExtResource("1_k0juu")
@@ -104,6 +111,20 @@ sources/0 = SubResource("TileSetAtlasSource_xo05s")
 sources/1 = SubResource("TileSetAtlasSource_dss4m")
 sources/2 = SubResource("TileSetAtlasSource_7t5mc")
 
+[sub_resource type="Resource" id="Resource_hi6a0"]
+script = ExtResource("34_e75v4")
+amount = 30
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_eo1xk"]
+script = ExtResource("32_ggc52")
+stack = Array[ExtResource("33_l8ah6")]([SubResource("Resource_hi6a0")])
+
+[sub_resource type="Resource" id="Resource_18clu"]
+script = ExtResource("36_rga7q")
+size = Vector2(1296, 944)
+metadata/_custom_type_script = "uid://1wbh6o12u2v4"
+
 [node name="world" type="Node2D" unique_id=96941812]
 y_sort_enabled = true
 
@@ -137,7 +158,7 @@ tile_map_data = PackedByteArray("AAAEAA0AcwAAAAAAAAAKAA0AcwAAAAAAAAAQAA0AcwAAAAA
 tile_set = ExtResource("6_i7141")
 
 [node name="Player" parent="." unique_id=1264858247 instance=ExtResource("4_i7141")]
-position = Vector2(1063, 604)
+position = Vector2(204, 665)
 
 [node name="trees" type="TileMapLayer" parent="." unique_id=741209503]
 y_sort_enabled = true
@@ -229,3 +250,20 @@ variant = 8
 position = Vector2(790, 367)
 sprite_frames = ExtResource("30_luhhm")
 animation = &"burn"
+
+[node name="Scatter2D" type="Node2D" parent="." unique_id=700242587]
+script = ExtResource("31_817gm")
+modifier_stack = SubResource("Resource_eo1xk")
+metadata/_custom_type_script = "uid://blehcnoynshbt"
+
+[node name="ScatterShape" type="Node2D" parent="Scatter2D" unique_id=135138723]
+position = Vector2(652, 475)
+script = ExtResource("35_8u370")
+shape = SubResource("Resource_18clu")
+metadata/_custom_type_script = "uid://h0re0ckmxr17"
+
+[node name="ScatterItem" type="Node2D" parent="Scatter2D" unique_id=571349472]
+position = Vector2(652, 475)
+script = ExtResource("37_6oujy")
+path = "uid://bl6bde0j521dq"
+metadata/_custom_type_script = "uid://8wl6weshukhx"

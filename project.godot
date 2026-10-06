@@ -28,6 +28,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="fantasy-farm"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/scatter2d/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
