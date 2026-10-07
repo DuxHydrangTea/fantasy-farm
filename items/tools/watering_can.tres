@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bghbkp1kho21r"]
+
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_4d4ee"]
+[ext_resource type="Texture2D" path="res://icons/outline/tools/tools_r01_c07.tres" id="1_ldwep"]
+
+[resource]
+script = ExtResource("1_4d4ee")
+item_id = &"watering_can"
+display_name = "Watering Can"
+icon = ExtResource("1_ldwep")
+tool_type = 1
+metadata/_custom_type_script = "uid://bg2be8miqe4ud"

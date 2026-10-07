@@ -32,11 +32,11 @@ Ví dụ cây cần 1.200 giây (20 phút): mỗi lần tưới đất khô cộ
 | --- | --- |
 | `FarmPlot` — scene một ô đất | Giữ thời gian ướt, cây đang trồng, tiến độ; xử lý trồng/tưới/thu hoạch; đổi hình |
 | `CropDefinition` — Resource | Cấu hình dùng chung cho một loại cây: 4 texture, tổng thời gian và sản lượng |
-| `FarmLand` — Node2D chứa các ô | Lập danh sách ô có sẵn, chuyển vị trí thế giới sang tọa độ ô, trả về `FarmPlot` |
+| `FarmLand` — Node2D chứa các ô | Lập danh sách scene ô có sẵn, tìm ô chứa điểm tương tác trước mặt Player |
 | `Player` | Chọn và chốt ô mục tiêu, loại cây; gọi thao tác ở frame tác động |
 | `ToolState` | Khóa di chuyển, chạy animation và phát tín hiệu tác động đúng một lần |
 
-`FarmLand` có một dictionary `cell → FarmPlot` để tra cứu. Dictionary này chỉ giữ tham chiếu node, không có bản sao trạng thái đất/cây. Không còn `FarmPlotData`, `crop_visuals` hoặc một vòng lặp trên FarmLand để cập nhật mọi cây.
+`FarmLand` chỉ giữ một mảng tham chiếu tới các FarmPlot con. Không cần cell, atlas, dictionary tọa độ, `FarmPlotData` hoặc một vòng lặp trên FarmLand để cập nhật mọi cây. Mỗi ô là object thật có thể chọn, di chuyển và cấu hình trong editor.
 
 Bản đầu dùng một `_process(delta)` trong mỗi ô để đếm thời gian. Ô khô và trống, hoặc khô và có cây trưởng thành, tự tắt cập nhật. Chưa cần thêm Timer, state machine hay manager toàn cục. Nếu sau này cần cây có hành vi phức tạp, có thể tách cây thành scene con trong `FarmPlot`.
 
@@ -48,7 +48,7 @@ Một ô có thể chứa cây ở bất kỳ stage nào dù đất đang khô h
 
 | Dữ liệu | Nơi lưu | Ý nghĩa |
 | --- | --- | --- |
-| `cell: Vector2i` | Export của FarmPlot | ID ổn định trong một FarmLand; dùng tra cứu và save |
+| `plot_id: StringName` | Export của FarmPlot | ID ổn định, do bạn đặt cho từng ô; dùng save |
 | `wet_remaining` | Biến trong FarmPlot | Số giây đất còn ướt; 0 nghĩa là khô |
 | `crop` | Biến trong FarmPlot | CropDefinition đang trồng; null nghĩa là ô trống |
 | `growth_elapsed` | Biến trong FarmPlot | Tiến độ bằng giây, gồm tự lớn và bonus tưới |
@@ -75,8 +75,8 @@ Không dùng `floor(progress * 4)` vì công thức đó làm stage 4 xuất hi�
 world (Node2D, y_sort_enabled = true)
 ├── FarmGround (TileMapLayer: nền/viền đất trang trí)
 ├── FarmLand (Node2D, farm_land.gd, y_sort_enabled = true)
-│   ├── Plot_10_6 (instance FarmPlot.tscn, cell = (10, 6))
-│   ├── Plot_11_6 (instance FarmPlot.tscn, cell = (11, 6))
+│   ├── Plot_01 (instance FarmPlot.tscn, plot_id = "plot_01")
+│   ├── Plot_02 (instance FarmPlot.tscn, plot_id = "plot_02")
 │   └── ... các ô cố định
 └── Player (CharacterBody2D, player.gd)
     ├── AnimatedSprite2D
@@ -119,20 +119,19 @@ Trong `scenes/world.tscn` hiện có một TileMapLayer tên `FarmLand`, offset 
 3. Gán hai texture vào export trên scene gốc. Gán texture khô cho SoilSprite để nhìn thấy ô trong editor; đặt CropSprite.visible = false.
 4. Đổi tên TileMapLayer FarmLand hiện tại thành `FarmGround`; giữ nền/viền trang trí và offset cũ.
 5. Tạo Node2D mới tên `FarmLand`, position `(0, 12)`, gắn `farm_land.gd`. Thêm các instance FarmPlot làm **con trực tiếp**.
-6. Với mỗi ô trồng cũ, đặt `cell` tương ứng trên instance, rồi xóa đúng tile ô trồng đó khỏi FarmGround để không vẽ đất hai lần. Không chuyển tile viền thành ô trồng.
-7. Gán vị trí instance trong editor theo công thức bên dưới và đặt các export Y-sort/z_index như mục 4.
+6. Đặt các instance vào vị trí mong muốn bằng Move trong editor, gán `plot_id` riêng như `plot_01`, `plot_02`. Xóa đúng tile ô trồng cũ khỏi FarmGround để không vẽ đất hai lần. Không chuyển tile viền thành ô trồng.
+7. Đặt các export Y-sort/z_index như mục 4. Bật snap 16 pixel nếu muốn xếp ô đều; snap chỉ giúp bố trí trong editor, code không phụ thuộc lưới.
 
-Lưới bản đầu là lưới vuông 16 × 16, gốc FarmLand là góc trên trái cell `(0, 0)`. Với cell `(x, y)`, vị trí root ô trong FarmLand là:
+Root của mỗi ô là giữa cạnh dưới hình đất. Ví dụ muốn hình đất phủ vùng local x = 160..176, y = 96..112 thì đặt root tại `(168, 112)`:
 
 ```text
-position = (x * 16 + 8, y * 16 + 16)
-cell (10, 6) → local position (168, 112)
+FarmPlot local position (168, 112)
 FarmLand position (0, 12) → world position (168, 124)
 ```
 
-`cell` là nguồn xác định vị trí: FarmLand sẽ đặt lại position từ cell khi chạy. Nếu kéo ô trong editor, cập nhật cả cell và position để preview khớp runtime. Bản đầu giữ scale `(1, 1)`, rotation 0 của các ô, không hỗ trợ kéo ô sang cell khác khi đang chơi.
+Vị trí node trong editor là vị trí runtime; FarmLand không tự đặt lại position. Bạn có thể xếp các ô bất kỳ, không bắt buộc tạo lưới. Mỗi ô dùng `plot_size = (16, 16)` để xác định vùng nhận tương tác; tránh đặt các vùng này chồng nhau. Bản đầu giữ scale `(1, 1)`, rotation 0 để hình pixel không biến dạng.
 
-Nếu nhiều ô, lúc triển khai có thể viết một script chuyển đổi chạy một lần trong editor: lấy các cell source 2 có atlas đất khô/ướt, tạo instance, đặt cell và position, gán `owner` là root world để scene lưu các instance, rồi xóa đúng tile đã chuyển. Giữ lại tile viền và lưu world sau khi kiểm tra. Gameplay sau chuyển đổi lấy danh sách scene con, không quét TileMap để dựng lại ô mỗi lần chơi.
+Nếu nhiều ô cũ, có thể viết script chuyển đổi chạy một lần trong editor, nhưng không cần cho bản đầu. Bố trí instance thủ công trước để kiểm tra scene. Gameplay không quét TileMap và không cần TileSet cho các ô đất này.
 
 ## 6. Cấu hình loại cây
 
@@ -171,7 +170,8 @@ Gắn script này vào root FarmPlot. Một ô tự kiểm tra điều kiện, t
 class_name FarmPlot
 extends Node2D
 
-@export var cell: Vector2i = Vector2i.ZERO
+@export var plot_id: StringName
+@export var plot_size: Vector2 = Vector2(16, 16)
 @export var dry_texture: Texture2D
 @export var wet_texture: Texture2D
 @export_range(0.1, 3600.0, 0.1) var wet_duration: float = 300.0
@@ -186,8 +186,14 @@ var growth_elapsed: float = 0.0
 
 func _ready() -> void:
 	assert(dry_texture != null and wet_texture != null)
+	assert(plot_size.x > 0.0 and plot_size.y > 0.0)
 	refresh_visuals()
 	_update_processing()
+
+func contains_world_point(world_position: Vector2) -> bool:
+	# Root ở giữa cạnh dưới, nên vùng đất nằm phía trên root.
+	var bounds := Rect2(Vector2(-plot_size.x * 0.5, -plot_size.y), plot_size)
+	return bounds.has_point(to_local(world_position))
 
 func is_wet() -> bool:
 	return wet_remaining > 0.0
@@ -270,7 +276,7 @@ func _update_processing() -> void:
 	set_process(is_wet() or (crop != null and not is_mature()))
 ```
 
-API của một ô không cần truyền cell: `plot.water()`, `plot.plant(definition)`, `plot.harvest()`. Trạng thái runtime chỉ được thay qua các thao tác này hoặc bước load; không để Player tự gán `crop` hay thời gian.
+API của một ô là `plot.water()`, `plot.plant(definition)`, `plot.harvest()`. Trạng thái runtime chỉ được thay qua các thao tác này hoặc bước load; không để Player tự gán `crop` hay thời gian.
 
 `_process` chỉ đổi hình khi đất khô hoặc cây đổi stage. Trồng, tưới và thu hoạch cập nhật hình ngay, rồi bật/tắt xử lý thời gian theo trạng thái mới. Ô trống vẫn nhận tưới và tự khô; cây trưởng thành vẫn giữ thời gian đất ướt nếu còn.
 
@@ -284,43 +290,35 @@ FarmLand đăng ký các scene ô đã có, không tạo ô mới khi dùng côn
 class_name FarmLand
 extends Node2D
 
-@export var tile_size: Vector2i = Vector2i(16, 16)
-
-var _plots: Dictionary[Vector2i, FarmPlot] = {}
+var _plots: Array[FarmPlot] = []
 
 func _ready() -> void:
-	assert(tile_size.x > 0 and tile_size.y > 0)
 	for child in get_children():
 		if not child is FarmPlot:
 			continue
 		var plot := child as FarmPlot
-		assert(not _plots.has(plot.cell), "FarmLand: hai o trung cell")
-		_plots[plot.cell] = plot
-		plot.position = bottom_center_of_cell(plot.cell)
-
-func bottom_center_of_cell(cell: Vector2i) -> Vector2:
-	return Vector2(
-		cell.x * tile_size.x + tile_size.x * 0.5,
-		(cell.y + 1) * tile_size.y
-	)
-
-func cell_from_world(world_position: Vector2) -> Vector2i:
-	var local_position := to_local(world_position)
-	return Vector2i(
-		int(floor(local_position.x / tile_size.x)),
-		int(floor(local_position.y / tile_size.y))
-	)
-
-func get_plot(cell: Vector2i) -> FarmPlot:
-	return _plots.get(cell) as FarmPlot
+		assert(plot.plot_id != &"", "FarmLand: ô chưa có plot_id")
+		assert(get_plot_by_id(plot.plot_id) == null, "FarmLand: hai ô trùng plot_id")
+		_plots.append(plot)
 
 func get_plot_at_world(world_position: Vector2) -> FarmPlot:
-	return get_plot(cell_from_world(world_position))
+	for plot in _plots:
+		if plot.contains_world_point(world_position):
+			return plot
+	return null
+
+func get_plot_by_id(plot_id: StringName) -> FarmPlot:
+	for plot in _plots:
+		if plot.plot_id == plot_id:
+			return plot
+	return null
 ```
 
-`to_local()` xử lý offset của FarmLand trước khi chia cho kích thước ô. Dùng floor để tọa độ âm nằm đúng cell. Cell không có scene trả về null, dù bên dưới có tile đất trang trí. Công thức này dành cho lưới vuông của map hiện tại; map isometric cần cách chuyển tọa độ khác.
+`get_plot_at_world()` hỏi từng object: điểm mục tiêu có nằm trong vùng đất của bạn không? Ô tự chuyển điểm world về local rồi kiểm tra Rect2. Offset của FarmLand và vị trí riêng của ô được xử lý bởi `to_local()`. Điểm không nằm trong scene ô nào trả null, dù bên dưới có tile trang trí. Chỉ duyệt khi dùng công cụ, không duyệt để tìm ô mỗi frame.
 
-Danh sách được lập một lần vì các ô cố định. Khi triển khai thêm tạo/xóa ô runtime, bổ sung đăng ký/hủy đăng ký; không sửa riêng dictionary rồi để scene tree lệch danh sách. Player chỉ dùng `get_plot_at_world()`, không đọc `_plots`.
+Chưa cần Area2D/CollisionShape2D: vùng chữ nhật đủ cho ô đất 16 × 16 và không cần cấu hình collision layer. Nếu sau này dùng hệ thống tương tác vật lý chung, có thể thay cách tìm mục tiêu bằng Area2D hoặc truy vấn physics; API `water()/plant()/harvest()` của ô vẫn giữ nguyên. Vùng kiểm tra phải khớp hình SoilSprite; nếu đổi kích thước hình, cập nhật plot_size.
+
+Danh sách được lập một lần vì các ô cố định. Khi triển khai thêm tạo/xóa ô runtime, bổ sung đăng ký/hủy đăng ký. Player chỉ dùng `get_plot_at_world()`, không đọc `_plots`.
 
 ## 9. Nối Player và ToolState
 
@@ -437,7 +435,7 @@ Trong world, chọn instance Player, kéo **Node2D FarmLand mới** vào export 
 
 Mục tiêu là tham chiếu tới đúng scene ô, được chốt trước animation. Đổi hướng hoặc chọn loại cây khác giữa animation không đổi mục tiêu đã chốt. Kiểm tra `is_instance_valid()` trước frame tác động để xử lý trường hợp ô đã bị hủy.
 
-`tool_reach = 16` là thông số thử cho lưới hiện tại; vị trí Player có thể lệch tâm ô. Kiểm tra bốn hướng với highlight ô mục tiêu trước khi chốt khoảng cách. Space trồng/thu hoạch là quy ước prototype, chưa phải hệ thống chọn công cụ hoàn chỉnh. Trồng vào ô có cây chưa chín trả false; tưới ô ướt có thể vẫn chạy animation nhưng không cộng bonus.
+`tool_reach = 16` là thông số thử theo kích thước ô; vị trí Player có thể lệch tâm ô. Kiểm tra bốn hướng với highlight ô mục tiêu trước khi chốt khoảng cách. Space trồng/thu hoạch là quy ước prototype, chưa phải hệ thống chọn công cụ hoàn chỉnh. Trồng vào ô có cây chưa chín trả false; tưới ô ướt có thể vẫn chạy animation nhưng không cộng bonus.
 
 ### Nối inventory sau prototype
 
@@ -455,20 +453,19 @@ Lưu dữ liệu của từng FarmPlot bằng snapshot, ví dụ JSON:
 
 ```json
 {
-  "x": 10,
-  "y": 6,
+  "plot_id": "plot_01",
   "wet_remaining": 214.5,
   "crop_id": "crop_01",
   "growth_elapsed": 430.0
 }
 ```
 
-Ô trống dùng crop_id rỗng và growth_elapsed bằng 0. Không serialize Node, Sprite hoặc Resource trực tiếp. Nếu nhiều map, thêm map_id vì cell chỉ duy nhất trong một FarmLand. Không dùng tên node làm ID: đổi tên `Plot_10_6` trong editor không được làm mất save.
+Ô trống dùng crop_id rỗng và growth_elapsed bằng 0. Không serialize Node, Sprite hoặc Resource trực tiếp. Nếu nhiều map, thêm map_id vì plot_id chỉ duy nhất trong một FarmLand. ID do bạn gán trong Inspector phải giữ ổn định; đổi tên hoặc di chuyển node không làm đổi ID và không làm mất save.
 
 Trình tự load khi triển khai:
 
 1. World và các scene FarmPlot vào cây node; chờ FarmLand hoàn tất `_ready()` và đăng ký ô.
-2. Đọc snapshot, chuyển x/y thành Vector2i rồi dùng `FarmLand.get_plot(cell)`. Bỏ qua cell không có scene, không tạo thêm ô từ save.
+2. Đọc snapshot, dùng `FarmLand.get_plot_by_id(StringName(snapshot["plot_id"]))`. Bỏ qua ID không có scene, không tạo thêm ô từ save.
 3. Trong một hàm `FarmPlot.restore_snapshot()` sẽ bổ sung lúc làm save/load, tra crop_id qua danh mục CropDefinition, kiểm tra resource hợp lệ. ID không tồn tại thì giữ ô trống và báo cảnh báo.
 4. Clamp wet_remaining vào `[0, wet_duration]`, growth_elapsed vào `[0, total_growth_seconds]`; ô trống có tiến độ 0.
 5. Trong hàm restore của ô, gọi `refresh_visuals()` và `_update_processing()`. Bật lại xử lý là cần thiết vì ô khô/trống đã tắt `_process` ở `_ready()`.
@@ -480,7 +477,7 @@ Code mẫu trên chưa có bộ ghi/đọc save. Khi bổ sung, để bước kh
 1. Tạo CropDefinition và một resource cây với đủ 4 texture.
 2. Tạo FarmPlot.tscn với hai sprite và hai texture đất; thử một ô độc lập.
 3. Thử `plant()`, `water()`, `harvest()` trực tiếp trước khi nối Player.
-4. Chuyển các tile ô trồng thành instance dưới Node2D FarmLand; kiểm tra cell, offset và Y-sort.
+4. Bố trí các instance dưới Node2D FarmLand; kiểm tra plot_id, vùng tương tác, offset và Y-sort.
 5. Nối ToolState và Player; thử pause, lặp dùng công cụ và bốn hướng.
 6. Nối inventory rồi save/load.
 
@@ -505,8 +502,9 @@ Dùng wet_duration = 5 giây và total_growth_seconds = 30 giây khi thử, thay
 | Player đứng trước/sau cây ở bốn hướng | Vị trí gốc, ô mục tiêu và Y-sort đúng |
 | Hai ô trồng cùng loại cây | Tưới một ô không thay thời gian hoặc hình của ô còn lại |
 | Ô khô/trống hoặc khô/cây chín | Tắt xử lý; trồng/tưới bật lại khi cần |
-| Hai instance trùng cell | Phát hiện lỗi khi FarmLand đăng ký |
-| Cell âm hoặc world có offset | Tìm đúng ô; ngoài danh sách trả null |
+| Hai instance trùng plot_id | Phát hiện lỗi khi FarmLand đăng ký |
+| Di chuyển ô trong editor hoặc world có offset | Tìm đúng scene ô; ngoài vùng trả null |
+| Đổi tên/di chuyển node rồi load | Tìm đúng ô qua plot_id ổn định |
 | Chuyển từ tile sang scene | Mỗi ô chỉ có một hình đất; tile viền vẫn giữ |
 | Load cây đang lớn vào ô ban đầu trống | Cập nhật sprite và bật lại xử lý thời gian |
 
@@ -514,6 +512,7 @@ Dùng wet_duration = 5 giây và total_growth_seconds = 30 giây khi thử, thay
 
 - [Resource ảnh cây đang có](crop_resources.md): 22 bộ hoa màu, mỗi bộ có 4 stage AtlasTexture khung 16 × 32.
 - [Godot Node2D](https://docs.godotengine.org/en/stable/classes/class_node2d.html): tọa độ local/global.
+- [Godot Rect2](https://docs.godotengine.org/en/stable/classes/class_rect2.html): kiểm tra điểm nằm trong vùng chữ nhật của ô.
 - [Godot CanvasItem](https://docs.godotengine.org/en/stable/classes/class_canvasitem.html): Y-sort và z_index.
 - [Godot AnimatedSprite2D](https://docs.godotengine.org/en/stable/classes/class_animatedsprite2d.html): signal frame_changed và animation_finished; animation loop không phát animation_finished.
 - [Godot Node](https://docs.godotengine.org/en/stable/classes/class_node.html): delta, set_process và Process Mode khi pause.
