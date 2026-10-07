@@ -6,26 +6,24 @@ extends Controller
 @export var action_up: StringName = &"ui_up"
 @export var action_down: StringName = &"ui_down"
 @export var action_use_tool: StringName = &"use_tool"
-@export var action_water: String = &"water"
+@export var action_water: StringName = &"water"
+
+var player: Player
+
+func _ready() -> void:
+	super._ready()
+	player = actor as Player
+	assert(player != null, "PlayerInputController phải là con trực tiếp của Player")
 
 func _physics_process(_delta: float) -> void:
 	actor.movement_vector = Input.get_vector(action_left, action_right, action_up, action_down)
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	var tool_action: String
-	
 	if event.is_action_pressed(action_use_tool):
-		tool_action = "tool"
-	if event.is_action_pressed(action_water):
-		tool_action = "water"
+		player.use_tool("tool")
+	elif event.is_action_pressed(action_water):
+		player.use_tool("water")
 	else:
 		return
-		
-	var machine := actor.state_machine
-	
-	if not (machine.current_state is IdleState or machine.current_state is WalkState):
-		return
-	var tool_state = machine.get_node("ToolState") as ToolState
-	tool_state.action = tool_action
-	machine.change_state(&"tool")
+
 	get_viewport().set_input_as_handled()
