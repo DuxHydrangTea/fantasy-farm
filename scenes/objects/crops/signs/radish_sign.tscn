@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_19/sign.tres" id="1_ecwqf"]
+[ext_resource type="Texture2D" path="res://crops/field/radish/sign.tres" id="1_ecwqf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvfn3"]
 size = Vector2(9.8, 3.2)
@@ -9,7 +9,7 @@ size = Vector2(9.8, 3.2)
 texture_filter = 1
 metadata/object_id = "radish_sign"
 metadata/object_kind = "crop_sign"
-metadata/source_visual = "res://crops/field/crop_19/sign.tres"
+metadata/source_visual = "res://crops/field/radish/sign.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=975906188]
 position = Vector2(0, -8)

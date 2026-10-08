@@ -1,15 +1,15 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_21/stage_01.tres" id="1_dij7t"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_21/stage_02.tres" id="2_s08yf"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_21/stage_03.tres" id="3_r62ls"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_21/stage_04.tres" id="4_6g2pp"]
+[ext_resource type="Texture2D" path="res://crops/field/leek/stage_01.tres" id="1_dij7t"]
+[ext_resource type="Texture2D" path="res://crops/field/leek/stage_02.tres" id="2_s08yf"]
+[ext_resource type="Texture2D" path="res://crops/field/leek/stage_03.tres" id="3_r62ls"]
+[ext_resource type="Texture2D" path="res://crops/field/leek/stage_04.tres" id="4_6g2pp"]
 
 [node name="Leek" type="StaticBody2D" unique_id=2014555526]
 texture_filter = 1
 metadata/object_id = "leek"
 metadata/object_kind = "crop"
-metadata/source_visual = "res://crops/field/crop_21/stage_01.tres"
+metadata/source_visual = "res://crops/field/leek/stage_01.tres"
 metadata/growth_textures = Array[Texture2D]([ExtResource("1_dij7t"), ExtResource("2_s08yf"), ExtResource("3_r62ls"), ExtResource("4_6g2pp")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=315407532]

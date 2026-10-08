@@ -1,15 +1,15 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_06/stage_01.tres" id="1_u377x"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_06/stage_02.tres" id="2_w2m65"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_06/stage_03.tres" id="3_i0od1"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_06/stage_04.tres" id="4_0k60m"]
+[ext_resource type="Texture2D" path="res://crops/field/pumpkin/stage_01.tres" id="1_u377x"]
+[ext_resource type="Texture2D" path="res://crops/field/pumpkin/stage_02.tres" id="2_w2m65"]
+[ext_resource type="Texture2D" path="res://crops/field/pumpkin/stage_03.tres" id="3_i0od1"]
+[ext_resource type="Texture2D" path="res://crops/field/pumpkin/stage_04.tres" id="4_0k60m"]
 
 [node name="Pumpkin" type="StaticBody2D" unique_id=1240853069]
 texture_filter = 1
 metadata/object_id = "pumpkin"
 metadata/object_kind = "crop"
-metadata/source_visual = "res://crops/field/crop_06/stage_01.tres"
+metadata/source_visual = "res://crops/field/pumpkin/stage_01.tres"
 metadata/growth_textures = Array[Texture2D]([ExtResource("1_u377x"), ExtResource("2_w2m65"), ExtResource("3_i0od1"), ExtResource("4_0k60m")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1509416727]

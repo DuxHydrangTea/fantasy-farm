@@ -71,8 +71,9 @@ có đuôi. `object_kind` vẫn mô tả nhóm (crop, seed, harvest, tools...).
 
 Bảng tên được lưu ở `scripts/setup/data/object_scene_names.json`, với tên cây trồng
 đã được người dùng đồng ý. Quặng/crystal chưa có tên loại từ asset dùng màu sắc,
-không tự gán thành kim loại giả tưởng. Resource atlas vẫn giữ hàng/cột hoặc
-`crop_01` để đối chiếu PNG; tên scene và object_id dùng tên mô tả.
+không tự gán thành kim loại giả tưởng. Resource cây trong `crops/field` dùng cùng
+tên cây với scene, ví dụ `crops/field/wheat/stage_01.tres`. Key `crop_01` … `crop_22`
+trong catalog vẫn chỉ định hàng của PNG; vùng cắt atlas không thay đổi.
 Nội thất giữ index biến thể như trước. Xem bảng tên trong `docs/object_scene_names.md`.
 
 Nếu còn bản scene tên cũ, chạy `python3 scripts/setup/rename_object_scenes.py`

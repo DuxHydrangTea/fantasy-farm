@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bg270usqa0ayi"]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/seed_icon.tres" id="1_fi3dm"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/seed_icon.tres" id="1_fi3dm"]
+[ext_resource type="Resource" uid="uid://cn0qaulhor4l" path="res://crops/field/wheat/wheat.tres" id="1_n4gri"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_rbit6"]
 
 [resource]
@@ -9,4 +10,5 @@ item_id = &"wheat_seed"
 display_name = "Wheat Seed"
 icon = ExtResource("1_fi3dm")
 item_type = 1
+crop = ExtResource("1_n4gri")
 metadata/_custom_type_script = "uid://bg2be8miqe4ud"

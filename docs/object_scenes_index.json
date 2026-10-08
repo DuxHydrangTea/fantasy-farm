@@ -24315,13 +24315,13 @@
 			"kind": "crop",
 			"object_id": "wheat",
 			"scene": "res://scenes/objects/crops/field/wheat.tscn",
-			"source": "res://crops/field/crop_01/stage_01.tres",
+			"source": "res://crops/field/wheat/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_01/stage_01.tres",
-				"res://crops/field/crop_01/stage_02.tres",
-				"res://crops/field/crop_01/stage_03.tres",
-				"res://crops/field/crop_01/stage_04.tres"
+				"res://crops/field/wheat/stage_01.tres",
+				"res://crops/field/wheat/stage_02.tres",
+				"res://crops/field/wheat/stage_03.tres",
+				"res://crops/field/wheat/stage_04.tres"
 			]
 		},
 		{
@@ -24333,7 +24333,7 @@
 			"kind": "crop_sign",
 			"object_id": "wheat_sign",
 			"scene": "res://scenes/objects/crops/signs/wheat_sign.tscn",
-			"source": "res://crops/field/crop_01/sign.tres",
+			"source": "res://crops/field/wheat/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24346,7 +24346,7 @@
 			"kind": "seed",
 			"object_id": "wheat_seed",
 			"scene": "res://scenes/objects/items/seeds/wheat_seed.tscn",
-			"source": "res://crops/field/crop_01/seed_icon.tres",
+			"source": "res://crops/field/wheat/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24359,7 +24359,7 @@
 			"kind": "harvest",
 			"object_id": "wheat_harvest",
 			"scene": "res://scenes/objects/items/harvest/wheat_harvest.tscn",
-			"source": "res://crops/field/crop_01/harvest_icon.tres",
+			"source": "res://crops/field/wheat/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24372,13 +24372,13 @@
 			"kind": "crop",
 			"object_id": "tomato",
 			"scene": "res://scenes/objects/crops/field/tomato.tscn",
-			"source": "res://crops/field/crop_02/stage_01.tres",
+			"source": "res://crops/field/tomato/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_02/stage_01.tres",
-				"res://crops/field/crop_02/stage_02.tres",
-				"res://crops/field/crop_02/stage_03.tres",
-				"res://crops/field/crop_02/stage_04.tres"
+				"res://crops/field/tomato/stage_01.tres",
+				"res://crops/field/tomato/stage_02.tres",
+				"res://crops/field/tomato/stage_03.tres",
+				"res://crops/field/tomato/stage_04.tres"
 			]
 		},
 		{
@@ -24390,7 +24390,7 @@
 			"kind": "crop_sign",
 			"object_id": "tomato_sign",
 			"scene": "res://scenes/objects/crops/signs/tomato_sign.tscn",
-			"source": "res://crops/field/crop_02/sign.tres",
+			"source": "res://crops/field/tomato/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24403,7 +24403,7 @@
 			"kind": "seed",
 			"object_id": "tomato_seed",
 			"scene": "res://scenes/objects/items/seeds/tomato_seed.tscn",
-			"source": "res://crops/field/crop_02/seed_icon.tres",
+			"source": "res://crops/field/tomato/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24416,7 +24416,7 @@
 			"kind": "harvest",
 			"object_id": "tomato_harvest",
 			"scene": "res://scenes/objects/items/harvest/tomato_harvest.tscn",
-			"source": "res://crops/field/crop_02/harvest_icon.tres",
+			"source": "res://crops/field/tomato/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24429,13 +24429,13 @@
 			"kind": "crop",
 			"object_id": "carrot",
 			"scene": "res://scenes/objects/crops/field/carrot.tscn",
-			"source": "res://crops/field/crop_03/stage_01.tres",
+			"source": "res://crops/field/carrot/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_03/stage_01.tres",
-				"res://crops/field/crop_03/stage_02.tres",
-				"res://crops/field/crop_03/stage_03.tres",
-				"res://crops/field/crop_03/stage_04.tres"
+				"res://crops/field/carrot/stage_01.tres",
+				"res://crops/field/carrot/stage_02.tres",
+				"res://crops/field/carrot/stage_03.tres",
+				"res://crops/field/carrot/stage_04.tres"
 			]
 		},
 		{
@@ -24447,7 +24447,7 @@
 			"kind": "crop_sign",
 			"object_id": "carrot_sign",
 			"scene": "res://scenes/objects/crops/signs/carrot_sign.tscn",
-			"source": "res://crops/field/crop_03/sign.tres",
+			"source": "res://crops/field/carrot/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24460,7 +24460,7 @@
 			"kind": "seed",
 			"object_id": "carrot_seed",
 			"scene": "res://scenes/objects/items/seeds/carrot_seed.tscn",
-			"source": "res://crops/field/crop_03/seed_icon.tres",
+			"source": "res://crops/field/carrot/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24473,7 +24473,7 @@
 			"kind": "harvest",
 			"object_id": "carrot_harvest",
 			"scene": "res://scenes/objects/items/harvest/carrot_harvest.tscn",
-			"source": "res://crops/field/crop_03/harvest_icon.tres",
+			"source": "res://crops/field/carrot/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24486,13 +24486,13 @@
 			"kind": "crop",
 			"object_id": "beetroot",
 			"scene": "res://scenes/objects/crops/field/beetroot.tscn",
-			"source": "res://crops/field/crop_04/stage_01.tres",
+			"source": "res://crops/field/beetroot/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_04/stage_01.tres",
-				"res://crops/field/crop_04/stage_02.tres",
-				"res://crops/field/crop_04/stage_03.tres",
-				"res://crops/field/crop_04/stage_04.tres"
+				"res://crops/field/beetroot/stage_01.tres",
+				"res://crops/field/beetroot/stage_02.tres",
+				"res://crops/field/beetroot/stage_03.tres",
+				"res://crops/field/beetroot/stage_04.tres"
 			]
 		},
 		{
@@ -24504,7 +24504,7 @@
 			"kind": "crop_sign",
 			"object_id": "beetroot_sign",
 			"scene": "res://scenes/objects/crops/signs/beetroot_sign.tscn",
-			"source": "res://crops/field/crop_04/sign.tres",
+			"source": "res://crops/field/beetroot/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24517,7 +24517,7 @@
 			"kind": "seed",
 			"object_id": "beetroot_seed",
 			"scene": "res://scenes/objects/items/seeds/beetroot_seed.tscn",
-			"source": "res://crops/field/crop_04/seed_icon.tres",
+			"source": "res://crops/field/beetroot/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24530,7 +24530,7 @@
 			"kind": "harvest",
 			"object_id": "beetroot_harvest",
 			"scene": "res://scenes/objects/items/harvest/beetroot_harvest.tscn",
-			"source": "res://crops/field/crop_04/harvest_icon.tres",
+			"source": "res://crops/field/beetroot/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24543,13 +24543,13 @@
 			"kind": "crop",
 			"object_id": "corn",
 			"scene": "res://scenes/objects/crops/field/corn.tscn",
-			"source": "res://crops/field/crop_05/stage_01.tres",
+			"source": "res://crops/field/corn/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_05/stage_01.tres",
-				"res://crops/field/crop_05/stage_02.tres",
-				"res://crops/field/crop_05/stage_03.tres",
-				"res://crops/field/crop_05/stage_04.tres"
+				"res://crops/field/corn/stage_01.tres",
+				"res://crops/field/corn/stage_02.tres",
+				"res://crops/field/corn/stage_03.tres",
+				"res://crops/field/corn/stage_04.tres"
 			]
 		},
 		{
@@ -24561,7 +24561,7 @@
 			"kind": "crop_sign",
 			"object_id": "corn_sign",
 			"scene": "res://scenes/objects/crops/signs/corn_sign.tscn",
-			"source": "res://crops/field/crop_05/sign.tres",
+			"source": "res://crops/field/corn/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24574,7 +24574,7 @@
 			"kind": "seed",
 			"object_id": "corn_seed",
 			"scene": "res://scenes/objects/items/seeds/corn_seed.tscn",
-			"source": "res://crops/field/crop_05/seed_icon.tres",
+			"source": "res://crops/field/corn/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24587,7 +24587,7 @@
 			"kind": "harvest",
 			"object_id": "corn_harvest",
 			"scene": "res://scenes/objects/items/harvest/corn_harvest.tscn",
-			"source": "res://crops/field/crop_05/harvest_icon.tres",
+			"source": "res://crops/field/corn/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24600,13 +24600,13 @@
 			"kind": "crop",
 			"object_id": "pumpkin",
 			"scene": "res://scenes/objects/crops/field/pumpkin.tscn",
-			"source": "res://crops/field/crop_06/stage_01.tres",
+			"source": "res://crops/field/pumpkin/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_06/stage_01.tres",
-				"res://crops/field/crop_06/stage_02.tres",
-				"res://crops/field/crop_06/stage_03.tres",
-				"res://crops/field/crop_06/stage_04.tres"
+				"res://crops/field/pumpkin/stage_01.tres",
+				"res://crops/field/pumpkin/stage_02.tres",
+				"res://crops/field/pumpkin/stage_03.tres",
+				"res://crops/field/pumpkin/stage_04.tres"
 			]
 		},
 		{
@@ -24618,7 +24618,7 @@
 			"kind": "crop_sign",
 			"object_id": "pumpkin_sign",
 			"scene": "res://scenes/objects/crops/signs/pumpkin_sign.tscn",
-			"source": "res://crops/field/crop_06/sign.tres",
+			"source": "res://crops/field/pumpkin/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24631,7 +24631,7 @@
 			"kind": "seed",
 			"object_id": "pumpkin_seed",
 			"scene": "res://scenes/objects/items/seeds/pumpkin_seed.tscn",
-			"source": "res://crops/field/crop_06/seed_icon.tres",
+			"source": "res://crops/field/pumpkin/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24644,7 +24644,7 @@
 			"kind": "harvest",
 			"object_id": "pumpkin_harvest",
 			"scene": "res://scenes/objects/items/harvest/pumpkin_harvest.tscn",
-			"source": "res://crops/field/crop_06/harvest_icon.tres",
+			"source": "res://crops/field/pumpkin/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24657,13 +24657,13 @@
 			"kind": "crop",
 			"object_id": "parsnip",
 			"scene": "res://scenes/objects/crops/field/parsnip.tscn",
-			"source": "res://crops/field/crop_07/stage_01.tres",
+			"source": "res://crops/field/parsnip/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_07/stage_01.tres",
-				"res://crops/field/crop_07/stage_02.tres",
-				"res://crops/field/crop_07/stage_03.tres",
-				"res://crops/field/crop_07/stage_04.tres"
+				"res://crops/field/parsnip/stage_01.tres",
+				"res://crops/field/parsnip/stage_02.tres",
+				"res://crops/field/parsnip/stage_03.tres",
+				"res://crops/field/parsnip/stage_04.tres"
 			]
 		},
 		{
@@ -24675,7 +24675,7 @@
 			"kind": "crop_sign",
 			"object_id": "parsnip_sign",
 			"scene": "res://scenes/objects/crops/signs/parsnip_sign.tscn",
-			"source": "res://crops/field/crop_07/sign.tres",
+			"source": "res://crops/field/parsnip/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24688,7 +24688,7 @@
 			"kind": "seed",
 			"object_id": "parsnip_seed",
 			"scene": "res://scenes/objects/items/seeds/parsnip_seed.tscn",
-			"source": "res://crops/field/crop_07/seed_icon.tres",
+			"source": "res://crops/field/parsnip/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24701,7 +24701,7 @@
 			"kind": "harvest",
 			"object_id": "parsnip_harvest",
 			"scene": "res://scenes/objects/items/harvest/parsnip_harvest.tscn",
-			"source": "res://crops/field/crop_07/harvest_icon.tres",
+			"source": "res://crops/field/parsnip/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24714,13 +24714,13 @@
 			"kind": "crop",
 			"object_id": "cabbage",
 			"scene": "res://scenes/objects/crops/field/cabbage.tscn",
-			"source": "res://crops/field/crop_08/stage_01.tres",
+			"source": "res://crops/field/cabbage/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_08/stage_01.tres",
-				"res://crops/field/crop_08/stage_02.tres",
-				"res://crops/field/crop_08/stage_03.tres",
-				"res://crops/field/crop_08/stage_04.tres"
+				"res://crops/field/cabbage/stage_01.tres",
+				"res://crops/field/cabbage/stage_02.tres",
+				"res://crops/field/cabbage/stage_03.tres",
+				"res://crops/field/cabbage/stage_04.tres"
 			]
 		},
 		{
@@ -24732,7 +24732,7 @@
 			"kind": "crop_sign",
 			"object_id": "cabbage_sign",
 			"scene": "res://scenes/objects/crops/signs/cabbage_sign.tscn",
-			"source": "res://crops/field/crop_08/sign.tres",
+			"source": "res://crops/field/cabbage/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24745,7 +24745,7 @@
 			"kind": "seed",
 			"object_id": "cabbage_seed",
 			"scene": "res://scenes/objects/items/seeds/cabbage_seed.tscn",
-			"source": "res://crops/field/crop_08/seed_icon.tres",
+			"source": "res://crops/field/cabbage/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24758,7 +24758,7 @@
 			"kind": "harvest",
 			"object_id": "cabbage_harvest",
 			"scene": "res://scenes/objects/items/harvest/cabbage_harvest.tscn",
-			"source": "res://crops/field/crop_08/harvest_icon.tres",
+			"source": "res://crops/field/cabbage/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24771,13 +24771,13 @@
 			"kind": "crop",
 			"object_id": "cucumber",
 			"scene": "res://scenes/objects/crops/field/cucumber.tscn",
-			"source": "res://crops/field/crop_09/stage_01.tres",
+			"source": "res://crops/field/cucumber/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_09/stage_01.tres",
-				"res://crops/field/crop_09/stage_02.tres",
-				"res://crops/field/crop_09/stage_03.tres",
-				"res://crops/field/crop_09/stage_04.tres"
+				"res://crops/field/cucumber/stage_01.tres",
+				"res://crops/field/cucumber/stage_02.tres",
+				"res://crops/field/cucumber/stage_03.tres",
+				"res://crops/field/cucumber/stage_04.tres"
 			]
 		},
 		{
@@ -24789,7 +24789,7 @@
 			"kind": "crop_sign",
 			"object_id": "cucumber_sign",
 			"scene": "res://scenes/objects/crops/signs/cucumber_sign.tscn",
-			"source": "res://crops/field/crop_09/sign.tres",
+			"source": "res://crops/field/cucumber/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24802,7 +24802,7 @@
 			"kind": "seed",
 			"object_id": "cucumber_seed",
 			"scene": "res://scenes/objects/items/seeds/cucumber_seed.tscn",
-			"source": "res://crops/field/crop_09/seed_icon.tres",
+			"source": "res://crops/field/cucumber/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24815,7 +24815,7 @@
 			"kind": "harvest",
 			"object_id": "cucumber_harvest",
 			"scene": "res://scenes/objects/items/harvest/cucumber_harvest.tscn",
-			"source": "res://crops/field/crop_09/harvest_icon.tres",
+			"source": "res://crops/field/cucumber/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24828,13 +24828,13 @@
 			"kind": "crop",
 			"object_id": "chili_pepper",
 			"scene": "res://scenes/objects/crops/field/chili_pepper.tscn",
-			"source": "res://crops/field/crop_10/stage_01.tres",
+			"source": "res://crops/field/chili_pepper/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_10/stage_01.tres",
-				"res://crops/field/crop_10/stage_02.tres",
-				"res://crops/field/crop_10/stage_03.tres",
-				"res://crops/field/crop_10/stage_04.tres"
+				"res://crops/field/chili_pepper/stage_01.tres",
+				"res://crops/field/chili_pepper/stage_02.tres",
+				"res://crops/field/chili_pepper/stage_03.tres",
+				"res://crops/field/chili_pepper/stage_04.tres"
 			]
 		},
 		{
@@ -24846,7 +24846,7 @@
 			"kind": "crop_sign",
 			"object_id": "chili_pepper_sign",
 			"scene": "res://scenes/objects/crops/signs/chili_pepper_sign.tscn",
-			"source": "res://crops/field/crop_10/sign.tres",
+			"source": "res://crops/field/chili_pepper/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24859,7 +24859,7 @@
 			"kind": "seed",
 			"object_id": "chili_pepper_seed",
 			"scene": "res://scenes/objects/items/seeds/chili_pepper_seed.tscn",
-			"source": "res://crops/field/crop_10/seed_icon.tres",
+			"source": "res://crops/field/chili_pepper/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24872,7 +24872,7 @@
 			"kind": "harvest",
 			"object_id": "chili_pepper_harvest",
 			"scene": "res://scenes/objects/items/harvest/chili_pepper_harvest.tscn",
-			"source": "res://crops/field/crop_10/harvest_icon.tres",
+			"source": "res://crops/field/chili_pepper/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24885,13 +24885,13 @@
 			"kind": "crop",
 			"object_id": "bell_pepper",
 			"scene": "res://scenes/objects/crops/field/bell_pepper.tscn",
-			"source": "res://crops/field/crop_11/stage_01.tres",
+			"source": "res://crops/field/bell_pepper/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_11/stage_01.tres",
-				"res://crops/field/crop_11/stage_02.tres",
-				"res://crops/field/crop_11/stage_03.tres",
-				"res://crops/field/crop_11/stage_04.tres"
+				"res://crops/field/bell_pepper/stage_01.tres",
+				"res://crops/field/bell_pepper/stage_02.tres",
+				"res://crops/field/bell_pepper/stage_03.tres",
+				"res://crops/field/bell_pepper/stage_04.tres"
 			]
 		},
 		{
@@ -24903,7 +24903,7 @@
 			"kind": "crop_sign",
 			"object_id": "bell_pepper_sign",
 			"scene": "res://scenes/objects/crops/signs/bell_pepper_sign.tscn",
-			"source": "res://crops/field/crop_11/sign.tres",
+			"source": "res://crops/field/bell_pepper/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24916,7 +24916,7 @@
 			"kind": "seed",
 			"object_id": "bell_pepper_seed",
 			"scene": "res://scenes/objects/items/seeds/bell_pepper_seed.tscn",
-			"source": "res://crops/field/crop_11/seed_icon.tres",
+			"source": "res://crops/field/bell_pepper/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24929,7 +24929,7 @@
 			"kind": "harvest",
 			"object_id": "bell_pepper_harvest",
 			"scene": "res://scenes/objects/items/harvest/bell_pepper_harvest.tscn",
-			"source": "res://crops/field/crop_11/harvest_icon.tres",
+			"source": "res://crops/field/bell_pepper/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24942,13 +24942,13 @@
 			"kind": "crop",
 			"object_id": "yellow_bell_pepper",
 			"scene": "res://scenes/objects/crops/field/yellow_bell_pepper.tscn",
-			"source": "res://crops/field/crop_12/stage_01.tres",
+			"source": "res://crops/field/yellow_bell_pepper/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_12/stage_01.tres",
-				"res://crops/field/crop_12/stage_02.tres",
-				"res://crops/field/crop_12/stage_03.tres",
-				"res://crops/field/crop_12/stage_04.tres"
+				"res://crops/field/yellow_bell_pepper/stage_01.tres",
+				"res://crops/field/yellow_bell_pepper/stage_02.tres",
+				"res://crops/field/yellow_bell_pepper/stage_03.tres",
+				"res://crops/field/yellow_bell_pepper/stage_04.tres"
 			]
 		},
 		{
@@ -24960,7 +24960,7 @@
 			"kind": "crop_sign",
 			"object_id": "yellow_bell_pepper_sign",
 			"scene": "res://scenes/objects/crops/signs/yellow_bell_pepper_sign.tscn",
-			"source": "res://crops/field/crop_12/sign.tres",
+			"source": "res://crops/field/yellow_bell_pepper/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24973,7 +24973,7 @@
 			"kind": "seed",
 			"object_id": "yellow_bell_pepper_seed",
 			"scene": "res://scenes/objects/items/seeds/yellow_bell_pepper_seed.tscn",
-			"source": "res://crops/field/crop_12/seed_icon.tres",
+			"source": "res://crops/field/yellow_bell_pepper/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24986,7 +24986,7 @@
 			"kind": "harvest",
 			"object_id": "yellow_bell_pepper_harvest",
 			"scene": "res://scenes/objects/items/harvest/yellow_bell_pepper_harvest.tscn",
-			"source": "res://crops/field/crop_12/harvest_icon.tres",
+			"source": "res://crops/field/yellow_bell_pepper/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -24999,13 +24999,13 @@
 			"kind": "crop",
 			"object_id": "green_bell_pepper",
 			"scene": "res://scenes/objects/crops/field/green_bell_pepper.tscn",
-			"source": "res://crops/field/crop_13/stage_01.tres",
+			"source": "res://crops/field/green_bell_pepper/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_13/stage_01.tres",
-				"res://crops/field/crop_13/stage_02.tres",
-				"res://crops/field/crop_13/stage_03.tres",
-				"res://crops/field/crop_13/stage_04.tres"
+				"res://crops/field/green_bell_pepper/stage_01.tres",
+				"res://crops/field/green_bell_pepper/stage_02.tres",
+				"res://crops/field/green_bell_pepper/stage_03.tres",
+				"res://crops/field/green_bell_pepper/stage_04.tres"
 			]
 		},
 		{
@@ -25017,7 +25017,7 @@
 			"kind": "crop_sign",
 			"object_id": "green_bell_pepper_sign",
 			"scene": "res://scenes/objects/crops/signs/green_bell_pepper_sign.tscn",
-			"source": "res://crops/field/crop_13/sign.tres",
+			"source": "res://crops/field/green_bell_pepper/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25030,7 +25030,7 @@
 			"kind": "seed",
 			"object_id": "green_bell_pepper_seed",
 			"scene": "res://scenes/objects/items/seeds/green_bell_pepper_seed.tscn",
-			"source": "res://crops/field/crop_13/seed_icon.tres",
+			"source": "res://crops/field/green_bell_pepper/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25043,7 +25043,7 @@
 			"kind": "harvest",
 			"object_id": "green_bell_pepper_harvest",
 			"scene": "res://scenes/objects/items/harvest/green_bell_pepper_harvest.tscn",
-			"source": "res://crops/field/crop_13/harvest_icon.tres",
+			"source": "res://crops/field/green_bell_pepper/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25056,13 +25056,13 @@
 			"kind": "crop",
 			"object_id": "broccoli",
 			"scene": "res://scenes/objects/crops/field/broccoli.tscn",
-			"source": "res://crops/field/crop_14/stage_01.tres",
+			"source": "res://crops/field/broccoli/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_14/stage_01.tres",
-				"res://crops/field/crop_14/stage_02.tres",
-				"res://crops/field/crop_14/stage_03.tres",
-				"res://crops/field/crop_14/stage_04.tres"
+				"res://crops/field/broccoli/stage_01.tres",
+				"res://crops/field/broccoli/stage_02.tres",
+				"res://crops/field/broccoli/stage_03.tres",
+				"res://crops/field/broccoli/stage_04.tres"
 			]
 		},
 		{
@@ -25074,7 +25074,7 @@
 			"kind": "crop_sign",
 			"object_id": "broccoli_sign",
 			"scene": "res://scenes/objects/crops/signs/broccoli_sign.tscn",
-			"source": "res://crops/field/crop_14/sign.tres",
+			"source": "res://crops/field/broccoli/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25087,7 +25087,7 @@
 			"kind": "seed",
 			"object_id": "broccoli_seed",
 			"scene": "res://scenes/objects/items/seeds/broccoli_seed.tscn",
-			"source": "res://crops/field/crop_14/seed_icon.tres",
+			"source": "res://crops/field/broccoli/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25100,7 +25100,7 @@
 			"kind": "harvest",
 			"object_id": "broccoli_harvest",
 			"scene": "res://scenes/objects/items/harvest/broccoli_harvest.tscn",
-			"source": "res://crops/field/crop_14/harvest_icon.tres",
+			"source": "res://crops/field/broccoli/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25113,13 +25113,13 @@
 			"kind": "crop",
 			"object_id": "sunflower",
 			"scene": "res://scenes/objects/crops/field/sunflower.tscn",
-			"source": "res://crops/field/crop_15/stage_01.tres",
+			"source": "res://crops/field/sunflower/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_15/stage_01.tres",
-				"res://crops/field/crop_15/stage_02.tres",
-				"res://crops/field/crop_15/stage_03.tres",
-				"res://crops/field/crop_15/stage_04.tres"
+				"res://crops/field/sunflower/stage_01.tres",
+				"res://crops/field/sunflower/stage_02.tres",
+				"res://crops/field/sunflower/stage_03.tres",
+				"res://crops/field/sunflower/stage_04.tres"
 			]
 		},
 		{
@@ -25131,7 +25131,7 @@
 			"kind": "crop_sign",
 			"object_id": "sunflower_sign",
 			"scene": "res://scenes/objects/crops/signs/sunflower_sign.tscn",
-			"source": "res://crops/field/crop_15/sign.tres",
+			"source": "res://crops/field/sunflower/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25144,7 +25144,7 @@
 			"kind": "seed",
 			"object_id": "sunflower_seed",
 			"scene": "res://scenes/objects/items/seeds/sunflower_seed.tscn",
-			"source": "res://crops/field/crop_15/seed_icon.tres",
+			"source": "res://crops/field/sunflower/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25157,7 +25157,7 @@
 			"kind": "harvest",
 			"object_id": "sunflower_harvest",
 			"scene": "res://scenes/objects/items/harvest/sunflower_harvest.tscn",
-			"source": "res://crops/field/crop_15/harvest_icon.tres",
+			"source": "res://crops/field/sunflower/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25170,13 +25170,13 @@
 			"kind": "crop",
 			"object_id": "garlic",
 			"scene": "res://scenes/objects/crops/field/garlic.tscn",
-			"source": "res://crops/field/crop_16/stage_01.tres",
+			"source": "res://crops/field/garlic/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_16/stage_01.tres",
-				"res://crops/field/crop_16/stage_02.tres",
-				"res://crops/field/crop_16/stage_03.tres",
-				"res://crops/field/crop_16/stage_04.tres"
+				"res://crops/field/garlic/stage_01.tres",
+				"res://crops/field/garlic/stage_02.tres",
+				"res://crops/field/garlic/stage_03.tres",
+				"res://crops/field/garlic/stage_04.tres"
 			]
 		},
 		{
@@ -25188,7 +25188,7 @@
 			"kind": "crop_sign",
 			"object_id": "garlic_sign",
 			"scene": "res://scenes/objects/crops/signs/garlic_sign.tscn",
-			"source": "res://crops/field/crop_16/sign.tres",
+			"source": "res://crops/field/garlic/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25201,7 +25201,7 @@
 			"kind": "seed",
 			"object_id": "garlic_seed",
 			"scene": "res://scenes/objects/items/seeds/garlic_seed.tscn",
-			"source": "res://crops/field/crop_16/seed_icon.tres",
+			"source": "res://crops/field/garlic/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25214,7 +25214,7 @@
 			"kind": "harvest",
 			"object_id": "garlic_harvest",
 			"scene": "res://scenes/objects/items/harvest/garlic_harvest.tscn",
-			"source": "res://crops/field/crop_16/harvest_icon.tres",
+			"source": "res://crops/field/garlic/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25227,13 +25227,13 @@
 			"kind": "crop",
 			"object_id": "potato",
 			"scene": "res://scenes/objects/crops/field/potato.tscn",
-			"source": "res://crops/field/crop_17/stage_01.tres",
+			"source": "res://crops/field/potato/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_17/stage_01.tres",
-				"res://crops/field/crop_17/stage_02.tres",
-				"res://crops/field/crop_17/stage_03.tres",
-				"res://crops/field/crop_17/stage_04.tres"
+				"res://crops/field/potato/stage_01.tres",
+				"res://crops/field/potato/stage_02.tres",
+				"res://crops/field/potato/stage_03.tres",
+				"res://crops/field/potato/stage_04.tres"
 			]
 		},
 		{
@@ -25245,7 +25245,7 @@
 			"kind": "crop_sign",
 			"object_id": "potato_sign",
 			"scene": "res://scenes/objects/crops/signs/potato_sign.tscn",
-			"source": "res://crops/field/crop_17/sign.tres",
+			"source": "res://crops/field/potato/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25258,7 +25258,7 @@
 			"kind": "seed",
 			"object_id": "potato_seed",
 			"scene": "res://scenes/objects/items/seeds/potato_seed.tscn",
-			"source": "res://crops/field/crop_17/seed_icon.tres",
+			"source": "res://crops/field/potato/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25271,7 +25271,7 @@
 			"kind": "harvest",
 			"object_id": "potato_harvest",
 			"scene": "res://scenes/objects/items/harvest/potato_harvest.tscn",
-			"source": "res://crops/field/crop_17/harvest_icon.tres",
+			"source": "res://crops/field/potato/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25284,13 +25284,13 @@
 			"kind": "crop",
 			"object_id": "strawberry",
 			"scene": "res://scenes/objects/crops/field/strawberry.tscn",
-			"source": "res://crops/field/crop_18/stage_01.tres",
+			"source": "res://crops/field/strawberry/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_18/stage_01.tres",
-				"res://crops/field/crop_18/stage_02.tres",
-				"res://crops/field/crop_18/stage_03.tres",
-				"res://crops/field/crop_18/stage_04.tres"
+				"res://crops/field/strawberry/stage_01.tres",
+				"res://crops/field/strawberry/stage_02.tres",
+				"res://crops/field/strawberry/stage_03.tres",
+				"res://crops/field/strawberry/stage_04.tres"
 			]
 		},
 		{
@@ -25302,7 +25302,7 @@
 			"kind": "crop_sign",
 			"object_id": "strawberry_sign",
 			"scene": "res://scenes/objects/crops/signs/strawberry_sign.tscn",
-			"source": "res://crops/field/crop_18/sign.tres",
+			"source": "res://crops/field/strawberry/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25315,7 +25315,7 @@
 			"kind": "seed",
 			"object_id": "strawberry_seed",
 			"scene": "res://scenes/objects/items/seeds/strawberry_seed.tscn",
-			"source": "res://crops/field/crop_18/seed_icon.tres",
+			"source": "res://crops/field/strawberry/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25328,7 +25328,7 @@
 			"kind": "harvest",
 			"object_id": "strawberry_harvest",
 			"scene": "res://scenes/objects/items/harvest/strawberry_harvest.tscn",
-			"source": "res://crops/field/crop_18/harvest_icon.tres",
+			"source": "res://crops/field/strawberry/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25341,13 +25341,13 @@
 			"kind": "crop",
 			"object_id": "radish",
 			"scene": "res://scenes/objects/crops/field/radish.tscn",
-			"source": "res://crops/field/crop_19/stage_01.tres",
+			"source": "res://crops/field/radish/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_19/stage_01.tres",
-				"res://crops/field/crop_19/stage_02.tres",
-				"res://crops/field/crop_19/stage_03.tres",
-				"res://crops/field/crop_19/stage_04.tres"
+				"res://crops/field/radish/stage_01.tres",
+				"res://crops/field/radish/stage_02.tres",
+				"res://crops/field/radish/stage_03.tres",
+				"res://crops/field/radish/stage_04.tres"
 			]
 		},
 		{
@@ -25359,7 +25359,7 @@
 			"kind": "crop_sign",
 			"object_id": "radish_sign",
 			"scene": "res://scenes/objects/crops/signs/radish_sign.tscn",
-			"source": "res://crops/field/crop_19/sign.tres",
+			"source": "res://crops/field/radish/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25372,7 +25372,7 @@
 			"kind": "seed",
 			"object_id": "radish_seed",
 			"scene": "res://scenes/objects/items/seeds/radish_seed.tscn",
-			"source": "res://crops/field/crop_19/seed_icon.tres",
+			"source": "res://crops/field/radish/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25385,7 +25385,7 @@
 			"kind": "harvest",
 			"object_id": "radish_harvest",
 			"scene": "res://scenes/objects/items/harvest/radish_harvest.tscn",
-			"source": "res://crops/field/crop_19/harvest_icon.tres",
+			"source": "res://crops/field/radish/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25398,13 +25398,13 @@
 			"kind": "crop",
 			"object_id": "onion",
 			"scene": "res://scenes/objects/crops/field/onion.tscn",
-			"source": "res://crops/field/crop_20/stage_01.tres",
+			"source": "res://crops/field/onion/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_20/stage_01.tres",
-				"res://crops/field/crop_20/stage_02.tres",
-				"res://crops/field/crop_20/stage_03.tres",
-				"res://crops/field/crop_20/stage_04.tres"
+				"res://crops/field/onion/stage_01.tres",
+				"res://crops/field/onion/stage_02.tres",
+				"res://crops/field/onion/stage_03.tres",
+				"res://crops/field/onion/stage_04.tres"
 			]
 		},
 		{
@@ -25416,7 +25416,7 @@
 			"kind": "crop_sign",
 			"object_id": "onion_sign",
 			"scene": "res://scenes/objects/crops/signs/onion_sign.tscn",
-			"source": "res://crops/field/crop_20/sign.tres",
+			"source": "res://crops/field/onion/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25429,7 +25429,7 @@
 			"kind": "seed",
 			"object_id": "onion_seed",
 			"scene": "res://scenes/objects/items/seeds/onion_seed.tscn",
-			"source": "res://crops/field/crop_20/seed_icon.tres",
+			"source": "res://crops/field/onion/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25442,7 +25442,7 @@
 			"kind": "harvest",
 			"object_id": "onion_harvest",
 			"scene": "res://scenes/objects/items/harvest/onion_harvest.tscn",
-			"source": "res://crops/field/crop_20/harvest_icon.tres",
+			"source": "res://crops/field/onion/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25455,13 +25455,13 @@
 			"kind": "crop",
 			"object_id": "leek",
 			"scene": "res://scenes/objects/crops/field/leek.tscn",
-			"source": "res://crops/field/crop_21/stage_01.tres",
+			"source": "res://crops/field/leek/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_21/stage_01.tres",
-				"res://crops/field/crop_21/stage_02.tres",
-				"res://crops/field/crop_21/stage_03.tres",
-				"res://crops/field/crop_21/stage_04.tres"
+				"res://crops/field/leek/stage_01.tres",
+				"res://crops/field/leek/stage_02.tres",
+				"res://crops/field/leek/stage_03.tres",
+				"res://crops/field/leek/stage_04.tres"
 			]
 		},
 		{
@@ -25473,7 +25473,7 @@
 			"kind": "crop_sign",
 			"object_id": "leek_sign",
 			"scene": "res://scenes/objects/crops/signs/leek_sign.tscn",
-			"source": "res://crops/field/crop_21/sign.tres",
+			"source": "res://crops/field/leek/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25486,7 +25486,7 @@
 			"kind": "seed",
 			"object_id": "leek_seed",
 			"scene": "res://scenes/objects/items/seeds/leek_seed.tscn",
-			"source": "res://crops/field/crop_21/seed_icon.tres",
+			"source": "res://crops/field/leek/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25499,7 +25499,7 @@
 			"kind": "harvest",
 			"object_id": "leek_harvest",
 			"scene": "res://scenes/objects/items/harvest/leek_harvest.tscn",
-			"source": "res://crops/field/crop_21/harvest_icon.tres",
+			"source": "res://crops/field/leek/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25512,13 +25512,13 @@
 			"kind": "crop",
 			"object_id": "eggplant",
 			"scene": "res://scenes/objects/crops/field/eggplant.tscn",
-			"source": "res://crops/field/crop_22/stage_01.tres",
+			"source": "res://crops/field/eggplant/stage_01.tres",
 			"sprite": "Sprite2D",
 			"texture_options": [
-				"res://crops/field/crop_22/stage_01.tres",
-				"res://crops/field/crop_22/stage_02.tres",
-				"res://crops/field/crop_22/stage_03.tres",
-				"res://crops/field/crop_22/stage_04.tres"
+				"res://crops/field/eggplant/stage_01.tres",
+				"res://crops/field/eggplant/stage_02.tres",
+				"res://crops/field/eggplant/stage_03.tres",
+				"res://crops/field/eggplant/stage_04.tres"
 			]
 		},
 		{
@@ -25530,7 +25530,7 @@
 			"kind": "crop_sign",
 			"object_id": "eggplant_sign",
 			"scene": "res://scenes/objects/crops/signs/eggplant_sign.tscn",
-			"source": "res://crops/field/crop_22/sign.tres",
+			"source": "res://crops/field/eggplant/sign.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25543,7 +25543,7 @@
 			"kind": "seed",
 			"object_id": "eggplant_seed",
 			"scene": "res://scenes/objects/items/seeds/eggplant_seed.tscn",
-			"source": "res://crops/field/crop_22/seed_icon.tres",
+			"source": "res://crops/field/eggplant/seed_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},
@@ -25556,7 +25556,7 @@
 			"kind": "harvest",
 			"object_id": "eggplant_harvest",
 			"scene": "res://scenes/objects/items/harvest/eggplant_harvest.tscn",
-			"source": "res://crops/field/crop_22/harvest_icon.tres",
+			"source": "res://crops/field/eggplant/harvest_icon.tres",
 			"sprite": "Sprite2D",
 			"texture_options": []
 		},

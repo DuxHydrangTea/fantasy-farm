@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bsq54ecdboea2"]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/sign.tres" id="1_60jch"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/sign.tres" id="1_60jch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqp3b"]
 size = Vector2(9.8, 3.2)
@@ -9,7 +9,7 @@ size = Vector2(9.8, 3.2)
 texture_filter = 1
 metadata/object_id = "wheat_sign"
 metadata/object_kind = "crop_sign"
-metadata/source_visual = "res://crops/field/crop_01/sign.tres"
+metadata/source_visual = "res://crops/field/wheat/sign.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1971803964]
 position = Vector2(0, -8)

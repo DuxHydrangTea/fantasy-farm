@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_20/sign.tres" id="1_ljoc7"]
+[ext_resource type="Texture2D" path="res://crops/field/onion/sign.tres" id="1_ljoc7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jel10"]
 size = Vector2(9.8, 3.2)
@@ -9,7 +9,7 @@ size = Vector2(9.8, 3.2)
 texture_filter = 1
 metadata/object_id = "onion_sign"
 metadata/object_kind = "crop_sign"
-metadata/source_visual = "res://crops/field/crop_20/sign.tres"
+metadata/source_visual = "res://crops/field/onion/sign.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1528853092]
 position = Vector2(0, -8)

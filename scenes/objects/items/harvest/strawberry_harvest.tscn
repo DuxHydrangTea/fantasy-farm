@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_18/harvest_icon.tres" id="1_xke3p"]
+[ext_resource type="Texture2D" path="res://crops/field/strawberry/harvest_icon.tres" id="1_xke3p"]
 
 [node name="StrawberryHarvest" type="StaticBody2D" unique_id=15715301]
 texture_filter = 1
 metadata/object_id = "strawberry_harvest"
 metadata/object_kind = "harvest"
-metadata/source_visual = "res://crops/field/crop_18/harvest_icon.tres"
+metadata/source_visual = "res://crops/field/strawberry/harvest_icon.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=642281622]
 position = Vector2(0, -8)

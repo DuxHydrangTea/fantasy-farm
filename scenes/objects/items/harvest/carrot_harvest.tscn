@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_03/harvest_icon.tres" id="1_64y6i"]
+[ext_resource type="Texture2D" path="res://crops/field/carrot/harvest_icon.tres" id="1_64y6i"]
 
 [node name="CarrotHarvest" type="StaticBody2D" unique_id=2140755523]
 texture_filter = 1
 metadata/object_id = "carrot_harvest"
 metadata/object_kind = "harvest"
-metadata/source_visual = "res://crops/field/crop_03/harvest_icon.tres"
+metadata/source_visual = "res://crops/field/carrot/harvest_icon.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=579935149]
 position = Vector2(0, -8)

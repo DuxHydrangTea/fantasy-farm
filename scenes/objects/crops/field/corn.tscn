@@ -1,15 +1,15 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_05/stage_01.tres" id="1_4cq6k"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_05/stage_02.tres" id="2_mmvja"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_05/stage_03.tres" id="3_3tsuv"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_05/stage_04.tres" id="4_5bhyn"]
+[ext_resource type="Texture2D" path="res://crops/field/corn/stage_01.tres" id="1_4cq6k"]
+[ext_resource type="Texture2D" path="res://crops/field/corn/stage_02.tres" id="2_mmvja"]
+[ext_resource type="Texture2D" path="res://crops/field/corn/stage_03.tres" id="3_3tsuv"]
+[ext_resource type="Texture2D" path="res://crops/field/corn/stage_04.tres" id="4_5bhyn"]
 
 [node name="Corn" type="StaticBody2D" unique_id=1177385944]
 texture_filter = 1
 metadata/object_id = "corn"
 metadata/object_kind = "crop"
-metadata/source_visual = "res://crops/field/crop_05/stage_01.tres"
+metadata/source_visual = "res://crops/field/corn/stage_01.tres"
 metadata/growth_textures = Array[Texture2D]([ExtResource("1_4cq6k"), ExtResource("2_mmvja"), ExtResource("3_3tsuv"), ExtResource("4_5bhyn")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=880835546]

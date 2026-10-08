@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://bkfqj3awec282"]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/stage_01.tres" id="1_6j52q"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/stage_02.tres" id="2_tomnn"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/stage_03.tres" id="3_7mj38"]
-[ext_resource type="Texture2D" path="res://crops/field/crop_01/stage_04.tres" id="4_48qcs"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/stage_01.tres" id="1_6j52q"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/stage_02.tres" id="2_tomnn"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/stage_03.tres" id="3_7mj38"]
+[ext_resource type="Texture2D" path="res://crops/field/wheat/stage_04.tres" id="4_48qcs"]
 
 [node name="Wheat" type="StaticBody2D" unique_id=920015511]
 texture_filter = 1
 metadata/object_id = "wheat"
 metadata/object_kind = "crop"
-metadata/source_visual = "res://crops/field/crop_01/stage_01.tres"
+metadata/source_visual = "res://crops/field/wheat/stage_01.tres"
 metadata/growth_textures = Array[Texture2D]([ExtResource("1_6j52q"), ExtResource("2_tomnn"), ExtResource("3_7mj38"), ExtResource("4_48qcs")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=812521806]

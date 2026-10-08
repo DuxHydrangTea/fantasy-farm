@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_12/harvest_icon.tres" id="1_18nbd"]
+[ext_resource type="Texture2D" path="res://crops/field/yellow_bell_pepper/harvest_icon.tres" id="1_18nbd"]
 
 [node name="YellowBellPepperHarvest" type="StaticBody2D" unique_id=1013395327]
 texture_filter = 1
 metadata/object_id = "yellow_bell_pepper_harvest"
 metadata/object_kind = "harvest"
-metadata/source_visual = "res://crops/field/crop_12/harvest_icon.tres"
+metadata/source_visual = "res://crops/field/yellow_bell_pepper/harvest_icon.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1752207429]
 position = Vector2(0, -8)

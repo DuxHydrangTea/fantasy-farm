@@ -3,6 +3,7 @@ extends SceneTree
 # Chạy: godot --headless --path . --script res://scripts/setup/setup_crop_resources.gd
 const SOURCE_ROOT := "res://assets/Crops"
 const OUTPUT_ROOT := "res://crops"
+const NAME_CATALOG := "res://scripts/setup/data/object_scene_names.json"
 const SOURCE_SIZES := {
 	"Crops.png": Vector2i(112, 704),
 	"Crops_2.png": Vector2i(112, 256),
@@ -19,12 +20,16 @@ const SOURCE_SIZES := {
 const FRUIT_NAMES := ["grapes", "apple", "pear", "peach", "cherry"]
 
 var _textures: Dictionary = {}
+var _crop_names: Array[String] = []
 var _entries: Array[Dictionary] = []
 var _saved := 0
 var _failed := 0
 
 
 func _initialize() -> void:
+	if not _load_crop_names():
+		quit(1)
+		return
 	if not _load_sources():
 		quit(1)
 		return
@@ -42,6 +47,24 @@ func _initialize() -> void:
 			_save_texture(entry)
 	print("Crop AtlasTexture: %d đã lưu, %d lỗi. Output: %s" % [_saved, _failed, OUTPUT_ROOT])
 	quit(1 if _failed > 0 else 0)
+
+
+func _load_crop_names() -> bool:
+	var catalog := JSON.new()
+	if catalog.parse(FileAccess.get_file_as_string(NAME_CATALOG)) != OK or not catalog.data is Dictionary:
+		_fail("Không đọc được danh mục tên cây: " + NAME_CATALOG)
+		return false
+	var names: Dictionary = catalog.data.get("crops", {})
+	var pattern := RegEx.new()
+	pattern.compile("^[a-z][a-z0-9_]*$")
+	for row in range(22):
+		var source_name := "crop_%02d" % (row + 1)
+		var crop_name := String(names.get(source_name, ""))
+		if pattern.search(crop_name) == null or _crop_names.has(crop_name):
+			_fail("Tên cây thiếu, không hợp lệ hoặc trùng: " + source_name)
+			return false
+		_crop_names.append(crop_name)
+	return true
 
 
 func _load_sources() -> bool:
@@ -76,7 +99,7 @@ func _build_entries() -> void:
 	# Mỗi hàng: biển, hạt giống, 4 giai đoạn cây, hình thu hoạch.
 	# Stage giữ cả ô 16x32; biển/hạt/thu hoạch lấy ô 16x16 phía dưới.
 	for row in range(22):
-		var folder := "field/crop_%02d" % (row + 1)
+		var folder := "field/" + _crop_names[row]
 		_add("Crops.png", Rect2i(0, row * 32 + 16, 16, 16), folder + "/sign")
 		_add("Crops.png", Rect2i(16, row * 32 + 16, 16, 16), folder + "/seed_icon")
 		for stage in range(4):

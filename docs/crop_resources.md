@@ -6,7 +6,7 @@ Không cấu hình animation loop hay thời gian tăng trưởng, giá bán ho�
 
 | Folder | Nội dung | Số resource |
 |---|---|---:|
-| `field/crop_01` … `field/crop_22` | Mỗi bộ: biển, hạt giống, 4 giai đoạn, hình thu hoạch | 154 |
+| `field/wheat`, `field/tomato`, … `field/eggplant` | 22 bộ theo tên cây: biển, hạt giống, 4 giai đoạn, hình thu hoạch | 154 |
 | `fruit_trees/shared` | 3 giai đoạn cây ăn quả chưa có quả | 3 |
 | `fruit_trees/apple`, `pear`, `peach`, `cherry` | Hình cây có quả, mỗi loại một `ready.tres` | 4 |
 | `fruit_objects` | Nho, táo, lê, đào, cherry theo thứ tự sheet | 5 |
@@ -15,13 +15,16 @@ Không cấu hình animation loop hay thời gian tăng trưởng, giá bán ho�
 
 ## Mapping và khung ảnh
 
-- `Crops.png`: 22 hàng × 7 cột, mỗi ô 16 × 32. `crop_01` là hàng đầu tiên,
-  `crop_22` là hàng cuối. Tên theo hàng giúp đối chiếu chính xác mà không tự gán tên item.
+- `Crops.png`: 22 hàng × 7 cột, mỗi ô 16 × 32. Hàng đầu là `wheat`,
+  hàng cuối là `eggplant`. Mapping hàng → tên lấy từ mục `crops` trong
+  `scripts/setup/data/object_scene_names.json`; các key `crop_01` … `crop_22`
+  trong catalog chỉ định hàng source, không còn là tên thư mục resource.
   Cột 1 là biển, cột 2 là hạt, cột 3–6 là `stage_01` … `stage_04`, cột 7 là thu hoạch.
 - Stage giữ toàn bộ khung 16 × 32 để cây thấp/cao có cùng vị trí gốc. Biển, hạt và
   hình thu hoạch nằm trong nửa dưới ô, được cắt 16 × 16 để dùng như icon.
-- `Crops_2.png` trùng pixel với hàng 15–22 của `Crops.png`. Dùng resource ở
-  `field/crop_15` … `field/crop_22`, không tạo lặp từ sheet này.
+- `Crops_2.png` trùng pixel với hàng 15–22 của `Crops.png`: `sunflower`,
+  `garlic`, `potato`, `strawberry`, `radish`, `onion`, `leek`, `eggplant`.
+  Dùng các resource cùng tên trong `field`, không tạo lặp từ sheet này.
 - Cây ăn quả giữ khung 32 × 64. Ba hình trong `Fruit_Tree_Stages.png` nằm trong
   `fruit_trees/shared`; hình có quả được lưu riêng theo tên PNG gốc.
 - `Fruit_Trees_Fruit_Objects.png`: 5 ô 16 × 16, thứ tự trái sang phải là nho, táo,
@@ -40,7 +43,7 @@ và không lưu đường dẫn cache `.godot/imported`.
 Gán resource stage vào `Sprite2D.texture`. Ví dụ:
 
 ```gdscript
-var stage_texture: Texture2D = preload("res://crops/field/crop_01/stage_01.tres")
+var stage_texture: Texture2D = preload("res://crops/field/wheat/stage_01.tres")
 ```
 
 Các `seed_icon.tres` và `harvest_icon.tres` có thể dùng với `TextureRect` hoặc
@@ -56,4 +59,16 @@ godot --headless --path . --script res://scripts/setup/setup_crop_resources.gd
 ```
 
 Generator kiểm tra kích thước của cả 10 PNG, xác nhận sheet trùng và xác minh
-vùng cắt trước khi lưu. Nếu bố cục asset thay đổi, cập nhật mapping trước khi chạy lại.
+vùng cắt trước khi lưu. Generator kiểm tra đủ 22 tên duy nhất và tạo đúng thư mục
+theo catalog; không tạo lại các folder `crop_XX`. `resource_name` cũng theo tên cây,
+ví dụ `field_wheat_stage_01`. Nếu bố cục asset thay đổi, cập nhật mapping trước khi chạy lại.
+
+Để chuyển một checkout còn dùng thư mục cũ, chạy một lần từ root dự án:
+
+```powershell
+.\scripts\setup\rename_crop_resources.ps1
+```
+
+Script chuyển thư mục, cập nhật resource_name và tham chiếu trong scene/item/index/tài liệu,
+giữ nguyên vùng cắt và UID hiện có; từ chối ghi đè nếu tên cũ và tên mới cùng tồn tại.
+Generator `setup_object_scenes.gd` cũng lấy resource cây từ đường dẫn theo tên mới.

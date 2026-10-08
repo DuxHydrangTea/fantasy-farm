@@ -5,8 +5,7 @@ extends Controller
 @export var action_right: StringName = &"ui_right"
 @export var action_up: StringName = &"ui_up"
 @export var action_down: StringName = &"ui_down"
-@export var action_use_tool: StringName = &"use_tool"
-@export var action_water: StringName = &"water"
+@export var action_use_item: StringName = &"use_item"
 
 var player: Player
 
@@ -19,11 +18,8 @@ func _physics_process(_delta: float) -> void:
 	actor.movement_vector = Input.get_vector(action_left, action_right, action_up, action_down)
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed(action_use_tool):
-		player.use_tool("tool")
-	elif event.is_action_pressed(action_water):
-		player.use_tool("water")
-	else:
+	if not event.is_action_pressed(action_use_item):
 		return
-
+	
+	player.use_selected_item()
 	get_viewport().set_input_as_handled()

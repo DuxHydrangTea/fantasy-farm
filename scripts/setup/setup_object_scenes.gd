@@ -147,7 +147,7 @@ func _add_crops() -> void:
 	for crop_number in range(1, 23):
 		var source_name := "crop_%02d" % crop_number
 		var name := _semantic_name("crops", source_name)
-		var folder := "res://crops/field/" + source_name
+		var folder := "res://crops/field/" + name
 		var paths: Array[String] = []
 		for stage in range(1, 5):
 			paths.append(folder + "/stage_%02d.tres" % stage)

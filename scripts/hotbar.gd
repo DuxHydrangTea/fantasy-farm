@@ -5,7 +5,7 @@ signal slot_selected(index: int)
 
 @export var slots: Array[ItemSlot] = []
 
-var selected_index: int = 1
+var selected_index: int = -1
 var _buttons: Array[Button] = []
 
 func _ready() -> void:
@@ -80,7 +80,7 @@ func _refresh_slot(index: int):
 	button.add_theme_stylebox_override("pressed", style)
 
 func get_selected_slot() -> ItemSlot:
-	if selected_index < 0:
+	if selected_index < 0 or selected_index >= slots.size():
 		return null
 
 	return slots[selected_index]

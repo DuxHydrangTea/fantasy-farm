@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Crops/Crops.png" id="1_xa077"]
+
+[resource]
+resource_name = "field_leek_stage_04"
+atlas = ExtResource("1_xa077")
+region = Rect2(80, 640, 16, 32)
+filter_clip = true

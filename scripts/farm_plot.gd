@@ -5,10 +5,13 @@ extends Node2D
 @export var dry_texture: Texture2D
 @export var wet_texture: Texture2D
 @onready var soil_sprite: Sprite2D = $SoilSprite
+@onready var crop_sprite: Sprite2D = $CropSprite
 var wet_duration: float = 5.0
 var plot_id: StringName
 var wet_remaining: float = 0.0 #seconds
 var _focused: bool = false
+var crop: CropDefinition
+var growth_elapsed: float = 0.0
 const PLOT_RECT: Rect2 = Rect2(-8, -16,16,16)
 
 func _ready() -> void:
@@ -64,3 +67,24 @@ func _draw() -> void:
 	var border := PLOT_RECT.grow(-0.5)
 	draw_rect(border, Color("#ffe006"), false, 1.0)
 	
+func has_crop() -> bool:
+	return crop != null
+	
+func plant(defination: CropDefinition) -> bool:
+	if Engine.is_editor_hint():
+		return false
+		
+	if has_crop():
+		return false
+	
+	if defination == null:
+		return false
+		
+	if not defination.is_valid():
+		return false
+		
+	crop = defination
+	growth_elapsed = 0.0
+	crop_sprite.texture = crop.stage_textures[0]
+	crop_sprite.visible = true
+	return true

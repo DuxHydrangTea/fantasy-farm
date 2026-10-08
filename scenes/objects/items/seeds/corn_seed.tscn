@@ -1,12 +1,12 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://crops/field/crop_05/seed_icon.tres" id="1_r6h0j"]
+[ext_resource type="Texture2D" path="res://crops/field/corn/seed_icon.tres" id="1_r6h0j"]
 
 [node name="CornSeed" type="StaticBody2D" unique_id=775922694]
 texture_filter = 1
 metadata/object_id = "corn_seed"
 metadata/object_kind = "seed"
-metadata/source_visual = "res://crops/field/crop_05/seed_icon.tres"
+metadata/source_visual = "res://crops/field/corn/seed_icon.tres"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=557895160]
 position = Vector2(0, -8)
