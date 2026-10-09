@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Texture2D" path="res://crops/field/cucumber/seed_icon.tres" id="1_fi3dm"]
+[ext_resource type="Resource" path="res://crops/field/cucumber/cucumber.tres" id="1_n4gri"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_rbit6"]
+
+[resource]
+script = ExtResource("1_rbit6")
+item_id = &"cucumber_seed"
+display_name = "Cucumber Seed"
+icon = ExtResource("1_fi3dm")
+item_type = 1
+crop = ExtResource("1_n4gri")
+metadata/_custom_type_script = "uid://bg2be8miqe4ud"
