@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" path="res://crops/field/tomato/stage_03.tres" id="4_ir8o3"]
 [ext_resource type="Texture2D" path="res://crops/field/tomato/stage_04.tres" id="5_sum8w"]
 
+[ext_resource type="Resource" path="res://items/harvest_produces/tomato_produces.tres" id="harvest_produce"]
+
 [resource]
 script = ExtResource("1_j20b1")
 crop_id = &"tomato"
 stage_textures = Array[Texture2D]([ExtResource("2_bmtk1"), ExtResource("3_eemvj"), ExtResource("4_ir8o3"), ExtResource("5_sum8w")])
 growth_seconds = 10.0
+harvest_item = ExtResource("harvest_produce")
+harvest_amount = 1
 metadata/_custom_type_script = "uid://c6xdvb1xr63p3"

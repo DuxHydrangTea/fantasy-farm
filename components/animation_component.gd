@@ -1,11 +1,13 @@
 class_name AnimationComponent
 extends Node
 
+signal action_finished(action: String)
+
 @export var animated_sprite: AnimatedSprite2D
 @export var fallback_animation: StringName = &"idle_down"
 @export var flip_left: bool = true
-
-signal action_finished(action: String)
+@export var single_direction: bool = false
+@export var single_direction_faces_left: bool = true # Cho biết ảnh gốc nhìn trái hay phải, để lật đúng hướng.
 
 const DIR_VECTORS: Dictionary[StringName, Vector2] = {
 	&"down": Vector2.DOWN,
@@ -32,8 +34,14 @@ func play(action: String, force_restart: bool = false) -> void:
 	
 	var flip := false
 	var dir := facing_direction
-	
-	if dir == &"left" and flip_left:
+	if single_direction:
+		dir = &"down"
+		
+		if single_direction_faces_left:
+			flip = facing_direction == &"right"
+		else:
+			flip = facing_direction == &"left"
+	elif dir == &"left" and flip_left:
 		dir = &"right"
 		flip = true
 		
@@ -68,6 +76,13 @@ func update_facing_direction(dir: Vector2) -> bool:
 		return false
 		
 	var old := facing_direction
+	
+	if single_direction:
+		if not is_zero_approx(dir.x):
+			facing_direction = &"right" if dir.x > 0.0 else &"left"
+			
+		return facing_direction != old
+	
 	var horizontal: StringName = &"right" if dir.x > 0 else &"left"
 	var vertical: StringName = &"down" if dir.y > 0 else &"up"
 	

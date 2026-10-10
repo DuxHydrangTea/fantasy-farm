@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dhv4w5ljxx685"]
+
+[ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_2i4cc"]
+[ext_resource type="Script" path="res://scripts/item_slot_view.gd" id="2_slot_view"]
+
+[node name="ItemSlotView" type="Button" unique_id=1364753346]
+custom_minimum_size = Vector2(32, 32)
+focus_mode = 0
+theme = ExtResource("1_2i4cc")
+theme_type_variation = &"ItemSlotButton"
+script = ExtResource("2_slot_view")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -15.0
+offset_right = -3.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.15, 0.1, 0.06, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 2
+vertical_alignment = 2

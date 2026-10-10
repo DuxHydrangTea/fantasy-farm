@@ -7,24 +7,25 @@ const OUTPUT_ROOT := "res://sprite_frames/animals"
 const DEFAULT_FPS := 8.0
 const FLY_FPS := 12.0
 
-# Thứ tự phần tử tương ứng hàng từ trên xuống.
+# Thứ tự phần tử tương ứng hàng từ trên xuống; tên rỗng bỏ qua hàng.
+# Chỉ giữ ảnh nhìn trái, đặt hậu tố down để dùng chế độ một hướng.
 # Số frame riêng cho từng loài, không suy ra từ chiều rộng sheet.
 const MAMMAL_NAMES := [
-	"idle_left",
 	"idle_down",
-	"idle_up",
-	"walk_left",
+	"",
+	"",
 	"walk_down",
-	"walk_up",
-	"graze_left",
-	"chew_left",
-	"lie_down_left",
-	"stand_up_left",
-	"sleep_start_left",
-	"sleep_left",
-	"hurt_left",
+	"",
+	"",
+	"graze_down",
+	"chew_down",
+	"lie_down_down",
+	"stand_up_down",
+	"sleep_start_down",
+	"sleep_down",
 	"hurt_down",
-	"hurt_up",
+	"",
+	"",
 ]
 
 const MAMMAL_LOOPS := [
@@ -111,28 +112,28 @@ func _run() -> void:
 		)
 
 	# Chicken bao gồm Chicken_01...18 và Rooster.
-	_generate_two_directions(
+	_generate_single_direction(
 		"Chicken",
 		POULTRY_ACTIONS,
 		[2, 6, 8, 3, 3, 3, 8, 4],
 		POULTRY_LOOPS
 	)
 
-	_generate_two_directions(
+	_generate_single_direction(
 		"Goose",
 		POULTRY_ACTIONS,
 		[2, 6, 12, 3, 3, 3, 8, 4],
 		POULTRY_LOOPS
 	)
 
-	_generate_two_directions(
+	_generate_single_direction(
 		"Duck",
 		WATERFOWL_ACTIONS,
 		[2, 6, 3, 3, 3, 8, 4, 2, 4, 8],
 		WATERFOWL_LOOPS
 	)
 
-	_generate_two_directions(
+	_generate_single_direction(
 		"Swan",
 		WATERFOWL_ACTIONS,
 		[2, 6, 3, 3, 3, 8, 4, 2, 3, 8],
@@ -203,7 +204,7 @@ func _generate_species(
 		)
 
 
-func _generate_two_directions(
+func _generate_single_direction(
 	species: String,
 	actions: Array,
 	counts_per_direction: Array,
@@ -213,9 +214,10 @@ func _generate_two_directions(
 	var counts: Array = []
 	var loops: Array = []
 
-	for direction in ["down_left", "up_left"]:
+	# Giữ nguyên số hàng nguồn để kiểm tra kích thước, nhưng bỏ góc up_left.
+	for direction in ["down", ""]:
 		for index in range(actions.size()):
-			names.append("%s_%s" % [actions[index], direction])
+			names.append("%s_%s" % [actions[index], direction] if direction != "" else "")
 			counts.append(counts_per_direction[index])
 			loops.append(loops_per_direction[index])
 
@@ -256,6 +258,8 @@ func _generate_sheet(
 	var frames := _new_sprite_frames()
 
 	for row in range(names.size()):
+		if String(names[row]).is_empty():
+			continue
 		if not _add_animation(
 			frames,
 			texture,

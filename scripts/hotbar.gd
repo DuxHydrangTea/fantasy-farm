@@ -3,10 +3,12 @@ extends HBoxContainer
 
 signal slot_selected(index: int)
 
+const SLOT_VIEW_SCENE: PackedScene = preload("res://scenes/item_slot_view.tscn")
+
 @export var slots: Array[ItemSlot] = []
 
 var selected_index: int = -1
-var _buttons: Array[Button] = []
+var _buttons: Array[ItemSlotView] = []
 
 func _ready() -> void:
 	for index in range(slots.size()):
@@ -24,12 +26,10 @@ func _ready() -> void:
 		
 		slots[index] = runtime_slot
 		
-		var button = Button.new()
-		button.custom_minimum_size = Vector2(48, 36)
+		var button := SLOT_VIEW_SCENE.instantiate() as ItemSlotView
 		
 		# Tránh nút giữ keyboard focus và nhận space
 		button.focus_mode = Control.FOCUS_NONE
-		button.add_theme_font_size_override("font_size", 12)
 		button.pressed.connect(select_slot.bind(index))
 		add_child(button)
 		_buttons.append(button)
@@ -55,32 +55,78 @@ func select_slot(index: int):
 	_refresh_slot(selected_index)
 	slot_selected.emit(selected_index)
 
-func _refresh_slot(index: int):
-	var slot := slots[index]
-	var button := _buttons[index]
-	
-	button.icon = null
-	button.text = ""
-	button.tooltip_text = ""
-	
-	if not slot.is_empty():
-		button.icon = slot.item.icon
-		button.tooltip_text = slot.item.display_name
+func _refresh_slot(index: int) -> void:
+	var slot: ItemSlot = slots[index]
+	var button: ItemSlotView = _buttons[index]
 
-		if slot.item.item_type == ItemDefinition.ItemType.SEED:
-			button.text = str(slot.quantity)
-	
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#242832")
-	style.set_border_width_all(2)
-	style.border_color = Color("#ff3066") if index == selected_index else Color("#596170")
-	
-	button.add_theme_stylebox_override("normal", style)
-	button.add_theme_stylebox_override("hover", style)
-	button.add_theme_stylebox_override("pressed", style)
+	if index == selected_index:
+		button.theme_type_variation = &"SelectedItemSlotButton"
+	else:
+		button.theme_type_variation = &"ItemSlotButton"
+
+	button.display_slot(slot)
 
 func get_selected_slot() -> ItemSlot:
 	if selected_index < 0 or selected_index >= slots.size():
 		return null
 
 	return slots[selected_index]
+	
+func try_add_item(defination: ItemDefinition, amount: int) -> bool:
+	if defination == null or amount <= 0:
+		return false
+		
+	if defination.item_type == ItemDefinition.ItemType.PRODUCE:
+		return false
+	
+	var stack_limit: int = defination.get_stack_limit()
+	var capacity: int = 0
+	
+	for slot in slots:
+		if slot == null:
+			continue
+		
+		if slot.is_empty():
+			capacity += stack_limit
+		elif slot.item == defination:
+			capacity += maxi(0, stack_limit - slot.quantity)
+			
+	if capacity < amount:
+		return false
+		
+	var remaining: int = amount
+	
+	for slot in slots:
+		if slot == null or slot.is_empty():
+			continue
+			
+		if slot.item != defination:
+			continue
+			
+		var available: int = maxi(0, stack_limit - slot.quantity)
+		var added: int = mini(available, remaining)
+		
+		if added <=0:
+			continue
+			
+		slot.quantity += added
+		remaining -= added
+		slot.emit_changed()
+		
+		if remaining == 0:
+			return true
+			
+	for slot in slots:
+		if slot == null:
+			continue
+		
+		if not slot.is_empty():
+			continue
+			
+		var added: int = mini(stack_limit, remaining)
+		slot.set_item(defination, added)
+		remaining -= added
+		
+		if remaining == 0:
+			return true	
+	return true

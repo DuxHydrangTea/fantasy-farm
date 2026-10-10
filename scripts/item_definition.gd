@@ -3,7 +3,8 @@ extends Resource
 
 enum ItemType {
 	TOOL,
-	SEED
+	SEED,
+	PRODUCE
 }
 
 enum ToolType {

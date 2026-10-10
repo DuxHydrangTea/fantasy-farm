@@ -2,28 +2,70 @@
 
 [ext_resource type="Script" uid="uid://cw7w11202lxp4" path="res://scenes/chicken.gd" id="1_1yv3s"]
 [ext_resource type="SpriteFrames" uid="uid://bsb7fgp03fsqq" path="res://sprite_frames/animals/chicken_01_frames.tres" id="1_8lku0"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_rc7ma"]
+[ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://scripts/state_machine.gd" id="4_0du8g"]
+[ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="5_pep2a"]
+[ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://scripts/states/idle_state.gd" id="6_5sgx4"]
+[ext_resource type="Script" uid="uid://bws6o6t3ps7w5" path="res://scripts/states/chicken_action_state.gd" id="7_8aah5"]
+[ext_resource type="Script" uid="uid://dot0p6wtjutyn" path="res://components/controllers/chicken_ai_controller.gd" id="8_5sgx4"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="8_8aah5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(6, 3)
 
-[node name="chicken" type="CharacterBody2D" unique_id=1135842981]
+[node name="chicken" type="CharacterBody2D" unique_id=1894568812]
 y_sort_enabled = true
+motion_mode = 1
 script = ExtResource("1_1yv3s")
+metadata/_custom_type_script = "uid://8poilp21n6py"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1479713037]
-y_sort_enabled = true
 position = Vector2(0, -6)
 sprite_frames = ExtResource("1_8lku0")
-animation = &"idle_down_left"
-frame_progress = 0.7277071
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1918769064]
 y_sort_enabled = true
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_vgjnj")
 
-[node name="Timer" type="Timer" parent="." unique_id=1375814286]
+[node name="AnimationComponent" type="Node" parent="." unique_id=1103678459 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("3_rc7ma")
+animated_sprite = NodePath("../AnimatedSprite2D")
+single_direction = true
+
+[node name="StateMachine" type="Node" parent="." unique_id=844628634 node_paths=PackedStringArray("initial_state", "default_state")]
+script = ExtResource("4_0du8g")
+initial_state = NodePath("IdleState")
+default_state = NodePath("IdleState")
+
+[node name="WalkState" type="Node" parent="StateMachine" unique_id=1630607985]
+script = ExtResource("5_pep2a")
+metadata/_custom_type_script = "uid://cfild0cob8ewe"
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1352386048]
+script = ExtResource("6_5sgx4")
+metadata/_custom_type_script = "uid://cfild0cob8ewe"
+
+[node name="PeckState" type="Node" parent="StateMachine" unique_id=1049407950]
+script = ExtResource("7_8aah5")
+metadata/_custom_type_script = "uid://cfild0cob8ewe"
+
+[node name="RestState" type="Node" parent="StateMachine" unique_id=224529910]
+script = ExtResource("7_8aah5")
+metadata/_custom_type_script = "uid://cfild0cob8ewe"
+
+[node name="SleepState" type="Node" parent="StateMachine" unique_id=1961564574]
+script = ExtResource("7_8aah5")
+metadata/_custom_type_script = "uid://cfild0cob8ewe"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=998161162]
+script = ExtResource("8_8aah5")
+speed = 50.0
+
+[node name="ChickenAIController" type="Node" parent="." unique_id=565501861]
+script = ExtResource("8_5sgx4")
+
+[node name="Timer" type="Timer" parent="ChickenAIController" unique_id=1375814286]
 wait_time = 3.0
 autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

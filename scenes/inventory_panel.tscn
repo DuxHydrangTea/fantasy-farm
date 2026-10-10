@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dvuejxn3mhkh2"]
+
+[ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_u4feb"]
+[ext_resource type="Script" uid="uid://c80heketgljyu" path="res://scripts/inventory_panel.gd" id="1_v4pxl"]
+
+[node name="InventoryPanel" type="PanelContainer" unique_id=398165552]
+theme = ExtResource("1_u4feb")
+script = ExtResource("1_v4pxl")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1915903121]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1616850654]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=39462894]
+layout_mode = 2
+text = "Inventory"
+
+[node name="SlotsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=1960017966]
+layout_mode = 2
+columns = 4

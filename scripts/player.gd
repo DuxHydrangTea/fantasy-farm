@@ -7,6 +7,9 @@ extends CharacterBase
 @export var farm_land: FarmLand
 @export var tool_reach: float = 16.0
 @export var hotbar: Hotbar
+@export var inventory: Inventory
+@export var inventory_panel: InventoryPanel
+
 var focused_plot: FarmPlot
 var _target_plot: FarmPlot
 var _pending_slot: ItemSlot
@@ -15,6 +18,7 @@ var _pending_item: ItemDefinition
 func _ready() -> void:
 	super._ready()
 	tool_state.effect_requested.connect(_on_tool_effect_requested)
+	assert(is_instance_valid(inventory_panel), "Player chưa được gán inventory panel")
 
 func _process(_delta: float) -> void:
 	if state_machine.current_state is ToolState:
@@ -69,7 +73,7 @@ func _on_tool_effect_requested(action: String) -> void:
 		if action != "tool":
 			return
 		
-		if _pending_item == null or _pending_slot.is_empty():
+		if _pending_slot == null or _pending_slot.is_empty():
 			return
 		
 		if _pending_slot.item != _pending_item:
@@ -85,9 +89,17 @@ func _on_tool_effect_requested(action: String) -> void:
 		_target_plot.water()
 	
 func use_selected_item() -> void:
+	if is_inventory_open():
+		return
+
 	if not (state_machine.current_state is IdleState or state_machine.current_state is WalkState):
 		return
 		
+	if is_instance_valid(focused_plot):
+		if focused_plot.is_mature():
+			_try_harvest_focused_plot()
+			return
+	
 	if not is_instance_valid(hotbar):
 		return
 		
@@ -137,3 +149,58 @@ func use_selected_item() -> void:
 	
 	tool_state.action = action
 	state_machine.change_state(&"tool")
+	
+func _try_harvest_focused_plot() -> bool:
+	if not is_instance_valid(focused_plot):
+		return false
+	
+	if not focused_plot.is_mature():
+		return false
+		
+	if not is_instance_valid(inventory):
+		return false
+		
+	var defination: CropDefinition = focused_plot.crop
+	
+	if defination == null:
+		return false
+	
+	if not defination.has_valid_harvest():
+		push_warning("Cây chưa có cấu hình thu hoạch hợp lệ!")
+		return false
+		
+	var added: bool = inventory.try_add_item(
+		defination.harvest_item,
+		defination.harvest_amount
+	)
+	
+	if not added:
+		print("Slot không đủ chỗ!")
+		return false
+		
+	return focused_plot.harvest()
+
+func is_inventory_open() -> bool:
+	return inventory_panel.visible
+	
+func toggle_inventory() -> void:
+	if not is_inventory_open():
+		if not (
+			state_machine.current_state is IdleState
+			or state_machine.current_state is WalkState
+		):
+			return
+	
+	inventory_panel.toggle()
+	
+	if is_inventory_open():
+		movement_vector = Vector2.ZERO
+
+func select_hotbar_slot(index) -> void:
+	if is_inventory_open():
+		return
+	
+	if not is_instance_valid(hotbar):
+		return
+		
+	hotbar.select_slot(index)

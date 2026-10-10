@@ -4,7 +4,14 @@
 [ext_resource type="Script" uid="uid://d1hihyn6xegc4" path="res://scripts/farm_plot.gd" id="1_hprdi"]
 [ext_resource type="Texture2D" uid="uid://6fo62w568cgk" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_02.png" id="2_hprdi"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52ljm"]
+bg_color = Color(0.7518282, 0.8641211, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52obr"]
+bg_color = Color(0.8647432, 0.8681122, 1.1551381e-06, 1)
+
 [node name="FarmPlot" type="Node2D" unique_id=893550335]
+y_sort_enabled = true
 script = ExtResource("1_hprdi")
 dry_texture = ExtResource("1_3jttp")
 wet_texture = ExtResource("2_hprdi")
@@ -15,7 +22,16 @@ texture = ExtResource("1_3jttp")
 offset = Vector2(0, -8)
 
 [node name="CropSprite" type="Sprite2D" parent="." unique_id=606062562]
-visible = false
-z_index = -1
 position = Vector2(0, -8)
-offset = Vector2(0, -8)
+offset = Vector2(0, -10)
+
+[node name="GrowthBar" type="ProgressBar" parent="CropSprite" unique_id=792533247]
+offset_left = -10.0
+offset_top = -18.0
+offset_right = 9.0
+offset_bottom = -14.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_52ljm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_52obr")
+step = 0.1
+show_percentage = false

@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://qacu43xtym4o"]
 
+[ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_2hkft"]
 [ext_resource type="Script" uid="uid://cu6any5khuoqi" path="res://scripts/hotbar.gd" id="1_qssp3"]
 [ext_resource type="Script" uid="uid://bmk5iiktcr4fu" path="res://scripts/item_slot.gd" id="2_d1od2"]
 [ext_resource type="Resource" uid="uid://bwv7habiobaqu" path="res://items/tools/hoe.tres" id="3_bfqb0"]
 [ext_resource type="Resource" uid="uid://bghbkp1kho21r" path="res://items/tools/watering_can.tres" id="4_hlsmc"]
 [ext_resource type="Resource" uid="uid://bg270usqa0ayi" path="res://items/seeds/wheat_seed.tres" id="5_3wyi3"]
+[ext_resource type="Resource" uid="uid://ebpy0mmpjtu3" path="res://items/seeds/beetroot_seed.tres" id="6_3wyi3"]
+[ext_resource type="Resource" uid="uid://dlc3pj5noacyh" path="res://items/seeds/bell_pepper_seed.tres" id="7_441x5"]
+[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="8_441x5"]
 
 [sub_resource type="Resource" id="Resource_w6xti"]
 script = ExtResource("2_d1od2")
@@ -24,20 +28,39 @@ item = ExtResource("5_3wyi3")
 quantity = 40
 metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
 
+[sub_resource type="Resource" id="Resource_2hkft"]
+script = ExtResource("2_d1od2")
+item = ExtResource("6_3wyi3")
+quantity = 55
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_4oyfp"]
+script = ExtResource("2_d1od2")
+item = ExtResource("7_441x5")
+quantity = 55
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_mjxje"]
+script = ExtResource("2_d1od2")
+item = ExtResource("8_441x5")
+quantity = 11
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
 [node name="HUB" type="CanvasLayer" unique_id=1830923712]
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1532438223]
+[node name="HotbarContainer" type="MarginContainer" parent="." unique_id=1532438223]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -60.0
-offset_bottom = -12.0
+offset_top = -32.0
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Hotbar" type="HBoxContainer" parent="MarginContainer" unique_id=1338832528]
+[node name="Hotbar" type="HBoxContainer" parent="HotbarContainer" unique_id=1338832528]
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("1_2hkft")
 script = ExtResource("1_qssp3")
-slots = Array[ExtResource("2_d1od2")]([SubResource("Resource_w6xti"), SubResource("Resource_bfqb0"), SubResource("Resource_hlsmc")])
+slots = Array[ExtResource("2_d1od2")]([SubResource("Resource_w6xti"), SubResource("Resource_bfqb0"), SubResource("Resource_hlsmc"), SubResource("Resource_2hkft"), SubResource("Resource_4oyfp"), SubResource("Resource_mjxje"), null, null, null])

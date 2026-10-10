@@ -8,6 +8,7 @@ var body: CharacterBody2D
 
 func _ready() -> void:
 	body = get_parent() as CharacterBody2D
+	print(speed)
 	assert(body != null, "MovementComponent phai la con truc tiep cua CharacterBody2D")
 
 func move(dir: Vector2, delta: float):
