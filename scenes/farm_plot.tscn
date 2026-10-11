@@ -49,10 +49,9 @@ position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_focus")
 
 [node name="FocusMarker" parent="FocusComponent" index="1" unique_id=1972875434]
-visible = true
 position = Vector2(0, -28)
 
-[node name="Polygon2D" parent="FocusComponent/FocusMarker" index="0" unique_id=291800676]
-position = Vector2(7, 19)
+[node name="Pointer" parent="FocusComponent/FocusMarker" index="0" unique_id=1012589044]
+position = Vector2(0, 18.999998)
 
 [editable path="FocusComponent"]
