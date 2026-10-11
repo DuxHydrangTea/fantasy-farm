@@ -3,28 +3,110 @@
 [ext_resource type="PackedScene" uid="uid://dvuejxn3mhkh2" path="res://scenes/inventory_panel.tscn" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://by1pqde5cnk1m" path="res://scenes/farm_world.tscn" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://db6ngk1b7cdrt" path="res://scenes/inventory.tscn" id="2_qfnet"]
+[ext_resource type="PackedScene" uid="uid://d3mwygtrxhdn0" path="res://scenes/game_debug_panel.tscn" id="3_4mrxx"]
+[ext_resource type="Script" uid="uid://bmk5iiktcr4fu" path="res://scripts/item_slot.gd" id="3_dss4m"]
+[ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="4_7r4gi"]
+[ext_resource type="Resource" uid="uid://bwv7habiobaqu" path="res://items/tools/hoe.tres" id="4_7t5mc"]
 [ext_resource type="PackedScene" uid="uid://c5odairxjouiv" path="res://scenes/player.tscn" id="4_i7141"]
+[ext_resource type="Resource" uid="uid://bghbkp1kho21r" path="res://items/tools/watering_can.tres" id="5_lakw3"]
+[ext_resource type="Resource" uid="uid://bg270usqa0ayi" path="res://items/seeds/wheat_seed.tres" id="6_pm21f"]
+[ext_resource type="Resource" uid="uid://ebpy0mmpjtu3" path="res://items/seeds/beetroot_seed.tres" id="7_2lf6f"]
+[ext_resource type="Resource" uid="uid://dlc3pj5noacyh" path="res://items/seeds/bell_pepper_seed.tres" id="8_7iits"]
+[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="9_oo54l"]
+[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="10_kpybi"]
 [ext_resource type="PackedScene" uid="uid://qacu43xtym4o" path="res://scenes/hub.tscn" id="28_0nbtd"]
 [ext_resource type="PackedScene" uid="uid://dnepca2rdvkfc" path="res://scenes/farm_land.tscn" id="35_f17e3"]
+
+[sub_resource type="Resource" id="Resource_w6xti"]
+script = ExtResource("3_dss4m")
+item = ExtResource("4_7t5mc")
+quantity = 1
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_bfqb0"]
+script = ExtResource("3_dss4m")
+item = ExtResource("5_lakw3")
+quantity = 1
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_hlsmc"]
+script = ExtResource("3_dss4m")
+item = ExtResource("6_pm21f")
+quantity = 40
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_2hkft"]
+script = ExtResource("3_dss4m")
+item = ExtResource("7_2lf6f")
+quantity = 55
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_4oyfp"]
+script = ExtResource("3_dss4m")
+item = ExtResource("8_7iits")
+quantity = 55
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_mjxje"]
+script = ExtResource("3_dss4m")
+item = ExtResource("9_oo54l")
+quantity = 11
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+
+[sub_resource type="Resource" id="Resource_glrfu"]
+script = ExtResource("3_dss4m")
+item = ExtResource("10_kpybi")
+quantity = 99
+metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
 
 [node name="world" type="Node2D" unique_id=1443101210]
 y_sort_enabled = true
 
 [node name="Inventory" parent="." unique_id=258328632 instance=ExtResource("2_qfnet")]
+position = Vector2(1, 0)
 
 [node name="HUB" parent="." unique_id=1830923712 instance=ExtResource("28_0nbtd")]
 
-[node name="InventoryPanel" parent="HUB" unique_id=1018988890 node_paths=PackedStringArray("inventory") instance=ExtResource("1_71j4m")]
-offset_right = 75.0
-offset_bottom = 27.0
+[node name="Hotbar" parent="HUB/HotbarContainer" parent_id_path=PackedInt32Array(1830923712, 1532438223) index="0" unique_id=1338832528]
+slots = Array[ExtResource("3_dss4m")]([SubResource("Resource_w6xti"), SubResource("Resource_bfqb0"), SubResource("Resource_hlsmc"), SubResource("Resource_2hkft"), SubResource("Resource_4oyfp"), SubResource("Resource_mjxje"), SubResource("Resource_glrfu"), null, null])
+
+[node name="GameDebugPanel" parent="HUB" unique_id=560170532 node_paths=PackedStringArray("inventory") instance=ExtResource("3_4mrxx")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_bottom = 46.0
+grow_horizontal = 0
 inventory = NodePath("../../Inventory")
 
-[node name="Player" parent="." unique_id=1264858247 node_paths=PackedStringArray("farm_land", "hotbar", "inventory", "inventory_panel") instance=ExtResource("4_i7141")]
-position = Vector2(222, 288)
-farm_land = NodePath("../MapContainer/FarmLand")
+[node name="InventoryPanel" parent="HUB" unique_id=1018988890 node_paths=PackedStringArray("inventory") instance=ExtResource("1_71j4m")]
+anchors_preset = -1
+anchor_left = 0.014
+anchor_top = 0.036000002
+anchor_right = 0.014
+anchor_bottom = 0.036000002
+offset_left = -3.96
+offset_top = 19.039999
+offset_right = 93.04
+offset_bottom = 71.04
+inventory = NodePath("../../Inventory")
+
+[node name="InventoryButton" type="Button" parent="HUB" unique_id=1732029476]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 82.0
+offset_bottom = 33.0
+size_flags_horizontal = 8
+theme = ExtResource("4_7r4gi")
+theme_type_variation = &"ItemSlotButton"
+text = "Balo"
+
+[node name="Player" parent="." unique_id=1264858247 node_paths=PackedStringArray("hotbar", "inventory", "inventory_panel", "inventory_button") instance=ExtResource("4_i7141")]
+position = Vector2(201, 384)
 hotbar = NodePath("../HUB/HotbarContainer/Hotbar")
 inventory = NodePath("../Inventory")
 inventory_panel = NodePath("../HUB/InventoryPanel")
+inventory_button = NodePath("../HUB/InventoryButton")
 
 [node name="MapContainer" type="Node2D" parent="." unique_id=1263561242]
 y_sort_enabled = true

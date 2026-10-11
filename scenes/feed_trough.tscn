@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cn6uqfutu3sx7"]
+
+[ext_resource type="Script" uid="uid://b4kdnh5sowvx6" path="res://scripts/feed_trough.gd" id="1_glrfu"]
+[ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="1_texture"]
+[ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="3_m7ssx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(14, 24)
+
+[node name="FeedTrough" type="StaticBody2D" unique_id=560725084]
+texture_filter = 1
+script = ExtResource("1_glrfu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1872734406]
+position = Vector2(0, 8)
+texture = ExtResource("1_texture")
+region_enabled = true
+region_rect = Rect2(144, 0, 16, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=194985930]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="EatPoint" type="Marker2D" parent="." unique_id=589677150]
+position = Vector2(-9, 9)
+
+[node name="FocusComponent" parent="." unique_id=570100360 instance=ExtResource("3_m7ssx")]

@@ -2,7 +2,7 @@ class_name ItemSlot
 extends Resource
 
 @export var item: ItemDefinition
-@export_range(0, 99) var quantity: int = 0
+@export_range(0, 32000) var quantity: int = 0
 
 func is_empty() -> bool:
 	return item == null or quantity <= 0
@@ -25,7 +25,13 @@ func consume_seed(amount: int = 1) -> bool:
 	
 	if item.item_type != ItemDefinition.ItemType.SEED:
 		return false
-		
+	
+	return consume(amount)
+
+func consume(amount: int = 1) -> bool:
+	if is_empty():
+		return false
+	
 	if amount <= 0 or amount > quantity:
 		return false
 		

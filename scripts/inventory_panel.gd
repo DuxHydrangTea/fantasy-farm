@@ -19,6 +19,9 @@ func _ready() -> void:
 	if not inventory.is_node_ready():
 		await inventory.ready
 	
+	if not is_instance_valid(inventory):
+		return
+	
 	slots_grid.columns = 4
 	
 	for index in range(inventory.slots.size()):
@@ -26,7 +29,6 @@ func _ready() -> void:
 
 		slots_grid.add_child(button)
 		_buttons.append(button)
-
 		_refresh_slot(index)
 		
 	inventory.slot_changed.connect(_refresh_slot)
@@ -46,4 +48,18 @@ func _refresh_slot(index: int) ->void:
 	button.display_slot(slot)
 
 func toggle() -> void:
-	visible = not visible
+	if visible:
+		close()
+	else:
+		open_inventory()
+
+func open_inventory() -> void:
+	_refresh_all_slots()
+	show()
+	
+func _refresh_all_slots() -> void:
+	for index in range(_buttons.size()):
+		_refresh_slot(index)
+
+func close() -> void:
+	hide()

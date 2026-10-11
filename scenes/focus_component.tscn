@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://2dehwjif0yol"]
+
+[ext_resource type="Script" uid="uid://b03w84kwp8o2l" path="res://components/focus_component.gd" id="1_5v041"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei2gk"]
+size = Vector2(14, 24)
+
+[node name="FocusComponent" type="Area2D" unique_id=570100360]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_5v041")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1270675274]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_ei2gk")
+
+[node name="FocusMarker" type="Node2D" parent="." unique_id=1972875434]
+visible = false
+z_index = 10
+position = Vector2(0, -12)
+
+[node name="Polygon2D" type="Polygon2D" parent="FocusMarker" unique_id=291800676]
+position = Vector2(7, 1.9999999)
+scale = Vector2(0.022986306, 0.023752522)
+polygon = PackedVector2Array(-394, 9, -211, 9, -304, 171)
+uv = PackedVector2Array(-394, 9, -211, 9, -304, 171)

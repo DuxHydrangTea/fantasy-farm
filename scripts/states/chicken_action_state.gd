@@ -11,6 +11,7 @@ enum Phase {
 @export var hold_action: String = ""
 @export var finish_action: String = ""
 @export_range(0.0, 60.0) var hold_seconds: float = 0.0
+
 var _phase: Phase = Phase.HOLD
 var _remaining: float = 0.0
 

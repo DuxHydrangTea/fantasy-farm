@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dkf1hcwbn5teo"]
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r07_c05.tres" id="1_icon"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_script"]
@@ -9,5 +9,5 @@ item_id = &"chili_pepper_produces"
 display_name = "Chili Pepper Produces"
 icon = ExtResource("1_icon")
 item_type = 2
-max_stack = 99
+max_stack = 32000
 metadata/_custom_type_script = "uid://bg2be8miqe4ud"

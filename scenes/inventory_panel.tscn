@@ -2,24 +2,51 @@
 
 [ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_u4feb"]
 [ext_resource type="Script" uid="uid://c80heketgljyu" path="res://scripts/inventory_panel.gd" id="1_v4pxl"]
+[ext_resource type="Texture2D" uid="uid://cnowl2fy768m5" path="res://assets/Ui/Setting menu.png" id="2_curve"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_glrfu"]
+texture = ExtResource("2_curve")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(139, 12, 106, 122)
 
 [node name="InventoryPanel" type="PanelContainer" unique_id=398165552]
+offset_right = 77.0
+offset_bottom = 48.0
 theme = ExtResource("1_u4feb")
+theme_override_styles/panel = SubResource("StyleBoxTexture_glrfu")
 script = ExtResource("1_v4pxl")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1915903121]
 layout_mode = 2
-theme_override_constants/margin_left = 6
-theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 6
-theme_override_constants/margin_bottom = 6
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1616850654]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=39462894]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1714756628]
 layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=39462894]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.5647059, 0.38431373, 0.3647059, 1)
+theme_override_constants/outline_size = 2
 text = "Inventory"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1779766667]
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("1_u4feb")
+theme_type_variation = &"ItemSlotButton"
+icon_alignment = 1
+expand_icon = true
 
 [node name="SlotsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=1960017966]
 layout_mode = 2

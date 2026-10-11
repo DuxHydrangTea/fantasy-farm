@@ -7,6 +7,7 @@ extends Node2D
 @onready var soil_sprite: Sprite2D = $SoilSprite
 @onready var crop_sprite: Sprite2D = $CropSprite
 @onready var growth_bar: ProgressBar = $CropSprite/GrowthBar
+@onready var focus_component: FocusComponent = $FocusComponent
 
 var wet_duration: float = 5.0
 var plot_id: StringName
@@ -16,8 +17,6 @@ var crop: CropDefinition
 var growth_elapsed: float = 0.0
 var _normal_progress_fill: StyleBox
 var _mature_progress_fill: StyleBoxFlat
-
-const PLOT_RECT: Rect2 = Rect2(-8, -16,16,16)
 
 func _ready() -> void:
 	growth_bar.hide()
@@ -31,6 +30,7 @@ func _ready() -> void:
 		
 	assert(dry_texture != null, "Chưa gán dry_texture")
 	assert(wet_texture != null, "Chưa gán wet_texture")
+	focus_component.focus_changed.connect(set_focused)
 	
 	_refresh_soil()
 	_refresh_crop()
@@ -86,23 +86,12 @@ func water() -> bool:
 	_update_processing()
 	return true
 	
-func contains_world_point(world_position: Vector2) -> bool: 
-	return PLOT_RECT.has_point(to_local(world_position))
-	
 func set_focused(value: bool) -> void:
 	if _focused == value:
 		return
 	
 	_focused = value
-	queue_redraw()
 	_refresh_growth_bar()
-	
-func _draw() -> void:
-	if not _focused:
-		return
-	
-	var border := PLOT_RECT.grow(-0.5)
-	draw_rect(border, Color("#ffe006"), false, 1.0)
 	
 func has_crop() -> bool:
 	return crop != null

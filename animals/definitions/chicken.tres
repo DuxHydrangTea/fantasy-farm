@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://dkgtvc6cyu172"]
+
+[ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://bbamtd60ewk2p" path="res://animals/productions/chicken_egg_production.tres" id="2_production"]
+[ext_resource type="SpriteFrames" uid="uid://bsb7fgp03fsqq" path="res://sprite_frames/animals/chicken_01_frames.tres" id="3_frames"]
+
+[resource]
+script = ExtResource("1_script")
+animal_id = &"chicken"
+display_name = "Gà"
+hydration_depletion_seconds = 300.0
+production = ExtResource("2_production")
+adult_frames = ExtResource("3_frames")

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cw7w11202lxp4" path="res://scenes/chicken.gd" id="1_1yv3s"]
 [ext_resource type="SpriteFrames" uid="uid://bsb7fgp03fsqq" path="res://sprite_frames/animals/chicken_01_frames.tres" id="1_8lku0"]
+[ext_resource type="Resource" uid="uid://dkgtvc6cyu172" path="res://animals/definitions/chicken.tres" id="2_trwpf"]
 [ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_rc7ma"]
 [ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://scripts/state_machine.gd" id="4_0du8g"]
 [ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="5_pep2a"]
@@ -9,6 +10,8 @@
 [ext_resource type="Script" uid="uid://bws6o6t3ps7w5" path="res://scripts/states/chicken_action_state.gd" id="7_8aah5"]
 [ext_resource type="Script" uid="uid://dot0p6wtjutyn" path="res://components/controllers/chicken_ai_controller.gd" id="8_5sgx4"]
 [ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="8_8aah5"]
+[ext_resource type="Script" uid="uid://cwc4ope2iy25j" path="res://components/animal_needs_component.gd" id="10_1fwex"]
+[ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="12_r70ld"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(6, 3)
@@ -17,6 +20,7 @@ size = Vector2(6, 3)
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_1yv3s")
+definition = ExtResource("2_trwpf")
 metadata/_custom_type_script = "uid://8poilp21n6py"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1479713037]
@@ -28,6 +32,7 @@ animation = &"walk_down"
 y_sort_enabled = true
 position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_vgjnj")
+disabled = true
 
 [node name="AnimationComponent" type="Node" parent="." unique_id=1103678459 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("3_rc7ma")
@@ -69,3 +74,16 @@ script = ExtResource("8_5sgx4")
 [node name="Timer" type="Timer" parent="ChickenAIController" unique_id=1375814286]
 wait_time = 3.0
 autostart = true
+
+[node name="AnimalNeedsComponent" type="Node" parent="." unique_id=1620117655]
+script = ExtResource("10_1fwex")
+initial_satiety = 31.0
+initial_hydration = 31.0
+seek_threshold = 30.0
+
+[node name="FocusComponent" parent="." unique_id=570100360 instance=ExtResource("12_r70ld")]
+
+[node name="CollisionShape2D" parent="FocusComponent" index="0" unique_id=1270675274]
+position = Vector2(0, -4)
+
+[editable path="FocusComponent"]

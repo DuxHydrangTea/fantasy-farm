@@ -9,9 +9,13 @@
 [ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="6_smehm"]
 [ext_resource type="Script" uid="uid://dg7u7sowt6pqe" path="res://scripts/states/tool_state.gd" id="7_ur7pv"]
 [ext_resource type="Script" uid="uid://c0crv1w8dmqwu" path="res://components/controllers/player_input_controller.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://w8a03uhhofvp" path="res://components/interaction_focus_component.gd" id="10_y4r1p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(9, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ur7pv"]
+radius = 96.13012
 
 [node name="Player" type="CharacterBody2D" unique_id=1264858247]
 motion_mode = 1
@@ -61,3 +65,13 @@ limit_right = 1296
 limit_bottom = 944
 limit_smoothed = true
 position_smoothing_enabled = true
+
+[node name="InteractionFocusComponent" type="Area2D" parent="." unique_id=950230047]
+collision_layer = 0
+collision_mask = 8
+input_pickable = false
+monitorable = false
+script = ExtResource("10_y4r1p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionFocusComponent" unique_id=532117795]
+shape = SubResource("CircleShape2D_ur7pv")

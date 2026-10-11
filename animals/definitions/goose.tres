@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_01_frames.tres" id="1_5gxe4"]
+[ext_resource type="Resource" path="res://animals/productions/goose_egg_production.tres" id="2_7gw8x"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_fc0eu"]
+
+[resource]
+script = ExtResource("3_fc0eu")
+animal_id = &"goose"
+display_name = "Ngỗng"
+species = 5
+hydration_depletion_seconds = 300.0
+production = ExtResource("2_7gw8x")
+adult_frames = ExtResource("1_5gxe4")

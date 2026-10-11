@@ -3,12 +3,16 @@
 [ext_resource type="Texture2D" uid="uid://1j21c4avo6e2" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_01.png" id="1_3jttp"]
 [ext_resource type="Script" uid="uid://d1hihyn6xegc4" path="res://scripts/farm_plot.gd" id="1_hprdi"]
 [ext_resource type="Texture2D" uid="uid://6fo62w568cgk" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_02.png" id="2_hprdi"]
+[ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="4_focus"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52ljm"]
 bg_color = Color(0.7518282, 0.8641211, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52obr"]
 bg_color = Color(0.8647432, 0.8681122, 1.1551381e-06, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_focus"]
+size = Vector2(16, 16)
 
 [node name="FarmPlot" type="Node2D" unique_id=893550335]
 y_sort_enabled = true
@@ -26,6 +30,7 @@ position = Vector2(0, -8)
 offset = Vector2(0, -10)
 
 [node name="GrowthBar" type="ProgressBar" parent="CropSprite" unique_id=792533247]
+visible = false
 offset_left = -10.0
 offset_top = -18.0
 offset_right = 9.0
@@ -35,3 +40,19 @@ theme_override_styles/background = SubResource("StyleBoxFlat_52ljm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_52obr")
 step = 0.1
 show_percentage = false
+
+[node name="FocusComponent" parent="." unique_id=1472839571 instance=ExtResource("4_focus")]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" parent="FocusComponent" index="0" unique_id=1270675274]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_focus")
+
+[node name="FocusMarker" parent="FocusComponent" index="1" unique_id=1972875434]
+visible = true
+position = Vector2(0, -28)
+
+[node name="Polygon2D" parent="FocusComponent/FocusMarker" index="0" unique_id=291800676]
+position = Vector2(7, 19)
+
+[editable path="FocusComponent"]

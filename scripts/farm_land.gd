@@ -61,11 +61,3 @@ func create_grid() -> void:
 			)
 			plot.set_meta(&"generated_plot", true)	
 			add_child(plot)
-			
-func get_plot_at_world(world_position: Vector2) -> FarmPlot:
-	for child in get_children():
-		if child is FarmPlot:
-			var plot := child as FarmPlot
-			if plot.contains_world_point(world_position):
-				return plot
-	return null
