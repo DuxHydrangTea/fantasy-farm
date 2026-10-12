@@ -1,7 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://b6b4x2otct53q"]
 
 [ext_resource type="Texture2D" uid="uid://begqyocpbdhaf" path="res://assets/Ui/buttons/Square Buttons 26x26.png" id="1_i0wvi"]
-[ext_resource type="FontFile" uid="uid://1huaid5ei7fa" path="res://assets/Fonts/Kode_Mono/static/KodeMono-Regular.ttf" id="2_kode_font"]
+[ext_resource type="FontFile" uid="uid://cchlbqvastqg0" path="res://assets/Fonts/Mouse_Meadow/MouseMeadow-Bold.ttf" id="2_cbygh"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0wvi"]
 content_margin_left = 6.0
@@ -76,7 +76,7 @@ texture_margin_bottom = 6.0
 region_rect = Rect2(59, 107, 26, 28)
 
 [resource]
-default_font = ExtResource("2_kode_font")
+default_font = ExtResource("2_cbygh")
 default_font_size = 12
 ItemSlotButton/base_type = &"Button"
 ItemSlotButton/styles/hover = SubResource("StyleBoxTexture_i0wvi")
