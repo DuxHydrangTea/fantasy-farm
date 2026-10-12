@@ -52,3 +52,30 @@ func add_item(defination: ItemDefinition, amount: int) -> int:
 			return 0	
 			
 	return remaining # Trả về số lượng còn thừa không nhét vừa
+
+func try_add_item(
+	definition: ItemDefinition,
+	amount: int
+) -> bool:
+	if definition == null or amount <= 0:
+		return false
+		
+	if definition.item_type != ItemDefinition.ItemType.PRODUCE:
+		return false
+		
+	var stack_limit := definition.get_stack_limit()
+	var capacity: int = 0
+	
+	for slot in slots:
+		if slot == null:
+			continue
+			
+		if slot.is_empty():
+			capacity += stack_limit
+		elif slot.item == definition:
+			capacity += maxi(0, stack_limit - slot.quantity)
+			
+	if capacity < amount:
+		return false
+		
+	return add_item(definition, amount) == 0

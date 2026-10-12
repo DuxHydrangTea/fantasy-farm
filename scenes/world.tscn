@@ -101,12 +101,14 @@ theme = ExtResource("4_7r4gi")
 theme_type_variation = &"ItemSlotButton"
 text = "Balo"
 
-[node name="Player" parent="." unique_id=1264858247 node_paths=PackedStringArray("hotbar", "inventory", "inventory_panel", "inventory_button") instance=ExtResource("4_i7141")]
+[node name="Player" parent="." unique_id=1264858247 node_paths=PackedStringArray("inventory") instance=ExtResource("4_i7141")]
 position = Vector2(201, 384)
-hotbar = NodePath("../HUB/HotbarContainer/Hotbar")
 inventory = NodePath("../Inventory")
-inventory_panel = NodePath("../HUB/InventoryPanel")
-inventory_button = NodePath("../HUB/InventoryButton")
+
+[node name="PlayerUIController" parent="Player" index="8" unique_id=1423353928 node_paths=PackedStringArray("hotbar", "inventory_panel", "inventory_button")]
+hotbar = NodePath("../../HUB/HotbarContainer/Hotbar")
+inventory_panel = NodePath("../../HUB/InventoryPanel")
+inventory_button = NodePath("../../HUB/InventoryButton")
 
 [node name="MapContainer" type="Node2D" parent="." unique_id=1263561242]
 y_sort_enabled = true
@@ -119,3 +121,4 @@ position = Vector2(384, 44)
 
 [editable path="HUB"]
 [editable path="HUB/InventoryPanel"]
+[editable path="Player"]

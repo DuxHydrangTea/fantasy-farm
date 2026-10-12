@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d1hihyn6xegc4" path="res://scripts/farm_plot.gd" id="1_hprdi"]
 [ext_resource type="Texture2D" uid="uid://6fo62w568cgk" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_02.png" id="2_hprdi"]
 [ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="4_focus"]
+[ext_resource type="Script" uid="uid://8607cp3hdrxm" path="res://scripts/farm_plot_interactable.gd" id="5_65hbi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52ljm"]
 bg_color = Color(0.7518282, 0.8641211, 1, 1)
@@ -53,5 +54,9 @@ position = Vector2(0, -28)
 
 [node name="Pointer" parent="FocusComponent/FocusMarker" index="0" unique_id=1012589044]
 position = Vector2(0, 18.999998)
+
+[node name="Interactable" type="Node" parent="." unique_id=612077184]
+script = ExtResource("5_65hbi")
+metadata/_custom_type_script = "uid://ben8vby76ub01"
 
 [editable path="FocusComponent"]

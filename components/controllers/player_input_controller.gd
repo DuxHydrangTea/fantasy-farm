@@ -29,7 +29,7 @@ func _ready() -> void:
 	assert(player != null, "PlayerInputController phải là con trực tiếp của Player")
 
 func _physics_process(_delta: float) -> void:
-	if player.is_inventory_open():
+	if player.ui_controller.is_inventory_open():
 		actor.movement_vector = Vector2.ZERO
 		return
 
@@ -43,7 +43,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		var action: StringName = HOTBAR_ACTIONS[index]
 		
 		if event.is_action_pressed(action):
-			player.select_hotbar_slot(index)
+			player.ui_controller.select_hotbar_slot(index)
 			get_viewport().set_input_as_handled()
 			return
 
@@ -58,5 +58,5 @@ func _input(event: InputEvent) -> void:
 	if not event.is_action_pressed(action_toggle_inventory):
 		return
 		
-	player.toggle_inventory()
+	player.ui_controller.toggle_inventory()
 	get_viewport().set_input_as_handled()

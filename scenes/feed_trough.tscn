@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b4kdnh5sowvx6" path="res://scripts/feed_trough.gd" id="1_glrfu"]
 [ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="1_texture"]
 [ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="3_m7ssx"]
+[ext_resource type="Script" uid="uid://c7hertaegoe4u" path="res://scripts/feed_trough_interactable.gd" id="4_5lxww"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(14, 24)
@@ -25,3 +26,7 @@ shape = SubResource("RectangleShape2D_body")
 position = Vector2(-9, 9)
 
 [node name="FocusComponent" parent="." unique_id=570100360 instance=ExtResource("3_m7ssx")]
+
+[node name="Interactable" type="Node" parent="." unique_id=400760056]
+script = ExtResource("4_5lxww")
+metadata/_custom_type_script = "uid://ben8vby76ub01"

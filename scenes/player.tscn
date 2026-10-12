@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://dg7u7sowt6pqe" path="res://scripts/states/tool_state.gd" id="7_ur7pv"]
 [ext_resource type="Script" uid="uid://c0crv1w8dmqwu" path="res://components/controllers/player_input_controller.gd" id="8_smehm"]
 [ext_resource type="Script" uid="uid://w8a03uhhofvp" path="res://components/interaction_focus_component.gd" id="10_y4r1p"]
+[ext_resource type="Script" uid="uid://ogox0j1c0l14" path="res://components/controllers/player_ui_component.gd" id="11_d2wvv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(9, 2)
@@ -75,3 +76,6 @@ script = ExtResource("10_y4r1p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionFocusComponent" unique_id=532117795]
 shape = SubResource("CircleShape2D_ur7pv")
+
+[node name="PlayerUIController" type="Node" parent="." unique_id=1423353928]
+script = ExtResource("11_d2wvv")

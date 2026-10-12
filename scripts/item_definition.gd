@@ -6,7 +6,8 @@ enum ItemType {
 	TOOL,
 	SEED,
 	PRODUCE,
-	FEED
+	FEED,
+	HOE
 }
 
 enum ToolType {
