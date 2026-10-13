@@ -186,3 +186,5 @@ Mapping áp dụng cho cả `outline` và `no_outline`. Tên mô tả hình vẽ
 | `horizontal_gate_02` | `horizontal_gate_right_hinge` |
 | `fireplace_01` | `stone_fireplace` |
 | `fireplace_02` | `brick_fireplace` |
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

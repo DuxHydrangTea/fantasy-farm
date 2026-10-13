@@ -60,8 +60,10 @@ Resource tham chiếu PNG gốc; các frame là AtlasTexture với `filter_clip`
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_interiors_outdoor_resources.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=sprite_frames/outdoor_decor
 ```
 
 Generator kiểm tra danh sách sheet nội thất, kích thước 19 PNG nguồn và vùng frame
 trước khi lưu resource. Các animation ngoài trời được chọn theo danh sách trong generator.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

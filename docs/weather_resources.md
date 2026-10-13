@@ -28,8 +28,10 @@ Tất cả resource tham chiếu PNG gốc, AtlasTexture bật `filter_clip`.
 ## Tạo lại
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_weather_resources.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=weather
 ```
 
 Generator kiểm tra danh sách 4 PNG, kích thước sheet và vùng cắt trước khi lưu
 5 AtlasTexture cùng 2 SpriteFrames.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

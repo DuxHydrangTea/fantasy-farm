@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cgpxt1mahgmgg"]
 
 [ext_resource type="Texture2D" uid="uid://1j21c4avo6e2" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_01.png" id="1_3jttp"]
-[ext_resource type="Script" uid="uid://d1hihyn6xegc4" path="res://scripts/farm_plot.gd" id="1_hprdi"]
+[ext_resource type="Script" uid="uid://d1hihyn6xegc4" path="res://src/Farming/FarmPlot.cs" id="1_hprdi"]
 [ext_resource type="Texture2D" uid="uid://6fo62w568cgk" path="res://assets/Tiles/FarmLand/FarmLand_Tile_Squared_02.png" id="2_hprdi"]
 [ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="4_focus"]
-[ext_resource type="Script" uid="uid://8607cp3hdrxm" path="res://scripts/farm_plot_interactable.gd" id="5_65hbi"]
+[ext_resource type="Script" uid="uid://8607cp3hdrxm" path="res://src/Farming/FarmPlotInteractable.cs" id="5_65hbi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52ljm"]
 bg_color = Color(0.7518282, 0.8641211, 1, 1)
@@ -18,8 +18,8 @@ size = Vector2(16, 16)
 [node name="FarmPlot" type="Node2D" unique_id=893550335]
 y_sort_enabled = true
 script = ExtResource("1_hprdi")
-dry_texture = ExtResource("1_3jttp")
-wet_texture = ExtResource("2_hprdi")
+DryTexture = ExtResource("1_3jttp")
+WetTexture = ExtResource("2_hprdi")
 
 [node name="SoilSprite" type="Sprite2D" parent="." unique_id=1702818830]
 z_index = -1
@@ -57,6 +57,5 @@ position = Vector2(0, 18.999998)
 
 [node name="Interactable" type="Node" parent="." unique_id=612077184]
 script = ExtResource("5_65hbi")
-metadata/_custom_type_script = "uid://ben8vby76ub01"
 
 [editable path="FocusComponent"]

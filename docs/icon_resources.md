@@ -31,9 +31,11 @@ hoặc trường `@export var icon: Texture2D` trong resource dữ liệu item.
 Chạy từ thư mục dự án bằng Godot 4:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_icon_resources.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=icons
 ```
 
 Generator là script `SceneTree` chạy qua CLI. Script kiểm tra kích thước sheet và
 số ô có hình trước khi ghi. Nếu thay đổi bố cục PNG, cập nhật cấu hình `SHEETS`
 trong generator và kiểm tra lại mapping của các item đang dùng icon.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

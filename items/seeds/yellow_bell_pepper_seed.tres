@@ -2,13 +2,12 @@
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r05_c06.tres" id="1_fi3dm"]
 [ext_resource type="Resource" path="res://crops/field/yellow_bell_pepper/yellow_bell_pepper.tres" id="1_n4gri"]
-[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_rbit6"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://src/Data/ItemDefinition.cs" id="1_rbit6"]
 
 [resource]
 script = ExtResource("1_rbit6")
-item_id = &"yellow_bell_pepper_seed"
-display_name = "Yellow Bell Pepper Seed"
-icon = ExtResource("1_fi3dm")
-item_type = 1
-crop = ExtResource("1_n4gri")
-metadata/_custom_type_script = "uid://bg2be8miqe4ud"
+ItemId = &"yellow_bell_pepper_seed"
+DisplayName = "Yellow Bell Pepper Seed"
+Icon = ExtResource("1_fi3dm")
+ItemType = 1
+Crop = ExtResource("1_n4gri")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b5xnh7fb6a0kd"]
 
 [ext_resource type="Texture2D" uid="uid://d4dgkfl8bd6wb" path="res://assets/Buildings/Buildings/Unique_Buildings/Inn/Inn_Black.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://drbuhjusl646k" path="res://scenes/buildings/unique_buildings/inn.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://drbuhjusl646k" path="res://src/World/Buildings/Inn.cs" id="2_variant"]
 
 [node name="Inn" type="StaticBody2D" unique_id=649129807]
 texture_filter = 1

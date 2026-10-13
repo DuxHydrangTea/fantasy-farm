@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://fgsntiqgx8yj"]
 
 [ext_resource type="TileSet" uid="uid://c1kysnycbadmg" path="res://tilesets/fence.tres" id="1_p1m3l"]
-[ext_resource type="Script" uid="uid://go3qcmw5dbap" path="res://scripts/chicken_coop.gd" id="1_qogfv"]
+[ext_resource type="Script" uid="uid://go3qcmw5dbap" path="res://src/Animals/ChickenCoop.cs" id="1_qogfv"]
 [ext_resource type="TileSet" uid="uid://d3irmhc7qja6m" path="res://tilesets/water_stone_tile_1.tres" id="1_rqmf2"]
 [ext_resource type="TileSet" uid="uid://bs834scd1mfrj" path="res://tilesets/my_decor_grass_tileset.tres" id="3_34wmx"]
 [ext_resource type="PackedScene" uid="uid://dipp05a6ivsjr" path="res://scenes/buildings/unique_buildings/coop.tscn" id="3_in7re"]
@@ -52,14 +52,14 @@ position = Vector2(259, 53)
 [node name="chicken" parent="." unique_id=1135842981 instance=ExtResource("8_qogfv")]
 position = Vector2(157, 121)
 
-[node name="ChickenAIController" parent="chicken" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area")]
-wander_area = NodePath("../../WanderArea")
+[node name="ChickenAIController" parent="chicken" index="5" unique_id=565501861 node_paths=PackedStringArray("WanderArea")]
+WanderArea = NodePath("../../WanderArea")
 
 [node name="chicken2" parent="." unique_id=440386657 instance=ExtResource("8_qogfv")]
 position = Vector2(141, 176)
 
-[node name="ChickenAIController" parent="chicken2" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area")]
-wander_area = NodePath("../../WanderArea")
+[node name="ChickenAIController" parent="chicken2" index="5" unique_id=565501861 node_paths=PackedStringArray("WanderArea")]
+WanderArea = NodePath("../../WanderArea")
 
 [node name="WanderArea" type="Area2D" parent="." unique_id=2062876631]
 position = Vector2(42, 73)

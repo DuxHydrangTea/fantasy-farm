@@ -70,9 +70,11 @@ atlas của TileSet bật texture padding. Không bundle đường dẫn `.godot
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_house_decor_resources.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=sprite_frames/house_decor
 ```
 
 Generator kiểm tra danh sách và kích thước sheet trước khi tạo resource.
-Phần TileSet gọi `setup_house_decor_tiles_v2.gd` để dùng ma trận vùng chọn đã duyệt;
+Phần TileSet dùng lệnh C# `house-decor` để đọc ma trận vùng chọn đã duyệt;
 phần SpriteFrames tiếp tục tạo các animation trong bảng trên.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

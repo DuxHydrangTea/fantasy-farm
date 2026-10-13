@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ihf1oply32n1"]
 
 [ext_resource type="Texture2D" uid="uid://c464iwm64lieb" path="res://assets/Buildings/Buildings/Unique_Buildings/Windmill/Windmill.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://cxahrmct1mixj" path="res://scenes/buildings/unique_buildings/windmill.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://cxahrmct1mixj" path="res://src/World/Buildings/Windmill.cs" id="2_variant"]
 [ext_resource type="Texture2D" uid="uid://b0kdeffl0jq5d" path="res://assets/Buildings/Buildings/Unique_Buildings/Windmill/Windmill_Sail_Anim.png" id="3_sails"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sail_0"]

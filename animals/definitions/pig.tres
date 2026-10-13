@@ -2,12 +2,12 @@
 
 [ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_01_frames.tres" id="1_wurm3"]
 [ext_resource type="Resource" path="res://animals/productions/pig_truffle_production.tres" id="2_n204y"]
-[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_t6ync"]
+[ext_resource type="Script" path="res://src/Data/AnimalDefinition.cs" id="3_t6ync"]
 
 [resource]
 script = ExtResource("3_t6ync")
-animal_id = &"pig"
-display_name = "Heo"
-species = 4
-production = ExtResource("2_n204y")
-adult_frames = ExtResource("1_wurm3")
+AnimalId = &"pig"
+DisplayName = "Heo"
+Species = 4
+Production = ExtResource("2_n204y")
+AdultFrames = ExtResource("1_wurm3")

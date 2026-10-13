@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dylhx7c34uwy7"]
 
 [ext_resource type="Texture2D" uid="uid://dbql4r6f2scky" path="res://assets/Buildings/Buildings/Unique_Buildings/Church/Church_Black.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://c5dsf1y1to0ou" path="res://scenes/buildings/unique_buildings/church.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://c5dsf1y1to0ou" path="res://src/World/Buildings/Church.cs" id="2_variant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true

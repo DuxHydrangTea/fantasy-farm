@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefination" format=3 uid="uid://bbamtd60ewk2p"]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://bbamtd60ewk2p"]
 
-[ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://src/Data/AnimalProductionDefinition.cs" id="1_script"]
 [ext_resource type="Resource" path="res://items/animal_produces/chicken_egg.tres" id="2_egg"]
 
 [resource]
 script = ExtResource("1_script")
-production_item = ExtResource("2_egg")
-production_seconds = 30.0
+ProductionItem = ExtResource("2_egg")
+ProductionSeconds = 30.0

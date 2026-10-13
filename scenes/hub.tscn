@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://qacu43xtym4o"]
 
 [ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_2hkft"]
-[ext_resource type="Script" uid="uid://cu6any5khuoqi" path="res://scripts/hotbar.gd" id="1_qssp3"]
-[ext_resource type="Script" uid="uid://bmk5iiktcr4fu" path="res://scripts/item_slot.gd" id="2_d1od2"]
+[ext_resource type="Script" uid="uid://cu6any5khuoqi" path="res://src/UI/Hotbar.cs" id="1_qssp3"]
+[ext_resource type="Script" uid="uid://bmk5iiktcr4fu" path="res://src/Data/ItemSlot.cs" id="2_d1od2"]
 [ext_resource type="Resource" uid="uid://bwv7habiobaqu" path="res://items/tools/hoe.tres" id="3_bfqb0"]
 [ext_resource type="Resource" uid="uid://bghbkp1kho21r" path="res://items/tools/watering_can.tres" id="4_hlsmc"]
 [ext_resource type="Resource" uid="uid://bg270usqa0ayi" path="res://items/seeds/wheat_seed.tres" id="5_3wyi3"]
@@ -12,39 +12,33 @@
 
 [sub_resource type="Resource" id="Resource_w6xti"]
 script = ExtResource("2_d1od2")
-item = ExtResource("3_bfqb0")
-quantity = 1
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("3_bfqb0")
+Quantity = 1
 
 [sub_resource type="Resource" id="Resource_bfqb0"]
 script = ExtResource("2_d1od2")
-item = ExtResource("4_hlsmc")
-quantity = 1
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("4_hlsmc")
+Quantity = 1
 
 [sub_resource type="Resource" id="Resource_hlsmc"]
 script = ExtResource("2_d1od2")
-item = ExtResource("5_3wyi3")
-quantity = 40
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("5_3wyi3")
+Quantity = 40
 
 [sub_resource type="Resource" id="Resource_2hkft"]
 script = ExtResource("2_d1od2")
-item = ExtResource("6_3wyi3")
-quantity = 55
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("6_3wyi3")
+Quantity = 55
 
 [sub_resource type="Resource" id="Resource_4oyfp"]
 script = ExtResource("2_d1od2")
-item = ExtResource("7_441x5")
-quantity = 55
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("7_441x5")
+Quantity = 55
 
 [sub_resource type="Resource" id="Resource_mjxje"]
 script = ExtResource("2_d1od2")
-item = ExtResource("8_441x5")
-quantity = 11
-metadata/_custom_type_script = "uid://bmk5iiktcr4fu"
+Item = ExtResource("8_441x5")
+Quantity = 11
 
 [node name="HUB" type="CanvasLayer" unique_id=1830923712]
 
@@ -63,4 +57,4 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_2hkft")
 script = ExtResource("1_qssp3")
-slots = Array[ExtResource("2_d1od2")]([SubResource("Resource_w6xti"), SubResource("Resource_bfqb0"), SubResource("Resource_hlsmc"), SubResource("Resource_2hkft"), SubResource("Resource_4oyfp"), SubResource("Resource_mjxje"), null, null, null])
+Slots = Array[ExtResource("2_d1od2")]([SubResource("Resource_w6xti"), SubResource("Resource_bfqb0"), SubResource("Resource_hlsmc"), SubResource("Resource_2hkft"), SubResource("Resource_4oyfp"), SubResource("Resource_mjxje"), null, null, null])

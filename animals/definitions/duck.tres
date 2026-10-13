@@ -2,13 +2,13 @@
 
 [ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_01_frames.tres" id="1_r4afy"]
 [ext_resource type="Resource" path="res://animals/productions/duck_egg_production.tres" id="2_bueop"]
-[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_al3q5"]
+[ext_resource type="Script" path="res://src/Data/AnimalDefinition.cs" id="3_al3q5"]
 
 [resource]
 script = ExtResource("3_al3q5")
-animal_id = &"duck"
-display_name = "Vịt"
-species = 1
-hydration_depletion_seconds = 300.0
-production = ExtResource("2_bueop")
-adult_frames = ExtResource("1_r4afy")
+AnimalId = &"duck"
+DisplayName = "Vịt"
+Species = 1
+HydrationDepletionSeconds = 300.0
+Production = ExtResource("2_bueop")
+AdultFrames = ExtResource("1_r4afy")

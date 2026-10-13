@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://6k0npaj73au5"]
 
 [ext_resource type="Texture2D" uid="uid://cxhpgkdax4gk7" path="res://assets/Buildings/Buildings/Houses/Limestone/House_3_Limestone_Base_Black.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://b8u0k30o2qg1b" path="res://scenes/buildings/houses/house_3.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://b8u0k30o2qg1b" path="res://src/World/Buildings/House3.cs" id="2_variant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true

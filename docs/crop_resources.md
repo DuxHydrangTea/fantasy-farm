@@ -55,7 +55,7 @@ sau đó chuyển sang `fruit_trees/<loại>/ready.tres` khi có quả.
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_crop_resources.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=crops
 ```
 
 Generator kiểm tra kích thước của cả 10 PNG, xác nhận sheet trùng và xác minh
@@ -63,12 +63,6 @@ vùng cắt trước khi lưu. Generator kiểm tra đủ 22 tên duy nhất và
 theo catalog; không tạo lại các folder `crop_XX`. `resource_name` cũng theo tên cây,
 ví dụ `field_wheat_stage_01`. Nếu bố cục asset thay đổi, cập nhật mapping trước khi chạy lại.
 
-Để chuyển một checkout còn dùng thư mục cũ, chạy một lần từ root dự án:
+Generator C# dùng recipe khai báo tường minh và giữ mapping/vùng cắt hiện tại. Các bước đổi tên thư mục cũ đã hoàn thành trong lịch sử Git. Xem README để ghi output vào dự án; mặc định chỉ ghi vào vùng kiểm tra.
 
-```powershell
-.\scripts\setup\rename_crop_resources.ps1
-```
-
-Script chuyển thư mục, cập nhật resource_name và tham chiếu trong scene/item/index/tài liệu,
-giữ nguyên vùng cắt và UID hiện có; từ chối ghi đè nếu tên cũ và tên mới cùng tồn tại.
-Generator `setup_object_scenes.gd` cũng lấy resource cây từ đường dẫn theo tên mới.
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

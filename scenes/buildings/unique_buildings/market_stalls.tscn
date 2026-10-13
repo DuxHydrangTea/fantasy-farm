@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c03235u8r5px3"]
 
 [ext_resource type="Texture2D" uid="uid://bk1ntcoa7ftck" path="res://assets/Buildings/Buildings/Unique_Buildings/Stalls/Market_Stalls.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://bl2qy5gjov5bk" path="res://scenes/buildings/unique_buildings/market_stalls.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://bl2qy5gjov5bk" path="res://src/World/Buildings/MarketStalls.cs" id="2_variant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true

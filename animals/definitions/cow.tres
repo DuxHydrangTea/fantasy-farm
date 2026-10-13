@@ -2,12 +2,12 @@
 
 [ext_resource type="SpriteFrames" uid="uid://q7ydd4whdjn2" path="res://sprite_frames/animals/cow_01_frames.tres" id="1_xjw31"]
 [ext_resource type="Resource" uid="uid://cmijh4nyswxoe" path="res://animals/productions/cow_milk_production.tres" id="2_l6ege"]
-[ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="3_1gcwn"]
+[ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://src/Data/AnimalDefinition.cs" id="3_1gcwn"]
 
 [resource]
 script = ExtResource("3_1gcwn")
-animal_id = &"cow"
-display_name = "Bò"
-species = 2
-production = ExtResource("2_l6ege")
-adult_frames = ExtResource("1_xjw31")
+AnimalId = &"cow"
+DisplayName = "Bò"
+Species = 2
+Production = ExtResource("2_l6ege")
+AdultFrames = ExtResource("1_xjw31")

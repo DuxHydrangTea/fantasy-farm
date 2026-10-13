@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dhv4w5ljxx685"]
 
 [ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="1_2i4cc"]
-[ext_resource type="Script" uid="uid://b24b5p7l13kcq" path="res://scripts/item_slot_view.gd" id="2_slot_view"]
+[ext_resource type="Script" uid="uid://b24b5p7l13kcq" path="res://src/UI/ItemSlotView.cs" id="2_slot_view"]
 
 [node name="ItemSlotView" type="Button" unique_id=1364753346]
 custom_minimum_size = Vector2(32, 32)

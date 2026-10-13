@@ -1,0 +1,463 @@
+{
+  "scripts": [
+    {
+      "source": "components/animal_needs_component.gd",
+      "destination": "src/Animals/AnimalNeedsComponent.cs"
+    },
+    {
+      "source": "components/animation_component.gd",
+      "destination": "src/Characters/AnimationComponent.cs"
+    },
+    {
+      "source": "components/controllers/chicken_ai_controller.gd",
+      "destination": "src/Animals/ChickenAIController.cs"
+    },
+    {
+      "source": "components/controllers/controller.gd",
+      "destination": "src/Characters/Controller.cs"
+    },
+    {
+      "source": "components/controllers/player_input_controller.gd",
+      "destination": "src/Characters/PlayerInputController.cs"
+    },
+    {
+      "source": "components/controllers/player_ui_component.gd",
+      "destination": "src/UI/PlayerUIComponent.cs"
+    },
+    {
+      "source": "components/focus_component.gd",
+      "destination": "src/Interactions/FocusComponent.cs"
+    },
+    {
+      "source": "components/interaction_focus_component.gd",
+      "destination": "src/Interactions/InteractionFocusComponent.cs"
+    },
+    {
+      "source": "components/movement_component.gd",
+      "destination": "src/Characters/MovementComponent.cs"
+    },
+    {
+      "source": "scenes/buildings/houses/house_1.gd",
+      "destination": "src/World/Buildings/House1.cs"
+    },
+    {
+      "source": "scenes/buildings/houses/house_2.gd",
+      "destination": "src/World/Buildings/House2.cs"
+    },
+    {
+      "source": "scenes/buildings/houses/house_3.gd",
+      "destination": "src/World/Buildings/House3.cs"
+    },
+    {
+      "source": "scenes/buildings/houses/house_4.gd",
+      "destination": "src/World/Buildings/House4.cs"
+    },
+    {
+      "source": "scenes/buildings/houses/house_5.gd",
+      "destination": "src/World/Buildings/House5.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/barn.gd",
+      "destination": "src/World/Buildings/Barn.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/blacksmith_house.gd",
+      "destination": "src/World/Buildings/BlacksmithHouse.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/church.gd",
+      "destination": "src/World/Buildings/Church.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/coop.gd",
+      "destination": "src/World/Buildings/Coop.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/fisherman_house.gd",
+      "destination": "src/World/Buildings/FishermanHouse.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/greenhouse.gd",
+      "destination": "src/World/Buildings/Greenhouse.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/inn.gd",
+      "destination": "src/World/Buildings/Inn.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/market_stalls.gd",
+      "destination": "src/World/Buildings/MarketStalls.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/shed.gd",
+      "destination": "src/World/Buildings/Shed.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/silo.gd",
+      "destination": "src/World/Buildings/Silo.cs"
+    },
+    {
+      "source": "scenes/buildings/unique_buildings/windmill.gd",
+      "destination": "src/World/Buildings/Windmill.cs"
+    },
+    {
+      "source": "scenes/chicken.gd",
+      "destination": "src/Animals/Chicken.cs"
+    },
+    {
+      "source": "scripts/animals/animal_definition.gd",
+      "destination": "src/Data/AnimalDefinition.cs"
+    },
+    {
+      "source": "scripts/animals/animal_production_definition.gd",
+      "destination": "src/Data/AnimalProductionDefinition.cs"
+    },
+    {
+      "source": "scripts/animals/animal_types.gd",
+      "destination": "src/Data/AnimalSpecies.cs"
+    },
+    {
+      "source": "scripts/character_base.gd",
+      "destination": "src/Characters/CharacterBase.cs"
+    },
+    {
+      "source": "scripts/chicken_coop.gd",
+      "destination": "src/Animals/ChickenCoop.cs"
+    },
+    {
+      "source": "scripts/crop_definition.gd",
+      "destination": "src/Data/CropDefinition.cs"
+    },
+    {
+      "source": "scripts/cursor_controller.gd",
+      "destination": "src/World/CursorController.cs"
+    },
+    {
+      "source": "scripts/farm_land.gd",
+      "destination": "src/Farming/FarmLand.cs"
+    },
+    {
+      "source": "scripts/farm_plot.gd",
+      "destination": "src/Farming/FarmPlot.cs"
+    },
+    {
+      "source": "scripts/farm_plot_interactable.gd",
+      "destination": "src/Farming/FarmPlotInteractable.cs"
+    },
+    {
+      "source": "scripts/feed_trough.gd",
+      "destination": "src/Animals/FeedTrough.cs"
+    },
+    {
+      "source": "scripts/feed_trough_interactable.gd",
+      "destination": "src/Animals/FeedTroughInteractable.cs"
+    },
+    {
+      "source": "scripts/game_debug_panel.gd",
+      "destination": "src/UI/GameDebugPanel.cs"
+    },
+    {
+      "source": "scripts/hotbar.gd",
+      "destination": "src/UI/Hotbar.cs"
+    },
+    {
+      "source": "scripts/interactions/action_context.gd",
+      "destination": "src/Interactions/ActionContext.cs"
+    },
+    {
+      "source": "scripts/interactions/interactable.gd",
+      "destination": "src/Interactions/Interactable.cs"
+    },
+    {
+      "source": "scripts/inventory.gd",
+      "destination": "src/Inventory/Inventory.cs"
+    },
+    {
+      "source": "scripts/inventory_panel.gd",
+      "destination": "src/UI/InventoryPanel.cs"
+    },
+    {
+      "source": "scripts/item_definition.gd",
+      "destination": "src/Data/ItemDefinition.cs"
+    },
+    {
+      "source": "scripts/item_slot.gd",
+      "destination": "src/Data/ItemSlot.cs"
+    },
+    {
+      "source": "scripts/item_slot_view.gd",
+      "destination": "src/UI/ItemSlotView.cs"
+    },
+    {
+      "source": "scripts/merge_tilesets.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/player.gd",
+      "destination": "src/Characters/Player.cs"
+    },
+    {
+      "source": "scripts/setup/create_animal_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_animal_sprite_frames.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_buildings_tile.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_crop_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_farmer_bob_frames.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_grass_decor_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_house_decor_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_house_decor_tiles_v2.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_icon_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_interiors_outdoor_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_muschroom_decor_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_not_potted_flower_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_npc_sprite_frames.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/setup/setup_object_scenes.gd",
+      "destination": "tools/ObjectSceneGenerator.cs"
+    },
+    {
+      "source": "scripts/setup/setup_potted_flower_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_rock_decor_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_water_decor_tiles.gd",
+      "destination": "tools/TileSetTools.cs"
+    },
+    {
+      "source": "scripts/setup/setup_weather_resources.gd",
+      "destination": "tools/ResourceGenerator.cs (declarative recipes / tools commands)"
+    },
+    {
+      "source": "scripts/state.gd",
+      "destination": "src/Characters/State.cs"
+    },
+    {
+      "source": "scripts/state_machine.gd",
+      "destination": "src/Characters/StateMachine.cs"
+    },
+    {
+      "source": "scripts/states/chicken_action_state.gd",
+      "destination": "src/Animals/ChickenActionState.cs"
+    },
+    {
+      "source": "scripts/states/idle_state.gd",
+      "destination": "src/Characters/IdleState.cs"
+    },
+    {
+      "source": "scripts/states/tool_state.gd",
+      "destination": "src/Characters/ToolState.cs"
+    },
+    {
+      "source": "scripts/states/walk_state.gd",
+      "destination": "src/Characters/WalkState.cs"
+    },
+    {
+      "source": "scripts/states/water_state.gd",
+      "destination": "src/Characters/WaterState.cs"
+    },
+    {
+      "source": "scripts/utils/character_utils.gd",
+      "destination": "removed: empty commented placeholder"
+    },
+    {
+      "source": "scripts/water_trough.gd",
+      "destination": "src/Animals/WaterTrough.cs"
+    },
+    {
+      "source": "scripts/water_trough_interactable.gd",
+      "destination": "src/Animals/WaterTroughInteractable.cs"
+    },
+    {
+      "source": "scripts/setup/split_farmland_squared.ps1",
+      "destination": "retired: completed one-time migration; collision maintenance is a C# tools command"
+    },
+    {
+      "source": "scripts/setup/rename_object_scenes.py",
+      "destination": "retired: completed one-time migration; collision maintenance is a C# tools command"
+    },
+    {
+      "source": "scripts/setup/rename_crop_resources.ps1",
+      "destination": "retired: completed one-time migration; collision maintenance is a C# tools command"
+    },
+    {
+      "source": "scripts/setup/remove_visual_scene_collisions.py",
+      "destination": "retired: completed one-time migration; collision maintenance is a C# tools command"
+    }
+  ],
+  "changed_assets": [
+    "scenes/world.tscn",
+    "scenes/inventory.tscn",
+    "scenes/item_slot_view.tscn",
+    "scenes/chicken_coop.tscn",
+    "scenes/focus_component.tscn",
+    "scenes/player.tscn",
+    "scenes/hub.tscn",
+    "scenes/inventory_panel.tscn",
+    "scenes/farm_land.tscn",
+    "scenes/farm_plot.tscn",
+    "scenes/farm_world.tscn",
+    "scenes/water_trough.tscn",
+    "scenes/game_debug_panel.tscn",
+    "scenes/chicken.tscn",
+    "scenes/feed_trough.tscn",
+    "scenes/buildings/houses/house_2.tscn",
+    "scenes/buildings/houses/house_3.tscn",
+    "scenes/buildings/houses/house_5.tscn",
+    "scenes/buildings/houses/house_4.tscn",
+    "scenes/buildings/houses/house_1.tscn",
+    "scenes/buildings/unique_buildings/church.tscn",
+    "scenes/buildings/unique_buildings/inn.tscn",
+    "scenes/buildings/unique_buildings/barn.tscn",
+    "scenes/buildings/unique_buildings/greenhouse.tscn",
+    "scenes/buildings/unique_buildings/coop.tscn",
+    "scenes/buildings/unique_buildings/silo.tscn",
+    "scenes/buildings/unique_buildings/market_stalls.tscn",
+    "scenes/buildings/unique_buildings/shed.tscn",
+    "scenes/buildings/unique_buildings/blacksmith_house.tscn",
+    "scenes/buildings/unique_buildings/fisherman_house.tscn",
+    "scenes/buildings/unique_buildings/windmill.tscn",
+    "items/seeds/wheat_seed.tres",
+    "items/seeds/cabbage_seed.tres",
+    "items/seeds/radish_seed.tres",
+    "items/seeds/green_bell_pepper_seed.tres",
+    "items/seeds/garlic_seed.tres",
+    "items/seeds/leek_seed.tres",
+    "items/seeds/chili_pepper_seed.tres",
+    "items/seeds/eggplant_seed.tres",
+    "items/seeds/potato_seed.tres",
+    "items/seeds/cucumber_seed.tres",
+    "items/seeds/corn_seed.tres",
+    "items/seeds/broccoli_seed.tres",
+    "items/seeds/strawberry_seed.tres",
+    "items/seeds/carrot_seed.tres",
+    "items/seeds/beetroot_seed.tres",
+    "items/seeds/pumpkin_seed.tres",
+    "items/seeds/bell_pepper_seed.tres",
+    "items/seeds/yellow_bell_pepper_seed.tres",
+    "items/seeds/onion_seed.tres",
+    "items/seeds/sunflower_seed.tres",
+    "items/seeds/tomato_seed.tres",
+    "items/seeds/parsnip_seed.tres",
+    "items/tools/watering_can.tres",
+    "items/tools/hoe.tres",
+    "items/harvest_produces/onion_produces.tres",
+    "items/harvest_produces/eggplant_produces.tres",
+    "items/harvest_produces/strawberry_produces.tres",
+    "items/harvest_produces/green_bell_pepper_produces.tres",
+    "items/harvest_produces/tomato_produces.tres",
+    "items/harvest_produces/beetroot_produces.tres",
+    "items/harvest_produces/corn_produces.tres",
+    "items/harvest_produces/cabbage_produces.tres",
+    "items/harvest_produces/yellow_bell_pepper_produces.tres",
+    "items/harvest_produces/cucumber_produces.tres",
+    "items/harvest_produces/carrot_produces.tres",
+    "items/harvest_produces/parsnip_produces.tres",
+    "items/harvest_produces/chili_pepper_produces.tres",
+    "items/harvest_produces/broccoli_produces.tres",
+    "items/harvest_produces/pumpkin_produces.tres",
+    "items/harvest_produces/wheat_produces.tres",
+    "items/harvest_produces/potato_produces.tres",
+    "items/harvest_produces/bell_pepper_produces.tres",
+    "items/harvest_produces/radish_produces.tres",
+    "items/harvest_produces/garlic_produces.tres",
+    "items/harvest_produces/leek_produces.tres",
+    "items/harvest_produces/sunflower_produces.tres",
+    "items/animal_produces/chicken_egg.tres",
+    "items/animal_produces/goose_egg.tres",
+    "items/animal_produces/cow_milk.tres",
+    "items/animal_produces/duck_egg.tres",
+    "items/animal_produces/pig_truffle.tres",
+    "items/animal_produces/sheep_wool.tres",
+    "items/feeds/poultry_feed.tres",
+    "crops/field/parsnip/parsnip.tres",
+    "crops/field/cucumber/cucumber.tres",
+    "crops/field/sunflower/sunflower.tres",
+    "crops/field/radish/radish.tres",
+    "crops/field/pumpkin/pumpkin.tres",
+    "crops/field/beetroot/beetroot.tres",
+    "crops/field/onion/onion.tres",
+    "crops/field/leek/leek.tres",
+    "crops/field/broccoli/broccoli.tres",
+    "crops/field/eggplant/eggplant.tres",
+    "crops/field/green_bell_pepper/green_bell_pepper.tres",
+    "crops/field/carrot/carrot.tres",
+    "crops/field/garlic/garlic.tres",
+    "crops/field/wheat/wheat.tres",
+    "crops/field/cabbage/cabbage.tres",
+    "crops/field/corn/corn.tres",
+    "crops/field/bell_pepper/bell_pepper.tres",
+    "crops/field/potato/potato.tres",
+    "crops/field/chili_pepper/chili_pepper.tres",
+    "crops/field/yellow_bell_pepper/yellow_bell_pepper.tres",
+    "crops/field/strawberry/strawberry.tres",
+    "crops/field/tomato/tomato.tres",
+    "animals/productions/duck_egg_production.tres",
+    "animals/productions/pig_truffle_production.tres",
+    "animals/productions/cow_milk_production.tres",
+    "animals/productions/goose_egg_production.tres",
+    "animals/productions/sheep_wool_production.tres",
+    "animals/productions/chicken_egg_production.tres",
+    "animals/definitions/cow.tres",
+    "animals/definitions/duck.tres",
+    "animals/definitions/sheep.tres",
+    "animals/definitions/pig.tres",
+    "animals/definitions/chicken.tres",
+    "animals/definitions/goose.tres",
+    "animals/definitions/horse.tres"
+  ],
+  "behavior_notes": [
+    {
+      "change": "InventoryStore.Add returns the unaccepted amount for invalid/rejected item categories instead of reporting success with zero.",
+      "reason": "Make remainder semantics consistent with the inventory interface; covered by core checks."
+    },
+    {
+      "change": "The existing unbound WaterState node now references its C# script and explicit enum state ID.",
+      "reason": "Complete the scene binding during migration; the player normally uses ToolState for watering."
+    },
+    {
+      "change": "The TileSet merge command carries physics and terrain definitions and remaps terrain IDs instead of merging atlas sources into an empty TileSet.",
+      "reason": "The original helper generated out-of-range terrain errors; the C# port must preserve the referenced terrain configuration."
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> Ghi chú: đây là bản khảo sát/mapping lịch sử trước khi chuyển C#. Công cụ đang dùng được mô tả trong README; các đoạn kế hoạch migrate cũ phía dưới chỉ là bối cảnh.
+
 # Danh sách animation động vật để chuẩn bị migrate SpriteFrames
 
 **Cập nhật 10/10/2026:** 72 SpriteFrames của Chicken/Rooster, Goose, Duck,
@@ -10,7 +12,7 @@ giữ tên không có hướng. Các bảng hướng bên dưới là tài liệ
 thay đổi này, không phải danh sách animation hiện tại.
 
 **Cập nhật 06/10/2026:** 93 SpriteFrames động vật hiện nằm trực tiếp trong
-`res://sprite_frames/animals`. Generator `setup_animal_sprite_frames.gd` đã cập nhật
+`res://sprite_frames/animals`. Recipe và generator C# đã cập nhật
 đường dẫn này. Các ghi chú đề xuất bên dưới giữ lại theo thời điểm rà soát ban đầu.
 
 Ngày rà soát: 04/10/2026. Nguồn: `res://assets/Animals`.
@@ -207,3 +209,5 @@ Butterfly: 2,2,2,2,2,2,2,2 (8 × 8; mỗi hàng một biến thể)
 Kapybara: idle=9, look_around=10, dive=9,
           look_around_submerged=9, bubbles=25, emerge=10
 ```
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

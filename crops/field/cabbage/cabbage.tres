@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://dytjr2n5q6fp4"]
 
-[ext_resource type="Script" uid="uid://c6xdvb1xr63p3" path="res://scripts/crop_definition.gd" id="1_j20b1"]
+[ext_resource type="Script" uid="uid://c6xdvb1xr63p3" path="res://src/Data/CropDefinition.cs" id="1_j20b1"]
 [ext_resource type="Texture2D" path="res://crops/field/cabbage/stage_01.tres" id="2_bmtk1"]
 [ext_resource type="Texture2D" path="res://crops/field/cabbage/stage_02.tres" id="3_eemvj"]
 [ext_resource type="Texture2D" path="res://crops/field/cabbage/stage_03.tres" id="4_ir8o3"]
@@ -9,9 +9,8 @@
 
 [resource]
 script = ExtResource("1_j20b1")
-crop_id = &"cabbage"
-stage_textures = Array[Texture2D]([ExtResource("2_bmtk1"), ExtResource("3_eemvj"), ExtResource("4_ir8o3"), ExtResource("5_sum8w")])
-growth_seconds = 10.0
-harvest_item = ExtResource("harvest_produce")
-harvest_amount = 200
-metadata/_custom_type_script = "uid://c6xdvb1xr63p3"
+CropId = &"cabbage"
+StageTextures = Array[Texture2D]([ExtResource("2_bmtk1"), ExtResource("3_eemvj"), ExtResource("4_ir8o3"), ExtResource("5_sum8w")])
+GrowthSeconds = 10.0
+HarvestItem = ExtResource("harvest_produce")
+HarvestAmount = 200

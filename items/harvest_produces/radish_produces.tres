@@ -1,13 +1,12 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b133h16fndp01"]
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r09_c03.tres" id="1_icon"]
-[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://src/Data/ItemDefinition.cs" id="2_script"]
 
 [resource]
 script = ExtResource("2_script")
-item_id = &"radish_produces"
-display_name = "Radish Produces"
-icon = ExtResource("1_icon")
-item_type = 2
-max_stack = 32000
-metadata/_custom_type_script = "uid://bg2be8miqe4ud"
+ItemId = &"radish_produces"
+DisplayName = "Radish Produces"
+Icon = ExtResource("1_icon")
+ItemType = 2
+MaxStack = 32000

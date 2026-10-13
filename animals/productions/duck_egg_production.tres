@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefination" format=3 uid="uid://drousmeh0qlyp"]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://drousmeh0qlyp"]
 
 [ext_resource type="Resource" path="res://items/animal_produces/duck_egg.tres" id="1_mf70l"]
-[ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="2_on3qr"]
+[ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://src/Data/AnimalProductionDefinition.cs" id="2_on3qr"]
 
 [resource]
 script = ExtResource("2_on3qr")
-production_item = ExtResource("1_mf70l")
-production_seconds = 40.0
+ProductionItem = ExtResource("1_mf70l")
+ProductionSeconds = 40.0

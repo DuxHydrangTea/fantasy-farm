@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cxk50akhu73dt"]
 
 [ext_resource type="Texture2D" uid="uid://cfkj76osp3mvr" path="res://assets/Buildings/Buildings/Unique_Buildings/Blacksmith_House/Blacksmith_House_Black.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://hysbq0q5q86f" path="res://scenes/buildings/unique_buildings/blacksmith_house.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://hysbq0q5q86f" path="res://src/World/Buildings/BlacksmithHouse.cs" id="2_variant"]
 
 [node name="Blacksmith_House" type="StaticBody2D" unique_id=1530919486]
 texture_filter = 1

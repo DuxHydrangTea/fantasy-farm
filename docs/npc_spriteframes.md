@@ -27,11 +27,12 @@ Tên `cast`/`reel` dựa trên quan sát thao tác thả/thu cần trong ảnh.
 
 ## Tạo lại
 
-Mở `res://scripts/setup/setup_npc_sprite_frames.gd` trong Godot và chạy EditorScript
-(File → Run). Generator dùng profile theo NPC, kiểm tra kích thước sheet, rồi lưu `.tres`.
-PNG được giữ làm external resource, không phụ thuộc đường dẫn cache `.godot/imported`.
-Script `setup_farmer_bob_frames.gd` vẫn tạo riêng Farmer Bob bằng cùng profile.
-Generator động vật `setup_animal_sprite_frames.gd` cũng ghi trực tiếp vào folder `animals`.
+Build C# trước, rồi chạy runner:
 
-Player dùng resource Farmer Bob tại đường dẫn mới; Chicken dùng resource trong `animals`.
-UID của các resource đã có được giữ khi chuyển thư mục.
+```sh
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- generate --group=sprite_frames/character
+```
+
+Animal frames dùng nhóm `sprite_frames/animals`. Mapping frame được lưu trong `tools/data/resource_recipes.json`; không cần GDScript generator. Xem README để áp dụng output vào dự án.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

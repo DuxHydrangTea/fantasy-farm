@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://c5odairxjouiv"]
 
 [ext_resource type="SpriteFrames" uid="uid://c8bijqj7rn1vl" path="res://sprite_frames/character/farmer_bob_frames.tres" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://daci5wkgp36xp" path="res://scripts/player.gd" id="1_qhqgy"]
-[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://scripts/state_machine.gd" id="4_dqkch"]
-[ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://scripts/states/idle_state.gd" id="5_fjrip"]
-[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="5_qlg0r"]
-[ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="6_smehm"]
-[ext_resource type="Script" uid="uid://dg7u7sowt6pqe" path="res://scripts/states/tool_state.gd" id="7_ur7pv"]
-[ext_resource type="Script" uid="uid://c0crv1w8dmqwu" path="res://components/controllers/player_input_controller.gd" id="8_smehm"]
-[ext_resource type="Script" uid="uid://w8a03uhhofvp" path="res://components/interaction_focus_component.gd" id="10_y4r1p"]
-[ext_resource type="Script" uid="uid://ogox0j1c0l14" path="res://components/controllers/player_ui_component.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://daci5wkgp36xp" path="res://src/Characters/Player.cs" id="1_qhqgy"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://src/Characters/MovementComponent.cs" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://src/Characters/StateMachine.cs" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://src/Characters/IdleState.cs" id="5_fjrip"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://src/Characters/AnimationComponent.cs" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://src/Characters/WalkState.cs" id="6_smehm"]
+[ext_resource type="Script" uid="uid://dg7u7sowt6pqe" path="res://src/Characters/ToolState.cs" id="7_ur7pv"]
+[ext_resource type="Script" uid="uid://c0crv1w8dmqwu" path="res://src/Characters/PlayerInputController.cs" id="8_smehm"]
+[ext_resource type="Script" uid="uid://w8a03uhhofvp" path="res://src/Interactions/InteractionFocusComponent.cs" id="10_y4r1p"]
+[ext_resource type="Script" uid="uid://ogox0j1c0l14" path="res://src/UI/PlayerUIComponent.cs" id="11_d2wvv"]
+
+[ext_resource type="Script" path="res://src/Characters/WaterState.cs" id="12_water"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(9, 2)
@@ -36,25 +38,30 @@ shape = SubResource("RectangleShape2D_vgjnj")
 [node name="MovementComponent" type="Node" parent="." unique_id=139411656]
 script = ExtResource("3_dqkch")
 
-[node name="StateMachine" type="Node" parent="." unique_id=981192739 node_paths=PackedStringArray("initial_state", "default_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=981192739 node_paths=PackedStringArray("InitialState", "DefaultState")]
 script = ExtResource("4_dqkch")
-initial_state = NodePath("IdleState")
-default_state = NodePath("IdleState")
+InitialState = NodePath("IdleState")
+DefaultState = NodePath("IdleState")
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=1790553552]
 script = ExtResource("5_fjrip")
+Id = 0
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=2400552]
 script = ExtResource("6_smehm")
+Id = 1
 
 [node name="ToolState" type="Node" parent="StateMachine" unique_id=1703147333]
 script = ExtResource("7_ur7pv")
+Id = 2
 
 [node name="WaterState" type="Node" parent="StateMachine" unique_id=1986661763]
+script = ExtResource("12_water")
+Id = 3
 
-[node name="AnimationComponent" type="Node" parent="." unique_id=1965887219 node_paths=PackedStringArray("animated_sprite")]
+[node name="AnimationComponent" type="Node" parent="." unique_id=1965887219 node_paths=PackedStringArray("AnimatedSprite")]
 script = ExtResource("5_qlg0r")
-animated_sprite = NodePath("../AnimatedSprite2D")
+AnimatedSprite = NodePath("../AnimatedSprite2D")
 
 [node name="PlayerInputController" type="Node" parent="." unique_id=1436894923]
 script = ExtResource("8_smehm")

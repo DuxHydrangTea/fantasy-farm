@@ -1,0 +1,20 @@
+using FantasyFarm.Core;
+int count=0;
+void Check(bool condition,string message){if(!condition)throw new Exception(message);count++;}
+var produce=new Spec(ItemCategory.Produce,99);var seed=new Spec(ItemCategory.Seed,99);var tool=new Spec(ItemCategory.Tool,1);
+var slots=new[]{new ItemStack<Spec>(),new ItemStack<Spec>()};var store=new InventoryStore<Spec>(slots,x=>x.Category==ItemCategory.Produce);
+Check(store.TryAdd(produce,100),"Split stacks");Check(slots[0].Quantity==99&&slots[1].Quantity==1,"Stack quantities");
+Check(!store.TryAdd(produce,99)&&slots[1].Quantity==1,"Atomic failure");Check(store.Add(produce,100)==2&&slots[1].Quantity==99,"Partial add remainder");
+Check(!store.TryAdd(seed,1)&&store.Add(seed,1)==1,"Reject unsupported type without claiming success");
+Check(!store.TryAdd(null,1)&&!store.TryAdd(produce,0)&&!store.TryAdd(produce,-1),"Invalid amounts");
+Check(!slots[0].Consume(100)&&!slots[0].Consume(-1),"Reject invalid consume");Check(slots[0].Consume(99)&&slots[0].Item is null,"Empty consumed stack");
+Check(!slots[0].Set(tool,2)&&slots[0].Set(tool,1),"Tool stack limit");
+int events=0;slots[0].Changed+=()=>events++;slots[0].Consume(1);Check(events==1,"One change notification");
+var bar=new InventoryStore<Spec>(new[]{new ItemStack<Spec>()},x=>x.Category!=ItemCategory.Produce);Check(bar.TryAdd(seed,99)&&!bar.TryAdd(produce,1),"Hotbar policy");
+var gate=new ActionGate();int effects=0;Check(gate.Execute(()=>{effects++;return true;}),"First execution");Check(!gate.Execute(()=>{effects++;return true;})&&effects==1,"One effect per action");
+var failed=new ActionGate();Check(!failed.Execute(()=>false)&&!failed.Execute(()=>true),"Failed action cannot retry old context");
+var crop=new CropProgress();Check(crop.Stage==-1&&!crop.Harvest(),"Empty crop");Check(!crop.Plant(0)&&!crop.Plant(double.NaN),"Invalid growth duration");Check(crop.Plant(120)&&!crop.Plant(120),"Occupied crop");
+crop.Advance(40);Check(crop.Stage==1&&!crop.Mature,"Growth stage");Check(crop.Water()&&crop.Elapsed==46,"Water bonus");Check(!crop.Water(),"Wet cooldown");crop.Advance(5);Check(!crop.Wet&&crop.Elapsed==51,"Dry growth continues");crop.Advance(1000);Check(crop.Mature&&crop.Elapsed==120&&crop.Stage==3,"Maturity clamp");Check(crop.Harvest()&&!crop.HasCrop&&!crop.Harvest(),"Single harvest");
+var needs=new AnimalNeeds{Threshold=30};Check(!needs.Initialize(0,600,100,100),"Invalid needs config");int flags=0;needs.FlagsChanged+=()=>flags++;Check(needs.Initialize(600,300,31,31),"Needs init");needs.Advance(6);Check(needs.Hungry&&needs.Thirsty&&flags==2,"Needs threshold transition");needs.Advance(-1);Check(needs.Satiety==30,"Negative time ignored");needs.Advance(10000);Check(needs.Satiety==0&&needs.Hydration==0&&!needs.CanGrow,"Needs clamp");needs.RestoreFood();Check(needs.Satiety==100&&!needs.CanGrow,"Restore food only");needs.RestoreWater();Check(needs.CanGrow&&!needs.Hungry&&!needs.Thirsty,"Restore hydration");
+Console.WriteLine($"PASS: {count} core behavior checks");
+record Spec(ItemCategory Category,int StackLimit):IItemSpec;

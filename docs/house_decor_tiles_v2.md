@@ -1,7 +1,7 @@
 # House Decor TileSet v2
 
 Resource: `res://tilesets/house_decor/house_decor_tiles.tres`.
-Generator: `res://scripts/setup/setup_house_decor_tiles_v2.gd`.
+Generator: `res://tools/ResourceGenerator.cs`, lệnh `house-decor`.
 Ma trận vùng chọn: `res://scripts/setup/data/house_decor_selection_matrix_v2.json`.
 
 V2 tạo một tile Godot cho mỗi vùng chọn của đồ vật, bằng
@@ -64,7 +64,7 @@ Vùng cửa đầu tiên bắt đầu tại atlas `(0, 0)`, rộng 1 ô, cao 2 �
 Sửa rectangle trong JSON, rồi chạy lại:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_house_decor_tiles_v2.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- house-decor
 ```
 
 Generator kiểm tra toàn bộ ma trận trước khi tạo atlas, rồi lưu TileSet và trang preview.
@@ -75,3 +75,5 @@ Gán resource vào `TileMapLayer.tile_set`. Map đã dùng bản chia ô cũ c�
 đồ vật vì atlas anchor và kích thước tile đã thay đổi, dù source ID của PNG giữ nguyên.
 Collision, y-sort và texture origin được cấu hình theo scene; resource giữ texture
 origin mặc định của Godot.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

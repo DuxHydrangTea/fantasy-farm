@@ -20,7 +20,7 @@ Vị trí sprite giữ nguyên trong lúc animation phát, giúp giữ canvas gi
 lửa/đuốc/khói, thảm, cửa sổ, gương/đồng hồ/khăn treo tường, vòi/nút,
 giá treo nồi, đèn bàn và đồ trang trí nhỏ. Root vẫn giữ StaticBody2D.
 Quy tắc nằm ở `scripts/setup/data/object_collision_policy.json`; generator dùng
-cùng quy tắc khi tạo mới. Chạy `python3 scripts/setup/remove_visual_scene_collisions.py`
+cùng quy tắc khi tạo mới. Chạy runner C# với lệnh `collisions`
 để áp dụng lên scene đã có, giữ các chỉnh sửa khác.
 
 1.083 scene còn CollisionShape2D có RectangleShape2D làm footprint tham khảo.
@@ -76,22 +76,22 @@ tên cây với scene, ví dụ `crops/field/wheat/stage_01.tres`. Key `crop_01`
 trong catalog vẫn chỉ định hàng của PNG; vùng cắt atlas không thay đổi.
 Nội thất giữ index biến thể như trước. Xem bảng tên trong `docs/object_scene_names.md`.
 
-Nếu còn bản scene tên cũ, chạy `python3 scripts/setup/rename_object_scenes.py`
-trước khi chạy generator. Công cụ đổi tên giữ nội dung scene, cập nhật đường dẫn
-tham chiếu và từ chối ghi đè nếu cả tên cũ và tên mới cùng tồn tại.
+Các bước đổi tên scene/resource cũ đã hoàn thành. Catalog vẫn nằm trong `scripts/setup/data`; C# generator đọc danh mục scene tại `docs/object_scenes_index.json`.
 
 ## Tạo lại
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_object_scenes.gd
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- objects
 ```
 
-Mặc định generator giữ các scene đã tồn tại để bảo vệ chỉnh sửa trên scene.
+Mặc định generator ghi vào `.godot/generator-check` và giữ file đã tồn tại ở output đích. Xem README để áp dụng vào scene của game.
 Muốn tạo lại toàn bộ scene do generator sinh:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_object_scenes.gd -- --overwrite
+"$FARM_GODOT" --headless --path . res://tools/runner.tscn -- objects --output-root=res:// --overwrite
 ```
 
 Lệnh overwrite áp dụng các đường dẫn trong thư viện `scenes/objects`.
 Generator kiểm tra resource, animation mặc định và vùng atlas nội thất trước khi lưu.
+
+Các lệnh dùng biến `FARM_GODOT` trỏ đến Godot .NET. Output mặc định nằm trong `.godot/generator-check`; xem README để áp dụng có chủ đích vào dự án.

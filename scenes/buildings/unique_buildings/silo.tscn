@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://doyfp647dvswg"]
 
 [ext_resource type="Texture2D" uid="uid://dthq1gqja6rb1" path="res://assets/Buildings/Buildings/Unique_Buildings/Silo/Silo.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://qeuv3tdekovu" path="res://scenes/buildings/unique_buildings/silo.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://qeuv3tdekovu" path="res://src/World/Buildings/Silo.cs" id="2_variant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true

@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://4n5qh8k20wjq"]
 
-[ext_resource type="Script" uid="uid://cw7w11202lxp4" path="res://scenes/chicken.gd" id="1_1yv3s"]
+[ext_resource type="Script" uid="uid://cw7w11202lxp4" path="res://src/Animals/Chicken.cs" id="1_1yv3s"]
 [ext_resource type="SpriteFrames" uid="uid://bsb7fgp03fsqq" path="res://sprite_frames/animals/chicken_01_frames.tres" id="1_8lku0"]
 [ext_resource type="Resource" uid="uid://dkgtvc6cyu172" path="res://animals/definitions/chicken.tres" id="2_trwpf"]
-[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_rc7ma"]
-[ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://scripts/state_machine.gd" id="4_0du8g"]
-[ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://scripts/states/walk_state.gd" id="5_pep2a"]
-[ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://scripts/states/idle_state.gd" id="6_5sgx4"]
-[ext_resource type="Script" uid="uid://bws6o6t3ps7w5" path="res://scripts/states/chicken_action_state.gd" id="7_8aah5"]
-[ext_resource type="Script" uid="uid://dot0p6wtjutyn" path="res://components/controllers/chicken_ai_controller.gd" id="8_5sgx4"]
-[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="8_8aah5"]
-[ext_resource type="Script" uid="uid://cwc4ope2iy25j" path="res://components/animal_needs_component.gd" id="10_1fwex"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://src/Characters/AnimationComponent.cs" id="3_rc7ma"]
+[ext_resource type="Script" uid="uid://dpdbcujh6fvye" path="res://src/Characters/StateMachine.cs" id="4_0du8g"]
+[ext_resource type="Script" uid="uid://bvbmv358v6nrp" path="res://src/Characters/WalkState.cs" id="5_pep2a"]
+[ext_resource type="Script" uid="uid://b0g7jufrmq8l7" path="res://src/Characters/IdleState.cs" id="6_5sgx4"]
+[ext_resource type="Script" uid="uid://bws6o6t3ps7w5" path="res://src/Animals/ChickenActionState.cs" id="7_8aah5"]
+[ext_resource type="Script" uid="uid://dot0p6wtjutyn" path="res://src/Animals/ChickenAIController.cs" id="8_5sgx4"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://src/Characters/MovementComponent.cs" id="8_8aah5"]
+[ext_resource type="Script" uid="uid://cwc4ope2iy25j" path="res://src/Animals/AnimalNeedsComponent.cs" id="10_1fwex"]
 [ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="12_r70ld"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
@@ -20,8 +20,7 @@ size = Vector2(6, 3)
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_1yv3s")
-definition = ExtResource("2_trwpf")
-metadata/_custom_type_script = "uid://8poilp21n6py"
+Definition = ExtResource("2_trwpf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1479713037]
 position = Vector2(0, -6)
@@ -34,39 +33,39 @@ position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_vgjnj")
 disabled = true
 
-[node name="AnimationComponent" type="Node" parent="." unique_id=1103678459 node_paths=PackedStringArray("animated_sprite")]
+[node name="AnimationComponent" type="Node" parent="." unique_id=1103678459 node_paths=PackedStringArray("AnimatedSprite")]
 script = ExtResource("3_rc7ma")
-animated_sprite = NodePath("../AnimatedSprite2D")
-single_direction = true
+AnimatedSprite = NodePath("../AnimatedSprite2D")
+SingleDirection = true
 
-[node name="StateMachine" type="Node" parent="." unique_id=844628634 node_paths=PackedStringArray("initial_state", "default_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=844628634 node_paths=PackedStringArray("InitialState", "DefaultState")]
 script = ExtResource("4_0du8g")
-initial_state = NodePath("IdleState")
-default_state = NodePath("IdleState")
+InitialState = NodePath("IdleState")
+DefaultState = NodePath("IdleState")
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=1630607985]
 script = ExtResource("5_pep2a")
-metadata/_custom_type_script = "uid://cfild0cob8ewe"
+Id = 1
 
 [node name="IdleState" type="Node" parent="StateMachine" unique_id=1352386048]
 script = ExtResource("6_5sgx4")
-metadata/_custom_type_script = "uid://cfild0cob8ewe"
+Id = 0
 
 [node name="PeckState" type="Node" parent="StateMachine" unique_id=1049407950]
 script = ExtResource("7_8aah5")
-metadata/_custom_type_script = "uid://cfild0cob8ewe"
+Id = 4
 
 [node name="RestState" type="Node" parent="StateMachine" unique_id=224529910]
 script = ExtResource("7_8aah5")
-metadata/_custom_type_script = "uid://cfild0cob8ewe"
+Id = 5
 
 [node name="SleepState" type="Node" parent="StateMachine" unique_id=1961564574]
 script = ExtResource("7_8aah5")
-metadata/_custom_type_script = "uid://cfild0cob8ewe"
+Id = 6
 
 [node name="MovementComponent" type="Node" parent="." unique_id=998161162]
 script = ExtResource("8_8aah5")
-speed = 50.0
+Speed = 50.0
 
 [node name="ChickenAIController" type="Node" parent="." unique_id=565501861]
 script = ExtResource("8_5sgx4")
@@ -77,9 +76,9 @@ autostart = true
 
 [node name="AnimalNeedsComponent" type="Node" parent="." unique_id=1620117655]
 script = ExtResource("10_1fwex")
-initial_satiety = 31.0
-initial_hydration = 31.0
-seek_threshold = 30.0
+InitialSatiety = 31.0
+InitialHydration = 31.0
+SeekThreshold = 30.0
 
 [node name="FocusComponent" parent="." unique_id=570100360 instance=ExtResource("12_r70ld")]
 

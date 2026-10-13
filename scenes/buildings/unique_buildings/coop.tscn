@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dipp05a6ivsjr"]
 
 [ext_resource type="Texture2D" uid="uid://dxjlofs3fb3rj" path="res://assets/Buildings/Buildings/Unique_Buildings/Coop/Coop_Base_Black.png" id="1_texture"]
-[ext_resource type="Script" uid="uid://dx2n3j8k23r3b" path="res://scenes/buildings/unique_buildings/coop.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://dx2n3j8k23r3b" path="res://src/World/Buildings/Coop.cs" id="2_variant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="AnimalDefinition" format=3]
 
 [ext_resource type="SpriteFrames" path="res://sprite_frames/animals/horse_01_frames.tres" id="1_0h4fm"]
-[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="2_gvvte"]
+[ext_resource type="Script" path="res://src/Data/AnimalDefinition.cs" id="2_gvvte"]
 
 [resource]
 script = ExtResource("2_gvvte")
-animal_id = &"horse"
-display_name = "Ngựa"
-species = 6
-adult_frames = ExtResource("1_0h4fm")
+AnimalId = &"horse"
+DisplayName = "Ngựa"
+Species = 6
+AdultFrames = ExtResource("1_0h4fm")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dnepca2rdvkfc"]
 
-[ext_resource type="Script" uid="uid://cg7h7ak07tv2d" path="res://scripts/farm_land.gd" id="1_8t6kq"]
+[ext_resource type="Script" uid="uid://cg7h7ak07tv2d" path="res://src/Farming/FarmLand.cs" id="1_8t6kq"]
 [ext_resource type="Texture2D" uid="uid://ds8jtul5pvs76" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="2_p4lod"]
 [ext_resource type="PackedScene" uid="uid://cgpxt1mahgmgg" path="res://scenes/farm_plot.tscn" id="2_so3p6"]
 
@@ -12,9 +12,9 @@ sources/0 = SubResource("TileSetAtlasSource_so3p6")
 
 [node name="FarmLand" type="Node2D" unique_id=544886606]
 script = ExtResource("1_8t6kq")
-plot_scene = ExtResource("2_so3p6")
-rows = 14
-cols = 25
+PlotScene = ExtResource("2_so3p6")
+Rows = 14
+Cols = 25
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1063784986]
 tile_set = SubResource("TileSet_vgjnj")
