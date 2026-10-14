@@ -12,6 +12,9 @@
 [ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="8_8aah5"]
 [ext_resource type="Script" uid="uid://cwc4ope2iy25j" path="res://components/animal_needs_component.gd" id="10_1fwex"]
 [ext_resource type="PackedScene" uid="uid://2dehwjif0yol" path="res://scenes/focus_component.tscn" id="12_r70ld"]
+[ext_resource type="Script" uid="uid://08klsh7xibdt" path="res://scripts/animal_status_ui.gd" id="14_g67ly"]
+[ext_resource type="Theme" uid="uid://b6b4x2otct53q" path="res://themes/item_slots_theme.tres" id="14_wx60v"]
+[ext_resource type="PackedScene" uid="uid://oim4c63lynyn" path="res://scenes/progress_bar_display.tscn" id="15_g67ly"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
 size = Vector2(6, 3)
@@ -77,13 +80,42 @@ autostart = true
 
 [node name="AnimalNeedsComponent" type="Node" parent="." unique_id=1620117655]
 script = ExtResource("10_1fwex")
-initial_satiety = 31.0
-initial_hydration = 31.0
 seek_threshold = 30.0
 
 [node name="FocusComponent" parent="." unique_id=570100360 instance=ExtResource("12_r70ld")]
 
 [node name="CollisionShape2D" parent="FocusComponent" index="0" unique_id=1270675274]
 position = Vector2(0, -4)
+
+[node name="AnimalStatusUI" type="Node2D" parent="." unique_id=1051645769]
+z_index = 10
+position = Vector2(-16, -41)
+script = ExtResource("14_g67ly")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AnimalStatusUI" unique_id=819150968]
+custom_minimum_size = Vector2(30, 0)
+custom_maximum_size = Vector2(31, -1)
+offset_right = 31.0
+offset_bottom = 15.0
+theme_override_constants/separation = 1
+
+[node name="StatusLabel" type="Label" parent="AnimalStatusUI/VBoxContainer" unique_id=269152674]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("14_wx60v")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 6
+text = "Bình thường"
+
+[node name="SatietyDisplay" parent="AnimalStatusUI/VBoxContainer" unique_id=981929402 instance=ExtResource("15_g67ly")]
+layout_mode = 2
+fill_color = Color(0.90588236, 0.39607844, 0.34117648, 1)
+progress_value = 78.688
+
+[node name="ProgressBarDisplay" parent="AnimalStatusUI/VBoxContainer" unique_id=663199509 instance=ExtResource("15_g67ly")]
+layout_mode = 2
+fill_color = Color(0.2901961, 0.6784314, 0.9098039, 1)
+progress_value = 58.008
 
 [editable path="FocusComponent"]

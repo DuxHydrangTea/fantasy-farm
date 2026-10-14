@@ -44,3 +44,58 @@ func _process(delta: float) -> void:
 			continue
 			
 		needs.advance_time(elapsed_seconds)
+
+func find_nearest_feed_trough(
+	from_postion: Vector2,
+	defination: AnimalDefinition
+) -> FeedTrough:
+	var nearest: FeedTrough = null
+	var nearest_distance: float = INF
+	
+	for child in get_children():
+		var trough := child as FeedTrough
+		
+		if trough == null:
+			continue
+			
+		if trough.animal_species != defination.species:
+			continue
+		
+		if not trough.has_food(defination.food_per_meal):
+			continue
+			
+		var distance := from_postion.distance_squared_to(
+			trough.eat_point.global_position
+		)
+		
+		if distance < nearest_distance:
+			nearest = trough
+			nearest_distance = distance
+			
+	return nearest
+	
+func find_nearest_water_trough(
+	from_position: Vector2,
+	definition: AnimalDefinition
+) -> WaterTrough:
+	var nearest: WaterTrough = null
+	var nearest_distance: float = INF
+
+	for child in get_children():
+		var trough := child as WaterTrough
+
+		if trough == null:
+			continue
+
+		if not trough.has_water(definition.water_per_drink):
+			continue
+
+		var distance := from_position.distance_squared_to(
+			trough.drink_point.global_position
+		)
+
+		if distance < nearest_distance:
+			nearest = trough
+			nearest_distance = distance
+
+	return nearest

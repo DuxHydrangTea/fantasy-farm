@@ -52,14 +52,24 @@ position = Vector2(259, 53)
 [node name="chicken" parent="." unique_id=1135842981 instance=ExtResource("8_qogfv")]
 position = Vector2(157, 121)
 
-[node name="ChickenAIController" parent="chicken" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area")]
+[node name="ChickenAIController" parent="chicken" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area", "coop")]
 wander_area = NodePath("../../WanderArea")
+coop = NodePath("../..")
+
+[node name="AnimalNeedsComponent" parent="chicken" index="6" unique_id=1620117655]
+initial_satiety = 32.0
+initial_hydration = 32.0
 
 [node name="chicken2" parent="." unique_id=440386657 instance=ExtResource("8_qogfv")]
 position = Vector2(141, 176)
 
-[node name="ChickenAIController" parent="chicken2" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area")]
+[node name="ChickenAIController" parent="chicken2" index="5" unique_id=565501861 node_paths=PackedStringArray("wander_area", "coop")]
 wander_area = NodePath("../../WanderArea")
+coop = NodePath("../..")
+
+[node name="AnimalNeedsComponent" parent="chicken2" index="6" unique_id=1620117655]
+initial_satiety = 32.0
+initial_hydration = 32.0
 
 [node name="WanderArea" type="Area2D" parent="." unique_id=2062876631]
 position = Vector2(42, 73)
@@ -69,19 +79,21 @@ position = Vector2(110.5, 85.5)
 shape = SubResource("RectangleShape2D_vgjnj")
 
 [node name="FeedTrough" parent="." unique_id=736809304 instance=ExtResource("9_qogfv")]
-position = Vector2(280, 146)
+position = Vector2(274, 146)
 
 [node name="FeedTrough2" parent="." unique_id=1157135847 instance=ExtResource("9_qogfv")]
-position = Vector2(280, 116)
+position = Vector2(274, 116)
 
 [node name="FeedTrough3" parent="." unique_id=551018817 instance=ExtResource("9_qogfv")]
-position = Vector2(280, 86)
+position = Vector2(274, 86)
 
 [node name="WoodenFeedTrough" parent="." unique_id=1049204328 instance=ExtResource("10_feed_trough")]
-position = Vector2(280, 186)
+position = Vector2(274, 186)
 
 [node name="FeedTrough4" parent="." unique_id=28832260 instance=ExtResource("10_feed_trough")]
-position = Vector2(280, 218)
+position = Vector2(274, 218)
 
 [editable path="chicken"]
+[editable path="chicken/FocusComponent"]
 [editable path="chicken2"]
+[editable path="chicken2/FocusComponent"]

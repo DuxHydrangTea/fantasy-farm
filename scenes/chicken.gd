@@ -4,6 +4,7 @@ extends CharacterBase
 @export var definition: AnimalDefinition
 
 @onready var needs_component: AnimalNeedsComponent = $AnimalNeedsComponent
+@onready var status_ui = $AnimalStatusUI
 
 func _ready() -> void:
 	super._ready()
@@ -11,6 +12,8 @@ func _ready() -> void:
 	
 	if not needs_component.initialize(definition):
 		return
+	
+	status_ui.setup(needs_component, state_machine)
 
 func _on_need_flags_changed(hungry: bool, thirsty: bool) -> void:
 	print(
