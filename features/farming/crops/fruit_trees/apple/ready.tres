@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Apple_Tree.png" id="1_ihegk"]
+
+[resource]
+resource_name = "fruit_trees_apple_ready"
+atlas = ExtResource("1_ihegk")
+region = Rect2(0, 0, 32, 64)
+filter_clip = true

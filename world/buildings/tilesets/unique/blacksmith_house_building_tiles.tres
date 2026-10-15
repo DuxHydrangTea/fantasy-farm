@@ -1,0 +1,32 @@
+[gd_resource type="TileSet" format=3 uid="uid://cukbngo8d5ra3"]
+
+[ext_resource type="Texture2D" uid="uid://cfkj76osp3mvr" path="res://world/buildings/art/Buildings/Unique_Buildings/Blacksmith_House/Blacksmith_House_Black.png" id="1_xrbii"]
+[ext_resource type="Texture2D" uid="uid://b0llt4jo8lpk8" path="res://world/buildings/art/Buildings/Unique_Buildings/Blacksmith_House/Blacksmith_House_Blue.png" id="2_8a7ug"]
+[ext_resource type="Texture2D" uid="uid://dsa05b22fhyho" path="res://world/buildings/art/Buildings/Unique_Buildings/Blacksmith_House/Blacksmith_House_Red.png" id="3_833sa"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u07se"]
+texture = ExtResource("1_xrbii")
+0:0/size_in_atlas = Vector2i(10, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 23
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(67.45463, 15.805267, -65.19673, 14.676323, -65.7612, 53.06054, -51.649357, 54.18949, -51.649357, 47.415802, -30.763824, 46.286858, -29.070404, 54.18949, 2.5401306, 54.18949, 1.9756622, 45.72238, 17.78093, 45.157906, 19.47435, 38.948692, 44.311203, 40.64212, 46.004623, 44.02896, 56.72962, 42.90001, 58.423042, 33.86843, 69.71252, 33.86843)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6cs61"]
+texture = ExtResource("2_8a7ug")
+0:0/size_in_atlas = Vector2i(10, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 23
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(67.45463, 15.805267, -65.19673, 14.676323, -65.7612, 53.06054, -51.649357, 54.18949, -51.649357, 47.415802, -30.763824, 46.286858, -29.070404, 54.18949, 2.5401306, 54.18949, 1.9756622, 45.72238, 17.78093, 45.157906, 19.47435, 38.948692, 44.311203, 40.64212, 46.004623, 44.02896, 56.72962, 42.90001, 58.423042, 33.86843, 69.71252, 33.86843)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbb5x"]
+texture = ExtResource("3_833sa")
+0:0/size_in_atlas = Vector2i(10, 8)
+0:0/0 = 0
+0:0/0/y_sort_origin = 23
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(67.45463, 15.805267, -65.19673, 14.676323, -65.7612, 53.06054, -51.649357, 54.18949, -51.649357, 47.415802, -30.763824, 46.286858, -29.070404, 54.18949, 2.5401306, 54.18949, 1.9756622, 45.72238, 17.78093, 45.157906, 19.47435, 38.948692, 44.311203, 40.64212, 46.004623, 44.02896, 56.72962, 42.90001, 58.423042, 33.86843, 69.71252, 33.86843)
+
+[resource]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_u07se")
+sources/1 = SubResource("TileSetAtlasSource_6cs61")
+sources/2 = SubResource("TileSetAtlasSource_tbb5x")

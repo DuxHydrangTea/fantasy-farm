@@ -2,8 +2,8 @@
 
 ## Sàn, tường và cầu thang
 
-Nguồn: `res://assets/Buildings/Houses_Interiors`.
-Gán `res://tilesets/house_interiors/house_interiors_tiles.tres` vào
+Nguồn: `res://world/buildings/art/Houses_Interiors`.
+Gán `res://world/buildings/tilesets/interiors/house_interiors_tiles.tres` vào
 `TileMapLayer.tile_set` để vẽ sàn, tường, khung nhà kính và cầu thang.
 TileSet dùng lưới 16 × 16, gồm 7 atlas source và 254 ô có pixel hiển thị.
 Chọn nhiều ô cùng lúc để đặt cụm tường, khung hoặc mẫu sàn đúng như sheet gốc.
@@ -24,7 +24,7 @@ y-sort và xử lý di chuyển qua cầu thang cần cấu hình theo scene/gam
 
 ## SpriteFrames ngoài trời
 
-14 resource nằm trong `res://sprite_frames/outdoor_decor`. Gán vào
+14 resource nằm trong `res://world/decorations/outdoor/animations`. Gán vào
 `AnimatedSprite2D.sprite_frames`, rồi phát animation tương ứng. FPS mặc định: 8.
 
 | Resource (`*_frames.tres`) | Canvas | Animation |
@@ -51,7 +51,7 @@ Sau khi `animation_finished`, gameplay có thể chọn trạng thái giữ tư�
 `broken` giữ frame cuối với mảnh vỡ. Gameplay quyết định giữ mảnh vỡ hay xoá node
 sau khi animation kết thúc. Canvas luôn giữ nguyên 48 × 48 để mảnh vỡ có đủ chỗ.
 
-PNG gốc nằm trong `assets/Outdoor decoration`: `Big_Torch_Anim.png` ở thư mục gốc,
+PNG gốc nằm trong `world/decorations/outdoor/art`: `Big_Torch_Anim.png` ở thư mục gốc,
 các nguồn còn lại ở `Outdoor_Decor_Animations/Other_Animations` và `Break_Animations`.
 Resource tham chiếu PNG gốc; các frame là AtlasTexture với `filter_clip` bật.
 
@@ -60,7 +60,7 @@ Resource tham chiếu PNG gốc; các frame là AtlasTexture với `filter_clip`
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_interiors_outdoor_resources.gd
+godot --headless --path . --script res://tools/setup/setup_interiors_outdoor_resources.gd
 ```
 
 Generator kiểm tra danh sách sheet nội thất, kích thước 19 PNG nguồn và vùng frame

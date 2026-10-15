@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Fruit_Trees_Fruit_Objects.png" id="1_voj67"]
+
+[resource]
+resource_name = "fruit_objects_grapes"
+atlas = ExtResource("1_voj67")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true

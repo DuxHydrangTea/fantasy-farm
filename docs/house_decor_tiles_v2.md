@@ -1,8 +1,8 @@
 # House Decor TileSet v2
 
-Resource: `res://tilesets/house_decor/house_decor_tiles.tres`.
-Generator: `res://scripts/setup/setup_house_decor_tiles_v2.gd`.
-Ma trận vùng chọn: `res://scripts/setup/data/house_decor_selection_matrix_v2.json`.
+Resource: `res://world/decorations/house/tilesets/house_decor_tiles.tres`.
+Generator: `res://tools/setup/setup_house_decor_tiles_v2.gd`.
+Ma trận vùng chọn: `res://tools/setup/data/house_decor_selection_matrix_v2.json`.
 
 V2 tạo một tile Godot cho mỗi vùng chọn của đồ vật, bằng
 `TileSetAtlasSource.create_tile(atlas_coords, size_in_atlas)`.
@@ -64,7 +64,7 @@ Vùng cửa đầu tiên bắt đầu tại atlas `(0, 0)`, rộng 1 ô, cao 2 �
 Sửa rectangle trong JSON, rồi chạy lại:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_house_decor_tiles_v2.gd
+godot --headless --path . --script res://tools/setup/setup_house_decor_tiles_v2.gd
 ```
 
 Generator kiểm tra toàn bộ ma trận trước khi tạo atlas, rồi lưu TileSet và trang preview.

@@ -1,0 +1,76 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dgbeek7ougnak"]
+
+[ext_resource type="Texture2D" uid="uid://5ujrltlutsai" path="res://world/decorations/outdoor/art/Outdoor_Decor_Animations/Other_Animations/Torch_Anim.png" id="1_ss5d3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsbg8"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(0, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqnc7"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(16, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lttjs"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(32, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6kx0"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(48, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfpx4"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(64, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63hih"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(80, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbx1n"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(96, 0, 16, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nejlg"]
+atlas = ExtResource("1_ss5d3")
+region = Rect2(112, 0, 16, 32)
+filter_clip = true
+
+[resource]
+resource_name = "torch"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsbg8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqnc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lttjs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6kx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfpx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63hih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbx1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nejlg")
+}],
+"loop": 1,
+"name": &"burn",
+"speed": 8.0
+}]

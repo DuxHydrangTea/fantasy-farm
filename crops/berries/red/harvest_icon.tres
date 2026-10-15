@@ -1,9 +1,0 @@
-[gd_resource type="AtlasTexture" format=3]
-
-[ext_resource type="Texture2D" path="res://assets/Crops/Berries.png" id="1_vncch"]
-
-[resource]
-resource_name = "berries_red_harvest_icon"
-atlas = ExtResource("1_vncch")
-region = Rect2(16, 0, 16, 16)
-filter_clip = true

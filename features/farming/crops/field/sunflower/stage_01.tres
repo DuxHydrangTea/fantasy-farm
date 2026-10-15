@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Crops.png" id="1_ogd2u"]
+
+[resource]
+resource_name = "field_sunflower_stage_01"
+atlas = ExtResource("1_ogd2u")
+region = Rect2(32, 448, 16, 32)
+filter_clip = true

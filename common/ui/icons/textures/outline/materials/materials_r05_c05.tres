@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://common/ui/icons/art/Outline/Resources_Icons_Outline.png" id="1_7y6k6"]
+
+[resource]
+resource_name = "materials_r05_c05"
+atlas = ExtResource("1_7y6k6")
+region = Rect2(64, 64, 16, 16)
+filter_clip = true

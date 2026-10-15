@@ -1,7 +1,7 @@
 # Resource icon tĩnh
 
-Đã tạo 276 `AtlasTexture` `.tres` từ `res://assets/Icons`, chia thành hai bản
-`res://icons/outline` và `res://icons/no_outline`.
+Đã tạo 276 `AtlasTexture` `.tres` từ `res://common/ui/icons/art`, chia thành hai bản
+`res://common/ui/icons/textures/outline` và `res://common/ui/icons/textures/no_outline`.
 
 | Folder nhóm | Sheet nguồn | Resource / mỗi bản |
 |---|---|---:|
@@ -19,7 +19,7 @@ nên không tạo thêm resource từ sheet này.
 
 Tên theo mẫu `<nhóm>_r<hàng>_c<cột>.tres`, hàng/cột bắt đầu từ 1 và tính cả ô trống
 trong sheet. Hai bản outline/no_outline dùng cùng tên và tọa độ.
-Ví dụ `res://icons/outline/tools/tools_r01_c01.tres` là ô hàng 1, cột 1 của sheet
+Ví dụ `res://common/ui/icons/textures/outline/tools/tools_r01_c01.tres` là ô hàng 1, cột 1 của sheet
 `Tool_Icons_Outline.png`. Tên theo tọa độ giữ mapping chính xác mà không tự gán tên
 item hoặc loại khoáng sản từ màu ảnh.
 
@@ -31,7 +31,7 @@ hoặc trường `@export var icon: Texture2D` trong resource dữ liệu item.
 Chạy từ thư mục dự án bằng Godot 4:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_icon_resources.gd
+godot --headless --path . --script res://tools/setup/setup_icon_resources.gd
 ```
 
 Generator là script `SceneTree` chạy qua CLI. Script kiểm tra kích thước sheet và

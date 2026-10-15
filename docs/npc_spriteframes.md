@@ -1,8 +1,8 @@
 # SpriteFrames NPC
 
-Đã tạo ngày 06/10/2026 từ toàn bộ 8 PNG trong `res://assets/NPCs (Premade)`.
-Resource nằm trực tiếp trong `res://sprite_frames/character/<npc>_frames.tres`.
-Resource động vật nằm trực tiếp trong `res://sprite_frames/animals/<variant>_frames.tres`.
+Đã tạo ngày 06/10/2026 từ toàn bộ 8 PNG trong `res://entities/npcs/art`.
+Resource nằm trực tiếp trong `res://entities/npcs/animations/<npc>_frames.tres`.
+Resource động vật nằm trực tiếp trong `res://entities/animals/animations/<variant>_frames.tres`.
 
 ## Mapping NPC
 
@@ -27,11 +27,11 @@ Tên `cast`/`reel` dựa trên quan sát thao tác thả/thu cần trong ảnh.
 
 ## Tạo lại
 
-Mở `res://scripts/setup/setup_npc_sprite_frames.gd` trong Godot và chạy EditorScript
+Mở `res://tools/setup/setup_npc_sprite_frames.gd` trong Godot và chạy EditorScript
 (File → Run). Generator dùng profile theo NPC, kiểm tra kích thước sheet, rồi lưu `.tres`.
 PNG được giữ làm external resource, không phụ thuộc đường dẫn cache `.godot/imported`.
 Script `setup_farmer_bob_frames.gd` vẫn tạo riêng Farmer Bob bằng cùng profile.
-Generator động vật `setup_animal_sprite_frames.gd` cũng ghi trực tiếp vào folder `animals`.
+Generator động vật `setup_animal_sprite_frames.gd` cũng ghi trực tiếp vào folder `entities/animals`.
 
-Player dùng resource Farmer Bob tại đường dẫn mới; Chicken dùng resource trong `animals`.
+Player dùng resource Farmer Bob tại đường dẫn mới; Chicken dùng resource trong `entities/animals`.
 UID của các resource đã có được giữ khi chuyển thư mục.

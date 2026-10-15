@@ -1,0 +1,139 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ys7p7ja0ama5"]
+
+[ext_resource type="Texture2D" uid="uid://unao0h472p53" path="res://world/decorations/house/art/Golden_Chest_Anim.png" id="1_thuv6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0fq3"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(80, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcivq"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(64, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4p2x"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(48, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ff0m"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(32, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5riaq"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(16, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbi04"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxvsj"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34e28"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqlrv"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(16, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67yvq"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(32, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hn8bt"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(48, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aso0g"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(64, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njnss"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(80, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5hvt"]
+atlas = ExtResource("1_thuv6")
+region = Rect2(80, 0, 16, 16)
+filter_clip = true
+
+[resource]
+resource_name = "golden_chest"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0fq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcivq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4p2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ff0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5riaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbi04")
+}],
+"loop": 0,
+"name": &"close",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxvsj")
+}],
+"loop": 1,
+"name": &"closed",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34e28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqlrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67yvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hn8bt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aso0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njnss")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5hvt")
+}],
+"loop": 1,
+"name": &"opened",
+"speed": 8.0
+}]

@@ -3,11 +3,11 @@
 TileSet hiện gom nguyên đồ vật theo [ma trận vùng chọn](house_decor_tiles_v2.md)
 và dùng tên chính `house_decor_tiles.tres`.
 
-Nguồn: `res://assets/Buildings/House_Decor`, gồm 19 sheet tĩnh và 7 sheet animation.
+Nguồn: `res://world/decorations/house/art`, gồm 19 sheet tĩnh và 7 sheet animation.
 
 ## TileSet nội thất
 
-`res://tilesets/house_decor/house_decor_tiles.tres` có 19 atlas source và 1.670 vùng chọn.
+`res://world/decorations/house/tilesets/house_decor_tiles.tres` có 19 atlas source và 1.670 vùng chọn.
 Lưới cơ sở 16 × 16; mỗi đồ vật được gom vào một tile với kích thước atlas tương ứng,
 ví dụ cửa 1 × 2 ô. Gán resource vào `TileMapLayer.tile_set` để vẽ nội thất.
 Resource này chứa phần hình ảnh,
@@ -41,7 +41,7 @@ Khi thêm sheet mới trong generator, thêm ở cuối danh sách để giữ I
 
 ## SpriteFrames
 
-11 resource nằm trong `res://sprite_frames/house_decor`. FPS mặc định 8.
+11 resource nằm trong `res://world/decorations/house/animations`. FPS mặc định 8.
 Gán vào `AnimatedSprite2D.sprite_frames`, rồi chọn animation tương ứng.
 
 | Resource | Khung | Animation |
@@ -70,7 +70,7 @@ atlas của TileSet bật texture padding. Không bundle đường dẫn `.godot
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_house_decor_resources.gd
+godot --headless --path . --script res://tools/setup/setup_house_decor_resources.gd
 ```
 
 Generator kiểm tra danh sách và kích thước sheet trước khi tạo resource.

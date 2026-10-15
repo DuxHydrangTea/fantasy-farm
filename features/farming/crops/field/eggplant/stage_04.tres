@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Crops.png" id="1_585oj"]
+
+[resource]
+resource_name = "field_eggplant_stage_04"
+atlas = ExtResource("1_585oj")
+region = Rect2(80, 672, 16, 32)
+filter_clip = true

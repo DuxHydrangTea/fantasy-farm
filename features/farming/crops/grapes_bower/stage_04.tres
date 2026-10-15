@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Grapes_Bower.png" id="1_a3a5l"]
+
+[resource]
+resource_name = "grapes_bower_stage_04"
+atlas = ExtResource("1_a3a5l")
+region = Rect2(0, 80, 96, 80)
+filter_clip = true

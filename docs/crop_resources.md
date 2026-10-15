@@ -1,6 +1,6 @@
 # Resource hình ảnh cây trồng
 
-181 `AtlasTexture` `.tres` trong `res://crops`, tạo từ `res://assets/Crops`.
+181 `AtlasTexture` `.tres` trong `res://features/farming/crops`, tạo từ `res://features/farming/art`.
 Các resource này chứa hình ảnh; giai đoạn tăng trưởng được chọn bởi logic trồng trọt.
 Không cấu hình animation loop hay thời gian tăng trưởng, giá bán hoặc sản lượng.
 
@@ -16,8 +16,8 @@ Không cấu hình animation loop hay thời gian tăng trưởng, giá bán ho�
 ## Mapping và khung ảnh
 
 - `Crops.png`: 22 hàng × 7 cột, mỗi ô 16 × 32. Hàng đầu là `wheat`,
-  hàng cuối là `eggplant`. Mapping hàng → tên lấy từ mục `crops` trong
-  `scripts/setup/data/object_scene_names.json`; các key `crop_01` … `crop_22`
+  hàng cuối là `eggplant`. Mapping hàng → tên lấy từ mục `features/farming/crops` trong
+  `tools/setup/data/object_scene_names.json`; các key `crop_01` … `crop_22`
   trong catalog chỉ định hàng source, không còn là tên thư mục resource.
   Cột 1 là biển, cột 2 là hạt, cột 3–6 là `stage_01` … `stage_04`, cột 7 là thu hoạch.
 - Stage giữ toàn bộ khung 16 × 32 để cây thấp/cao có cùng vị trí gốc. Biển, hạt và
@@ -43,7 +43,7 @@ và không lưu đường dẫn cache `.godot/imported`.
 Gán resource stage vào `Sprite2D.texture`. Ví dụ:
 
 ```gdscript
-var stage_texture: Texture2D = preload("res://crops/field/wheat/stage_01.tres")
+var stage_texture: Texture2D = preload("res://features/farming/crops/field/wheat/stage_01.tres")
 ```
 
 Các `seed_icon.tres` và `harvest_icon.tres` có thể dùng với `TextureRect` hoặc
@@ -55,7 +55,7 @@ sau đó chuyển sang `fruit_trees/<loại>/ready.tres` khi có quả.
 Chạy từ thư mục dự án:
 
 ```sh
-godot --headless --path . --script res://scripts/setup/setup_crop_resources.gd
+godot --headless --path . --script res://tools/setup/setup_crop_resources.gd
 ```
 
 Generator kiểm tra kích thước của cả 10 PNG, xác nhận sheet trùng và xác minh

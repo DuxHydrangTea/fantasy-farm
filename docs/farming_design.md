@@ -105,7 +105,7 @@ scripts/farming/crop_definition.gd
 scripts/farming/farm_plot.gd
 scripts/farming/farm_land.gd
 scenes/farming/farm_plot.tscn
-crops/definitions/wheat.tres
+features/farming/crops/definitions/wheat.tres
 ```
 
 Không tạo `farm_plot_data.gd` và `crop_visual.tscn` của thiết kế trước. Chỉ sửa Player và ToolState sau khi thử được một ô độc lập.
@@ -158,9 +158,9 @@ func is_valid() -> bool:
 	return harvest_item_id != &"" and harvest_amount > 0
 ```
 
-Trong FileSystem, Create New → Resource → CropDefinition, lưu thành `crops/definitions/wheat.tres`. Gán ID tùy quy ước của game, tổng thời gian 1.200 giây và mảng 4 texture theo đúng thứ tự `stage_01` … `stage_04`. Resource ảnh trong `crops/field` đã dùng tên loại cây từ catalog; ID sản phẩm gameplay do bạn định nghĩa.
+Trong FileSystem, Create New → Resource → CropDefinition, lưu thành `features/farming/crops/definitions/wheat.tres`. Gán ID tùy quy ước của game, tổng thời gian 1.200 giây và mảng 4 texture theo đúng thứ tự `stage_01` … `stage_04`. Resource ảnh trong `features/farming/crops/field` đã dùng tên loại cây từ catalog; ID sản phẩm gameplay do bạn định nghĩa.
 
-`crops/field/wheat/stage_01.tres` hiện có là **AtlasTexture**, không phải CropDefinition. Kéo các resource ảnh có sẵn vào cấu hình cây mới; không sửa resource cấu hình khi tưới.
+`features/farming/crops/field/wheat/stage_01.tres` hiện có là **AtlasTexture**, không phải CropDefinition. Kéo các resource ảnh có sẵn vào cấu hình cây mới; không sửa resource cấu hình khi tưới.
 
 ## 7. Code mẫu cho một ô: `scripts/farming/farm_plot.gd`
 

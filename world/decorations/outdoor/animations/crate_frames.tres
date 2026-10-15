@@ -1,0 +1,86 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://0hnd0pbcke3y"]
+
+[ext_resource type="Texture2D" uid="uid://d3381585wb8w3" path="res://world/decorations/outdoor/art/Outdoor_Decor_Animations/Break_Animations/Crate_Anim.png" id="1_3dtcm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2ohl"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrkp1"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(48, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyv5n"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(96, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei2dn"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(144, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lecbm"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(192, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyspq"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(240, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7umx"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(240, 0, 48, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6grn"]
+atlas = ExtResource("1_3dtcm")
+region = Rect2(0, 0, 48, 48)
+filter_clip = true
+
+[resource]
+resource_name = "crate"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2ohl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrkp1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyv5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei2dn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lecbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yyspq")
+}],
+"loop": 0,
+"name": &"break",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7umx")
+}],
+"loop": 1,
+"name": &"broken",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6grn")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]

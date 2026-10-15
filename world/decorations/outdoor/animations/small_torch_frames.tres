@@ -1,0 +1,60 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://d334u67atsq0w"]
+
+[ext_resource type="Texture2D" uid="uid://ddgm3ya6ku6yp" path="res://world/decorations/outdoor/art/Outdoor_Decor_Animations/Other_Animations/Torch_small_anim.png" id="1_gydw8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvsab"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwjm8"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(16, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blsj2"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(32, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acyb1"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(48, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qk5sk"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(64, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a78ga"]
+atlas = ExtResource("1_gydw8")
+region = Rect2(80, 0, 16, 16)
+filter_clip = true
+
+[resource]
+resource_name = "small_torch"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvsab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwjm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blsj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acyb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qk5sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a78ga")
+}],
+"loop": 1,
+"name": &"burn",
+"speed": 8.0
+}]

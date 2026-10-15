@@ -1,0 +1,139 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://world/decorations/house/art/Golden_Jeweled_Chest_Anim.png" id="1_x2toe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcoxu"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(80, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nx30"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(64, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2g8h"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(48, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgmfk"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(32, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0fg6"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(16, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33drv"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(0, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdaeg"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(0, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eu5gq"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(0, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dexkq"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(16, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgrv6"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(32, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8flkd"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(48, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbd23"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(64, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytj3i"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(80, 64, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxy5e"]
+atlas = ExtResource("1_x2toe")
+region = Rect2(80, 64, 16, 16)
+filter_clip = true
+
+[resource]
+resource_name = "golden_jeweled_chest_05"
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcoxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nx30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2g8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgmfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0fg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33drv")
+}],
+"loop": 0,
+"name": &"close",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdaeg")
+}],
+"loop": 1,
+"name": &"closed",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eu5gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dexkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgrv6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8flkd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbd23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytj3i")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxy5e")
+}],
+"loop": 1,
+"name": &"opened",
+"speed": 8.0
+}]

@@ -10,10 +10,10 @@ giữ tên không có hướng. Các bảng hướng bên dưới là tài liệ
 thay đổi này, không phải danh sách animation hiện tại.
 
 **Cập nhật 06/10/2026:** 93 SpriteFrames động vật hiện nằm trực tiếp trong
-`res://sprite_frames/animals`. Generator `setup_animal_sprite_frames.gd` đã cập nhật
+`res://entities/animals/animations`. Generator `setup_animal_sprite_frames.gd` đã cập nhật
 đường dẫn này. Các ghi chú đề xuất bên dưới giữ lại theo thời điểm rà soát ban đầu.
 
-Ngày rà soát: 04/10/2026. Nguồn: `res://assets/Animals`.
+Ngày rà soát: 04/10/2026. Nguồn: `res://entities/animals/art`.
 
 Đây là bản đề xuất để review, chưa phải cấu hình generator đã chốt. Chưa tạo `.tres`, chưa đổi script hoặc scene.
 
@@ -164,7 +164,7 @@ Nguồn: `Butterfly.png` (16 × 64). Chia ô **8 × 8**: 2 cột × 8 hàng. M�
 
 ## 13. Kapybara
 
-Giữ đúng cách viết `Kapybara` của thư mục nguồn. Có hai biến thể: `Kapybara_*` và `Albino_Kapybara_*`, nằm trong `res://assets/Animals/Kapybara/Static`. Tên thư mục `Static` không có nghĩa ảnh chỉ có một frame.
+Giữ đúng cách viết `Kapybara` của thư mục nguồn. Có hai biến thể: `Kapybara_*` và `Albino_Kapybara_*`, nằm trong `res://entities/animals/art/Kapybara/Static`. Tên thư mục `Static` không có nghĩa ảnh chỉ có một frame.
 
 Mỗi file chứa một hàng, ô 32 × 32. Gom sáu file cùng tiền tố vào một SpriteFrames. Các state không thêm hậu tố hướng vì có động tác tự quay nhìn trong cùng dải, chưa có bộ di chuyển theo hướng.
 

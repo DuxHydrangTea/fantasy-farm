@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Berries.png" id="1_uqco3"]
+
+[resource]
+resource_name = "berries_red_appearance_04"
+atlas = ExtResource("1_uqco3")
+region = Rect2(0, 48, 16, 16)
+filter_clip = true

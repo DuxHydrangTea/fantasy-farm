@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://features/farming/art/Fruit_Tree_Stages.png" id="1_amtnw"]
+
+[resource]
+resource_name = "fruit_trees_shared_stage_02"
+atlas = ExtResource("1_amtnw")
+region = Rect2(32, 0, 32, 64)
+filter_clip = true
