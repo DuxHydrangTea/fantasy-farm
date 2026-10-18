@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/farmer_bob_frames.tres" id="1_frames"]
+[ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
+[ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
+[ext_resource type="Script" path="res://components/state_component.gd" id="4_state"]
+
+[sub_resource type="RectangleShape2D" id="FeetShape"]
+size = Vector2(10, 4)
+
+[node name="FarmerBob" type="CharacterBody2D"]
+texture_filter = 1
+motion_mode = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_frames")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("FeetShape")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("2_move")
+
+[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("3_animation")
+animated_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="StateComponent" type="Node" parent="." node_paths=PackedStringArray("movement", "animation")]
+script = ExtResource("4_state")
+movement = NodePath("../MovementComponent")
+animation = NodePath("../AnimationComponent")

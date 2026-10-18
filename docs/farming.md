@@ -1,0 +1,61 @@
+# Farming
+
+Choose a hotbar slot with **1–6**, by clicking it, or by scrolling the mouse wheel.
+Face the adjacent tile and **right-click** or press **Space** to use the selected tool.
+Left-click still moves the player. Number keys select a slot without immediately using its tool.
+The change happens once on animation frame 3. Changing state before impact cancels it.
+
+The four-corner highlight follows the adjacent cell in the facing direction.
+White means the selected tool can affect the cell; red means blocked/unmarked or
+an invalid soil state for that tool. Empty slots hide the highlight. During Tool/Water the marker
+stays on the same cell as the action, including after impact until the animation
+finishes. It hides outside the Ground map or when Player runs without a farming world.
+
+The marker uses `resources/ui/soil_focus.tres`: atlas region `(144, 144, 32, 32)`
+from `assets/Ui/Sprite sheet for Basic Pack.png`, scaled to the actual tile size.
+
+`FarmLand` is the permission layer and stays in place. `DrySoil` is the continuous
+tilled bed. `WetSoil` overlays watered cells, keeping the bed connected where wet
+and dry cells meet. Both soil layers use their existing terrain set 0 / terrain 0.
+
+## Permissions in TileSet Custom Data
+
+The `FarmLand` TileSet has four boolean custom data fields:
+
+| Field | Meaning |
+| --- | --- |
+| `can_till` | Allows changing an untilled cell to dry soil. |
+| `can_water` | Allows watering dry soil. |
+| `can_plant` | Allows planting on dry or wet soil. |
+| `blocks_farming` | Blocks tilling, watering and planting. |
+
+The existing interior FarmLand tile `(1, 6)` enables the three permissions.
+Unmarked grass, empty cells and terrain border tiles deny farming by default.
+Paint the FarmLand terrain to expand the allowed region.
+
+Custom data belongs to a **tile definition**, so changing a flag affects every
+placement of that atlas/alternative tile. For only one protected region, paint
+an alternative tile with permissions disabled, or use a separate TileMapLayer
+whose placed tiles have `blocks_farming = true`. Any sibling tile layer can carry
+that flag; the layers must belong to the same world as `FarmingController`.
+
+Physics bodies on the controller's `obstacle_mask` (default layer 1) block actions
+in their occupied tile area; this covers existing tree trunks/building colliders.
+For a larger protected footprint, paint blocking tiles under the object.
+Objects without colliders can also call `set_cell_occupied(cell, true)` and clear
+it when removed. Placement code should check `can_plant(cell, actor)` before planting.
+
+Crop placement and timestamp growth are implemented; see [crop growth](crop_growth.md).
+Moisture decay and saving soil between game sessions are not yet implemented.
+
+## Tests
+
+Run all unit and integration tests from the GUT panel, or:
+
+```powershell
+godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit
+```
+
+`tests/unit/test_farming_rules.gd` tests permissions and soil transitions.
+`tests/integration/test_farming.gd` tests real terrains, four action directions,
+animation impact/cancellation, colliders and transformed maps.

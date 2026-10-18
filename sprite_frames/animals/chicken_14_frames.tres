@@ -168,8 +168,7 @@ animations = [{
 "loop": 0,
 "name": &"hurt_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lhvr0")
@@ -180,8 +179,7 @@ animations = [{
 "loop": 1,
 "name": &"idle_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pn83s")
@@ -210,8 +208,7 @@ animations = [{
 "loop": 1,
 "name": &"peck_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fca3r")
@@ -225,8 +222,7 @@ animations = [{
 "loop": 0,
 "name": &"sit_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yj4ba")
@@ -255,8 +251,7 @@ animations = [{
 "loop": 1,
 "name": &"sleep_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ywpr8")
@@ -270,8 +265,7 @@ animations = [{
 "loop": 0,
 "name": &"sleep_start_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nib2a")
@@ -285,8 +279,7 @@ animations = [{
 "loop": 0,
 "name": &"stand_up_down",
 "speed": 8.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_74s4k")

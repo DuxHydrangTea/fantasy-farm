@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://p617o0sl32sc"]
+
+[ext_resource type="PackedScene" path="res://scenes/characters/farmer_bob.tscn" id="1_farmer_bob"]
+[ext_resource type="Script" path="res://components/farming_action_component.gd" id="2_yewv4"]
+[ext_resource type="Script" path="res://components/soil_focus_component.gd" id="3_dyp2m"]
+[ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
+[ext_resource type="Script" path="res://components/tool_selection_component.gd" id="5_tools"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
+[ext_resource type="PackedScene" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
+[ext_resource type="Resource" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="9_item"]
+
+[node name="Player" unique_id=556331968 instance=ExtResource("1_farmer_bob")]
+
+[node name="StateComponent" parent="." index="4" node_paths=PackedStringArray("tool_selection")]
+tool_selection = NodePath("../ToolSelection")
+
+[node name="Camera2D" type="Camera2D" parent="." index="5" unique_id=1879359231]
+zoom = Vector2(3, 3)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="FarmingActionComponent" type="Node" parent="." index="6" unique_id=2057080144 node_paths=PackedStringArray("animation", "state")]
+script = ExtResource("2_yewv4")
+animation = NodePath("../AnimationComponent")
+state = NodePath("../StateComponent")
+
+[node name="SoilFocus" type="Node2D" parent="." index="7" unique_id=445356736 node_paths=PackedStringArray("actions")]
+z_index = 1
+z_as_relative = false
+texture_filter = 1
+script = ExtResource("3_dyp2m")
+actions = NodePath("../FarmingActionComponent")
+
+[node name="Marker" type="Sprite2D" parent="SoilFocus" index="0" unique_id=196721607]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_atpat")
+
+[node name="ToolSelection" type="Node" parent="."]
+script = ExtResource("5_tools")
+starting_seeds = Array[ExtResource("9_item")]([ExtResource("8_seed")])
+
+[node name="Hotbar" parent="." node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
+selection = NodePath("../ToolSelection")
+
+[node name="InventoryUI" parent="." node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
+selection = NodePath("../ToolSelection")

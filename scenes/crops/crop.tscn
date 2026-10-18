@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/crop.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="2_frame"]
+
+[sub_resource type="StyleBoxEmpty" id="Empty"]
+[sub_resource type="StyleBoxFlat" id="Fill"]
+bg_color = Color(0.53, 0.83, 0.32, 1)
+
+[node name="Crop" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_script")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="Progress" type="TextureRect" parent="."]
+z_index = 2
+z_as_relative = false
+offset_left = -7.5
+offset_top = -40.0
+offset_right = 7.5
+offset_bottom = -33.0
+mouse_filter = 2
+texture = ExtResource("2_frame")
+
+[node name="Bar" type="ProgressBar" parent="Progress"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 13.0
+offset_bottom = 4.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("Empty")
+theme_override_styles/fill = SubResource("Fill")
+max_value = 1.0
+step = 0.0
+show_percentage = false

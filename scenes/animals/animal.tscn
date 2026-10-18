@@ -1,0 +1,74 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://components/animals/animal_actor.gd" id="1_actor"]
+[ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
+[ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
+[ext_resource type="Script" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
+[ext_resource type="Script" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
+[sub_resource type="RectangleShape2D" id="Feet"]
+size = Vector2(10, 6)
+[sub_resource type="StyleBoxFlat" id="BarBackground"]
+bg_color = Color(0.15, 0.16, 0.21, 1)
+[sub_resource type="StyleBoxFlat" id="FoodFill"]
+bg_color = Color(0.95, 0.65, 0.24, 1)
+[sub_resource type="StyleBoxFlat" id="WaterFill"]
+bg_color = Color(0.27, 0.73, 0.92, 1)
+
+[node name="Animal" type="CharacterBody2D"]
+texture_filter = 1
+motion_mode = 1
+script = ExtResource("1_actor")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("Feet")
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("2_move")
+speed = 28.0
+acceleration = 240.0
+friction = 320.0
+arrival_distance = 1.0
+
+[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("3_animation")
+animated_sprite = NodePath("../AnimatedSprite2D")
+single_direction = true
+
+[node name="NeedsComponent" type="Node" parent="."]
+script = ExtResource("4_needs")
+
+[node name="WanderComponent" type="Node" parent="." node_paths=PackedStringArray("movement", "animation", "collision")]
+script = ExtResource("5_wander")
+movement = NodePath("../MovementComponent")
+animation = NodePath("../AnimationComponent")
+collision = NodePath("../CollisionShape2D")
+
+[node name="NeedsDisplay" type="Node2D" parent="."]
+position = Vector2(0, -28)
+z_index = 2
+
+[node name="Satiety" type="ProgressBar" parent="NeedsDisplay"]
+offset_left = -10.0
+offset_top = 0.0
+offset_right = 10.0
+offset_bottom = 3.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("FoodFill")
+value = 100.0
+step = 0.0
+show_percentage = false
+
+[node name="Hydration" type="ProgressBar" parent="NeedsDisplay"]
+offset_left = -10.0
+offset_top = 5.0
+offset_right = 10.0
+offset_bottom = 8.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarBackground")
+theme_override_styles/fill = SubResource("WaterFill")
+value = 100.0
+step = 0.0
+show_percentage = false
