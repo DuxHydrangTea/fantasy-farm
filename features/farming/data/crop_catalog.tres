@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CropCatalog" format=3 uid="uid://bqy4vlyw3s0aj"]
+
+[ext_resource type="Script" uid="uid://cykqwq3m1pqb8" path="res://features/farming/data/crop_definition.gd" id="1_rwgnm"]
+[ext_resource type="Resource" uid="uid://b1lcsa0mnbjt8" path="res://features/farming/data/carrot.tres" id="2_3ulh7"]
+[ext_resource type="Script" uid="uid://c24wvksuesrqs" path="res://features/inventory/data/crop_catalog.gd" id="2_sg0wg"]
+
+[resource]
+script = ExtResource("2_sg0wg")
+crops = Array[ExtResource("1_rwgnm")]([ExtResource("2_3ulh7")])
+metadata/_custom_type_script = "uid://c24wvksuesrqs"

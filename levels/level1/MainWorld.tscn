@@ -1,3 +1,81 @@
 [gd_scene format=3 uid="uid://b16qngqlur700"]
 
+[ext_resource type="PackedScene" uid="uid://bwihprc21wddf" path="res://entities/player/Player.tscn" id="1_vaclg"]
+[ext_resource type="PackedScene" uid="uid://c015e3i562gpa" path="res://world/farm/FarmWorld.tscn" id="2_1wdp0"]
+[ext_resource type="Script" uid="uid://bre686igisgsn" path="res://entities/player/target_preview.gd" id="3_4whbl"]
+[ext_resource type="Resource" uid="uid://bqy4vlyw3s0aj" path="res://features/farming/data/crop_catalog.tres" id="3_eu7nw"]
+[ext_resource type="PackedScene" uid="uid://ycmlckae8dng" path="res://features/inventory/ui/inventory_screen.tscn" id="4_w8hub"]
+[ext_resource type="PackedScene" uid="uid://dhjbui30rnp3p" path="res://features/inventory/ui/inventory_item_view.tscn" id="5_fav3m"]
+[ext_resource type="Script" uid="uid://hnjd3jsgmhgc" path="res://features/time/day_manager.gd" id="6_jmbdn"]
+[ext_resource type="Script" uid="uid://comdhvjnpsh3q" path="res://features/time/day_label.gd" id="6_n7w6c"]
+[ext_resource type="PackedScene" uid="uid://bl08d6ghtkqyp" path="res://features/inventory/ui/hotbar.tscn" id="7_udfma"]
+[ext_resource type="Script" uid="uid://b4i6rqtbrwfwq" path="res://features/time/debug_day_advance.gd" id="7_ysyrm"]
+
 [node name="MainWorld" type="Node2D" unique_id=526235270]
+
+[node name="FarmWorld" parent="." unique_id=1264019133 instance=ExtResource("2_1wdp0")]
+
+[node name="WorldGrid" parent="FarmWorld" index="6" unique_id=1753440174 node_paths=PackedStringArray("day_manager")]
+day_manager = NodePath("../../DayManager")
+
+[node name="Player" parent="." unique_id=1124257727 node_paths=PackedStringArray("target_preview", "world_grid", "hotbar_view") instance=ExtResource("1_vaclg")]
+position = Vector2(265.8014, 22.779877)
+target_preview = NodePath("../TargetPreview")
+world_grid = NodePath("../FarmWorld/WorldGrid")
+hotbar_view = NodePath("../HUB/Hotbar")
+crop_catalog = ExtResource("3_eu7nw")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=583822001]
+position = Vector2(655.9984, 368.00912)
+
+[node name="TargetPreview" type="Node2D" parent="." unique_id=1400809035 node_paths=PackedStringArray("grid_layer", "feet_anchor", "facing_component", "world_grid")]
+script = ExtResource("3_4whbl")
+grid_layer = NodePath("../FarmWorld/Grass")
+feet_anchor = NodePath("../Player/FeetAnchor")
+facing_component = NodePath("../Player/FacingComponent")
+world_grid = NodePath("../FarmWorld/WorldGrid")
+
+[node name="HUB" type="CanvasLayer" parent="." unique_id=815794535]
+
+[node name="InventoryScreen" parent="HUB" unique_id=1704696217 node_paths=PackedStringArray("inventory") instance=ExtResource("4_w8hub")]
+process_mode = 3
+inventory = NodePath("../../Player/InventoryComponent")
+item_view_scene = ExtResource("5_fav3m")
+
+[node name="DayLabel" type="Label" parent="HUB" unique_id=545271929 node_paths=PackedStringArray("day_manager")]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 66.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 14
+text = "Ngày 1"
+script = ExtResource("6_n7w6c")
+day_manager = NodePath("../../DayManager")
+
+[node name="Hotbar" parent="HUB" unique_id=1337467831 node_paths=PackedStringArray("inventory") instance=ExtResource("7_udfma")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -40.0
+offset_right = 124.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+inventory = NodePath("../../Player/InventoryComponent")
+slot_item_ids = Array[StringName]([&"hoe", &"watering_can", &"carrot_seed"])
+
+[node name="DayManager" type="Node" parent="." unique_id=65634499]
+script = ExtResource("6_jmbdn")
+
+[node name="DayTimer" type="Timer" parent="DayManager" unique_id=199998689]
+one_shot = true
+
+[node name="DebugDayAdvance" type="Node" parent="." unique_id=1512194012 node_paths=PackedStringArray("day_manager")]
+script = ExtResource("7_ysyrm")
+day_manager = NodePath("../DayManager")
+
+[editable path="FarmWorld"]
+[editable path="Player"]

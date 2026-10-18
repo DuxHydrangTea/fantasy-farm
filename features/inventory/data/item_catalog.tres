@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemCatalog" format=3 uid="uid://cejxi2s7gnai8"]
+
+[ext_resource type="Script" uid="uid://qq6ptfcknjv2" path="res://features/inventory/data/item_definition.gd" id="1_b7ov2"]
+[ext_resource type="Script" uid="uid://0mfju2ealryv" path="res://features/inventory/data/item_catalog.gd" id="2_f5pwf"]
+[ext_resource type="Resource" uid="uid://dnrqam78vsljw" path="res://features/inventory/data/carrot.tres" id="2_sfh5o"]
+[ext_resource type="Resource" uid="uid://bcf7b5juslcvr" path="res://features/inventory/data/carrot_seed.tres" id="3_sfh5o"]
+[ext_resource type="Resource" uid="uid://kf8uvcgwaf52" path="res://features/inventory/data/hoe.tres" id="4_cs3nm"]
+[ext_resource type="Resource" uid="uid://dh5sda5u2g337" path="res://features/inventory/data/watering_can.tres" id="5_ymxw3"]
+
+[resource]
+script = ExtResource("2_f5pwf")
+items = Array[ExtResource("1_b7ov2")]([ExtResource("2_sfh5o"), ExtResource("3_sfh5o"), ExtResource("4_cs3nm"), ExtResource("5_ymxw3")])
+metadata/_custom_type_script = "uid://0mfju2ealryv"

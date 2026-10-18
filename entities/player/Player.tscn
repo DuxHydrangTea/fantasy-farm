@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bwihprc21wddf"]
+
+[ext_resource type="Script" uid="uid://dlhdewl5pe8f2" path="res://entities/player/player.gd" id="1_bls4j"]
+[ext_resource type="Resource" uid="uid://b1lcsa0mnbjt8" path="res://features/farming/data/carrot.tres" id="2_ak4un"]
+[ext_resource type="Script" uid="uid://c61pb6y6bbht7" path="res://common/components/movement_component.gd" id="2_bls4j"]
+[ext_resource type="SpriteFrames" uid="uid://c8bijqj7rn1vl" path="res://entities/npcs/animations/farmer_bob_frames.tres" id="2_fkugw"]
+[ext_resource type="Script" uid="uid://bo78aj63j8e1d" path="res://entities/player/player_input_controller.gd" id="2_sglur"]
+[ext_resource type="Script" uid="uid://dtv2l4r0ply8r" path="res://common/components/animation_component.gd" id="5_fkugw"]
+[ext_resource type="Script" uid="uid://bi2ro0co5icgr" path="res://common/components/facing_component.gd" id="6_8fjmc"]
+[ext_resource type="Script" uid="uid://ibfhahb1ryct" path="res://common/states/actor_state_machine.gd" id="7_fmb3c"]
+[ext_resource type="Script" uid="uid://c1mb8etliekxk" path="res://common/states/locomotion.gd" id="8_q57vx"]
+[ext_resource type="Script" uid="uid://dgp460xeficeo" path="res://common/states/using_tool.gd" id="9_q57vx"]
+[ext_resource type="Script" uid="uid://dyjrar4na2fii" path="res://common/components/inventory_component.gd" id="11_1ms0h"]
+[ext_resource type="Resource" uid="uid://cejxi2s7gnai8" path="res://features/inventory/data/item_catalog.tres" id="12_2rv2u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bls4j"]
+size = Vector2(7.977401, 3.189713)
+
+[node name="Player" type="CharacterBody2D" unique_id=1124257727 node_paths=PackedStringArray("movement_component", "player_input_controller", "facing_component", "animation_component", "state_machine", "locomotion_state", "using_tool_state", "inventory_component")]
+script = ExtResource("1_bls4j")
+movement_component = NodePath("MovementComponent")
+player_input_controller = NodePath("PlayerInputController")
+facing_component = NodePath("FacingComponent")
+animation_component = NodePath("AnimationComponent")
+state_machine = NodePath("StateMachine")
+locomotion_state = NodePath("StateMachine/Locomotion")
+using_tool_state = NodePath("StateMachine/UsingTool")
+selected_crop = ExtResource("2_ak4un")
+inventory_component = NodePath("InventoryComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1027691315]
+sprite_frames = ExtResource("2_fkugw")
+animation = &"water_right"
+frame = 5
+frame_progress = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=595046755]
+position = Vector2(-0.02844286, 5.433754)
+shape = SubResource("RectangleShape2D_bls4j")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1274452665 node_paths=PackedStringArray("body")]
+script = ExtResource("2_bls4j")
+body = NodePath("..")
+
+[node name="PlayerInputController" type="Node" parent="." unique_id=446017549]
+script = ExtResource("2_sglur")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=347183540]
+limit_left = 0
+limit_top = 0
+limit_right = 655
+limit_bottom = 368
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=1275301898 node_paths=PackedStringArray("anim_sprite")]
+script = ExtResource("5_fkugw")
+anim_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="FacingComponent" type="Node" parent="." unique_id=2079419099]
+script = ExtResource("6_8fjmc")
+
+[node name="FeetAnchor" type="Marker2D" parent="." unique_id=1881905489]
+position = Vector2(-0.022094727, 5.5900116)
+
+[node name="StateMachine" type="Node" parent="." unique_id=1893025737 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("7_fmb3c")
+initial_state = NodePath("Locomotion")
+
+[node name="Locomotion" type="Node" parent="StateMachine" unique_id=823072836 node_paths=PackedStringArray("movement_component", "facing_component", "animation_component")]
+script = ExtResource("8_q57vx")
+movement_component = NodePath("../../MovementComponent")
+facing_component = NodePath("../../FacingComponent")
+animation_component = NodePath("../../AnimationComponent")
+
+[node name="UsingTool" type="Node" parent="StateMachine" unique_id=1233797789 node_paths=PackedStringArray("animation_component")]
+script = ExtResource("9_q57vx")
+animation_component = NodePath("../../AnimationComponent")
+
+[node name="InventoryComponent" type="Node" parent="." unique_id=590517544]
+script = ExtResource("11_1ms0h")
+item_catalog = ExtResource("12_2rv2u")

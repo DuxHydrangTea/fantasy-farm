@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://ycmlckae8dng"]
+
+[ext_resource type="Script" uid="uid://bcmdnj28c65r2" path="res://features/inventory/ui/inventory_screen.gd" id="1_w5prg"]
+
+[node name="InventoryScreen" type="Control" unique_id=1704696217]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_w5prg")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1829466195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1756118401]
+custom_minimum_size = Vector2(240, 100)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=1938532919]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=961652262]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1683726484]
+layout_mode = 2
+text = "Túi đồ"
+
+[node name="ItemsGrid" type="GridContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=414526002]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4

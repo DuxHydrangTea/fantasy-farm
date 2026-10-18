@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://b1lcsa0mnbjt8"]
+
+[ext_resource type="Script" uid="uid://cykqwq3m1pqb8" path="res://features/farming/data/crop_definition.gd" id="1_d4ymb"]
+[ext_resource type="Resource" uid="uid://dnrqam78vsljw" path="res://features/inventory/data/carrot.tres" id="1_m8a1i"]
+[ext_resource type="Texture2D" path="res://features/farming/crops/field/carrot/stage_01.tres" id="2_l0dce"]
+[ext_resource type="Texture2D" path="res://features/farming/crops/field/carrot/stage_02.tres" id="3_m8a1i"]
+[ext_resource type="Resource" uid="uid://bcf7b5juslcvr" path="res://features/inventory/data/carrot_seed.tres" id="3_r413l"]
+[ext_resource type="Texture2D" path="res://features/farming/crops/field/carrot/stage_03.tres" id="4_r413l"]
+[ext_resource type="Texture2D" path="res://features/farming/crops/field/carrot/stage_04.tres" id="5_k3jec"]
+
+[resource]
+script = ExtResource("1_d4ymb")
+crop_id = &"carrot"
+display_name = "Carrot"
+stage_textures = Array[Texture2D]([ExtResource("2_l0dce"), ExtResource("3_m8a1i"), ExtResource("4_r413l"), ExtResource("5_k3jec")])
+growth_seconds = 10.0
+harvest_item = ExtResource("1_m8a1i")
+seed_item = ExtResource("3_r413l")
+metadata/_custom_type_script = "uid://cykqwq3m1pqb8"

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dximstu4kq21e"]
+
+[ext_resource type="Script" uid="uid://cxk88s1d4we37" path="res://features/inventory/ui/hotbar_slot_view.gd" id="1_8ktaf"]
+[ext_resource type="PackedScene" uid="uid://dhjbui30rnp3p" path="res://features/inventory/ui/inventory_item_view.tscn" id="2_8ktaf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oyk2y"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.70454204, 0.8333956, 0, 1)
+
+[node name="HotbarSlotView" type="Control" unique_id=1509499252]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8ktaf")
+
+[node name="ItemView" parent="." unique_id=954476295 instance=ExtResource("2_8ktaf")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SelectionBorder" type="Panel" parent="." unique_id=706302402]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oyk2y")
+
+[node name="ShortcutLabel" type="Label" parent="." unique_id=834974232]
+layout_mode = 1
+offset_left = 1.0
+offset_right = 41.0
+offset_bottom = 22.0
+theme_override_font_sizes/font_size = 8
+text = "12"

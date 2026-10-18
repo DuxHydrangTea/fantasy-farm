@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bl08d6ghtkqyp"]
+
+[ext_resource type="Script" uid="uid://q5p17vuvxk47" path="res://features/inventory/ui/hotbar.gd" id="1_vxb6u"]
+[ext_resource type="PackedScene" uid="uid://dximstu4kq21e" path="res://features/inventory/ui/hotbar_slot_view.tscn" id="2_kine2"]
+
+[node name="Hotbar" type="MarginContainer" unique_id=1337467831]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_vxb6u")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=404130836]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Slots" type="HBoxContainer" parent="CenterContainer" unique_id=1485876342]
+layout_mode = 2
+
+[node name="HotbarSlotView" parent="CenterContainer/Slots" unique_id=1509499252 instance=ExtResource("2_kine2")]
+layout_mode = 2
+
+[node name="HotbarSlotView2" parent="CenterContainer/Slots" unique_id=752115319 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 2
+
+[node name="HotbarSlotView3" parent="CenterContainer/Slots" unique_id=1421665496 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 3
+
+[node name="HotbarSlotView4" parent="CenterContainer/Slots" unique_id=890491322 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 4
+
+[node name="HotbarSlotView5" parent="CenterContainer/Slots" unique_id=1572132474 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 5
+
+[node name="HotbarSlotView6" parent="CenterContainer/Slots" unique_id=323147077 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 6
+
+[node name="HotbarSlotView7" parent="CenterContainer/Slots" unique_id=497079211 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 7
+
+[node name="HotbarSlotView8" parent="CenterContainer/Slots" unique_id=131736274 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 8
+
+[node name="HotbarSlotView9" parent="CenterContainer/Slots" unique_id=476580052 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 9
+
+[node name="HotbarSlotView10" parent="CenterContainer/Slots" unique_id=1813938464 instance=ExtResource("2_kine2")]
+layout_mode = 2
+slot_number = 0

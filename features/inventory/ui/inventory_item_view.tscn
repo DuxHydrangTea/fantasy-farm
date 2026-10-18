@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dhjbui30rnp3p"]
+
+[ext_resource type="Texture2D" path="res://features/farming/crops/field/carrot/harvest_icon.tres" id="1_cacg3"]
+[ext_resource type="Script" uid="uid://chfyot2usdofb" path="res://features/inventory/ui/inventory_item_view.gd" id="1_kjdav"]
+
+[node name="InventoryItemView" type="PanelContainer" unique_id=954476295]
+custom_minimum_size = Vector2(24, 24)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_kjdav")
+
+[node name="Content" type="Control" parent="." unique_id=56684450]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Content" unique_id=816955584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Icon" type="TextureRect" parent="Content/MarginContainer" unique_id=1906269880]
+texture_filter = 1
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_cacg3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmountLabel" type="Label" parent="Content" unique_id=590896896]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 2

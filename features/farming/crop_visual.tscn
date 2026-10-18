@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://r3cg70cpikaa"]
+
+[ext_resource type="Script" uid="uid://ivdq32r0mkmj" path="res://features/farming/crop_visual.gd" id="1_2j5jp"]
+
+[node name="CropVisual" type="Node2D" unique_id=1693035043]
+script = ExtResource("1_2j5jp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1774699567]
+position = Vector2(0, -16)
