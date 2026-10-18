@@ -15,6 +15,20 @@ func _capture() -> void:
 	camera.make_current()
 	var animal: Node = world.get_node("CoopPen/Chicken")
 	animal.needs.update_at(animal.needs.time_manager.now() + 150.0)
-	await create_timer(1.0).timeout
+	var behaviours: bool = OS.get_cmdline_user_args().has("behaviours")
+	if behaviours:
+		for sample: Array in [["Chicken", &"forage"], ["Chicken_2", &"sleep"], ["Chicken_3", &"rest"]]:
+			var target: Node = world.get_node("CoopPen/" + String(sample[0]))
+			target.behaviour.definition = target.definition.duplicate()
+			target.behaviour.definition.forage_seconds = Vector2(20, 20)
+			target.behaviour.definition.rest_seconds = Vector2(20, 20)
+			target.behaviour.definition.sleep_seconds = Vector2(20, 20)
+			target.behaviour.request_behaviour(sample[1])
+	await create_timer(2.5 if behaviours else 1.0).timeout
 	await RenderingServer.frame_post_draw
-	quit(root.get_texture().get_image().save_png("res://.godot/animal-preview.png"))
+	if behaviours:
+		for node_name: String in ["Chicken", "Chicken_2", "Chicken_3"]:
+			var target: Node = world.get_node("CoopPen/" + node_name)
+			print(node_name, " preview animation: ", target.sprite.animation, " frame: ", target.sprite.frame)
+	var path: String = "res://.godot/animal-behaviours-preview.png" if behaviours else "res://.godot/animal-preview.png"
+	quit(root.get_texture().get_image().save_png(path))

@@ -4,6 +4,7 @@ const Definition = preload("res://scripts/animals/animal_definition.gd")
 const Pen = preload("res://components/animals/animal_pen.gd")
 const Needs = preload("res://components/animals/animal_needs_component.gd")
 const Wander = preload("res://components/animals/animal_wander_component.gd")
+const Behaviour = preload("res://components/animals/animal_behaviour_component.gd")
 @export var definition: Definition
 @export var pen: Pen
 @export var skin_frames: SpriteFrames
@@ -13,6 +14,7 @@ const Wander = preload("res://components/animals/animal_wander_component.gd")
 @onready var animation: AnimationComponent = $AnimationComponent
 @onready var needs: Needs = $NeedsComponent
 @onready var wander: Wander = $WanderComponent
+@onready var behaviour: Behaviour = $BehaviourComponent
 
 func _ready() -> void:
 	if pen == null:
@@ -26,7 +28,7 @@ func _ready() -> void:
 	var texture: Texture2D = sprite.sprite_frames.get_frame_texture(&"idle_down", 0)
 	var visible_rect: Rect2i = texture.get_image().get_used_rect()
 	sprite.position.y = texture.get_height() * 0.5 - visible_rect.end.y
-	$NeedsDisplay.position.y = sprite.position.y - texture.get_height() * 0.5 + visible_rect.position.y - 11.0
+	$NeedsDisplay.position.y = sprite.position.y - texture.get_height() * 0.5 + visible_rect.position.y - 18.0
 	$NeedsDisplay.visible = show_needs
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = definition.footprint
@@ -38,6 +40,7 @@ func _ready() -> void:
 	wander.idle_seconds = definition.idle_seconds
 	wander.margin = maxf(definition.pen_margin, definition.footprint.length() * 0.5)
 	animation.play("idle")
+	behaviour.configure(definition)
 
 func _update_needs_display(food: float, water: float) -> void:
 	$NeedsDisplay/Satiety.value = food

@@ -58,3 +58,46 @@ func test_incremental_paint_joins_and_erasing_reconnects(terrain = use_parameter
 	assert_eq(layer.get_cell_source_id(Vector2i(2, 1)), -1)
 	assert_eq(layer.get_cell_tile_data(Vector2i(2, 0)).get_terrain_peering_bit(TileSet.CELL_NEIGHBOR_BOTTOM_SIDE), -1)
 	assert_eq(layer.get_cell_tile_data(Vector2i(2, 2)).get_terrain_peering_bit(TileSet.CELL_NEIGHBOR_TOP_SIDE), -1)
+
+func test_fence_physics_layer_and_collision_polygons() -> void:
+	assert_eq(FENCES.get_physics_layers_count(), 1, "Fences tileset must have 1 physics layer")
+	assert_eq(FENCES.get_physics_layer_collision_layer(0), 1, "Physics layer 0 collision_layer must be 1 (World)")
+	for index: int in range(FENCES.get_source_count()):
+		var source: TileSetAtlasSource = FENCES.get_source(FENCES.get_source_id(index)) as TileSetAtlasSource
+		assert_eq(source.get_tiles_count(), 16)
+		for t: int in range(source.get_tiles_count()):
+			var coords: Vector2i = source.get_tile_id(t)
+			var data: TileData = source.get_tile_data(coords, 0)
+			assert_not_null(data)
+			if data != null:
+				assert_eq(data.get_collision_polygons_count(0), 1, "Tile at %s must have 1 collision polygon" % str(coords))
+				var pts: PackedVector2Array = data.get_collision_polygon_points(0, 0)
+				assert_eq(pts.size(), 4, "Tile at %s must have 4 collision points" % str(coords))
+
+	# Verify functional collision with a CharacterBody2D on collision_mask 1
+	var layer: TileMapLayer = TileMapLayer.new()
+	layer.tile_set = FENCES
+	add_child_autofree(layer)
+	layer.set_cell(Vector2i(2, 2), 0, Vector2i(0, 0))
+
+	var body: CharacterBody2D = CharacterBody2D.new()
+	body.collision_layer = 2
+	body.collision_mask = 1
+	var col: CollisionShape2D = CollisionShape2D.new()
+	var rect: RectangleShape2D = RectangleShape2D.new()
+	rect.size = Vector2(10, 4)
+	col.shape = rect
+	body.add_child(col)
+	add_child_autofree(body)
+
+	body.position = Vector2(20, 40)
+	await wait_physics_frames(2)
+	body.velocity = Vector2(100, 0)
+	for i in range(10):
+		body.move_and_slide()
+
+	assert_gt(body.get_slide_collision_count(), 0, "CharacterBody2D should collide with fence layer")
+	assert_lt(body.position.x, 32.0, "CharacterBody2D should be blocked by fence bounds")
+
+
+

@@ -198,3 +198,20 @@ func test_blocked_mouse_movement_stops_at_collider() -> void:
 	assert_lt(player.position.x, wall.position.x)
 	assert_false(state.movement.has_target)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
+
+func test_movement_dust_particles_emit_while_walking_and_stop_when_idle() -> void:
+	var dust: GPUParticles2D = player.get_node_or_null("DustParticles")
+	assert_not_null(dust, "Player must have DustParticles node")
+	assert_not_null(state.dust_particles, "StateComponent must reference DustParticles")
+	assert_false(dust.emitting, "Dust particles should not emit while idle")
+
+	_send_key(KEY_D, true)
+	await wait_physics_frames(10)
+	assert_eq(state.current_state, StateComponent.State.WALK)
+	assert_true(dust.emitting, "Dust particles should emit while walking")
+
+	_send_key(KEY_D, false)
+	await wait_physics_frames(15)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+	assert_false(dust.emitting, "Dust particles should stop emitting when idle")
+

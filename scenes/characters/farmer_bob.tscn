@@ -4,12 +4,45 @@
 [ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
 [ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
 [ext_resource type="Script" path="res://components/state_component.gd" id="4_state"]
+[ext_resource type="Texture2D" uid="uid://d0yebn4gwb0bi" path="res://assets/effects/dust_particle.png" id="5_dust"]
 
 [sub_resource type="RectangleShape2D" id="FeetShape"]
 size = Vector2(10, 4)
 
+[sub_resource type="Gradient" id="Gradient_dust"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0.8, 1, 1, 1, 0.5, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dust"]
+gradient = SubResource("Gradient_dust")
+
+[sub_resource type="Curve" id="Curve_dust"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dust"]
+curve = SubResource("Curve_dust")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dust"]
+resource_local_to_scene = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 1, 0)
+direction = Vector3(0, -1, 0)
+spread = 45.0
+initial_velocity_min = 6.0
+initial_velocity_max = 14.0
+gravity = Vector3(0, -8, 0)
+damping_min = 2.0
+damping_max = 5.0
+scale_min = 0.6
+scale_max = 1.0
+scale_curve = SubResource("CurveTexture_dust")
+color_ramp = SubResource("GradientTexture1D_dust")
+
 [node name="FarmerBob" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 2
+collision_mask = 1
 motion_mode = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -29,7 +62,21 @@ script = ExtResource("2_move")
 script = ExtResource("3_animation")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
-[node name="StateComponent" type="Node" parent="." node_paths=PackedStringArray("movement", "animation")]
+[node name="StateComponent" type="Node" parent="." node_paths=PackedStringArray("movement", "animation", "dust_particles")]
 script = ExtResource("4_state")
 movement = NodePath("../MovementComponent")
 animation = NodePath("../AnimationComponent")
+dust_particles = NodePath("../DustParticles")
+
+[node name="DustParticles" type="GPUParticles2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(0, -1)
+emitting = false
+amount = 8
+texture = ExtResource("5_dust")
+lifetime = 0.35
+randomness = 0.2
+local_coords = false
+process_material = SubResource("ParticleProcessMaterial_dust")
+

@@ -17,6 +17,8 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var action_down: StringName = &"move_down"
 @export var action_use_item: StringName = &"use_item"
 @export var tool_selection: ToolSelection
+@export var dust_particles: GPUParticles2D
+
 
 var current_state: State = State.IDLE
 var _initialized: bool = false
@@ -36,11 +38,13 @@ func _physics_process(delta: float) -> void:
 		_use_requested = false
 		_harvest_requested = false
 		movement.stop()
+		_update_dust(false)
 		return
 	if current_state == State.TOOL or current_state == State.WATER:
 		_use_requested = false
 		_harvest_requested = false
 		movement.stop()
+		_update_dust(false)
 		return
 	var keyboard: Vector2 = Input.get_vector(action_left, action_right, action_up, action_down)
 	if not keyboard.is_zero_approx():
@@ -63,6 +67,9 @@ func _physics_process(delta: float) -> void:
 		movement.move(direction, delta)
 	transition_to(State.IDLE if direction.is_zero_approx() else State.WALK)
 	animation.play(STATE_NAMES[current_state])
+	var is_moving: bool = current_state == State.WALK and movement.body.velocity.length_squared() > 100.0
+	_update_dust(is_moving)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if tool_selection != null and tool_selection.inventory_open:
@@ -129,8 +136,22 @@ func transition_to(next_state: State) -> void:
 	if current_state == State.TOOL or current_state == State.WATER:
 		movement.cancel_target()
 		movement.stop()
+	if current_state != State.WALK:
+		_update_dust(false)
 	animation.play(STATE_NAMES[current_state], true)
 	state_changed.emit(previous, STATE_NAMES[current_state])
+
+func _update_dust(emitting: bool) -> void:
+	if dust_particles == null:
+		return
+	dust_particles.emitting = emitting
+	if emitting and movement != null and movement.body != null and dust_particles.process_material is ParticleProcessMaterial:
+		var mat: ParticleProcessMaterial = dust_particles.process_material as ParticleProcessMaterial
+		var vel: Vector2 = movement.body.velocity
+		if not vel.is_zero_approx():
+			var kick_dir: Vector2 = (-vel.normalized() * 0.7 + Vector2(0, -0.6)).normalized()
+			mat.direction = Vector3(kick_dir.x, kick_dir.y, 0)
+
 
 func _movement_direction() -> Vector2:
 	return Input.get_vector(action_left, action_right, action_up, action_down)

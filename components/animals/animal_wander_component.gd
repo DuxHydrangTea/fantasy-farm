@@ -18,6 +18,10 @@ func _ready() -> void:
 		_rng.seed = random_seed
 
 func _physics_process(delta: float) -> void:
+	step(delta)
+
+## Called by AnimalBehaviourComponent when it owns the animal's state.
+func step(delta: float) -> void:
 	if not is_instance_valid(pen):
 		movement.cancel_target()
 		movement.stop()

@@ -11,6 +11,17 @@ const Production = preload("res://scripts/animals/animal_production_definition.g
 @export var idle_seconds: Vector2 = Vector2(0.6, 1.8)
 @export var footprint: Vector2 = Vector2(10, 6)
 @export_range(1.0, 64.0) var pen_margin: float = 12.0
+@export_group("Behaviour")
+@export_range(0.0, 20.0) var walk_weight: float = 5.0
+@export_range(0.0, 20.0) var forage_weight: float = 3.0
+@export_range(0.0, 20.0) var rest_weight: float = 1.0
+@export_range(0.0, 20.0) var sleep_weight: float = 1.0
+@export var forage_seconds: Vector2 = Vector2(1.5, 3.5)
+@export var rest_seconds: Vector2 = Vector2(2.0, 4.0)
+@export var sleep_seconds: Vector2 = Vector2(4.0, 8.0)
+## Empty uses the first supported animation (peck/graze/chew, sit/lie_down).
+@export var forage_action: StringName = &""
+@export var lie_down_action: StringName = &""
 @export_group("Needs")
 @export_range(1.0, 86400.0) var satiety_depletion_seconds: float = 600.0
 @export_range(1.0, 86400.0) var hydration_depletion_seconds: float = 600.0

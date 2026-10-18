@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://p617o0sl32sc"]
 
 [ext_resource type="PackedScene" path="res://scenes/characters/farmer_bob.tscn" id="1_farmer_bob"]
-[ext_resource type="Script" path="res://components/farming_action_component.gd" id="2_yewv4"]
-[ext_resource type="Script" path="res://components/soil_focus_component.gd" id="3_dyp2m"]
+[ext_resource type="Script" uid="uid://cb0l66kr4jf76" path="res://components/farming_action_component.gd" id="2_yewv4"]
+[ext_resource type="Script" uid="uid://w37qhagijxt1" path="res://components/soil_focus_component.gd" id="3_dyp2m"]
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
-[ext_resource type="Script" path="res://components/tool_selection_component.gd" id="5_tools"]
+[ext_resource type="Script" uid="uid://cnttid04f6mx7" path="res://components/tool_selection_component.gd" id="5_tools"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
-[ext_resource type="Resource" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="9_item"]
+[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="9_item"]
 
 [node name="Player" unique_id=556331968 instance=ExtResource("1_farmer_bob")]
 
@@ -41,12 +41,14 @@ actions = NodePath("../FarmingActionComponent")
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_atpat")
 
-[node name="ToolSelection" type="Node" parent="."]
+[node name="ToolSelection" type="Node" parent="." index="8" unique_id=912929547]
 script = ExtResource("5_tools")
 starting_seeds = Array[ExtResource("9_item")]([ExtResource("8_seed")])
 
-[node name="Hotbar" parent="." node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
+[node name="Hotbar" parent="." index="9" unique_id=165912592 node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
+visible = false
 selection = NodePath("../ToolSelection")
 
-[node name="InventoryUI" parent="." node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
+[node name="InventoryUI" parent="." index="10" unique_id=868395166 node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
+visible = false
 selection = NodePath("../ToolSelection")

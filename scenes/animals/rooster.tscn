@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/animals/animal.tscn" id="1_base"]
+[ext_resource type="Resource" path="res://animals/definitions/chicken.tres" id="2_definition"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/rooster_frames.tres" id="3_rooster_frames"]
+
+[node name="Rooster" instance=ExtResource("1_base")]
+definition = ExtResource("2_definition")
+skin_frames = ExtResource("3_rooster_frames")

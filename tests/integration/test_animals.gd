@@ -114,3 +114,34 @@ func test_invalid_skin_falls_back_to_valid_species_frames() -> void:
 	animal.skin_frames = SpriteFrames.new()
 	field.add_child(animal)
 	assert_eq(animal.sprite.sprite_frames, animal.definition.adult_frames)
+
+func test_world_has_nine_distinct_chicken_skins_without_duplicate_spawns() -> void:
+	var world: Node = preload("res://world/main_world.tscn").instantiate()
+	var skins: Dictionary[String, int] = {}
+	var count: int = 0
+	for child: Node in world.get_node("CoopPen").get_children():
+		if child.scene_file_path != CHICKEN.resource_path:
+			continue
+		var animal: Actor = child as Actor
+		var frames: SpriteFrames = animal.skin_frames if animal.skin_frames != null else animal.definition.adult_frames
+		skins[frames.resource_path] = skins.get(frames.resource_path, 0) + 1
+		count += 1
+	assert_eq(count, 9)
+	for index: int in range(1, 10):
+		var path: String = "res://sprite_frames/animals/chicken_%02d_frames.tres" % index
+		assert_eq(skins.get(path, 0), 1, "Exactly one chicken for each requested skin")
+	world.free()
+
+func test_needs_bars_use_the_same_pixel_frame_as_crop_progress() -> void:
+	var crop: Node = preload("res://scenes/crops/crop.tscn").instantiate()
+	var crop_frame: TextureRect = crop.get_node("Progress")
+	for prefix: String in ["Satiety", "Hydration"]:
+		var frame: TextureRect = chicken.get_node("NeedsDisplay/" + prefix + "Frame")
+		var bar: ProgressBar = chicken.get_node("NeedsDisplay/" + prefix)
+		assert_eq(frame.texture, crop_frame.texture)
+		assert_eq(frame.size, Vector2(15, 7))
+		assert_true(frame.get_global_rect().encloses(bar.get_global_rect()))
+		assert_eq(frame.mouse_filter, Control.MOUSE_FILTER_IGNORE)
+		assert_eq(bar.mouse_filter, Control.MOUSE_FILTER_IGNORE)
+		assert_false(bar.show_percentage)
+	crop.free()

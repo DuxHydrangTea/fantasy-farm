@@ -1,74 +1,99 @@
 [gd_scene format=3]
+
 [ext_resource type="Script" path="res://components/animals/animal_actor.gd" id="1_actor"]
 [ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
 [ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
 [ext_resource type="Script" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
 [ext_resource type="Script" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
+[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_frame"]
+[ext_resource type="Script" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
+
 [sub_resource type="RectangleShape2D" id="Feet"]
 size = Vector2(10, 6)
-[sub_resource type="StyleBoxFlat" id="BarBackground"]
-bg_color = Color(0.15, 0.16, 0.21, 1)
+
+[sub_resource type="StyleBoxEmpty" id="BarEmpty"]
+
 [sub_resource type="StyleBoxFlat" id="FoodFill"]
 bg_color = Color(0.95, 0.65, 0.24, 1)
+
 [sub_resource type="StyleBoxFlat" id="WaterFill"]
 bg_color = Color(0.27, 0.73, 0.92, 1)
 
-[node name="Animal" type="CharacterBody2D"]
+[node name="Animal" type="CharacterBody2D" unique_id=967302978]
 texture_filter = 1
+collision_layer = 4
 motion_mode = 1
 script = ExtResource("1_actor")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1449018031]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=107920121]
 position = Vector2(0, -3)
 shape = SubResource("Feet")
 
-[node name="MovementComponent" type="Node" parent="."]
+[node name="MovementComponent" type="Node" parent="." unique_id=881000539]
 script = ExtResource("2_move")
 speed = 28.0
 acceleration = 240.0
 friction = 320.0
 arrival_distance = 1.0
 
-[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("animated_sprite")]
+[node name="AnimationComponent" type="Node" parent="." unique_id=518748439 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("3_animation")
 animated_sprite = NodePath("../AnimatedSprite2D")
 single_direction = true
 
-[node name="NeedsComponent" type="Node" parent="."]
+[node name="NeedsComponent" type="Node" parent="." unique_id=1042965650]
 script = ExtResource("4_needs")
 
-[node name="WanderComponent" type="Node" parent="." node_paths=PackedStringArray("movement", "animation", "collision")]
+[node name="WanderComponent" type="Node" parent="." unique_id=1335359085 node_paths=PackedStringArray("movement", "animation", "collision")]
 script = ExtResource("5_wander")
 movement = NodePath("../MovementComponent")
 animation = NodePath("../AnimationComponent")
 collision = NodePath("../CollisionShape2D")
 
-[node name="NeedsDisplay" type="Node2D" parent="."]
-position = Vector2(0, -28)
+[node name="NeedsDisplay" type="Node2D" parent="." unique_id=1867274484]
 z_index = 2
+position = Vector2(0, -35)
 
-[node name="Satiety" type="ProgressBar" parent="NeedsDisplay"]
-offset_left = -10.0
-offset_top = 0.0
-offset_right = 10.0
-offset_bottom = 3.0
+[node name="SatietyFrame" type="TextureRect" parent="NeedsDisplay" unique_id=543953675]
+offset_left = -7.5
+offset_right = 7.5
+offset_bottom = 7.0
 mouse_filter = 2
-theme_override_styles/background = SubResource("BarBackground")
+texture = ExtResource("6_frame")
+
+[node name="Satiety" type="ProgressBar" parent="NeedsDisplay" unique_id=580550276]
+offset_left = -5.5
+offset_top = 2.0
+offset_right = 5.5
+offset_bottom = 4.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarEmpty")
 theme_override_styles/fill = SubResource("FoodFill")
-value = 100.0
 step = 0.0
+value = 100.0
 show_percentage = false
 
-[node name="Hydration" type="ProgressBar" parent="NeedsDisplay"]
-offset_left = -10.0
-offset_top = 5.0
-offset_right = 10.0
-offset_bottom = 8.0
+[node name="HydrationFrame" type="TextureRect" parent="NeedsDisplay" unique_id=1323004160]
+offset_left = -7.5
+offset_top = 8.0
+offset_right = 7.5
+offset_bottom = 15.0
 mouse_filter = 2
-theme_override_styles/background = SubResource("BarBackground")
+texture = ExtResource("6_frame")
+
+[node name="Hydration" type="ProgressBar" parent="NeedsDisplay" unique_id=1868923916]
+offset_left = -5.5
+offset_top = 10.0
+offset_right = 5.5
+offset_bottom = 12.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("BarEmpty")
 theme_override_styles/fill = SubResource("WaterFill")
-value = 100.0
 step = 0.0
+value = 100.0
 show_percentage = false
+
+[node name="BehaviourComponent" type="Node" parent="." unique_id=658705467]
+script = ExtResource("7_dufb3")
