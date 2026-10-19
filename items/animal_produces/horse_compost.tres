@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://icons/no_outline/materials/materials_r06_c02.tres" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = &"horse_compost"
+display_name = "Phân hữu cơ"
+icon = ExtResource("2_icon")
+item_type = 2
+max_stack = 32000

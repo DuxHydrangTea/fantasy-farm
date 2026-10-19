@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/animals/animal_trough.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
+
+[sub_resource type="AtlasTexture" id="Full"]
+atlas = ExtResource("2_sheet")
+region = Rect2(16, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="Empty"]
+atlas = ExtResource("2_sheet")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="RectangleShape2D" id="Body"]
+size = Vector2(28, 8)
+
+[node name="WaterTrough" type="StaticBody2D"]
+texture_filter = 1
+script = ExtResource("1_script")
+full_texture = SubResource("Full")
+empty_texture = SubResource("Empty")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = SubResource("Full")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("Body")

@@ -2,6 +2,8 @@ extends Node
 
 const Clock = preload("res://components/time_manager.gd")
 signal changed(satiety: float, hydration: float)
+## Eligible time is measured BEFORE depletion, including partial last intervals.
+signal time_advanced(timestamp: float, elapsed: float, supplied_seconds: float)
 @export var time_manager: Clock
 var satiety: float = 100.0
 var hydration: float = 100.0
@@ -23,7 +25,12 @@ func configure(food_seconds: float, water_seconds: float) -> void:
 func update_at(timestamp: float) -> void:
 	var elapsed: float = maxf(0.0, timestamp - _updated_at)
 	_updated_at = maxf(_updated_at, timestamp)
+	var food_seconds: float = satiety * satiety_depletion_seconds / 100.0
+	var water_seconds: float = hydration * hydration_depletion_seconds / 100.0
+	var supplied: float = minf(elapsed, minf(food_seconds, water_seconds))
 	_set_values(satiety - elapsed * 100.0 / satiety_depletion_seconds, hydration - elapsed * 100.0 / hydration_depletion_seconds)
+	if elapsed > 0.0:
+		time_advanced.emit(_updated_at, elapsed, supplied)
 
 func feed(amount: float) -> float:
 	_sync()

@@ -9,14 +9,50 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
 [ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="9_item"]
+[ext_resource type="Script" uid="uid://1rh2a2xtxj0w" path="res://components/item_collector.gd" id="10_collector"]
+[ext_resource type="Script" uid="uid://8s4o5x32ce3g" path="res://components/animals/trough_interaction_component.gd" id="11_refill"]
+[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
+[ext_resource type="FontFile" uid="uid://cweato48t7jwx" path="res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf" id="13_font"]
+
+[sub_resource type="CircleShape2D" id="PickupRadius"]
+radius = 14.0
+
+[sub_resource type="Gradient" id="Gradient_dust"]
+offsets = PackedFloat32Array(0, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0.8, 1, 1, 1, 0.5, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dust"]
+gradient = SubResource("Gradient_dust")
+
+[sub_resource type="Curve" id="Curve_dust"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dust"]
+curve = SubResource("Curve_dust")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhtjm"]
+resource_local_to_scene = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 1, 0)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 6.0
+initial_velocity_max = 14.0
+gravity = Vector3(0, -8, 0)
+damping_min = 2.0
+damping_max = 5.0
+scale_min = 0.6
+scale_curve = SubResource("CurveTexture_dust")
+color_ramp = SubResource("GradientTexture1D_dust")
 
 [node name="Player" unique_id=556331968 instance=ExtResource("1_farmer_bob")]
 
-[node name="StateComponent" parent="." index="4" node_paths=PackedStringArray("tool_selection")]
+[node name="StateComponent" parent="." index="4" node_paths=PackedStringArray("tool_selection", "trough_interaction")]
 tool_selection = NodePath("../ToolSelection")
+trough_interaction = NodePath("../TroughInteraction")
 
 [node name="Camera2D" type="Camera2D" parent="." index="5" unique_id=1879359231]
-zoom = Vector2(3, 3)
+zoom = Vector2(2.5, 2.5)
 process_callback = 0
 limit_left = 0
 limit_top = 0
@@ -44,11 +80,41 @@ texture = ExtResource("4_atpat")
 [node name="ToolSelection" type="Node" parent="." index="8" unique_id=912929547]
 script = ExtResource("5_tools")
 starting_seeds = Array[ExtResource("9_item")]([ExtResource("8_seed")])
+starting_feed = ExtResource("12_feed")
 
 [node name="Hotbar" parent="." index="9" unique_id=165912592 node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
-visible = false
 selection = NodePath("../ToolSelection")
 
 [node name="InventoryUI" parent="." index="10" unique_id=868395166 node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
-visible = false
 selection = NodePath("../ToolSelection")
+
+[node name="ItemCollector" type="Area2D" parent="." index="11" unique_id=1951112033 node_paths=PackedStringArray("inventory_source")]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("10_collector")
+inventory_source = NodePath("../ToolSelection")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCollector" index="0" unique_id=568082033]
+shape = SubResource("PickupRadius")
+
+[node name="TroughInteraction" type="Node2D" parent="." index="12" unique_id=685308976 node_paths=PackedStringArray("selection", "animation", "state")]
+z_index = 10
+script = ExtResource("11_refill")
+selection = NodePath("../ToolSelection")
+animation = NodePath("../AnimationComponent")
+state = NodePath("../StateComponent")
+
+[node name="Prompt" type="Label" parent="TroughInteraction" index="0" unique_id=1824732653]
+offset_left = -110.0
+offset_top = -54.0
+offset_right = 110.0
+offset_bottom = -24.0
+theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("13_font")
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+
+[node name="DustParticles" parent="." index="13"]
+process_material = SubResource("ParticleProcessMaterial_xhtjm")

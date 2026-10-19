@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/animals/water_trough.tscn" id="1_base"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
+[ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="3_feed"]
+
+[sub_resource type="AtlasTexture" id="Full"]
+atlas = ExtResource("2_sheet")
+region = Rect2(96, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="Empty"]
+atlas = ExtResource("2_sheet")
+region = Rect2(144, 0, 16, 32)
+
+[node name="FeedTrough" instance=ExtResource("1_base")]
+kind = 0
+capacity = 600
+stock = 120
+feed_item = ExtResource("3_feed")
+full_texture = SubResource("Full")
+empty_texture = SubResource("Empty")
+
+[node name="Sprite2D" parent="." index="0"]
+rotation = 1.5707964
+texture = SubResource("Full")

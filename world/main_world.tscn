@@ -28,6 +28,8 @@
 [ext_resource type="SpriteFrames" uid="uid://csso86f5uo6qp" path="res://sprite_frames/animals/chicken_07_frames.tres" id="29_chicken_07"]
 [ext_resource type="SpriteFrames" uid="uid://bkjxb5x0tc545" path="res://sprite_frames/animals/chicken_08_frames.tres" id="30_chicken_08"]
 [ext_resource type="SpriteFrames" uid="uid://drnaomoo6ryf2" path="res://sprite_frames/animals/chicken_09_frames.tres" id="31_chicken_09"]
+[ext_resource type="PackedScene" path="res://scenes/animals/feed_trough.tscn" id="32_feed_trough"]
+[ext_resource type="PackedScene" path="res://scenes/animals/water_trough.tscn" id="33_water_trough"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -1510,30 +1512,49 @@ position = Vector2(1350, 330)
 [node name="CoopPen" parent="." unique_id=1747236029 instance=ExtResource("18_c45uy")]
 position = Vector2(1008, 288)
 
+[node name="FeedTrough" parent="CoopPen" instance=ExtResource("32_feed_trough")]
+position = Vector2(96, 32)
+
+[node name="FeedTrough2" parent="CoopPen" instance=ExtResource("32_feed_trough")]
+position = Vector2(176, 32)
+
+[node name="WaterTrough" parent="CoopPen" instance=ExtResource("33_water_trough")]
+position = Vector2(256, 32)
+
+[node name="WaterTrough2" parent="CoopPen" instance=ExtResource("33_water_trough")]
+position = Vector2(304, 192)
+
 [node name="Chicken" parent="CoopPen" unique_id=847583252 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(192, 144)
 
 [node name="Chicken_2" parent="CoopPen" unique_id=1897946056 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(75, 75)
 skin_frames = ExtResource("24_chicken_02")
 
 [node name="Chicken_3" parent="CoopPen" unique_id=472283585 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(135, 75)
 skin_frames = ExtResource("25_chicken_03")
 
 [node name="Chicken_4" parent="CoopPen" unique_id=151074559 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(185, 75)
 skin_frames = ExtResource("26_chicken_04")
 
 [node name="Chicken_5" parent="CoopPen" unique_id=2040936649 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(75, 135)
 skin_frames = ExtResource("27_chicken_05")
 
 [node name="Chicken_6" parent="CoopPen" unique_id=1968352152 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(135, 135)
 skin_frames = ExtResource("28_chicken_06")
 
 [node name="Chicken_7" parent="CoopPen" unique_id=1090335375 instance=ExtResource("20_q1dqp")]
+initial_age_seconds = 120.0
 position = Vector2(75, 195)
 skin_frames = ExtResource("29_chicken_07")
 
@@ -1546,28 +1567,37 @@ position = Vector2(195, 195)
 skin_frames = ExtResource("31_chicken_09")
 
 [node name="Rooster_1" parent="CoopPen" unique_id=93969433 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(240, 75)
 
 [node name="Rooster_2" parent="CoopPen" unique_id=153216699 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(290, 85)
 
 [node name="Rooster_3" parent="CoopPen" unique_id=2089046417 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(240, 125)
 
 [node name="Rooster_4" parent="CoopPen" unique_id=1724648053 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(290, 135)
 
 [node name="Rooster_5" parent="CoopPen" unique_id=658304725 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(240, 175)
 
 [node name="Rooster_6" parent="CoopPen" unique_id=403489761 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(290, 185)
 
 [node name="Rooster_7" parent="CoopPen" unique_id=955461653 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(165, 175)
 
 [node name="Rooster_8" parent="CoopPen" unique_id=1905618757 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(225, 145)
 
 [node name="Rooster_9" parent="CoopPen" unique_id=1727059515 instance=ExtResource("23_rooster")]
+initial_age_seconds = 120.0
 position = Vector2(265, 215)

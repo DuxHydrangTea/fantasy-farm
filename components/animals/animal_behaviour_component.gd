@@ -3,10 +3,13 @@ extends Node
 ## Owns behaviour decisions; Wander owns targets and Movement owns physics.
 const Definition = preload("res://scripts/animals/animal_definition.gd")
 const Wander = preload("res://components/animals/animal_wander_component.gd")
+const Foraging = preload("res://components/animals/animal_foraging_component.gd")
+const Trough = preload("res://components/animals/animal_trough.gd")
 signal state_changed(previous: StringName, current: StringName)
-enum State { IDLE, WALK, FORAGE, LIE_DOWN, REST, SLEEP_START, SLEEP, STAND_UP }
-const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"forage", &"lie_down", &"rest", &"sleep_start", &"sleep", &"stand_up"]
+enum State { IDLE, WALK, FORAGE, LIE_DOWN, REST, SLEEP_START, SLEEP, STAND_UP, SEEK_RESOURCE, EAT, DRINK }
+const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"forage", &"lie_down", &"rest", &"sleep_start", &"sleep", &"stand_up", &"seek_resource", &"eat", &"drink"]
 @onready var wander: Wander = $"../WanderComponent"
+@onready var foraging: Foraging = $"../ForagingComponent"
 var current_state: State = State.IDLE
 var definition: Definition
 var _remaining: float = 0.0
@@ -35,13 +38,42 @@ func configure(data: Definition) -> void:
 func _physics_process(delta: float) -> void:
 	if definition == null:
 		return
+	foraging.advance(delta)
 	if not is_instance_valid(wander.pen):
+		foraging.cancel()
 		_stop()
 		if current_state != State.IDLE:
 			_enter(State.IDLE)
 		return
 	# Boundary enforcement remains active while sitting or sleeping.
 	wander._keep_inside()
+	if current_state == State.SEEK_RESOURCE:
+		var travel: Foraging.Travel = foraging.step(delta)
+		if travel == Foraging.Travel.ARRIVED:
+			_enter(State.EAT if foraging.target.kind == Trough.Kind.FOOD else State.DRINK)
+		elif travel == Foraging.Travel.FAILED:
+			foraging.cancel(true)
+			_enter(State.IDLE)
+		return
+	if current_state == State.EAT or current_state == State.DRINK:
+		_stop()
+		if not foraging.target_is_valid():
+			foraging.cancel(true)
+			_enter(State.IDLE)
+			return
+		_remaining -= delta
+		if _remaining <= 0.0:
+			foraging.finish()
+			foraging.cancel()
+			_enter(State.IDLE)
+		return
+	if current_state == State.IDLE or current_state == State.WALK or current_state == State.FORAGE:
+		if foraging.try_begin():
+			_enter(State.SEEK_RESOURCE)
+			return
+	elif (current_state == State.REST or current_state == State.SLEEP) and foraging.has_need():
+		wake()
+		return
 	if current_state == State.WALK:
 		wander.step(delta)
 		if not wander.movement.has_target:
@@ -117,7 +149,7 @@ func _enter(next: State) -> void:
 	var previous: StringName = STATE_NAMES[current_state]
 	current_state = next
 	_expected_action = &""
-	if next != State.WALK:
+	if next != State.WALK and next != State.SEEK_RESOURCE:
 		_stop()
 	match next:
 		State.IDLE:
@@ -140,6 +172,11 @@ func _enter(next: State) -> void:
 			_play(&"sleep")
 		State.STAND_UP:
 			_play(&"stand_up")
+		State.SEEK_RESOURCE:
+			_play(&"walk")
+		State.EAT, State.DRINK:
+			_remaining = maxf(0.05, foraging.target.serving_seconds)
+			_play(_forage_action if not _forage_action.is_empty() else &"idle")
 	if previous != STATE_NAMES[next]:
 		state_changed.emit(previous, STATE_NAMES[next])
 
@@ -167,8 +204,8 @@ func _stop() -> void:
 
 func _has_action(action: StringName) -> bool:
 	var frames: SpriteFrames = wander.animation.animated_sprite.sprite_frames
-	var name: StringName = StringName(String(action) + "_down")
-	return frames != null and frames.has_animation(name) and frames.get_frame_count(name) > 0
+	var animation_name: StringName = StringName(String(action) + "_down")
+	return frames != null and frames.has_animation(animation_name) and frames.get_frame_count(animation_name) > 0
 
 func _one_shot(action: StringName) -> bool:
 	return _has_action(action) and not wander.animation.animated_sprite.sprite_frames.get_animation_loop(StringName(String(action) + "_down"))

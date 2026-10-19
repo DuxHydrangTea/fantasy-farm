@@ -5,16 +5,29 @@ const Pen = preload("res://components/animals/animal_pen.gd")
 const Needs = preload("res://components/animals/animal_needs_component.gd")
 const Wander = preload("res://components/animals/animal_wander_component.gd")
 const Behaviour = preload("res://components/animals/animal_behaviour_component.gd")
+const Foraging = preload("res://components/animals/animal_foraging_component.gd")
+const Growth = preload("res://components/animals/animal_growth_component.gd")
+const Production = preload("res://components/animals/animal_production_component.gd")
+const ProductionDefinition = preload("res://scripts/animals/animal_production_definition.gd")
+const Pickup = preload("res://components/item_pickup.gd")
+const Inventory = preload("res://components/inventory_component.gd")
+const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn")
 @export var definition: Definition
 @export var pen: Pen
 @export var skin_frames: SpriteFrames
 @export var show_needs: bool = true
+@export_range(0.0, 86400.0) var initial_age_seconds: float = 0.0
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement: MovementComponent = $MovementComponent
 @onready var animation: AnimationComponent = $AnimationComponent
 @onready var needs: Needs = $NeedsComponent
 @onready var wander: Wander = $WanderComponent
 @onready var behaviour: Behaviour = $BehaviourComponent
+@onready var foraging: Foraging = $ForagingComponent
+@onready var growth: Growth = $GrowthComponent
+@onready var production: Production = $ProductionComponent
+var _product_pickup: Pickup
+var _stage_visual_pending: bool = false
 
 func _ready() -> void:
 	if pen == null:
@@ -24,11 +37,6 @@ func _ready() -> void:
 		return
 	movement.speed = definition.move_speed
 	animation.single_direction_faces_left = definition.faces_left
-	sprite.sprite_frames = skin_frames if definition.has_movement_frames(skin_frames) else definition.adult_frames
-	var texture: Texture2D = sprite.sprite_frames.get_frame_texture(&"idle_down", 0)
-	var visible_rect: Rect2i = texture.get_image().get_used_rect()
-	sprite.position.y = texture.get_height() * 0.5 - visible_rect.end.y
-	$NeedsDisplay.position.y = sprite.position.y - texture.get_height() * 0.5 + visible_rect.position.y - 18.0
 	$NeedsDisplay.visible = show_needs
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = definition.footprint
@@ -39,8 +47,65 @@ func _ready() -> void:
 	wander.pen = pen
 	wander.idle_seconds = definition.idle_seconds
 	wander.margin = maxf(definition.pen_margin, definition.footprint.length() * 0.5)
+	growth.configure(definition.maturity_seconds, initial_age_seconds)
+	production.configure(definition.production)
+	growth.matured.connect(_on_matured)
+	production.produced.connect(_on_produced)
+	needs.time_advanced.connect(_advance_lifecycle)
+	_apply_stage_visuals()
 	animation.play("idle")
+	foraging.configure(definition, needs, wander)
 	behaviour.configure(definition)
+
+func _physics_process(_delta: float) -> void:
+	# Swap real juvenile art only while upright and idle, preserving rest/meal chains.
+	if _stage_visual_pending and behaviour.current_state == Behaviour.State.IDLE:
+		_apply_stage_visuals()
+		behaviour.configure(definition)
+
+func _apply_stage_visuals() -> void:
+	_stage_visual_pending = false
+	var frames: SpriteFrames = definition.get_frames_for_stage(growth.is_adult())
+	if frames == definition.adult_frames and definition.has_movement_frames(skin_frames):
+		frames = skin_frames
+	sprite.sprite_frames = frames
+	var texture: Texture2D = frames.get_frame_texture(&"idle_down", 0)
+	if texture != null:
+		var visible_rect: Rect2i = texture.get_image().get_used_rect()
+		sprite.position.y = texture.get_height() * 0.5 - visible_rect.end.y
+		$NeedsDisplay.position.y = sprite.position.y - texture.get_height() * 0.5 + visible_rect.position.y - 18.0
+
+func _on_matured() -> void:
+	var frames: SpriteFrames = definition.get_frames_for_stage(true)
+	if definition.has_movement_frames(skin_frames):
+		frames = skin_frames
+	_stage_visual_pending = frames != sprite.sprite_frames
+
+func _advance_lifecycle(_timestamp: float, elapsed: float, supplied_seconds: float) -> void:
+	var juvenile_seconds: float = growth.seconds_until_adult()
+	growth.advance(elapsed)
+	# Supplied time is a prefix of this interval; adulthood may begin partway in.
+	production.advance(maxf(0.0, supplied_seconds - juvenile_seconds))
+
+func _on_produced(_amount: int) -> void:
+	if production.definition.collection_mode != ProductionDefinition.CollectionMode.WORLD_DROP or not is_inside_tree():
+		return
+	if not is_instance_valid(_product_pickup) or _product_pickup.is_queued_for_deletion():
+		_product_pickup = PICKUP_SCENE.instantiate() as Pickup
+		_product_pickup.item = production.definition.production_item
+		_product_pickup.amount = production.take_output(production.stored_amount)
+		var spawn_point: Vector2 = global_position + Vector2(0, 10)
+		if is_instance_valid(pen):
+			spawn_point = pen.clamp_world(spawn_point, wander.margin)
+		get_parent().add_child(_product_pickup)
+		_product_pickup.global_position = spawn_point
+	else:
+		_product_pickup.add_amount(production.take_output(production.stored_amount))
+
+func collect_produce(inventory: Inventory) -> int:
+	if production.definition == null or production.definition.collection_mode != ProductionDefinition.CollectionMode.DIRECT_COLLECTION:
+		return 0
+	return production.collect(inventory)
 
 func _update_needs_display(food: float, water: float) -> void:
 	$NeedsDisplay/Satiety.value = food

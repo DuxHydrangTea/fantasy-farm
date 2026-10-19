@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
 [ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_frame"]
 [ext_resource type="Script" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
+[ext_resource type="Script" path="res://components/animals/animal_foraging_component.gd" id="8_foraging"]
+[ext_resource type="Script" path="res://components/animals/animal_growth_component.gd" id="9_growth"]
+[ext_resource type="Script" path="res://components/animals/animal_production_component.gd" id="10_production"]
 
 [sub_resource type="RectangleShape2D" id="Feet"]
 size = Vector2(10, 6)
@@ -97,3 +100,12 @@ show_percentage = false
 
 [node name="BehaviourComponent" type="Node" parent="." unique_id=658705467]
 script = ExtResource("7_dufb3")
+
+[node name="ForagingComponent" type="Node" parent="."]
+script = ExtResource("8_foraging")
+
+[node name="GrowthComponent" type="Node" parent="."]
+script = ExtResource("9_growth")
+
+[node name="ProductionComponent" type="Node" parent="."]
+script = ExtResource("10_production")

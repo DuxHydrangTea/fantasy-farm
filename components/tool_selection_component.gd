@@ -8,6 +8,8 @@ const Item = preload("res://scripts/item_definition.gd")
 const HOTBAR_SIZE: int = 6
 @export var inventory: Inventory
 @export var starting_seeds: Array[Item] = []
+@export var starting_feed: Item
+@export_range(0, 99) var starting_feed_amount: int = 5
 @export_range(1, 99) var starting_seed_amount: int = 12
 var selected_index: int = 0
 var inventory_open: bool = false
@@ -17,8 +19,10 @@ func _ready() -> void:
 		inventory = Inventory.new()
 		inventory.name = "Inventory"
 		add_child(inventory)
-		for seed: Item in starting_seeds:
-			inventory.add(seed, starting_seed_amount)
+		for seed_item: Item in starting_seeds:
+			inventory.add(seed_item, starting_seed_amount)
+		if starting_feed != null:
+			inventory.add(starting_feed, starting_feed_amount)
 	inventory.changed.connect(_on_inventory_changed)
 
 func set_inventory_open(open: bool) -> void:

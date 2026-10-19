@@ -17,6 +17,7 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var action_down: StringName = &"move_down"
 @export var action_use_item: StringName = &"use_item"
 @export var tool_selection: ToolSelection
+@export var trough_interaction: Node
 @export var dust_particles: GPUParticles2D
 
 
@@ -107,6 +108,13 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 		return false
 	if current_state == State.TOOL or current_state == State.WATER:
 		return false
+	var refill_action: StringName = trough_interaction.prepare_action() if trough_interaction != null else &""
+	if refill_action == &"blocked":
+		return true
+	if not refill_action.is_empty():
+		active_action = refill_action
+		transition_to(State.WATER if refill_action == &"refill_water" else State.TOOL)
+		return true
 	active_action = requested_action if requested_action == &"harvest" else get_selected_tool_action()
 	match active_action:
 		&"tool", &"plant", &"harvest":
