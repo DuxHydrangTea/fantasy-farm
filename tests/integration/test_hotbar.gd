@@ -108,6 +108,8 @@ func test_number_shortcut_then_space_uses_selected_tool() -> void:
 	assert_eq(state.current_state, StateComponent.State.WATER)
 
 func test_empty_slot_does_not_use_any_tool() -> void:
+	# Starting supplies can occupy this slot; this case requires an empty slot.
+	selection.inventory.remove_from_slot(3, int(selection.inventory.slot(3).count))
 	_click_slot(3)
 	_space(true)
 	_space(false)

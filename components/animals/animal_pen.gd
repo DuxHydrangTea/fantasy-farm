@@ -1,5 +1,6 @@
 @tool
 extends Node2D
+@export var persistent_id: StringName
 ## Rect in this node's local space, shared by any number of animals.
 @export var bounds: Rect2 = Rect2(0, 0, 384, 256):
 	set(value):

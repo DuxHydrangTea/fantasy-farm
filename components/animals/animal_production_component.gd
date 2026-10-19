@@ -17,6 +17,11 @@ func configure(data: Definition) -> void:
 func progress_ratio() -> float:
 	return progress_seconds / definition.production_seconds if definition != null and definition.is_valid() else 0.0
 
+func restore_state(progress: float, amount: int) -> void:
+	progress_seconds = progress
+	stored_amount = amount
+	stock_changed.emit(stored_amount)
+
 func advance(eligible_seconds: float) -> int:
 	if eligible_seconds <= 0.0 or definition == null or not definition.is_valid():
 		return 0

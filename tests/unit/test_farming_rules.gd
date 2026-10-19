@@ -37,6 +37,16 @@ func test_permission_flags_are_independent() -> void:
 	assert_true(farming.water(cell))
 	assert_false(farming.can_plant(cell), "Wet soil does not override planting permission")
 
+func test_water_and_farmland_borders_do_not_grant_farming_permissions() -> void:
+	for source_and_atlas: Array in [[0, Vector2i(0, 0)], [0, Vector2i(0, 5)], [0, Vector2i(1, 5)], [1, Vector2i(1, 1)]]:
+		land.set_cell(cell, source_and_atlas[0], source_and_atlas[1])
+		var data: TileData = land.get_cell_tile_data(cell)
+		for permission: String in ["can_till", "can_water", "can_plant"]:
+			assert_true(data.has_custom_data(permission))
+			assert_false(data.get_custom_data(permission), "Protected tile: " + permission)
+		assert_false(farming.can_till(cell))
+		assert_false(farming.till(cell))
+
 func test_soil_lifecycle_is_idempotent_and_preserves_permission_layer() -> void:
 	watch_signals(farming)
 	var source: int = land.get_cell_source_id(cell)

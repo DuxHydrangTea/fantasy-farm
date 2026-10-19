@@ -7,6 +7,7 @@ enum ToolType { HOE, WATERING_CAN }
 @export var item_id: StringName
 @export var display_name: String
 @export var icon: Texture2D
+@export var show_world_quantity: bool = true
 @export var item_type: ItemType = ItemType.TOOL
 @export var tool_type: ToolType = ToolType.HOE
 @export var crop: Resource

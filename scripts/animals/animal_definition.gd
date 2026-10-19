@@ -33,6 +33,9 @@ const Production = preload("res://scripts/animals/animal_production_definition.g
 @export var adult_frames: SpriteFrames
 @export var juvenile_frames: SpriteFrames
 @export var faces_left: bool = true
+@export_group("Habitat")
+@export var can_swim: bool = false
+@export var eggs_on_land: bool = false
 @export_group("Growth And Production")
 @export_range(0.0, 86400.0) var maturity_seconds: float = 120.0
 @export var production: Production

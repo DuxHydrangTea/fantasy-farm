@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/flowers/flower_pot.gd" id="1_jv2wi"]
+[ext_resource type="SpriteFrames" path="res://flowers/empty_pot_frames.tres" id="2_fgjva"]
+[ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="3_12gb3"]
+[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="4_hqowy"]
+[ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="5_2hk72"]
+[ext_resource type="StyleBox" path="res://flowers/progress_fill.tres" id="6_4nilf"]
+[ext_resource type="Shape2D" path="res://flowers/pot_collision.tres" id="7_fgjva"]
+
+[node name="FlowerPot" type="StaticBody2D" unique_id=1292078041]
+texture_filter = 1
+collision_mask = 0
+script = ExtResource("1_jv2wi")
+empty_frames = ExtResource("2_fgjva")
+
+[node name="Flower" type="AnimatedSprite2D" parent="." unique_id=1182751548]
+position = Vector2(0, -8)
+sprite_frames = ExtResource("2_fgjva")
+animation = &"grow"
+
+[node name="Focus" type="Sprite2D" parent="." unique_id=1188082198]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("3_12gb3")
+
+[node name="Progress" type="TextureRect" parent="." unique_id=616589614]
+visible = false
+z_index = 2
+z_as_relative = false
+offset_left = -7.5
+offset_top = -26.0
+offset_right = 7.5
+offset_bottom = -19.0
+mouse_filter = 2
+texture = ExtResource("4_hqowy")
+
+[node name="Bar" type="ProgressBar" parent="Progress" unique_id=1152474970]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 13.0
+offset_bottom = 4.0
+mouse_filter = 2
+theme_override_styles/background = ExtResource("5_2hk72")
+theme_override_styles/fill = ExtResource("6_4nilf")
+max_value = 1.0
+step = 0.0
+show_percentage = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1282025820]
+position = Vector2(0, -2)
+shape = ExtResource("7_fgjva")

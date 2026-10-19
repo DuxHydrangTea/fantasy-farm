@@ -1,0 +1,59 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cdqks26047oqy"]
+
+[ext_resource type="Texture2D" uid="uid://cfm5ffry05u6l" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Potted/Flowers_5_Potted_Anim.png" id="1_6u4m6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1wnq"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(0, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gofw"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(16, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3nsj"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(32, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ho5sx"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(48, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qn2p"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(64, 32, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0waln"]
+atlas = ExtResource("1_6u4m6")
+region = Rect2(80, 32, 16, 16)
+filter_clip = true
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1wnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gofw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3nsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ho5sx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qn2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0waln")
+}],
+"loop": 1,
+"name": &"grow",
+"speed": 8.0
+}]

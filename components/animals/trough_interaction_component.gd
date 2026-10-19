@@ -18,6 +18,13 @@ var _feedback: String = ""
 var _feedback_until: int = 0
 
 func _ready() -> void:
+	# Render at UI resolution, independently of camera zoom and fractional motion.
+	var prompt_layer: CanvasLayer = CanvasLayer.new()
+	prompt_layer.name = "PromptLayer"
+	prompt_layer.layer = 9
+	add_child(prompt_layer)
+	prompt.reparent(prompt_layer)
+	prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	state.state_changed.connect(_on_state_changed)
 	animation.animated_sprite.frame_changed.connect(_on_frame_changed)
 	refresh()
@@ -85,6 +92,14 @@ func refresh() -> void:
 	var title: String = "Thức ăn" if focused_trough.kind == Trough.Kind.FOOD else "Nước"
 	var hint: String = _feedback if Time.get_ticks_msec() < _feedback_until else refill_hint(focused_trough)
 	prompt.text = "%s %d/%d\n%s" % [title, focused_trough.stock, focused_trough.capacity, hint]
+	prompt.reset_size()
+	var anchor: Vector2 = get_global_transform_with_canvas() * Vector2(0.0, -44.0)
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var desired: Vector2 = anchor - Vector2(prompt.size.x * 0.5, prompt.size.y)
+	prompt.position = Vector2(
+		clampf(desired.x, 8.0, maxf(8.0, viewport_size.x - prompt.size.x - 8.0)),
+		clampf(desired.y, 8.0, maxf(8.0, viewport_size.y - prompt.size.y - 8.0))
+	).round()
 	prompt.show()
 
 ## Empty lets farming proceed; blocked consumes the input and explains the reason.

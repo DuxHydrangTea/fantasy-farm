@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://p617o0sl32sc"]
 
-[ext_resource type="PackedScene" path="res://scenes/characters/farmer_bob.tscn" id="1_farmer_bob"]
+[ext_resource type="SpriteFrames" uid="uid://c8bijqj7rn1vl" path="res://sprite_frames/character/farmer_bob_frames.tres" id="1_3wg1y"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="2_kmyvj"]
 [ext_resource type="Script" uid="uid://cb0l66kr4jf76" path="res://components/farming_action_component.gd" id="2_yewv4"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_a2luo"]
 [ext_resource type="Script" uid="uid://w37qhagijxt1" path="res://components/soil_focus_component.gd" id="3_dyp2m"]
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
+[ext_resource type="Script" uid="uid://romagl4yruop" path="res://components/state_component.gd" id="4_eir2k"]
 [ext_resource type="Script" uid="uid://cnttid04f6mx7" path="res://components/tool_selection_component.gd" id="5_tools"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
 [ext_resource type="PackedScene" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
@@ -12,7 +15,11 @@
 [ext_resource type="Script" uid="uid://1rh2a2xtxj0w" path="res://components/item_collector.gd" id="10_collector"]
 [ext_resource type="Script" uid="uid://8s4o5x32ce3g" path="res://components/animals/trough_interaction_component.gd" id="11_refill"]
 [ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
-[ext_resource type="FontFile" uid="uid://cweato48t7jwx" path="res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf" id="13_font"]
+[ext_resource type="Texture2D" uid="uid://d0yebn4gwb0bi" path="res://assets/effects/dust_particle.png" id="18_dm10o"]
+[ext_resource type="Script" uid="uid://b8ewk02kjngvp" path="res://components/flowers/flower_interaction.gd" id="19_o6auj"]
+
+[sub_resource type="RectangleShape2D" id="FeetShape"]
+size = Vector2(10, 4)
 
 [sub_resource type="CircleShape2D" id="PickupRadius"]
 radius = 14.0
@@ -31,7 +38,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_dust"]
 curve = SubResource("Curve_dust")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xhtjm"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j8g38"]
 resource_local_to_scene = true
 emission_shape = 3
 emission_box_extents = Vector3(3, 1, 0)
@@ -45,14 +52,38 @@ scale_min = 0.6
 scale_curve = SubResource("CurveTexture_dust")
 color_ramp = SubResource("GradientTexture1D_dust")
 
-[node name="Player" unique_id=556331968 instance=ExtResource("1_farmer_bob")]
+[node name="Player" type="CharacterBody2D" unique_id=556331968]
+texture_filter = 1
+collision_layer = 2
+motion_mode = 1
 
-[node name="StateComponent" parent="." index="4" node_paths=PackedStringArray("tool_selection", "trough_interaction")]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362085865]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("1_3wg1y")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1488582401]
+position = Vector2(0, -2)
+shape = SubResource("FeetShape")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=204499654]
+script = ExtResource("2_kmyvj")
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=1101635109 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("3_a2luo")
+animated_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="StateComponent" type="Node" parent="." unique_id=244539320 node_paths=PackedStringArray("movement", "animation", "tool_selection", "trough_interaction", "dust_particles")]
+script = ExtResource("4_eir2k")
+movement = NodePath("../MovementComponent")
+animation = NodePath("../AnimationComponent")
 tool_selection = NodePath("../ToolSelection")
 trough_interaction = NodePath("../TroughInteraction")
+dust_particles = NodePath("../DustParticles")
 
-[node name="Camera2D" type="Camera2D" parent="." index="5" unique_id=1879359231]
-zoom = Vector2(2.5, 2.5)
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1879359231]
+zoom = Vector2(1.2, 1.2)
 process_callback = 0
 limit_left = 0
 limit_top = 0
@@ -61,60 +92,81 @@ limit_bottom = 1080
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="FarmingActionComponent" type="Node" parent="." index="6" unique_id=2057080144 node_paths=PackedStringArray("animation", "state")]
+[node name="FarmingActionComponent" type="Node" parent="." unique_id=2057080144 node_paths=PackedStringArray("animation", "state")]
 script = ExtResource("2_yewv4")
 animation = NodePath("../AnimationComponent")
 state = NodePath("../StateComponent")
 
-[node name="SoilFocus" type="Node2D" parent="." index="7" unique_id=445356736 node_paths=PackedStringArray("actions")]
+[node name="SoilFocus" type="Node2D" parent="." unique_id=445356736 node_paths=PackedStringArray("actions")]
 z_index = 1
 z_as_relative = false
 texture_filter = 1
 script = ExtResource("3_dyp2m")
 actions = NodePath("../FarmingActionComponent")
 
-[node name="Marker" type="Sprite2D" parent="SoilFocus" index="0" unique_id=196721607]
+[node name="Marker" type="Sprite2D" parent="SoilFocus" unique_id=196721607]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_atpat")
 
-[node name="ToolSelection" type="Node" parent="." index="8" unique_id=912929547]
+[node name="ToolSelection" type="Node" parent="." unique_id=912929547]
 script = ExtResource("5_tools")
 starting_seeds = Array[ExtResource("9_item")]([ExtResource("8_seed")])
 starting_feed = ExtResource("12_feed")
 
-[node name="Hotbar" parent="." index="9" unique_id=165912592 node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
+[node name="Hotbar" parent="." unique_id=165912592 node_paths=PackedStringArray("selection") instance=ExtResource("6_hotbar")]
 selection = NodePath("../ToolSelection")
 
-[node name="InventoryUI" parent="." index="10" unique_id=868395166 node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
+[node name="InventoryUI" parent="." unique_id=868395166 node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
 selection = NodePath("../ToolSelection")
 
-[node name="ItemCollector" type="Area2D" parent="." index="11" unique_id=1951112033 node_paths=PackedStringArray("inventory_source")]
+[node name="ItemCollector" type="Area2D" parent="." unique_id=1951112033 node_paths=PackedStringArray("inventory_source")]
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("10_collector")
 inventory_source = NodePath("../ToolSelection")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCollector" index="0" unique_id=568082033]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCollector" unique_id=568082033]
 shape = SubResource("PickupRadius")
 
-[node name="TroughInteraction" type="Node2D" parent="." index="12" unique_id=685308976 node_paths=PackedStringArray("selection", "animation", "state")]
+[node name="TroughInteraction" type="Node2D" parent="." unique_id=685308976 node_paths=PackedStringArray("selection", "animation", "state")]
 z_index = 10
 script = ExtResource("11_refill")
 selection = NodePath("../ToolSelection")
 animation = NodePath("../AnimationComponent")
 state = NodePath("../StateComponent")
 
-[node name="Prompt" type="Label" parent="TroughInteraction" index="0" unique_id=1824732653]
+[node name="Prompt" type="Label" parent="TroughInteraction" unique_id=1824732653]
 offset_left = -110.0
 offset_top = -54.0
 offset_right = 110.0
 offset_bottom = -24.0
 theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
 theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
-theme_override_constants/outline_size = 3
-theme_override_fonts/font = ExtResource("13_font")
-theme_override_font_sizes/font_size = 9
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 
-[node name="DustParticles" parent="." index="13"]
-process_material = SubResource("ParticleProcessMaterial_xhtjm")
+[node name="DustParticles" type="GPUParticles2D" parent="." unique_id=387363737]
+z_index = -1
+texture_filter = 1
+position = Vector2(0, -1)
+emitting = false
+texture = ExtResource("18_dm10o")
+lifetime = 0.35
+randomness = 0.2
+process_material = SubResource("ParticleProcessMaterial_j8g38")
+
+[node name="FlowerInteraction" type="Node2D" parent="." unique_id=1919763103]
+z_index = 10
+script = ExtResource("19_o6auj")
+
+[node name="Prompt" type="Label" parent="FlowerInteraction" unique_id=964306362]
+offset_left = -140.0
+offset_top = -44.0
+offset_right = 140.0
+offset_bottom = -29.0
+theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1

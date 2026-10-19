@@ -18,6 +18,7 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var action_use_item: StringName = &"use_item"
 @export var tool_selection: ToolSelection
 @export var trough_interaction: Node
+@export var flower_interaction: Node
 @export var dust_particles: GPUParticles2D
 
 
@@ -29,6 +30,8 @@ var _harvest_requested: bool = false
 
 func _ready() -> void:
 	assert(movement != null and animation != null, "StateComponent requires movement and animation components")
+	if flower_interaction == null:
+		flower_interaction = get_parent().get_node_or_null("FlowerInteraction")
 	animation.action_finished.connect(_on_action_finished)
 	if tool_selection != null:
 		tool_selection.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
@@ -115,6 +118,13 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 		active_action = refill_action
 		transition_to(State.WATER if refill_action == &"refill_water" else State.TOOL)
 		return true
+	var flower_action: StringName = flower_interaction.prepare_action(requested_action) if flower_interaction != null else &""
+	if flower_action == &"blocked":
+		return true
+	if not flower_action.is_empty():
+		active_action = flower_action
+		transition_to(State.WATER if flower_action == &"flower_water" else State.TOOL)
+		return true
 	active_action = requested_action if requested_action == &"harvest" else get_selected_tool_action()
 	match active_action:
 		&"tool", &"plant", &"harvest":
@@ -132,6 +142,14 @@ func _on_inventory_visibility_changed(open: bool) -> void:
 		movement.cancel_target()
 		movement.stop()
 		transition_to(State.IDLE)
+
+func reset_after_load() -> void:
+	_use_requested = false
+	_harvest_requested = false
+	movement.cancel_target()
+	movement.stop()
+	active_action = &""
+	transition_to(State.IDLE)
 
 func transition_to(next_state: State) -> void:
 	if _initialized and next_state == current_state:

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bvmvchc2y523n"]
+
+[ext_resource type="Texture2D" uid="uid://ycn2asim76xy" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_5_Anim.png" id="1_6lu46"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_djton"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqvho"]
+atlas = ExtResource("1_6lu46")
+region = Rect2(0, 64, 16, 16)
+filter_clip = true
+
+[resource]
+script = ExtResource("2_djton")
+item_id = &"flower_05"
+display_name = "Hoa 05"
+icon = SubResource("AtlasTexture_qqvho")
+item_type = 2

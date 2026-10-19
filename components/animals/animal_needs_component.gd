@@ -22,6 +22,11 @@ func configure(food_seconds: float, water_seconds: float) -> void:
 	satiety_depletion_seconds = maxf(1.0, food_seconds)
 	hydration_depletion_seconds = maxf(1.0, water_seconds)
 
+## Set a baseline without crediting the interval twice; update_at applies catch-up.
+func restore_state(food: float, water: float, timestamp: float) -> void:
+	_updated_at = timestamp
+	_set_values(food, water)
+
 func update_at(timestamp: float) -> void:
 	var elapsed: float = maxf(0.0, timestamp - _updated_at)
 	_updated_at = maxf(_updated_at, timestamp)

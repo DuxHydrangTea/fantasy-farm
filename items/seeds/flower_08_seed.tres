@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://l4u8rcsm0scp"]
+
+[ext_resource type="Resource" path="res://flowers/definitions/flower_08.tres" id="1_x4176"]
+[ext_resource type="Texture2D" uid="uid://dhjo8olc6uuyc" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_1_Anim.png" id="2_3olaj"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_4vahw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdlwi"]
+atlas = ExtResource("2_3olaj")
+region = Rect2(0, 112, 16, 16)
+filter_clip = true
+
+[resource]
+script = ExtResource("3_4vahw")
+item_id = &"flower_08_seed"
+display_name = "Hạt hoa 08"
+icon = SubResource("AtlasTexture_mdlwi")
+item_type = 1
+crop = ExtResource("1_x4176")

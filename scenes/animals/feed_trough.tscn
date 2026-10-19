@@ -1,8 +1,8 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cn2ms4ioidlvh"]
 
 [ext_resource type="PackedScene" path="res://scenes/animals/water_trough.tscn" id="1_base"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
-[ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="3_feed"]
+[ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
+[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="3_feed"]
 
 [sub_resource type="AtlasTexture" id="Full"]
 atlas = ExtResource("2_sheet")
@@ -12,14 +12,21 @@ region = Rect2(96, 0, 16, 32)
 atlas = ExtResource("2_sheet")
 region = Rect2(144, 0, 16, 32)
 
-[node name="FeedTrough" instance=ExtResource("1_base")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7guf6"]
+size = Vector2(8, 24)
+
+[node name="FeedTrough" unique_id=624608384 instance=ExtResource("1_base")]
 kind = 0
 capacity = 600
-stock = 120
-feed_item = ExtResource("3_feed")
+access_offsets = [Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)]
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
+feed_item = ExtResource("3_feed")
 
 [node name="Sprite2D" parent="." index="0"]
-rotation = 1.5707964
+position = Vector2(0, 0)
 texture = SubResource("Full")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_7guf6")

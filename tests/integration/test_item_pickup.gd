@@ -45,6 +45,29 @@ func test_partial_transfer_preserves_remainder_and_full_bag_keeps_item() -> void
 	assert_eq(pickup.collect(inventory), 2)
 	assert_true(pickup.is_queued_for_deletion())
 
+func test_animal_produce_hides_world_quantity_even_after_stacking_and_collection(species = use_parameters([
+	"chicken_egg", "duck_egg", "goose_egg", "cow_milk", "sheep_wool", "pig_truffle", "horse_compost"
+])) -> void:
+	var item_path: String = "res://items/animal_produces/%s.tres" % species
+	item = load(item_path).duplicate() as Item
+	item.max_stack = 3
+	var pickup: Pickup = _pickup(5)
+	var label: Label = pickup.get_node("Quantity") as Label
+	assert_false(label.visible)
+	pickup.add_amount(2)
+	assert_false(label.visible)
+	assert_eq(pickup.collect(inventory), 3)
+	assert_eq(pickup.amount, 4)
+	assert_false(label.visible)
+	assert_eq(inventory.count_item(item.item_id), 3)
+
+func test_other_world_pickups_still_show_stack_quantity() -> void:
+	item = load("res://items/feeds/poultry_feed.tres") as Item
+	var pickup: Pickup = _pickup(5)
+	var label: Label = pickup.get_node("Quantity") as Label
+	assert_true(label.visible)
+	assert_eq(label.text, "5")
+
 func test_same_frame_and_reentrant_collection_cannot_duplicate_items() -> void:
 	var pickup: Pickup = _pickup(2)
 	inventory.changed.connect(func() -> void: pickup.collect(inventory))

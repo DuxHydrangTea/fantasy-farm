@@ -19,15 +19,13 @@ config/icon="res://icon.svg"
 
 MCPRuntimeServer="*res://addons/godot_mcp_toolkit/runtime/mcp_runtime_server.gd"
 TimeManager="*uid://carbh7lwvbqus"
+SaveManager="*res://persistence/save_manager.gd"
 
 [display]
 
-window/size/viewport_width=400
-window/size/viewport_height=400
-window/size/window_width_override=400
-window/size/window_height_override=400
+window/size/viewport_width=1920.0
+window/size/viewport_height=1080.0
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
 mouse_cursor/custom_image="uid://jk46x1khcgsk"
 
 [dotnet]
@@ -40,6 +38,7 @@ enabled=PackedStringArray("res://addons/godot_mcp_toolkit/plugin.cfg", "res://ad
 
 [gui]
 
+theme/default_font_multichannel_signed_distance_field=true
 theme/custom="res://resources/ui/game_theme.tres"
 theme/custom_font="res://resources/ui/pixelify_sans.tres"
 

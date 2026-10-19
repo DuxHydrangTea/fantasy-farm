@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/animals/feed_trough.tscn" id="1_base"]
+[ext_resource type="Resource" path="res://items/feeds/livestock_feed.tres" id="2_feed"]
+
+[node name="LivestockFeedTrough" instance=ExtResource("1_base")]
+capacity = 600
+stock = 600
+allowed_species = Array[int]([2, 3])
+access_offsets = [Vector2(-18, -8), Vector2(-18, 8), Vector2(18, -8), Vector2(18, 8), Vector2(0, -22), Vector2(0, 26)]
+feed_item = ExtResource("2_feed")

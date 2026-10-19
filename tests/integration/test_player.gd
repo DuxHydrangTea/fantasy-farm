@@ -14,13 +14,18 @@ func before_each() -> void:
 	viewport.size = Vector2i(1920, 1080)
 	viewport.world_2d = World2D.new()
 	add_child_autofree(viewport)
+	await get_tree().process_frame
 	player = PLAYER.instantiate() as CharacterBody2D
 	player.position = Vector2(960, 540)
 	viewport.add_child(player)
 	state = player.get_node("StateComponent")
 	sprite = player.get_node("AnimatedSprite2D")
 	camera = player.get_node("Camera2D")
+	camera.make_current()
 	await wait_physics_frames(2)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	camera.force_update_scroll()
 
 func after_each() -> void:
 	_release_input()
@@ -81,19 +86,23 @@ func test_selected_tool_locks_then_resumes_movement(case = use_parameters([
 	assert_gt(player.position.x, locked_position.x)
 	assert_false(sprite.flip_h)
 
-func test_camera_follows_player() -> void:
+func test_full_hd_camera_uses_requested_zoom_and_follows_within_map_limits() -> void:
 	assert_eq(viewport.get_camera_2d(), camera)
-	assert_eq(camera.zoom, Vector2(3, 3))
+	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	assert_eq(int(ProjectSettings.get_setting("display/window/size/viewport_width")), 1920)
+	assert_eq(int(ProjectSettings.get_setting("display/window/size/viewport_height")), 1080)
 	player.position = Vector2(1200, 650)
 	await wait_seconds(0.8)
 	var center: Vector2 = camera.get_screen_center_position()
-	assert_almost_eq(center.x, player.position.x, 3.0)
-	assert_almost_eq(center.y, player.position.y, 3.0)
+	assert_almost_eq(center.x, 1120.0, 3.0)
+	assert_almost_eq(center.y, 630.0, 3.0)
 
 func test_camera_keeps_view_inside_map(position = use_parameters([
 	Vector2(-500, -500), Vector2(2400, 1600)
 ])) -> void:
 	player.position = position
+	await get_tree().process_frame
+	await get_tree().process_frame
 	camera.reset_smoothing()
 	camera.force_update_scroll()
 	await wait_physics_frames(2)

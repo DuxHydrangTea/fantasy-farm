@@ -1,4 +1,5 @@
 extends Area2D
+@export var persistent_id: StringName
 ## Inventory-aware adaptation of the Godot skill's collectible template.
 const Item = preload("res://scripts/item_definition.gd")
 const Inventory = preload("res://components/inventory_component.gd")
@@ -37,5 +38,5 @@ func _update_display() -> void:
 		sprite.texture = item.icon if item != null else null
 	var label: Label = get_node_or_null("Quantity") as Label
 	if label != null:
-		label.visible = amount > 1
+		label.visible = amount > 1 and (item == null or item.show_world_quantity)
 		label.text = str(amount) if amount <= 999 else "999+"

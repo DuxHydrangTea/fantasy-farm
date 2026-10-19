@@ -27,6 +27,9 @@ func refresh() -> void:
 	if actions.state.trough_interaction != null and actions.state.trough_interaction.focused_trough != null:
 		hide()
 		return
+	if actions.state.flower_interaction != null and actions.state.flower_interaction.focused_pot != null:
+		hide()
+		return
 	var farming: Farming = actions.get_farming_controller()
 	if farming == null or farming.farmland == null or farming.farmland.tile_set == null:
 		hide()

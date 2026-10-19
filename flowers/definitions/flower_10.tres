@@ -1,0 +1,16 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Resource" path="res://items/flowers/flower_10.tres" id="1_jxh2t"]
+[ext_resource type="Script" path="res://scripts/flower_definition.gd" id="2_q4xs7"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_10_stage_1.tres" id="3_3tqmb"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_10_stage_2.tres" id="4_rkt2q"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_10_stage_3.tres" id="5_gjoa2"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_10_stage_4.tres" id="6_xxu13"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_10_stage_5.tres" id="7_1r6ki"]
+
+[resource]
+script = ExtResource("2_q4xs7")
+flower_id = &"flower_10"
+display_name = "Hoa 10"
+stage_frames = Array[SpriteFrames]([ExtResource("3_3tqmb"), ExtResource("4_rkt2q"), ExtResource("5_gjoa2"), ExtResource("6_xxu13"), ExtResource("7_1r6ki")])
+harvest_item = ExtResource("1_jxh2t")

@@ -47,6 +47,8 @@ def main() -> int:
                       "unit/test_animal_growth.gd", "unit/test_animal_production.gd", "unit/test_inventory.gd",
                       "integration/test_animals.gd", "integration/test_animal_behaviour.gd", "integration/test_animal_feeding.gd",
                       "integration/test_animal_lifecycle.gd", "integration/test_item_pickup.gd",
+                      "integration/test_barn_animals.gd",
+                      "integration/test_waterfowl.gd",
                       "unit/test_trough_refilling.gd", "integration/test_trough_interaction.gd"]
             command += ["-gtest=" + ",".join("res://tests/" + suite for suite in suites)]
         environment = dict(os.environ, XDG_DATA_HOME=str(project / "user-data"), XDG_CONFIG_HOME=str(project / "config"))

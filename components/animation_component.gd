@@ -18,6 +18,8 @@ const DIR_VECTORS: Dictionary[StringName, Vector2] = {
 
 var facing_direction: StringName = &"down"
 var current_action: String = ""
+## Optional habitat presentation; completion signals retain the original action.
+var action_mapper: Callable
 var _warned: Dictionary[StringName, bool] = {}
 var facing_vector: Vector2:
 	get:
@@ -45,7 +47,8 @@ func play(action: String, force_restart: bool = false) -> void:
 		dir = &"right"
 		flip = true
 		
-	var animation_name := StringName("%s_%s" % [action, dir])
+	var visual_action: String = String(action_mapper.call(action)) if action_mapper.is_valid() else action
+	var animation_name := StringName("%s_%s" % [visual_action, dir])
 	
 	if not animated_sprite.sprite_frames.has_animation(animation_name):
 		_warn_once(animation_name)

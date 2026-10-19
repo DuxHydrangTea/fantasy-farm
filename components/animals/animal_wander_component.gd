@@ -8,6 +8,7 @@ const Pen = preload("res://components/animals/animal_pen.gd")
 @export var random_seed: int = 0
 var idle_seconds: Vector2 = Vector2(0.6, 1.8)
 var margin: float = 12.0
+var traversal: Node
 var _wait_remaining: float = 0.0
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -34,7 +35,7 @@ func step(delta: float) -> void:
 			choose_target()
 	var before: Vector2 = movement.body.global_position
 	if movement.has_target:
-		movement.move_to_target(delta)
+		move_to_destination(delta)
 		_keep_inside()
 	var displacement: Vector2 = movement.body.global_position - before
 	animation.update_facing_direction(displacement)
@@ -50,9 +51,34 @@ func choose_target() -> bool:
 	for attempt: int in range(16):
 		var point: Vector2 = pen.sample_world(_rng, margin)
 		if movement.body.global_position.distance_to(point) > movement.arrival_distance and _target_is_clear(point):
-			movement.set_target(point)
-			return true
+			if set_destination(point):
+				return true
 	return false
+
+func set_destination(point: Vector2) -> bool:
+	if traversal != null:
+		return traversal.set_destination(point)
+	movement.set_target(point)
+	return true
+
+func move_to_destination(delta: float) -> void:
+	if traversal != null:
+		traversal.travel(delta)
+	else:
+		movement.move_to_target(delta)
+
+func cancel_destination() -> void:
+	if traversal != null:
+		traversal.cancel()
+	else:
+		movement.cancel_target()
+		movement.stop()
+
+func destination_matches(point: Vector2) -> bool:
+	return traversal.destination.is_equal_approx(point) if traversal != null else movement.target_position.is_equal_approx(point)
+
+func route_distance() -> float:
+	return traversal.distance_remaining() if traversal != null else movement.body.global_position.distance_to(movement.target_position)
 
 func _keep_inside() -> void:
 	var body: CharacterBody2D = movement.body
@@ -66,6 +92,8 @@ func _keep_inside() -> void:
 
 func _target_is_clear(point: Vector2) -> bool:
 	if collision == null or collision.shape == null:
+		return false
+	if traversal != null and not traversal.can_reach(point):
 		return false
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = collision.shape

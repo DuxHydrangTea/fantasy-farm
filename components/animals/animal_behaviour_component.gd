@@ -47,6 +47,8 @@ func _physics_process(delta: float) -> void:
 		return
 	# Boundary enforcement remains active while sitting or sleeping.
 	wander._keep_inside()
+	if wander.traversal != null and wander.traversal.handle_laying(delta):
+		return
 	if current_state == State.SEEK_RESOURCE:
 		var travel: Foraging.Travel = foraging.step(delta)
 		if travel == Foraging.Travel.ARRIVED:
@@ -111,6 +113,9 @@ func request_behaviour(action: StringName) -> bool:
 				return false
 			_enter(State.FORAGE)
 		&"rest", &"sleep":
+			if wander.traversal != null and wander.traversal.is_swimming():
+				_enter(State.SLEEP if action == &"sleep" else State.IDLE)
+				return true
 			if not _can_rest() or (action == &"sleep" and not _has_action(&"sleep")):
 				return false
 			_sleep_after_lying = action == &"sleep"
@@ -123,6 +128,9 @@ func request_behaviour(action: StringName) -> bool:
 func wake() -> bool:
 	if current_state != State.REST and current_state != State.SLEEP:
 		return false
+	if wander.traversal != null and wander.traversal.is_swimming():
+		_enter(State.IDLE)
+		return true
 	_enter(State.STAND_UP)
 	return true
 
@@ -199,8 +207,7 @@ func _play(action: StringName) -> void:
 	wander.animation.play(String(action), true)
 
 func _stop() -> void:
-	wander.movement.cancel_target()
-	wander.movement.stop()
+	wander.cancel_destination()
 
 func _has_action(action: StringName) -> bool:
 	var frames: SpriteFrames = wander.animation.animated_sprite.sprite_frames

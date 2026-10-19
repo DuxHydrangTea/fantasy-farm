@@ -20,3 +20,7 @@ func _process(delta: float) -> void:
 
 func refresh() -> void:
 	tick.emit(now())
+
+func advance_floor(timestamp: float) -> void:
+	if is_finite(timestamp) and timestamp >= 0.0:
+		_last_timestamp = maxf(_last_timestamp, timestamp)

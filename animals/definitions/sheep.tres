@@ -1,13 +1,16 @@
-[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://hmk67rr5vgme"]
 
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/sheep_01_frames.tres" id="1_8gfh4"]
-[ext_resource type="Resource" path="res://animals/productions/sheep_wool_production.tres" id="2_h0uyb"]
-[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_5hb53"]
+[ext_resource type="SpriteFrames" uid="uid://b1u7qibu6yqis" path="res://sprite_frames/animals/sheep_01_frames.tres" id="1_8gfh4"]
+[ext_resource type="Resource" uid="uid://8wy7xnrq2u4r" path="res://animals/productions/sheep_wool_production.tres" id="2_h0uyb"]
+[ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="3_5hb53"]
 
 [resource]
 script = ExtResource("3_5hb53")
 animal_id = &"sheep"
 display_name = "Cừu"
 species = 3
-production = ExtResource("2_h0uyb")
+move_speed = 26.0
+footprint = Vector2(14, 8)
+pen_margin = 14.0
 adult_frames = ExtResource("1_8gfh4")
+production = ExtResource("2_h0uyb")

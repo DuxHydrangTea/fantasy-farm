@@ -39,3 +39,10 @@ func refresh(timestamp: float) -> void:
 
 func is_mature() -> bool:
 	return progress >= 1.0
+
+func restore_progress(crop: Definition, planted: float, deadline: float, earned: float, timestamp: float) -> void:
+	definition = crop
+	planted_at = planted
+	matures_at = deadline
+	progress = earned
+	refresh(timestamp)

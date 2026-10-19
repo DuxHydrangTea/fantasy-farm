@@ -158,7 +158,7 @@ func test_prompt_fits_two_viewport_sizes() -> void:
 		await wait_physics_frames(2)
 		component.refresh()
 		assert_true(component.prompt.visible)
-		var rect: Rect2 = component.prompt.get_global_transform_with_canvas() * component.prompt.get_rect()
+		var rect: Rect2 = component.prompt.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, component.prompt.size)
 		assert_gt(rect.size.x, 0.0)
 		assert_gt(rect.size.y, 0.0)
 		assert_true(Rect2(Vector2.ZERO, Vector2(viewport_size)).encloses(rect), str(viewport_size))
@@ -166,7 +166,8 @@ func test_prompt_fits_two_viewport_sizes() -> void:
 		assert_string_contains(component.prompt.text, "Chưa đủ chỗ")
 
 func test_actor_faces_trough_and_checks_new_obstacle_again_at_impact() -> void:
-	trough.position = player.position + Vector2(0, -20)
+	# Leave room for a wall between the player and the vertical trough's edge.
+	trough.position = player.position + Vector2(0, -28)
 	assert_true(state.use_selected_tool())
 	assert_eq(state.animation.facing_vector, Vector2.UP)
 	var wall: StaticBody2D = StaticBody2D.new()

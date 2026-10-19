@@ -220,7 +220,7 @@ func test_obstructed_nearest_station_is_skipped_for_clear_station() -> void:
 	assert_eq(blocked.stock, 120)
 
 func test_new_obstacle_abandons_blocked_trip_and_uses_another_station() -> void:
-	var blocked: Trough = _trough(Trough.Kind.FOOD, Vector2(120, 70))
+	var blocked: Trough = _trough(Trough.Kind.FOOD, Vector2(110, 70))
 	var clear: Trough = _trough(Trough.Kind.FOOD, Vector2(45, 180))
 	animal.needs.satiety = 30.0
 	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
@@ -259,8 +259,12 @@ func test_farm_contains_working_prefilled_food_and_water_in_the_pen() -> void:
 			continue
 		assert_eq(station.pen, enclosure)
 		assert_gt(station.stock, 0)
+		var usable_slots: int = 0
 		for offset: Vector2 in station.access_offsets:
-			assert_true(enclosure.contains_world(station.to_global(offset), 12.0))
+			if enclosure.contains_world(station.to_global(offset), 12.0):
+				usable_slots += 1
+		# Beside a fence, outward slots are filtered by Foraging; inward slots remain usable.
+		assert_gt(usable_slots, 0, "Each prefilled station needs an approach inside the pen")
 		if station.kind == Trough.Kind.FOOD:
 			counts.x += 1
 		else:

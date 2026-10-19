@@ -66,8 +66,10 @@ func try_begin() -> bool:
 		if best != null and best.claim(wander.movement.body, best_slot, definition):
 			target = best
 			target_slot = best_slot
-			wander.movement.set_target(best.access_position(best_slot))
-			_travel_remaining = maxf(5.0, sqrt(best_distance) / maxf(1.0, wander.movement.speed) * 2.0 + 2.0)
+			if not wander.set_destination(best.access_position(best_slot)):
+				cancel(true)
+				return false
+			_travel_remaining = maxf(5.0, wander.route_distance() / maxf(1.0, wander.movement.speed) * 2.0 + 2.0)
 			return true
 	return false
 
@@ -80,7 +82,7 @@ func step(delta: float) -> Travel:
 	var body: CharacterBody2D = wander.movement.body
 	var point: Vector2 = target.access_position(target_slot)
 	# A moved trough invalidates the current trip instead of feeding at a stale point.
-	if not wander.movement.target_position.is_equal_approx(point):
+	if not wander.destination_matches(point):
 		return Travel.FAILED
 	if body.global_position.distance_to(point) <= 2.0:
 		wander.movement.cancel_target()
@@ -93,7 +95,7 @@ func step(delta: float) -> Travel:
 	if _travel_remaining <= 0.0:
 		return Travel.FAILED
 	var before: Vector2 = body.global_position
-	wander.movement.move_to_target(delta)
+	wander.move_to_destination(delta)
 	wander._keep_inside()
 	var displacement: Vector2 = body.global_position - before
 	wander.animation.update_facing_direction(displacement)
@@ -111,13 +113,14 @@ func cancel(failed: bool = false) -> void:
 	target = null
 	target_slot = -1
 	if wander != null:
-		wander.movement.cancel_target()
-		wander.movement.stop()
+		wander.cancel_destination()
 
 func _exit_tree() -> void:
 	cancel()
 
 func _path_is_clear(point: Vector2) -> bool:
+	if wander.traversal != null:
+		return wander.traversal.can_reach(point)
 	if wander.collision == null or wander.collision.shape == null:
 		return false
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()

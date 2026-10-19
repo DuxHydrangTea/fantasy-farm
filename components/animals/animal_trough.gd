@@ -1,4 +1,5 @@
 extends StaticBody2D
+@export var persistent_id: StringName
 ## Shared, finite food/water supply. Reservations prevent two animals using one slot.
 const Definition = preload("res://scripts/animals/animal_definition.gd")
 const Needs = preload("res://components/animals/animal_needs_component.gd")

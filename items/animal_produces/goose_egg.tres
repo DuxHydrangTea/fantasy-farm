@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bcq425vmu8s42"]
 
-[ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r02_c07.tres" id="1_ho7ut"]
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="2_nwqd7"]
+[ext_resource type="Texture2D" uid="uid://cirvcagc23m5v" path="res://icons/no_outline/food/food_r02_c07.tres" id="1_ho7ut"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_nwqd7"]
 
 [resource]
 script = ExtResource("2_nwqd7")
 item_id = &"goose_egg"
 display_name = "Trứng ngỗng"
 icon = ExtResource("1_ho7ut")
+show_world_quantity = false
 item_type = 2
 max_stack = 32000

@@ -3,6 +3,9 @@
 Scene dùng: `scenes/animals/chicken.tscn` và `scenes/animals/rooster.tscn`.
 MainWorld có 18 con gà trong `CoopPen`: 9 gà mái mang 9 màu lông khác nhau (`Chicken_01`…`Chicken_09`) và 9 gà trống (`Rooster`), ở khu hàng rào bên phải, cạnh công trình Coop hiện có.
 
+`BarnPen` có thêm 9 bò và 9 cừu sống chung, sản xuất sữa/lông; xem
+[cấu hình Barn](barn_animals.md) để chỉnh phạm vi, máng ăn/nước và chu kỳ.
+
 ## Thành phần dùng chung
 
 - `animal.tscn` / `AnimalActor`: nối dữ liệu loài, collider chân, sprite và UI.
@@ -48,9 +51,9 @@ pause/mở túi vẫn tính vào nhu cầu khi cập nhật tiếp, đồng bộ
 Timestamp lặp/lùi không trừ hai lần; giá trị luôn giới hạn trong 0…100.
 
 `needs.feed(25.0)` / `needs.drink(25.0)` hồi chỉ số và trả về lượng hồi thực tế.
-Đây là điểm nối để bổ sung máng ăn/máng nước; chưa có thao tác tự ăn/uống,
-chết, sinh sản, trưởng thành, tạo sản phẩm hay save/load trong lượt này.
-Các resource sản phẩm cũ được giữ để các định nghĩa loài hiện có tải đúng.
+Vật nuôi dùng ForagingComponent để tự tìm máng ăn/nước cùng Pen, GrowthComponent
+để lớn lên và ProductionComponent để tạo sản phẩm khi trưởng thành, đủ thức ăn/nước.
+Chưa có chết, sinh sản hoặc save/load.
 
 ## Trạng thái sinh hoạt
 

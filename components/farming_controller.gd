@@ -103,6 +103,51 @@ func _refresh_crops(timestamp: float) -> void:
 		if is_instance_valid(crop) and not crop.is_mature():
 			crop.refresh(timestamp)
 
+func crop_cells() -> Array[Vector2i]:
+	return _crops.keys()
+
+func capture_soil() -> Array[Dictionary]:
+	var cells: Dictionary[Vector2i, bool] = {}
+	for layer: TileMapLayer in [dry_soil, wet_soil]:
+		for point: Vector2i in layer.get_used_cells():
+			cells[world_to_cell(layer.to_global(layer.map_to_local(point)))] = true
+	var result: Array[Dictionary] = []
+	for cell: Vector2i in cells.keys():
+		var state: int = get_soil_state(cell)
+		if state != Soil.UNTILLED:
+			result.append({"cell": [cell.x, cell.y], "state": state})
+	return result
+
+func can_restore_soil() -> bool:
+	return _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) and _valid_terrain(wet_soil, wet_terrain_set, wet_terrain)
+
+func restore_soil(records: Array) -> void:
+	for crop: Crop in _crops.values():
+		if is_instance_valid(crop):
+			crop.free()
+	_crops.clear()
+	dry_soil.clear()
+	wet_soil.clear()
+	var dry: Array[Vector2i] = []
+	var wet: Array[Vector2i] = []
+	for record: Dictionary in records:
+		var cell: Vector2i = Vector2i(int(record.cell[0]), int(record.cell[1]))
+		dry.append(_layer_cell(dry_soil, cell))
+		if int(record.state) == Soil.WET:
+			wet.append(_layer_cell(wet_soil, cell))
+	if not dry.is_empty():
+		dry_soil.set_cells_terrain_connect(dry, dry_terrain_set, dry_terrain, false)
+	if not wet.is_empty():
+		wet_soil.set_cells_terrain_connect(wet, wet_terrain_set, wet_terrain, false)
+
+func restore_crop(cell: Vector2i, definition: CropDefinitionResource, planted: float, deadline: float, progress: float, now: float) -> void:
+	var crop: Crop = CROP_SCENE.instantiate() as Crop
+	get_parent().add_child(crop)
+	var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)
+	crop.global_transform = farmland.global_transform * Transform2D(0.0, center)
+	crop.restore_progress(definition, planted, deadline, progress, now)
+	_crops[cell] = crop
+
 func set_cell_occupied(cell: Vector2i, occupied: bool) -> void:
 	if occupied:
 		_occupied[cell] = true

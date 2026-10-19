@@ -30,6 +30,21 @@ func slot(index: int) -> Dictionary:
 		return {"item": null, "count": 0}
 	return _slots[index].duplicate()
 
+## One validated replacement, so UI never sees a half-restored inventory.
+func replace_slots(stacks: Array[Dictionary]) -> bool:
+	if stacks.size() != slot_count:
+		return false
+	var replacement: Array[Dictionary] = []
+	for stack: Dictionary in stacks:
+		var item: Item = stack.get("item") as Item
+		var amount: int = int(stack.get("count", 0))
+		if (item == null and amount != 0) or (item != null and (amount < 1 or amount > item.get_stack_limit())):
+			return false
+		replacement.append({"item": item, "count": amount})
+	_slots = replacement
+	changed.emit()
+	return true
+
 func add(item: Item, amount: int = 1) -> int:
 	_ensure_slots()
 	if item == null or item.item_id.is_empty() or amount <= 0:

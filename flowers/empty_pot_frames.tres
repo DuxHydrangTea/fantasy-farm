@@ -1,0 +1,19 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bbxlh012t152i"]
+
+[ext_resource type="Texture2D" uid="uid://c80myn3pbh3kv" path="res://assets/Buildings/House_Decor/House_Plants.png" id="1_gxq13"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o5v8"]
+atlas = ExtResource("1_gxq13")
+region = Rect2(176, 16, 16, 16)
+filter_clip = true
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o5v8")
+}],
+"loop": 1,
+"name": &"grow",
+"speed": 5.0
+}]
