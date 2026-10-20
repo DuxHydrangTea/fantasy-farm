@@ -7,7 +7,7 @@ extends Controller
 @export_range(1.0, 16.0) var arrival_distance: float = 3.0
 
 @onready var decision_timer: Timer = $Timer
-@onready var needs_component: AnimalNeedsComponent = $"../AnimalNeedsComponent"
+@onready var needs_component: LegacyAnimalNeedsComponent = $"../AnimalNeedsComponent"
 
 var _boundary_shape: CollisionShape2D
 var _walk_bounds: Rect2

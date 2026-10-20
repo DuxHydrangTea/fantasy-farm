@@ -1,13 +1,10 @@
 extends GutTest
-const Interaction = preload("res://components/animals/trough_interaction_component.gd")
-const Trough = preload("res://components/animals/animal_trough.gd")
-const Selection = preload("res://components/tool_selection_component.gd")
 const FEED: Resource = preload("res://items/feeds/poultry_feed.tres")
 var player: CharacterBody2D
 var state: StateComponent
-var selection: Selection
-var interaction: Interaction
-var trough: Trough
+var selection: ToolSelectionComponent
+var interaction: TroughInteractionComponent
+var trough: AnimalTrough
 
 func before_each() -> void:
 	player = preload("res://scenes/characters/player.tscn").instantiate() as CharacterBody2D
@@ -15,10 +12,10 @@ func before_each() -> void:
 	add_child_autofree(player)
 	state = player.get_node("StateComponent") as StateComponent
 	state.set_physics_process(false)
-	selection = player.get_node("ToolSelection") as Selection
-	interaction = player.get_node("TroughInteraction") as Interaction
+	selection = player.get_node("ToolSelection") as ToolSelectionComponent
+	interaction = player.get_node("TroughInteraction") as TroughInteractionComponent
 	interaction.set_physics_process(false)
-	trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as Trough
+	trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as AnimalTrough
 	trough.position = player.position + Vector2(0, 20)
 	add_child_autofree(trough)
 	trough.stock = 0
@@ -41,7 +38,7 @@ func test_player_uses_shared_inventory_and_refills_once_at_animation_impact() ->
 	assert_string_contains(interaction.prompt.text, "600/600")
 
 func test_water_requires_selected_can_and_never_consumes_the_tool() -> void:
-	trough.kind = Trough.Kind.WATER
+	trough.kind = AnimalTrough.Kind.WATER
 	interaction.refresh()
 	assert_string_contains(interaction.prompt.text, "Chọn bình tưới")
 	assert_true(state.use_selected_tool())
@@ -76,7 +73,7 @@ func test_deleting_target_before_impact_is_safe() -> void:
 	assert_eq(selection.inventory.count_item(FEED.item_id), 5)
 
 func test_water_slot_swap_cannot_redirect_the_action() -> void:
-	trough.kind = Trough.Kind.WATER
+	trough.kind = AnimalTrough.Kind.WATER
 	selection.select_slot(1)
 	assert_true(state.use_selected_tool())
 	selection.inventory.move_slot(1, 10)
@@ -84,7 +81,7 @@ func test_water_slot_swap_cannot_redirect_the_action() -> void:
 	assert_eq(trough.stock, 0)
 
 func test_selecting_another_slot_keeps_original_watering_action() -> void:
-	trough.kind = Trough.Kind.WATER
+	trough.kind = AnimalTrough.Kind.WATER
 	selection.select_slot(1)
 	assert_true(state.use_selected_tool())
 	selection.select_slot(0)
@@ -124,7 +121,7 @@ func test_no_nearby_trough_preserves_farming_action() -> void:
 	assert_eq(state.active_action, &"tool")
 
 func test_e_input_is_routed_to_trough_and_nearest_target_is_stable() -> void:
-	var other: Trough = preload("res://scenes/animals/water_trough.tscn").instantiate() as Trough
+	var other: AnimalTrough = preload("res://scenes/animals/water_trough.tscn").instantiate() as AnimalTrough
 	other.position = player.position + Vector2(0, -29)
 	add_child_autofree(other)
 	assert_eq(interaction.find_trough(), trough)
@@ -149,11 +146,11 @@ func test_prompt_fits_two_viewport_sizes() -> void:
 		viewport.add_child(actor)
 		(actor.get_node("Camera2D") as Camera2D).enabled = false
 		(actor.get_node("StateComponent") as StateComponent).set_physics_process(false)
-		var station: Trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as Trough
+		var station: AnimalTrough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as AnimalTrough
 		station.position = actor.position + Vector2(0, 20)
 		viewport.add_child(station)
 		station.stock = 400
-		var component: Interaction = actor.get_node("TroughInteraction") as Interaction
+		var component: TroughInteractionComponent = actor.get_node("TroughInteraction") as TroughInteractionComponent
 		component.set_physics_process(false)
 		await wait_physics_frames(2)
 		component.refresh()

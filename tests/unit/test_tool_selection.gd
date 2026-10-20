@@ -1,10 +1,9 @@
 extends GutTest
 
-const Selection = preload("res://components/tool_selection_component.gd")
-var selection: Selection
+var selection: ToolSelectionComponent
 
 func before_each() -> void:
-	selection = Selection.new()
+	selection = ToolSelectionComponent.new()
 	add_child_autofree(selection)
 
 func test_default_tool_is_hoe() -> void:
@@ -29,7 +28,7 @@ func test_empty_slot_has_no_action() -> void:
 	assert_eq(selection.get_selected_action(), &"")
 	assert_eq(selection.get_selected_name(), "Ô trống")
 
-func test_mouse_wheel_cycles_with_wraparound() -> void:
+func test_cycle_selection_wraps_indices() -> void:
 	selection.cycle_selection(-1)
 	assert_eq(selection.selected_index, 5)
 	selection.cycle_selection(1)

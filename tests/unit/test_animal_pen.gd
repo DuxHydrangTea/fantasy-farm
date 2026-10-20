@@ -1,9 +1,8 @@
 extends GutTest
-const Pen = preload("res://components/animals/animal_pen.gd")
-var pen: Pen
+var pen: AnimalPen
 
 func before_each() -> void:
-	pen = Pen.new()
+	pen = AnimalPen.new()
 	pen.bounds = Rect2(-20, -10, 200, 100)
 	add_child_autofree(pen)
 

@@ -1,18 +1,16 @@
 extends GutTest
-const Bag = preload("res://components/inventory_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
-var bag: Bag
-var seed: Item
+var bag: InventoryComponent
+var seed: ItemDefinition
 
 func before_each() -> void:
-	bag = Bag.new()
+	bag = InventoryComponent.new()
 	bag.starting_tools = false
 	bag.slot_count = 4
 	add_child_autofree(bag)
-	seed = Item.new()
+	seed = ItemDefinition.new()
 	seed.item_id = &"seed"
 	seed.display_name = "Hạt giống"
-	seed.item_type = Item.ItemType.SEED
+	seed.item_type = ItemDefinition.ItemType.SEED
 	seed.max_stack = 5
 
 func test_add_fills_existing_stack_before_free_slots() -> void:
@@ -36,7 +34,7 @@ func test_remove_across_stacks_and_clear_empty_slot() -> void:
 	assert_eq(bag.remove(&"seed", 1), 0)
 
 func test_tools_never_stack() -> void:
-	assert_eq(bag.add(Bag.HOE, 3), 3)
+	assert_eq(bag.add(InventoryComponent.HOE, 3), 3)
 	for index: int in range(3):
 		assert_eq(bag.slot(index).count, 1)
 
@@ -50,7 +48,7 @@ func test_move_merge_partial_stack_preserves_remainder() -> void:
 
 func test_swap_different_items_and_move_to_empty_slot() -> void:
 	bag.add(seed, 3)
-	bag.add(Bag.HOE)
+	bag.add(InventoryComponent.HOE)
 	assert_true(bag.move_slot(0, 1))
 	assert_eq(bag.slot(0).item.item_id, &"hoe")
 	assert_eq(bag.slot(1).count, 3)
@@ -76,7 +74,7 @@ func test_slot_snapshot_does_not_expose_mutable_storage() -> void:
 	assert_eq(bag.slot(0).count, 3)
 
 func test_existing_seed_resources_load_with_crop_metadata() -> void:
-	var carrot: Item = load("res://items/seeds/carrot_seed.tres") as Item
+	var carrot: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
 	assert_not_null(carrot)
 	assert_not_null(carrot.crop)
 	assert_eq(bag.add(carrot, 12), 12)

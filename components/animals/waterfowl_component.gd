@@ -1,16 +1,15 @@
+class_name WaterfowlComponent
 extends Node
 ## Habitat traversal and shore delivery, attached only inside a PondPen.
-const Pond = preload("res://components/animals/pond_pen.gd")
-const Behaviour = preload("res://components/animals/animal_behaviour_component.gd")
-var actor: CharacterBody2D
-var pen: Pond
+var actor: AnimalActor
+var pen: PondPen
 var _points: PackedVector2Array = PackedVector2Array()
 var _next: int = 0
 var destination: Vector2
 var _returning: bool = false
 var _was_swimming: bool = false
 
-func configure(body: CharacterBody2D, habitat: Pond) -> void:
+func configure(body: AnimalActor, habitat: PondPen) -> void:
 	actor = body
 	pen = habitat
 	actor.wander.traversal = self
@@ -40,7 +39,7 @@ func refresh_visual() -> void:
 		var texture: Texture2D = actor.sprite.sprite_frames.get_frame_texture(actor.sprite.animation, 0)
 		var used: Rect2i = texture.get_image().get_used_rect()
 		actor.sprite.position.y = texture.get_height() * 0.5 - used.end.y
-		actor.get_node("NeedsDisplay").position.y = actor.sprite.position.y - texture.get_height() * 0.5 + used.position.y - 18.0
+		actor.needs_display.position.y = actor.sprite.position.y - texture.get_height() * 0.5 + used.position.y - 18.0
 
 func can_reach(point: Vector2) -> bool:
 	return not pen.route(actor.global_position, point, actor.definition.can_swim).is_empty()
@@ -92,7 +91,7 @@ func handle_laying(delta: float) -> bool:
 		return false
 	if not pen.navigation_ready:
 		return true
-	if actor.behaviour.current_state in [Behaviour.State.REST, Behaviour.State.SLEEP]:
+	if actor.behaviour.current_state in [AnimalBehaviourComponent.State.REST, AnimalBehaviourComponent.State.SLEEP]:
 		actor.behaviour.wake()
 		return true
 	if not _returning or not actor.movement.has_target:

@@ -1,13 +1,10 @@
 extends GutTest
 
 const Fixture = preload("res://tests/support/farming_fixture.gd")
-const Farming = preload("res://components/farming_controller.gd")
-const Clock = preload("res://components/time_manager.gd")
-const Item = preload("res://scripts/item_definition.gd")
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
 var field: Node2D
-var farming: Farming
-var clock: Clock
+var farming: FarmingController
+var clock: FarmClock
 var player: CharacterBody2D
 var state: StateComponent
 var timestamp: float = 1000.0
@@ -18,7 +15,7 @@ func before_each() -> void:
 	timestamp = 1000.0
 	field = Fixture.create_field()
 	farming = field.get_node("FarmingController")
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	farming.time_manager = clock
 	add_child_autofree(clock)
@@ -26,6 +23,7 @@ func before_each() -> void:
 	add_child_autofree(field)
 	player = PLAYER.instantiate() as CharacterBody2D
 	player.position = farming.farmland.map_to_local(cell)
+	(player as FarmPlayer).farming_actions.farming = farming
 	field.add_child(player)
 	state = player.get_node("StateComponent")
 	Fixture.mark_cell(field, target)
@@ -78,7 +76,7 @@ func test_switching_hotbar_mid_action_keeps_original_seed_and_target() -> void:
 	await wait_seconds(0.9)
 	assert_not_null(farming.get_crop(target))
 	assert_eq(state.tool_selection.inventory.slot(2).count, 11)
-	assert_eq(farming.get_soil_state(target), Farming.Soil.DRY)
+	assert_eq(farming.get_soil_state(target), FarmingController.Soil.DRY)
 
 func test_clock_tick_updates_independent_crops_and_progress() -> void:
 	var bag: Node = state.tool_selection.inventory
@@ -104,7 +102,7 @@ func test_harvest_requires_maturity_and_capacity_then_keeps_soil() -> void:
 	assert_false(farming.harvest(target, bag))
 	var crop: Node = farming.get_crop(target)
 	timestamp = crop.matures_at
-	var item: Item = crop.definition.harvest_item
+	var item: ItemDefinition = crop.definition.harvest_item
 	var amount: int = crop.definition.harvest_amount
 	# Fill every free slot with non-stackable tools. Existing seed stack remains full of seeds.
 	bag.add(load("res://items/tools/hoe.tres"), 99)
@@ -114,7 +112,7 @@ func test_harvest_requires_maturity_and_capacity_then_keeps_soil() -> void:
 	assert_true(farming.harvest(target, bag))
 	assert_eq(bag.count_item(item.item_id), amount)
 	assert_null(farming.get_crop(target))
-	assert_eq(farming.get_soil_state(target), Farming.Soil.DRY)
+	assert_eq(farming.get_soil_state(target), FarmingController.Soil.DRY)
 	assert_true(farming.can_plant(target, player))
 	assert_false(farming.harvest(target, bag))
 

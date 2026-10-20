@@ -1,20 +1,24 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dg7d1varywemi"]
 
-[ext_resource type="Script" path="res://components/crop.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="2_frame"]
+[ext_resource type="Script" uid="uid://bcwmoome4ky3k" path="res://components/crop.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://j0sv7dsytcv" path="res://assets/Ui/progress_bar.png" id="2_frame"]
 
 [sub_resource type="StyleBoxEmpty" id="Empty"]
+
 [sub_resource type="StyleBoxFlat" id="Fill"]
 bg_color = Color(0.53, 0.83, 0.32, 1)
 
-[node name="Crop" type="Node2D"]
+[node name="Crop" type="Node2D" unique_id=1213648057 node_paths=PackedStringArray("sprite", "progress_bar", "progress_frame")]
 texture_filter = 1
 script = ExtResource("1_script")
+sprite = NodePath("Sprite")
+progress_bar = NodePath("Progress/Bar")
+progress_frame = NodePath("Progress")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=378690749]
 position = Vector2(0, -16)
 
-[node name="Progress" type="TextureRect" parent="."]
+[node name="Progress" type="TextureRect" parent="." unique_id=9125450]
 z_index = 2
 z_as_relative = false
 offset_left = -7.5
@@ -24,7 +28,8 @@ offset_bottom = -33.0
 mouse_filter = 2
 texture = ExtResource("2_frame")
 
-[node name="Bar" type="ProgressBar" parent="Progress"]
+[node name="Bar" type="ProgressBar" parent="Progress" unique_id=2095212402]
+layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 13.0

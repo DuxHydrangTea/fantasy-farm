@@ -1,28 +1,29 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://qpocghqmf0oy"]
 
-[ext_resource type="Script" path="res://components/item_pickup.gd" id="1_pickup"]
+[ext_resource type="Script" uid="uid://bf6c53iijldrv" path="res://components/item_pickup.gd" id="1_pickup"]
 
 [sub_resource type="CircleShape2D" id="Area"]
 radius = 6.0
 
-[node name="ItemPickup" type="Area2D"]
+[node name="ItemPickup" type="Area2D" unique_id=1576462758 node_paths=PackedStringArray("sprite", "quantity_label")]
 texture_filter = 1
 collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_pickup")
+sprite = NodePath("Sprite2D")
+quantity_label = NodePath("Quantity")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=272074179]
 position = Vector2(0, -6)
 scale = Vector2(0.65, 0.65)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2101477824]
 shape = SubResource("Area")
 
-[node name="Quantity" type="Label" parent="."]
+[node name="Quantity" type="Label" parent="." unique_id=1392016511]
 offset_left = 3.0
 offset_top = -3.0
-mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0.1, 0.08, 0.12, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 8

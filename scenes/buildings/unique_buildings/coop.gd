@@ -1,5 +1,8 @@
 @tool
+class_name CoopAppearance
 extends StaticBody2D
+
+@export var sprite: Sprite2D
 
 enum Variant {
 	BASE_BLACK_FRAME_1,
@@ -72,7 +75,6 @@ func _ready() -> void:
 
 
 func _update_sprite() -> void:
-	var sprite := get_node_or_null("Sprite2D") as Sprite2D
 	if sprite != null:
 		sprite.texture = VARIANTS[variant]["texture"]
 		sprite.frame = VARIANTS[variant]["frame"]

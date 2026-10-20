@@ -1,10 +1,15 @@
 # Vật nuôi
 
-Scene dùng: `scenes/animals/chicken.tscn` và `scenes/animals/rooster.tscn`.
+Các scene chicken/rooster/cow/sheep/duck/goose trong `scenes/animals` kế thừa `animal.tscn` và dùng chung các component.
 MainWorld có 18 con gà trong `CoopPen`: 9 gà mái mang 9 màu lông khác nhau (`Chicken_01`…`Chicken_09`) và 9 gà trống (`Rooster`), ở khu hàng rào bên phải, cạnh công trình Coop hiện có.
 
 `BarnPen` có thêm 9 bò và 9 cừu sống chung, sản xuất sữa/lông; xem
 [cấu hình Barn](barn_animals.md) để chỉnh phạm vi, máng ăn/nước và chu kỳ.
+
+`PondPen` có 5 vịt và 6 ngỗng trưởng thành, máng riêng và đường đi theo bờ/nước;
+xem [khu ao](waterfowl.md). Tổng nội dung khởi tạo là **47 vật nuôi** ở 3 pen;
+hồ sơ đã lưu có thể khác scene mặc định. Tra cứu API trong
+[runtime_system_reference.md](runtime_system_reference.md).
 
 ## Thành phần dùng chung
 
@@ -16,6 +21,8 @@ MainWorld có 18 con gà trong `CoopPen`: 9 gà mái mang 9 màu lông khác nha
   ngủ; chỉ gọi Wander khi đang đi. Đây là nơi sở hữu state và thời gian hành vi.
 - `AnimalNeedsComponent`: no (`satiety`) và nước (`hydration`), mỗi con giữ riêng.
 - `AnimalPen`: giới hạn cứng vùng đi lại; áp dụng cả khi hàng rào có khoảng hở.
+- `PondPen`, `WaterfowlComponent`: navigation AStar trên bờ/nước, animation bơi
+  và giữ trứng tới khi chim lên bờ; chỉ dùng cho khu ao.
 - `AnimalDefinition`: tốc độ, thời gian nghỉ, kích thước chân, khoảng cách mép rào,
   thời gian tiêu hao thức ăn/nước và SpriteFrames. Không gắn logic riêng theo loài
   trong các component.
@@ -36,7 +43,9 @@ vùng; hoặc gán thuộc tính `pen` khi đặt vật nuôi ở nơi khác tro
 Vật nuôi không được gán Pen sẽ đứng yên. Nếu bị đẩy hoặc đặt ra ngoài vùng,
 component đưa nó về trong vùng và chọn lại đích. Công trình/vật cản ở Layer 1 (World) vẫn được xét va chạm bình thường.
 Vật nuôi nằm ở Layer 3 (Animal) và chỉ quét va chạm với Layer 1; người chơi nằm ở Layer 2 (Player) và cũng chỉ quét Layer 1, giúp gà đi xuyên qua nhau và xuyên qua người chơi mượt mà không bị cản trở.
-AI hiện chọn đường thẳng và chọn lại khi bị chặn, chưa tìm đường qua mê cung.
+CoopPen/BarnPen chọn đường thẳng và chọn lại khi bị chặn. PondPen dùng hai
+AStarGrid2D ô 16 px, đi 4 hướng: vịt đi bờ/nước, ngỗng chỉ đi bờ. Khi thêm hoặc
+đổi vật cản runtime, cần rebuild navigation sau khi physics cập nhật.
 
 ## Đói và khát
 
@@ -53,7 +62,9 @@ Timestamp lặp/lùi không trừ hai lần; giá trị luôn giới hạn trong
 `needs.feed(25.0)` / `needs.drink(25.0)` hồi chỉ số và trả về lượng hồi thực tế.
 Vật nuôi dùng ForagingComponent để tự tìm máng ăn/nước cùng Pen, GrowthComponent
 để lớn lên và ProductionComponent để tạo sản phẩm khi trưởng thành, đủ thức ăn/nước.
-Chưa có chết, sinh sản hoặc save/load.
+Tuổi, no/nước, skin, vị trí, tiến độ sản xuất và sản phẩm chưa thu đã được lưu/tải;
+xem [saving.md](saving.md). Offline vẫn tính tuổi và phần thời gian sản xuất đủ
+điều kiện, không giả lập tự đi ăn/uống. Chưa có chết hoặc sinh sản.
 
 ## Trạng thái sinh hoạt
 
@@ -77,12 +88,15 @@ Code có thể gọi `animal.behaviour.request_behaviour(&"forage")`, `&"rest"`,
 `&"sleep"`, `&"walk"` hoặc `&"idle"`. Con vật đã nằm phải `wake()` và chạy xong
 đứng lên trước khi nhận hành vi đứng/đi. Tín hiệu `state_changed` phục vụ UI/debug.
 
+Riêng vịt đang bơi dùng `swim_idle`/`swim_sleep`, bỏ chuỗi nằm/đứng trên cạn;
+`wake()` chuyển thẳng về IDLE khi ở nước.
+
 Mapping `forage_action` / `lie_down_action` để trống sẽ dò các animation có sẵn;
 cũng có thể gán tên action cụ thể (không kèm `_down`). Loại không có animation
 phụ tương ứng sẽ bỏ qua hành vi đó. Transition bị cấu hình loop không được chọn,
 tránh bị kẹt chờ một tín hiệu hoàn tất không phát ra.
 
-## Thêm bò, cừu, lợn
+## Thêm loài hoặc cá thể
 
 Tạo scene kế thừa `animal.tscn`, gán definition tương ứng, chỉnh move_speed,
 footprint, pen_margin, thời gian nghỉ và nhu cầu theo loài. Đặt instance dưới Pen

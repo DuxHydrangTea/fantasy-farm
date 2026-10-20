@@ -1,3 +1,4 @@
+class_name AnimalGrowthComponent
 extends Node
 ## Per-animal age, independent of the species Resource and of hunger.
 signal matured

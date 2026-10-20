@@ -1,21 +1,18 @@
+class_name AnimalForagingComponent
 extends Node
 ## Species-independent supply selection, reservations, travel and consumption.
 ## Behaviour owns the animation/state transitions; Needs owns food/water values.
-const Definition = preload("res://scripts/animals/animal_definition.gd")
-const Needs = preload("res://components/animals/animal_needs_component.gd")
-const Wander = preload("res://components/animals/animal_wander_component.gd")
-const Trough = preload("res://components/animals/animal_trough.gd")
 enum Travel { MOVING, ARRIVED, FAILED }
-var definition: Definition
-var needs: Needs
-var wander: Wander
-var target: Trough
+var definition: AnimalDefinition
+var needs: AnimalNeedsComponent
+var wander: AnimalWanderComponent
+var target: AnimalTrough
 var target_slot: int = -1
 var _retry_remaining: float = 0.0
 var _travel_remaining: float = 0.0
 var _blocked: Dictionary[int, float] = {}
 
-func configure(data: Definition, needs_component: Needs, wander_component: Wander) -> void:
+func configure(data: AnimalDefinition, needs_component: AnimalNeedsComponent, wander_component: AnimalWanderComponent) -> void:
 	definition = data
 	needs = needs_component
 	wander = wander_component
@@ -33,12 +30,12 @@ func has_need() -> bool:
 func priority_kinds() -> Array[int]:
 	var kinds: Array[int] = []
 	if needs.hydration <= definition.water_seek_threshold:
-		kinds.append(Trough.Kind.WATER)
+		kinds.append(AnimalTrough.Kind.WATER)
 	if needs.satiety <= definition.food_seek_threshold:
 		if kinds.is_empty() or needs.satiety < needs.hydration:
-			kinds.push_front(Trough.Kind.FOOD)
+			kinds.push_front(AnimalTrough.Kind.FOOD)
 		else:
-			kinds.append(Trough.Kind.FOOD)
+			kinds.append(AnimalTrough.Kind.FOOD)
 	return kinds
 
 func try_begin() -> bool:
@@ -46,11 +43,11 @@ func try_begin() -> bool:
 		return false
 	_retry_remaining = 0.75
 	for supply_kind: int in priority_kinds():
-		var best: Trough = null
+		var best: AnimalTrough = null
 		var best_slot: int = -1
 		var best_distance: float = INF
 		for candidate: Node in get_tree().get_nodes_in_group(&"animal_troughs"):
-			var trough: Trough = candidate as Trough
+			var trough: AnimalTrough = candidate as AnimalTrough
 			if trough == null or trough.is_queued_for_deletion() or trough.pen != wander.pen or trough.kind != supply_kind or not trough.can_supply(definition) or _blocked.has(trough.get_instance_id()):
 				continue
 			for slot: int in range(trough.access_offsets.size()):

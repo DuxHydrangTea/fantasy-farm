@@ -1,15 +1,15 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://d7mgxqs0kunn"]
 
-[ext_resource type="Script" path="res://components/animals/animal_actor.gd" id="1_actor"]
-[ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
-[ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
-[ext_resource type="Script" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
-[ext_resource type="Script" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
-[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_frame"]
-[ext_resource type="Script" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
-[ext_resource type="Script" path="res://components/animals/animal_foraging_component.gd" id="8_foraging"]
-[ext_resource type="Script" path="res://components/animals/animal_growth_component.gd" id="9_growth"]
-[ext_resource type="Script" path="res://components/animals/animal_production_component.gd" id="10_production"]
+[ext_resource type="Script" uid="uid://dtvb48c6pv5w3" path="res://components/animals/animal_actor.gd" id="1_actor"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="2_move"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_animation"]
+[ext_resource type="Script" uid="uid://dt1pemh1bujdn" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
+[ext_resource type="Script" uid="uid://d0ut4g826op3x" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
+[ext_resource type="Texture2D" uid="uid://j0sv7dsytcv" path="res://assets/Ui/progress_bar.png" id="6_frame"]
+[ext_resource type="Script" uid="uid://cdn3d642kfvts" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
+[ext_resource type="Script" uid="uid://cu5incrqxh7bu" path="res://components/animals/animal_foraging_component.gd" id="8_foraging"]
+[ext_resource type="Script" uid="uid://b15j1mkmo6qj4" path="res://components/animals/animal_growth_component.gd" id="9_growth"]
+[ext_resource type="Script" uid="uid://dxfto08scucm4" path="res://components/animals/animal_production_component.gd" id="10_production"]
 
 [sub_resource type="RectangleShape2D" id="Feet"]
 size = Vector2(10, 6)
@@ -22,11 +22,24 @@ bg_color = Color(0.95, 0.65, 0.24, 1)
 [sub_resource type="StyleBoxFlat" id="WaterFill"]
 bg_color = Color(0.27, 0.73, 0.92, 1)
 
-[node name="Animal" type="CharacterBody2D" unique_id=967302978]
+[node name="Animal" type="CharacterBody2D" unique_id=967302978 node_paths=PackedStringArray("collision", "needs_display", "satiety_bar", "hydration_bar", "sprite", "movement", "animation", "needs", "wander", "behaviour", "foraging", "growth", "production")]
 texture_filter = 1
 collision_layer = 4
 motion_mode = 1
 script = ExtResource("1_actor")
+collision = NodePath("CollisionShape2D")
+needs_display = NodePath("NeedsDisplay")
+satiety_bar = NodePath("NeedsDisplay/Satiety")
+hydration_bar = NodePath("NeedsDisplay/Hydration")
+sprite = NodePath("AnimatedSprite2D")
+movement = NodePath("MovementComponent")
+animation = NodePath("AnimationComponent")
+needs = NodePath("NeedsComponent")
+wander = NodePath("WanderComponent")
+behaviour = NodePath("BehaviourComponent")
+foraging = NodePath("ForagingComponent")
+growth = NodePath("GrowthComponent")
+production = NodePath("ProductionComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1449018031]
 
@@ -98,14 +111,16 @@ step = 0.0
 value = 100.0
 show_percentage = false
 
-[node name="BehaviourComponent" type="Node" parent="." unique_id=658705467]
+[node name="BehaviourComponent" type="Node" parent="." unique_id=658705467 node_paths=PackedStringArray("wander", "foraging")]
 script = ExtResource("7_dufb3")
+wander = NodePath("../WanderComponent")
+foraging = NodePath("../ForagingComponent")
 
-[node name="ForagingComponent" type="Node" parent="."]
+[node name="ForagingComponent" type="Node" parent="." unique_id=2127638396]
 script = ExtResource("8_foraging")
 
-[node name="GrowthComponent" type="Node" parent="."]
+[node name="GrowthComponent" type="Node" parent="." unique_id=2141260288]
 script = ExtResource("9_growth")
 
-[node name="ProductionComponent" type="Node" parent="."]
+[node name="ProductionComponent" type="Node" parent="." unique_id=1796286268]
 script = ExtResource("10_production")

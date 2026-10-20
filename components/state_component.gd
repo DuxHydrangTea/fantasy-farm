@@ -1,8 +1,6 @@
 class_name StateComponent
 extends Node
 
-const ToolSelection = preload("res://components/tool_selection_component.gd")
-
 # Component adaptation of the Godot skill's state-machine and top-down templates.
 signal state_changed(previous: StringName, current: StringName)
 
@@ -16,10 +14,11 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var action_up: StringName = &"move_up"
 @export var action_down: StringName = &"move_down"
 @export var action_use_item: StringName = &"use_item"
-@export var tool_selection: ToolSelection
-@export var trough_interaction: Node
-@export var flower_interaction: Node
+@export var tool_selection: ToolSelectionComponent
+@export var trough_interaction: TroughInteractionComponent
+@export var flower_interaction: FlowerInteraction
 @export var dust_particles: GPUParticles2D
+@export var navigation: PlayerNavigationComponent
 
 
 var current_state: State = State.IDLE
@@ -30,8 +29,6 @@ var _harvest_requested: bool = false
 
 func _ready() -> void:
 	assert(movement != null and animation != null, "StateComponent requires movement and animation components")
-	if flower_interaction == null:
-		flower_interaction = get_parent().get_node_or_null("FlowerInteraction")
 	animation.action_finished.connect(_on_action_finished)
 	if tool_selection != null:
 		tool_selection.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
@@ -52,6 +49,8 @@ func _physics_process(delta: float) -> void:
 		return
 	var keyboard: Vector2 = Input.get_vector(action_left, action_right, action_up, action_down)
 	if not keyboard.is_zero_approx():
+		if navigation != null:
+			navigation.cancel()
 		movement.cancel_target()
 	var direction: Vector2 = keyboard if not keyboard.is_zero_approx() else movement.target_direction()
 	animation.update_facing_direction(direction)
@@ -63,13 +62,16 @@ func _physics_process(delta: float) -> void:
 		_use_requested = false
 		if use_selected_tool():
 			return
-	if movement.has_target:
+	var previous_position: Vector2 = movement.body.global_position
+	if navigation != null and navigation.has_focus:
+		navigation.move(delta)
+	elif movement.has_target:
 		movement.move_to_target(delta)
-		if not movement.has_target:
-			direction = Vector2.ZERO
 	else:
 		movement.move(direction, delta)
-	transition_to(State.IDLE if direction.is_zero_approx() else State.WALK)
+	# Collision can prevent movement even while input or a destination remains.
+	var did_move: bool = movement.body.global_position.distance_squared_to(previous_position) > 0.000001
+	transition_to(State.WALK if did_move else State.IDLE)
 	animation.play(STATE_NAMES[current_state])
 	var is_moving: bool = current_state == State.WALK and movement.body.velocity.length_squared() > 100.0
 	_update_dust(is_moving)
@@ -100,7 +102,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if current_state == State.TOOL or current_state == State.WATER:
 		return
 	# Event coordinates belong to this viewport; undo the camera transform.
-	movement.set_target(movement.body.get_canvas_transform().affine_inverse() * click.position)
+	var point: Vector2 = movement.body.get_canvas_transform().affine_inverse() * click.position
+	if navigation != null:
+		navigation.request_focus(point)
 	get_viewport().set_input_as_handled()
 
 func get_selected_tool_action() -> StringName:
@@ -139,6 +143,8 @@ func _on_inventory_visibility_changed(open: bool) -> void:
 	if open:
 		_use_requested = false
 		_harvest_requested = false
+		if navigation != null:
+			navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
 		transition_to(State.IDLE)
@@ -146,6 +152,8 @@ func _on_inventory_visibility_changed(open: bool) -> void:
 func reset_after_load() -> void:
 	_use_requested = false
 	_harvest_requested = false
+	if navigation != null:
+		navigation.cancel()
 	movement.cancel_target()
 	movement.stop()
 	active_action = &""
@@ -160,6 +168,8 @@ func transition_to(next_state: State) -> void:
 	if current_state != State.TOOL and current_state != State.WATER:
 		active_action = &""
 	if current_state == State.TOOL or current_state == State.WATER:
+		if navigation != null:
+			navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
 	if current_state != State.WALK:

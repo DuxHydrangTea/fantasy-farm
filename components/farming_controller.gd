@@ -1,10 +1,7 @@
+class_name FarmingController
 extends Node
+@export var ground: TileMapLayer
 
-const Crop = preload("res://components/crop.gd")
-const CropDefinitionResource = preload("res://scripts/crop_definition.gd")
-const Item = preload("res://scripts/item_definition.gd")
-const Inventory = preload("res://components/inventory_component.gd")
-const Clock = preload("res://components/time_manager.gd")
 const CROP_SCENE: PackedScene = preload("res://scenes/crops/crop.tscn")
 
 signal soil_changed(cell: Vector2i, previous: int, current: int)
@@ -21,7 +18,7 @@ enum Soil { UNTILLED, DRY, WET }
 @export var wet_terrain_set: int = 0
 @export var wet_terrain: int = 0
 @export_flags_2d_physics var obstacle_mask: int = 1
-@export var time_manager: Clock
+@export var time_manager: FarmClock
 var _crops: Dictionary[Vector2i, Crop] = {}
 
 # Runtime occupation, for future crops/placed objects without a physics body.
@@ -30,7 +27,7 @@ var _occupied: Dictionary[Vector2i, bool] = {}
 func _ready() -> void:
 	add_to_group("farming_controller")
 	if time_manager == null:
-		time_manager = get_node_or_null("/root/TimeManager") as Clock
+		time_manager = TimeManager
 	if time_manager != null:
 		time_manager.tick.connect(_refresh_crops)
 
@@ -57,14 +54,14 @@ func get_crop(cell: Vector2i) -> Crop:
 	var crop: Crop = _crops.get(cell) as Crop
 	return crop if is_instance_valid(crop) else null
 
-func plant(cell: Vector2i, inventory: Inventory, slot_index: int, actor: PhysicsBody2D = null) -> bool:
+func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor: PhysicsBody2D = null) -> bool:
 	if inventory == null or time_manager == null or not can_plant(cell, actor):
 		return false
 	var stack: Dictionary = inventory.slot(slot_index)
-	var seed: Item = stack.item as Item
-	if seed == null or stack.count < 1 or seed.item_type != Item.ItemType.SEED:
+	var seed: ItemDefinition = stack.item as ItemDefinition
+	if seed == null or stack.count < 1 or seed.item_type != ItemDefinition.ItemType.SEED:
 		return false
-	var definition: CropDefinitionResource = seed.crop as CropDefinitionResource
+	var definition: CropDefinition = seed.crop as CropDefinition
 	if definition == null or not definition.is_valid():
 		return false
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
@@ -85,11 +82,11 @@ func can_harvest(cell: Vector2i) -> bool:
 	crop.refresh(time_manager.now())
 	return crop.is_mature() and crop.definition.has_valid_harvest()
 
-func harvest(cell: Vector2i, inventory: Inventory) -> bool:
+func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 	if inventory == null or not can_harvest(cell):
 		return false
 	var crop: Crop = get_crop(cell)
-	var produce: Item = crop.definition.harvest_item as Item
+	var produce: ItemDefinition = crop.definition.harvest_item as ItemDefinition
 	if inventory.capacity_for(produce) < crop.definition.harvest_amount:
 		return false
 	inventory.add(produce, crop.definition.harvest_amount)
@@ -140,7 +137,7 @@ func restore_soil(records: Array) -> void:
 	if not wet.is_empty():
 		wet_soil.set_cells_terrain_connect(wet, wet_terrain_set, wet_terrain, false)
 
-func restore_crop(cell: Vector2i, definition: CropDefinitionResource, planted: float, deadline: float, progress: float, now: float) -> void:
+func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, deadline: float, progress: float, now: float) -> void:
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
 	get_parent().add_child(crop)
 	var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)

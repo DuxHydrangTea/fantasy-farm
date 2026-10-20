@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://p617o0sl32sc"]
 
 [ext_resource type="SpriteFrames" uid="uid://c8bijqj7rn1vl" path="res://sprite_frames/character/farmer_bob_frames.tres" id="1_3wg1y"]
+[ext_resource type="Script" uid="uid://b54mbgruol8xh" path="res://components/farm_player.gd" id="1_d6tgn"]
 [ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="2_kmyvj"]
 [ext_resource type="Script" uid="uid://cb0l66kr4jf76" path="res://components/farming_action_component.gd" id="2_yewv4"]
 [ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_a2luo"]
@@ -8,15 +9,17 @@
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
 [ext_resource type="Script" uid="uid://romagl4yruop" path="res://components/state_component.gd" id="4_eir2k"]
 [ext_resource type="Script" uid="uid://cnttid04f6mx7" path="res://components/tool_selection_component.gd" id="5_tools"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
-[ext_resource type="PackedScene" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
+[ext_resource type="PackedScene" uid="uid://ohxda0nyw7wu" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
+[ext_resource type="PackedScene" uid="uid://8ftvdhs2ex1r" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
 [ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="9_item"]
 [ext_resource type="Script" uid="uid://1rh2a2xtxj0w" path="res://components/item_collector.gd" id="10_collector"]
 [ext_resource type="Script" uid="uid://8s4o5x32ce3g" path="res://components/animals/trough_interaction_component.gd" id="11_refill"]
 [ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
 [ext_resource type="Texture2D" uid="uid://d0yebn4gwb0bi" path="res://assets/effects/dust_particle.png" id="18_dm10o"]
+[ext_resource type="Script" uid="uid://birn2jpdp32qn" path="res://components/camera_zoom_component.gd" id="19_3wg1y"]
 [ext_resource type="Script" uid="uid://b8ewk02kjngvp" path="res://components/flowers/flower_interaction.gd" id="19_o6auj"]
+[ext_resource type="Script" uid="uid://dgs0b3ufl14w2" path="res://components/player_navigation_component.gd" id="20_kmyvj"]
 
 [sub_resource type="RectangleShape2D" id="FeetShape"]
 size = Vector2(10, 4)
@@ -52,10 +55,16 @@ scale_min = 0.6
 scale_curve = SubResource("CurveTexture_dust")
 color_ramp = SubResource("GradientTexture1D_dust")
 
-[node name="Player" type="CharacterBody2D" unique_id=556331968]
+[node name="Player" type="CharacterBody2D" unique_id=556331968 node_paths=PackedStringArray("animation", "state", "selection", "camera", "farming_actions")]
 texture_filter = 1
 collision_layer = 2
 motion_mode = 1
+script = ExtResource("1_d6tgn")
+animation = NodePath("AnimationComponent")
+state = NodePath("StateComponent")
+selection = NodePath("ToolSelection")
+camera = NodePath("Camera2D")
+farming_actions = NodePath("FarmingActionComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362085865]
 position = Vector2(0, -9)
@@ -74,13 +83,15 @@ script = ExtResource("2_kmyvj")
 script = ExtResource("3_a2luo")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
-[node name="StateComponent" type="Node" parent="." unique_id=244539320 node_paths=PackedStringArray("movement", "animation", "tool_selection", "trough_interaction", "dust_particles")]
+[node name="StateComponent" type="Node" parent="." unique_id=244539320 node_paths=PackedStringArray("movement", "animation", "tool_selection", "trough_interaction", "flower_interaction", "dust_particles", "navigation")]
 script = ExtResource("4_eir2k")
 movement = NodePath("../MovementComponent")
 animation = NodePath("../AnimationComponent")
 tool_selection = NodePath("../ToolSelection")
 trough_interaction = NodePath("../TroughInteraction")
+flower_interaction = NodePath("../FlowerInteraction")
 dust_particles = NodePath("../DustParticles")
+navigation = NodePath("../PlayerNavigation")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1879359231]
 zoom = Vector2(1.2, 1.2)
@@ -97,12 +108,13 @@ script = ExtResource("2_yewv4")
 animation = NodePath("../AnimationComponent")
 state = NodePath("../StateComponent")
 
-[node name="SoilFocus" type="Node2D" parent="." unique_id=445356736 node_paths=PackedStringArray("actions")]
+[node name="SoilFocus" type="Node2D" parent="." unique_id=445356736 node_paths=PackedStringArray("actions", "marker")]
 z_index = 1
 z_as_relative = false
 texture_filter = 1
 script = ExtResource("3_dyp2m")
 actions = NodePath("../FarmingActionComponent")
+marker = NodePath("Marker")
 
 [node name="Marker" type="Sprite2D" parent="SoilFocus" unique_id=196721607]
 scale = Vector2(0.5, 0.5)
@@ -128,12 +140,13 @@ inventory_source = NodePath("../ToolSelection")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCollector" unique_id=568082033]
 shape = SubResource("PickupRadius")
 
-[node name="TroughInteraction" type="Node2D" parent="." unique_id=685308976 node_paths=PackedStringArray("selection", "animation", "state")]
+[node name="TroughInteraction" type="Node2D" parent="." unique_id=685308976 node_paths=PackedStringArray("selection", "animation", "state", "prompt")]
 z_index = 10
 script = ExtResource("11_refill")
 selection = NodePath("../ToolSelection")
 animation = NodePath("../AnimationComponent")
 state = NodePath("../StateComponent")
+prompt = NodePath("Prompt")
 
 [node name="Prompt" type="Label" parent="TroughInteraction" unique_id=1824732653]
 offset_left = -110.0
@@ -156,9 +169,13 @@ lifetime = 0.35
 randomness = 0.2
 process_material = SubResource("ParticleProcessMaterial_j8g38")
 
-[node name="FlowerInteraction" type="Node2D" parent="." unique_id=1919763103]
+[node name="FlowerInteraction" type="Node2D" parent="." unique_id=1919763103 node_paths=PackedStringArray("selection", "animation", "state", "prompt")]
 z_index = 10
 script = ExtResource("19_o6auj")
+selection = NodePath("../ToolSelection")
+animation = NodePath("../AnimationComponent")
+state = NodePath("../StateComponent")
+prompt = NodePath("Prompt")
 
 [node name="Prompt" type="Label" parent="FlowerInteraction" unique_id=964306362]
 offset_left = -140.0
@@ -170,3 +187,16 @@ theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
+
+[node name="CameraZoom" type="Node" parent="." unique_id=1798385918 node_paths=PackedStringArray("camera", "selection")]
+script = ExtResource("19_3wg1y")
+camera = NodePath("../Camera2D")
+selection = NodePath("../ToolSelection")
+
+[node name="PlayerNavigation" type="Node" parent="." unique_id=385155000 node_paths=PackedStringArray("movement", "animation", "camera", "collision_shape", "farming_actions")]
+script = ExtResource("20_kmyvj")
+movement = NodePath("../MovementComponent")
+animation = NodePath("../AnimationComponent")
+camera = NodePath("../Camera2D")
+collision_shape = NodePath("../CollisionShape2D")
+farming_actions = NodePath("../FarmingActionComponent")

@@ -1,17 +1,17 @@
+class_name Crop
 extends Node2D
 
-const Definition = preload("res://scripts/crop_definition.gd")
 signal matured
-var definition: Definition
+var definition: CropDefinition
 var planted_at: float = 0.0
 var matures_at: float = 0.0
 var progress: float = 0.0
 var stage: int = 0
-@onready var sprite: Sprite2D = $Sprite
-@onready var progress_bar: ProgressBar = $Progress/Bar
-@onready var progress_frame: Control = $Progress
+@export var sprite: Sprite2D
+@export var progress_bar: ProgressBar
+@export var progress_frame: Control
 
-func configure(crop: Definition, timestamp: float) -> void:
+func configure(crop: CropDefinition, timestamp: float) -> void:
 	definition = crop
 	planted_at = timestamp
 	matures_at = timestamp + crop.growth_seconds
@@ -40,7 +40,7 @@ func refresh(timestamp: float) -> void:
 func is_mature() -> bool:
 	return progress >= 1.0
 
-func restore_progress(crop: Definition, planted: float, deadline: float, earned: float, timestamp: float) -> void:
+func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float) -> void:
 	definition = crop
 	planted_at = planted
 	matures_at = deadline

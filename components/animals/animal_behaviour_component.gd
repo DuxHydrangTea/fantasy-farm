@@ -1,17 +1,15 @@
+class_name AnimalBehaviourComponent
 extends Node
+
 ## Small state machine adapted from the Godot skill's state-machine template.
 ## Owns behaviour decisions; Wander owns targets and Movement owns physics.
-const Definition = preload("res://scripts/animals/animal_definition.gd")
-const Wander = preload("res://components/animals/animal_wander_component.gd")
-const Foraging = preload("res://components/animals/animal_foraging_component.gd")
-const Trough = preload("res://components/animals/animal_trough.gd")
 signal state_changed(previous: StringName, current: StringName)
 enum State { IDLE, WALK, FORAGE, LIE_DOWN, REST, SLEEP_START, SLEEP, STAND_UP, SEEK_RESOURCE, EAT, DRINK }
 const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"forage", &"lie_down", &"rest", &"sleep_start", &"sleep", &"stand_up", &"seek_resource", &"eat", &"drink"]
-@onready var wander: Wander = $"../WanderComponent"
-@onready var foraging: Foraging = $"../ForagingComponent"
+@export var wander: AnimalWanderComponent
+@export var foraging: AnimalForagingComponent
 var current_state: State = State.IDLE
-var definition: Definition
+var definition: AnimalDefinition
 var _remaining: float = 0.0
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _forage_action: StringName = &""
@@ -23,7 +21,7 @@ var _first_decision: bool = true
 func _ready() -> void:
 	wander.animation.action_finished.connect(_on_animation_finished)
 
-func configure(data: Definition) -> void:
+func configure(data: AnimalDefinition) -> void:
 	definition = data
 	wander.set_physics_process(false)
 	if wander.random_seed == 0:
@@ -50,10 +48,10 @@ func _physics_process(delta: float) -> void:
 	if wander.traversal != null and wander.traversal.handle_laying(delta):
 		return
 	if current_state == State.SEEK_RESOURCE:
-		var travel: Foraging.Travel = foraging.step(delta)
-		if travel == Foraging.Travel.ARRIVED:
-			_enter(State.EAT if foraging.target.kind == Trough.Kind.FOOD else State.DRINK)
-		elif travel == Foraging.Travel.FAILED:
+		var travel: AnimalForagingComponent.Travel = foraging.step(delta)
+		if travel == AnimalForagingComponent.Travel.ARRIVED:
+			_enter(State.EAT if foraging.target.kind == AnimalTrough.Kind.FOOD else State.DRINK)
+		elif travel == AnimalForagingComponent.Travel.FAILED:
 			foraging.cancel(true)
 			_enter(State.IDLE)
 		return

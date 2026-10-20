@@ -1,14 +1,14 @@
 @tool
-extends "res://components/animals/animal_pen.gd"
+class_name PondPen
+extends AnimalPen
 ## Cardinal 16px routes derived from the actual painted water and static physics.
 ## Two graphs keep land-only birds out of water without blocking swimming birds.
-@export var water_layer_path: NodePath = NodePath("../FarmLand")
+@export var water_layer: TileMapLayer
 @export var water_source: int = 1
 @export var water_terrain: int = 1
 var navigation_ready: bool = false
 var _land: AStarGrid2D
 var _amphibious: AStarGrid2D
-var _water_layer: TileMapLayer
 var _dry_points: Array[Vector2i] = []
 var _navigation_frames: int = 2
 const CELL: float = 16.0
@@ -17,7 +17,6 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_physics_process(false)
 		return
-	_water_layer = get_node_or_null(water_layer_path) as TileMapLayer
 
 func _physics_process(_delta: float) -> void:
 	_navigation_frames -= 1
@@ -26,13 +25,11 @@ func _physics_process(_delta: float) -> void:
 		set_physics_process(false)
 
 func is_water(point: Vector2) -> bool:
-	if _water_layer == null:
-		_water_layer = get_node_or_null(water_layer_path) as TileMapLayer
-	if _water_layer == null:
+	if water_layer == null:
 		return false
-	var cell: Vector2i = _water_layer.local_to_map(_water_layer.to_local(point))
-	var data: TileData = _water_layer.get_cell_tile_data(cell)
-	return _water_layer.get_cell_source_id(cell) == water_source and data != null and data.terrain == water_terrain
+	var cell: Vector2i = water_layer.local_to_map(water_layer.to_local(point))
+	var data: TileData = water_layer.get_cell_tile_data(cell)
+	return water_layer.get_cell_source_id(cell) == water_source and data != null and data.terrain == water_terrain
 
 func rebuild_after_load() -> void:
 	navigation_ready = false

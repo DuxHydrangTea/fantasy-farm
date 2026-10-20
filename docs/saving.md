@@ -8,7 +8,8 @@ File: `user://saves/profile_local.json` (Godot: Project → Open User Data Folde
 
 - Vị trí/hướng người chơi, hotbar đang chọn, đầy đủ slot và số lượng túi đồ.
 - Ô đất đã cuốc/tưới theo tọa độ logic; khôi phục qua terrain connect, giữ đường nối. Cây trồng: loại, thời điểm gieo/chín, tiến độ đã đạt.
-- Vật nuôi: ID, loài, skin, chuồng, vị trí/hướng, tuổi, no/nước, phần chu kỳ sản xuất và sản phẩm chưa thu. Tất cả 36 vật nuôi hiện tại dùng cùng cơ chế.
+- Vật nuôi: ID, loài, skin, chuồng, vị trí/hướng, tuổi, no/nước, phần chu kỳ sản xuất và sản phẩm chưa thu. Cả 47 vật nuôi khởi tạo (18 gà/gà trống, 18 bò/cừu, 11 vịt/ngỗng) dùng cùng cơ chế; số lượng thực tế lấy từ world lúc lưu.
+- Vườn hoa: ID vườn, ô chậu có hoa, loại hoa, mốc gieo/tưới/chín, tiến độ và cờ đã cấp hoa trồng sẵn. Chậu không có trong danh sách là chậu trống; vật phẩm hạt/hoa dùng cùng dữ liệu inventory/pickup.
 - Lượng thức ăn/nước và vị trí các máng; vật phẩm còn trên đất, số lượng và liên kết đống sản phẩm với vật nuôi tạo ra nó.
 - ID chuồng đã khởi tạo (`animal_pens`): chuồng mới như PondPen nhận đàn/máng ban đầu khi tải save cũ; sau khi lưu, vật nuôi bị xóa không tự hồi sinh. Trứng vịt còn dưới nước được giữ trong production stock cho tới khi lên bờ.
 
@@ -28,7 +29,7 @@ File chứa payload JSON và SHA-256 của chính chuỗi payload. Checksum phá
 
 ## Chuẩn bị cho online
 
-`save_manager.gd` điều phối capture/restore và trạng thái busy. `world_state_adapter.gd` biết scene; `save_schema.gd` chỉ biết DTO. `save_repository.gd` là hợp đồng backend:
+`save_manager.gd` điều phối capture/restore và trạng thái busy. `world_state_adapter.gd` dùng FarmWorld/FarmPlayer và tham chiếu typed được scene gán, không tìm Player/component bằng tên node; `save_schema.gd` chỉ biết DTO. `save_repository.gd` là hợp đồng backend:
 
 ```gdscript
 read_profile(profile_id: String) -> Dictionary

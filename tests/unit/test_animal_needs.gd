@@ -1,17 +1,15 @@
 extends GutTest
-const Clock = preload("res://components/time_manager.gd")
-const Needs = preload("res://components/animals/animal_needs_component.gd")
 var timestamp: float = 1000.0
-var clock: Clock
-var needs: Needs
+var clock: FarmClock
+var needs: AnimalNeedsComponent
 
 func before_each() -> void:
 	timestamp = 1000.0
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
-	needs = Needs.new()
+	needs = AnimalNeedsComponent.new()
 	needs.time_manager = clock
 	add_child_autofree(needs)
 	needs.configure(600.0, 300.0)
@@ -52,7 +50,7 @@ func test_repeated_or_backward_timestamp_does_not_double_charge() -> void:
 	assert_almost_eq(needs.satiety, 75.0, 0.001)
 
 func test_needs_of_two_animals_do_not_share_state() -> void:
-	var other: Needs = Needs.new()
+	var other: AnimalNeedsComponent = AnimalNeedsComponent.new()
 	other.time_manager = clock
 	add_child_autofree(other)
 	needs.update_at(1300.0)

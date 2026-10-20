@@ -1,16 +1,12 @@
 extends GutTest
-const Production = preload("res://components/animals/animal_production_component.gd")
-const Definition = preload("res://scripts/animals/animal_production_definition.gd")
-const Inventory = preload("res://components/inventory_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
-var production: Production
-var data: Definition
+var production: AnimalProductionComponent
+var data: AnimalProductionDefinition
 
 func before_each() -> void:
-	data = load("res://animals/productions/chicken_egg_production.tres").duplicate() as Definition
+	data = load("res://animals/productions/chicken_egg_production.tres").duplicate() as AnimalProductionDefinition
 	data.production_seconds = 4.0
 	data.production_amount = 2
-	production = Production.new()
+	production = AnimalProductionComponent.new()
 	add_child_autofree(production)
 	production.configure(data)
 
@@ -47,11 +43,11 @@ func test_take_output_never_overdraws_or_adds_negative_stock() -> void:
 	assert_eq(production.stored_amount, 0)
 
 func test_direct_collection_preserves_output_when_inventory_is_full() -> void:
-	var inventory: Inventory = Inventory.new()
+	var inventory: InventoryComponent = InventoryComponent.new()
 	inventory.starting_tools = false
 	inventory.slot_count = 1
 	add_child_autofree(inventory)
-	var item: Item = data.production_item.duplicate() as Item
+	var item: ItemDefinition = data.production_item.duplicate() as ItemDefinition
 	item.max_stack = 3
 	data.production_item = item
 	production.advance(8.0)
@@ -64,7 +60,7 @@ func test_direct_collection_preserves_output_when_inventory_is_full() -> void:
 	assert_eq(inventory.count_item(item.item_id), 3)
 
 func test_reentrant_inventory_notifications_cannot_duplicate_output() -> void:
-	var inventory: Inventory = Inventory.new()
+	var inventory: InventoryComponent = InventoryComponent.new()
 	inventory.starting_tools = false
 	add_child_autofree(inventory)
 	inventory.changed.connect(func() -> void: production.collect(inventory))
@@ -74,7 +70,7 @@ func test_reentrant_inventory_notifications_cannot_duplicate_output() -> void:
 	assert_eq(production.stored_amount, 0)
 
 func test_components_sharing_one_definition_have_independent_state() -> void:
-	var other: Production = Production.new()
+	var other: AnimalProductionComponent = AnimalProductionComponent.new()
 	add_child_autofree(other)
 	other.configure(data)
 	production.advance(5.0)

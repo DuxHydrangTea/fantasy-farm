@@ -1,3 +1,4 @@
+class_name SaveRepository
 extends RefCounted
 ## Backend contract. Methods may be synchronous or coroutines; callers await them.
 ## Online implementations must enforce expected_revision atomically on the server.

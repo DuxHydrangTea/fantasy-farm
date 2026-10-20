@@ -1,9 +1,10 @@
+class_name InventorySlot
 extends TextureButton
-const Inventory = preload("res://components/inventory_component.gd")
+var _selection_frame: TextureRect
 const NORMAL: Texture2D = preload("res://resources/ui/hotbar_slot.tres")
 const SELECTED: Texture2D = preload("res://resources/ui/hotbar_selected.tres")
 const FOCUS: Texture2D = preload("res://resources/ui/soil_focus.tres")
-var inventory: Inventory
+var inventory: InventoryComponent
 var slot_index: int = 0
 var compact: bool = false
 var show_shortcut: bool = false
@@ -31,15 +32,15 @@ func _ready() -> void:
 	_icon.offset_top = 8.0 if compact else 12.0
 	_icon.offset_right = -margin
 	_icon.offset_bottom = -12.0 if compact else -18.0
-	var frame: TextureRect = TextureRect.new()
-	frame.name = "SelectionFrame"
-	frame.texture = FOCUS
-	frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	frame.stretch_mode = TextureRect.STRETCH_SCALE
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(frame)
-	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	frame.hide()
+	_selection_frame = TextureRect.new()
+	_selection_frame.name = "SelectionFrame"
+	_selection_frame.texture = FOCUS
+	_selection_frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_selection_frame.stretch_mode = TextureRect.STRETCH_SCALE
+	_selection_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_selection_frame)
+	_selection_frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_selection_frame.hide()
 	var shortcut: Label = Label.new()
 	shortcut.name = "Shortcut"
 	shortcut.text = str(slot_index + 1) if show_shortcut else ""
@@ -93,3 +94,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if _can_drop_data(_at_position, data):
 		inventory.move_slot(data.slot, slot_index)
+
+func set_selected(value: bool) -> void:
+	set_pressed_no_signal(value)
+	_selection_frame.visible = value

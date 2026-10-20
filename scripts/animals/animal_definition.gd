@@ -1,11 +1,9 @@
 class_name AnimalDefinition
 extends Resource
 
-const Types = preload("res://scripts/animals/animal_types.gd")
-const Production = preload("res://scripts/animals/animal_production_definition.gd")
 @export var animal_id: StringName
 @export var display_name: String
-@export var species: Types.Species = Types.Species.CHICKEN
+@export var species: AnimalTypes.Species = AnimalTypes.Species.CHICKEN
 @export_group("Movement")
 @export_range(1.0, 150.0) var move_speed: float = 28.0
 @export var idle_seconds: Vector2 = Vector2(0.6, 1.8)
@@ -38,7 +36,7 @@ const Production = preload("res://scripts/animals/animal_production_definition.g
 @export var eggs_on_land: bool = false
 @export_group("Growth And Production")
 @export_range(0.0, 86400.0) var maturity_seconds: float = 120.0
-@export var production: Production
+@export var production: AnimalProductionDefinition
 
 func is_valid() -> bool:
 	return not animal_id.is_empty() and has_movement_frames(adult_frames) and move_speed > 0.0 and footprint.x > 0.0 and footprint.y > 0.0 and satiety_depletion_seconds > 0.0 and hydration_depletion_seconds > 0.0 and idle_seconds.x >= 0.0 and idle_seconds.y >= idle_seconds.x

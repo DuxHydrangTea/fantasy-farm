@@ -1,18 +1,17 @@
+class_name HotbarUI
 extends CanvasLayer
 
-const ToolSelection = preload("res://components/tool_selection_component.gd")
-const Slot = preload("res://components/inventory_slot.gd")
 const SLOT_ACTIONS: Array[StringName] = [&"hotbar_1", &"hotbar_2", &"hotbar_3", &"hotbar_4", &"hotbar_5", &"hotbar_6"]
 
-@export var selection: ToolSelection
-@onready var slots: HBoxContainer = $Root/Bottom/Column/Slots
-@onready var selected_name: Label = $Root/Bottom/Column/SelectedName
-var buttons: Array[TextureButton] = []
+@export var selection: ToolSelectionComponent
+@export var slots: HBoxContainer
+@export var selected_name: Label
+var buttons: Array[InventorySlot] = []
 
 func _ready() -> void:
 	assert(selection != null, "Hotbar requires ToolSelection")
 	for index: int in range(selection.HOTBAR_SIZE):
-		var button: Slot = Slot.new()
+		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
 		button.inventory = selection.inventory
 		button.slot_index = index
@@ -29,8 +28,7 @@ func _select_slot(index: int) -> void:
 
 func _on_selection_changed(index: int, _tool: StringName) -> void:
 	for i: int in range(buttons.size()):
-		buttons[i].set_pressed_no_signal(i == index)
-		buttons[i].get_node("SelectionFrame").visible = i == index
+		buttons[i].set_selected(i == index)
 	selected_name.text = selection.get_selected_name()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -44,13 +42,3 @@ func _unhandled_input(event: InputEvent) -> void:
 				selection.select_slot(index)
 				get_viewport().set_input_as_handled()
 				return
-	var mouse: InputEventMouseButton = event as InputEventMouseButton
-	if mouse == null or not mouse.pressed:
-		return
-	if mouse.button_index == MOUSE_BUTTON_WHEEL_UP:
-		selection.cycle_selection(-1)
-	elif mouse.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-		selection.cycle_selection(1)
-	else:
-		return
-	get_viewport().set_input_as_handled()

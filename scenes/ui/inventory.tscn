@@ -1,10 +1,20 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://components/inventory_ui.gd" id="1_ui"]
-[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="2_theme"]
-[node name="InventoryUI" type="CanvasLayer"]
+[gd_scene format=3 uid="uid://8ftvdhs2ex1r"]
+
+[ext_resource type="Script" uid="uid://dgb6lslvg74ii" path="res://components/inventory_ui.gd" id="1_ui"]
+[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="2_theme"]
+
+[node name="InventoryUI" type="CanvasLayer" unique_id=1598767233 node_paths=PackedStringArray("close_button", "root", "panel", "grid", "details", "capacity")]
 layer = 20
 script = ExtResource("1_ui")
-[node name="Root" type="Control" parent="."]
+close_button = NodePath("Root/Center/Panel/Body/Header/Close")
+root = NodePath("Root")
+panel = NodePath("Root/Center/Panel")
+grid = NodePath("Root/Center/Panel/Body/Scroll/Center/Grid")
+details = NodePath("Root/Center/Panel/Body/Details")
+capacity = NodePath("Root/Center/Panel/Body/Footer/Capacity")
+
+[node name="Root" type="Control" parent="." unique_id=1269671540]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,16 +22,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
-texture_filter = 1
-[node name="Dim" type="ColorRect" parent="Root"]
+
+[node name="Dim" type="ColorRect" parent="Root" unique_id=1326428285]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.10, 0.09, 0.07, 0.65)
-[node name="Center" type="CenterContainer" parent="Root"]
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root" unique_id=765675278]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,56 +40,69 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-[node name="Panel" type="PanelContainer" parent="Root/Center"]
-layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=1424098951]
 custom_minimum_size = Vector2(520, 540)
-[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+layout_mode = 2
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=1800325310]
 layout_mode = 2
 theme_override_constants/separation = 12
-[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1017386628]
 layout_mode = 2
-[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=1494367326]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "TÚI ĐỒ"
 theme_override_font_sizes/font_size = 32
-[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
-layout_mode = 2
-focus_mode = 0
+text = "TÚI ĐỒ"
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=1951490743]
 custom_minimum_size = Vector2(44, 40)
-text = "×"
-tooltip_text = "Đóng (Esc)"
-[node name="Subtitle" type="Label" parent="Root/Center/Panel/Body"]
 layout_mode = 2
-text = "6 ô đầu dùng chung với hotbar"
+tooltip_text = "Đóng (Esc)"
+focus_mode = 0
+text = "×"
+
+[node name="Subtitle" type="Label" parent="Root/Center/Panel/Body" unique_id=1082757921]
+layout_mode = 2
 theme_override_font_sizes/font_size = 18
+text = "6 ô đầu dùng chung với hotbar"
 autowrap_mode = 3
-[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body"]
+
+[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body" unique_id=2135767848]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
-[node name="Center" type="CenterContainer" parent="Root/Center/Panel/Body/Scroll"]
+
+[node name="Center" type="CenterContainer" parent="Root/Center/Panel/Body/Scroll" unique_id=80968017]
 layout_mode = 2
 size_flags_horizontal = 3
-[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Scroll/Center"]
+
+[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Scroll/Center" unique_id=601836878]
 layout_mode = 2
 size_flags_horizontal = 4
-columns = 6
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
-[node name="Details" type="Label" parent="Root/Center/Panel/Body"]
-layout_mode = 2
+columns = 6
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Body" unique_id=1318824912]
 custom_minimum_size = Vector2(0, 28)
-autowrap_mode = 3
-theme_override_font_sizes/font_size = 20
-[node name="Footer" type="HBoxContainer" parent="Root/Center/Panel/Body"]
 layout_mode = 2
-[node name="Hint" type="Label" parent="Root/Center/Panel/Body/Footer"]
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Footer" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1222223094]
+layout_mode = 2
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body/Footer" unique_id=1552169593]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Kéo thả để đổi chỗ / gộp"
 theme_override_font_sizes/font_size = 16
+text = "Kéo thả để đổi chỗ / gộp"
 autowrap_mode = 3
-[node name="Capacity" type="Label" parent="Root/Center/Panel/Body/Footer"]
+
+[node name="Capacity" type="Label" parent="Root/Center/Panel/Body/Footer" unique_id=498918105]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16

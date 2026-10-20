@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://drlyjllanxony"]
 
-[ext_resource type="Script" path="res://components/animals/animal_trough.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
+[ext_resource type="Script" uid="uid://bmo4pkevliajl" path="res://components/animals/animal_trough.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="2_sheet"]
 
 [sub_resource type="AtlasTexture" id="Full"]
 atlas = ExtResource("2_sheet")
@@ -14,16 +14,17 @@ region = Rect2(64, 0, 32, 16)
 [sub_resource type="RectangleShape2D" id="Body"]
 size = Vector2(28, 8)
 
-[node name="WaterTrough" type="StaticBody2D"]
+[node name="WaterTrough" type="StaticBody2D" unique_id=450736599 node_paths=PackedStringArray("sprite")]
 texture_filter = 1
 script = ExtResource("1_script")
+sprite = NodePath("Sprite2D")
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=418290871]
 position = Vector2(0, -8)
 texture = SubResource("Full")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=829862144]
 position = Vector2(0, -4)
 shape = SubResource("Body")

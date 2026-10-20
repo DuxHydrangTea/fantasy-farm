@@ -1,18 +1,16 @@
+class_name TroughInteractionComponent
 extends Node2D
 ## Player-side adapter for any AnimalTrough. StateComponent owns input/animation.
-const Trough = preload("res://components/animals/animal_trough.gd")
-const Selection = preload("res://components/tool_selection_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
-@export var selection: Selection
+@export var selection: ToolSelectionComponent
 @export var animation: AnimationComponent
 @export var state: StateComponent
 @export_range(8.0, 64.0) var reach: float = 30.0
 @export var impact_frame: int = 3
-@onready var prompt: Label = $Prompt
-var focused_trough: Trough
-var _pending: Trough
+@export var prompt: Label
+var focused_trough: AnimalTrough
+var _pending: AnimalTrough
 var _action: StringName = &""
-var _water_item: Item
+var _water_item: ItemDefinition
 var _water_slot: int = -1
 var _feedback: String = ""
 var _feedback_until: int = 0
@@ -32,7 +30,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	refresh()
 
-func can_reach(trough: Trough) -> bool:
+func can_reach(trough: AnimalTrough) -> bool:
 	if not is_instance_valid(trough) or trough.is_queued_for_deletion() or not trough.is_inside_tree():
 		return false
 	if global_position.distance_to(trough.global_position) > reach:
@@ -45,11 +43,11 @@ func can_reach(trough: Trough) -> bool:
 	var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(ray)
 	return hit.is_empty() or hit.collider == trough
 
-func find_trough() -> Trough:
-	var nearest: Trough
+func find_trough() -> AnimalTrough:
+	var nearest: AnimalTrough
 	var distance: float = INF
 	for node: Node in get_tree().get_nodes_in_group(&"animal_troughs"):
-		var trough: Trough = node as Trough
+		var trough: AnimalTrough = node as AnimalTrough
 		if not can_reach(trough):
 			continue
 		var candidate: float = global_position.distance_squared_to(trough.global_position)
@@ -59,13 +57,13 @@ func find_trough() -> Trough:
 	return nearest
 
 func has_watering_can() -> bool:
-	var item: Item = selection.get_selected_item() if selection != null else null
-	return item != null and item.item_type == Item.ItemType.TOOL and item.tool_type == Item.ToolType.WATERING_CAN
+	var item: ItemDefinition = selection.get_selected_item() if selection != null else null
+	return item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.WATERING_CAN
 
-func refill_hint(trough: Trough) -> String:
+func refill_hint(trough: AnimalTrough) -> String:
 	if trough.stock >= trough.capacity:
 		return "Máng đã đầy"
-	if trough.kind == Trough.Kind.WATER:
+	if trough.kind == AnimalTrough.Kind.WATER:
 		return "[E] Thêm nước" if has_watering_can() else "Chọn bình tưới để thêm nước"
 	if trough.feed_item == null:
 		return "Máng chưa được chọn loại thức ăn"
@@ -75,10 +73,10 @@ func refill_hint(trough: Trough) -> String:
 		return "Chưa đủ chỗ cho 1 gói thức ăn"
 	return "[E] Thêm thức ăn"
 
-func can_refill(trough: Trough) -> bool:
+func can_refill(trough: AnimalTrough) -> bool:
 	if trough.stock >= trough.capacity:
 		return false
-	return has_watering_can() if trough.kind == Trough.Kind.WATER else trough.feed_items_needed(selection.inventory) > 0
+	return has_watering_can() if trough.kind == AnimalTrough.Kind.WATER else trough.feed_items_needed(selection.inventory) > 0
 
 func refresh() -> void:
 	if selection == null or selection.inventory_open:
@@ -89,7 +87,7 @@ func refresh() -> void:
 	if focused_trough == null:
 		prompt.hide()
 		return
-	var title: String = "Thức ăn" if focused_trough.kind == Trough.Kind.FOOD else "Nước"
+	var title: String = "Thức ăn" if focused_trough.kind == AnimalTrough.Kind.FOOD else "Nước"
 	var hint: String = _feedback if Time.get_ticks_msec() < _feedback_until else refill_hint(focused_trough)
 	prompt.text = "%s %d/%d\n%s" % [title, focused_trough.stock, focused_trough.capacity, hint]
 	prompt.reset_size()
@@ -113,7 +111,7 @@ func prepare_action() -> StringName:
 		return &"blocked"
 	_pending = focused_trough
 	animation.update_facing_direction(_pending.global_position - global_position)
-	_action = &"refill_food" if _pending.kind == Trough.Kind.FOOD else &"refill_water"
+	_action = &"refill_food" if _pending.kind == AnimalTrough.Kind.FOOD else &"refill_water"
 	_water_item = selection.get_selected_item()
 	_water_slot = selection.selected_index
 	return _action
@@ -131,7 +129,7 @@ func _on_frame_changed() -> void:
 		_pending = null
 		return
 	var action: StringName = _action
-	var trough: Trough = _pending
+	var trough: AnimalTrough = _pending
 	_action = &""
 	_pending = null
 	if not can_reach(trough) or selection.inventory_open or state.active_action != action:

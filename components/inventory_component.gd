@@ -1,9 +1,9 @@
+class_name InventoryComponent
 extends Node
 
 # Fixed-slot inventory adapted from the Godot skill's inventory.gd template.
 signal changed
 
-const Item = preload("res://scripts/item_definition.gd")
 const HOE: Resource = preload("res://items/tools/hoe.tres")
 const WATER: Resource = preload("res://items/tools/watering_can.tres")
 
@@ -36,7 +36,7 @@ func replace_slots(stacks: Array[Dictionary]) -> bool:
 		return false
 	var replacement: Array[Dictionary] = []
 	for stack: Dictionary in stacks:
-		var item: Item = stack.get("item") as Item
+		var item: ItemDefinition = stack.get("item") as ItemDefinition
 		var amount: int = int(stack.get("count", 0))
 		if (item == null and amount != 0) or (item != null and (amount < 1 or amount > item.get_stack_limit())):
 			return false
@@ -45,7 +45,7 @@ func replace_slots(stacks: Array[Dictionary]) -> bool:
 	changed.emit()
 	return true
 
-func add(item: Item, amount: int = 1) -> int:
+func add(item: ItemDefinition, amount: int = 1) -> int:
 	_ensure_slots()
 	if item == null or item.item_id.is_empty() or amount <= 0:
 		return 0
@@ -94,7 +94,7 @@ func remove_from_slot(index: int, amount: int = 1) -> int:
 		changed.emit()
 	return removed
 
-func capacity_for(item: Item) -> int:
+func capacity_for(item: ItemDefinition) -> int:
 	_ensure_slots()
 	if item == null:
 		return 0
@@ -120,7 +120,7 @@ func move_slot(source: int, target: int) -> bool:
 		return false
 	var from: Dictionary = _slots[source]
 	var to: Dictionary = _slots[target]
-	var item: Item = from.item
+	var item: ItemDefinition = from.item
 	if item == null:
 		return false
 	if to.item != null and item.matches(to.item):

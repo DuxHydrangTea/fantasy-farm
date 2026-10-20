@@ -1,9 +1,8 @@
 extends GutTest
 
 const Fixture = preload("res://tests/support/farming_fixture.gd")
-const Farming = preload("res://components/farming_controller.gd")
 var field: Node2D
-var farming: Farming
+var farming: FarmingController
 var land: TileMapLayer
 var cell: Vector2i = Vector2i(20, 20)
 
@@ -51,15 +50,15 @@ func test_soil_lifecycle_is_idempotent_and_preserves_permission_layer() -> void:
 	watch_signals(farming)
 	var source: int = land.get_cell_source_id(cell)
 	var atlas: Vector2i = land.get_cell_atlas_coords(cell)
-	assert_eq(farming.get_soil_state(cell), Farming.Soil.UNTILLED)
+	assert_eq(farming.get_soil_state(cell), FarmingController.Soil.UNTILLED)
 	assert_false(farming.water(cell), "Cannot water uncultivated grass")
 	assert_false(farming.can_plant(cell))
 	assert_true(farming.till(cell))
-	assert_eq(farming.get_soil_state(cell), Farming.Soil.DRY)
+	assert_eq(farming.get_soil_state(cell), FarmingController.Soil.DRY)
 	assert_false(farming.till(cell))
 	assert_true(farming.can_plant(cell))
 	assert_true(farming.water(cell))
-	assert_eq(farming.get_soil_state(cell), Farming.Soil.WET)
+	assert_eq(farming.get_soil_state(cell), FarmingController.Soil.WET)
 	assert_false(farming.water(cell))
 	assert_false(farming.till(cell))
 	assert_true(farming.can_plant(cell))
@@ -100,7 +99,7 @@ func test_missing_permission_data_defaults_to_denied() -> void:
 func test_unconfigured_soil_terrain_does_not_change_state() -> void:
 	farming.dry_terrain = 999
 	assert_false(farming.till(cell))
-	assert_eq(farming.get_soil_state(cell), Farming.Soil.UNTILLED)
+	assert_eq(farming.get_soil_state(cell), FarmingController.Soil.UNTILLED)
 
 func test_empty_layers_without_tilesets_do_not_break_farming() -> void:
 	for index: int in range(4):
@@ -116,6 +115,6 @@ func test_empty_layers_without_tilesets_do_not_break_farming() -> void:
 func test_soil_state_queries_ignore_layers_with_missing_tilesets() -> void:
 	farming.dry_soil.tile_set = null
 	farming.wet_soil.tile_set = null
-	assert_eq(farming.get_soil_state(cell), Farming.Soil.UNTILLED)
+	assert_eq(farming.get_soil_state(cell), FarmingController.Soil.UNTILLED)
 	assert_false(farming.till(cell))
 	assert_false(farming.water(cell))

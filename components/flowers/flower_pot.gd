@@ -1,13 +1,12 @@
 @tool
+class_name FlowerPot
 extends StaticBody2D
+var garden: FlowerGarden
 ## Timestamp-based growth in a permanent pot. Water starts the growth clock once.
-const Definition = preload("res://scripts/flower_definition.gd")
-const Item = preload("res://scripts/item_definition.gd")
-const Inventory = preload("res://components/inventory_component.gd")
 signal changed
 @export var empty_frames: SpriteFrames
 var cell: Vector2i
-var definition: Definition
+var definition: FlowerDefinition
 var planted_at: float = 0.0
 var growth_started_at: float = -1.0
 var matures_at: float = 0.0
@@ -15,10 +14,10 @@ var progress: float = 0.0
 var stage: int = 0
 var _focused: bool = false
 var _harvesting: bool = false
-@onready var sprite: AnimatedSprite2D = $Flower
-@onready var marker: Sprite2D = $Focus
-@onready var progress_frame: TextureRect = $Progress
-@onready var bar: ProgressBar = $Progress/Bar
+@export var sprite: AnimatedSprite2D
+@export var marker: Sprite2D
+@export var progress_frame: TextureRect
+@export var bar: ProgressBar
 
 func _ready() -> void:
 	_update_visual()
@@ -26,18 +25,18 @@ func _ready() -> void:
 func is_mature() -> bool:
 	return definition != null and progress >= 1.0
 
-func can_plant(seed: Item) -> bool:
-	return definition == null and seed != null and seed.item_type == Item.ItemType.SEED and seed.crop is Definition and seed.crop.is_valid()
+func can_plant(seed: ItemDefinition) -> bool:
+	return definition == null and seed != null and seed.item_type == ItemDefinition.ItemType.SEED and seed.crop is FlowerDefinition and seed.crop.is_valid()
 
-func plant(bag: Inventory, index: int, now: float) -> bool:
+func plant(bag: InventoryComponent, index: int, now: float) -> bool:
 	if bag == null:
 		return false
 	var stack: Dictionary = bag.slot(index)
-	var seed: Item = stack.item as Item
+	var seed: ItemDefinition = stack.item as ItemDefinition
 	if not can_plant(seed) or stack.count < 1:
 		return false
 	# Establish state before inventory signals can re-enter the interaction.
-	definition = seed.crop as Definition
+	definition = seed.crop as FlowerDefinition
 	planted_at = now
 	growth_started_at = -1.0
 	matures_at = 0.0
@@ -68,7 +67,7 @@ func refresh(now: float) -> void:
 	stage = mini(4, int(floor(progress * 4.0)))
 	_update_visual()
 
-func harvest(bag: Inventory) -> bool:
+func harvest(bag: InventoryComponent) -> bool:
 	if _harvesting or bag == null or not is_mature() or bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
 		return false
 	_harvesting = true
@@ -88,7 +87,7 @@ func clear() -> void:
 	_update_visual()
 	changed.emit()
 
-func restore_state(data: Dictionary, flower: Definition, now: float) -> void:
+func restore_state(data: Dictionary, flower: FlowerDefinition, now: float) -> void:
 	definition = flower
 	planted_at = float(data.planted_at)
 	growth_started_at = float(data.growth_started_at)
@@ -109,7 +108,7 @@ func set_focused(value: bool, allowed: bool = true) -> void:
 	progress_frame.visible = value and definition != null
 
 func _update_visual() -> void:
-	if not is_node_ready():
+	if not is_node_ready() or sprite == null or progress_frame == null or bar == null:
 		return
 	var frames: SpriteFrames = definition.stage_frames[stage] if definition != null else empty_frames
 	# House-decor empty pots are twice the size of the pots baked into flower art.

@@ -1,16 +1,13 @@
 extends GutTest
-const Trough = preload("res://components/animals/animal_trough.gd")
-const Inventory = preload("res://components/inventory_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
-const FEED: Item = preload("res://items/feeds/poultry_feed.tres")
-var trough: Trough
-var inventory: Inventory
+const FEED: ItemDefinition = preload("res://items/feeds/poultry_feed.tres")
+var trough: AnimalTrough
+var inventory: InventoryComponent
 
 func before_each() -> void:
-	trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as Trough
+	trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as AnimalTrough
 	add_child_autofree(trough)
 	trough.stock = 0
-	inventory = Inventory.new()
+	inventory = InventoryComponent.new()
 	inventory.starting_tools = false
 	add_child_autofree(inventory)
 
@@ -35,16 +32,16 @@ func test_missing_or_wrong_feed_or_invalid_configuration_spends_nothing() -> voi
 	inventory.add(preload("res://items/seeds/carrot_seed.tres"), 10)
 	assert_eq(trough.refill_from_inventory(inventory), 0)
 	inventory.add(FEED, 2)
-	trough.kind = Trough.Kind.WATER
+	trough.kind = AnimalTrough.Kind.WATER
 	assert_eq(trough.refill_from_inventory(inventory), 0)
-	trough.kind = Trough.Kind.FOOD
+	trough.kind = AnimalTrough.Kind.FOOD
 	trough.feed_item = null
 	assert_eq(trough.refill_from_inventory(inventory), 0)
 	assert_eq(trough.refill_from_inventory(null), 0)
 	assert_eq(inventory.count_item(FEED.item_id), 2)
 
 func test_custom_species_feed_is_selected_by_resource_not_hardcoded_id() -> void:
-	var hay: Item = FEED.duplicate() as Item
+	var hay: ItemDefinition = FEED.duplicate() as ItemDefinition
 	hay.item_id = &"hay"
 	hay.food_units_per_item = 20
 	trough.feed_item = hay
@@ -63,7 +60,7 @@ func test_reentrant_inventory_notification_cannot_spend_twice() -> void:
 func test_inventory_limit_and_water_overflow_are_respected() -> void:
 	inventory.add(FEED, 1)
 	assert_eq(trough.refill_from_inventory(inventory), 300)
-	trough.kind = Trough.Kind.WATER
+	trough.kind = AnimalTrough.Kind.WATER
 	trough.stock = 590
 	assert_eq(trough.refill(trough.water_per_use), 10)
 	assert_eq(trough.stock, 600)

@@ -19,7 +19,7 @@ lần khi qua mốc trưởng thành. Tuổi tiếp tục tăng dù con vật đ
 
 ## Cấu hình phụ phẩm
 
-Gán `production` trong resource của loài. `AnimalProductionDefination` giữ:
+Gán `production` trong resource của loài. `AnimalProductionDefinition` giữ:
 
 | Thuộc tính | Ý nghĩa |
 | --- | --- |
@@ -57,6 +57,11 @@ bằng icon sẵn có của item, trong cùng pen và nằm trong giới hạn c
 lần sản xuất tiếp theo cộng vào cùng một đống tới khi người chơi nhặt hết;
 vật phẩm đã rơi vẫn tồn tại nếu animal bị xóa.
 
+Với vịt/ngỗng có `eggs_on_land` trong PondPen, sản lượng hoàn tất khi ở nước
+được giữ ở `ProductionComponent.stored_amount`. WaterfowlComponent đưa chim
+lên bờ trước khi actor tạo/cộng đống trứng; không thả trứng xuống ao. Xem
+[waterfowl.md](waterfowl.md) cho navigation và animation bơi.
+
 Player có `ItemCollector`: đi lại gần phụ phẩm để tự nhặt vào inventory đang
 được hotbar và túi đồ dùng chung. Túi đầy thì vật phẩm ở lại; nếu chỉ nhận được
 một phần, phần còn lại vẫn nằm trên đất. Bỏ bớt đồ khi vẫn đứng cạnh sẽ tự thử
@@ -78,6 +83,15 @@ và giữ phần dư. Chế độ này không tự tạo item trên đất.
 - `AnimalProductionComponent`: chu kỳ, tiến độ, số lượng chờ chuyển ra.
 - `Animal` scene/controller: nối các component, lựa chọn sprite và tạo đống phụ phẩm.
 - `ItemPickup`, `ItemCollector`: chuyển vật phẩm vào InventoryComponent dùng chung.
+
+## Lưu/tải và thời gian offline
+
+WorldStateAdapter lưu tuổi, no/nước, tiến độ/stock sản xuất và liên kết đống sản
+phẩm theo persistent_id. `restore_lifecycle()` đặt lại baseline tại `saved_at`,
+nối lại pile rồi đồng bộ tới thời điểm tải, tránh cộng lại thời gian/sản phẩm.
+Offline tăng tuổi và chỉ cộng sản xuất trong phần còn đủ cả no và nước, không
+giả lập đi lại hoặc tiêu thụ máng. Trứng còn dưới nước vẫn chờ lên bờ sau tải.
+Chi tiết schema, backup và phím F5/F9: [saving.md](saving.md).
 
 ## Kiểm thử
 

@@ -1,9 +1,6 @@
+class_name SaveCatalog
 extends RefCounted
 ## Only shipped resources enter this allowlist. Never load a path from save JSON.
-const Item = preload("res://scripts/item_definition.gd")
-const Crop = preload("res://scripts/crop_definition.gd")
-const Animal = preload("res://scripts/animals/animal_definition.gd")
-const Flower = preload("res://scripts/flower_definition.gd")
 var items: Dictionary = {}
 var crops: Dictionary = {}
 var animals: Dictionary = {}
@@ -14,7 +11,7 @@ func _init() -> void:
 	_scan_items("res://items")
 	for file: String in ResourceLoader.list_directory("res://flowers/definitions"):
 		if file.ends_with(".tres"):
-			var flower: Flower = load("res://flowers/definitions/" + file) as Flower
+			var flower: FlowerDefinition = load("res://flowers/definitions/" + file) as FlowerDefinition
 			if flower != null:
 				flowers[String(flower.flower_id)] = flower
 	for entry: String in ResourceLoader.list_directory("res://crops/field"):
@@ -23,12 +20,12 @@ func _init() -> void:
 		var folder: String = entry.trim_suffix("/")
 		var path: String = "res://crops/field/%s/%s.tres" % [folder, folder]
 		if ResourceLoader.exists(path):
-			var crop: Crop = load(path) as Crop
+			var crop: CropDefinition = load(path) as CropDefinition
 			if crop != null:
 				crops[String(crop.crop_id)] = crop
 	for file: String in ResourceLoader.list_directory("res://animals/definitions"):
 		if file.ends_with(".tres"):
-			var animal: Animal = load("res://animals/definitions/" + file) as Animal
+			var animal: AnimalDefinition = load("res://animals/definitions/" + file) as AnimalDefinition
 			if animal != null:
 				animals[String(animal.animal_id)] = animal
 	for file: String in ResourceLoader.list_directory("res://sprite_frames/animals"):
@@ -38,7 +35,7 @@ func _init() -> void:
 func _scan_items(folder: String) -> void:
 	for file: String in ResourceLoader.list_directory(folder):
 		if file.ends_with(".tres"):
-			var item: Item = load(folder + "/" + file) as Item
+			var item: ItemDefinition = load(folder + "/" + file) as ItemDefinition
 			if item != null:
 				items[String(item.item_id)] = item
 		elif file.ends_with("/"):

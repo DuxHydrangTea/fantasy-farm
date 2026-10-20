@@ -1,11 +1,11 @@
+class_name FlowerDefinition
 extends Resource
 ## Five growth stages, each with its own independent looping six-frame clip.
-const Item = preload("res://scripts/item_definition.gd")
 @export var flower_id: StringName
 @export var display_name: String
 @export var stage_frames: Array[SpriteFrames] = []
 @export_range(1.0, 86400.0) var growth_seconds: float = 120.0
-@export var harvest_item: Item
+@export var harvest_item: ItemDefinition
 @export_range(1, 99) var harvest_amount: int = 1
 
 func is_valid() -> bool:
