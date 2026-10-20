@@ -7,7 +7,16 @@
 - Hoạt ảnh chạm ở frame 3 mới nạp và trừ vật phẩm. Mở túi, mất vật phẩm, xóa máng, ra xa hoặc xuất hiện vật cản trước đó sẽ hủy lần nạp. Đổi hotbar không chuyển hành động sang vật phẩm khác.
 - Máng đầy, thiếu thức ăn, thiếu bình tưới hoặc thiếu chỗ cho một gói sẽ hiện lý do. Khi đang ở gần máng, phím tương tác ưu tiên máng; ra ngoài phạm vi sẽ tiếp tục thao tác trồng trọt như trước.
 
-Người chơi được cấp 5 gói thức ăn gia cầm khi khởi tạo kho mới trong `player.tscn`. Một gói dùng `ItemDefinition.food_units_per_item`, hiện mặc định **300**. Máng thức ăn chứa **600**, bắt đầu với **120** như trước; máng nước giữ sức chứa/bắt đầu **120**. Ví dụ nạp máng thức ăn đang có 120 sẽ dùng 1 gói và lên 420; 180 chỗ còn lại chưa nhận được cả gói, nên không trừ thêm thức ăn.
+Người chơi được cấp 5 gói thức ăn gia cầm khi khởi tạo kho mới trong `player.tscn`. Một gói dùng `ItemDefinition.food_units_per_item`, hiện mặc định **300**. Trong CoopPen, máng thức ăn chứa **600**, bắt đầu **120**; máng nước giữ **120/120**. Ví dụ nạp máng ăn đang có 120 dùng 1 gói và lên 420; 180 chỗ còn lại chưa nhận được cả gói, nên không trừ thêm thức ăn.
+
+BarnPen và PondPen mỗi nơi có một cặp máng ăn/nước, khởi tạo **600/600**.
+Barn nhận `livestock_feed` cho bò/cừu, Pond nhận `poultry_feed` cho vịt/ngỗng;
+mỗi pen có pickup 5 gói gần cửa. Khi tải hồ sơ đã lưu, stock và các pickup còn
+lại lấy từ save, không tự nạp đầy hay cấp lại thức ăn đã nhặt.
+
+Lời nhắc máng nằm trong CanvasLayer layer 9, căn theo pixel màn hình và giới hạn
+trong viewport, không phóng to/thu nhỏ theo camera. Thứ tự tương tác hiện là
+**máng → chậu hoa → đất**; xem [flowers.md](flowers.md).
 
 ## Cấu hình và tái sử dụng
 

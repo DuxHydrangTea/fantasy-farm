@@ -1,12 +1,10 @@
 extends GutTest
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
-const Item = preload("res://scripts/item_definition.gd")
-const Bag = preload("res://components/inventory_component.gd")
 var viewport: SubViewport
 var player: CharacterBody2D
 var ui: CanvasLayer
 var state: StateComponent
-var bag: Bag
+var bag: InventoryComponent
 
 func before_each() -> void:
 	viewport = SubViewport.new()
@@ -108,7 +106,7 @@ func test_drag_drop_updates_shared_inventory_and_hotbar() -> void:
 	assert_eq(player.get_node("Hotbar").selected_name.text, "Bình tưới")
 
 func test_quantity_labels_refresh_in_bag_and_hotbar() -> void:
-	var seed: Item = load("res://items/seeds/carrot_seed.tres") as Item
+	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
 	bag.remove(seed.item_id, bag.count_item(seed.item_id))
 	bag.add(seed, 12)
 	assert_eq(ui.buttons[2].get_node("Count").text, "12")

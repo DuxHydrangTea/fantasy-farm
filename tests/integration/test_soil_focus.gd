@@ -2,13 +2,10 @@ extends GutTest
 
 const Fixture = preload("res://tests/support/farming_fixture.gd")
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
-const Farming = preload("res://components/farming_controller.gd")
-const Focus = preload("res://components/soil_focus_component.gd")
-
 var field: Node2D
-var farming: Farming
+var farming: FarmingController
 var player: CharacterBody2D
-var focus: Focus
+var focus: SoilFocusComponent
 var state: StateComponent
 var animation: AnimationComponent
 var cell: Vector2i = Vector2i(20, 20)
@@ -19,6 +16,7 @@ func before_each() -> void:
 	farming = field.get_node("FarmingController")
 	player = PLAYER.instantiate() as CharacterBody2D
 	player.position = farming.farmland.map_to_local(cell)
+	(player as FarmPlayer).farming_actions.farming = farming
 	field.add_child(player)
 	focus = player.get_node("SoilFocus")
 	state = player.get_node("StateComponent")
@@ -93,7 +91,7 @@ func test_focus_stays_on_action_target_until_animation_finishes() -> void:
 	assert_eq(focus.focused_cell, target)
 	await wait_seconds(0.5)
 	assert_eq(focus.focused_cell, target, "Impact must not release focus early")
-	assert_eq(farming.get_soil_state(target), Farming.Soil.DRY)
+	assert_eq(farming.get_soil_state(target), FarmingController.Soil.DRY)
 	await wait_seconds(0.5)
 	assert_eq(focus.focused_cell, target + Vector2i(2, 0))
 
@@ -110,7 +108,7 @@ func test_standalone_player_hides_focus_without_farming_world() -> void:
 	farming.remove_from_group("farming_controller")
 	var standalone: CharacterBody2D = PLAYER.instantiate() as CharacterBody2D
 	add_child_autofree(standalone)
-	var standalone_focus: Focus = standalone.get_node("SoilFocus")
+	var standalone_focus: SoilFocusComponent = standalone.get_node("SoilFocus")
 	standalone_focus.refresh()
 	assert_false(standalone_focus.visible)
 

@@ -1,15 +1,13 @@
+class_name SoilFocusComponent
 extends Node2D
 
-const FarmingActions = preload("res://components/farming_action_component.gd")
-const Farming = preload("res://components/farming_controller.gd")
-
-@export var actions: FarmingActions
+@export var actions: FarmingActionComponent
 @export var available_color: Color = Color.WHITE
 @export var blocked_color: Color = Color(1.0, 0.35, 0.35, 0.9)
 
 var focused_cell: Vector2i = Vector2i.ZERO
 var actionable: bool = false
-@onready var marker: Sprite2D = $Marker
+@export var marker: Sprite2D
 
 func _ready() -> void:
 	hide()
@@ -30,14 +28,14 @@ func refresh() -> void:
 	if actions.state.flower_interaction != null and actions.state.flower_interaction.focused_pot != null:
 		hide()
 		return
-	var farming: Farming = actions.get_farming_controller()
+	var farming: FarmingController = actions.get_farming_controller()
 	if farming == null or farming.farmland == null or farming.farmland.tile_set == null:
 		hide()
 		return
 	var land: TileMapLayer = farming.farmland
 	focused_cell = actions.get_focused_cell()
 	var center: Vector2 = land.to_global(land.map_to_local(focused_cell))
-	var ground: TileMapLayer = farming.get_parent().get_node_or_null("Ground") as TileMapLayer
+	var ground: TileMapLayer = farming.ground
 	if ground == null or ground.tile_set == null or ground.get_cell_source_id(ground.local_to_map(ground.to_local(center))) == -1:
 		hide()
 		return

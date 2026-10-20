@@ -1,27 +1,19 @@
+class_name FlowerInteraction
 extends Node2D
 ## One locked target and one impact per action, sharing the player's tool states.
-const Garden = preload("res://components/flowers/flower_garden.gd")
-const Pot = preload("res://components/flowers/flower_pot.gd")
-const Item = preload("res://scripts/item_definition.gd")
-const Selection = preload("res://components/tool_selection_component.gd")
-@export var selection: Selection
+@export var selection: ToolSelectionComponent
 @export var animation: AnimationComponent
 @export var state: StateComponent
 @export var impact_frame: int = 3
-var focused_pot: Pot
-var _pending: Pot
+var focused_pot: FlowerPot
+var _pending: FlowerPot
 var _action: StringName = &""
-var _seed: Item
+var _seed: ItemDefinition
 var _slot: int = -1
-@onready var prompt: Label = $Prompt
+@export var prompt: Label
 
 func _ready() -> void:
-	if selection == null:
-		selection = get_parent().get_node("ToolSelection") as Selection
-	if animation == null:
-		animation = get_parent().get_node("AnimationComponent") as AnimationComponent
-	if state == null:
-		state = get_parent().get_node("StateComponent") as StateComponent
+	assert(selection != null and animation != null and state != null and prompt != null, "Assign flower interaction components in the Player scene")
 	state.state_changed.connect(_on_state_changed)
 	animation.animated_sprite.frame_changed.connect(_on_frame_changed)
 	prompt.hide()
@@ -29,7 +21,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	refresh()
 
-func _reachable(pot: Pot) -> bool:
+func _reachable(pot: FlowerPot) -> bool:
 	return is_instance_valid(pot) and pot.global_position.distance_to((get_parent() as Node2D).global_position) <= 28.0
 
 func refresh() -> void:
@@ -44,13 +36,13 @@ func refresh() -> void:
 		focused_pot = _pending
 	else:
 		for garden: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
-			var candidate: Pot = (garden as Garden).focused_pot(point, animation.facing_vector)
+			var candidate: FlowerPot = (garden as FlowerGarden).focused_pot(point, animation.facing_vector)
 			if candidate != null and (focused_pot == null or candidate.global_position.distance_squared_to(point) < focused_pot.global_position.distance_squared_to(point)):
 				focused_pot = candidate
 	if focused_pot == null:
 		return
-	var pot: Pot = focused_pot
-	pot.refresh((pot.get_parent().get_parent() as Garden).time_manager.now())
+	var pot: FlowerPot = focused_pot
+	pot.refresh(pot.garden.time_manager.now())
 	var allowed: bool = pot.can_plant(selection.get_selected_item()) if pot.definition == null else (pot.is_mature() or (selection.get_selected_action() == &"water" and pot.can_water()))
 	pot.set_focused(true, allowed)
 	global_position = pot.global_position
@@ -94,7 +86,7 @@ func _on_frame_changed() -> void:
 	if not _reachable(_pending) or selection.inventory_open or state.active_action != action:
 		_pending = null
 		return
-	var garden: Garden = _pending.get_parent().get_parent() as Garden
+	var garden: FlowerGarden = _pending.garden
 	var now: float = garden.time_manager.now()
 	if action == &"flower_plant" and selection.inventory.slot(_slot).item == _seed:
 		_pending.plant(selection.inventory, _slot, now)

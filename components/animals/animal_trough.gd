@@ -1,15 +1,12 @@
+class_name AnimalTrough
 extends StaticBody2D
+@export var sprite: Sprite2D
 @export var persistent_id: StringName
 ## Shared, finite food/water supply. Reservations prevent two animals using one slot.
-const Definition = preload("res://scripts/animals/animal_definition.gd")
-const Needs = preload("res://components/animals/animal_needs_component.gd")
-const Pen = preload("res://components/animals/animal_pen.gd")
-const Inventory = preload("res://components/inventory_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
 enum Kind { FOOD, WATER }
 signal stock_changed(amount: int)
 @export var kind: Kind = Kind.WATER
-@export var pen: Pen
+@export var pen: AnimalPen
 @export_range(1, 32000) var capacity: int = 120
 @export_range(0, 32000) var stock: int = 120:
 	set(value):
@@ -25,19 +22,19 @@ signal stock_changed(amount: int)
 @export var full_texture: Texture2D
 @export var empty_texture: Texture2D
 @export_group("Player Refilling")
-@export var feed_item: Item
+@export var feed_item: ItemDefinition
 @export_range(1, 32000) var water_per_use: int = 30
 var _occupants: Dictionary[int, WeakRef] = {}
 var _refilling: bool = false
 
 ## Whole packages only: never discard feed when the remaining space is too small.
-func feed_items_needed(inventory: Inventory) -> int:
-	if kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != Item.ItemType.FEED:
+func feed_items_needed(inventory: InventoryComponent) -> int:
+	if kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != ItemDefinition.ItemType.FEED:
 		return 0
 	var units: int = maxi(1, feed_item.food_units_per_item)
 	return mini(floori(float(maxi(0, capacity - stock)) / units), inventory.count_item(feed_item.item_id))
 
-func refill_from_inventory(inventory: Inventory) -> int:
+func refill_from_inventory(inventory: InventoryComponent) -> int:
 	if _refilling:
 		return 0
 	var packages: int = feed_items_needed(inventory)
@@ -51,15 +48,15 @@ func refill_from_inventory(inventory: Inventory) -> int:
 
 func _ready() -> void:
 	if pen == null:
-		pen = get_parent() as Pen
+		pen = get_parent() as AnimalPen
 	stock = stock
 	add_to_group(&"animal_troughs")
 	_update_visual()
 
-func portion_size(data: Definition) -> int:
+func portion_size(data: AnimalDefinition) -> int:
 	return maxi(1, data.food_per_meal if kind == Kind.FOOD else data.water_per_drink)
 
-func can_supply(data: Definition) -> bool:
+func can_supply(data: AnimalDefinition) -> bool:
 	return data != null and restoration_per_unit > 0.0 and stock >= portion_size(data) and (allowed_species.is_empty() or int(data.species) in allowed_species)
 
 func access_position(slot: int) -> Vector2:
@@ -75,7 +72,7 @@ func slot_available(slot: int, animal: Node2D = null) -> bool:
 		return true
 	return occupant == animal
 
-func claim(animal: Node2D, slot: int, data: Definition) -> bool:
+func claim(animal: Node2D, slot: int, data: AnimalDefinition) -> bool:
 	if not is_instance_valid(animal) or not animal.is_inside_tree() or not can_supply(data) or not slot_available(slot, animal):
 		return false
 	_occupants[slot] = weakref(animal)
@@ -92,7 +89,7 @@ func release(animal: Node2D) -> void:
 			_occupants.erase(slot)
 
 ## No stock is spent until a reserved animal is physically at its serving point.
-func serve(animal: Node2D, needs: Needs, data: Definition, slot: int) -> float:
+func serve(animal: Node2D, needs: AnimalNeedsComponent, data: AnimalDefinition, slot: int) -> float:
 	if not is_instance_valid(animal) or not is_instance_valid(needs) or not can_supply(data) or not owns_slot(animal, slot):
 		return 0.0
 	if slot < 0 or slot >= access_offsets.size() or animal.global_position.distance_to(access_position(slot)) > 3.0:
@@ -110,6 +107,5 @@ func refill(units: int) -> int:
 	return stock - before
 
 func _update_visual() -> void:
-	var sprite: Sprite2D = get_node_or_null("Sprite2D") as Sprite2D
 	if sprite != null:
 		sprite.texture = full_texture if stock > 0 else empty_texture

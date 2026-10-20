@@ -1,12 +1,16 @@
-[gd_scene format=3]
-[ext_resource type="Script" path="res://components/hotbar_ui.gd" id="1_ui"]
-[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="2_theme"]
+[gd_scene format=3 uid="uid://ohxda0nyw7wu"]
 
-[node name="Hotbar" type="CanvasLayer"]
+[ext_resource type="Script" uid="uid://qnlh6s12is40" path="res://components/hotbar_ui.gd" id="1_ui"]
+[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="2_theme"]
+
+[node name="Hotbar" type="CanvasLayer" unique_id=1967160829 node_paths=PackedStringArray("slots", "selected_name")]
 layer = 10
 script = ExtResource("1_ui")
+slots = NodePath("Root/Bottom/Column/Slots")
+selected_name = NodePath("Root/Bottom/Column/SelectedName")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=1905817526]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,11 +18,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture_filter = 1
 theme = ExtResource("2_theme")
 
-[node name="Bottom" type="MarginContainer" parent="Root"]
+[node name="Bottom" type="MarginContainer" parent="Root" unique_id=2044134146]
 layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -30,15 +34,14 @@ mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="Column" type="VBoxContainer" parent="Root/Bottom"]
+[node name="Column" type="VBoxContainer" parent="Root/Bottom" unique_id=554161138]
 layout_mode = 2
 mouse_filter = 2
-alignment = 2
 theme_override_constants/separation = 6
+alignment = 2
 
-[node name="SelectedName" type="Label" parent="Root/Bottom/Column"]
+[node name="SelectedName" type="Label" parent="Root/Bottom/Column" unique_id=2052340069]
 layout_mode = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_shadow_color = Color(0.16, 0.13, 0.11, 1)
 theme_override_constants/shadow_offset_x = 2
@@ -46,19 +49,18 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 
-[node name="Slots" type="HBoxContainer" parent="Root/Bottom/Column"]
+[node name="Slots" type="HBoxContainer" parent="Root/Bottom/Column" unique_id=19812671]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 2
 theme_override_constants/separation = 6
 
-[node name="Hint" type="Label" parent="Root/Bottom/Column"]
+[node name="Hint" type="Label" parent="Root/Bottom/Column" unique_id=1643133673]
 layout_mode = 2
-mouse_filter = 2
-text = "1–6: chọn  •  Chuột phải / Space: dùng  •  E: thu hoạch"
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_shadow_color = Color(0.16, 0.13, 0.11, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 16
+text = "1–6: chọn  •  Chuột phải / Space: dùng  •  E: thu hoạch"
 horizontal_alignment = 1

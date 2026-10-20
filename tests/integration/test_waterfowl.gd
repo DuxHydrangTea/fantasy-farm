@@ -1,20 +1,14 @@
 extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
-const Actor = preload("res://components/animals/animal_actor.gd")
-const Pond = preload("res://components/animals/pond_pen.gd")
-const Clock = preload("res://components/time_manager.gd")
-const Catalog = preload("res://persistence/save_catalog.gd")
-const Adapter = preload("res://persistence/world_state_adapter.gd")
-const Repository = preload("res://persistence/local_save_repository.gd")
 var world: Node2D
-var pen: Pond
-var clock: Clock
+var pen: PondPen
+var clock: FarmClock
 var timestamp: float = 1000.0
-var adapter: Adapter
+var adapter: WorldStateAdapter
 
 func before_each() -> void:
 	timestamp = 1000.0
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
@@ -22,27 +16,27 @@ func before_each() -> void:
 	for child: Node in world.get_children():
 		if String(child.name).begins_with("TreeScatter") or child.name in [&"CoopPen", &"BarnPen"]:
 			child.free()
-	pen = world.get_node("PondPen") as Pond
+	pen = world.get_node("PondPen") as PondPen
 	world.get_node("FarmingController").time_manager = clock
 	world.get_node("FlowerGarden").time_manager = clock
-	for actor: Actor in _actors():
+	for actor: AnimalActor in _actors():
 		actor.get_node("NeedsComponent").time_manager = clock
 	add_child_autofree(world)
 	world.get_node("Player").process_mode = Node.PROCESS_MODE_DISABLED
-	for actor: Actor in _actors():
+	for actor: AnimalActor in _actors():
 		actor.behaviour.set_physics_process(false)
 	await wait_physics_frames(3)
-	adapter = Adapter.new(world, Catalog.new())
+	adapter = WorldStateAdapter.new(world, SaveCatalog.new())
 
-func _actors() -> Array[Actor]:
-	var result: Array[Actor] = []
+func _actors() -> Array[AnimalActor]:
+	var result: Array[AnimalActor] = []
 	for node: Node in pen.get_children():
-		if node is Actor:
+		if node is AnimalActor:
 			result.append(node)
 	return result
 
-func _actor(id: String) -> Actor:
-	for actor: Actor in _actors():
+func _actor(id: String) -> AnimalActor:
+	for actor: AnimalActor in _actors():
 		if String(actor.persistent_id) == id:
 			return actor
 	return null
@@ -51,7 +45,7 @@ func test_scene_has_all_five_ducks_and_six_geese_with_valid_spawns() -> void:
 	assert_true(pen.navigation_ready)
 	assert_eq(_actors().size(), 11)
 	var skins: Dictionary = {}
-	for actor: Actor in _actors():
+	for actor: AnimalActor in _actors():
 		assert_not_null(actor.waterfowl)
 		assert_true(pen.contains_world(actor.global_position, actor.wander.margin))
 		assert_true(actor.wander._target_is_clear(actor.global_position))
@@ -66,7 +60,7 @@ func test_scene_has_all_five_ducks_and_six_geese_with_valid_spawns() -> void:
 	assert_eq(world.get_node("Fence").get_cell_source_id(Vector2i(89,39)), -1)
 
 func test_duck_uses_swim_idle_swim_sleep_and_returns_to_land_animation() -> void:
-	var duck: Actor = pen.get_node("Duck_3") as Actor
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
 	assert_true(pen.is_water(duck.global_position))
 	duck.animation.play("walk")
 	assert_eq(duck.sprite.animation, &"swim_down")
@@ -81,8 +75,8 @@ func test_duck_uses_swim_idle_swim_sleep_and_returns_to_land_animation() -> void
 	assert_eq(duck.sprite.animation, &"walk_down")
 
 func test_goose_rejects_water_route_while_duck_can_cross_shore() -> void:
-	var goose: Actor = pen.get_node("Goose_1") as Actor
-	var duck: Actor = pen.get_node("Duck_3") as Actor
+	var goose: AnimalActor = pen.get_node("Goose_1") as AnimalActor
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
 	assert_false(pen.route(goose.global_position, duck.global_position, false).size() > 0)
 	assert_false(goose.waterfowl.set_destination(duck.global_position))
 	var route: PackedVector2Array = pen.route(goose.global_position, duck.global_position, true)
@@ -92,7 +86,7 @@ func test_goose_rejects_water_route_while_duck_can_cross_shore() -> void:
 	assert_false(pen.is_water(shore[-1]))
 
 func test_egg_waits_in_stock_on_water_then_duck_walks_ashore_to_drop_once() -> void:
-	var duck: Actor = pen.get_node("Duck_3") as Actor
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
 	duck.production.advance(40.0)
 	assert_eq(duck.production.stored_amount, 1)
 	assert_null(duck.product_pickup())
@@ -112,14 +106,14 @@ func test_egg_waits_in_stock_on_water_then_duck_walks_ashore_to_drop_once() -> v
 		assert_eq(duck.product_pickup().amount, 1)
 
 func test_goose_egg_always_drops_on_land() -> void:
-	var goose: Actor = pen.get_node("Goose_1") as Actor
+	var goose: AnimalActor = pen.get_node("Goose_1") as AnimalActor
 	goose.production.advance(50.0)
 	assert_not_null(goose.product_pickup())
 	assert_eq(goose.product_pickup().item.item_id, &"goose_egg")
 	assert_false(pen.is_water(goose.product_pickup().global_position))
 
 func test_hungry_duck_navigates_from_water_to_feed_trough() -> void:
-	var duck: Actor = pen.get_node("Duck_4") as Actor
+	var duck: AnimalActor = pen.get_node("Duck_4") as AnimalActor
 	duck.needs.satiety = 0.0
 	duck.behaviour.set_physics_process(true)
 	for index: int in range(1600):
@@ -132,22 +126,22 @@ func test_hungry_duck_navigates_from_water_to_feed_trough() -> void:
 	assert_false(pen.is_water(duck.global_position))
 
 func test_patrol_keeps_geese_on_land_and_every_bird_inside_fence() -> void:
-	for actor: Actor in _actors():
+	for actor: AnimalActor in _actors():
 		actor.behaviour.set_physics_process(true)
 	for index: int in range(240):
 		await wait_physics_frames(1)
-		for actor: Actor in _actors():
+		for actor: AnimalActor in _actors():
 			assert_true(pen.contains_world(actor.global_position, actor.wander.margin))
 			if not actor.definition.can_swim:
 				assert_false(pen.is_water(actor.global_position))
 
 func test_file_roundtrip_restores_pending_eggs_without_spawning_them_underwater() -> void:
-	var duck: Actor = pen.get_node("Duck_3") as Actor
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
 	duck.production.advance(40.0)
 	var id: String = String(duck.persistent_id)
 	var saved: Dictionary = adapter.capture("test", 1, timestamp)
 	var folder: String = "res://.godot/pond_save_" + Crypto.new().generate_random_bytes(8).hex_encode()
-	var repo: Repository = Repository.new(folder, Catalog.new())
+	var repo: LocalSaveRepository = LocalSaveRepository.new(folder, SaveCatalog.new())
 	assert_true(repo.write_profile("test", saved, 0).ok)
 	assert_true(adapter.restore(repo.read_profile("test").snapshot, 1080.0).ok)
 	duck = _actor(id)

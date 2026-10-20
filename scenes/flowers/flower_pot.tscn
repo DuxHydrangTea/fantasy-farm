@@ -1,18 +1,22 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://ruv13fvk6mjw"]
 
-[ext_resource type="Script" path="res://components/flowers/flower_pot.gd" id="1_jv2wi"]
-[ext_resource type="SpriteFrames" path="res://flowers/empty_pot_frames.tres" id="2_fgjva"]
+[ext_resource type="Script" uid="uid://bio17m8iegyro" path="res://components/flowers/flower_pot.gd" id="1_jv2wi"]
+[ext_resource type="SpriteFrames" uid="uid://bbxlh012t152i" path="res://flowers/empty_pot_frames.tres" id="2_fgjva"]
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="3_12gb3"]
-[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="4_hqowy"]
+[ext_resource type="Texture2D" uid="uid://j0sv7dsytcv" path="res://assets/Ui/progress_bar.png" id="4_hqowy"]
 [ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="5_2hk72"]
 [ext_resource type="StyleBox" path="res://flowers/progress_fill.tres" id="6_4nilf"]
 [ext_resource type="Shape2D" path="res://flowers/pot_collision.tres" id="7_fgjva"]
 
-[node name="FlowerPot" type="StaticBody2D" unique_id=1292078041]
+[node name="FlowerPot" type="StaticBody2D" unique_id=1292078041 node_paths=PackedStringArray("sprite", "marker", "progress_frame", "bar")]
 texture_filter = 1
 collision_mask = 0
 script = ExtResource("1_jv2wi")
 empty_frames = ExtResource("2_fgjva")
+sprite = NodePath("Flower")
+marker = NodePath("Focus")
+progress_frame = NodePath("Progress")
+bar = NodePath("Progress/Bar")
 
 [node name="Flower" type="AnimatedSprite2D" parent="." unique_id=1182751548]
 position = Vector2(0, -8)

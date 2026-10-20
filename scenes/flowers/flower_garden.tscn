@@ -1,24 +1,24 @@
-[gd_scene format=4]
+[gd_scene format=4 uid="uid://bt6yijivg2evt"]
 
-[ext_resource type="Script" path="res://components/flowers/flower_garden.gd" id="1_jqxow"]
-[ext_resource type="TileSet" path="res://flowers/garden_floor.tres" id="2_xpb02"]
-[ext_resource type="PackedScene" path="res://scenes/objects/item_pickup.tscn" id="3_2udwj"]
-[ext_resource type="Script" path="res://components/item_pickup.gd" id="4_fi0hm"]
-[ext_resource type="Resource" path="res://items/seeds/flower_01_seed.tres" id="5_5tqj7"]
-[ext_resource type="Resource" path="res://items/seeds/flower_02_seed.tres" id="6_tc156"]
-[ext_resource type="Resource" path="res://items/seeds/flower_03_seed.tres" id="7_5skkv"]
-[ext_resource type="Resource" path="res://items/seeds/flower_04_seed.tres" id="8_0movj"]
-[ext_resource type="Resource" path="res://items/seeds/flower_05_seed.tres" id="9_lam84"]
-[ext_resource type="Resource" path="res://items/seeds/flower_06_seed.tres" id="10_i34y4"]
-[ext_resource type="Resource" path="res://items/seeds/flower_07_seed.tres" id="11_aiogh"]
-[ext_resource type="Resource" path="res://items/seeds/flower_08_seed.tres" id="12_toaos"]
-[ext_resource type="Resource" path="res://items/seeds/flower_09_seed.tres" id="13_3by4u"]
-[ext_resource type="Resource" path="res://items/seeds/flower_10_seed.tres" id="14_18ind"]
+[ext_resource type="Script" uid="uid://b3o2q0l58xmml" path="res://components/flowers/flower_garden.gd" id="1_jqxow"]
+[ext_resource type="TileSet" uid="uid://cwpxdpyx8pbmo" path="res://flowers/garden_floor.tres" id="2_xpb02"]
+[ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="3_2udwj"]
+[ext_resource type="Resource" uid="uid://dpv2o2obtmfss" path="res://items/seeds/flower_01_seed.tres" id="5_5tqj7"]
+[ext_resource type="Resource" uid="uid://ba1txm51ur5nb" path="res://items/seeds/flower_02_seed.tres" id="6_tc156"]
+[ext_resource type="Resource" uid="uid://s1jvgss0vdtk" path="res://items/seeds/flower_03_seed.tres" id="7_5skkv"]
+[ext_resource type="Resource" uid="uid://bbodcnt2lfywj" path="res://items/seeds/flower_04_seed.tres" id="8_0movj"]
+[ext_resource type="Resource" uid="uid://dupjxnr2jocqs" path="res://items/seeds/flower_05_seed.tres" id="9_lam84"]
+[ext_resource type="Resource" uid="uid://bfebrr6tir1fy" path="res://items/seeds/flower_06_seed.tres" id="10_i34y4"]
+[ext_resource type="Resource" uid="uid://c10ayurnwar76" path="res://items/seeds/flower_07_seed.tres" id="11_aiogh"]
+[ext_resource type="Resource" uid="uid://l4u8rcsm0scp" path="res://items/seeds/flower_08_seed.tres" id="12_toaos"]
+[ext_resource type="Resource" uid="uid://b5vtqliiybpln" path="res://items/seeds/flower_09_seed.tres" id="13_3by4u"]
+[ext_resource type="Resource" uid="uid://ccbng7ss6wer7" path="res://items/seeds/flower_10_seed.tres" id="14_18ind"]
 
-[node name="FlowerGarden" type="Node2D" unique_id=1957728385]
+[node name="FlowerGarden" type="Node2D" unique_id=1957728385 node_paths=PackedStringArray("pot_container")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_jqxow")
+pot_container = NodePath("Pots")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=110476052]
 z_index = -2
@@ -28,112 +28,62 @@ tile_set = ExtResource("2_xpb02")
 [node name="Pots" type="Node2D" parent="." unique_id=1351523064]
 y_sort_enabled = true
 
-[node name="FlowerSeedSupply_01" type="Area2D" parent="." unique_id=2122676184 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_01" parent="." unique_id=2122676184 instance=ExtResource("3_2udwj")]
 position = Vector2(32, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_01"
 item = ExtResource("5_5tqj7")
 amount = 6
 
-[node name="FlowerSeedSupply_02" type="Area2D" parent="." unique_id=1690197155 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_02" parent="." unique_id=1690197155 instance=ExtResource("3_2udwj")]
 position = Vector2(64, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_02"
 item = ExtResource("6_tc156")
 amount = 6
 
-[node name="FlowerSeedSupply_03" type="Area2D" parent="." unique_id=371557168 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_03" parent="." unique_id=371557168 instance=ExtResource("3_2udwj")]
 position = Vector2(96, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_03"
 item = ExtResource("7_5skkv")
 amount = 6
 
-[node name="FlowerSeedSupply_04" type="Area2D" parent="." unique_id=1024418028 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_04" parent="." unique_id=1024418028 instance=ExtResource("3_2udwj")]
 position = Vector2(128, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_04"
 item = ExtResource("8_0movj")
 amount = 6
 
-[node name="FlowerSeedSupply_05" type="Area2D" parent="." unique_id=280189726 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_05" parent="." unique_id=280189726 instance=ExtResource("3_2udwj")]
 position = Vector2(160, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_05"
 item = ExtResource("9_lam84")
 amount = 6
 
-[node name="FlowerSeedSupply_06" type="Area2D" parent="." unique_id=1142816227 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_06" parent="." unique_id=1142816227 instance=ExtResource("3_2udwj")]
 position = Vector2(224, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_06"
 item = ExtResource("10_i34y4")
 amount = 6
 
-[node name="FlowerSeedSupply_07" type="Area2D" parent="." unique_id=548205922 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_07" parent="." unique_id=548205922 instance=ExtResource("3_2udwj")]
 position = Vector2(256, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_07"
 item = ExtResource("11_aiogh")
 amount = 6
 
-[node name="FlowerSeedSupply_08" type="Area2D" parent="." unique_id=1940187268 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_08" parent="." unique_id=1940187268 instance=ExtResource("3_2udwj")]
 position = Vector2(288, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_08"
 item = ExtResource("12_toaos")
 amount = 6
 
-[node name="FlowerSeedSupply_09" type="Area2D" parent="." unique_id=871252139 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_09" parent="." unique_id=871252139 instance=ExtResource("3_2udwj")]
 position = Vector2(320, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_09"
 item = ExtResource("13_3by4u")
 amount = 6
 
-[node name="FlowerSeedSupply_10" type="Area2D" parent="." unique_id=2016849236 instance=ExtResource("3_2udwj")]
-texture_filter = 1
+[node name="FlowerSeedSupply_10" parent="." unique_id=2016849236 instance=ExtResource("3_2udwj")]
 position = Vector2(352, 8)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("4_fi0hm")
 persistent_id = &"flower_seed_supply_10"
 item = ExtResource("14_18ind")
 amount = 6

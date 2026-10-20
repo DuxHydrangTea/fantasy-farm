@@ -1,10 +1,8 @@
 extends SceneTree
-const Clock = preload("res://components/time_manager.gd")
-const Pot = preload("res://components/flowers/flower_pot.gd")
 func _initialize() -> void:
 	call_deferred("_capture")
 func _capture() -> void:
-	var clock: Clock = Clock.new()
+	var clock: FarmClock = FarmClock.new()
 	clock.clock_source = func() -> float: return 1000.0
 	root.add_child(clock)
 	clock.set_process(false)
@@ -15,7 +13,7 @@ func _capture() -> void:
 	for cell: Vector2i in garden.pots:
 		if cell.y == 0:
 			continue
-		var pot: Pot = garden.pots[cell]
+		var pot: FlowerPot = garden.pots[cell]
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % (cell.x % 10 + 1)
 		var definition: Resource = load(path)
 		var progress: float = float((cell.y - 1) % 5) / 4.0
@@ -33,7 +31,7 @@ func _capture() -> void:
 	camera.make_current()
 	await physics_frame
 	await physics_frame
-	for pot: Pot in garden.pots.values():
+	for pot: FlowerPot in garden.pots.values():
 		var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 		query.shape = pot.get_node("CollisionShape2D").shape
 		query.transform = pot.get_node("CollisionShape2D").global_transform

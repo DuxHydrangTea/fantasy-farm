@@ -1,16 +1,6 @@
 extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
-const Catalog = preload("res://persistence/save_catalog.gd")
-const Schema = preload("res://persistence/save_schema.gd")
-const Adapter = preload("res://persistence/world_state_adapter.gd")
-const Repository = preload("res://persistence/local_save_repository.gd")
-const Actor = preload("res://components/animals/animal_actor.gd")
-const Pickup = preload("res://components/item_pickup.gd")
-const Clock = preload("res://components/time_manager.gd")
-const Farm = preload("res://components/farming_controller.gd")
-const Selection = preload("res://components/tool_selection_component.gd")
-const Inventory = preload("res://components/inventory_component.gd")
-class MemoryRepository extends "res://persistence/save_repository.gd":
+class MemoryRepository extends SaveRepository:
 	signal release_write
 	var record: Dictionary = {}
 	var hold_write: bool = false
@@ -30,21 +20,21 @@ class MemoryRepository extends "res://persistence/save_repository.gd":
 		record = snapshot.duplicate(true)
 		return {"ok": true, "revision": int(snapshot.revision)}
 
-class ServiceHarness extends "res://persistence/save_manager.gd":
-	var test_clock: Node
-	func _clock() -> Node:
+class ServiceHarness extends GameSaveManager:
+	var test_clock: FarmClock
+	func _clock() -> FarmClock:
 		return test_clock
 var world: Node2D
-var adapter: Adapter
-var clock: Clock
+var adapter: WorldStateAdapter
+var clock: FarmClock
 var timestamp: float = 1000.0
-var catalog: Catalog
-var farm: Farm
-var selection: Selection
+var catalog: SaveCatalog
+var farm: FarmingController
+var selection: ToolSelectionComponent
 
 func before_each() -> void:
 	timestamp = 1000.0
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
@@ -55,27 +45,27 @@ func before_each() -> void:
 	for child: Node in world.get_children():
 		if String(child.name).begins_with("TreeScatter"):
 			child.free()
-	farm = world.get_node("FarmingController") as Farm
+	farm = world.get_node("FarmingController") as FarmingController
 	farm.time_manager = clock
 	world.get_node("FlowerGarden").time_manager = clock
 	for pen_name: String in ["CoopPen", "BarnPen"]:
 		for child: Node in world.get_node(pen_name).get_children():
-			if child is Actor:
+			if child is AnimalActor:
 				child.get_node("NeedsComponent").time_manager = clock
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
-	selection = world.get_node("Player/ToolSelection") as Selection
-	catalog = Catalog.new()
-	adapter = Adapter.new(world, catalog)
+	selection = world.get_node("Player/ToolSelection") as ToolSelectionComponent
+	catalog = SaveCatalog.new()
+	adapter = WorldStateAdapter.new(world, catalog)
 
 func _snapshot() -> Dictionary:
 	return adapter.capture("test", 1, timestamp)
 
-func _actor(id: String) -> Actor:
+func _actor(id: String) -> AnimalActor:
 	for pen_name: String in ["CoopPen", "BarnPen"]:
 		for node: Node in world.get_node(pen_name).get_children():
-			if node is Actor and String(node.persistent_id) == id:
-				return node as Actor
+			if node is AnimalActor and String(node.persistent_id) == id:
+				return node as AnimalActor
 	return null
 
 func test_player_inventory_soil_and_crop_roundtrip_through_file() -> void:
@@ -83,10 +73,10 @@ func test_player_inventory_soil_and_crop_roundtrip_through_file() -> void:
 	selection.select_slot(2)
 	selection.inventory.remove(&"carrot_seed", 3)
 	var cell: Vector2i = Vector2i(20, 20)
-	farm.restore_soil([{"cell": [20, 20], "state": Farm.Soil.WET}, {"cell": [21, 20], "state": Farm.Soil.DRY}])
+	farm.restore_soil([{"cell": [20, 20], "state": FarmingController.Soil.WET}, {"cell": [21, 20], "state": FarmingController.Soil.DRY}])
 	farm.restore_crop(cell, catalog.crops["carrot"], 1000.0, 1010.0, 0.0, 1000.0)
 	var folder: String = "res://.godot/save_tests/roundtrip_" + Crypto.new().generate_random_bytes(8).hex_encode()
-	var repo: Repository = Repository.new(folder, catalog)
+	var repo: LocalSaveRepository = LocalSaveRepository.new(folder, catalog)
 	var saved: Dictionary = _snapshot()
 	assert_true(repo.write_profile("test", saved, 0).ok)
 	selection.inventory.remove(&"carrot_seed", 100)
@@ -99,8 +89,8 @@ func test_player_inventory_soil_and_crop_roundtrip_through_file() -> void:
 	assert_eq(world.get_node("Player").position, Vector2(400, 300))
 	assert_eq(selection.selected_index, 2)
 	assert_eq(selection.inventory.count_item(&"carrot_seed"), 9)
-	assert_eq(farm.get_soil_state(cell), Farm.Soil.WET)
-	assert_eq(farm.get_soil_state(Vector2i(21, 20)), Farm.Soil.DRY)
+	assert_eq(farm.get_soil_state(cell), FarmingController.Soil.WET)
+	assert_eq(farm.get_soil_state(Vector2i(21, 20)), FarmingController.Soil.DRY)
 	assert_almost_eq(farm.get_crop(cell).progress, 0.6, 0.0001)
 	assert_eq(farm.get_crop(cell).stage, 1)
 	DirAccess.remove_absolute(repo.path("test"))
@@ -109,7 +99,7 @@ func test_player_inventory_soil_and_crop_roundtrip_through_file() -> void:
 func test_offline_production_stacks_into_same_saved_pile_once() -> void:
 	timestamp = 1060.0
 	clock.refresh()
-	var cow: Actor = world.get_node("BarnPen/Cow_1") as Actor
+	var cow: AnimalActor = world.get_node("BarnPen/Cow_1") as AnimalActor
 	var saved: Dictionary = _snapshot()
 	var id: String = String(cow.persistent_id)
 	var pile_id: String = String(cow.product_pickup().persistent_id)
@@ -125,7 +115,7 @@ func test_offline_production_stacks_into_same_saved_pile_once() -> void:
 	assert_eq(adapter.capture("test", 2, 1180.0).animals.size(), 36)
 
 func test_long_offline_interval_stops_production_when_needs_run_out() -> void:
-	var cow: Actor = world.get_node("BarnPen/Cow_1") as Actor
+	var cow: AnimalActor = world.get_node("BarnPen/Cow_1") as AnimalActor
 	var saved: Dictionary = _snapshot()
 	var id: String = String(cow.persistent_id)
 	assert_true(adapter.restore(saved, 100000.0).ok)
@@ -136,9 +126,9 @@ func test_long_offline_interval_stops_production_when_needs_run_out() -> void:
 	assert_almost_eq(cow.growth.age_seconds, 99120.0, 0.001)
 
 func test_collected_default_pickup_and_removed_animal_do_not_respawn() -> void:
-	var default_feed: Pickup = world.get_node("BarnPen/LivestockFeed") as Pickup
+	var default_feed: ItemPickup = world.get_node("BarnPen/LivestockFeed") as ItemPickup
 	default_feed.free()
-	var cow: Actor = world.get_node("BarnPen/Cow_1") as Actor
+	var cow: AnimalActor = world.get_node("BarnPen/Cow_1") as AnimalActor
 	cow.free()
 	var saved: Dictionary = _snapshot()
 	assert_true(adapter.restore(saved, timestamp).ok)
@@ -166,7 +156,7 @@ func test_invalid_load_does_not_mutate_world() -> void:
 	assert_eq(_snapshot().animals.size(), 36)
 
 func test_progress_does_not_go_back_when_system_clock_moves_back() -> void:
-	var cow: Actor = world.get_node("BarnPen/Cow_1") as Actor
+	var cow: AnimalActor = world.get_node("BarnPen/Cow_1") as AnimalActor
 	timestamp = 1030.0
 	clock.refresh()
 	var id: String = String(cow.persistent_id)
@@ -181,7 +171,7 @@ func test_test_world_does_not_bind_real_profile() -> void:
 	assert_null(get_node("/root/SaveManager").adapter)
 
 func test_inventory_replace_is_atomic_and_emits_once() -> void:
-	var bag: Inventory = selection.inventory
+	var bag: InventoryComponent = selection.inventory
 	watch_signals(bag)
 	var stacks: Array[Dictionary] = []
 	for index: int in range(bag.slot_count):
@@ -306,7 +296,7 @@ func test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies()
 	assert_true(pot.plant(selection.inventory, slot, timestamp))
 	assert_true(pot.water(timestamp))
 	var saved: Dictionary = _snapshot()
-	assert_eq(saved.version, Schema.VERSION)
+	assert_eq(saved.version, SaveSchema.VERSION)
 	assert_eq(saved.flower_gardens.size(), 1)
 	assert_true(adapter.restore(saved, 1060.0).ok)
 	assert_almost_eq(pot.progress, 0.5, 0.001)

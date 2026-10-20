@@ -1,15 +1,14 @@
+class_name AnimalProductionComponent
 extends Node
 ## Pure production state. The actor hands eligible time in and delivers output.
-const Definition = preload("res://scripts/animals/animal_production_definition.gd")
-const Inventory = preload("res://components/inventory_component.gd")
 signal produced(amount: int)
 signal stock_changed(amount: int)
-var definition: Definition
+var definition: AnimalProductionDefinition
 var progress_seconds: float = 0.0
 var stored_amount: int = 0
 var _collecting: bool = false
 
-func configure(data: Definition) -> void:
+func configure(data: AnimalProductionDefinition) -> void:
 	definition = data
 	progress_seconds = 0.0
 	stored_amount = 0
@@ -44,7 +43,7 @@ func take_output(amount: int) -> int:
 	return removed
 
 ## Used by DIRECT_COLLECTION definitions; partial transfers preserve the rest.
-func collect(inventory: Inventory) -> int:
+func collect(inventory: InventoryComponent) -> int:
 	if _collecting or inventory == null or definition == null or not definition.is_valid() or stored_amount <= 0:
 		return 0
 	_collecting = true

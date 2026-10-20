@@ -1,17 +1,16 @@
+class_name ContextBarsComponent
 extends Node2D
 ## Player-side presentation only: one focused target and one nearby mouse target.
 ## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
-const FarmingActions = preload("res://components/farming_action_component.gd")
-const Garden = preload("res://components/flowers/flower_garden.gd")
-const Actor = preload("res://components/animals/animal_actor.gd")
-const Selection = preload("res://components/tool_selection_component.gd")
 @export var mouse_padding: float = 5.0
 @export var animal_focus_reach: float = 32.0
 @export var refresh_interval: float = 0.05
-@onready var player: Node2D = get_parent() as Node2D
-@onready var animation: AnimationComponent = player.get_node("AnimationComponent") as AnimationComponent
-@onready var actions: FarmingActions = player.get_node("FarmingActionComponent") as FarmingActions
-@onready var selection: Selection = player.get_node("ToolSelection") as Selection
+@export var player: FarmPlayer
+@export var animation: AnimationComponent
+@export var actions: FarmingActionComponent
+@export var selection: ToolSelectionComponent
+@export var trough_interaction: TroughInteractionComponent
+@export var flower_interaction: FlowerInteraction
 var _visible: Array[Node2D] = []
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 var _elapsed: float = 0.0
@@ -45,16 +44,14 @@ func _exit_tree() -> void:
 			target.set_status_focused(false)
 
 func _focused_target() -> Node2D:
-	var troughs: Node = player.get_node_or_null("TroughInteraction")
-	if troughs != null and is_instance_valid(troughs.focused_trough):
+	if trough_interaction != null and is_instance_valid(trough_interaction.focused_trough):
 		return null
-	var flowers: Node = player.get_node_or_null("FlowerInteraction")
-	if flowers != null and is_instance_valid(flowers.focused_pot):
-		return flowers.focused_pot as Node2D
-	var nearest: Actor
+	if flower_interaction != null and is_instance_valid(flower_interaction.focused_pot):
+		return flower_interaction.focused_pot
+	var nearest: AnimalActor
 	var distance: float = animal_focus_reach * animal_focus_reach
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
-		var animal: Actor = node as Actor
+		var animal: AnimalActor = node as AnimalActor
 		if not is_instance_valid(animal) or animal.is_queued_for_deletion() or not animal.show_needs:
 			continue
 		var offset: Vector2 = animal.global_position - player.global_position
@@ -69,11 +66,11 @@ func _focused_target() -> Node2D:
 func _hovered_target(point: Vector2) -> Node2D:
 	var candidates: Array[Node2D] = []
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
-		var animal: Actor = node as Actor
+		var animal: AnimalActor = node as AnimalActor
 		if is_instance_valid(animal) and animal.show_needs:
 			candidates.append(animal)
 	for node: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
-		for pot: Node2D in (node as Garden).pots.values():
+		for pot: FlowerPot in (node as FlowerGarden).pots.values():
 			if pot.definition != null:
 				candidates.append(pot)
 	var farm: Node = actions.get_farming_controller()

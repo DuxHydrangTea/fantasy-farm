@@ -1,3 +1,4 @@
+class_name FarmClock
 extends Node
 
 ## Shared Unix clock. Growth uses timestamps; delta only limits UI refresh rate.

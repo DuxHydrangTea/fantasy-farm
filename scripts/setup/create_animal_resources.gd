@@ -23,7 +23,7 @@ func _init() -> void:
 			"item_name": "Sữa bò",
 			"icon_path": "res://icons/no_outline/food/food_r10_c08.tres",
 			"production_seconds": 60.0,
-			"collection_mode": AnimalProductionDefination.CollectionMode.WORLD_DROP,
+			"collection_mode": AnimalProductionDefinition.CollectionMode.WORLD_DROP,
 			"hydration_depletion": 600.0,
 			"satiety_depletion": 600.0,
 		},
@@ -37,7 +37,7 @@ func _init() -> void:
 			"item_name": "Lông cừu",
 			"icon_path": "res://icons/no_outline/materials/materials_r05_c04.tres",
 			"production_seconds": 60.0,
-			"collection_mode": AnimalProductionDefination.CollectionMode.WORLD_DROP,
+			"collection_mode": AnimalProductionDefinition.CollectionMode.WORLD_DROP,
 			"hydration_depletion": 600.0,
 			"satiety_depletion": 600.0,
 		},
@@ -51,7 +51,7 @@ func _init() -> void:
 			"item_name": "Trứng vịt",
 			"icon_path": "res://icons/no_outline/food/food_r02_c07.tres",
 			"production_seconds": 40.0,
-			"collection_mode": AnimalProductionDefination.CollectionMode.WORLD_DROP,
+			"collection_mode": AnimalProductionDefinition.CollectionMode.WORLD_DROP,
 			"hydration_depletion": 300.0,
 			"satiety_depletion": 600.0,
 		},
@@ -65,7 +65,7 @@ func _init() -> void:
 			"item_name": "Trứng ngỗng",
 			"icon_path": "res://icons/no_outline/food/food_r02_c07.tres",
 			"production_seconds": 50.0,
-			"collection_mode": AnimalProductionDefination.CollectionMode.WORLD_DROP,
+			"collection_mode": AnimalProductionDefinition.CollectionMode.WORLD_DROP,
 			"hydration_depletion": 300.0,
 			"satiety_depletion": 600.0,
 		},
@@ -79,7 +79,7 @@ func _init() -> void:
 			"item_name": "Nấm Truffle",
 			"icon_path": "res://icons/no_outline/food/food_r01_c05.tres",
 			"production_seconds": 60.0,
-			"collection_mode": AnimalProductionDefination.CollectionMode.WORLD_DROP,
+			"collection_mode": AnimalProductionDefinition.CollectionMode.WORLD_DROP,
 			"hydration_depletion": 600.0,
 			"satiety_depletion": 600.0,
 		},
@@ -95,7 +95,7 @@ func _init() -> void:
 	]
 
 	for cfg in configs:
-		var prod_def: AnimalProductionDefination = null
+		var prod_def: AnimalProductionDefinition = null
 
 		if cfg.get("has_production", false):
 			# 1. Tạo ItemDefinition
@@ -118,7 +118,7 @@ func _init() -> void:
 			item = load(item_path)
 
 			# 2. Tạo AnimalProductionDefination
-			prod_def = AnimalProductionDefination.new()
+			prod_def = AnimalProductionDefinition.new()
 			prod_def.production_item = item
 			prod_def.production_amount = 1
 			prod_def.production_seconds = cfg["production_seconds"]

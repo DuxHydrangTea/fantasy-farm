@@ -1,9 +1,8 @@
 extends GutTest
-const Growth = preload("res://components/animals/animal_growth_component.gd")
-var growth: Growth
+var growth: AnimalGrowthComponent
 
 func before_each() -> void:
-	growth = Growth.new()
+	growth = AnimalGrowthComponent.new()
 	add_child_autofree(growth)
 	growth.configure(10.0)
 
@@ -37,7 +36,7 @@ func test_negative_elapsed_and_initial_values_never_reverse_age() -> void:
 	assert_eq(growth.age_seconds, 5.0)
 
 func test_animals_do_not_share_age_state() -> void:
-	var other: Growth = Growth.new()
+	var other: AnimalGrowthComponent = AnimalGrowthComponent.new()
 	add_child_autofree(other)
 	other.configure(10.0)
 	growth.advance(20.0)

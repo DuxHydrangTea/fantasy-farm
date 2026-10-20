@@ -1,13 +1,11 @@
 extends GutTest
 
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
-const Selection = preload("res://components/tool_selection_component.gd")
-const Hotbar = preload("res://components/hotbar_ui.gd")
 var viewport: SubViewport
 var player: CharacterBody2D
 var state: StateComponent
-var selection: Selection
-var hotbar: Hotbar
+var selection: ToolSelectionComponent
+var hotbar: HotbarUI
 
 func before_each() -> void:
 	viewport = SubViewport.new()
@@ -118,18 +116,24 @@ func test_empty_slot_does_not_use_any_tool() -> void:
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_eq(hotbar.selected_name.text, "Ô trống")
 
-func test_wheel_selects_and_wraps_slots() -> void:
+func test_wheel_keeps_selected_slot_and_does_not_move() -> void:
+	selection.select_slot(4)
 	_mouse(Vector2(400, 300), MOUSE_BUTTON_WHEEL_DOWN, true)
-	assert_eq(selection.selected_index, 1)
 	_mouse(Vector2(400, 300), MOUSE_BUTTON_WHEEL_UP, true)
 	_mouse(Vector2(400, 300), MOUSE_BUTTON_WHEEL_UP, true)
-	assert_eq(selection.selected_index, 5)
+	assert_eq(selection.selected_index, 4)
 	assert_false(state.movement.has_target)
 
-func test_wheel_over_hotbar_selects_tool() -> void:
+func test_wheel_over_hotbar_zooms_without_selecting_tool() -> void:
 	var center: Vector2 = hotbar.buttons[0].get_global_rect().get_center()
-	_mouse(center, MOUSE_BUTTON_WHEEL_DOWN, true)
-	assert_eq(selection.selected_index, 1)
+	var camera: Camera2D = (player as FarmPlayer).camera
+	var original_zoom: float = camera.zoom.x
+	var original_slot_size: Vector2 = hotbar.buttons[0].get_global_rect().size
+	_mouse(center, MOUSE_BUTTON_WHEEL_UP, true)
+	await wait_seconds(0.6)
+	assert_gt(camera.zoom.x, original_zoom)
+	assert_eq(selection.selected_index, 0)
+	assert_eq(hotbar.buttons[0].get_global_rect().size, original_slot_size)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 
 func test_changing_selection_during_action_keeps_current_animation() -> void:

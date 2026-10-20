@@ -1,8 +1,12 @@
 # Farming
 
-Choose a hotbar slot with **1–6**, by clicking it, or by scrolling the mouse wheel.
+Choose a hotbar slot with **1–6** or by clicking it.
+Scroll up to zoom in on the farm, or down to zoom out; this does not change the selected slot.
 Face the adjacent tile and **right-click** or press **Space** to use the selected tool.
-Left-click still moves the player. Number keys select a slot without immediately using its tool.
+Left-click focuses a point: the player finds a collision-safe path to a nearby interaction position,
+stops and faces the clicked cell. It does not use a tool automatically.
+Movement keys, tool use and opening the inventory cancel the route.
+Number keys select a slot without immediately using its tool.
 The change happens once on animation frame 3. Changing state before impact cancels it.
 
 The four-corner highlight follows the adjacent cell in the facing direction.

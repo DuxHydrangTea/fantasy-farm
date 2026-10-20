@@ -1,23 +1,20 @@
 extends GutTest
 
-const Clock = preload("res://components/time_manager.gd")
-const Definition = preload("res://scripts/crop_definition.gd")
 const CROP: PackedScene = preload("res://scenes/crops/crop.tscn")
-const Crop = preload("res://components/crop.gd")
 var timestamp: float = 1000.0
-var clock: Clock
+var clock: FarmClock
 var crop: Crop
-var definition: Definition
+var definition: CropDefinition
 
 func before_each() -> void:
 	timestamp = 1000.0
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
 	crop = CROP.instantiate() as Crop
 	add_child_autofree(crop)
-	definition = (load("res://crops/field/carrot/carrot.tres") as Definition).duplicate()
+	definition = (load("res://crops/field/carrot/carrot.tres") as CropDefinition).duplicate()
 	definition.growth_seconds = 90.0
 	crop.configure(definition, timestamp)
 
@@ -61,7 +58,7 @@ func test_existing_crop_catalog_has_four_valid_stages_and_harvest() -> void:
 	var checked: int = 0
 	for crop_name: String in directory.get_directories():
 		var path: String = "res://crops/field/%s/%s.tres" % [crop_name, crop_name]
-		var data: Definition = load(path) as Definition
+		var data: CropDefinition = load(path) as CropDefinition
 		assert_not_null(data, path)
 		if data != null:
 			assert_true(data.is_valid(), path)

@@ -1,4 +1,4 @@
-class_name AnimalNeedsComponent
+class_name LegacyAnimalNeedsComponent
 extends Node
 
 signal needs_changed(satiety: float, hydration: float)

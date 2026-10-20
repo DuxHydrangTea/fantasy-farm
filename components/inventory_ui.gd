@@ -1,20 +1,20 @@
+class_name InventoryUI
 extends CanvasLayer
+@export var close_button: BaseButton
 # Signal-driven grid adapted from the Godot skill's inventory_ui.gd template.
-const Selection = preload("res://components/tool_selection_component.gd")
-const Slot = preload("res://components/inventory_slot.gd")
-@export var selection: Selection
-@onready var root: Control = $Root
-@onready var panel: PanelContainer = $Root/Center/Panel
-@onready var grid: GridContainer = $Root/Center/Panel/Body/Scroll/Center/Grid
-@onready var details: Label = $Root/Center/Panel/Body/Details
-@onready var capacity: Label = $Root/Center/Panel/Body/Footer/Capacity
-var buttons: Array[TextureButton] = []
+@export var selection: ToolSelectionComponent
+@export var root: Control
+@export var panel: PanelContainer
+@export var grid: GridContainer
+@export var details: Label
+@export var capacity: Label
+var buttons: Array[InventorySlot] = []
 var inspected_index: int = 0
 
 func _ready() -> void:
 	root.hide()
 	for index: int in range(selection.inventory.slot_count):
-		var button: Slot = Slot.new()
+		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
 		button.inventory = selection.inventory
 		button.slot_index = index
@@ -23,7 +23,7 @@ func _ready() -> void:
 		button.pressed.connect(_inspect_slot.bind(index))
 		grid.add_child(button)
 		buttons.append(button)
-	$Root/Center/Panel/Body/Header/Close.pressed.connect(close)
+	close_button.pressed.connect(close)
 	selection.inventory_visibility_changed.connect(_on_visibility_changed)
 	selection.inventory.changed.connect(_refresh)
 	root.resized.connect(_fit_panel)
@@ -56,8 +56,7 @@ func _refresh() -> void:
 	var used: int = 0
 	for index: int in range(buttons.size()):
 		var selected: bool = index == inspected_index
-		buttons[index].set_pressed_no_signal(selected)
-		buttons[index].get_node("SelectionFrame").visible = selected
+		buttons[index].set_selected(selected)
 		if selection.inventory.slot(index).item != null:
 			used += 1
 	var stack: Dictionary = selection.inventory.slot(inspected_index)

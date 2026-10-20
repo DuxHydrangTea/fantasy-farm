@@ -7,6 +7,7 @@ var state: StateComponent
 var sprite: AnimatedSprite2D
 var camera: Camera2D
 var viewport: SubViewport
+var navigation: PlayerNavigationComponent
 
 func before_each() -> void:
 	_release_input()
@@ -21,6 +22,7 @@ func before_each() -> void:
 	state = player.get_node("StateComponent")
 	sprite = player.get_node("AnimatedSprite2D")
 	camera = player.get_node("Camera2D")
+	navigation = state.navigation
 	camera.make_current()
 	await wait_physics_frames(2)
 	await get_tree().process_frame
@@ -123,16 +125,112 @@ func _click_world(world_position: Vector2, button: MouseButton = MOUSE_BUTTON_LE
 	click.pressed = false
 	viewport.push_input(click, true)
 
-func test_left_click_reaches_world_target_and_stops() -> void:
+func _wheel(button: MouseButton, pressed: bool = true) -> void:
+	var event: InputEventMouseButton = InputEventMouseButton.new()
+	event.position = Vector2(400, 300)
+	event.global_position = event.position
+	event.button_index = button
+	event.pressed = pressed
+	viewport.push_input(event, true)
+
+func test_wheel_zoom_is_smooth_and_accumulates_fast_steps() -> void:
+	var initial_zoom: Vector2 = camera.zoom
+	for step: int in range(3):
+		_wheel(MOUSE_BUTTON_WHEEL_UP)
+	assert_eq(camera.zoom, initial_zoom, "Zoom eases towards its target")
+	await wait_seconds(0.7)
+	assert_almost_eq(camera.zoom.x, 1.2 * pow(1.15, 3), 0.002)
+	assert_eq(camera.zoom.x, camera.zoom.y)
+	for step: int in range(3):
+		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
+	await wait_seconds(0.7)
+	assert_almost_eq(camera.zoom.x, initial_zoom.x, 0.002)
+
+func test_wheel_zoom_clamps_and_keeps_map_inside_view() -> void:
+	for step: int in range(40):
+		_wheel(MOUSE_BUTTON_WHEEL_UP)
+	await wait_seconds(0.8)
+	assert_almost_eq(camera.zoom.x, 3.0, 0.002)
+	for step: int in range(60):
+		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
+	await wait_seconds(0.8)
+	assert_almost_eq(camera.zoom.x, 1.0, 0.002)
+	camera.reset_smoothing()
+	camera.force_update_scroll()
+	await wait_physics_frames(2)
+	var center: Vector2 = camera.get_screen_center_position()
+	var half_view: Vector2 = Vector2(viewport.size) / camera.zoom / 2.0
+	assert_gte(center.x - half_view.x, -0.01)
+	assert_gte(center.y - half_view.y, -0.01)
+	assert_lte(center.x + half_view.x, 1920.01)
+	assert_lte(center.y + half_view.y, 1080.01)
+
+func test_zoom_minimum_adapts_to_viewport_resize() -> void:
+	viewport.size = Vector2i(3840, 2160)
+	await wait_physics_frames(3)
+	assert_gte(camera.zoom.x, 2.0, "Larger viewport must not expose outside the map")
+	for step: int in range(20):
+		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
+	await wait_seconds(0.7)
+	assert_almost_eq(camera.zoom.x, 2.0, 0.002)
+
+func test_inventory_blocks_wheel_zoom() -> void:
+	var inventory_ui: InventoryUI = player.get_node("InventoryUI") as InventoryUI
+	inventory_ui.open()
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	_wheel(MOUSE_BUTTON_WHEEL_DOWN)
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	await wait_seconds(0.6)
+	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	inventory_ui.close()
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	await wait_seconds(0.6)
+	assert_gt(camera.zoom.x, 1.2)
+
+func test_ui_consumed_wheel_does_not_zoom_world() -> void:
+	var overlay: Control = Control.new()
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	overlay.mouse_force_pass_scroll_events = false
+	overlay.size = Vector2(viewport.size)
+	viewport.add_child(overlay)
+	await wait_physics_frames(2)
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	await wait_seconds(0.6)
+	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+
+func test_wheel_release_is_ignored() -> void:
+	_wheel(MOUSE_BUTTON_WHEEL_UP, false)
+	await wait_seconds(0.6)
+	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+
+func test_click_focus_stays_correct_after_zoom() -> void:
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	await wait_seconds(0.7)
+	await wait_physics_frames(2)
 	var target: Vector2 = player.global_position + Vector2(60, -30)
 	_click_world(target)
-	assert_true(state.movement.has_target)
-	assert_almost_eq(state.movement.target_position.x, target.x, 0.01)
-	assert_almost_eq(state.movement.target_position.y, target.y, 0.01)
+	assert_true(navigation.has_focus)
+	assert_almost_eq(navigation.focus_position.x, target.x, 0.01)
+	assert_almost_eq(navigation.focus_position.y, target.y, 0.01)
+	await wait_seconds(0.9)
+	assert_lte(player.global_position.distance_to(target), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_false(navigation.is_navigating)
+
+func test_left_click_approaches_focus_then_faces_it_without_stepping_on_it() -> void:
+	var target: Vector2 = player.global_position + Vector2(60, -30)
+	_click_world(target)
+	assert_true(navigation.has_focus)
+	assert_almost_eq(navigation.focus_position.x, target.x, 0.01)
+	assert_almost_eq(navigation.focus_position.y, target.y, 0.01)
 	await wait_physics_frames(10)
 	assert_eq(state.current_state, StateComponent.State.WALK)
 	await wait_seconds(0.9)
-	assert_lte(player.global_position.distance_to(target), state.movement.arrival_distance)
+	assert_lte(player.global_position.distance_to(target), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_gt(player.global_position.distance_to(target), state.movement.arrival_distance)
+	var facing: Vector2 = (player as FarmPlayer).animation.facing_vector
+	assert_gt(facing.dot(player.global_position.direction_to(target)), 0.4)
+	assert_false(navigation.is_navigating)
 	assert_false(state.movement.has_target)
 	assert_eq(player.velocity, Vector2.ZERO)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
@@ -146,7 +244,9 @@ func test_new_click_replaces_destination() -> void:
 	var replacement: Vector2 = player.global_position + Vector2(-50, 0)
 	_click_world(replacement)
 	await wait_seconds(0.8)
-	assert_lte(player.global_position.distance_to(replacement), state.movement.arrival_distance)
+	assert_lte(player.global_position.distance_to(replacement), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_almost_eq(navigation.focus_position.x, replacement.x, 0.001)
+	assert_almost_eq(navigation.focus_position.y, replacement.y, 0.001)
 	assert_true(sprite.flip_h)
 
 func test_keyboard_cancels_click_destination() -> void:
@@ -155,6 +255,7 @@ func test_keyboard_cancels_click_destination() -> void:
 	_send_key(KEY_LEFT, true)
 	await wait_physics_frames(10)
 	assert_false(state.movement.has_target)
+	assert_false(navigation.has_focus)
 	assert_lt(player.velocity.x, 0.0)
 	_send_key(KEY_LEFT, false)
 	await wait_physics_frames(15)
@@ -169,6 +270,7 @@ func test_action_cancels_destination_and_ignores_clicks() -> void:
 	_send_key(KEY_SPACE, false)
 	assert_eq(state.current_state, StateComponent.State.TOOL)
 	assert_false(state.movement.has_target)
+	assert_false(navigation.has_focus)
 	var locked: Vector2 = player.position
 	_click_world(locked + Vector2(0, 100))
 	assert_false(state.movement.has_target)
@@ -191,8 +293,104 @@ func test_ui_consumes_click_before_movement() -> void:
 	_click_world(player.position + Vector2(50, 0))
 	await wait_physics_frames(2)
 	assert_false(state.movement.has_target, "UI clicks must not move the player")
+	assert_false(navigation.has_focus)
 
-func test_blocked_mouse_movement_stops_at_collider() -> void:
+func _wall(offset: Vector2, wall_size: Vector2) -> StaticBody2D:
+	var wall: StaticBody2D = StaticBody2D.new()
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = wall_size
+	collision.shape = shape
+	wall.add_child(collision)
+	wall.position = player.position + offset
+	viewport.add_child(wall)
+	return wall
+
+func test_click_focus_finds_a_path_around_collision() -> void:
+	var wall: StaticBody2D = _wall(Vector2(30, 0), Vector2(10, 100))
+	await wait_physics_frames(2)
+	var start: Vector2 = player.position
+	var focus: Vector2 = start + Vector2(96, 0)
+	_click_world(focus)
+	var detour: float = 0.0
+	for frame: int in range(180):
+		await wait_physics_frames(1)
+		detour = maxf(detour, absf(player.position.y - start.y))
+	assert_gt(detour, 45.0, "Must go around the wall")
+	assert_gt(player.position.x, wall.position.x)
+	assert_lte(player.position.distance_to(focus), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_false(state.movement.has_target)
+	assert_false(navigation.is_navigating)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+
+func test_unreachable_focus_stops_without_walking_in_place() -> void:
+	_wall(Vector2(30, 0), Vector2(10, 1080))
+	await wait_physics_frames(2)
+	var start: Vector2 = player.position
+	_click_world(start + Vector2(96, 0))
+	await wait_seconds(0.5)
+	assert_false(navigation.is_navigating)
+	assert_false(state.movement.has_target)
+	assert_eq(player.position, start)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+	assert_eq(sprite.animation, &"idle_right")
+	assert_false(state.dust_particles.emitting)
+
+func test_collidable_focus_is_approached_without_entering_it() -> void:
+	var target: StaticBody2D = _wall(Vector2(96, 0), Vector2(16, 16))
+	await wait_physics_frames(2)
+	_click_world(target.position)
+	await wait_seconds(1.5)
+	assert_lte(player.position.distance_to(target.position), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_gt(player.position.distance_to(target.position), 12.0)
+	assert_false(navigation.is_navigating)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+	assert_eq((player as FarmPlayer).animation.facing_direction, &"right")
+
+func test_new_collision_replans_the_route() -> void:
+	var focus: Vector2 = player.position + Vector2(180, 0)
+	_click_world(focus)
+	await wait_physics_frames(10)
+	_wall(Vector2(32, 0), Vector2(10, 64))
+	await wait_seconds(3.0)
+	assert_lte(player.position.distance_to(focus), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_false(navigation.is_navigating)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+
+func test_focus_route_fits_a_one_tile_wide_gate() -> void:
+	# World-wide barrier with a 16px opening centered on x=960.
+	_wall(Vector2(-484, -60), Vector2(952, 16))
+	_wall(Vector2(484, -60), Vector2(952, 16))
+	await wait_physics_frames(2)
+	var focus: Vector2 = player.position + Vector2(0, -120)
+	_click_world(focus)
+	await wait_seconds(2.0)
+	assert_lte(player.position.distance_to(focus), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_false(navigation.is_navigating)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+
+func test_nearby_focus_only_turns_without_walking() -> void:
+	var start: Vector2 = player.position
+	_click_world(start + Vector2(0, -16))
+	await wait_physics_frames(10)
+	assert_eq(player.position, start)
+	assert_false(navigation.is_navigating)
+	assert_eq(sprite.animation, &"idle_up")
+
+func test_inventory_cancels_focus_route() -> void:
+	_click_world(player.position + Vector2(100, 0))
+	await wait_physics_frames(5)
+	var inventory_ui: InventoryUI = player.get_node("InventoryUI") as InventoryUI
+	inventory_ui.open()
+	var stopped: Vector2 = player.position
+	await wait_physics_frames(5)
+	assert_false(navigation.has_focus)
+	assert_eq(player.position, stopped)
+	inventory_ui.close()
+	await wait_physics_frames(5)
+	assert_eq(player.position, stopped)
+
+func test_collision_plays_idle_and_resumes_walking_when_path_clears() -> void:
 	var wall: StaticBody2D = StaticBody2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	var shape: RectangleShape2D = RectangleShape2D.new()
@@ -202,11 +400,19 @@ func test_blocked_mouse_movement_stops_at_collider() -> void:
 	wall.position = player.position + Vector2(30, 0)
 	viewport.add_child(wall)
 	await wait_physics_frames(2)
-	_click_world(player.position + Vector2(80, 0))
-	await wait_seconds(1.0)
-	assert_lt(player.position.x, wall.position.x)
-	assert_false(state.movement.has_target)
+	_send_key(KEY_D, true)
+	await wait_physics_frames(25)
+	var blocked_position: Vector2 = player.position
+	await wait_physics_frames(5)
+	assert_almost_eq(player.position.x, blocked_position.x, 0.001)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
+	assert_eq(sprite.animation, &"idle_right")
+	assert_false(state.dust_particles.emitting)
+	wall.queue_free()
+	await wait_physics_frames(10)
+	assert_gt(player.position.x, blocked_position.x)
+	assert_eq(state.current_state, StateComponent.State.WALK)
+	_send_key(KEY_D, false)
 
 func test_movement_dust_particles_emit_while_walking_and_stop_when_idle() -> void:
 	var dust: GPUParticles2D = player.get_node_or_null("DustParticles")
@@ -223,4 +429,3 @@ func test_movement_dust_particles_emit_while_walking_and_stop_when_idle() -> voi
 	await wait_physics_frames(15)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_false(dust.emitting, "Dust particles should stop emitting when idle")
-

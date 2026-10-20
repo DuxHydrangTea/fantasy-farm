@@ -1,14 +1,14 @@
+class_name AnimalWanderComponent
 extends Node
 ## Top-down patrol using the shared Movement/Animation components.
-const Pen = preload("res://components/animals/animal_pen.gd")
 @export var movement: MovementComponent
 @export var animation: AnimationComponent
 @export var collision: CollisionShape2D
-@export var pen: Pen
+@export var pen: AnimalPen
 @export var random_seed: int = 0
 var idle_seconds: Vector2 = Vector2(0.6, 1.8)
 var margin: float = 12.0
-var traversal: Node
+var traversal: WaterfowlComponent
 var _wait_remaining: float = 0.0
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 

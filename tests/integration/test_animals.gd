@@ -1,20 +1,17 @@
 extends GutTest
 const CHICKEN: PackedScene = preload("res://scenes/animals/chicken.tscn")
 const BASE: PackedScene = preload("res://scenes/animals/animal.tscn")
-const Actor = preload("res://components/animals/animal_actor.gd")
-const Pen = preload("res://components/animals/animal_pen.gd")
-const Definition = preload("res://scripts/animals/animal_definition.gd")
 var field: Node2D
-var pen: Pen
-var chicken: Actor
+var pen: AnimalPen
+var chicken: AnimalActor
 
 func before_each() -> void:
 	field = Node2D.new()
 	add_child_autofree(field)
-	pen = Pen.new()
+	pen = AnimalPen.new()
 	pen.bounds = Rect2(0, 0, 240, 180)
 	field.add_child(pen)
-	chicken = CHICKEN.instantiate() as Actor
+	chicken = CHICKEN.instantiate() as AnimalActor
 	chicken.pen = pen
 	chicken.position = Vector2(100, 90)
 	chicken.get_node("WanderComponent").random_seed = 123
@@ -72,9 +69,9 @@ func test_wall_collision_and_target_sampling_do_not_enter_obstacle() -> void:
 	assert_false(chicken.wander._target_is_clear(wall.global_position))
 
 func test_base_animal_supports_other_species_data(species_name = use_parameters(["cow", "sheep", "pig"])) -> void:
-	var animal: Actor = BASE.instantiate() as Actor
+	var animal: AnimalActor = BASE.instantiate() as AnimalActor
 	var path: String = "res://animals/definitions/%s.tres" % species_name
-	animal.definition = load(path) as Definition
+	animal.definition = load(path) as AnimalDefinition
 	animal.position = Vector2(40, 40)
 	field.add_child(animal)
 	assert_true(animal.definition.is_valid())
@@ -86,7 +83,7 @@ func test_base_animal_supports_other_species_data(species_name = use_parameters(
 	assert_ne(animal.get_node("CollisionShape2D").shape, chicken.get_node("CollisionShape2D").shape)
 
 func test_skin_override_and_needs_display_follow_individual_animal() -> void:
-	var other: Actor = CHICKEN.instantiate() as Actor
+	var other: AnimalActor = CHICKEN.instantiate() as AnimalActor
 	other.skin_frames = load("res://sprite_frames/animals/chicken_18_frames.tres") as SpriteFrames
 	other.position = Vector2(40, 40)
 	field.add_child(other)
@@ -100,7 +97,7 @@ func test_parent_pen_is_used_automatically_and_sorting_is_preserved() -> void:
 	enclosure.position = Vector2(500, 400)
 	enclosure.scale = Vector2(1.5, 1.5)
 	field.add_child(enclosure)
-	var animal: Actor = CHICKEN.instantiate() as Actor
+	var animal: AnimalActor = CHICKEN.instantiate() as AnimalActor
 	animal.position = Vector2(100, 80)
 	enclosure.add_child(animal)
 	await wait_physics_frames(3)
@@ -110,7 +107,7 @@ func test_parent_pen_is_used_automatically_and_sorting_is_preserved() -> void:
 	assert_true(animal.pen.contains_world(animal.global_position, animal.wander.margin))
 
 func test_invalid_skin_falls_back_to_valid_species_frames() -> void:
-	var animal: Actor = CHICKEN.instantiate() as Actor
+	var animal: AnimalActor = CHICKEN.instantiate() as AnimalActor
 	animal.skin_frames = SpriteFrames.new()
 	field.add_child(animal)
 	assert_eq(animal.sprite.sprite_frames, animal.definition.adult_frames)
@@ -122,7 +119,7 @@ func test_world_has_nine_distinct_chicken_skins_without_duplicate_spawns() -> vo
 	for child: Node in world.get_node("CoopPen").get_children():
 		if child.scene_file_path != CHICKEN.resource_path:
 			continue
-		var animal: Actor = child as Actor
+		var animal: AnimalActor = child as AnimalActor
 		var frames: SpriteFrames = animal.skin_frames if animal.skin_frames != null else animal.definition.adult_frames
 		skins[frames.resource_path] = skins.get(frames.resource_path, 0) + 1
 		count += 1

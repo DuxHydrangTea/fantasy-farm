@@ -1,7 +1,7 @@
+class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
 const VERSION: int = 3
-const Catalog = preload("res://persistence/save_catalog.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid") -> Dictionary:
@@ -16,7 +16,7 @@ static func vector(value: Variant, integral: bool = false) -> bool:
 static func identifier(value: Variant) -> bool:
 	return value is String and value.length() > 0 and value.length() <= 100 and value.is_valid_identifier()
 
-static func validate(data: Variant, catalog: Catalog) -> Dictionary:
+static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if not data is Dictionary:
 		return failure("Dữ liệu lưu không phải object.")
 	if number(data.get("version"), VERSION + 1, 1000000, true):

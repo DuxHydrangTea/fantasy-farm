@@ -18,6 +18,7 @@ func before_each() -> void:
 	farm = field.get_node("FarmingController") as Farming
 	player = PLAYER.instantiate() as CharacterBody2D
 	player.position = Vector2(-1000, -1000)
+	(player as FarmPlayer).farming_actions.farming = farm
 	field.add_child(player)
 	player.get_node("StateComponent").set_physics_process(false)
 	context = player.get_node("ContextBars") as Context

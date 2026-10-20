@@ -1,19 +1,21 @@
+class_name WorldPersistence
 extends Node
 ## Only the real running MainWorld binds persistence. GUT/preview instances do not.
-var _service: Node
+@export var world: FarmWorld
+var _service: GameSaveManager
 var _label: Label
 var _hide_at: int = 0
 
 func _ready() -> void:
-	call_deferred("_start")
+	_start.call_deferred()
 
 func _start() -> void:
-	if get_tree().current_scene != get_parent():
+	if get_tree().current_scene != world:
 		return
-	_service = get_node("/root/SaveManager")
+	_service = SaveManager
 	_build_notice()
 	_service.status_changed.connect(_notice)
-	await _service.bind_world(get_parent())
+	await _service.bind_world(world)
 
 func _build_notice() -> void:
 	var layer: CanvasLayer = CanvasLayer.new()

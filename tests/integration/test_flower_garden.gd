@@ -1,27 +1,23 @@
 extends GutTest
 const GARDEN: PackedScene = preload("res://scenes/flowers/flower_garden.tscn")
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
-const Garden = preload("res://components/flowers/flower_garden.gd")
-const Pot = preload("res://components/flowers/flower_pot.gd")
-const Clock = preload("res://components/time_manager.gd")
-const Item = preload("res://scripts/item_definition.gd")
-var clock: Clock
-var garden: Garden
+var clock: FarmClock
+var garden: FlowerGarden
 var player: CharacterBody2D
 var state: StateComponent
 var selection: Node
 var interaction: Node
-var pot: Pot
+var pot: FlowerPot
 var seed_slot: int
 var timestamp: float = 1000.0
 
 func before_each() -> void:
 	timestamp = 1000.0
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
-	garden = GARDEN.instantiate() as Garden
+	garden = GARDEN.instantiate() as FlowerGarden
 	garden.time_manager = clock
 	add_child_autofree(garden)
 	player = PLAYER.instantiate() as CharacterBody2D
@@ -33,7 +29,7 @@ func before_each() -> void:
 	pot = garden.pots[Vector2i.ZERO]
 	player.global_position = pot.global_position + Vector2(0, 10)
 	state.animation.face(Vector2.UP)
-	var seed: Item = load("res://items/seeds/flower_01_seed.tres") as Item
+	var seed: ItemDefinition = load("res://items/seeds/flower_01_seed.tres") as ItemDefinition
 	selection.inventory.add(seed, 3)
 	for index: int in range(selection.inventory.slot_count):
 		if selection.inventory.slot(index).item == seed:
@@ -46,7 +42,7 @@ func _impact() -> void:
 
 func test_grid_is_180_unique_pots_in_four_dense_blocks_with_cross_aisle() -> void:
 	assert_eq(garden.pots.size(), 180)
-	assert_eq(Garden.SIZE, Vector2(384, 256))
+	assert_eq(FlowerGarden.SIZE, Vector2(384, 256))
 	var used: Dictionary = {}
 	for cell: Vector2i in garden.pots:
 		var position: Vector2 = garden.pots[cell].position
@@ -128,13 +124,13 @@ func test_ten_seed_supplies_are_available_for_new_and_existing_players() -> void
 func test_eight_starting_flowers_cover_different_stages_and_do_not_respawn() -> void:
 	var stages: Dictionary = {}
 	var count: int = 0
-	for current: Pot in garden.pots.values():
+	for current: FlowerPot in garden.pots.values():
 		if current.definition != null:
 			count += 1
 			stages[current.stage] = true
 	assert_eq(count, 8)
 	assert_eq(stages.size(), 5)
-	var ready: Pot = garden.pots[Vector2i(15, 0)]
+	var ready: FlowerPot = garden.pots[Vector2i(15, 0)]
 	assert_true(ready.is_mature())
 	assert_true(ready.harvest(selection.inventory))
 	garden.add_starter_flowers(timestamp)

@@ -1,31 +1,28 @@
 extends GutTest
 const POT: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
-const Pot = preload("res://components/flowers/flower_pot.gd")
-const Bag = preload("res://components/inventory_component.gd")
-const Item = preload("res://scripts/item_definition.gd")
-var pot: Pot
-var bag: Bag
-var seed: Item
+var pot: FlowerPot
+var bag: InventoryComponent
+var seed: ItemDefinition
 
 func before_each() -> void:
-	pot = POT.instantiate() as Pot
+	pot = POT.instantiate() as FlowerPot
 	add_child_autofree(pot)
-	bag = Bag.new()
+	bag = InventoryComponent.new()
 	bag.starting_tools = false
 	bag.slot_count = 2
 	add_child_autofree(bag)
-	seed = load("res://items/seeds/flower_01_seed.tres") as Item
+	seed = load("res://items/seeds/flower_01_seed.tres") as ItemDefinition
 	bag.add(seed, 3)
 
 func test_all_ten_flowers_have_five_stages_and_six_frames_each() -> void:
 	for index: int in range(1, 11):
 		var path: String = "res://items/seeds/flower_%02d_seed.tres" % index
-		var item: Item = load(path) as Item
+		var item: ItemDefinition = load(path) as ItemDefinition
 		assert_true(item.crop.is_valid())
 		assert_eq(item.crop.stage_frames.size(), 5)
 		for stage: SpriteFrames in item.crop.stage_frames:
 			assert_eq(stage.get_frame_count(&"grow"), 6)
-		assert_eq(item.crop.harvest_item.item_type, Item.ItemType.PRODUCE)
+		assert_eq(item.crop.harvest_item.item_type, ItemDefinition.ItemType.PRODUCE)
 
 func test_plant_spends_one_seed_once_and_rejects_other_crops() -> void:
 	assert_false(pot.can_plant(load("res://items/seeds/carrot_seed.tres")))

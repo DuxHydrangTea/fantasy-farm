@@ -7,7 +7,7 @@
 - Vịt đi bộ trên bờ, dùng `swim`, `swim_idle`, `swim_sleep` khi ở nước. Nằm/ngủ trên nước không chạy chuỗi đứng dậy trên cạn.
 - Ngỗng dùng animation trên cạn, không đi vào tile nước. Cùng pen, máng và hệ nhu cầu với vịt.
 - `pond_pen.gd` xây hai AStarGrid2D, ô 16 px, đường đi 4 hướng. Graph chung cho vịt đi cả bờ/nước; graph đất chặn nước cho ngỗng. Cả hai loại trừ hàng rào, nhà và máng theo physics layer 1, footprint 10 × 6 px. Không cắt đường chéo qua góc vật cản.
-- Nhận biết nước bằng chính FarmLand, source 1, terrain 1; nếu đổi TileSet cần cập nhật các export `water_source`, `water_terrain`, `water_layer_path` trên PondPen. Tile viền đá terrain -1 được coi là bờ.
+- Nhận biết nước bằng chính FarmLand, source 1, terrain 1; nếu đổi TileSet cần cập nhật các export `water_source`, `water_terrain`, `water_layer` trên instance PondPen. Tile viền đá terrain -1 được coi là bờ.
 - Navigation chờ 2 physics tick khi mở/tải game để collider ổn định. Đổi vật cản/terrain bằng code trong runtime cần gọi `rebuild_after_load()` hoặc `rebuild_navigation()` sau khi physics cập nhật.
 
 `WaterfowlComponent` chỉ gắn cho actor có `eggs_on_land` trong PondPen. Wander/Foraging dùng các phương thức destination chung; động vật ở pen cũ giữ cách di chuyển hiện tại. AnimationComponent có mapper tùy chọn cho hình ảnh môi trường, tín hiệu kết thúc animation giữ tên action gốc.
@@ -25,3 +25,5 @@ Offline tiếp tục tính tuổi/giảm no/nước, sản xuất chỉ tính th
 Snapshot version 2 bổ sung danh sách ID `animal_pens` để phân biệt chuồng mới với chuồng đã được người chơi lưu. Với file cũ thiếu danh sách này, suy ra các chuồng hiện có từ vật nuôi và máng trong snapshot. PondPen mới giữ đàn/máng/thức ăn mặc định; các chuồng cũ vẫn được phục hồi đúng dữ liệu. Sau lần lưu mới, chim bị xóa hoặc thức ăn đã nhặt không tự xuất hiện lại. Trạng thái trứng đang giữ dùng trường stock đã có.
 
 GUT: `tests/integration/test_waterfowl.gd` kiểm tra 11 skin, va chạm spawn, animation, bờ/nước, đường tới máng, lên bờ đẻ, patrol, file roundtrip và khởi tạo chuồng mới từ save cũ. Preview: `tests/support/waterfowl_preview.gd`, không bind hồ sơ thật.
+
+Kiểm chứng cửa vào: hai ô Fence `(89,38)` và `(89,39)` đều trống (source -1); shape chân player đi qua được cả hai hàng cửa. Lượt GUT sau sửa đạt 282/282 test toàn project.

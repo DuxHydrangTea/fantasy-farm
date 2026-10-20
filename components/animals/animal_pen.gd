@@ -1,4 +1,5 @@
 @tool
+class_name AnimalPen
 extends Node2D
 @export var persistent_id: StringName
 ## Rect in this node's local space, shared by any number of animals.

@@ -2,8 +2,9 @@
 
 Open or close with Tab or I; Escape and the X button also close it.
 The 24 slots use the existing UI sprite sheet and square button sprites.
-The first six slots are shared with the hotbar. Select them using 1–6,
-the mouse wheel, or a click. Space or right click uses the selected tool.
+The first six slots are shared with the hotbar. Select them using 1–6
+or a click. Space or right click uses the selected tool.
+The mouse wheel zooms the farm while the inventory is closed; it never changes the selected slot.
 
 Drag items between slots to move, swap, or merge matching stacks. Counts and
 hotbar icons refresh immediately. Opening the inventory stops movement and

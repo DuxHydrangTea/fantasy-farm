@@ -22,11 +22,24 @@ bg_color = Color(0.95, 0.65, 0.24, 1)
 [sub_resource type="StyleBoxFlat" id="WaterFill"]
 bg_color = Color(0.27, 0.73, 0.92, 1)
 
-[node name="Animal" type="CharacterBody2D" unique_id=967302978]
+[node name="Animal" type="CharacterBody2D" unique_id=967302978 node_paths=PackedStringArray("collision", "needs_display", "satiety_bar", "hydration_bar", "sprite", "movement", "animation", "needs", "wander", "behaviour", "foraging", "growth", "production")]
 texture_filter = 1
 collision_layer = 4
 motion_mode = 1
 script = ExtResource("1_actor")
+collision = NodePath("CollisionShape2D")
+needs_display = NodePath("NeedsDisplay")
+satiety_bar = NodePath("NeedsDisplay/Satiety")
+hydration_bar = NodePath("NeedsDisplay/Hydration")
+sprite = NodePath("AnimatedSprite2D")
+movement = NodePath("MovementComponent")
+animation = NodePath("AnimationComponent")
+needs = NodePath("NeedsComponent")
+wander = NodePath("WanderComponent")
+behaviour = NodePath("BehaviourComponent")
+foraging = NodePath("ForagingComponent")
+growth = NodePath("GrowthComponent")
+production = NodePath("ProductionComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1449018031]
 
@@ -99,14 +112,16 @@ step = 0.0
 value = 100.0
 show_percentage = false
 
-[node name="BehaviourComponent" type="Node" parent="." unique_id=658705467]
+[node name="BehaviourComponent" type="Node" parent="." unique_id=658705467 node_paths=PackedStringArray("wander", "foraging")]
 script = ExtResource("7_dufb3")
+wander = NodePath("../WanderComponent")
+foraging = NodePath("../ForagingComponent")
 
-[node name="ForagingComponent" type="Node" parent="." unique_id=975199756]
+[node name="ForagingComponent" type="Node" parent="." unique_id=2127638396]
 script = ExtResource("8_foraging")
 
-[node name="GrowthComponent" type="Node" parent="." unique_id=26681935]
+[node name="GrowthComponent" type="Node" parent="." unique_id=2141260288]
 script = ExtResource("9_growth")
 
-[node name="ProductionComponent" type="Node" parent="." unique_id=270710935]
+[node name="ProductionComponent" type="Node" parent="." unique_id=1796286268]
 script = ExtResource("10_production")

@@ -10,8 +10,9 @@ cho gà trong luồng ăn/uống mới.
 - `animal_needs_component.gd`: giữ chỉ số no/nước riêng của từng con, giảm theo
   đồng hồ, giới hạn trong 0–100 và phát signal để cập nhật thanh trạng thái.
 - `animal_foraging_component.gd`: tìm máng phù hợp trong cùng pen, chọn điểm
-  đứng gần nhất có đường thẳng thông thoáng, giữ chỗ, di chuyển và yêu cầu dùng
-  một suất. Kiểm tra vật cản bằng hình va chạm thật của animal.
+  đứng gần nhất đi tới được, giữ chỗ, di chuyển và yêu cầu dùng một suất.
+  CoopPen/BarnPen kiểm tra đường thẳng bằng shape; PondPen dùng traversal AStar
+  của WaterfowlComponent, tính timeout theo chiều dài route qua các waypoint.
 - `animal_trough.gd`: giữ lượng đồ hữu hạn, kiểm tra loài và khẩu phần, quản lý
   chỗ đứng bằng weak reference, trừ đồ khi animal thực sự tới và dùng suất.
 - `animal_behaviour_component.gd`: điều phối `seek_resource`, `eat`, `drink`
@@ -38,8 +39,9 @@ Instance `scenes/animals/feed_trough.tscn` hoặc `water_trough.tscn` dưới no
 Máng tự nhận pen cha; nếu đặt ở vị trí khác thì gán thuộc tính `pen` thủ công.
 Animal và máng phải trỏ tới cùng một pen.
 
-Farm hiện có hai máng thức ăn và hai máng nước trong `CoopPen`, dùng atlas từ
-`assets/Outdoor decoration/Water_Troughs.png`.
+Farm hiện có 8 máng: hai máng thức ăn và hai máng nước trong `CoopPen`, một cặp
+ăn/nước trong `BarnPen` và một cặp trong `PondPen`. Các máng dùng atlas từ
+`assets/Outdoor decoration/Water_Troughs.png`, chỉ phục vụ animal cùng pen.
 
 | Thuộc tính máng | Mặc định | Ý nghĩa |
 | --- | --- | --- |
@@ -49,12 +51,16 @@ Farm hiện có hai máng thức ăn và hai máng nước trong `CoopPen`, dùn
 | `allowed_species` | rỗng | Cho mọi loài; điền enum species để giới hạn |
 | `access_offsets` | 6 điểm | Điểm đứng quanh máng trong tọa độ local |
 
-Scene máng thức ăn ghi đè `capacity = 600`, giữ `stock = 120` để nhận gói thức ăn 300 đơn vị. Tương tác nạp máng của người chơi được mô tả trong [animal_refilling.md](animal_refilling.md).
+Máng thức ăn Coop ghi đè `capacity = 600`, giữ `stock = 120`; máng nước Coop
+giữ 120/120. Cả máng ăn và nước Barn/Pond khởi tạo 600/600. Barn giới hạn bò/cừu
+và dùng livestock_feed; Pond giới hạn vịt/ngỗng và dùng poultry_feed. Mỗi gói thêm
+300 stock. Xem [Barn](barn_animals.md), [Pond](waterfowl.md) và
+[tương tác nạp máng](animal_refilling.md).
 
 Điểm đứng phải nằm trong pen, đủ khoảng trống cho footprint của animal. Không
 hai con nào được giữ cùng một điểm. Máng đổi sang hình rỗng khi `stock` về 0;
 `refill(units)` nạp lại tối đa `capacity` và trả về số đơn vị thực tế đã thêm.
-API này có thể nối vào thao tác bổ sung thức ăn/nước của người chơi sau này.
+Người chơi đã có thể nạp qua TroughInteraction ở impact frame của hoạt ảnh.
 
 Khi máng hết đồ, bị xóa/di chuyển, animal mất pen hoặc đường đi bị chặn, chuyến
 đi bị hủy và chỗ đứng được trả. Máng gây thất bại được bỏ qua 3 giây trước khi

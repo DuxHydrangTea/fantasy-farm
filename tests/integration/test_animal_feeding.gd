@@ -1,29 +1,23 @@
 extends GutTest
 const CHICKEN: PackedScene = preload("res://scenes/animals/chicken.tscn")
-const Actor = preload("res://components/animals/animal_actor.gd")
-const Behaviour = preload("res://components/animals/animal_behaviour_component.gd")
-const Trough = preload("res://components/animals/animal_trough.gd")
-const Pen = preload("res://components/animals/animal_pen.gd")
-const Definition = preload("res://scripts/animals/animal_definition.gd")
-const Clock = preload("res://components/time_manager.gd")
-var pen: Pen
-var animal: Actor
-var clock: Clock
+var pen: AnimalPen
+var animal: AnimalActor
+var clock: FarmClock
 
 func before_each() -> void:
-	clock = Clock.new()
+	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return 1000.0
 	add_child_autofree(clock)
 	clock.set_process(false)
-	pen = Pen.new()
+	pen = AnimalPen.new()
 	pen.bounds = Rect2(0, 0, 320, 200)
 	add_child_autofree(pen)
 	animal = _animal("chicken", Vector2(45, 95))
 	await wait_physics_frames(2)
 
-func _animal(species: String, point: Vector2) -> Actor:
-	var actor: Actor = CHICKEN.instantiate() as Actor
-	actor.definition = load("res://animals/definitions/" + species + ".tres").duplicate() as Definition
+func _animal(species: String, point: Vector2) -> AnimalActor:
+	var actor: AnimalActor = CHICKEN.instantiate() as AnimalActor
+	actor.definition = load("res://animals/definitions/" + species + ".tres").duplicate() as AnimalDefinition
 	actor.definition.move_speed = 120.0
 	actor.definition.idle_seconds = Vector2(0.05, 0.05)
 	actor.definition.walk_weight = 0.0
@@ -37,15 +31,15 @@ func _animal(species: String, point: Vector2) -> Actor:
 	actor.behaviour.request_behaviour(&"idle")
 	return actor
 
-func _trough(supply_kind: Trough.Kind, point: Vector2) -> Trough:
-	var path: String = "res://scenes/animals/feed_trough.tscn" if supply_kind == Trough.Kind.FOOD else "res://scenes/animals/water_trough.tscn"
-	var station: Trough = (load(path) as PackedScene).instantiate() as Trough
+func _trough(supply_kind: AnimalTrough.Kind, point: Vector2) -> AnimalTrough:
+	var path: String = "res://scenes/animals/feed_trough.tscn" if supply_kind == AnimalTrough.Kind.FOOD else "res://scenes/animals/water_trough.tscn"
+	var station: AnimalTrough = (load(path) as PackedScene).instantiate() as AnimalTrough
 	station.position = point
 	station.serving_seconds = 0.1
 	pen.add_child(station)
 	return station
 
-func _wait_for(state: Behaviour.State, frames: int = 240, actor: Actor = animal) -> bool:
+func _wait_for(state: AnimalBehaviourComponent.State, frames: int = 240, actor: AnimalActor = animal) -> bool:
 	for index: int in range(frames):
 		if actor.behaviour.current_state == state:
 			return true
@@ -53,26 +47,26 @@ func _wait_for(state: Behaviour.State, frames: int = 240, actor: Actor = animal)
 	return false
 
 func test_hungry_chicken_walks_to_food_and_eats_without_refilling_water() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(160, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
 	animal.needs.satiety = 30.0
 	var start: Vector2 = animal.position
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(station.stock, 120, "Claiming/travelling cannot spend food")
-	assert_true(await _wait_for(Behaviour.State.EAT))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT))
 	assert_gt(animal.position.distance_to(start), 50.0)
 	assert_eq(animal.needs.satiety, 30.0, "Food is restored only after the serving delay")
-	assert_true(await _wait_for(Behaviour.State.IDLE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
 	assert_eq(animal.needs.satiety, 70.0)
 	assert_eq(animal.needs.hydration, 100.0)
 	assert_eq(station.stock, 119)
 	assert_true(station.slot_available(0))
 
 func test_more_urgent_water_then_food_are_both_satisfied() -> void:
-	_trough(Trough.Kind.FOOD, Vector2(160, 70))
-	var water: Trough = _trough(Trough.Kind.WATER, Vector2(75, 70))
+	_trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
+	var water: AnimalTrough = _trough(AnimalTrough.Kind.WATER, Vector2(75, 70))
 	animal.needs.satiety = 40.0
 	animal.needs.hydration = 20.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, water)
 	for index: int in range(300):
 		if animal.needs.satiety > 50.0 and animal.needs.hydration > 50.0:
@@ -82,79 +76,79 @@ func test_more_urgent_water_then_food_are_both_satisfied() -> void:
 	assert_eq(animal.needs.satiety, 80.0)
 
 func test_empty_other_pen_and_outside_stations_are_ignored() -> void:
-	var empty: Trough = _trough(Trough.Kind.FOOD, Vector2(70, 70))
+	var empty: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(70, 70))
 	empty.stock = 0
-	var outside: Trough = _trough(Trough.Kind.FOOD, Vector2(500, 70))
-	var other_pen: Pen = Pen.new()
+	var outside: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(500, 70))
+	var other_pen: AnimalPen = AnimalPen.new()
 	add_child_autofree(other_pen)
-	var foreign: Trough = _trough(Trough.Kind.FOOD, Vector2(90, 70))
+	var foreign: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(90, 70))
 	foreign.pen = other_pen
-	var valid: Trough = _trough(Trough.Kind.FOOD, Vector2(180, 70))
+	var valid: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(180, 70))
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, valid)
 	assert_eq(outside.stock, 120)
 
 func test_nearest_compatible_station_is_chosen() -> void:
-	var near: Trough = _trough(Trough.Kind.FOOD, Vector2(100, 70))
-	_trough(Trough.Kind.FOOD, Vector2(220, 70))
-	var incompatible: Trough = _trough(Trough.Kind.FOOD, Vector2(65, 70))
+	var near: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(100, 70))
+	_trough(AnimalTrough.Kind.FOOD, Vector2(220, 70))
+	var incompatible: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(65, 70))
 	incompatible.allowed_species = [99]
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, near)
 
 func test_unavailable_urgent_water_does_not_prevent_eating() -> void:
-	var food: Trough = _trough(Trough.Kind.FOOD, Vector2(100, 70))
-	var water: Trough = _trough(Trough.Kind.WATER, Vector2(160, 70))
+	var food: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(100, 70))
+	var water: AnimalTrough = _trough(AnimalTrough.Kind.WATER, Vector2(160, 70))
 	water.stock = 0
 	animal.needs.satiety = 30.0
 	animal.needs.hydration = 10.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, food)
-	assert_true(await _wait_for(Behaviour.State.EAT))
-	assert_true(await _wait_for(Behaviour.State.IDLE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
 	assert_eq(animal.needs.satiety, 70.0)
 	assert_eq(animal.needs.hydration, 10.0)
 
 func test_no_supply_falls_back_and_refilling_empty_supply_is_discovered() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(100, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(100, 70))
 	station.stock = 0
 	animal.needs.satiety = 30.0
 	await wait_physics_frames(70)
-	assert_ne(animal.behaviour.current_state, Behaviour.State.SEEK_RESOURCE)
+	assert_ne(animal.behaviour.current_state, AnimalBehaviourComponent.State.SEEK_RESOURCE)
 	assert_eq(animal.needs.satiety, 30.0)
 	station.refill(1)
-	assert_true(await _wait_for(Behaviour.State.EAT))
-	assert_true(await _wait_for(Behaviour.State.IDLE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
 	assert_eq(animal.needs.satiety, 70.0)
 	assert_eq(station.stock, 0)
 
 func test_deleted_target_cancels_without_restoring_food_or_leaking_reservation() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(160, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	station.queue_free()
 	await wait_physics_frames(3)
-	assert_eq(animal.behaviour.current_state, Behaviour.State.IDLE)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
 	assert_null(animal.foraging.target)
 	assert_eq(animal.needs.satiety, 30.0)
 
 func test_moved_target_releases_old_slot_without_remote_feeding() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(160, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	station.position += Vector2(60, 0)
 	await wait_physics_frames(2)
-	assert_eq(animal.behaviour.current_state, Behaviour.State.IDLE)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
 	assert_true(station.slot_available(0))
 	assert_eq(station.stock, 120)
 	assert_eq(animal.needs.satiety, 30.0)
 
 func test_last_portion_cannot_be_consumed_twice_by_competing_animals() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(120, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(120, 70))
 	station.stock = 1
-	var other: Actor = _animal("chicken", Vector2(190, 95))
+	var other: AnimalActor = _animal("chicken", Vector2(190, 95))
 	animal.needs.satiety = 30.0
 	other.needs.satiety = 30.0
 	await wait_physics_frames(200)
@@ -164,34 +158,34 @@ func test_last_portion_cannot_be_consumed_twice_by_competing_animals() -> void:
 	assert_true(station.slot_available(1))
 
 func test_station_emptying_during_service_does_not_create_food() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(80, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(80, 70))
 	station.serving_seconds = 1.0
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.EAT))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT))
 	station.stock = 0
 	await wait_physics_frames(3)
-	assert_eq(animal.behaviour.current_state, Behaviour.State.IDLE)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
 	assert_eq(animal.needs.satiety, 30.0)
 	assert_true(station.slot_available(0))
 
 func test_sleeping_chicken_finishes_standing_up_before_seeking() -> void:
-	_trough(Trough.Kind.WATER, Vector2(100, 70))
+	_trough(AnimalTrough.Kind.WATER, Vector2(100, 70))
 	animal.definition.sleep_seconds = Vector2(10, 10)
 	assert_true(animal.behaviour.request_behaviour(&"sleep"))
-	assert_true(await _wait_for(Behaviour.State.SLEEP))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SLEEP))
 	animal.needs.hydration = 20.0
-	assert_true(await _wait_for(Behaviour.State.STAND_UP))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.STAND_UP))
 	assert_null(animal.foraging.target)
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
-	assert_true(await _wait_for(Behaviour.State.DRINK))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.DRINK))
 
 func test_animals_reserve_different_slots_and_shared_logic_serves_other_species() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(160, 70))
-	var cow: Actor = _animal("cow", Vector2(220, 100))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
+	var cow: AnimalActor = _animal("cow", Vector2(220, 100))
 	animal.needs.satiety = 30.0
 	cow.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE, 240, cow))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE, 240, cow))
 	assert_ne(animal.foraging.target_slot, cow.foraging.target_slot)
 	for index: int in range(300):
 		if animal.needs.satiety > 50.0 and cow.needs.satiety > 50.0:
@@ -202,8 +196,8 @@ func test_animals_reserve_different_slots_and_shared_logic_serves_other_species(
 	assert_eq(station.stock, 118)
 
 func test_obstructed_nearest_station_is_skipped_for_clear_station() -> void:
-	var blocked: Trough = _trough(Trough.Kind.FOOD, Vector2(120, 70))
-	var clear: Trough = _trough(Trough.Kind.FOOD, Vector2(45, 160))
+	var blocked: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(120, 70))
+	var clear: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(45, 160))
 	var wall: StaticBody2D = StaticBody2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	var shape: RectangleShape2D = RectangleShape2D.new()
@@ -214,16 +208,16 @@ func test_obstructed_nearest_station_is_skipped_for_clear_station() -> void:
 	pen.add_child(wall)
 	await wait_physics_frames(2)
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, clear)
-	assert_true(await _wait_for(Behaviour.State.EAT))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT))
 	assert_eq(blocked.stock, 120)
 
 func test_new_obstacle_abandons_blocked_trip_and_uses_another_station() -> void:
-	var blocked: Trough = _trough(Trough.Kind.FOOD, Vector2(110, 70))
-	var clear: Trough = _trough(Trough.Kind.FOOD, Vector2(45, 180))
+	var blocked: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(110, 70))
+	var clear: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(45, 180))
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	assert_eq(animal.foraging.target, blocked)
 	var wall: StaticBody2D = StaticBody2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
@@ -233,28 +227,28 @@ func test_new_obstacle_abandons_blocked_trip_and_uses_another_station() -> void:
 	wall.add_child(collision)
 	wall.position = Vector2(85, 80)
 	pen.add_child(wall)
-	assert_true(await _wait_for(Behaviour.State.EAT, 360))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT, 360))
 	assert_eq(animal.foraging.target, clear)
 	assert_eq(blocked.stock, 120)
 	assert_true(blocked.slot_available(0))
 
 func test_removing_pen_releases_slot_and_stops_animal() -> void:
-	var station: Trough = _trough(Trough.Kind.FOOD, Vector2(160, 70))
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
 	animal.needs.satiety = 30.0
-	assert_true(await _wait_for(Behaviour.State.SEEK_RESOURCE))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SEEK_RESOURCE))
 	animal.wander.pen = null
 	await wait_physics_frames(2)
-	assert_eq(animal.behaviour.current_state, Behaviour.State.IDLE)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
 	assert_true(station.slot_available(0))
 	assert_false(animal.movement.has_target)
 
 func test_farm_contains_working_prefilled_food_and_water_in_the_pen() -> void:
 	var world: Node = preload("res://world/main_world.tscn").instantiate()
 	add_child_autofree(world)
-	var enclosure: Pen = world.get_node("CoopPen") as Pen
+	var enclosure: AnimalPen = world.get_node("CoopPen") as AnimalPen
 	var counts: Vector2i = Vector2i.ZERO
 	for child: Node in enclosure.get_children():
-		var station: Trough = child as Trough
+		var station: AnimalTrough = child as AnimalTrough
 		if station == null:
 			continue
 		assert_eq(station.pen, enclosure)
@@ -265,7 +259,7 @@ func test_farm_contains_working_prefilled_food_and_water_in_the_pen() -> void:
 				usable_slots += 1
 		# Beside a fence, outward slots are filtered by Foraging; inward slots remain usable.
 		assert_gt(usable_slots, 0, "Each prefilled station needs an approach inside the pen")
-		if station.kind == Trough.Kind.FOOD:
+		if station.kind == AnimalTrough.Kind.FOOD:
 			counts.x += 1
 		else:
 			counts.y += 1

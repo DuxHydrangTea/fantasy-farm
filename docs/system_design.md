@@ -1,5 +1,7 @@
 # Thiết kế hệ thống GDScript hiện tại
 
+> **Tài liệu lịch sử tại `83ee633` (15/10/2026).** Các phần dưới mô tả kiến trúc cũ trên nhánh `main`. Runtime của `rewrite-by-ai` tại `de8eaa0` đã có StateComponent, lifecycle vật nuôi, Barn/Pond, vườn hoa và save/load; tra cứu [runtime_system_reference.md](runtime_system_reference.md) để dùng đúng API hiện tại.
+
 Ảnh chụp thiết kế ngày **15/10/2026**, đối chiếu code nhánh **`main`**, commit **`83ee633`**. Tài liệu mô tả những gì code hiện tại thực hiện, gồm cả các phần đang dang dở.
 
 Phạm vi: **61 file `.gd`**, gồm 35 file trong `scripts`, 9 file trong `components` và 17 file trong `scenes`; giải thích **206 property khai báo trực tiếp**, cùng các enum, hằng số và signal liên quan. Bỏ qua toàn bộ `addons/` và `scripts/setup/`. Không phân tích nội dung `.tscn`, `.tres`, asset hay file ngôn ngữ khác; các đường dẫn scene/resource xuất hiện bên dưới là tham chiếu được ghi ngay trong GDScript.

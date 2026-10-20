@@ -1,10 +1,8 @@
 extends SceneTree
-const Clock = preload("res://components/time_manager.gd")
-const Actor = preload("res://components/animals/animal_actor.gd")
 func _initialize() -> void:
 	call_deferred("_capture")
 func _capture() -> void:
-	var clock: Clock = Clock.new()
+	var clock: FarmClock = FarmClock.new()
 	clock.clock_source = func() -> float: return 1000.0
 	root.add_child(clock)
 	clock.set_process(false)
@@ -13,7 +11,7 @@ func _capture() -> void:
 	world.get_node("FlowerGarden").time_manager=clock
 	var pen: Node = world.get_node("PondPen")
 	for actor: Node in pen.get_children():
-		if actor is Actor:
+		if actor is AnimalActor:
 			actor.get_node("NeedsComponent").time_manager=clock
 	root.add_child(world)
 	world.get_node("Player/Camera2D").enabled=false
@@ -27,7 +25,7 @@ func _capture() -> void:
 	await physics_frame
 	var birds: int=0
 	for actor: Node in pen.get_children():
-		if actor is Actor:
+		if actor is AnimalActor:
 			birds+=1
 			assert(actor.wander._target_is_clear(actor.global_position),"Spawn overlaps obstacle: "+actor.name)
 	print("POND_PREVIEW: ",birds," birds; land/water navigation ready=",pen.navigation_ready)

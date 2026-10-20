@@ -1,10 +1,10 @@
+class_name AnimalNeedsComponent
 extends Node
 
-const Clock = preload("res://components/time_manager.gd")
 signal changed(satiety: float, hydration: float)
 ## Eligible time is measured BEFORE depletion, including partial last intervals.
 signal time_advanced(timestamp: float, elapsed: float, supplied_seconds: float)
-@export var time_manager: Clock
+@export var time_manager: FarmClock
 var satiety: float = 100.0
 var hydration: float = 100.0
 var satiety_depletion_seconds: float = 600.0
@@ -13,7 +13,7 @@ var _updated_at: float = 0.0
 
 func _ready() -> void:
 	if time_manager == null:
-		time_manager = get_node_or_null("/root/TimeManager") as Clock
+		time_manager = TimeManager
 	if time_manager != null:
 		_updated_at = time_manager.now()
 		time_manager.tick.connect(update_at)
