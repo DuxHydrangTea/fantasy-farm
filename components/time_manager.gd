@@ -8,6 +8,12 @@ var clock_source: Callable = Time.get_unix_time_from_system
 var _last_timestamp: float = 0.0
 var _poll_elapsed: float = 0.0
 
+# MỐC THỜI GIAN CHUNG — cần cho tiến trình lưu/tải và lớn khi offline.
+# Lấy max(mốc đã thấy, giờ hệ thống) để thời gian của game không lùi trong phiên này.
+# Ví dụ đã tính cây đến giây 1000 nhưng máy bị chỉnh về 900: trả 1000, không làm cây non lại.
+# Nếu chỉ trả giờ hệ thống, tiến độ/no/nước có thể bị tính lùi hoặc cùng một khoảng bị tính lại.
+# Đây không phải chống gian lận: chỉnh đồng hồ tiến vẫn có thể đẩy thời gian offline đi nhanh.
+# Sau này online cần giờ đáng tin cậy từ server, không dựa vào đồng hồ client để trao thưởng.
 func now() -> float:
 	# Moving the system clock backwards must not undo already earned growth.
 	_last_timestamp = maxf(_last_timestamp, float(clock_source.call()))
@@ -22,6 +28,9 @@ func _process(delta: float) -> void:
 func refresh() -> void:
 	tick.emit(now())
 
+# Khi tải save, đặt sàn thời gian ít nhất bằng saved_at để đồng hồ hiện tại thấp hơn save
+# không đảo ngược tiến trình. Không cộng thêm một lần tăng trưởng ở đây: từng hệ thống
+# sẽ tính chênh lệch từ timestamp đã lưu của chính nó; cộng tại cả hai nơi sẽ bị nhân đôi.
 func advance_floor(timestamp: float) -> void:
 	if is_finite(timestamp) and timestamp >= 0.0:
 		_last_timestamp = maxf(_last_timestamp, timestamp)

@@ -45,6 +45,10 @@ func _grid() -> AStarGrid2D:
 	grid.update()
 	return grid
 
+# Hai đồ thị A* dùng chung hình học nhưng khác quyền đi qua nước: ngỗng dùng land,
+# vịt bơi được dùng amphibious. Ô nước lấy từ TileMap thật, không từ màu ảnh hiển thị.
+# Nếu dùng một đồ thị cho mọi loài, hoặc ngỗng đi xuống nước, hoặc vịt không thể qua ao.
+# Quyền đi là quy tắc gameplay cần giữ; có thể thay hai lưới bằng đồ thị khác có cùng ràng buộc.
 func rebuild_navigation() -> void:
 	_land = _grid()
 	_amphibious = _grid()

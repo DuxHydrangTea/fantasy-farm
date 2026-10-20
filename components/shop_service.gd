@@ -24,6 +24,11 @@ func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 		return {"ok": false, "error": "Túi đồ không đủ chỗ.", "total": total}
 	return {"ok": true, "total": total}
 
+# GIAO DỊCH OFFLINE — báo giá không phải cam kết: luôn kiểm tra lại khi bấm Mua.
+# Chuẩn bị bản sao các slot và xác nhận chứa đủ toàn bộ số mua trước khi chạm ví/túi thật.
+# Nếu chỉ inventory.add rồi trừ tổng giá, túi gần đầy có thể nhận một phần nhưng bị tính tiền cả gói.
+# _busy chặn listener của changed/purchased gọi Mua lồng nhau trong lúc đang commit.
+# Đây là lệnh đồng bộ trên main thread; sau này online vẫn cần giao dịch nguyên tử ở server.
 func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "Đang xử lý giao dịch."}
@@ -49,6 +54,10 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 		return {"ok": false, "error": "Túi đồ đã thay đổi."}
 	_busy = true
 	var previous: int = wallet.balance
+	# Đổi ví trước nhưng tạm chưa phát signal; replace_slots sau đó phát inventory.changed
+	# thì listener đã nhìn thấy cả ví mới lẫn túi mới. Nếu replace thất bại, trả ví về giá trị cũ.
+	# Sau cùng mới thông báo ví/giao dịch. Nếu phát signal ngay giữa hai bước, UI hoặc listener
+	# có thể quan sát trạng thái "đã có đồ nhưng chưa trừ xu" hoặc gọi mua lồng nhau.
 	wallet.set_balance(previous - int(checked.total), false)
 	if not inventory.replace_slots(stacks):
 		wallet.set_balance(previous, false)

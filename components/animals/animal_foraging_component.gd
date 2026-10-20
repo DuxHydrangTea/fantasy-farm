@@ -38,6 +38,11 @@ func priority_kinds() -> Array[int]:
 			kinds.append(AnimalTrough.Kind.FOOD)
 	return kinds
 
+# Tìm nguồn đáp ứng nhu cầu cấp bách trong đúng chuồng, rồi chọn điểm tiếp cận gần và đi tới được.
+# Khoảng cách dùng bình phương để so sánh mà không tính căn bậc hai cho mọi ứng viên.
+# Phải kiểm tra cả điểm đến lẫn tuyến đường: máng gần nhất sau tường không phải lựa chọn hợp lệ.
+# Khoảng nghỉ thử lại và danh sách nguồn vừa thất bại giúp tránh chạy lại tìm kiếm nặng mỗi frame;
+# đây là lựa chọn tối ưu có thể chỉnh, nhưng cần giữ kiểm tra đường và đặt chỗ trước khi đi.
 func try_begin() -> bool:
 	if definition == null or not is_instance_valid(wander.pen) or _retry_remaining > 0.0 or not has_need():
 		return false

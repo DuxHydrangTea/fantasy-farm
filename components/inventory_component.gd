@@ -59,6 +59,10 @@ func replace_slots(stacks: Array[Dictionary]) -> bool:
 	changed.emit()
 	return true
 
+# Gộp vào stack cùng item trước, rồi mới lấp ô trống. Giá trị trả về là số THỰC NHẬN.
+# Không được giả định luôn nhận đủ amount: caller nhặt đồ phải giữ phần dư trên đất,
+# caller giao dịch/thu hoạch toàn bộ phải kiểm tra capacity trước khi thay đổi nguồn đồ.
+# Nếu dùng amount thay vì kết quả trả về để xóa nguồn hoặc hiện +N, sẽ mất đồ/báo quá số nhận.
 func add(item: ItemDefinition, amount: int = 1) -> int:
 	_ensure_slots()
 	if item == null or item.item_id.is_empty() or amount <= 0:
@@ -108,6 +112,10 @@ func remove_from_slot(index: int, amount: int = 1) -> int:
 		changed.emit()
 	return removed
 
+# Sức chứa tính theo từng loại: tổng chỗ còn trong stack cùng item + sức chứa các ô rỗng.
+# Túi kín vẫn có thể nhận trứng nếu stack trứng chưa đầy, nhưng không nhận sữa chưa có stack.
+# Không thể chỉ đếm ô trống hoặc chỉ nhìn tổng số lượng. Đây là lý do các loại vật phẩm
+# có vẻ nhặt khác nhau dù dùng cùng thuật toán; số 64 ô là cấu hình có thể đổi, quy tắc gộp phải đúng.
 func capacity_for(item: ItemDefinition) -> int:
 	_ensure_slots()
 	if item == null:

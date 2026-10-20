@@ -37,6 +37,11 @@ func target_direction() -> Vector2:
 		return Vector2.ZERO
 	return body.global_position.direction_to(target_position)
 
+# Giới hạn tốc độ bước cuối bằng khoảng cách còn lại / delta (pixel / giây).
+# Ví dụ còn 2 pixel và tick 0,02 giây thì không đi nhanh hơn 100 pixel/giây trong bước đó.
+# Nếu vẫn dùng toàn bộ tốc độ, quán tính có thể đưa nhân vật qua đích rồi quay lại, rung liên tục.
+# max(delta, 0.0001) tránh chia cho 0; thời gian bị chặn giúp hủy đích khi mắc tường,
+# để hệ thống tìm đường được lập kế hoạch lại thay vì đẩy vào vật cản mãi.
 func move_to_target(delta: float) -> void:
 	var direction: Vector2 = target_direction()
 	if direction.is_zero_approx():

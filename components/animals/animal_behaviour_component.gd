@@ -80,6 +80,9 @@ func _physics_process(delta: float) -> void:
 			_enter(State.IDLE)
 		return
 	_stop()
+	# Các bước nằm xuống/bắt đầu ngủ/đứng dậy phải chờ animation one-shot kết thúc thật.
+	# Không chuyển bằng bộ đếm nghỉ ở dưới, vì mỗi loài có số frame/tốc độ khác nhau.
+	# Nếu bỏ nhánh chờ này, con vật có thể trượt đi trong tư thế nằm hoặc bỏ qua bước đứng dậy.
 	if current_state == State.LIE_DOWN or current_state == State.SLEEP_START or current_state == State.STAND_UP:
 		return # Only completion of the actual one-shot animation advances this state.
 	_remaining -= delta

@@ -51,6 +51,9 @@ func plant(bag: InventoryComponent, index: int, now: float) -> bool:
 func can_water() -> bool:
 	return definition != null and growth_started_at < 0.0
 
+# Với hoa chậu, lần tưới đầu mới bắt đầu đồng hồ lớn; -1 nghĩa là chưa bắt đầu.
+# max(now, planted_at) tránh giờ bắt đầu nằm trước lúc gieo khi đồng hồ bị lùi.
+# Nếu tưới lần nào cũng đặt lại mốc, người chơi tưới nhiều có thể vô tình kéo dài thời gian chín.
 func water(now: float) -> bool:
 	if not can_water():
 		return false
@@ -60,6 +63,9 @@ func water(now: float) -> bool:
 	changed.emit()
 	return true
 
+# Hoa chậu có 5 stage (0..4), khác cây farmland có 4 stage (0..3).
+# Vì vậy nhân tiến độ với 4 ở đây, còn farmland nhân 3; không đổi hai nơi thành cùng một số.
+# Nếu nhầm số stage, hình hoa chín và thời điểm cho thu hoạch sẽ không khớp nhau.
 func refresh(now: float) -> void:
 	if definition == null or growth_started_at < 0.0:
 		return

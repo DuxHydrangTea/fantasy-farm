@@ -46,6 +46,12 @@ func cancel_attraction() -> void:
 		sprite.position = _resting_sprite_position
 	_update_display()
 
+# Hút đồ chỉ di chuyển sprite, giữ nguyên Area2D/vị trí logic và số lượng cho tới lúc tới đích.
+# Nhờ vậy save giữa chuyến bay vẫn lưu đống đồ ở chỗ cũ, và vật nuôi vẫn liên kết đúng đống đó.
+# Tốc độ = tốc độ đầu + gia tốc * thời gian; bước đi = tốc độ * delta để không phụ thuộc FPS.
+# Đích đọc lại từ player mỗi tick để đi theo người đang chạy; không dùng một điểm chốt lúc bắt đầu.
+# Nếu túi đầy/collector mất/player đi quá xa thì trả hình về gốc, không xóa số lượng.
+# Nếu cộng đồ lúc bắt đầu bay rồi vẫn lưu đống cũ, load giữa chừng có thể nhân đôi sản phẩm.
 func _physics_process(delta: float) -> void:
 	if is_instance_valid(_attractor) and _attractor.inventory != null and item != null and amount > 0 and _attractor.inventory.capacity_for(item) == 0:
 		_attractor.inventory.report_capacity_blocked(item, amount)
@@ -67,6 +73,10 @@ func _physics_process(delta: float) -> void:
 func add_amount(count: int) -> void:
 	amount += maxi(0, count)
 
+# _collecting bảo vệ đoạn add -> trừ amount vì add phát inventory.changed đồng bộ.
+# Listener của sensor có thể thử collect lần nữa ngay trong add; nếu không khóa,
+# cả hai lời gọi đều thấy amount cũ và cùng chuyển nó vào túi.
+# Chỉ trừ accepted, không trừ lượng yêu cầu; phần không chứa được phải tiếp tục nằm trên đất.
 func collect(inventory: InventoryComponent) -> int:
 	if _collecting or is_queued_for_deletion() or inventory == null or item == null or amount <= 0:
 		return 0

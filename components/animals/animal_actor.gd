@@ -86,6 +86,10 @@ func _on_matured() -> void:
 	_stage_visual_pending = frames != sprite.sprite_frames
 
 func _advance_lifecycle(_timestamp: float, elapsed: float, supplied_seconds: float) -> void:
+	# Thời gian đủ no/nước là đoạn đầu của elapsed. Trừ số giây còn non khỏi đoạn này,
+	# không trừ khỏi toàn bộ thời gian offline rồi cho sản xuất cả phần đã đói.
+	# Ví dụ còn 5 giây trưởng thành nhưng chỉ đủ nước 10 giây: chỉ có 5 giây được sản xuất.
+	# Bỏ phép trừ sẽ cho con non tạo sản phẩm; đặt phép trừ sai chỗ có thể thưởng khi đã hết nước.
 	var juvenile_seconds: float = growth.seconds_until_adult()
 	growth.advance(elapsed)
 	# Supplied time is a prefix of this interval; adulthood may begin partway in.
@@ -96,6 +100,9 @@ func _on_produced(_amount: int) -> void:
 		return
 	if definition.eggs_on_land and pen is PondPen and (pen as PondPen).is_water(global_position):
 		return # Keep the completed eggs in production stock until physically on shore.
+	# Mỗi con giữ liên kết với đống sản phẩm của mình: các lô sau cộng vào cùng đống còn sống.
+	# queue_free chưa xóa Node ngay, nên phải kiểm tra cả is_queued_for_deletion, không chỉ is_instance_valid.
+	# Nếu cộng vào đống đã xếp lịch xóa do vừa nhặt hết, lô mới có thể biến mất cuối frame.
 	if not is_instance_valid(_product_pickup) or _product_pickup.is_queued_for_deletion():
 		_product_pickup = PICKUP_SCENE.instantiate() as ItemPickup
 		_product_pickup.item = production.definition.production_item

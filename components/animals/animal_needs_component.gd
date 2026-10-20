@@ -27,6 +27,13 @@ func restore_state(food: float, water: float, timestamp: float) -> void:
 	_updated_at = timestamp
 	_set_values(food, water)
 
+# TÍNH NO/KHÁT THEO THỜI GIAN THỰC — dùng cả lúc chơi và bắt kịp sau offline.
+# elapsed = max(0, giờ mới - mốc cũ) ngăn thời gian lùi làm vật nuôi được cộng no/nước.
+# Nếu 100% no hết trong D giây, còn p% thì còn p*D/100 giây được cung cấp thức ăn.
+# Thời gian được sản xuất chỉ là min(elapsed, giây còn no, giây còn nước), tính TRƯỚC khi trừ.
+# Ví dụ offline 600 giây nhưng nước chỉ đủ 60 giây: chỉ 60 giây được xét sinh sản phẩm.
+# Nếu bỏ giới hạn này, vật nuôi đói/khát vẫn tạo sản phẩm suốt thời gian offline.
+# Nếu tính sau khi trừ no/nước, khoảng cuối vừa hết nước có thể mất phần sản xuất hợp lệ.
 func update_at(timestamp: float) -> void:
 	var elapsed: float = maxf(0.0, timestamp - _updated_at)
 	_updated_at = maxf(_updated_at, timestamp)
@@ -49,6 +56,9 @@ func drink(amount: float) -> float:
 	_set_values(satiety, hydration + maxf(0.0, amount))
 	return hydration - before
 
+# Chốt phần thời gian cũ trước khi cho ăn/uống. Nếu cộng no trước rồi mới tính elapsed,
+# thức ăn vừa đổ vào có thể bị xem như đã có trong cả khoảng offline đã qua và sinh thưởng ngược.
+# Đây là yêu cầu giữ đúng thứ tự thời gian, không phải một hiệu ứng có thể bỏ tùy ý.
 func _sync() -> void:
 	if time_manager != null:
 		update_at(time_manager.now())

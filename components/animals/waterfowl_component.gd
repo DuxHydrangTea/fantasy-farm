@@ -79,6 +79,10 @@ func travel(delta: float) -> void:
 		if _next < _points.size():
 			actor.movement.set_target(_points[_next])
 
+# Trứng đã hoàn thành dưới nước được giữ ở production stock, chưa sinh ItemPickup.
+# Vịt cần tìm đường lên bờ; đến đất mới chuyển stock sang đống trứng và giải phóng lộ trình.
+# Nếu chỉ tạo pickup ngay khi đủ chu kỳ, trứng sẽ rơi dưới ao. Nếu chỉ xóa phần đã đẻ
+# trước khi tìm được bờ, đường đi thất bại có thể làm mất sản phẩm.
 func handle_laying(delta: float) -> bool:
 	if not actor.definition.eggs_on_land or actor.production.stored_amount <= 0:
 		return false

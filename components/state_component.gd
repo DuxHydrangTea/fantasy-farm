@@ -113,6 +113,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_selected_tool_action() -> StringName:
 	return tool_selection.get_selected_action() if tool_selection != null else &""
 
+# Ưu tiên mục tiêu tương tác theo thứ tự: máng -> chậu hoa -> farmland.
+# Kết quả "blocked" vẫn được xem là đã xử lý input: có mục tiêu nhưng thiếu đồ/đầy máng,
+# không có nghĩa được rơi xuống nhánh cuốc đất bên dưới nó. Bỏ phân biệt này có thể làm
+# player vừa muốn cho ăn thất bại lại cuốc ô đất hoặc tưới sai đối tượng.
+# Khóa khi mở menu/đang làm động tác giữ UI và animation khỏi tiêu vật phẩm ngoài ý muốn.
 func use_selected_tool(requested_action: StringName = &"") -> bool:
 	if tool_selection != null and tool_selection.is_menu_open():
 		return false

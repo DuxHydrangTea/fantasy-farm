@@ -48,6 +48,10 @@ func _cell_ahead() -> Vector2i:
 	var actor: Node2D = get_parent() as Node2D
 	return farming.world_to_cell(actor.global_position) + Vector2i(animation.facing_vector)
 
+# Thao tác chỉ commit ở frame chạm đất, không ở thời điểm người chơi vừa bấm nút.
+# Chép _action sang biến cục bộ và xóa nó TRƯỚC khi đổi inventory/terrain: các signal phát ra
+# có thể gọi frame handler lồng nhau. Nếu xóa sau, một động tác có thể tiêu hạt hoặc thu hoạch hai lần.
+# Đổi slot giữa animation không được đổi loại hạt đã chốt lúc bắt đầu, nên kiểm tra _slot_index/_seed.
 func _on_frame_changed() -> void:
 	if _action.is_empty() or not animation.impact_reached(impact_frame):
 		return

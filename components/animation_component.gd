@@ -25,6 +25,10 @@ var facing_vector: Vector2:
 	get:
 		return DIR_VECTORS[facing_direction]
 
+# Frame tác động không được vượt số frame thật của animation.
+# Ví dụ cấu hình muốn frame 3 nhưng clip chỉ có 2 frame (0,1): kẹp về 1 để thao tác vẫn xảy ra.
+# Clip một frame cần handler animation_changed đã nối deferred ở các component tương tác;
+# chỉ nghe frame_changed có thể bỏ lỡ vì frame vẫn là 0. Không kẹp thì clip ngắn không bao giờ commit.
 func impact_reached(requested_frame: int) -> bool:
 	if animated_sprite == null or animated_sprite.sprite_frames == null:
 		return false

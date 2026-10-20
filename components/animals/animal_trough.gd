@@ -72,6 +72,9 @@ func slot_available(slot: int, animal: Node2D = null) -> bool:
 		return true
 	return occupant == animal
 
+# Đặt chỗ ở máng để hai con không cùng chọn một vị trí phục vụ. Chưa trừ thức ăn ở bước này.
+# Tham chiếu yếu cho phép dọn chỗ khi con vật bị xóa; cancel/exit cũng phải trả chỗ.
+# Bỏ đặt chỗ làm nhiều con chồng vào nhau; bỏ trả chỗ làm một vị trí bị giữ mãi dù con vật đã đi.
 func claim(animal: Node2D, slot: int, data: AnimalDefinition) -> bool:
 	if not is_instance_valid(animal) or not animal.is_inside_tree() or not can_supply(data) or not slot_available(slot, animal):
 		return false
@@ -89,6 +92,10 @@ func release(animal: Node2D) -> void:
 			_occupants.erase(slot)
 
 ## No stock is spent until a reserved animal is physically at its serving point.
+# Chỉ phục vụ khi còn phần ăn đúng loài, con vật sở hữu chỗ và đã đến gần điểm phục vụ.
+# Chỉ trừ kho nếu no/nước thực sự tăng. Không được trừ ngay lúc bắt đầu đi tới máng:
+# con vật có thể bị chắn, máng có thể bị dời/xóa hoặc con vật bị hủy giữa đường.
+# Nếu bỏ kiểm tra khoảng cách/quyền chỗ, vật nuôi có thể ăn từ xa hoặc tranh cùng phần cuối.
 func serve(animal: Node2D, needs: AnimalNeedsComponent, data: AnimalDefinition, slot: int) -> float:
 	if not is_instance_valid(animal) or not is_instance_valid(needs) or not can_supply(data) or not owns_slot(animal, slot):
 		return 0.0

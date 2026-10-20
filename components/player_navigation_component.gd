@@ -13,6 +13,11 @@ extends Node
 var has_focus: bool = false
 var is_navigating: bool = false
 var focus_position: Vector2 = Vector2.ZERO
+# NGÂN SÁCH DÒ Ô — tối ưu độ mượt, không phải quy tắc gameplay bắt buộc.
+# Mỗi tick chỉ dò thêm tối đa số ô chưa biết này bằng physics; các kiểm tra đường đi trực tiếp
+# và rút gọn đường có giới hạn riêng. Không nên hiểu đây là giới hạn mọi truy vấn physics.
+# Nếu dò cả map ngay ở mỗi click, một khung hình có thể phải chạy hàng nghìn truy vấn và giật.
+# Đổi lại, lần click đầu ở vùng chưa có cache có thể chờ vài tick; lần sau tận dụng kết quả cũ.
 @export_range(16, 512, 16) var sampling_budget: int = 256
 var _sampled: Dictionary[Vector2i, bool] = {}
 var _regions: Array[Rect2i] = []
@@ -50,6 +55,10 @@ func _geometry_changed(node: Node) -> void:
 		_invalidate_pending = true
 		invalidate_cache.call_deferred()
 
+# Cache chỉ đúng khi vật cản và kích thước chân va chạm còn như lúc dò.
+# Thêm/xóa công trình hoặc đổi TileMap phải vô hiệu hóa cache để A* không dùng đường cũ.
+# Ô chưa dò lại được xem là bị chặn (bảo thủ): không suy đoán rằng nơi chưa biết chắc đi được.
+# Nếu bỏ bước này, player có thể liên tục chọn đường xuyên qua vật vừa được đặt.
 func invalidate_cache() -> void:
 	_invalidate_pending = false
 	_sampled.clear()
@@ -164,6 +173,10 @@ func _replan() -> void:
 	else:
 		_needs_path = true
 
+# Kiểm tra bằng hình va chạm thật của player, không chỉ ray từ một điểm.
+# Tịnh tiến transform hiện tại đến điểm giả định để giữ cả offset, scale và rotation của chân.
+# exclude bỏ chính body của player; nếu không, phép dò có thể luôn đụng bản thân.
+# Ray kiểm tra tâm có thể báo khe hẹp là trống dù thân player không lọt, gây kẹt ở góc.
 func _query(point: Vector2) -> PhysicsShapeQueryParameters2D:
 	var query: PhysicsShapeQueryParameters2D = _shared_query
 	query.shape = collision_shape.shape
@@ -179,6 +192,10 @@ func _point_clear(point: Vector2) -> bool:
 	total_physics_queries += 1
 	return movement.body.get_world_2d().direct_space_state.intersect_shape(_query(point), 1).is_empty()
 
+# Hai đầu đều trống không có nghĩa cả đoạn trống: giữa chúng có thể có hàng rào.
+# cast_motion quét hình chân dọc đoạn và trả tỷ lệ quãng đường còn an toàn.
+# Ngưỡng 0.9999 chấp nhận sai số số thực rất nhỏ ở cuối đoạn, không phải cho xuyên vật cản.
+# Bỏ phép quét này có thể làm rút gọn đường A* thành đường thẳng cắt xuyên chướng ngại.
 func _segment_clear(from: Vector2, to: Vector2) -> bool:
 	if not _point_clear(to):
 		return false
@@ -207,6 +224,9 @@ func _in_focus_range(point: Vector2) -> bool:
 	var facing: Vector2i = Vector2i(signi(offset.x), 0) if absf(direction.x) > absf(direction.y) else Vector2i(0, signi(offset.y))
 	return absi(offset.x) + absi(offset.y) == 1 and offset == facing
 
+# Đích là vị trí đứng cạnh ô cần tương tác, không phải chính ô cây/đồ vật được click.
+# Movement cho phép dừng trong arrival_distance, nên kiểm tra cả bốn phía của vùng sai số.
+# Nếu chỉ kiểm tra đúng tâm đích, player có thể dừng lệch sang ô khác rồi cuốc nhầm ô.
 func _goal_valid(point: Vector2) -> bool:
 	# Arrival has a tolerance: it must not leave the actor across a tile boundary.
 	var margin: float = movement.arrival_distance + 0.25
@@ -227,6 +247,9 @@ func _prepare_grid() -> void:
 	_grid.region = bounds
 	_grid.cell_size = Vector2.ONE * cell_size
 	_grid.offset = Vector2(camera.limit_left, camera.limit_top) + Vector2.ONE * cell_size
+	# Chọn lưới bốn hướng để không cắt chéo góc tường; đây là lựa chọn thuật toán hiện tại.
+	# Muốn cho đi chéo có thể đổi, nhưng phải bổ sung kiểm tra góc/hình chân tương ứng.
+	# Chỉ bật đường chéo mà không kiểm tra có thể khiến A* chọn khe mà physics không đi qua được.
 	_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	_grid.update()
 	invalidate_cache()
@@ -239,6 +262,10 @@ func _sample(cell: Vector2i) -> void:
 	_sampled[cell] = solid
 	_grid.set_point_solid(cell, solid or _blocked_cells.has(cell))
 
+# Dò từ hành lang quanh player–điểm click ra vùng rộng hơn (đệm 16, 64 ô rồi cả map).
+# Vùng hẹp xử lý click gần nhanh; vùng rộng giúp tìm đường vòng khi có rào chắn dài.
+# Các mức đệm là tham số tối ưu có thể thay, không phải khoảng cách tương tác.
+# Nếu chỉ giữ vùng hẹp, đường vòng hợp lệ ngoài vùng đó sẽ bị báo là không đi tới được.
 func _start_plan() -> void:
 	_prepare_grid()
 	_needs_path = false
@@ -285,6 +312,10 @@ func _advance_plan() -> void:
 	_planning = false
 	_finish()
 
+# Chọn một điểm khởi đầu gần player có đoạn nối thật sự thông, rồi thử các ô đứng được
+# quanh mục tiêu. Chi phí gồm khoảng cách tới ô bắt đầu + số bước bốn hướng nhân cell_size.
+# Không bắt player đứng đè lên ô focus, vì ô đó có thể chứa cây, máng hoặc NPC.
+# Nếu chỉ yêu cầu A* đi đến tâm điểm click, player có thể đứng sai chỗ để nông cụ tác động.
 func _build_path_in_region(region: Rect2i) -> bool:
 	_path.clear()
 	var origin: Vector2 = movement.body.global_position
@@ -327,6 +358,10 @@ func _build_path_in_region(region: Rect2i) -> bool:
 	_smooth_path(origin)
 	return true
 
+# Rút gọn đường là tối ưu/thẩm mỹ: bỏ điểm thẳng hàng trước, rồi thử nối tắt các góc.
+# Giới hạn 32 phép thử nối tắt để việc làm đường đẹp không gây giật khi đường dài.
+# Có thể bỏ bước này và vẫn đi theo A*, nhưng player sẽ qua nhiều waypoint hơn.
+# Không được bỏ kiểm tra segment_clear khi nối tắt, nếu không sẽ cắt xuyên hàng rào.
 func _smooth_path(origin: Vector2) -> void:
 	# Collapse straight runs without physics work; cap optional corner shortcuts.
 	var turns: PackedVector2Array = PackedVector2Array()

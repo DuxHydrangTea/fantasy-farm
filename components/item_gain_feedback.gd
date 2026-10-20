@@ -16,6 +16,9 @@ func _ready() -> void:
 	if farming != null:
 		farming.harvest_yielded.connect(_on_harvest)
 
+# Nhiều đống đồ có thể báo đầy trong cùng một frame. Dùng đồng hồ đếm mili giây của phiên,
+# không dùng Unix/timestamp lớn cây, để giới hạn thông báo mỗi 1,5 giây không bị chỉnh giờ ảnh hưởng.
+# Bỏ giới hạn vẫn giữ đúng đồ nhưng có thể phủ kín màn hình bằng cùng một cảnh báo.
 func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int) -> void:
 	var now: int = Time.get_ticks_msec()
 	if now - _last_capacity_notice < 1500:
@@ -24,6 +27,10 @@ func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int)
 	var text: String = "Túi đồ đầy" if available == 0 else "Túi đồ không đủ chỗ"
 	_spawn(item, 0, self, Vector2(0, -64), text)
 
+# Chỉ nghe sự kiện nhận đồ thực, không nghe mọi inventory.changed: mua hàng/load cũng đổi túi.
+# Nếu dùng changed để tạo +N, mua hoặc tải save có thể hiện thưởng nhặt giả.
+# Gộp cùng item trong 0,15 giây chỉ gộp thông báo, không gộp/thực hiện lại giao dịch inventory.
+# WeakRef tránh giữ một popup đã hết vòng đời; cửa sổ gộp và giới hạn popup chỉ là lựa chọn UI.
 func _on_pickup(item: ItemDefinition, amount: int) -> void:
 	if item == null or amount <= 0:
 		return

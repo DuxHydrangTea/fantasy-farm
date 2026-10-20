@@ -16,6 +16,12 @@ static func vector(value: Variant, integral: bool = false) -> bool:
 static func identifier(value: Variant) -> bool:
 	return value is String and value.length() > 0 and value.length() <= 100 and value.is_valid_identifier()
 
+# BIÊN DỮ LIỆU — migrate tuần tự rồi mới kiểm tra schema hiện tại.
+# Mỗi phiên bản bổ sung một thay đổi khác nhau (vườn, layout, tiền, sức chứa túi), nên không
+# được chỉ gán version=VERSION để bỏ qua các bước. Đổi nhãn không biến dữ liệu cũ thành dữ liệu mới.
+# duplicate(true) trước khi migrate để caller/backup vẫn giữ nguyên bản đầu vào nếu kiểm tra thất bại.
+# Các Resource chỉ được tìm bằng ID trong catalog cho phép; không load đường dẫn tùy ý từ file.
+# Nếu bỏ validation, dữ liệu lỗi/không tương thích có thể đi vào scene rồi làm mất trạng thái đang chơi.
 static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if not data is Dictionary:
 		return failure("Dữ liệu lưu không phải object.")
@@ -54,6 +60,11 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# Append independent empty slots; keep item stacks, hotbar and currency intact.
 	# Also accept a 24-slot snapshot written by an old, still-running player
 	# instance after scripts reload; a restart will instantiate the new bag size.
+	# Chỉ thêm ô rỗng phía sau 24 ô cũ để giữ vị trí hotbar, item/count, xu và lịch sử tiến trình.
+	# Cần nhận cả snapshot mang version hiện tại nhưng còn 24 ô: game đang chạy bản cũ có thể
+	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
+	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
+	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
 	if data.get("version") == 4 or (data.get("version") == VERSION and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Túi đồ cũ không hợp lệ.")

@@ -63,6 +63,11 @@ func _focused_target() -> Node2D:
 	var farm: Node = actions.get_farming_controller()
 	return farm.get_crop(actions.get_focused_cell()) as Node2D if farm != null else null
 
+# Tối ưu tìm cây dưới chuột: đổi chuột sang ô đất rồi chỉ thử vùng 5x5 ô quanh đó,
+# thay vì duyệt toàn bộ hàng nghìn cây. Vùng lân cận còn bắt được tán vươn khỏi ô gốc.
+# Sau đó đổi chuột world -> local sprite để hit-test theo ảnh thật, kể cả camera zoom/scale/rotation.
+# Nếu so tọa độ màn hình trực tiếp với rect local, hover sẽ lệch khi zoom hoặc camera di chuyển.
+# Chỉ giữ một focus và một hover để không hiện hàng loạt thanh cùng lúc; số mục tiêu là lựa chọn UI.
 func _hovered_target(point: Vector2) -> Node2D:
 	var candidates: Array[Node2D] = []
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):

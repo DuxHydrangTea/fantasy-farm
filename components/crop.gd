@@ -44,6 +44,10 @@ func set_status_focused(value: bool) -> void:
 		refresh(time_manager.now())
 	progress_frame.visible = value and definition != null
 
+# Đây là hiệu ứng có thể tắt; dữ liệu cây không phụ thuộc vào độ nghiêng.
+# Sprite có tâm nằm phía trên gốc. Xoay riêng rotation sẽ làm cây quay quanh bụng ảnh,
+# nên phải xoay cả vector từ gốc tới tâm, đồng thời co giãn vector đó cùng với sprite.
+# Nhờ vậy chân vẫn neo ở ô đất. Root/collision/timestamp không được di chuyển theo hiệu ứng.
 func _apply_pose() -> void:
 	if sprite == null:
 		return
@@ -52,6 +56,10 @@ func _apply_pose() -> void:
 	sprite.rotation = _rest_rotation + _bend
 	sprite.scale = _rest_scale * _stretch
 
+# Chỉ giữ một Tween phản ứng và hoàn nguyên pose trước khi tạo nhịp mới.
+# Nếu cộng dồn Tween mỗi lần focus/tưới, nhiều Tween cùng ghi một thuộc tính làm cây giật,
+# nghiêng quá mức hoặc không trở về dáng cũ. Có thể bỏ toàn bộ hiệu ứng, nhưng không nên
+# giữ hiệu ứng mà bỏ bước hủy/khôi phục này.
 func _start_motion() -> void:
 	if _motion != null and _motion.is_valid():
 		_motion.kill()
@@ -75,6 +83,10 @@ func play_sprout() -> void:
 	_motion.tween_property(self, "_stretch", Vector2(0.9, 1.1), 0.13)
 	_motion.tween_property(self, "_stretch", Vector2.ONE, 0.12)
 
+# Cây đã được gỡ khỏi danh sách gameplay trước khi gọi hàm này; Node còn lại 0,16 giây
+# chỉ để co/mờ. _retiring ngăn thanh tiến độ bị focus làm hiện lại trên cây đang biến mất.
+# Có thể queue_free ngay thay cho nhịp mờ mà không thay phần thưởng; không được trì hoãn
+# việc gỡ cây khỏi dữ liệu tới cuối Tween, vì lúc đó có thể tương tác/thu hoạch lần nữa.
 func retire_after_harvest() -> void:
 	_start_motion()
 	_retiring = true
@@ -97,6 +109,11 @@ func configure(crop: CropDefinition, timestamp: float) -> void:
 	matures_at = timestamp + crop.growth_seconds
 	refresh(timestamp)
 
+# Tiến độ = (giờ hiện tại - lúc trồng) / (hạn chín - lúc trồng), kẹp trong [0,1].
+# Lấy max với tiến độ đã có để thời gian lùi không làm cây non lại; timestamp cho phép
+# nhảy thẳng đến kết quả sau offline, không cần giả lập từng frame đã bỏ lỡ.
+# stage = floor(progress * 3) cho 4 stage 0..3: stage cuối chỉ đạt khi progress = 1.
+# Nhân 4 ở đây sẽ cho hình chín từ 75% thời gian dù luật thu hoạch vẫn yêu cầu 100%.
 func refresh(timestamp: float) -> void:
 	if definition == null:
 		return

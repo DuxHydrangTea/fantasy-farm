@@ -47,6 +47,10 @@ func _process(delta: float) -> void:
 		_elapsed = 0.0
 		save_game()
 
+# busy ngăn save/load chồng nhau; chỉ tăng revision sau khi backend xác nhận ghi thành công.
+# Nếu tăng trước rồi ghi lỗi, lần sau client sẽ đòi revision không tồn tại và tự gây conflict.
+# Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
+# Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
 	if busy or adapter == null or not writes_enabled:
 		return SaveSchema.failure("Chưa thể lưu hồ sơ này.", "busy" if busy else "disabled")

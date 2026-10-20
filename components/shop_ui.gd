@@ -130,6 +130,10 @@ func purchase() -> void:
 		_refresh()
 		status.text = String(result.error)
 
+# Lời cảm ơn phụ thuộc một LƯỢT mở menu, không chỉ phụ thuộc nút Mua vừa được bấm.
+# Chỉ bought_this_visit=true sau giao dịch thành công; đóng menu mới phát lời cảm ơn.
+# Load/thoát scene dùng show_thanks=false vì đó không phải người chơi kết thúc mua sắm.
+# Luôn trả modal lock và tháo signal, nếu không player có thể bị khóa đi lại sau khi NPC/menu bị xóa.
 func close(show_thanks: bool = true) -> void:
 	if not is_open:
 		return

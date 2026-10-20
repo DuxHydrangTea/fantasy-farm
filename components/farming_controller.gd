@@ -88,6 +88,12 @@ func can_harvest(cell: Vector2i) -> bool:
 	crop.refresh(time_manager.now())
 	return crop.is_mature() and crop.definition.has_valid_harvest()
 
+# THỨ TỰ THU HOẠCH — phần bảo toàn dữ liệu, cần giữ dù thay hiệu ứng hay UI.
+# 1) Xác nhận cây chín và túi đủ chỗ cho toàn bộ yield trước khi xóa cây.
+# 2) Khóa _harvesting trước inventory.add, vì changed có thể gọi lại harvest ngay trong lệnh add.
+# 3) Cộng đồ đúng một lần, gỡ cây khỏi dữ liệu/lịch lớn, rồi phát sự kiện cho phần hình ảnh.
+# Nếu bỏ kiểm tra sức chứa, có thể mất cây khi chưa nhận đủ nông sản; nếu bỏ khóa, có thể nhân đôi.
+# Cây mờ đi và icon bay về sau đó chỉ là trình bày, không được cộng thêm phần thưởng ở cuối hiệu ứng.
 func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 	if _harvesting or inventory == null or not can_harvest(cell):
 		return false
@@ -116,6 +122,10 @@ func _refresh_crops(timestamp: float) -> void:
 		crop.refresh(timestamp)
 		_schedule_crop(crop)
 
+# 4 hình tương ứng stage 0..3, nên các mốc chuyển là 1/3, 2/3 và 3/3 thời gian lớn.
+# Deadline kế tiếp = planted_at + (stage + 1)/3 * tổng thời gian; sau mỗi mốc mới đặt lịch tiếp.
+# Không cần chạy refresh trên mọi cây mỗi tick. Nếu đổi số stage, phải đổi cả công thức này
+# và cách tính stage trong Crop.refresh, nếu không lịch và hình ảnh sẽ lệch nhau.
 func _schedule_crop(crop: Crop) -> void:
 	if not crop.is_mature():
 		_growth.schedule(crop, crop.planted_at + float(crop.stage + 1) / 3.0 * (crop.matures_at - crop.planted_at))
@@ -212,6 +222,10 @@ func _has_terrain(layer: TileMapLayer, cell: Vector2i, set_id: int, terrain_id: 
 func _valid_terrain(layer: TileMapLayer, set_id: int, terrain_id: int) -> bool:
 	return layer != null and layer.tile_set != null and set_id >= 0 and set_id < layer.tile_set.get_terrain_sets_count() and terrain_id >= 0 and terrain_id < layer.tile_set.get_terrains_count(set_id)
 
+# Quyền can_till/can_water/can_plant là ba quyền độc lập; thiếu dữ liệu mặc định là không được.
+# Kiểm tra thêm overlay có blocks_farming và vật cản physics để ô cỏ hợp lệ không cho trồng
+# xuyên qua công trình/cây cối ở lớp khác. Nếu chỉ xét tile nền, có thể cuốc dưới nhà/hàng rào.
+# query.exclude bỏ chính player khi kiểm tra, nếu không chân player cũng có thể chặn thao tác.
 func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> bool:
 	if farmland == null or farmland.tile_set == null or _occupied.has(cell):
 		return false

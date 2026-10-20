@@ -88,6 +88,10 @@ func _saved_pens(data: Dictionary) -> Dictionary:
 			result[row.pen] = true
 	return result
 
+# Kiểm tra liên kết save với map hiện tại trước khi thay inventory, xóa actor hoặc dựng lại cây.
+# Không chỉ kiểm tra kiểu JSON: còn phải có đúng pen/garden/trough, sức chứa và số ô inventory.
+# Nếu vừa xóa thế giới cũ vừa phát hiện lỗi ở giữa restore, có thể để game trong trạng thái nửa cũ nửa mới.
+# Khi cấu trúc map thay đổi có chủ ý, cần migration rõ ràng thay vì bỏ qua các check để "tải cho được".
 func preflight(data: Dictionary) -> Dictionary:
 	var checked: Dictionary = SaveSchema.validate(data, catalog)
 	if not checked.ok:
@@ -141,6 +145,9 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
 	var farm: FarmingController = world.farming
+	# Dọn menu/hiệu ứng và trạng thái hành động trước khi restore để Tween/hành động cũ không
+	# tiếp tục commit vào thế giới vừa tải. Xóa entity mặc định trước inventory.changed của restore,
+	# vì signal đó có thể làm sensor thử nhặt các đống cũ; làm ngược thứ tự có thể cấp đồ lại từ mặc định.
 	player.shop_interaction.close_for_load()
 	player.item_feedback.clear()
 	player.wallet.set_balance(int(data.coins))

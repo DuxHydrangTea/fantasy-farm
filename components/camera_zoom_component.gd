@@ -17,6 +17,10 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_on_viewport_size_changed()
 
+# Zoom càng lớn thì phần thế giới nhìn thấy càng nhỏ: kích thước nhìn được = viewport / zoom.
+# Muốn không thấy ngoài map phải có zoom >= viewport_rộng/map_rộng và tương tự chiều cao;
+# lấy max của hai tỷ lệ để thỏa cả hai. Giới hạn Camera2D một mình chưa giải quyết trường hợp
+# viewport lớn hơn map. Nếu bỏ phép tính này, thu nhỏ zoom/đổi cửa sổ có thể lộ khoảng trống.
 func _minimum_zoom() -> float:
 	# Camera limits constrain its center; zoom must also keep the view inside them.
 	var map_size: Vector2 = Vector2(
@@ -54,6 +58,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	get_viewport().set_input_as_handled()
 
+# Hệ số nội suy a = 1 - exp(-k * delta) làm khoảng cách tới zoom đích giảm theo hàm mũ.
+# Với đích cố định, sau cùng một khoảng thời gian, mức tiến gần đích gần như không phụ thuộc FPS.
+# Lerp với một hệ số cố định mỗi frame sẽ nhanh hơn trên máy FPS cao; k*delta còn có thể
+# vượt 1 khi bị khựng. Đây chỉ là làm mượt: có thể gán thẳng zoom đích nếu không muốn hiệu ứng.
 func _process(delta: float) -> void:
 	var value: float = lerpf(camera.zoom.x, _target_zoom, 1.0 - exp(-zoom_speed * delta))
 	if is_equal_approx(value, _target_zoom):

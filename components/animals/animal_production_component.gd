@@ -21,6 +21,11 @@ func restore_state(progress: float, amount: int) -> void:
 	stored_amount = amount
 	stock_changed.emit(stored_amount)
 
+# Đếm lô thay vì vòng lặp từng sản phẩm: lô = floor(tổng giây đủ điều kiện / chu kỳ).
+# Giữ lại phần dư để tick sau tiếp tục, ví dụ 125 giây / chu kỳ 60 -> 2 lô, còn 5 giây.
+# Số 0.000001 chỉ bù sai số số thực ở ranh giới chu kỳ, không phải thời gian thưởng thêm đáng kể.
+# Bỏ phần dư sẽ làm mất tiến độ; lặp từng giây/lô khi offline dài sẽ tốn thời gian không cần thiết.
+# Điều kiện bắt buộc là bảo toàn sản phẩm + phần dư, không bắt buộc phải dùng đúng cách đếm này.
 func advance(eligible_seconds: float) -> int:
 	if eligible_seconds <= 0.0 or definition == null or not definition.is_valid():
 		return 0
@@ -43,6 +48,9 @@ func take_output(amount: int) -> int:
 	return removed
 
 ## Used by DIRECT_COLLECTION definitions; partial transfers preserve the rest.
+# inventory.add có thể nhận ít hơn yêu cầu nếu túi gần đầy; chỉ trừ kho đúng số thực nhận.
+# _collecting chặn gọi lồng nhau: add phát changed ngay và listener có thể lại yêu cầu collect
+# trước khi take_output kịp trừ kho. Không khóa thì một sản phẩm có thể được nhận hai lần.
 func collect(inventory: InventoryComponent) -> int:
 	if _collecting or inventory == null or definition == null or not definition.is_valid() or stored_amount <= 0:
 		return 0

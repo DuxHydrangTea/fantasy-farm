@@ -67,6 +67,11 @@ func _refresh() -> void:
 func _center_row() -> void:
 	row.position = Vector2(-row.size.x * 0.5, -row.size.y)
 
+# Đây chỉ là chuyển động chữ/icon: delay nhường chỗ cho nông sản bật ra trước.
+# age/lifetime được chuẩn hóa để chữ đi lên một quãng hữu hạn rồi hết vòng đời.
+# Scale vượt nhẹ 1 rồi trở về 1 tạo cảm giác nảy; alpha chỉ giảm ở đoạn cuối để có thời gian đọc.
+# Các mốc 0,1/0,12/0,65/0,3 giây là thẩm mỹ, có thể chỉnh; phải giữ queue_free để popup cũ
+# không tích lũy Node. Bỏ hiệu ứng không được làm thay đổi số đồ trong inventory.
 func _process(delta: float) -> void:
 	if _delay > 0.0:
 		_delay -= delta

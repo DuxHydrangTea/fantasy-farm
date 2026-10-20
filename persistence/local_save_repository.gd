@@ -15,6 +15,9 @@ func _init(folder: String = "user://saves", resources: SaveCatalog = null) -> vo
 func path(profile: String) -> String:
 	return directory.path_join("profile_" + profile + ".json")
 
+# Phục hồi backup chỉ khi primary lỗi/mất. Nếu primary thuộc phiên bản game tương lai,
+# phải từ chối thay vì lùi về backup cũ: lưu lại bằng game cũ có thể mất dữ liệu tính năng mới.
+# Đây là bảo vệ tương thích dữ liệu, không phải tối ưu có thể bỏ mà không đổi hành vi.
 func read_profile(profile: String) -> Dictionary:
 	if not SaveSchema.identifier(profile):
 		return SaveSchema.failure("ID hồ sơ không hợp lệ.")
@@ -42,6 +45,10 @@ func _validate_raw(raw: Dictionary, profile: String) -> Dictionary:
 		return SaveSchema.failure("File thuộc hồ sơ khác.")
 	return {"ok": true, "found": true, "snapshot": checked.snapshot, "revision": int(checked.snapshot.revision), "recovered": false}
 
+# File bọc nguyên chuỗi payload cùng SHA-256 của chính chuỗi đó để phát hiện hỏng/cắt cụt.
+# Không parse rồi stringify lại trước khi đối chiếu, vì thứ tự key/khoảng trắng có thể đổi hash.
+# Checksum này KHÔNG chống sửa save: ai sửa payload cũng có thể tính lại SHA-256.
+# Giới hạn byte bảo vệ bộ đọc khỏi file quá lớn; catalog/schema còn được kiểm tra ở bước main thread.
 func _read_raw(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
 		return SaveSchema.failure("Chưa có file lưu.", "missing")
@@ -109,6 +116,10 @@ func write_profile(profile: String, snapshot: Dictionary, expected_revision: int
 		return SaveSchema.failure("Không hoàn tất đổi file lưu; bản dự phòng được giữ lại.", "io")
 	return {"ok": true, "revision": int(snapshot.revision)}
 
+# Worker làm IO/JSON/hash; main thread nhường từng process_frame trong lúc chờ, rồi join lấy kết quả.
+# Nếu gọi wait_to_finish ngay mà không chờ như trên, main thread sẽ bị chặn và autosave gây khựng.
+# Không truy cập Node, UI hoặc duyệt Resource/catalog từ worker: đó là trạng thái của scene/main thread.
+# Có thể thay cơ chế thread bằng backend async khác; yêu cầu cần giữ là không race dữ liệu sống.
 func _run_io(work: Callable) -> Dictionary:
 	var worker: Thread = Thread.new()
 	var started: Error = worker.start(work)
@@ -145,6 +156,10 @@ func write_profile_async(profile: String, snapshot: Dictionary, expected_revisio
 		return SaveSchema.failure("Revision hoặc hồ sơ không khớp.", "conflict")
 	if not _primitive(snapshot):
 		return SaveSchema.failure("File lưu chỉ nhận dữ liệu nguyên thủy.")
+	# Chụp sâu DTO TRƯỚC await đầu tiên. Trong thời gian chờ worker, game vẫn tiếp tục:
+	# player có thể nhặt đồ, mua hàng hoặc caller sửa Dictionary/Array ban đầu.
+	# Nếu worker dùng cùng cấu trúc có thể đổi, file có nguy cơ trộn inventory ở hai thời điểm.
+	# _async_busy chặn hai lần ghi trong cùng repository giẫm lên chung file .tmp/.bak.
 	snapshot = snapshot.duplicate(true)
 	_async_busy = true
 	# Resources/catalog validation stays on the main thread. Only plain DTOs and
@@ -167,6 +182,13 @@ func write_profile_async(profile: String, snapshot: Dictionary, expected_revisio
 	_async_busy = false
 	return result
 
+# Kiểm tra revision trước commit giúp phát hiện đang lưu đè lên bản tiến trình mới hơn.
+# So hash raw một lần nữa bắt thay đổi file trong khoảng giữa đọc/validate và ghi.
+# Đây chưa phải khóa/transaction đa process hoàn chỉnh: vẫn có một cửa sổ race sau phép kiểm tra.
+# Khi online cần CAS/transaction ở server, không được xem kiểm tra local này là đảm bảo đồng thời tuyệt đối.
+# Tiếp theo ghi/flush/đọc xác nhận .tmp trước, rồi mới xoay primary hợp lệ sang .bak và đổi tên .tmp.
+# Nếu ghi thẳng primary, mất điện/ổ đầy giữa chừng có thể phá bản lưu đang tốt.
+# Nếu primary đang hỏng, không dùng nó ghi đè .bak tốt vừa dùng để phục hồi.
 func _commit_io(profile: String, snapshot: Dictionary, expected_hash: String, primary_valid: bool) -> Dictionary:
 	var target: String = path(profile)
 	if FileAccess.file_exists(target):

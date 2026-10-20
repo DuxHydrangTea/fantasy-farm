@@ -25,6 +25,13 @@ func _ready() -> void:
 		_lands.append(Vector2((index - float(count - 1) * 0.5) * 9.0, -5.0 - index * 2.0))
 	_last_target = global_position
 
+# HIỆU ỨNG TÙY CHỌN — có thể bỏ cả Node này, yield đã được commit trước khi nó sinh ra.
+# Pha bật: t chạy 0..1, vị trí ngang tăng tuyến tính còn độ cao = -14*sin(pi*t).
+# Sin bằng 0 ở hai đầu và đạt đỉnh ở t=0,5, tạo vòng cung đơn giản không cần body vật lý.
+# Pha hút: dùng lerp(điểm rơi, đích player hiện tại, t²); t² làm ban đầu chậm rồi nhanh dần.
+# Đổi đích global về local của hiệu ứng trước nội suy; trộn hai hệ tọa độ sẽ bay sai khi map dời/scale.
+# Mỗi icon lệch 0,035 giây để có nhịp; tối đa 3 icon đại diện, không tạo 400 Node cho yield 400.
+# TUYỆT ĐỐI không inventory.add khi bay xong: phần thưởng đã có, cộng lần nữa sẽ nhân đôi.
 func _process(delta: float) -> void:
 	age += delta
 	var actor: Node2D = target.get_ref() as Node2D if target != null else null
