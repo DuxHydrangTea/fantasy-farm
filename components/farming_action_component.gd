@@ -15,6 +15,7 @@ func _ready() -> void:
 	assert(animation != null and state != null, "Farming actions require animation and state")
 	state.state_changed.connect(_on_state_changed)
 	animation.animated_sprite.frame_changed.connect(_on_frame_changed)
+	animation.animated_sprite.animation_changed.connect(_on_frame_changed, CONNECT_DEFERRED)
 
 func _on_state_changed(_previous: StringName, current: StringName) -> void:
 	_action = &""
@@ -25,6 +26,10 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 		return
 	_cell = _cell_ahead()
 	_action = state.active_action if not state.active_action.is_empty() else current
+	if _action == &"harvest":
+		var crop: Crop = farming.get_crop(_cell)
+		if crop != null:
+			crop.react(6.0, animation.facing_vector.x)
 	if _action == &"plant" and state.tool_selection != null:
 		_seed = state.tool_selection.get_selected_item()
 		_slot_index = state.tool_selection.selected_index
@@ -44,7 +49,7 @@ func _cell_ahead() -> Vector2i:
 	return farming.world_to_cell(actor.global_position) + Vector2i(animation.facing_vector)
 
 func _on_frame_changed() -> void:
-	if _action.is_empty() or animation.animated_sprite.frame < impact_frame:
+	if _action.is_empty() or not animation.impact_reached(impact_frame):
 		return
 	var action: StringName = _action
 	_action = &""

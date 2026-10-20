@@ -135,3 +135,105 @@ func test_crop_anchor_tracks_scaled_translated_land() -> void:
 	var expected: Vector2 = farming.farmland.to_global(farming.farmland.map_to_local(target) + Vector2(0, 8))
 	assert_eq(farming.get_crop(target).global_position, expected)
 	assert_eq(farming.get_crop(target).global_scale, Vector2(2, 2))
+
+func test_harvest_reward_rises_from_soil_and_failed_harvest_shows_nothing() -> void:
+	var bag: InventoryComponent = state.tool_selection.inventory
+	assert_true(farming.plant(target, bag, 2, player))
+	assert_false(farming.harvest(target, bag))
+	assert_eq(get_tree().get_nodes_in_group(&"item_gain_popups").size(), 0)
+
+	var crop: Crop = farming.get_crop(target)
+	var produce: ItemDefinition = crop.definition.harvest_item
+	var quantity: int = crop.definition.harvest_amount
+	timestamp = crop.matures_at
+	var reentry: Array[bool] = []
+	bag.changed.connect(func() -> void: reentry.append(farming.harvest(target, bag)), CONNECT_ONE_SHOT)
+	assert_true(farming.harvest(target, bag))
+	assert_eq(reentry, [false])
+	var effects: Array[Node] = get_tree().get_nodes_in_group(&"item_gain_popups")
+	assert_eq(effects.size(), 1)
+	var popup: ItemGainPopup = effects[0] as ItemGainPopup
+	assert_eq(popup.item, produce)
+	assert_eq(popup.amount, quantity)
+	assert_eq(popup.global_position, farming.farmland.to_global(farming.farmland.map_to_local(target)))
+	assert_eq(popup.get_parent(), field)
+	assert_eq((player as FarmPlayer).item_feedback.get_child_count(), 0)
+	assert_false(popup.visible)
+	await wait_seconds(0.35)
+	assert_true(popup.visible)
+	await wait_seconds(1.05)
+	assert_eq(get_tree().get_nodes_in_group(&"item_gain_popups").size(), 0)
+
+func test_simultaneous_pickup_and_harvest_rewards_keep_separate_lines() -> void:
+	var bag: InventoryComponent = state.tool_selection.inventory
+	assert_true(farming.plant(target, bag, 2, player))
+	var crop: Crop = farming.get_crop(target)
+	timestamp = crop.matures_at
+	var origin: Vector2 = farming.farmland.to_global(farming.farmland.map_to_local(target))
+	player.position = origin + Vector2(0, 34)
+	var feedback: ItemGainFeedback = (player as FarmPlayer).item_feedback
+	feedback.collector.item_acquired.emit(crop.definition.harvest_item, 1)
+	var head: ItemGainPopup = feedback.get_child(0) as ItemGainPopup
+	assert_almost_eq(head.global_position.y, origin.y, 0.01)
+	assert_true(farming.harvest(target, bag))
+	assert_lte(head.global_position.y, origin.y - 28.0)
+
+func test_harvest_burst_never_adds_a_second_yield_and_load_clears_transient_visuals() -> void:
+	var bag: InventoryComponent = state.tool_selection.inventory
+	assert_true(farming.plant(target, bag, 2, player))
+	var crop: Crop = farming.get_crop(target)
+	var produce: ItemDefinition = crop.definition.harvest_item
+	var amount: int = crop.definition.harvest_amount
+	timestamp = crop.matures_at
+	assert_true(farming.harvest(target, bag))
+	assert_eq(bag.count_item(produce.item_id), amount)
+
+	assert_null(farming.get_crop(target))
+	assert_true(crop.is_retiring())
+	assert_eq(farming.crop_cells().size(), 0)
+	var bursts: Array[Node] = get_tree().get_nodes_in_group(&"harvest_effects")
+	assert_eq(bursts.size(), 2, "One retiring plant and one visual produce burst")
+	assert_eq(get_tree().get_nodes_in_group(&"item_pickups").size(), 0)
+	(player as FarmPlayer).item_feedback.clear()
+	farming.restore_soil([])
+	await wait_physics_frames(2)
+	assert_eq(get_tree().get_nodes_in_group(&"harvest_effects").size(), 0)
+	assert_eq(bag.count_item(produce.item_id), amount)
+
+
+func test_all_22_crops_harvest_through_action_impact_with_correct_yield(crop_name = use_parameters([
+	"beetroot", "bell_pepper", "broccoli", "cabbage", "carrot", "chili_pepper",
+	"corn", "cucumber", "eggplant", "garlic", "green_bell_pepper", "leek", "onion",
+	"parsnip", "potato", "pumpkin", "radish", "strawberry", "sunflower", "tomato", "wheat", "yellow_bell_pepper"
+])) -> void:
+	var crop_path: String = "res://crops/field/%s/%s.tres" % [crop_name, crop_name]
+	var definition: CropDefinition = load(crop_path) as CropDefinition
+	farming.restore_crop(target, definition, timestamp - 20.0, timestamp - 1.0, 1.0, timestamp)
+	var bag: InventoryComponent = state.tool_selection.inventory
+	assert_true(farming.can_harvest(target))
+	assert_gte(bag.capacity_for(definition.harvest_item), definition.harvest_amount)
+	watch_signals(farming)
+	assert_true(state.use_selected_tool(&"harvest"))
+	await wait_seconds(0.9)
+	assert_null(farming.get_crop(target))
+	assert_eq(bag.count_item(definition.harvest_item.item_id), definition.harvest_amount)
+	assert_signal_emit_count(farming, "harvest_yielded", 1)
+	assert_eq(farming.get_soil_state(target), FarmingController.Soil.DRY)
+
+func test_full_bag_reports_capacity_problem_and_preserves_mature_crop() -> void:
+	var bag: InventoryComponent = state.tool_selection.inventory
+	var definition: CropDefinition = load("res://crops/field/wheat/wheat.tres") as CropDefinition
+	farming.restore_crop(target, definition, timestamp - 20.0, timestamp - 1.0, 1.0, timestamp)
+	bag.add(load("res://items/tools/hoe.tres"), 100)
+	watch_signals(bag)
+	assert_false(farming.harvest(target, bag))
+	assert_signal_emitted_with_parameters(bag, "capacity_blocked", [definition.harvest_item, definition.harvest_amount, 0])
+	assert_not_null(farming.get_crop(target))
+	assert_eq(bag.count_item(definition.harvest_item.item_id), 0)
+	var feedback: ItemGainFeedback = (player as FarmPlayer).item_feedback
+	assert_eq(feedback.get_child_count(), 1)
+	var notice: ItemGainPopup = feedback.get_child(0) as ItemGainPopup
+	assert_eq(notice.message, "Túi đồ đầy")
+	bag.remove(&"hoe", 1)
+	assert_true(farming.harvest(target, bag))
+	assert_eq(bag.count_item(definition.harvest_item.item_id), definition.harvest_amount)

@@ -14,11 +14,14 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var action_up: StringName = &"move_up"
 @export var action_down: StringName = &"move_down"
 @export var action_use_item: StringName = &"use_item"
+@export var action_harvest: StringName = &"harvest"
+@export var action_click_move: StringName = &"click_move"
 @export var tool_selection: ToolSelectionComponent
 @export var trough_interaction: TroughInteractionComponent
 @export var flower_interaction: FlowerInteraction
 @export var dust_particles: GPUParticles2D
 @export var navigation: PlayerNavigationComponent
+var shop_interaction: ShopInteraction
 
 
 var current_state: State = State.IDLE
@@ -32,10 +35,11 @@ func _ready() -> void:
 	animation.action_finished.connect(_on_action_finished)
 	if tool_selection != null:
 		tool_selection.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
+		tool_selection.shop_visibility_changed.connect(_on_inventory_visibility_changed)
 	transition_to(State.IDLE)
 
 func _physics_process(delta: float) -> void:
-	if tool_selection != null and tool_selection.inventory_open:
+	if tool_selection != null and tool_selection.is_menu_open():
 		_use_requested = false
 		_harvest_requested = false
 		movement.stop()
@@ -78,11 +82,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if tool_selection != null and tool_selection.inventory_open:
+	if tool_selection != null and tool_selection.is_menu_open():
 		return
 	if current_state == State.TOOL or current_state == State.WATER:
 		return
-	if event is InputEventKey and event.physical_keycode == KEY_E and event.is_pressed() and not event.is_echo():
+	if (event.is_action_pressed(action_harvest) or event.is_action_pressed(&"interact")) and not event.is_echo():
+		if shop_interaction != null and shop_interaction.try_interact():
+			get_viewport().set_input_as_handled()
+			return
 		_harvest_requested = true
 		get_viewport().set_input_as_handled()
 		return
@@ -93,11 +100,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event is InputEventMouseButton:
 		return
 	var click: InputEventMouseButton = event as InputEventMouseButton
-	if click.button_index == MOUSE_BUTTON_RIGHT and click.pressed:
-		_use_requested = true
-		get_viewport().set_input_as_handled()
-		return
-	if click.button_index != MOUSE_BUTTON_LEFT or not click.pressed:
+	if not click.is_action_pressed(action_click_move):
 		return
 	if current_state == State.TOOL or current_state == State.WATER:
 		return
@@ -111,7 +114,7 @@ func get_selected_tool_action() -> StringName:
 	return tool_selection.get_selected_action() if tool_selection != null else &""
 
 func use_selected_tool(requested_action: StringName = &"") -> bool:
-	if tool_selection != null and tool_selection.inventory_open:
+	if tool_selection != null and tool_selection.is_menu_open():
 		return false
 	if current_state == State.TOOL or current_state == State.WATER:
 		return false

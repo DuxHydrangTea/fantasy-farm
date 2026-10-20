@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 
 func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
 	var next: Array[Node2D] = []
-	if not selection.inventory_open:
+	if not selection.is_menu_open():
 		var focused: Node2D = _focused_target()
 		if is_instance_valid(focused):
 			next.append(focused)

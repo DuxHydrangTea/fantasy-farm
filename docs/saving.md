@@ -23,7 +23,7 @@ Timestamp Unix dùng TimeManager hiện có. Cây lớn tới thời điểm ch�
 
 ## File và phục hồi
 
-`save_schema.gd` kiểm tra DTO version 3, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được thêm vườn hoa; version 2 được chuyển từ grid hoa 10 × 6 sang 18 × 10 trong bộ nhớ, giữ nguyên vị trí vật lý và tiến độ hoa cũ. Lần lưu tiếp theo ghi version 3. Vườn có 180 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
+`save_schema.gd` kiểm tra DTO version 5, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được thêm vườn hoa; version 2 được chuyển từ grid hoa 10 × 6 sang 18 × 10 trong bộ nhớ, giữ nguyên vị trí vật lý và tiến độ hoa cũ. Version 3 được thêm ví 1.000 xu một lần; version 4 lưu số xu nguyên cùng inventory. Version 4 được mở rộng túi từ 24 lên 64 ô, giữ nguyên toàn bộ slot cũ và hotbar; lần lưu tiếp theo ghi version 5. Vườn có 180 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
 
 File chứa payload JSON và SHA-256 của chính chuỗi payload. Checksum phát hiện lỗi dữ liệu, không phải mã hóa/chống sửa save. Backend ghi/flush/đọc kiểm tra `.tmp`, chuyển primary hợp lệ thành `.bak`, rồi rename `.tmp` thành primary. Nếu lỗi giữa các bước, bản dự phòng vẫn đọc được. Primary hỏng sẽ thử `.bak`; primary thuộc phiên bản mới hơn sẽ bị từ chối để tránh hạ phiên bản và mất dữ liệu. Không có backup hợp lệ hoặc thế giới không tương thích: giữ file và tắt tự lưu. Không tự ghi game mới đè lên file hỏng. Đã phục hồi `.bak` thì lần lưu kế tiếp chỉ xoay bản hợp lệ, không đè backup bằng primary hỏng.
 
@@ -36,12 +36,18 @@ read_profile(profile_id: String) -> Dictionary
 # {ok: true, found: false} hoặc {ok: true, found: true, snapshot: {...}}
 write_profile(profile_id: String, snapshot: Dictionary, expected_revision: int) -> Dictionary
 # {ok: true, revision: N} hoặc {ok: false, code: "conflict", error: "..."}
+write_profile_async(profile_id: String, snapshot: Dictionary, expected_revision: int) -> Dictionary
+# Service dùng phương thức này; mặc định await write_profile của backend.
 ```
 
-Service `await` cả hai phương thức, nên backend HTTP có thể trả coroutine. Inject backend vào `SaveManager.bind_world(world, backend, profile_id)` trước khi bind mặc định; bootstrap MainWorld hiện dùng file local. Test dùng repository bất đồng bộ giả để kiểm tra giao diện này. Bản hiện tại **chưa có đồng bộ cloud, đăng nhập hay multiplayer**.
+Service `await` read_profile và write_profile_async, nên backend HTTP có thể giữ coroutine write_profile hiện có thông qua fallback. LocalSaveRepository chuyển JSON/hash/I/O của write_profile_async sang Thread, copy DTO trước await, validate Resource/catalog trên main thread và join trước khi báo lưu xong. API write_profile sync vẫn phục vụ test/công cụ. Revision và fingerprint vẫn được kiểm tra để phát hiện thay đổi bên ngoài. Inject backend vào `SaveManager.bind_world(world, backend, profile_id)` trước khi bind mặc định; bootstrap MainWorld hiện dùng file local. Test dùng repository bất đồng bộ giả và file thật để kiểm tra giao diện này. Bản hiện tại **chưa có đồng bộ cloud, đăng nhập hay multiplayer**.
 
 Online cần server xác thực người dùng/quyền hồ sơ, kiểm tra DTO và luật chơi, cấp thời gian chuẩn, giới hạn payload, áp dụng `expected_revision` bằng transaction/CAS và trả conflict khi revision cũ. Backend local chỉ bảo vệ khỏi revision đã đổi lúc kiểm tra; không hỗ trợ hai process ghi cùng lúc. Với network mất kết nối sau khi server đã commit, thiết kế idempotency key cho thao tác ghi, đọc đối chiếu revision và UI xử lý conflict/retry. Không tự lấy snapshot có timestamp lớn nhất để hợp nhất túi đồ/sản phẩm vì sẽ gây nhân đôi hoặc mất đồ. Migration schema cần chạy trước validate và có test; phiên bản không được hỗ trợ hiện bị từ chối.
 
 ## Kiểm tra
 
 GUT: `tests/unit/test_save_repository.gd`, `tests/integration/test_world_persistence.gd`. Các test dùng file thật trong `.godot`, roundtrip MainWorld, phục hồi backup/checksum, revision cũ, phiên bản mới, dữ liệu không hợp lệ, sản xuất offline không trùng, ID sau rename, đồ đã nhặt và thay backend bất đồng bộ. Không bind hồ sơ thật từ fixture GUT.
+
+Tiền xu và mua hàng: xem [Cửa hàng](shops.md). Save v4 bắt buộc trường `coins` trong khoảng 0–1.000.000.000; tải save cũ tự migrate, không chỉnh trực tiếp file người chơi trong quá trình phát triển.
+
+Save v5 dùng túi mặc định 64 ô. Migration v4 chỉ thêm ô trống sau 24 ô cũ, không đổi item/count, selected_slot, tiền hoặc các tiến trình khác. Custom fixture có số slot khác được giữ để backend vẫn kiểm tra độc lập; adapter kiểm tra số slot của thế giới thực trước restore.

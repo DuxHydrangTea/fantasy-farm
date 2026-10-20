@@ -57,21 +57,20 @@ func _refresh() -> void:
 	for index: int in range(buttons.size()):
 		var selected: bool = index == inspected_index
 		buttons[index].set_selected(selected)
-		if selection.inventory.slot(index).item != null:
+		if not selection.inventory.is_empty_slot(index):
 			used += 1
-	var stack: Dictionary = selection.inventory.slot(inspected_index)
-	details.text = "%s  ×%d" % [stack.item.display_name, stack.count] if stack.item != null else "Ô trống — kéo vật phẩm vào đây"
+	var item: ItemDefinition = selection.inventory.get_slot_item(inspected_index)
+	details.text = "%s  ×%d" % [item.display_name, selection.inventory.get_slot_count(inspected_index)] if item != null else "Ô trống — kéo vật phẩm vào đây"
 	capacity.text = "%d / %d ô" % [used, buttons.size()]
 
 func _input(event: InputEvent) -> void:
-	if not event is InputEventKey or not event.is_pressed() or event.is_echo():
+	if selection.shop_open:
 		return
-	var key: InputEventKey = event as InputEventKey
-	if event.is_action_pressed("toggle_inventory") or key.physical_keycode == KEY_I:
+	if not event.is_pressed() or event.is_echo():
+		return
+	if event.is_action_pressed(&"toggle_inventory"):
 		selection.set_inventory_open(not selection.inventory_open)
 		get_viewport().set_input_as_handled()
-	elif selection.inventory_open and key.physical_keycode == KEY_ESCAPE:
+	elif selection.inventory_open and event.is_action_pressed(&"ui_cancel"):
 		close()
-		get_viewport().set_input_as_handled()
-	elif selection.inventory_open:
 		get_viewport().set_input_as_handled()

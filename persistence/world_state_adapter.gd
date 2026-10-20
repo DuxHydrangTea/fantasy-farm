@@ -44,7 +44,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 		animal.needs.update_at(now)
 	var data: Dictionary = {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": profile, "revision": revision, "saved_at": now,
 		"player": {"position": _pair(player.position), "facing": String(player.animation.facing_direction), "selected_slot": selection.selected_index},
-		"inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": []}
+		"coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": []}
 	for pen: AnimalPen in _nodes(world, AnimalPen):
 		data.animal_pens.append(_id(pen))
 	for garden: FlowerGarden in _nodes(world, FlowerGarden):
@@ -141,6 +141,9 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
 	var farm: FarmingController = world.farming
+	player.shop_interaction.close_for_load()
+	player.item_feedback.clear()
+	player.wallet.set_balance(int(data.coins))
 	player.state.reset_after_load()
 	selection.set_inventory_open(false)
 	# Remove default entities before inventory.changed retries nearby pickups.
@@ -211,4 +214,6 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		actor.global_position = actor.pen.clamp_world(actor.pen.to_global(_point(row.position)), actor.wander.margin)
 		actor.animation.facing_direction = StringName(row.facing)
 		actor.restore_lifecycle(row, data.saved_at, maxf(now, data.saved_at), piles.get(row.pickup) as ItemPickup)
+	if player.state.navigation != null:
+		player.state.navigation.invalidate_cache()
 	return {"ok": true}

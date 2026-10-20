@@ -52,13 +52,18 @@
 [ext_resource type="SpriteFrames" uid="uid://ob1gx7nyfngw" path="res://sprite_frames/animals/sheep_03_frames.tres" id="58_h0yb0"]
 [ext_resource type="SpriteFrames" uid="uid://osn6w1yia8pg" path="res://sprite_frames/animals/sheep_04_frames.tres" id="59_v2gse"]
 [ext_resource type="SpriteFrames" uid="uid://dkfy3l6gf0ade" path="res://sprite_frames/animals/sheep_05_frames.tres" id="60_4jawo"]
+[ext_resource type="PackedScene" uid="uid://cp4akcetkdos2" path="res://scenes/buildings/houses/house_4.tscn" id="60_qqiv8"]
+[ext_resource type="PackedScene" uid="uid://c03235u8r5px3" path="res://scenes/buildings/unique_buildings/market_stalls.tscn" id="61_gtd7t"]
 [ext_resource type="SpriteFrames" uid="uid://bc4vwmx5a42vs" path="res://sprite_frames/animals/sheep_06_frames.tres" id="61_labkd"]
+[ext_resource type="SpriteFrames" uid="uid://tmtnjr5thfb4" path="res://sprite_frames/character/fisherman_fin_frames.tres" id="62_qqiv8"]
 [ext_resource type="SpriteFrames" uid="uid://cn617wu4gncc3" path="res://sprite_frames/animals/sheep_07_frames.tres" id="62_ygtcd"]
 [ext_resource type="SpriteFrames" uid="uid://du7csj6hpy7mi" path="res://sprite_frames/animals/sheep_08_frames.tres" id="63_owu34"]
 [ext_resource type="SpriteFrames" uid="uid://dl57hi3aau0lt" path="res://sprite_frames/animals/sheep_09_frames.tres" id="64_hrcex"]
 [ext_resource type="Script" uid="uid://3ml3jshpyxgx" path="res://persistence/world_persistence.gd" id="65_ptedk"]
 [ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
 [ext_resource type="PackedScene" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
+
+[ext_resource type="Script" path="res://components/shop_merchant.gd" id="79_x28ju"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -1255,56 +1260,56 @@ terrain_set_0/terrain_0/name = "road"
 terrain_set_0/terrain_0/color = Color(0.3256452, 0.38956285, 0.49024087, 1)
 sources/0 = SubResource("TileSetAtlasSource_yae5m")
 
-[sub_resource type="Resource" id="Resource_hvhku"]
+[sub_resource type="Resource" id="Resource_lu7uo"]
 script = ExtResource("5_o0hhk")
 amount = 560
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_b6ukf"]
+[sub_resource type="Resource" id="Resource_4nnau"]
 script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_hvhku")])
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_lu7uo")])
 
 [sub_resource type="Resource" id="Resource_t6m8u"]
 script = ExtResource("7_ootrp")
 size = Vector2(2016, 224)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
-[sub_resource type="Resource" id="Resource_63pw8"]
+[sub_resource type="Resource" id="Resource_7ubxh"]
 script = ExtResource("5_o0hhk")
 amount = 420
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_qqiv8"]
+[sub_resource type="Resource" id="Resource_u1taw"]
 script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_63pw8")])
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_7ubxh")])
 
 [sub_resource type="Resource" id="Resource_4g0kw"]
 script = ExtResource("7_ootrp")
 size = Vector2(1888, 128)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
-[sub_resource type="Resource" id="Resource_gtd7t"]
+[sub_resource type="Resource" id="Resource_ylm8y"]
 script = ExtResource("5_o0hhk")
 amount = 265
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_cissw"]
+[sub_resource type="Resource" id="Resource_1ibep"]
 script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_gtd7t")])
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_ylm8y")])
 
 [sub_resource type="Resource" id="Resource_l7j4l"]
 script = ExtResource("7_ootrp")
 size = Vector2(96, 940)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
-[sub_resource type="Resource" id="Resource_lu7uo"]
+[sub_resource type="Resource" id="Resource_m3gxw"]
 script = ExtResource("5_o0hhk")
 amount = 265
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_4nnau"]
+[sub_resource type="Resource" id="Resource_7bmd6"]
 script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_lu7uo")])
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_m3gxw")])
 
 [sub_resource type="Resource" id="Resource_onsxo"]
 script = ExtResource("7_ootrp")
@@ -1326,6 +1331,9 @@ region = Rect2(16, 0, 32, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_vlh6x"]
 atlas = ExtResource("23_7ubxh")
 region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgjnj"]
+size = Vector2(10, 4)
 
 [node name="MainWorld" type="Node2D" unique_id=1598422927 node_paths=PackedStringArray("player", "farming")]
 y_sort_enabled = true
@@ -1377,7 +1385,7 @@ y_sort_enabled = true
 position = Vector2(960, 26)
 script = ExtResource("2_2ccdf")
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_b6ukf")
+modifier_stack = SubResource("Resource_4nnau")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatter2D" unique_id=97407539]
@@ -1403,45 +1411,13 @@ path = "res://scenes/trees/big_oak_tree.tscn"
 script = ExtResource("8_yae5m")
 path = "res://scenes/trees/big_spruce_tree.tscn"
 
-[node name="MediumBirchTree" type="Node2D" parent="TreeScatter2D" unique_id=721669658]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_birch_tree.tscn"
-
-[node name="MediumFruitTree" type="Node2D" parent="TreeScatter2D" unique_id=170629942]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_fruit_tree.tscn"
-
-[node name="MediumOakTree" type="Node2D" parent="TreeScatter2D" unique_id=1625033798]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_oak_tree.tscn"
-
-[node name="MediumSpruceTree" type="Node2D" parent="TreeScatter2D" unique_id=1067356541]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_spruce_tree.tscn"
-
-[node name="SmallBirchTree" type="Node2D" parent="TreeScatter2D" unique_id=1055259277]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_birch_tree.tscn"
-
-[node name="SmallFruitTree" type="Node2D" parent="TreeScatter2D" unique_id=792515963]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_fruit_tree.tscn"
-
-[node name="SmallOakTree" type="Node2D" parent="TreeScatter2D" unique_id=148959487]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_oak_tree.tscn"
-
-[node name="SmallSpruceTree" type="Node2D" parent="TreeScatter2D" unique_id=997593484]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_spruce_tree.tscn"
-
 [node name="TreeScatterBottom2D" type="Node2D" parent="." unique_id=290017318]
 y_sort_enabled = true
 position = Vector2(960, 1072)
 script = ExtResource("2_2ccdf")
 global_seed = 1
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_qqiv8")
+modifier_stack = SubResource("Resource_u1taw")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterBottom2D" unique_id=1752056320]
@@ -1467,45 +1443,13 @@ path = "res://scenes/trees/big_oak_tree.tscn"
 script = ExtResource("8_yae5m")
 path = "res://scenes/trees/big_spruce_tree.tscn"
 
-[node name="MediumBirchTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=288454616]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_birch_tree.tscn"
-
-[node name="MediumFruitTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=1454238424]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_fruit_tree.tscn"
-
-[node name="MediumOakTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=1464496644]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_oak_tree.tscn"
-
-[node name="MediumSpruceTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=1248781652]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_spruce_tree.tscn"
-
-[node name="SmallBirchTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=2064999957]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_birch_tree.tscn"
-
-[node name="SmallFruitTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=225929783]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_fruit_tree.tscn"
-
-[node name="SmallOakTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=2086171427]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_oak_tree.tscn"
-
-[node name="SmallSpruceTree" type="Node2D" parent="TreeScatterBottom2D" unique_id=897752138]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_spruce_tree.tscn"
-
 [node name="TreeScatterLeft2D" type="Node2D" parent="." unique_id=1008317903]
 y_sort_enabled = true
 position = Vector2(48, 586)
 script = ExtResource("2_2ccdf")
 global_seed = 2
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_cissw")
+modifier_stack = SubResource("Resource_1ibep")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterLeft2D" unique_id=455328251]
@@ -1531,45 +1475,13 @@ path = "res://scenes/trees/big_oak_tree.tscn"
 script = ExtResource("8_yae5m")
 path = "res://scenes/trees/big_spruce_tree.tscn"
 
-[node name="MediumBirchTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=912506771]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_birch_tree.tscn"
-
-[node name="MediumFruitTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=521300100]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_fruit_tree.tscn"
-
-[node name="MediumOakTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=1949418695]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_oak_tree.tscn"
-
-[node name="MediumSpruceTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=125893099]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_spruce_tree.tscn"
-
-[node name="SmallBirchTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=2047069143]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_birch_tree.tscn"
-
-[node name="SmallFruitTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=440136267]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_fruit_tree.tscn"
-
-[node name="SmallOakTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=744467915]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_oak_tree.tscn"
-
-[node name="SmallSpruceTree" type="Node2D" parent="TreeScatterLeft2D" unique_id=1290910012]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_spruce_tree.tscn"
-
 [node name="TreeScatterRight2D" type="Node2D" parent="." unique_id=1318908115]
 y_sort_enabled = true
 position = Vector2(1872, 586)
 script = ExtResource("2_2ccdf")
 global_seed = 3
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_4nnau")
+modifier_stack = SubResource("Resource_7bmd6")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterRight2D" unique_id=1671208368]
@@ -1594,38 +1506,6 @@ path = "res://scenes/trees/big_oak_tree.tscn"
 [node name="BigSpruceTree" type="Node2D" parent="TreeScatterRight2D" unique_id=641616743]
 script = ExtResource("8_yae5m")
 path = "res://scenes/trees/big_spruce_tree.tscn"
-
-[node name="MediumBirchTree" type="Node2D" parent="TreeScatterRight2D" unique_id=805124502]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_birch_tree.tscn"
-
-[node name="MediumFruitTree" type="Node2D" parent="TreeScatterRight2D" unique_id=1799655166]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_fruit_tree.tscn"
-
-[node name="MediumOakTree" type="Node2D" parent="TreeScatterRight2D" unique_id=1198230699]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_oak_tree.tscn"
-
-[node name="MediumSpruceTree" type="Node2D" parent="TreeScatterRight2D" unique_id=2073006422]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/medium_spruce_tree.tscn"
-
-[node name="SmallBirchTree" type="Node2D" parent="TreeScatterRight2D" unique_id=1814979350]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_birch_tree.tscn"
-
-[node name="SmallFruitTree" type="Node2D" parent="TreeScatterRight2D" unique_id=302397150]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_fruit_tree.tscn"
-
-[node name="SmallOakTree" type="Node2D" parent="TreeScatterRight2D" unique_id=615533117]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_oak_tree.tscn"
-
-[node name="SmallSpruceTree" type="Node2D" parent="TreeScatterRight2D" unique_id=928816329]
-script = ExtResource("8_yae5m")
-path = "res://scenes/trees/small_spruce_tree.tscn"
 
 [node name="Player" parent="." unique_id=1882155096 instance=ExtResource("20_farmer_bob")]
 position = Vector2(1515, 655)
@@ -1912,3 +1792,28 @@ position = Vector2(1666, 647)
 [node name="PondPen" parent="." unique_id=1195389997 node_paths=PackedStringArray("water_layer") instance=ExtResource("71_b3fbx")]
 position = Vector2(1424, 592)
 water_layer = NodePath("../FarmLand")
+
+[node name="House4" parent="." unique_id=1008030250 instance=ExtResource("60_qqiv8")]
+position = Vector2(1746, 197)
+variant = 4
+
+[node name="Stalls" parent="." unique_id=1381961398 instance=ExtResource("61_gtd7t")]
+position = Vector2(1700, 213)
+
+[node name="Stalls2" parent="." unique_id=1683204981 instance=ExtResource("61_gtd7t")]
+position = Vector2(1779, 214)
+variant = 2
+
+[node name="LaiBuon" type="CharacterBody2D" parent="." unique_id=1899029390]
+position = Vector2(1779, 214)
+script = ExtResource("79_x28ju")
+interaction_offset = Vector2(-38, 10)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="LaiBuon" unique_id=55685317]
+position = Vector2(-38, 1)
+sprite_frames = ExtResource("62_qqiv8")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LaiBuon" unique_id=1429807084]
+position = Vector2(-39, 6)
+shape = SubResource("RectangleShape2D_vgjnj")

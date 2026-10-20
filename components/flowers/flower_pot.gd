@@ -69,7 +69,10 @@ func refresh(now: float) -> void:
 	_update_visual()
 
 func harvest(bag: InventoryComponent) -> bool:
-	if _harvesting or bag == null or not is_mature() or bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
+	if _harvesting or bag == null or not is_mature():
+		return false
+	if bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
+		bag.report_capacity_blocked(definition.harvest_item, definition.harvest_amount)
 		return false
 	_harvesting = true
 	var count: int = bag.add(definition.harvest_item, definition.harvest_amount)
@@ -97,23 +100,30 @@ func restore_state(data: Dictionary, flower: FlowerDefinition, now: float) -> vo
 	stage = mini(4, int(floor(progress * 4.0)))
 	refresh(now)
 	_update_visual()
+	changed.emit()
 
 func capture(now: float) -> Dictionary:
 	refresh(now)
 	return {"cell": [cell.x, cell.y], "flower": String(definition.flower_id), "planted_at": planted_at, "growth_started_at": growth_started_at, "matures_at": matures_at, "progress": progress}
 
 func set_focused(value: bool, allowed: bool = true) -> void:
+	_refresh_for_focus(value)
 	_focused = value
 	marker.visible = value
 	marker.modulate = Color.WHITE if allowed else Color(1, 0.45, 0.35)
 	_update_status_visibility()
 
 func set_status_focused(value: bool) -> void:
+	_refresh_for_focus(value)
 	_status_focused = value
 	_update_status_visibility()
 
 func get_status_sprite() -> Node2D:
 	return sprite
+
+func _refresh_for_focus(value: bool) -> void:
+	if value and garden != null and garden.time_manager != null:
+		refresh(garden.time_manager.now())
 
 func _update_status_visibility() -> void:
 	progress_frame.visible = (_focused or _status_focused) and definition != null

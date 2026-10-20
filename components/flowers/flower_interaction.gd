@@ -16,6 +16,7 @@ func _ready() -> void:
 	assert(selection != null and animation != null and state != null and prompt != null, "Assign flower interaction components in the Player scene")
 	state.state_changed.connect(_on_state_changed)
 	animation.animated_sprite.frame_changed.connect(_on_frame_changed)
+	animation.animated_sprite.animation_changed.connect(_on_frame_changed, CONNECT_DEFERRED)
 	prompt.hide()
 
 func _physics_process(_delta: float) -> void:
@@ -29,7 +30,7 @@ func refresh() -> void:
 		focused_pot.set_focused(false)
 	focused_pot = null
 	prompt.hide()
-	if selection.inventory_open:
+	if selection.is_menu_open():
 		return
 	var point: Vector2 = (get_parent() as Node2D).global_position
 	if not _action.is_empty() and _reachable(_pending):
@@ -79,11 +80,11 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 		_pending = null
 
 func _on_frame_changed() -> void:
-	if _action.is_empty() or animation.animated_sprite.frame < impact_frame:
+	if _action.is_empty() or not animation.impact_reached(impact_frame):
 		return
 	var action: StringName = _action
 	_action = &""
-	if not _reachable(_pending) or selection.inventory_open or state.active_action != action:
+	if not _reachable(_pending) or selection.is_menu_open() or state.active_action != action:
 		_pending = null
 		return
 	var garden: FlowerGarden = _pending.garden

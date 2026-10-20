@@ -7,3 +7,7 @@ func read_profile(_profile_id: String) -> Dictionary:
 
 func write_profile(_profile_id: String, _snapshot: Dictionary, _expected_revision: int) -> Dictionary:
 	return {"ok": false, "code": "unsupported", "error": "Backend chưa hỗ trợ ghi."}
+
+func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
+	# HTTP/fake backends can retain their existing coroutine implementation.
+	return await write_profile(profile, snapshot, expected_revision)

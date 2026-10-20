@@ -1,0 +1,202 @@
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://dkfbc5ln6bl57"]
+
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="2_offer"]
+[ext_resource type="Resource" uid="uid://ebpy0mmpjtu3" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://dlc3pj5noacyh" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
+[ext_resource type="Resource" path="res://items/seeds/broccoli_seed.tres" id="item_2"]
+[ext_resource type="Resource" path="res://items/seeds/cabbage_seed.tres" id="item_3"]
+[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="item_4"]
+[ext_resource type="Resource" path="res://items/seeds/chili_pepper_seed.tres" id="item_5"]
+[ext_resource type="Resource" path="res://items/seeds/corn_seed.tres" id="item_6"]
+[ext_resource type="Resource" path="res://items/seeds/cucumber_seed.tres" id="item_7"]
+[ext_resource type="Resource" path="res://items/seeds/eggplant_seed.tres" id="item_8"]
+[ext_resource type="Resource" uid="uid://dpv2o2obtmfss" path="res://items/seeds/flower_01_seed.tres" id="item_9"]
+[ext_resource type="Resource" uid="uid://ba1txm51ur5nb" path="res://items/seeds/flower_02_seed.tres" id="item_10"]
+[ext_resource type="Resource" uid="uid://s1jvgss0vdtk" path="res://items/seeds/flower_03_seed.tres" id="item_11"]
+[ext_resource type="Resource" uid="uid://bbodcnt2lfywj" path="res://items/seeds/flower_04_seed.tres" id="item_12"]
+[ext_resource type="Resource" uid="uid://dupjxnr2jocqs" path="res://items/seeds/flower_05_seed.tres" id="item_13"]
+[ext_resource type="Resource" uid="uid://bfebrr6tir1fy" path="res://items/seeds/flower_06_seed.tres" id="item_14"]
+[ext_resource type="Resource" uid="uid://c10ayurnwar76" path="res://items/seeds/flower_07_seed.tres" id="item_15"]
+[ext_resource type="Resource" uid="uid://l4u8rcsm0scp" path="res://items/seeds/flower_08_seed.tres" id="item_16"]
+[ext_resource type="Resource" uid="uid://b5vtqliiybpln" path="res://items/seeds/flower_09_seed.tres" id="item_17"]
+[ext_resource type="Resource" uid="uid://ccbng7ss6wer7" path="res://items/seeds/flower_10_seed.tres" id="item_18"]
+[ext_resource type="Resource" path="res://items/seeds/garlic_seed.tres" id="item_19"]
+[ext_resource type="Resource" path="res://items/seeds/green_bell_pepper_seed.tres" id="item_20"]
+[ext_resource type="Resource" path="res://items/seeds/leek_seed.tres" id="item_21"]
+[ext_resource type="Resource" path="res://items/seeds/onion_seed.tres" id="item_22"]
+[ext_resource type="Resource" path="res://items/seeds/parsnip_seed.tres" id="item_23"]
+[ext_resource type="Resource" path="res://items/seeds/potato_seed.tres" id="item_24"]
+[ext_resource type="Resource" path="res://items/seeds/pumpkin_seed.tres" id="item_25"]
+[ext_resource type="Resource" path="res://items/seeds/radish_seed.tres" id="item_26"]
+[ext_resource type="Resource" path="res://items/seeds/strawberry_seed.tres" id="item_27"]
+[ext_resource type="Resource" path="res://items/seeds/sunflower_seed.tres" id="item_28"]
+[ext_resource type="Resource" path="res://items/seeds/tomato_seed.tres" id="item_29"]
+[ext_resource type="Resource" uid="uid://bg270usqa0ayi" path="res://items/seeds/wheat_seed.tres" id="item_30"]
+[ext_resource type="Resource" path="res://items/seeds/yellow_bell_pepper_seed.tres" id="item_31"]
+[ext_resource type="Resource" path="res://items/feeds/livestock_feed.tres" id="item_32"]
+[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="item_33"]
+
+[sub_resource type="Resource" id="Offer_0"]
+script = ExtResource("2_offer")
+item = ExtResource("item_0")
+
+[sub_resource type="Resource" id="Offer_1"]
+script = ExtResource("2_offer")
+item = ExtResource("item_1")
+
+[sub_resource type="Resource" id="Offer_2"]
+script = ExtResource("2_offer")
+item = ExtResource("item_2")
+
+[sub_resource type="Resource" id="Offer_3"]
+script = ExtResource("2_offer")
+item = ExtResource("item_3")
+
+[sub_resource type="Resource" id="Offer_4"]
+script = ExtResource("2_offer")
+item = ExtResource("item_4")
+
+[sub_resource type="Resource" id="Offer_5"]
+script = ExtResource("2_offer")
+item = ExtResource("item_5")
+
+[sub_resource type="Resource" id="Offer_6"]
+script = ExtResource("2_offer")
+item = ExtResource("item_6")
+
+[sub_resource type="Resource" id="Offer_7"]
+script = ExtResource("2_offer")
+item = ExtResource("item_7")
+
+[sub_resource type="Resource" id="Offer_8"]
+script = ExtResource("2_offer")
+item = ExtResource("item_8")
+
+[sub_resource type="Resource" id="Offer_9"]
+script = ExtResource("2_offer")
+item = ExtResource("item_9")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_10"]
+script = ExtResource("2_offer")
+item = ExtResource("item_10")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_11"]
+script = ExtResource("2_offer")
+item = ExtResource("item_11")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_12"]
+script = ExtResource("2_offer")
+item = ExtResource("item_12")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_13"]
+script = ExtResource("2_offer")
+item = ExtResource("item_13")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_14"]
+script = ExtResource("2_offer")
+item = ExtResource("item_14")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_15"]
+script = ExtResource("2_offer")
+item = ExtResource("item_15")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_16"]
+script = ExtResource("2_offer")
+item = ExtResource("item_16")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_17"]
+script = ExtResource("2_offer")
+item = ExtResource("item_17")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_18"]
+script = ExtResource("2_offer")
+item = ExtResource("item_18")
+price = 15
+category = 2
+
+[sub_resource type="Resource" id="Offer_19"]
+script = ExtResource("2_offer")
+item = ExtResource("item_19")
+
+[sub_resource type="Resource" id="Offer_20"]
+script = ExtResource("2_offer")
+item = ExtResource("item_20")
+
+[sub_resource type="Resource" id="Offer_21"]
+script = ExtResource("2_offer")
+item = ExtResource("item_21")
+
+[sub_resource type="Resource" id="Offer_22"]
+script = ExtResource("2_offer")
+item = ExtResource("item_22")
+
+[sub_resource type="Resource" id="Offer_23"]
+script = ExtResource("2_offer")
+item = ExtResource("item_23")
+
+[sub_resource type="Resource" id="Offer_24"]
+script = ExtResource("2_offer")
+item = ExtResource("item_24")
+
+[sub_resource type="Resource" id="Offer_25"]
+script = ExtResource("2_offer")
+item = ExtResource("item_25")
+
+[sub_resource type="Resource" id="Offer_26"]
+script = ExtResource("2_offer")
+item = ExtResource("item_26")
+
+[sub_resource type="Resource" id="Offer_27"]
+script = ExtResource("2_offer")
+item = ExtResource("item_27")
+
+[sub_resource type="Resource" id="Offer_28"]
+script = ExtResource("2_offer")
+item = ExtResource("item_28")
+
+[sub_resource type="Resource" id="Offer_29"]
+script = ExtResource("2_offer")
+item = ExtResource("item_29")
+
+[sub_resource type="Resource" id="Offer_30"]
+script = ExtResource("2_offer")
+item = ExtResource("item_30")
+
+[sub_resource type="Resource" id="Offer_31"]
+script = ExtResource("2_offer")
+item = ExtResource("item_31")
+
+[sub_resource type="Resource" id="Offer_32"]
+script = ExtResource("2_offer")
+item = ExtResource("item_32")
+price = 25
+category = 1
+
+[sub_resource type="Resource" id="Offer_33"]
+script = ExtResource("2_offer")
+item = ExtResource("item_33")
+price = 25
+category = 1
+
+[resource]
+script = ExtResource("1_catalog")
+offers = Array[ExtResource("2_offer")]([SubResource("Offer_0"), SubResource("Offer_1"), SubResource("Offer_2"), SubResource("Offer_3"), SubResource("Offer_4"), SubResource("Offer_5"), SubResource("Offer_6"), SubResource("Offer_7"), SubResource("Offer_8"), SubResource("Offer_9"), SubResource("Offer_10"), SubResource("Offer_11"), SubResource("Offer_12"), SubResource("Offer_13"), SubResource("Offer_14"), SubResource("Offer_15"), SubResource("Offer_16"), SubResource("Offer_17"), SubResource("Offer_18"), SubResource("Offer_19"), SubResource("Offer_20"), SubResource("Offer_21"), SubResource("Offer_22"), SubResource("Offer_23"), SubResource("Offer_24"), SubResource("Offer_25"), SubResource("Offer_26"), SubResource("Offer_27"), SubResource("Offer_28"), SubResource("Offer_29"), SubResource("Offer_30"), SubResource("Offer_31"), SubResource("Offer_32"), SubResource("Offer_33")])

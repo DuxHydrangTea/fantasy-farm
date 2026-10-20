@@ -54,7 +54,7 @@ func save_game() -> Dictionary:
 	var snapshot: Dictionary = adapter.capture(profile_id, revision + 1, _clock().now())
 	var result: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if result.ok:
-		result = await repository.write_profile(profile_id, snapshot, revision)
+		result = await repository.write_profile_async(profile_id, snapshot, revision)
 	if result.ok:
 		revision = int(snapshot.revision)
 		_elapsed = 0.0

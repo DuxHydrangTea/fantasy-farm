@@ -25,6 +25,12 @@ var facing_vector: Vector2:
 	get:
 		return DIR_VECTORS[facing_direction]
 
+func impact_reached(requested_frame: int) -> bool:
+	if animated_sprite == null or animated_sprite.sprite_frames == null:
+		return false
+	var count: int = animated_sprite.sprite_frames.get_frame_count(animated_sprite.animation)
+	return count > 0 and animated_sprite.frame >= clampi(requested_frame, 0, count - 1)
+
 func _ready() -> void:
 	assert(animated_sprite != null, "AnimationComponent: chua gan animted_sprite")
 	animated_sprite.animation_finished.connect(_on_animation_finished)

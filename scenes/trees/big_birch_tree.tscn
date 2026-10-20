@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bfrmwd6olbgsx" path="res://assets/Trees/Big_Birch_Tree.png" id="1_tree"]
 
+[ext_resource type="Material" path="res://resources/effects/tree_wind_48.tres" id="1_yvged"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trunk"]
 size = Vector2(8, 6)
 
@@ -9,6 +11,7 @@ size = Vector2(8, 6)
 texture_filter = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2007748148]
+material = ExtResource("1_yvged")
 position = Vector2(0, -24)
 texture = ExtResource("1_tree")
 hframes = 3

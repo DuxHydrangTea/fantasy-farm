@@ -6,6 +6,12 @@ var ui: CanvasLayer
 var state: StateComponent
 var bag: InventoryComponent
 
+class ShortcutProbe extends Node:
+	var received: bool = false
+	func _unhandled_key_input(event: InputEvent) -> void:
+		if event is InputEventKey and event.physical_keycode == KEY_F5 and event.is_pressed():
+			received = true
+
 func before_each() -> void:
 	viewport = SubViewport.new()
 	viewport.size = Vector2i(1920, 1080)
@@ -44,13 +50,36 @@ func test_inventory_opens_with_tab_or_i_and_closes_with_escape() -> void:
 	_key(KEY_TAB)
 	assert_true(ui.root.visible)
 	assert_true(state.tool_selection.inventory_open)
-	assert_eq(ui.buttons.size(), 24)
+	assert_eq(ui.buttons.size(), InventoryComponent.DEFAULT_SLOT_COUNT)
 	_key(KEY_ESCAPE)
 	assert_false(ui.root.visible)
 	_key(KEY_I)
 	assert_true(ui.root.visible)
 	_key(KEY_I)
 	assert_false(ui.root.visible)
+
+func test_inventory_toggle_uses_remapped_action_without_hardcoded_i() -> void:
+	var original: Array[InputEvent] = InputMap.action_get_events(&"toggle_inventory")
+	InputMap.action_erase_events(&"toggle_inventory")
+	var replacement: InputEventKey = InputEventKey.new()
+	replacement.physical_keycode = KEY_P
+	InputMap.action_add_event(&"toggle_inventory", replacement)
+	_key(KEY_I)
+	assert_false(ui.root.visible)
+	_key(KEY_P)
+	assert_true(ui.root.visible)
+	_key(KEY_P)
+	assert_false(ui.root.visible)
+	InputMap.action_erase_events(&"toggle_inventory")
+	for event: InputEvent in original:
+		InputMap.action_add_event(&"toggle_inventory", event)
+
+func test_inventory_does_not_consume_unrelated_shortcuts() -> void:
+	var probe: ShortcutProbe = ShortcutProbe.new()
+	viewport.add_child(probe)
+	ui.open()
+	_key(KEY_F5)
+	assert_true(probe.received, "An open inventory must not swallow save/debug shortcuts")
 
 func test_modal_cancels_movement_and_blocks_world_input() -> void:
 	state.movement.set_target(player.position + Vector2(100, 0))

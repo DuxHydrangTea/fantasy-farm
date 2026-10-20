@@ -1,3 +1,5 @@
+> Tài liệu lịch sử của commit `83ee633`. Các controller/focus/needs legacy đã được loại bỏ; liên kết mã đã xoá trỏ về commit gốc. Thiết kế đang chạy: [runtime_system_reference.md](runtime_system_reference.md) và [improvements.md](improvements.md).
+
 # Thiết kế hệ thống GDScript hiện tại
 
 > **Tài liệu lịch sử tại `83ee633` (15/10/2026).** Các phần dưới mô tả kiến trúc cũ trên nhánh `main`. Runtime của `rewrite-by-ai` tại `de8eaa0` đã có StateComponent, lifecycle vật nuôi, Barn/Pond, vườn hoa và save/load; tra cứu [runtime_system_reference.md](runtime_system_reference.md) để dùng đúng API hiện tại.
@@ -235,7 +237,7 @@ Nguồn: [scripts/player.gd](../scripts/player.gd). Kế thừa: `CharacterBase`
 
 ### Controller
 
-Nguồn: [components/controllers/controller.gd](../components/controllers/controller.gd). Kế thừa: `Node`.
+Nguồn: [components/controllers/controller.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/controllers/controller.gd). Kế thừa: `Node`.
 
 Lớp nền controller. Tìm CharacterBase ở node cha trực tiếp và đặt physics priority = -10 để ghi ý định trước state machine.
 
@@ -248,7 +250,7 @@ Lớp nền controller. Tìm CharacterBase ở node cha trực tiếp và đặt
 
 ### PlayerInputController
 
-Nguồn: [components/controllers/player_input_controller.gd](../components/controllers/player_input_controller.gd). Kế thừa: `Controller`.
+Nguồn: [components/controllers/player_input_controller.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/controllers/player_input_controller.gd). Kế thừa: `Controller`.
 
 Đọc InputMap để điều khiển Player; chọn slot bằng hotbar_1…hotbar_0 và đánh dấu sự kiện đã xử lý.
 
@@ -455,7 +457,7 @@ Class ChickenState dùng chung cho hành vi gà theo ba pha START → HOLD → F
 
 ### InteractionFocusComponent
 
-Nguồn: [components/interaction_focus_component.gd](../components/interaction_focus_component.gd). Kế thừa: `Area2D`.
+Nguồn: [components/interaction_focus_component.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/interaction_focus_component.gd). Kế thừa: `Area2D`.
 
 Chọn một FocusComponent từ các Area2D đang chồng lấp, dựa trên khoảng cách và hướng nhìn.
 
@@ -478,7 +480,7 @@ Chọn một FocusComponent từ các Area2D đang chồng lấp, dựa trên kh
 
 ### FocusComponent
 
-Nguồn: [components/focus_component.gd](../components/focus_component.gd). Kế thừa: `Area2D`.
+Nguồn: [components/focus_component.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/focus_component.gd). Kế thừa: `Area2D`.
 
 Component đặt trên vật có thể được chọn. Bật/tắt marker và tween con trỏ; mục tiêu tương tác là node cha.
 
@@ -673,7 +675,7 @@ Cửa sổ kho, dựng lưới bốn cột từ Inventory và làm mới slot kh
 
 ### PlayerUIComponent
 
-Nguồn: [components/controllers/player_ui_component.gd](../components/controllers/player_ui_component.gd). Kế thừa: `Node`.
+Nguồn: [components/controllers/player_ui_component.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/controllers/player_ui_component.gd). Kế thừa: `Node`.
 
 Điều phối UI của nhân vật và phát inventory_open_changed.
 
@@ -840,7 +842,7 @@ Class có tên hiện tại AnimalProductionDefination. Resource mô tả chu k�
 
 ### AnimalNeedsComponent
 
-Nguồn: [components/animal_needs_component.gd](../components/animal_needs_component.gd). Kế thừa: `Node`.
+Nguồn: [components/animal_needs_component.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/animal_needs_component.gd). Kế thừa: `Node`.
 
 Giữ độ no và nước của từng vật nuôi; không tự chạy đồng hồ, nhận thời gian từ ChickenCoop.
 
@@ -900,7 +902,7 @@ Nguồn: [scripts/chicken_coop.gd](../scripts/chicken_coop.gd). Kế thừa: `No
 
 ### ChickenController
 
-Nguồn: [components/controllers/chicken_ai_controller.gd](../components/controllers/chicken_ai_controller.gd). Kế thừa: `Controller`.
+Nguồn: [components/controllers/chicken_ai_controller.gd](https://github.com/DuxHydrangTea/fantasy-farm/blob/83ee633/components/controllers/chicken_ai_controller.gd). Kế thừa: `Controller`.
 
 Class ChickenController chọn hành vi ngẫu nhiên, tìm máng theo nhu cầu và giữ gà trong vùng chữ nhật.
 

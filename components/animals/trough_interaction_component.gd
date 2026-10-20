@@ -25,6 +25,7 @@ func _ready() -> void:
 	prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	state.state_changed.connect(_on_state_changed)
 	animation.animated_sprite.frame_changed.connect(_on_frame_changed)
+	animation.animated_sprite.animation_changed.connect(_on_frame_changed, CONNECT_DEFERRED)
 	refresh()
 
 func _physics_process(_delta: float) -> void:
@@ -79,7 +80,7 @@ func can_refill(trough: AnimalTrough) -> bool:
 	return has_watering_can() if trough.kind == AnimalTrough.Kind.WATER else trough.feed_items_needed(selection.inventory) > 0
 
 func refresh() -> void:
-	if selection == null or selection.inventory_open:
+	if selection == null or selection.is_menu_open():
 		focused_trough = null
 		prompt.hide()
 		return
@@ -122,7 +123,7 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 		_action = &""
 
 func _on_frame_changed() -> void:
-	if _action.is_empty() or animation.animated_sprite.frame < impact_frame:
+	if _action.is_empty() or not animation.impact_reached(impact_frame):
 		return
 	if not is_instance_valid(_pending):
 		_action = &""
@@ -132,7 +133,7 @@ func _on_frame_changed() -> void:
 	var trough: AnimalTrough = _pending
 	_action = &""
 	_pending = null
-	if not can_reach(trough) or selection.inventory_open or state.active_action != action:
+	if not can_reach(trough) or selection.is_menu_open() or state.active_action != action:
 		return
 	var added: int = 0
 	if action == &"refill_food":

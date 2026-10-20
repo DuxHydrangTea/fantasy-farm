@@ -32,7 +32,7 @@ func _on_selection_changed(index: int, _tool: StringName) -> void:
 	selected_name.text = selection.get_selected_name()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if selection.inventory_open:
+	if selection.is_menu_open():
 		return
 	if event is InputEventKey:
 		if not event.is_pressed() or event.is_echo():

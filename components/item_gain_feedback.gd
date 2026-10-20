@@ -1,0 +1,94 @@
+class_name ItemGainFeedback
+extends Node2D
+## Presentation subscriber: purchases/loads never masquerade as harvested items.
+var player: FarmPlayer
+var collector: ItemCollector
+var _popups: Array[ItemGainPopup] = []
+var _recent: Dictionary[StringName, WeakRef] = {}
+var _lane: int = 0
+var _bursts: Array[HarvestBurst] = []
+var _last_capacity_notice: int = -1500
+
+func _ready() -> void:
+	collector.item_acquired.connect(_on_pickup)
+	player.selection.inventory.capacity_blocked.connect(_on_capacity_blocked)
+	var farming: FarmingController = player.farming_actions.get_farming_controller()
+	if farming != null:
+		farming.harvest_yielded.connect(_on_harvest)
+
+func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int) -> void:
+	var now: int = Time.get_ticks_msec()
+	if now - _last_capacity_notice < 1500:
+		return
+	_last_capacity_notice = now
+	var text: String = "Túi đồ đầy" if available == 0 else "Túi đồ không đủ chỗ"
+	_spawn(item, 0, self, Vector2(0, -64), text)
+
+func _on_pickup(item: ItemDefinition, amount: int) -> void:
+	if item == null or amount <= 0:
+		return
+	var reference: WeakRef = _recent.get(item.item_id) as WeakRef
+	var existing: ItemGainPopup = reference.get_ref() as ItemGainPopup if reference != null else null
+	if is_instance_valid(existing) and not existing.is_queued_for_deletion() and existing.age < 0.15:
+		existing.add_amount(amount)
+		return
+	var popup: ItemGainPopup = _spawn(item, amount, self, Vector2((_lane % 3 - 1) * 8, -34 - (_lane % 3) * 9))
+	_recent[item.item_id] = weakref(popup)
+	_lane += 1
+
+func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent) -> void:
+	if inventory != player.selection.inventory or item == null or amount <= 0:
+		return
+	# Harvesting while picking up eggs must not stack two rewards on one line.
+	for previous: ItemGainPopup in _popups:
+		if is_instance_valid(previous) and previous.get_parent() == self and absf(previous.global_position.x - at.x) < 64.0 and absf(previous.global_position.y - at.y) < 28.0:
+			previous.shift_up(maxf(0.0, previous.global_position.y - at.y + 28.0))
+	var host: Node = player.farming_actions.farming.get_parent()
+	var popup: ItemGainPopup = _spawn(item, amount, host, Vector2.ZERO)
+	popup.place_world(at)
+	# Let the produce leave the soil before drawing text over the same pixels.
+	popup.start_after(0.3)
+	var active: Array[HarvestBurst] = []
+	for previous: HarvestBurst in _bursts:
+		if is_instance_valid(previous) and not previous.is_queued_for_deletion():
+			active.append(previous)
+	_bursts = active
+	if _bursts.size() >= 8:
+		_bursts.pop_front().queue_free()
+	var burst: HarvestBurst = HarvestBurst.new()
+	burst.item = item
+	burst.amount = amount
+	burst.target = weakref(player)
+	host.add_child(burst)
+	burst.global_position = at
+	burst.global_scale = Vector2.ONE
+	_bursts.append(burst)
+
+func _spawn(item: ItemDefinition, amount: int, host: Node, at: Vector2, message: String = "") -> ItemGainPopup:
+	var active: Array[ItemGainPopup] = []
+	for previous: ItemGainPopup in _popups:
+		if is_instance_valid(previous) and not previous.is_queued_for_deletion():
+			active.append(previous)
+	_popups = active
+	if _popups.size() >= 12:
+		_popups.pop_front().queue_free()
+	var popup: ItemGainPopup = ItemGainPopup.new()
+	popup.item = item
+	popup.amount = amount
+	popup.message = message
+	popup.position = at
+	host.add_child(popup)
+	_popups.append(popup)
+	return popup
+
+func clear() -> void:
+	for burst: HarvestBurst in _bursts:
+		if is_instance_valid(burst):
+			burst.queue_free()
+	_bursts.clear()
+	for popup: ItemGainPopup in _popups:
+		if is_instance_valid(popup):
+			popup.queue_free()
+	_popups.clear()
+	_recent.clear()
+	_last_capacity_notice = -1500

@@ -67,29 +67,30 @@ func _ready() -> void:
 	refresh()
 
 func refresh() -> void:
-	var stack: Dictionary = inventory.slot(slot_index)
-	_icon.texture = stack.item.icon if stack.item != null else null
-	_count.text = str(stack.count) if stack.count > 1 else ""
-	tooltip_text = stack.item.display_name if stack.item != null else "Ô trống"
+	var item: ItemDefinition = inventory.get_slot_item(slot_index)
+	var count: int = inventory.get_slot_count(slot_index)
+	_icon.texture = item.icon if item != null else null
+	_count.text = str(count) if count > 1 else ""
+	tooltip_text = item.display_name if item != null else "Ô trống"
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	var stack: Dictionary = inventory.slot(slot_index)
-	if stack.item == null:
+	var item: ItemDefinition = inventory.get_slot_item(slot_index)
+	if item == null:
 		return null
 	var preview: TextureRect = TextureRect.new()
-	preview.texture = stack.item.icon
+	preview.texture = item.icon
 	preview.custom_minimum_size = Vector2(48, 48)
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	preview.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	set_drag_preview(preview)
-	return {"inventory": inventory, "slot": slot_index, "item_id": stack.item.item_id}
+	return {"inventory": inventory, "slot": slot_index, "item_id": item.item_id}
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not data is Dictionary or data.get("inventory") != inventory or not data.get("slot") is int:
 		return false
-	var stack: Dictionary = inventory.slot(data.slot)
-	return data.slot != slot_index and stack.item != null and stack.item.item_id == data.get("item_id")
+	var item: ItemDefinition = inventory.get_slot_item(data.slot)
+	return data.slot != slot_index and item != null and item.item_id == data.get("item_id")
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if _can_drop_data(_at_position, data):

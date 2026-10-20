@@ -19,7 +19,7 @@ func refresh() -> void:
 	if actions == null:
 		hide()
 		return
-	if actions.state.tool_selection != null and actions.state.tool_selection.inventory_open:
+	if actions.state.tool_selection != null and actions.state.tool_selection.is_menu_open():
 		hide()
 		return
 	if actions.state.trough_interaction != null and actions.state.trough_interaction.focused_trough != null:

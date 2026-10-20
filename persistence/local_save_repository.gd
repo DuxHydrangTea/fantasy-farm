@@ -5,6 +5,8 @@ extends SaveRepository
 const MAX_BYTES: int = 8 * 1024 * 1024
 var directory: String = "user://saves"
 var catalog: SaveCatalog
+var _async_busy: bool = false
+var worker_operations: int = 0
 
 func _init(folder: String = "user://saves", resources: SaveCatalog = null) -> void:
 	directory = folder
@@ -28,6 +30,19 @@ func read_profile(profile: String) -> Dictionary:
 	return backup if backup.get("code") == "future_version" else SaveSchema.failure("File lưu và bản dự phòng đều không đọc được. Giữ nguyên file để phục hồi.", "corrupt")
 
 func _read(file_path: String, profile: String) -> Dictionary:
+	return _validate_raw(_read_raw(file_path), profile)
+
+func _validate_raw(raw: Dictionary, profile: String) -> Dictionary:
+	if not raw.ok:
+		return raw
+	var checked: Dictionary = SaveSchema.validate(raw.snapshot, catalog)
+	if not checked.ok:
+		return checked
+	if checked.snapshot.profile_id != profile:
+		return SaveSchema.failure("File thuộc hồ sơ khác.")
+	return {"ok": true, "found": true, "snapshot": checked.snapshot, "revision": int(checked.snapshot.revision), "recovered": false}
+
+func _read_raw(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
 		return SaveSchema.failure("Chưa có file lưu.", "missing")
 	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
@@ -39,20 +54,17 @@ func _read(file_path: String, profile: String) -> Dictionary:
 	file.close()
 	var json: JSON = JSON.new()
 	if json.parse(source) != OK or not json.data is Dictionary:
-		return SaveSchema.failure("File JSON bị hỏng.")
+		return SaveSchema.failure("File JSON bị hỏng.").merged({"file_hash": source.sha256_text()})
 	var envelope: Dictionary = json.data
 	if envelope.get("format") != "fantasy_farm_save" or not envelope.get("payload") is String or not envelope.get("sha256") is String or envelope.payload.sha256_text() != envelope.sha256:
-		return SaveSchema.failure("Checksum file lưu không đúng.")
+		return SaveSchema.failure("Checksum file lưu không đúng.").merged({"file_hash": source.sha256_text()})
 	if json.parse(envelope.payload) != OK:
-		return SaveSchema.failure("Nội dung file lưu bị hỏng.")
-	var checked: Dictionary = SaveSchema.validate(json.data, catalog)
-	if not checked.ok:
-		return checked
-	if checked.snapshot.profile_id != profile:
-		return SaveSchema.failure("File thuộc hồ sơ khác.")
-	return {"ok": true, "found": true, "snapshot": checked.snapshot, "revision": int(checked.snapshot.revision), "recovered": false}
+		return SaveSchema.failure("Nội dung file lưu bị hỏng.").merged({"file_hash": source.sha256_text()})
+	return {"ok": true, "snapshot": json.data, "file_hash": source.sha256_text()}
 
 func write_profile(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
+	if _async_busy:
+		return SaveSchema.failure("Đang lưu hồ sơ.", "busy")
 	var checked: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if not checked.ok:
 		return checked
@@ -80,7 +92,7 @@ func write_profile(profile: String, snapshot: Dictionary, expected_revision: int
 	if error != OK or not _read(temp, profile).ok:
 		return SaveSchema.failure("Ghi file tạm không hoàn tất.", "io")
 	# Never rotate a damaged primary over the last-good backup.
-	if _read(target, profile).ok:
+	if current.get("found", false) and not current.get("recovered", false):
 		if FileAccess.file_exists(target + ".bak"):
 			error = DirAccess.remove_absolute(target + ".bak")
 			if error != OK:
@@ -95,4 +107,97 @@ func write_profile(profile: String, snapshot: Dictionary, expected_revision: int
 	error = DirAccess.rename_absolute(temp, target)
 	if error != OK:
 		return SaveSchema.failure("Không hoàn tất đổi file lưu; bản dự phòng được giữ lại.", "io")
+	return {"ok": true, "revision": int(snapshot.revision)}
+
+func _run_io(work: Callable) -> Dictionary:
+	var worker: Thread = Thread.new()
+	var started: Error = worker.start(work)
+	if started != OK:
+		return SaveSchema.failure("Không tạo được luồng lưu: " + error_string(started), "io")
+	worker_operations += 1
+	while worker.is_alive():
+		await (Engine.get_main_loop() as SceneTree).process_frame
+	return worker.wait_to_finish() as Dictionary
+
+func _primitive(value: Variant, depth: int = 0) -> bool:
+	if depth > 64:
+		return false
+	if value is Dictionary:
+		for key: Variant in value:
+			if not key is String or not _primitive(value[key], depth + 1):
+				return false
+		return true
+	if value is Array:
+		for child: Variant in value:
+			if not _primitive(child, depth + 1):
+				return false
+		return true
+	return typeof(value) in [TYPE_NIL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STRING]
+
+func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
+	if _async_busy:
+		return SaveSchema.failure("Đang lưu hồ sơ.", "busy")
+	var checked: Dictionary = SaveSchema.validate(snapshot, catalog)
+	if not checked.ok:
+		return checked
+	snapshot = checked.snapshot
+	if snapshot.profile_id != profile or int(snapshot.revision) != expected_revision + 1:
+		return SaveSchema.failure("Revision hoặc hồ sơ không khớp.", "conflict")
+	if not _primitive(snapshot):
+		return SaveSchema.failure("File lưu chỉ nhận dữ liệu nguyên thủy.")
+	snapshot = snapshot.duplicate(true)
+	_async_busy = true
+	# Resources/catalog validation stays on the main thread. Only plain DTOs and
+	# filesystem/hash/JSON operations cross the worker boundary.
+	var primary_raw: Dictionary = await _run_io(_read_raw.bind(path(profile)))
+	var current: Dictionary = _validate_raw(primary_raw, profile)
+	var primary_valid: bool = current.ok
+	if not current.ok and current.get("code") != "future_version":
+		var backup_raw: Dictionary = await _run_io(_read_raw.bind(path(profile) + ".bak"))
+		current = _validate_raw(backup_raw, profile)
+		if not current.ok and primary_raw.get("code") == "missing" and backup_raw.get("code") == "missing":
+			current = {"ok": true, "revision": 0}
+		elif not current.ok and current.get("code") != "future_version":
+			current = SaveSchema.failure("File lưu và bản dự phòng đều không đọc được.", "corrupt")
+	if current.ok and int(current.revision) != expected_revision:
+		current = SaveSchema.failure("File đã được cập nhật. Tải lại trước khi lưu.", "conflict")
+	var result: Dictionary = current
+	if current.ok:
+		result = await _run_io(_commit_io.bind(profile, snapshot.duplicate(true), String(primary_raw.get("file_hash", "")), primary_valid))
+	_async_busy = false
+	return result
+
+func _commit_io(profile: String, snapshot: Dictionary, expected_hash: String, primary_valid: bool) -> Dictionary:
+	var target: String = path(profile)
+	if FileAccess.file_exists(target):
+		if expected_hash.is_empty() or FileAccess.get_file_as_string(target).sha256_text() != expected_hash:
+			return SaveSchema.failure("File đã đổi trong lúc lưu.", "conflict")
+	elif not expected_hash.is_empty():
+		return SaveSchema.failure("File đã bị xóa trong lúc lưu.", "conflict")
+	var error: Error = DirAccess.make_dir_recursive_absolute(directory)
+	if error != OK:
+		return SaveSchema.failure("Không tạo được thư mục lưu.", "io")
+	var temp: String = target + ".tmp"
+	var payload: String = JSON.stringify(snapshot)
+	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
+	if file == null:
+		return SaveSchema.failure("Không ghi được file tạm.", "io")
+	file.store_string(JSON.stringify({"format": "fantasy_farm_save", "sha256": payload.sha256_text(), "payload": payload}, "\t"))
+	file.flush()
+	error = file.get_error()
+	file.close()
+	if error != OK or not _read_raw(temp).ok:
+		return SaveSchema.failure("Ghi file tạm không hoàn tất.", "io")
+	# Only a primary validated on the main thread may replace the last-good backup.
+	if primary_valid:
+		if FileAccess.file_exists(target + ".bak"):
+			error = DirAccess.remove_absolute(target + ".bak")
+		if error == OK:
+			error = DirAccess.rename_absolute(target, target + ".bak")
+	elif FileAccess.file_exists(target):
+		error = DirAccess.remove_absolute(target)
+	if error == OK:
+		error = DirAccess.rename_absolute(temp, target)
+	if error != OK:
+		return SaveSchema.failure("Không hoàn tất lưu; bản dự phòng được giữ lại.", "io")
 	return {"ok": true, "revision": int(snapshot.revision)}

@@ -2,6 +2,28 @@ extends GutTest
 var catalog: SaveCatalog
 var repo: LocalSaveRepository
 var folder: String
+var _async_finished: bool = false
+var _async_result: Dictionary = {}
+
+class SlowRepository extends LocalSaveRepository:
+	func _commit_io(profile: String, data: Dictionary, expected_hash: String, primary_valid: bool) -> Dictionary:
+		OS.delay_msec(150)
+		return super._commit_io(profile, data, expected_hash, primary_valid)
+
+class ChangedRepository extends LocalSaveRepository:
+	func _commit_io(profile: String, data: Dictionary, expected_hash: String, primary_valid: bool) -> Dictionary:
+		var outside: Dictionary = data.duplicate(true)
+		outside.revision = 50
+		var payload: String = JSON.stringify(outside)
+		var file: FileAccess = FileAccess.open(path(profile), FileAccess.WRITE)
+		file.store_string(JSON.stringify({"format": "fantasy_farm_save", "payload": payload, "sha256": payload.sha256_text()}))
+		file.close()
+		return super._commit_io(profile, data, expected_hash, primary_valid)
+
+func _launch_async(data: Dictionary) -> void:
+	_async_finished = false
+	_async_result = await repo.write_profile_async("test", data, 0)
+	_async_finished = true
 
 func before_each() -> void:
 	catalog = SaveCatalog.new()
@@ -17,7 +39,7 @@ func after_each() -> void:
 		DirAccess.remove_absolute(folder)
 
 func _snapshot(revision: int = 1) -> Dictionary:
-	return {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
+	return {"version": SaveSchema.VERSION, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
 		"soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
 
@@ -27,11 +49,70 @@ func _write_raw(path: String, source: String) -> void:
 	file.store_string(source)
 	file.close()
 
+func test_v3_coins_migrate_once_and_current_coin_values_are_validated() -> void:
+	var old: Dictionary = _snapshot()
+	old.version = 3
+	old.erase("coins")
+	var migrated: Dictionary = SaveSchema.validate(old, catalog)
+	assert_true(migrated.ok)
+	assert_eq(migrated.snapshot.coins, 1000)
+	assert_false(old.has("coins"))
+	migrated.snapshot.coins = 0
+	assert_eq(SaveSchema.validate(migrated.snapshot, catalog).snapshot.coins, 0)
+	for invalid: Variant in [-1, 0.5, "1000", WalletComponent.MAX_COINS + 1]:
+		var bad: Dictionary = _snapshot()
+		bad.coins = invalid
+		assert_false(SaveSchema.validate(bad, catalog).ok)
+	var missing: Dictionary = _snapshot()
+	missing.erase("coins")
+	assert_false(SaveSchema.validate(missing, catalog).ok)
+
 func test_missing_profile_is_a_new_game() -> void:
 	var result: Dictionary = repo.read_profile("test")
 	assert_true(result.ok)
 	assert_false(result.found)
 	assert_eq(result.revision, 0)
+
+func test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks() -> void:
+	var old: Dictionary = _snapshot()
+	old.version = 4
+	old.coins = 731
+	old.player.selected_slot = 5
+	old.inventory = []
+	for index: int in range(24):
+		old.inventory.append({"item": "hoe", "count": 1})
+	old.inventory[5] = {"item": "cow_milk", "count": 234}
+	var original: String = JSON.stringify(old)
+	var checked: Dictionary = SaveSchema.validate(old, catalog)
+	assert_true(checked.ok)
+	assert_eq(JSON.stringify(old), original)
+	assert_eq(checked.snapshot.inventory.size(), 64)
+	assert_eq(checked.snapshot.inventory.slice(0, 24), old.inventory)
+	assert_eq(checked.snapshot.coins, 731)
+	assert_eq(checked.snapshot.player.selected_slot, 5)
+	for index: int in range(24, 64):
+		assert_eq(checked.snapshot.inventory[index], {"item": "", "count": 0})
+	var again: Dictionary = SaveSchema.validate(checked.snapshot, catalog)
+	assert_eq(again.snapshot, checked.snapshot, "Migration only runs once")
+	assert_true(repo.write_profile("test", checked.snapshot, 0).ok)
+	assert_eq(repo.read_profile("test").snapshot.inventory.size(), 64)
+
+func test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures() -> void:
+	var old: Dictionary = _snapshot()
+	old.version = 4
+	assert_eq(SaveSchema.validate(old, catalog).snapshot.inventory.size(), 1)
+	old.version = SaveSchema.VERSION
+	old.inventory = []
+	for index: int in range(24):
+		old.inventory.append({"item": "hoe", "count": 1})
+	var current_legacy: Dictionary = SaveSchema.validate(old, catalog)
+	assert_true(current_legacy.ok)
+	assert_eq(current_legacy.snapshot.inventory.size(), 64, "Live reload can still write an old-sized bag")
+	assert_eq(old.inventory.size(), 24)
+	old.inventory = []
+	for index: int in range(24):
+		old.inventory.append({"item": "unknown_item", "count": 1})
+	assert_false(SaveSchema.validate(old, catalog).ok)
 
 func test_roundtrip_and_previous_revision_backup() -> void:
 	assert_true(repo.write_profile("test", _snapshot(), 0).ok)
@@ -173,3 +254,52 @@ func test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
 	saved.version = 2
 	saved.flower_gardens = [{"id": "flower_garden_01", "flowers": [{"cell": [0, 6], "flower": "flower_01", "planted_at": 1000.0, "growth_started_at": -1.0, "matures_at": 0.0, "progress": 0.0}]}]
 	assert_false(SaveSchema.validate(saved, catalog).ok)
+
+func test_async_save_roundtrip_recovery_and_revision_guard() -> void:
+	assert_true((await repo.write_profile_async("test", _snapshot(), 0)).ok)
+	assert_gte(repo.worker_operations, 2)
+	assert_true((await repo.write_profile_async("test", _snapshot(2), 1)).ok)
+	_write_raw(repo.path("test"), "corrupt")
+	assert_true((await repo.write_profile_async("test", _snapshot(2), 1)).ok)
+	assert_eq(int(repo.read_profile("test").revision), 2)
+	assert_eq(int(repo._read(repo.path("test") + ".bak", "test").revision), 1)
+	var conflict: Dictionary = await repo.write_profile_async("test", _snapshot(2), 1)
+	assert_false(conflict.ok)
+	assert_eq(conflict.code, "conflict")
+
+func test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto() -> void:
+	repo = SlowRepository.new(folder, catalog)
+	var data: Dictionary = _snapshot()
+	_launch_async(data)
+	data.inventory[0].count = 0
+	var overlap: Dictionary = await repo.write_profile_async("test", _snapshot(), 0)
+	assert_eq(overlap.code, "busy")
+	assert_eq(repo.write_profile("test", _snapshot(), 0).code, "busy")
+	var frames: int = 0
+	var started: int = Time.get_ticks_msec()
+	while not _async_finished and Time.get_ticks_msec() - started < 4000:
+		await get_tree().process_frame
+		frames += 1
+	assert_true(_async_finished)
+	assert_true(_async_result.ok)
+	assert_gt(frames, 1, "Disk latency cannot block rendering/input frames")
+	assert_eq(int(repo.read_profile("test").snapshot.inventory[0].count), 1)
+
+func test_async_save_detects_external_change_between_validation_and_commit() -> void:
+	assert_true(repo.write_profile("test", _snapshot(), 0).ok)
+	repo = ChangedRepository.new(folder, catalog)
+	var result: Dictionary = await repo.write_profile_async("test", _snapshot(2), 1)
+	assert_false(result.ok)
+	assert_eq(result.code, "conflict")
+	assert_eq(int(repo.read_profile("test").revision), 50)
+
+func test_async_save_rejects_future_version_and_resource_objects_without_overwriting() -> void:
+	var future: Dictionary = _snapshot()
+	future.version = SaveSchema.VERSION + 1
+	var payload: String = JSON.stringify(future)
+	_write_raw(repo.path("test"), JSON.stringify({"format": "fantasy_farm_save", "payload": payload, "sha256": payload.sha256_text()}))
+	assert_eq((await repo.write_profile_async("test", _snapshot(), 0)).code, "future_version")
+	var data: Dictionary = _snapshot()
+	data.extra = Node.new()
+	assert_false((await repo.write_profile_async("test", data, 0)).ok)
+	data.extra.free()

@@ -3,6 +3,7 @@ extends Node
 
 signal selection_changed(index: int, tool: StringName)
 signal inventory_visibility_changed(open: bool)
+signal shop_visibility_changed(open: bool)
 
 const HOTBAR_SIZE: int = 6
 @export var inventory: InventoryComponent
@@ -12,6 +13,7 @@ const HOTBAR_SIZE: int = 6
 @export_range(1, 99) var starting_seed_amount: int = 12
 var selected_index: int = 0
 var inventory_open: bool = false
+var shop_open: bool = false
 
 func _ready() -> void:
 	if inventory == null:
@@ -25,12 +27,24 @@ func _ready() -> void:
 	inventory.changed.connect(_on_inventory_changed)
 
 func set_inventory_open(open: bool) -> void:
+	if open and shop_open:
+		return
 	if open != inventory_open:
 		inventory_open = open
 		inventory_visibility_changed.emit(open)
 
+func set_shop_open(open: bool) -> void:
+	if open and inventory_open:
+		return
+	if shop_open != open:
+		shop_open = open
+		shop_visibility_changed.emit(open)
+
+func is_menu_open() -> bool:
+	return inventory_open or shop_open
+
 func get_selected_item() -> ItemDefinition:
-	return inventory.slot(selected_index).item if inventory != null else null
+	return inventory.get_slot_item(selected_index) if inventory != null else null
 
 func _on_inventory_changed() -> void:
 	var item: ItemDefinition = get_selected_item()

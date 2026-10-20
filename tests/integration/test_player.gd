@@ -9,6 +9,65 @@ var camera: Camera2D
 var viewport: SubViewport
 var navigation: PlayerNavigationComponent
 
+func test_navigation_reuses_grid_and_bounds_physics_queries_per_frame() -> void:
+	state.set_physics_process(false)
+	navigation.set_physics_process(false)
+	navigation.invalidate_cache()
+	var target: Vector2 = player.position + Vector2(160, -80)
+	navigation.request_focus(target)
+	var before: int = navigation.total_physics_queries
+	for index: int in range(64):
+		var frame_before: int = navigation.total_physics_queries
+		navigation.move(1.0 / 60.0)
+		assert_lte(navigation.total_physics_queries - frame_before, navigation.sampling_budget + 128)
+		if not navigation._planning:
+			break
+		await wait_physics_frames(1)
+	assert_false(navigation._planning)
+	assert_true(navigation.is_navigating)
+	var cold_queries: int = navigation.total_physics_queries - before
+	var original_grid: AStarGrid2D = navigation._grid
+	navigation.request_focus(target)
+	before = navigation.total_physics_queries
+	navigation.move(1.0 / 60.0)
+	assert_eq(navigation._grid, original_grid)
+	assert_lt(navigation.total_physics_queries - before, cold_queries)
+	assert_false(navigation._planning)
+
+func test_harvest_and_mouse_tool_actions_can_be_remapped() -> void:
+	var originals: Dictionary = {}
+	for action: StringName in [&"harvest", &"use_item"]:
+		originals[action] = InputMap.action_get_events(action)
+		InputMap.action_erase_events(action)
+	var harvest: InputEventKey = InputEventKey.new()
+	harvest.physical_keycode = KEY_F
+	InputMap.action_add_event(&"harvest", harvest)
+	var use: InputEventKey = InputEventKey.new()
+	use.physical_keycode = KEY_R
+	InputMap.action_add_event(&"use_item", use)
+	var old: InputEventKey = InputEventKey.new()
+	old.physical_keycode = KEY_E
+	old.pressed = true
+	state._unhandled_input(old)
+	assert_false(state._harvest_requested)
+	harvest.pressed = true
+	state._unhandled_input(harvest)
+	assert_true(state._harvest_requested)
+	var old_mouse: InputEventMouseButton = InputEventMouseButton.new()
+	old_mouse.button_index = MOUSE_BUTTON_RIGHT
+	old_mouse.pressed = true
+	state._unhandled_input(old_mouse)
+	assert_false(state._use_requested)
+	use.pressed = true
+	state._unhandled_input(use)
+	assert_true(state._use_requested)
+	state._use_requested = false
+	state._harvest_requested = false
+	for action: StringName in originals:
+		InputMap.action_erase_events(action)
+		for event: InputEvent in originals[action]:
+			InputMap.action_add_event(action, event)
+
 func before_each() -> void:
 	_release_input()
 	viewport = SubViewport.new()
@@ -328,7 +387,11 @@ func test_unreachable_focus_stops_without_walking_in_place() -> void:
 	await wait_physics_frames(2)
 	var start: Vector2 = player.position
 	_click_world(start + Vector2(96, 0))
-	await wait_seconds(0.5)
+	# Cold-cache planning is budgeted across frames rather than blocking a frame.
+	for frame: int in range(240):
+		await wait_physics_frames(1)
+		if not navigation.is_navigating:
+			break
 	assert_false(navigation.is_navigating)
 	assert_false(state.movement.has_target)
 	assert_eq(player.position, start)

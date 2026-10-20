@@ -61,6 +61,58 @@ func before_each() -> void:
 func _snapshot() -> Dictionary:
 	return adapter.capture("test", 1, timestamp)
 
+func test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip() -> void:
+	var player: FarmPlayer = world.player
+	var stock: ShopCatalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
+	var service: ShopService = ShopService.new(stock, player.wallet, selection.inventory)
+	assert_true(service.buy(stock.offers[0], 3).ok)
+	var saved: Dictionary = _snapshot()
+	assert_eq(saved.coins, 970)
+	var directory: String = "res://.godot/shop_save_tests/" + Crypto.new().generate_random_bytes(8).hex_encode()
+	var repository: LocalSaveRepository = LocalSaveRepository.new(directory, catalog)
+	assert_true(repository.write_profile("test", saved, 0).ok)
+	player.wallet.set_balance(0)
+	var loaded: Dictionary = repository.read_profile("test")
+	assert_true(loaded.ok)
+	assert_true(adapter.restore(loaded.snapshot, timestamp).ok)
+	assert_eq(player.wallet.balance, 970)
+	assert_eq(selection.inventory.count_item(stock.offers[0].item.item_id), 3)
+	DirAccess.remove_absolute(repository.path("test"))
+	DirAccess.remove_absolute(directory)
+
+func test_saving_mid_attraction_keeps_ground_quantity_and_position_until_arrival() -> void:
+	var player: FarmPlayer = world.player
+	player.position = Vector2(1500, 900)
+	var pickup: ItemPickup = preload("res://scenes/objects/item_pickup.tscn").instantiate() as ItemPickup
+	pickup.item = load("res://items/animal_produces/chicken_egg.tres") as ItemDefinition
+	pickup.amount = 5
+	pickup.persistent_id = &"flight_test"
+	pickup.position = player.position + Vector2(40, 0)
+	world.add_child(pickup)
+	var collector: ItemCollector = player.get_node("ItemCollector") as ItemCollector
+	var before: int = selection.inventory.count_item(pickup.item.item_id)
+	assert_true(pickup.attract_to(collector))
+	pickup._physics_process(0.03)
+	assert_lt(pickup.sprite.position.x, 0.0)
+	var snapshot: Dictionary = _snapshot()
+	var found: bool = false
+	for record: Dictionary in snapshot.pickups:
+		if record.id == "flight_test":
+			found = true
+			assert_eq(record.amount, 5)
+			assert_eq(record.position, [1540.0, 900.0])
+	assert_true(found)
+	assert_eq(selection.inventory.count_item(pickup.item.item_id), before)
+	assert_true(adapter.restore(snapshot, timestamp).ok)
+	assert_eq(selection.inventory.count_item(&"chicken_egg"), before)
+	for child: Node in world.get_children():
+		if child is ItemPickup and child.persistent_id == &"flight_test":
+			assert_false(child.is_attracting())
+			assert_eq(child.amount, 5)
+			assert_eq(child.position, Vector2(1540, 900))
+			return
+	fail_test("Restored ground pile must still exist")
+
 func _actor(id: String) -> AnimalActor:
 	for pen_name: String in ["CoopPen", "BarnPen"]:
 		for node: Node in world.get_node(pen_name).get_children():

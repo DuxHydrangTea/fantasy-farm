@@ -41,7 +41,7 @@ func _on_viewport_size_changed() -> void:
 	camera.zoom = Vector2.ONE * value
 
 func _unhandled_input(event: InputEvent) -> void:
-	if selection.inventory_open:
+	if selection.is_menu_open():
 		return
 	var mouse: InputEventMouseButton = event as InputEventMouseButton
 	if mouse == null or not mouse.pressed:

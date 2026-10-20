@@ -13,6 +13,17 @@ extends Node
 var has_focus: bool = false
 var is_navigating: bool = false
 var focus_position: Vector2 = Vector2.ZERO
+@export_range(16, 512, 16) var sampling_budget: int = 256
+var _sampled: Dictionary[Vector2i, bool] = {}
+var _regions: Array[Rect2i] = []
+var _region_index: int = 0
+var _scan_cursor: int = 0
+var _background_cursor: int = 0
+var _planning: bool = false
+var _invalidate_pending: bool = false
+var _footprint_signature: Array = []
+var total_physics_queries: int = 0
+var _shared_query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 var _grid: AStarGrid2D
 var _path: PackedVector2Array = PackedVector2Array()
 var _path_index: int = 0
@@ -23,6 +34,53 @@ var _blocked_cells: Dictionary[Vector2i, bool] = {}
 func _ready() -> void:
 	assert(movement != null and animation != null and camera != null and collision_shape != null,
 		"Assign player navigation references")
+	get_tree().node_added.connect(_geometry_changed)
+	get_tree().node_removed.connect(_geometry_changed)
+	_connect_tile_changes.call_deferred()
+
+func _connect_tile_changes() -> void:
+	var farm: FarmingController = farming_actions.get_farming_controller() if farming_actions != null else null
+	if farm != null:
+		for child: Node in farm.get_parent().get_children():
+			if child is TileMapLayer and child.tile_set != null and child.tile_set.get_physics_layers_count() > 0:
+				child.changed.connect(invalidate_cache)
+
+func _geometry_changed(node: Node) -> void:
+	if node is StaticBody2D and not _invalidate_pending:
+		_invalidate_pending = true
+		invalidate_cache.call_deferred()
+
+func invalidate_cache() -> void:
+	_invalidate_pending = false
+	_sampled.clear()
+	_blocked_cells.clear()
+	_background_cursor = 0
+	if _grid != null:
+		_grid.fill_solid_region(_grid.region, true)
+	if has_focus and is_navigating:
+		_needs_path = true
+
+func invalidate_region(world_rect: Rect2) -> void:
+	if _grid == null:
+		return
+	var area: Rect2i = Rect2i(_cell(world_rect.position), Vector2i.ONE).expand(_cell(world_rect.end)).grow(1).intersection(_grid.region)
+	for y: int in range(area.position.y, area.end.y):
+		for x: int in range(area.position.x, area.end.x):
+			var cell: Vector2i = Vector2i(x, y)
+			_sampled.erase(cell)
+			_grid.set_point_solid(cell, true)
+
+func _physics_process(_delta: float) -> void:
+	if is_navigating:
+		return
+	_prepare_grid()
+	var left: int = sampling_budget
+	while _background_cursor < _grid.region.size.x * _grid.region.size.y and left > 0:
+		var cell: Vector2i = _scan_cell(_grid.region, _background_cursor)
+		_background_cursor += 1
+		if not _sampled.has(cell):
+			_sample(cell)
+			left -= 1
 
 func request_focus(point: Vector2) -> void:
 	cancel()
@@ -37,6 +95,7 @@ func cancel() -> void:
 	_needs_path = false
 	_path.clear()
 	_path_index = 0
+	_planning = false
 	_replans = 0
 	_blocked_cells.clear()
 	movement.cancel_target()
@@ -46,8 +105,11 @@ func move(delta: float) -> void:
 		return
 	if _needs_path:
 		_needs_path = false
-		if not _build_path():
-			_finish()
+		_start_plan()
+	if _planning:
+		movement.stop()
+		_advance_plan()
+		return
 	if not is_navigating:
 		movement.stop()
 		_face_focus()
@@ -90,6 +152,10 @@ func _facing_point() -> Vector2:
 	return farming.farmland.to_global(farming.farmland.map_to_local(farming.world_to_cell(focus_position)))
 
 func _replan() -> void:
+	var region: Rect2 = Rect2(movement.body.global_position, Vector2.ZERO)
+	if _path_index < _path.size():
+		region = region.expand(_path[_path_index])
+	invalidate_region(region.grow(64.0))
 	movement.cancel_target()
 	movement.stop()
 	_replans += 1
@@ -99,16 +165,18 @@ func _replan() -> void:
 		_needs_path = true
 
 func _query(point: Vector2) -> PhysicsShapeQueryParameters2D:
-	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	var query: PhysicsShapeQueryParameters2D = _shared_query
 	query.shape = collision_shape.shape
 	query.transform = collision_shape.global_transform
 	query.transform.origin += point - movement.body.global_position
 	query.collision_mask = movement.body.collision_mask
 	query.exclude = [movement.body.get_rid()]
+	query.motion = Vector2.ZERO
 	query.margin = 0.25
 	return query
 
 func _point_clear(point: Vector2) -> bool:
+	total_physics_queries += 1
 	return movement.body.get_world_2d().direct_space_state.intersect_shape(_query(point), 1).is_empty()
 
 func _segment_clear(from: Vector2, to: Vector2) -> bool:
@@ -116,6 +184,7 @@ func _segment_clear(from: Vector2, to: Vector2) -> bool:
 		return false
 	var query: PhysicsShapeQueryParameters2D = _query(from)
 	query.motion = to - from
+	total_physics_queries += 1
 	var fractions: PackedFloat32Array = movement.body.get_world_2d().direct_space_state.cast_motion(query)
 	return fractions[0] >= 0.9999
 
@@ -146,42 +215,79 @@ func _goal_valid(point: Vector2) -> bool:
 			return false
 	return _in_focus_range(point)
 
-func _build_path() -> bool:
-	_path.clear()
-	_path_index = 0
-	var origin: Vector2 = movement.body.global_position
-	if _in_focus_range(origin):
-		is_navigating = false
-		return true
+func _prepare_grid() -> void:
 	var bounds: Rect2i = Rect2i(Vector2i.ZERO, Vector2i(
 		floori(float(camera.limit_right - camera.limit_left) / cell_size) - 1,
 		floori(float(camera.limit_bottom - camera.limit_top) / cell_size) - 1))
-	if not bounds.has_point(_cell(origin)) or not bounds.has_point(_cell(focus_position)):
-		return false
-	# Most clicks need only a small area. Expand before declaring a target unreachable.
+	var footprint: Array = [collision_shape.shape.get_rid(), collision_shape.shape.get_rect(), collision_shape.transform, movement.body.global_scale, movement.body.global_rotation, movement.body.collision_mask]
+	if _grid != null and _grid.region == bounds and _grid.cell_size == Vector2.ONE * cell_size and _grid.offset == Vector2(camera.limit_left, camera.limit_top) + Vector2.ONE * cell_size and footprint == _footprint_signature:
+		return
+	_footprint_signature = footprint
+	_grid = AStarGrid2D.new()
+	_grid.region = bounds
+	_grid.cell_size = Vector2.ONE * cell_size
+	_grid.offset = Vector2(camera.limit_left, camera.limit_top) + Vector2.ONE * cell_size
+	_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	_grid.update()
+	invalidate_cache()
+
+func _scan_cell(region: Rect2i, cursor: int) -> Vector2i:
+	return region.position + Vector2i(cursor % region.size.x, cursor / region.size.x)
+
+func _sample(cell: Vector2i) -> void:
+	var solid: bool = not _point_clear(_point(cell))
+	_sampled[cell] = solid
+	_grid.set_point_solid(cell, solid or _blocked_cells.has(cell))
+
+func _start_plan() -> void:
+	_prepare_grid()
+	_needs_path = false
+	_face_focus()
+	_path.clear()
+	_path_index = 0
+	_planning = false
+	var origin: Vector2 = movement.body.global_position
+	if _in_focus_range(origin):
+		_finish()
+		return
+	if not _grid.region.has_point(_cell(origin)) or not _grid.region.has_point(_cell(focus_position)):
+		_finish()
+		return
 	var corridor: Rect2i = Rect2i(_cell(origin), Vector2i.ONE).expand(_cell(focus_position))
+	_regions.clear()
 	for padding: int in [16, 64]:
-		var region: Rect2i = corridor.grow(padding).intersection(bounds)
+		var region: Rect2i = corridor.grow(padding).intersection(_grid.region)
+		if not _regions.has(region):
+			_regions.append(region)
+	if not _regions.has(_grid.region):
+		_regions.append(_grid.region)
+	_region_index = 0
+	_scan_cursor = 0
+	_planning = true
+
+func _advance_plan() -> void:
+	var left: int = sampling_budget
+	while _region_index < _regions.size():
+		var region: Rect2i = _regions[_region_index]
+		while _scan_cursor < region.size.x * region.size.y:
+			var cell: Vector2i = _scan_cell(region, _scan_cursor)
+			if not _sampled.has(cell):
+				if left <= 0:
+					return
+				_sample(cell)
+				left -= 1
+			_scan_cursor += 1
 		if _build_path_in_region(region):
-			return true
-		if region == bounds:
-			return false
-	return _build_path_in_region(bounds)
+			_planning = false
+			return
+		_region_index += 1
+		_scan_cursor = 0
+	_planning = false
+	_finish()
 
 func _build_path_in_region(region: Rect2i) -> bool:
 	_path.clear()
 	var origin: Vector2 = movement.body.global_position
-	_grid = AStarGrid2D.new()
-	_grid.region = region
-	_grid.cell_size = Vector2.ONE * cell_size
-	# Include the centers of 16px farm tiles/gates, not only their quarter points.
-	_grid.offset = Vector2(camera.limit_left, camera.limit_top) + Vector2.ONE * cell_size
-	_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
-	_grid.update()
-	for y: int in range(region.position.y, region.end.y):
-		for x: int in range(region.position.x, region.end.x):
-			var cell: Vector2i = Vector2i(x, y)
-			_grid.set_point_solid(cell, _blocked_cells.has(cell) or not _point_clear(_point(cell)))
 	var start: Vector2i = Vector2i(-1, -1)
 	var start_distance: float = INF
 	var origin_cell: Vector2i = _cell(origin)
@@ -222,16 +328,24 @@ func _build_path_in_region(region: Rect2i) -> bool:
 	return true
 
 func _smooth_path(origin: Vector2) -> void:
-	# Keep only collision-clear turns; stopping at every grid cell feels jerky.
+	# Collapse straight runs without physics work; cap optional corner shortcuts.
+	var turns: PackedVector2Array = PackedVector2Array()
+	for index: int in range(_path.size()):
+		if index == 0 or index == _path.size() - 1 or (_path[index] - _path[index - 1]) != (_path[index + 1] - _path[index]):
+			turns.append(_path[index])
 	var smoothed: PackedVector2Array = PackedVector2Array()
 	var next_index: int = 0
-	while next_index < _path.size():
+	var checks: int = 0
+	while next_index < turns.size():
 		var chosen: int = next_index
-		for index: int in range(_path.size() - 1, next_index - 1, -1):
-			if _segment_clear(origin, _path[index]):
+		for index: int in range(turns.size() - 1, next_index, -1):
+			if checks >= 32:
+				break
+			checks += 1
+			if _segment_clear(origin, turns[index]):
 				chosen = index
 				break
-		origin = _path[chosen]
+		origin = turns[chosen]
 		smoothed.append(origin)
 		next_index = chosen + 1
 	_path = smoothed

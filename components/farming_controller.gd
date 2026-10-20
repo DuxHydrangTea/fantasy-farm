@@ -7,6 +7,7 @@ const CROP_SCENE: PackedScene = preload("res://scenes/crops/crop.tscn")
 signal soil_changed(cell: Vector2i, previous: int, current: int)
 signal crop_planted(cell: Vector2i, crop: Node2D)
 signal crop_harvested(cell: Vector2i)
+signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent)
 
 enum Soil { UNTILLED, DRY, WET }
 
@@ -20,6 +21,8 @@ enum Soil { UNTILLED, DRY, WET }
 @export_flags_2d_physics var obstacle_mask: int = 1
 @export var time_manager: FarmClock
 var _crops: Dictionary[Vector2i, Crop] = {}
+var _growth: GrowthSchedule = GrowthSchedule.new()
+var _harvesting: bool = false
 
 # Runtime occupation, for future crops/placed objects without a physics body.
 var _occupied: Dictionary[Vector2i, bool] = {}
@@ -65,11 +68,14 @@ func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor
 	if definition == null or not definition.is_valid():
 		return false
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
+	crop.time_manager = time_manager
 	get_parent().add_child(crop)
 	# The sprite frame is 16x32; anchor its bottom at the bottom of the soil cell.
 	var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)
 	crop.global_transform = farmland.global_transform * Transform2D(0.0, center)
 	crop.configure(definition, time_manager.now())
+	crop.play_sprout()
+	_schedule_crop(crop)
 	_crops[cell] = crop
 	inventory.remove_from_slot(slot_index, 1)
 	crop_planted.emit(cell, crop)
@@ -83,22 +89,36 @@ func can_harvest(cell: Vector2i) -> bool:
 	return crop.is_mature() and crop.definition.has_valid_harvest()
 
 func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
-	if inventory == null or not can_harvest(cell):
+	if _harvesting or inventory == null or not can_harvest(cell):
 		return false
 	var crop: Crop = get_crop(cell)
 	var produce: ItemDefinition = crop.definition.harvest_item as ItemDefinition
 	if inventory.capacity_for(produce) < crop.definition.harvest_amount:
+		inventory.report_capacity_blocked(produce, crop.definition.harvest_amount)
 		return false
-	inventory.add(produce, crop.definition.harvest_amount)
+	var requested: int = crop.definition.harvest_amount
+	var origin: Vector2 = farmland.to_global(farmland.map_to_local(cell))
+	_harvesting = true
+	var accepted: int = inventory.add(produce, requested)
+	if accepted == 0:
+		_harvesting = false
+		return false
 	_crops.erase(cell)
-	crop.queue_free()
+	_growth.cancel(crop)
+	crop.retire_after_harvest()
 	crop_harvested.emit(cell)
+	harvest_yielded.emit(produce, accepted, origin, inventory)
+	_harvesting = false
 	return true
 
 func _refresh_crops(timestamp: float) -> void:
-	for crop: Crop in _crops.values():
-		if is_instance_valid(crop) and not crop.is_mature():
-			crop.refresh(timestamp)
+	for crop: Crop in _growth.take_due(timestamp):
+		crop.refresh(timestamp)
+		_schedule_crop(crop)
+
+func _schedule_crop(crop: Crop) -> void:
+	if not crop.is_mature():
+		_growth.schedule(crop, crop.planted_at + float(crop.stage + 1) / 3.0 * (crop.matures_at - crop.planted_at))
 
 func crop_cells() -> Array[Vector2i]:
 	return _crops.keys()
@@ -119,6 +139,11 @@ func can_restore_soil() -> bool:
 	return _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) and _valid_terrain(wet_soil, wet_terrain_set, wet_terrain)
 
 func restore_soil(records: Array) -> void:
+	# Retiring visuals have already left the logical crop dictionary.
+	for child: Node in get_parent().get_children():
+		if child is Crop and child.is_retiring():
+			child.free()
+	_growth.clear()
 	for crop: Crop in _crops.values():
 		if is_instance_valid(crop):
 			crop.free()
@@ -139,10 +164,12 @@ func restore_soil(records: Array) -> void:
 
 func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, deadline: float, progress: float, now: float) -> void:
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
+	crop.time_manager = time_manager
 	get_parent().add_child(crop)
 	var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)
 	crop.global_transform = farmland.global_transform * Transform2D(0.0, center)
 	crop.restore_progress(definition, planted, deadline, progress, now)
+	_schedule_crop(crop)
 	_crops[cell] = crop
 
 func set_cell_occupied(cell: Vector2i, occupied: bool) -> void:
@@ -167,6 +194,9 @@ func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	wet_soil.set_cells_terrain_connect([_layer_cell(wet_soil, cell)], wet_terrain_set, wet_terrain, false)
 	if get_soil_state(cell) != Soil.WET:
 		return false
+	var crop: Crop = get_crop(cell)
+	if crop != null:
+		crop.react(4.0)
 	soil_changed.emit(cell, Soil.DRY, Soil.WET)
 	return true
 

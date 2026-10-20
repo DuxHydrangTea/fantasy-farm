@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 3
+const VERSION: int = 5
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid") -> Dictionary:
@@ -44,9 +44,28 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 					return failure("Ô hoa cũ ngoài phạm vi.")
 				var mapped: Vector2i = FlowerLayout.from_legacy(cell)
 				flower.cell = [mapped.x, mapped.y]
+		data.version = 3
+	# Version 3 predates currency. One-time grant, never on subsequent loads.
+	if data.get("version") == 3:
+		data = data.duplicate(true)
+		data.version = 4
+		data.coins = WalletComponent.STARTING_COINS
+	# The old 24-slot bag cannot hold the current seed/feed/produce catalog.
+	# Append independent empty slots; keep item stacks, hotbar and currency intact.
+	# Also accept a 24-slot snapshot written by an old, still-running player
+	# instance after scripts reload; a restart will instantiate the new bag size.
+	if data.get("version") == 4 or (data.get("version") == VERSION and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+		if not data.get("inventory") is Array:
+			return failure("Túi đồ cũ không hợp lệ.")
+		data = data.duplicate(true)
+		if data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT:
+			while data.inventory.size() < InventoryComponent.DEFAULT_SLOT_COUNT:
+				data.inventory.append({"item": "", "count": 0})
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Header hoặc phiên bản file không hợp lệ.")
+	if not number(data.get("coins"), 0, WalletComponent.MAX_COINS, true):
+		return failure("Số xu không hợp lệ.")
 	for key: String in ["inventory", "soil", "crops", "animals", "troughs", "pickups", "flower_gardens"]:
 		if not data.get(key) is Array or data[key].size() > 100000:
 			return failure("Danh sách không hợp lệ: " + key)

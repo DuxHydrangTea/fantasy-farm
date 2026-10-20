@@ -3,11 +3,14 @@ extends Node
 
 # Fixed-slot inventory adapted from the Godot skill's inventory.gd template.
 signal changed
+signal capacity_blocked(item: ItemDefinition, requested: int, available: int)
+const DEFAULT_SLOT_COUNT: int = 64
+const LEGACY_SLOT_COUNT: int = 24
 
 const HOE: Resource = preload("res://items/tools/hoe.tres")
 const WATER: Resource = preload("res://items/tools/watering_can.tres")
 
-@export var slot_count: int = 24
+@export var slot_count: int = DEFAULT_SLOT_COUNT
 @export var starting_tools: bool = true
 var _slots: Array[Dictionary] = []
 
@@ -29,6 +32,17 @@ func slot(index: int) -> Dictionary:
 	if index < 0 or index >= _slots.size():
 		return {"item": null, "count": 0}
 	return _slots[index].duplicate()
+
+func get_slot_item(index: int) -> ItemDefinition:
+	_ensure_slots()
+	return _slots[index].item if index >= 0 and index < _slots.size() else null
+
+func get_slot_count(index: int) -> int:
+	_ensure_slots()
+	return int(_slots[index].count) if index >= 0 and index < _slots.size() else 0
+
+func is_empty_slot(index: int) -> bool:
+	return get_slot_item(index) == null
 
 ## One validated replacement, so UI never sees a half-restored inventory.
 func replace_slots(stacks: Array[Dictionary]) -> bool:
@@ -105,6 +119,13 @@ func capacity_for(item: ItemDefinition) -> int:
 		elif item.matches(stack.item):
 			available += maxi(0, item.get_stack_limit() - int(stack.count))
 	return available
+
+func report_capacity_blocked(item: ItemDefinition, requested: int) -> void:
+	if item == null or requested <= 0:
+		return
+	var available: int = capacity_for(item)
+	if available < requested:
+		capacity_blocked.emit(item, requested, available)
 
 func count_item(item_id: StringName) -> int:
 	_ensure_slots()

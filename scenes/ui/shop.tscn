@@ -1,0 +1,143 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/shop_ui.gd" id="1_ui"]
+[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="2_theme"]
+
+[node name="ShopUI" type="CanvasLayer" node_paths=PackedStringArray("root", "panel", "grid", "balance_label", "details", "status", "quantity", "buy_button", "close_button", "categories")]
+layer = 25
+script = ExtResource("1_ui")
+root = NodePath("Root")
+panel = NodePath("Root/Center/Panel")
+grid = NodePath("Root/Center/Panel/Body/Scroll/Grid")
+balance_label = NodePath("Root/Center/Panel/Body/Header/Balance")
+details = NodePath("Root/Center/Panel/Body/Details")
+status = NodePath("Root/Center/Panel/Body/Status")
+quantity = NodePath("Root/Center/Panel/Body/Checkout/Quantity")
+buy_button = NodePath("Root/Center/Panel/Body/Checkout/Buy")
+close_button = NodePath("Root/Center/Panel/Body/Header/Close")
+categories = NodePath("Root/Center/Panel/Body/Categories")
+
+[node name="Root" type="Control" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+custom_minimum_size = Vector2(760, 660)
+layout_mode = 2
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "CỬA HÀNG LÁI BUÔN"
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+layout_mode = 2
+text = "1000 xu"
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 40)
+tooltip_text = "Đóng (Esc / E)"
+text = "×"
+
+[node name="Categories" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Crops" type="Button" parent="Root/Center/Panel/Body/Categories"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Hạt cây trồng"
+
+[node name="Feed" type="Button" parent="Root/Center/Panel/Body/Categories"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Thức ăn"
+
+[node name="Flowers" type="Button" parent="Root/Center/Panel/Body/Categories"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "Hạt hoa"
+
+[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 6
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 50)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Checkout" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Root/Center/Panel/Body/Checkout"]
+layout_mode = 2
+text = "Số lượng"
+
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Checkout"]
+layout_mode = 2
+custom_minimum_size = Vector2(108, 48)
+min_value = 1.0
+max_value = 99.0
+value = 1.0
+rounded = true
+
+[node name="Buy" type="Button" parent="Root/Center/Panel/Body/Checkout"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mua"
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Vật phẩm được đưa vào túi đồ · Esc / E / Tab để đóng"

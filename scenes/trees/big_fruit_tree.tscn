@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cwyqrqjfeb25f" path="res://assets/Trees/Big_Fruit_Tree.png" id="1_tree"]
 
+[ext_resource type="Material" path="res://resources/effects/tree_wind_32.tres" id="1_ei5lo"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trunk"]
 size = Vector2(6, 3)
 
@@ -9,6 +11,7 @@ size = Vector2(6, 3)
 texture_filter = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=939382056]
+material = ExtResource("1_ei5lo")
 position = Vector2(0, -16)
 texture = ExtResource("1_tree")
 hframes = 3

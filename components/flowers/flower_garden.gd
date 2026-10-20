@@ -9,6 +9,7 @@ const POT_SCENE: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
 @export var persistent_id: StringName = &"flower_garden_01"
 @export var time_manager: FarmClock
 var pots: Dictionary[Vector2i, FlowerPot] = {}
+var _growth: GrowthSchedule = GrowthSchedule.new()
 var starter_flowers_added: bool = false
 var _initial_supplies: Array[Dictionary] = []
 const SIZE: Vector2 = Vector2(384, 256)
@@ -24,6 +25,7 @@ func _ready() -> void:
 			pot.position = Layout.position_for(pot.cell)
 			pot.garden = self
 			pot_container.add_child(pot)
+			pot.changed.connect(_schedule_pot.bind(pot))
 			pots[pot.cell] = pot
 	if Engine.is_editor_hint():
 		add_starter_flowers(1000.0)
@@ -58,8 +60,14 @@ func add_starter_flowers(now: float) -> void:
 			"matures_at": planted + flower.growth_seconds if watered else 0.0, "progress": progress[index]}, flower, now)
 
 func refresh(now: float) -> void:
-	for pot: FlowerPot in pots.values():
+	for pot: FlowerPot in _growth.take_due(now):
 		pot.refresh(now)
+		_schedule_pot(pot)
+
+func _schedule_pot(pot: FlowerPot) -> void:
+	_growth.cancel(pot)
+	if pot.definition != null and pot.growth_started_at >= 0.0 and not pot.is_mature():
+		_growth.schedule(pot, pot.growth_started_at + float(pot.stage + 1) / 4.0 * (pot.matures_at - pot.growth_started_at))
 
 func capture(now: float) -> Dictionary:
 	var flowers: Array[Dictionary] = []
@@ -69,6 +77,7 @@ func capture(now: float) -> Dictionary:
 	return {"id": String(persistent_id), "flowers": flowers, "starter_flowers_added": starter_flowers_added}
 
 func reset() -> void:
+	_growth.clear()
 	starter_flowers_added = false
 	for pot: FlowerPot in pots.values():
 		pot.clear()
