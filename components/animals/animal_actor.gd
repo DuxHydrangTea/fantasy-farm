@@ -34,6 +34,8 @@ var _stage_visual_pending: bool = false
 var waterfowl: Waterfowl
 
 func _ready() -> void:
+	$NeedsDisplay.hide()
+	add_to_group(&"animal_status_targets")
 	if pen == null:
 		pen = get_parent() as Pen
 	if definition == null or not definition.is_valid():
@@ -41,7 +43,6 @@ func _ready() -> void:
 		return
 	movement.speed = definition.move_speed
 	animation.single_direction_faces_left = definition.faces_left
-	$NeedsDisplay.visible = show_needs
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = definition.footprint
 	$CollisionShape2D.shape = shape
@@ -143,3 +144,9 @@ func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: Pick
 func _update_needs_display(food: float, water: float) -> void:
 	$NeedsDisplay/Satiety.value = food
 	$NeedsDisplay/Hydration.value = water
+
+func set_status_focused(value: bool) -> void:
+	$NeedsDisplay.visible = value and show_needs and definition != null
+
+func get_status_sprite() -> Node2D:
+	return sprite

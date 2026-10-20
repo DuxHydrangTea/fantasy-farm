@@ -1,0 +1,122 @@
+extends Node2D
+## Player-side presentation only: one focused target and one nearby mouse target.
+## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
+const FarmingActions = preload("res://components/farming_action_component.gd")
+const Garden = preload("res://components/flowers/flower_garden.gd")
+const Actor = preload("res://components/animals/animal_actor.gd")
+const Selection = preload("res://components/tool_selection_component.gd")
+@export var mouse_padding: float = 5.0
+@export var animal_focus_reach: float = 32.0
+@export var refresh_interval: float = 0.05
+@onready var player: Node2D = get_parent() as Node2D
+@onready var animation: AnimationComponent = player.get_node("AnimationComponent") as AnimationComponent
+@onready var actions: FarmingActions = player.get_node("FarmingActionComponent") as FarmingActions
+@onready var selection: Selection = player.get_node("ToolSelection") as Selection
+var _visible: Array[Node2D] = []
+var _bounds: Dictionary[Texture2D, Rect2] = {}
+var _elapsed: float = 0.0
+
+func _physics_process(delta: float) -> void:
+	_elapsed += delta
+	if _elapsed < refresh_interval:
+		return
+	_elapsed = 0.0
+	refresh_at(get_global_mouse_position(), get_viewport().get_visible_rect().has_point(get_viewport().get_mouse_position()))
+
+func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
+	var next: Array[Node2D] = []
+	if not selection.inventory_open:
+		var focused: Node2D = _focused_target()
+		if is_instance_valid(focused):
+			next.append(focused)
+		var hovered: Node2D = _hovered_target(mouse_world) if pointer_inside else null
+		if is_instance_valid(hovered) and not next.has(hovered):
+			next.append(hovered)
+	for target: Node2D in _visible:
+		if is_instance_valid(target) and not target.is_queued_for_deletion() and not next.has(target):
+			target.set_status_focused(false)
+	for target: Node2D in next:
+		target.set_status_focused(true)
+	_visible = next
+
+func _exit_tree() -> void:
+	for target: Node2D in _visible:
+		if is_instance_valid(target) and not target.is_queued_for_deletion():
+			target.set_status_focused(false)
+
+func _focused_target() -> Node2D:
+	var troughs: Node = player.get_node_or_null("TroughInteraction")
+	if troughs != null and is_instance_valid(troughs.focused_trough):
+		return null
+	var flowers: Node = player.get_node_or_null("FlowerInteraction")
+	if flowers != null and is_instance_valid(flowers.focused_pot):
+		return flowers.focused_pot as Node2D
+	var nearest: Actor
+	var distance: float = animal_focus_reach * animal_focus_reach
+	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
+		var animal: Actor = node as Actor
+		if not is_instance_valid(animal) or animal.is_queued_for_deletion() or not animal.show_needs:
+			continue
+		var offset: Vector2 = animal.global_position - player.global_position
+		if offset.length_squared() <= distance and offset.normalized().dot(animation.facing_vector) > 0.5:
+			distance = offset.length_squared()
+			nearest = animal
+	if nearest != null:
+		return nearest
+	var farm: Node = actions.get_farming_controller()
+	return farm.get_crop(actions.get_focused_cell()) as Node2D if farm != null else null
+
+func _hovered_target(point: Vector2) -> Node2D:
+	var candidates: Array[Node2D] = []
+	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
+		var animal: Actor = node as Actor
+		if is_instance_valid(animal) and animal.show_needs:
+			candidates.append(animal)
+	for node: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
+		for pot: Node2D in (node as Garden).pots.values():
+			if pot.definition != null:
+				candidates.append(pot)
+	var farm: Node = actions.get_farming_controller()
+	if farm != null and farm.farmland != null and farm.farmland.tile_set != null:
+		var center: Vector2i = farm.world_to_cell(point)
+		for y: int in range(-2, 3):
+			for x: int in range(-2, 3):
+				var crop: Node2D = farm.get_crop(center + Vector2i(x, y)) as Node2D
+				if crop != null:
+					candidates.append(crop)
+	var nearest: Node2D
+	var distance: float = INF
+	for target: Node2D in candidates:
+		if target.is_queued_for_deletion():
+			continue
+		var sprite: Node2D = target.get_status_sprite()
+		var rect: Rect2 = _sprite_bounds(sprite)
+		var local_point: Vector2 = sprite.to_local(point)
+		if rect.has_area() and rect.grow(mouse_padding).has_point(local_point):
+			var score: float = point.distance_squared_to(sprite.to_global(rect.get_center()))
+			if score < distance:
+				distance = score
+				nearest = target
+	return nearest
+
+func _sprite_bounds(sprite: Node2D) -> Rect2:
+	var texture: Texture2D
+	if sprite is Sprite2D:
+		texture = (sprite as Sprite2D).texture
+	elif sprite is AnimatedSprite2D:
+		var animated: AnimatedSprite2D = sprite as AnimatedSprite2D
+		if animated.sprite_frames != null and animated.sprite_frames.has_animation(animated.animation) and animated.sprite_frames.get_frame_count(animated.animation) > 0:
+			texture = animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+	if texture == null:
+		return Rect2()
+	if not _bounds.has(texture):
+		var image: Image = texture.get_image()
+		_bounds[texture] = Rect2(image.get_used_rect()) if image != null else Rect2(Vector2.ZERO, texture.get_size())
+	var used: Rect2 = _bounds[texture]
+	var size: Vector2 = texture.get_size()
+	if bool(sprite.get("flip_h")):
+		used.position.x = size.x - used.end.x
+	if bool(sprite.get("flip_v")):
+		used.position.y = size.y - used.end.y
+	used.position += Vector2(sprite.get("offset")) - (size * 0.5 if bool(sprite.get("centered")) else Vector2.ZERO)
+	return used

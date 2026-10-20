@@ -11,6 +11,15 @@ var stage: int = 0
 @onready var progress_bar: ProgressBar = $Progress/Bar
 @onready var progress_frame: Control = $Progress
 
+func _ready() -> void:
+	progress_frame.hide()
+
+func set_status_focused(value: bool) -> void:
+	progress_frame.visible = value and definition != null
+
+func get_status_sprite() -> Node2D:
+	return sprite
+
 func configure(crop: Definition, timestamp: float) -> void:
 	definition = crop
 	planted_at = timestamp

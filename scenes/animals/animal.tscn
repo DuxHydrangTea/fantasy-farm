@@ -1,15 +1,15 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://d7mgxqs0kunn"]
 
-[ext_resource type="Script" path="res://components/animals/animal_actor.gd" id="1_actor"]
-[ext_resource type="Script" path="res://components/movement_component.gd" id="2_move"]
-[ext_resource type="Script" path="res://components/animation_component.gd" id="3_animation"]
-[ext_resource type="Script" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
-[ext_resource type="Script" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
-[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_frame"]
-[ext_resource type="Script" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
-[ext_resource type="Script" path="res://components/animals/animal_foraging_component.gd" id="8_foraging"]
-[ext_resource type="Script" path="res://components/animals/animal_growth_component.gd" id="9_growth"]
-[ext_resource type="Script" path="res://components/animals/animal_production_component.gd" id="10_production"]
+[ext_resource type="Script" uid="uid://dtvb48c6pv5w3" path="res://components/animals/animal_actor.gd" id="1_actor"]
+[ext_resource type="Script" uid="uid://rg3qbbj36qm8" path="res://components/movement_component.gd" id="2_move"]
+[ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_animation"]
+[ext_resource type="Script" uid="uid://dt1pemh1bujdn" path="res://components/animals/animal_needs_component.gd" id="4_needs"]
+[ext_resource type="Script" uid="uid://d0ut4g826op3x" path="res://components/animals/animal_wander_component.gd" id="5_wander"]
+[ext_resource type="Texture2D" uid="uid://j0sv7dsytcv" path="res://assets/Ui/progress_bar.png" id="6_frame"]
+[ext_resource type="Script" uid="uid://cdn3d642kfvts" path="res://components/animals/animal_behaviour_component.gd" id="7_dufb3"]
+[ext_resource type="Script" uid="uid://cu5incrqxh7bu" path="res://components/animals/animal_foraging_component.gd" id="8_foraging"]
+[ext_resource type="Script" uid="uid://b15j1mkmo6qj4" path="res://components/animals/animal_growth_component.gd" id="9_growth"]
+[ext_resource type="Script" uid="uid://dxfto08scucm4" path="res://components/animals/animal_production_component.gd" id="10_production"]
 
 [sub_resource type="RectangleShape2D" id="Feet"]
 size = Vector2(10, 6)
@@ -56,6 +56,7 @@ animation = NodePath("../AnimationComponent")
 collision = NodePath("../CollisionShape2D")
 
 [node name="NeedsDisplay" type="Node2D" parent="." unique_id=1867274484]
+visible = false
 z_index = 2
 position = Vector2(0, -35)
 
@@ -101,11 +102,11 @@ show_percentage = false
 [node name="BehaviourComponent" type="Node" parent="." unique_id=658705467]
 script = ExtResource("7_dufb3")
 
-[node name="ForagingComponent" type="Node" parent="."]
+[node name="ForagingComponent" type="Node" parent="." unique_id=975199756]
 script = ExtResource("8_foraging")
 
-[node name="GrowthComponent" type="Node" parent="."]
+[node name="GrowthComponent" type="Node" parent="." unique_id=26681935]
 script = ExtResource("9_growth")
 
-[node name="ProductionComponent" type="Node" parent="."]
+[node name="ProductionComponent" type="Node" parent="." unique_id=270710935]
 script = ExtResource("10_production")

@@ -31,7 +31,7 @@ func before_each() -> void:
 	selection = player.get_node("ToolSelection")
 	interaction = player.get_node("FlowerInteraction")
 	pot = garden.pots[Vector2i.ZERO]
-	player.global_position = pot.global_position + Vector2(0, 20)
+	player.global_position = pot.global_position + Vector2(0, 10)
 	state.animation.face(Vector2.UP)
 	var seed: Item = load("res://items/seeds/flower_01_seed.tres") as Item
 	selection.inventory.add(seed, 3)
@@ -44,8 +44,8 @@ func _impact() -> void:
 	state.animation.animated_sprite.frame = 3
 	interaction._on_frame_changed()
 
-func test_grid_is_sixty_unique_pots_in_four_blocks_with_cross_aisle() -> void:
-	assert_eq(garden.pots.size(), 60)
+func test_grid_is_180_unique_pots_in_four_dense_blocks_with_cross_aisle() -> void:
+	assert_eq(garden.pots.size(), 180)
 	assert_eq(Garden.SIZE, Vector2(384, 256))
 	var used: Dictionary = {}
 	for cell: Vector2i in garden.pots:
@@ -54,13 +54,15 @@ func test_grid_is_sixty_unique_pots_in_four_blocks_with_cross_aisle() -> void:
 		used[position] = true
 		assert_false(position.x > 176 and position.x < 208)
 		assert_false(position.y > 112 and position.y < 144)
-	assert_eq(garden.pots[Vector2i(9, 5)].position, Vector2(352, 224))
+	assert_eq(garden.pots[Vector2i(17, 9)].position, Vector2(352, 224))
+	assert_eq(garden.pots[Vector2i(1, 0)].position - pot.position, Vector2(16, 0))
+	assert_eq(garden.pots[Vector2i(0, 1)].position - pot.position, Vector2(0, 16))
 	assert_eq(garden.get_node("Floor").get_used_cells().size(), 384)
 
 func test_focus_only_reaches_pot_in_front_and_not_from_far_away() -> void:
 	interaction.refresh()
 	assert_eq(interaction.focused_pot, pot)
-	state.animation.face(Vector2.RIGHT)
+	state.animation.face(Vector2.LEFT)
 	interaction.refresh()
 	assert_null(interaction.focused_pot)
 	player.position += Vector2(1000, 0)
@@ -132,7 +134,7 @@ func test_eight_starting_flowers_cover_different_stages_and_do_not_respawn() -> 
 			stages[current.stage] = true
 	assert_eq(count, 8)
 	assert_eq(stages.size(), 5)
-	var ready: Pot = garden.pots[Vector2i(8, 0)]
+	var ready: Pot = garden.pots[Vector2i(15, 0)]
 	assert_true(ready.is_mature())
 	assert_true(ready.harvest(selection.inventory))
 	garden.add_starter_flowers(timestamp)

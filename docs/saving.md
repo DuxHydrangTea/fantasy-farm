@@ -22,7 +22,7 @@ Timestamp Unix dùng TimeManager hiện có. Cây lớn tới thời điểm ch�
 
 ## File và phục hồi
 
-`save_schema.gd` kiểm tra DTO version 2, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được migrate trong bộ nhớ để thêm vườn hoa; lần lưu tiếp theo ghi version 2. Vườn mới có 60 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
+`save_schema.gd` kiểm tra DTO version 3, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được thêm vườn hoa; version 2 được chuyển từ grid hoa 10 × 6 sang 18 × 10 trong bộ nhớ, giữ nguyên vị trí vật lý và tiến độ hoa cũ. Lần lưu tiếp theo ghi version 3. Vườn có 180 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
 
 File chứa payload JSON và SHA-256 của chính chuỗi payload. Checksum phát hiện lỗi dữ liệu, không phải mã hóa/chống sửa save. Backend ghi/flush/đọc kiểm tra `.tmp`, chuyển primary hợp lệ thành `.bak`, rồi rename `.tmp` thành primary. Nếu lỗi giữa các bước, bản dự phòng vẫn đọc được. Primary hỏng sẽ thử `.bak`; primary thuộc phiên bản mới hơn sẽ bị từ chối để tránh hạ phiên bản và mất dữ liệu. Không có backup hợp lệ hoặc thế giới không tương thích: giữ file và tắt tự lưu. Không tự ghi game mới đè lên file hỏng. Đã phục hồi `.bak` thì lần lưu kế tiếp chỉ xoay bản hợp lệ, không đè backup bằng primary hỏng.
 

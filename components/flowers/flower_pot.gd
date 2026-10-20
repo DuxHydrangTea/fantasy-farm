@@ -14,6 +14,7 @@ var matures_at: float = 0.0
 var progress: float = 0.0
 var stage: int = 0
 var _focused: bool = false
+var _status_focused: bool = false
 var _harvesting: bool = false
 @onready var sprite: AnimatedSprite2D = $Flower
 @onready var marker: Sprite2D = $Focus
@@ -106,7 +107,17 @@ func set_focused(value: bool, allowed: bool = true) -> void:
 	_focused = value
 	marker.visible = value
 	marker.modulate = Color.WHITE if allowed else Color(1, 0.45, 0.35)
-	progress_frame.visible = value and definition != null
+	_update_status_visibility()
+
+func set_status_focused(value: bool) -> void:
+	_status_focused = value
+	_update_status_visibility()
+
+func get_status_sprite() -> Node2D:
+	return sprite
+
+func _update_status_visibility() -> void:
+	progress_frame.visible = (_focused or _status_focused) and definition != null
 
 func _update_visual() -> void:
 	if not is_node_ready():
@@ -119,6 +130,6 @@ func _update_visual() -> void:
 	if sprite.sprite_frames != frames:
 		sprite.sprite_frames = frames
 		sprite.play(&"grow")
-	progress_frame.visible = _focused and definition != null
+	_update_status_visibility()
 	bar.value = progress
 	bar.modulate = Color(1, 0.85, 0.35) if is_mature() else (Color(0.6, 0.8, 1) if can_water() else Color.WHITE)

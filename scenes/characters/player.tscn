@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://1rh2a2xtxj0w" path="res://components/item_collector.gd" id="10_collector"]
 [ext_resource type="Script" uid="uid://8s4o5x32ce3g" path="res://components/animals/trough_interaction_component.gd" id="11_refill"]
 [ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
+[ext_resource type="Script" uid="uid://cjgnwd4071uqx" path="res://components/context_bars_component.gd" id="18_d6tgn"]
 [ext_resource type="Texture2D" uid="uid://d0yebn4gwb0bi" path="res://assets/effects/dust_particle.png" id="18_dm10o"]
 [ext_resource type="Script" uid="uid://b8ewk02kjngvp" path="res://components/flowers/flower_interaction.gd" id="19_o6auj"]
 
@@ -170,3 +171,6 @@ theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
+
+[node name="ContextBars" type="Node2D" parent="." unique_id=583155289]
+script = ExtResource("18_d6tgn")

@@ -16,9 +16,9 @@ func _capture() -> void:
 		if cell.y == 0:
 			continue
 		var pot: Pot = garden.pots[cell]
-		var path: String = "res://flowers/definitions/flower_%02d.tres" % (cell.x+1)
+		var path: String = "res://flowers/definitions/flower_%02d.tres" % (cell.x % 10 + 1)
 		var definition: Resource = load(path)
-		var progress: float = float(cell.y-1) / 4.0
+		var progress: float = float((cell.y - 1) % 5) / 4.0
 		pot.restore_state({"planted_at": 880.0,"growth_started_at":880.0,"matures_at":1000.0,"progress":progress},definition,880.0+progress*120.0)
 	var player: Node2D = world.get_node("Player")
 	player.get_node("Camera2D").enabled = false
@@ -40,7 +40,7 @@ func _capture() -> void:
 		query.exclude = [pot.get_rid()]
 		query.collision_mask = 1
 		assert(pot.get_world_2d().direct_space_state.intersect_shape(query,1).is_empty(),"Flower pot overlaps world obstacle: "+str(pot.cell))
-	print("FLOWER_PREVIEW: 60 pots; no obstacle overlap; 10 visual variants; 5 stages")
+	print("FLOWER_PREVIEW: 180 pots; no obstacle overlap; 10 visual variants; 5 stages")
 	await create_timer(0.2).timeout
 	await RenderingServer.frame_post_draw
 	assert(root.get_texture().get_image().save_png("res://.godot/flower-garden-preview.png") == OK)

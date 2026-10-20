@@ -1,6 +1,7 @@
 @tool
 extends Node2D
-## Four 5x3 blocks. Each slot is 32px, with a 32px cross aisle and 16px rim.
+## Four 9x5 blocks at 16px spacing, preserving the cross aisle and garden rim.
+const Layout = preload("res://scripts/flower_garden_layout.gd")
 const Pot = preload("res://components/flowers/flower_pot.gd")
 const Clock = preload("res://components/time_manager.gd")
 const Pickup = preload("res://components/item_pickup.gd")
@@ -14,12 +15,12 @@ var _initial_supplies: Array[Dictionary] = []
 const SIZE: Vector2 = Vector2(384, 256)
 
 func _ready() -> void:
-	for y: int in range(6):
-		for x: int in range(10):
+	for y: int in range(Layout.ROWS):
+		for x: int in range(Layout.COLUMNS):
 			var pot: Pot = POT_SCENE.instantiate() as Pot
 			pot.name = "Pot_%02d_%02d" % [x, y]
 			pot.cell = Vector2i(x, y)
-			pot.position = Vector2(32 + x * 32 + (32 if x >= 5 else 0), 32 + y * 32 + (32 if y >= 3 else 0))
+			pot.position = Layout.position_for(pot.cell)
 			$Pots.add_child(pot)
 			pots[pot.cell] = pot
 	if Engine.is_editor_hint():
@@ -44,7 +45,7 @@ func add_starter_flowers(now: float) -> void:
 	var ids: Array[int] = [1, 3, 5, 7, 2, 4, 6, 10]
 	var progress: Array[float] = [0.0, 0.25, 0.5, 1.0, 0.0, 0.5, 0.75, 1.0]
 	for index: int in range(cells.size()):
-		var pot: Pot = pots[cells[index]]
+		var pot: Pot = pots[Layout.from_legacy(cells[index])]
 		if pot.definition != null:
 			continue
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % ids[index]

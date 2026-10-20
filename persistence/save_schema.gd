@@ -1,7 +1,8 @@
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 2
+const VERSION: int = 3
 const Catalog = preload("res://persistence/save_catalog.gd")
+const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid") -> Dictionary:
 	return {"ok": false, "code": code, "error": message}
@@ -24,8 +25,26 @@ static func validate(data: Variant, catalog: Catalog) -> Dictionary:
 	# existing inventory, animals, crops and revision remain unchanged.
 	if data.get("version") == 1:
 		data = data.duplicate(true)
-		data.version = VERSION
+		data.version = 2
 		data.flower_gardens = []
+	# Version 2 uses a 10x6 garden. Preserve each plant's physical position and
+	# lifecycle when inserting the new pots, without modifying the caller's DTO.
+	if data.get("version") == 2:
+		if not data.get("flower_gardens") is Array:
+			return failure("Danh sách vườn hoa cũ không hợp lệ.")
+		data = data.duplicate(true)
+		for garden: Variant in data.flower_gardens:
+			if not garden is Dictionary or not garden.get("flowers") is Array or garden.flowers.size() > 60:
+				return failure("Vườn hoa cũ không hợp lệ.")
+			for flower: Variant in garden.flowers:
+				if not flower is Dictionary or not vector(flower.get("cell"), true):
+					return failure("Ô hoa cũ không hợp lệ.")
+				var cell: Vector2i = Vector2i(int(flower.cell[0]), int(flower.cell[1]))
+				if cell.x < 0 or cell.x >= 10 or cell.y < 0 or cell.y >= 6:
+					return failure("Ô hoa cũ ngoài phạm vi.")
+				var mapped: Vector2i = FlowerLayout.from_legacy(cell)
+				flower.cell = [mapped.x, mapped.y]
+		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Header hoặc phiên bản file không hợp lệ.")
 	for key: String in ["inventory", "soil", "crops", "animals", "troughs", "pickups", "flower_gardens"]:
@@ -97,7 +116,7 @@ static func validate(data: Variant, catalog: Catalog) -> Dictionary:
 			return failure("Máng ăn/uống không hợp lệ.")
 	var gardens: Dictionary = {}
 	for garden: Variant in data.flower_gardens:
-		if not garden is Dictionary or not identifier(garden.get("id")) or gardens.has(garden.id) or not garden.get("flowers") is Array or garden.flowers.size() > 60:
+		if not garden is Dictionary or not identifier(garden.get("id")) or gardens.has(garden.id) or not garden.get("flowers") is Array or garden.flowers.size() > FlowerLayout.CAPACITY:
 			return failure("Vườn hoa không hợp lệ hoặc bị trùng.")
 		gardens[garden.id] = true
 		if garden.has("starter_flowers_added") and not garden.starter_flowers_added is bool:
@@ -107,7 +126,7 @@ static func validate(data: Variant, catalog: Catalog) -> Dictionary:
 			if not flower is Dictionary or not vector(flower.get("cell"), true) or not catalog.flowers.has(flower.get("flower")) or not number(flower.get("planted_at")) or not number(flower.get("growth_started_at"), -1) or not number(flower.get("matures_at")) or not number(flower.get("progress"), 0, 1):
 				return failure("Hoa trong chậu không hợp lệ.")
 			var cell: Vector2i = Vector2i(int(flower.cell[0]), int(flower.cell[1]))
-			if cell.x < 0 or cell.x >= 10 or cell.y < 0 or cell.y >= 6 or cells.has(cell) or flower.planted_at > data.saved_at:
+			if cell.x < 0 or cell.x >= FlowerLayout.COLUMNS or cell.y < 0 or cell.y >= FlowerLayout.ROWS or cells.has(cell) or flower.planted_at > data.saved_at:
 				return failure("Ô hoặc thời gian gieo hoa không hợp lệ.")
 			cells[cell] = true
 			if flower.growth_started_at == -1:

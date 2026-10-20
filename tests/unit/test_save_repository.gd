@@ -114,7 +114,7 @@ func test_catalog_contains_all_current_gameplay_definitions() -> void:
 	assert_true(catalog.valid_skin("chicken", "rooster"))
 	assert_false(catalog.valid_skin("sheep", "cow_01"))
 
-func test_version_one_file_migrates_to_two_and_remains_a_valid_backup() -> void:
+func test_version_one_file_migrates_to_current_and_remains_a_valid_backup() -> void:
 	var old: Dictionary = _snapshot()
 	old.version = 1
 	old.erase("flower_gardens")
@@ -131,3 +131,48 @@ func test_version_one_file_migrates_to_two_and_remains_a_valid_backup() -> void:
 	assert_true(result.recovered)
 	assert_eq(int(result.snapshot.version), Schema.VERSION)
 	assert_eq(int(result.snapshot.revision), 1)
+
+func test_dense_garden_file_roundtrip_accepts_all_180_planted_pots() -> void:
+	var saved: Dictionary = _snapshot()
+	var flowers: Array = []
+	for y: int in range(10):
+		for x: int in range(18):
+			flowers.append({"cell": [x, y], "flower": "flower_01", "planted_at": 1000.0, "growth_started_at": -1.0, "matures_at": 0.0, "progress": 0.0})
+	saved.flower_gardens = [{"id": "flower_garden_01", "flowers": flowers, "starter_flowers_added": true}]
+	assert_true(repo.write_profile("test", saved, 0).ok)
+	var read: Dictionary = repo.read_profile("test")
+	assert_true(read.ok)
+	assert_eq(read.snapshot.flower_gardens[0].flowers.size(), 180)
+	assert_eq(read.snapshot.flower_gardens[0].flowers[-1].cell, [17.0, 9.0])
+
+func test_version_two_garden_migration_is_complete_and_does_not_mutate_input() -> void:
+	var saved: Dictionary = _snapshot()
+	saved.version = 2
+	var flowers: Array = []
+	for y: int in range(6):
+		for x: int in range(10):
+			flowers.append({"cell": [x, y], "flower": "flower_01", "planted_at": 900.0, "growth_started_at": 900.0, "matures_at": 1020.0, "progress": 0.5})
+	saved.flower_gardens = [{"id": "flower_garden_01", "flowers": flowers, "starter_flowers_added": true}]
+	var original: String = JSON.stringify(saved)
+	var checked: Dictionary = Schema.validate(saved, catalog)
+	assert_true(checked.ok)
+	assert_eq(checked.snapshot.version, Schema.VERSION)
+	assert_eq(JSON.stringify(saved), original)
+	var mapped: Dictionary = {}
+	for row: Dictionary in checked.snapshot.flower_gardens[0].flowers:
+		assert_false(mapped.has(str(row.cell)))
+		mapped[str(row.cell)] = true
+		assert_eq(row.progress, 0.5)
+		assert_eq(row.matures_at, 1020.0)
+	assert_eq(mapped.size(), 60)
+	assert_eq(checked.snapshot.flower_gardens[0].flowers[-1].cell, [17, 9])
+	assert_eq(checked.snapshot.inventory, saved.inventory)
+	assert_eq(checked.snapshot.player, saved.player)
+	var second: Dictionary = Schema.validate(checked.snapshot, catalog)
+	assert_eq(second.snapshot, checked.snapshot, "Migration cannot run twice")
+
+func test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot() -> void:
+	var saved: Dictionary = _snapshot()
+	saved.version = 2
+	saved.flower_gardens = [{"id": "flower_garden_01", "flowers": [{"cell": [0, 6], "flower": "flower_01", "planted_at": 1000.0, "growth_started_at": -1.0, "matures_at": 0.0, "progress": 0.0}]}]
+	assert_false(Schema.validate(saved, catalog).ok)

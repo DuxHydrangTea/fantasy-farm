@@ -1,6 +1,7 @@
 extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
 const Catalog = preload("res://persistence/save_catalog.gd")
+const Schema = preload("res://persistence/save_schema.gd")
 const Adapter = preload("res://persistence/world_state_adapter.gd")
 const Repository = preload("res://persistence/local_save_repository.gd")
 const Actor = preload("res://components/animals/animal_actor.gd")
@@ -305,7 +306,7 @@ func test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies()
 	assert_true(pot.plant(selection.inventory, slot, timestamp))
 	assert_true(pot.water(timestamp))
 	var saved: Dictionary = _snapshot()
-	assert_eq(saved.version, 2)
+	assert_eq(saved.version, Schema.VERSION)
 	assert_eq(saved.flower_gardens.size(), 1)
 	assert_true(adapter.restore(saved, 1060.0).ok)
 	assert_almost_eq(pot.progress, 0.5, 0.001)
@@ -337,11 +338,36 @@ func test_version_one_migration_keeps_progress_and_initializes_new_garden() -> v
 
 func test_invalid_flower_cell_rejects_whole_load_before_mutation() -> void:
 	var saved: Dictionary = _snapshot()
-	saved.flower_gardens[0].flowers = [{"cell": [10, 0], "flower": "flower_01", "planted_at": 1000, "growth_started_at": -1, "matures_at": 0, "progress": 0}]
+	saved.flower_gardens[0].flowers = [{"cell": [18, 0], "flower": "flower_01", "planted_at": 1000, "growth_started_at": -1, "matures_at": 0, "progress": 0}]
 	var position: Vector2 = world.get_node("Player").position
 	saved.player.position = [1, 1]
 	assert_false(adapter.restore(saved, timestamp).ok)
 	assert_eq(world.get_node("Player").position, position)
+
+func test_version_two_garden_migration_preserves_flowers_at_original_world_positions() -> void:
+	var saved: Dictionary = _snapshot()
+	saved.version = 2
+	var template: Dictionary = saved.flower_gardens[0].flowers[0].duplicate(true)
+	saved.flower_gardens[0].flowers = []
+	var legacy_cells: Array[Vector2i] = [Vector2i(0, 0), Vector2i(4, 2), Vector2i(5, 3), Vector2i(9, 5)]
+	for cell: Vector2i in legacy_cells:
+		var flower: Dictionary = template.duplicate(true)
+		flower.cell = [cell.x, cell.y]
+		saved.flower_gardens[0].flowers.append(flower)
+	var original: String = JSON.stringify(saved)
+	assert_true(adapter.restore(saved, timestamp).ok)
+	assert_eq(JSON.stringify(saved), original, "Migration must not alter the source snapshot")
+	var garden: Node = world.get_node("FlowerGarden")
+	assert_eq(garden.pots.size(), 180)
+	for old: Vector2i in legacy_cells:
+		var mapped: Vector2i = garden.Layout.from_legacy(old)
+		var current: Node = garden.pots[mapped]
+		assert_eq(current.position, Vector2(32 + old.x * 32 + (32 if old.x >= 5 else 0), 32 + old.y * 32 + (32 if old.y >= 3 else 0)))
+		assert_eq(String(current.definition.flower_id), template.flower)
+		assert_eq(current.capture(timestamp).growth_started_at, template.growth_started_at)
+		assert_eq(current.capture(timestamp).progress, template.progress)
+	assert_eq(_snapshot().flower_gardens[0].flowers.size(), 4)
+	assert_true(adapter.restore(_snapshot(), timestamp).ok, "Version 3 load cannot remap a second time")
 
 func test_collected_flower_seed_supply_stays_collected_after_reload() -> void:
 	world.get_node("FlowerGarden/FlowerSeedSupply_01").free()
@@ -361,7 +387,7 @@ func test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawni
 	assert_true(adapter.restore(saved, timestamp).ok)
 	assert_eq(_snapshot().flower_gardens[0].flowers.size(), 8)
 	var garden: Node = world.get_node("FlowerGarden")
-	var ready: Node = garden.pots[Vector2i(8, 0)]
+	var ready: Node = garden.pots[Vector2i(15, 0)]
 	assert_true(ready.harvest(selection.inventory))
 	var after: Dictionary = _snapshot()
 	assert_true(after.flower_gardens[0].starter_flowers_added)
