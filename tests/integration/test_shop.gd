@@ -87,7 +87,7 @@ func test_range_categories_and_checkout_revalidation() -> void:
 	player.position = merchant.position + Vector2(24, 0)
 	assert_true(player.shop_interaction.try_interact())
 	shop.show_category(ShopOffer.Category.FEED)
-	assert_eq(shop.grid.get_child_count(), 5)
+	assert_eq(shop.grid.get_child_count(), 13)
 	shop.show_category(ShopOffer.Category.FLOWER)
 	assert_eq(shop.grid.get_child_count(), 10)
 	shop.quantity.value = 99

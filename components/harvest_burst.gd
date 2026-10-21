@@ -4,6 +4,7 @@ extends Node2D
 ## A few representative icons keep high yields cheap and cannot be recollected.
 var item: ItemDefinition
 var amount: int = 1
+var drop_height: float = 0.0
 var target: WeakRef
 var age: float = 0.0
 var icons: Array[Sprite2D] = []
@@ -22,7 +23,7 @@ func _ready() -> void:
 		icon.scale = Vector2.ONE * 0.75
 		add_child(icon)
 		icons.append(icon)
-		_lands.append(Vector2((index - float(count - 1) * 0.5) * 9.0, -5.0 - index * 2.0))
+		_lands.append(Vector2((index - float(count - 1) * 0.5) * 9.0, drop_height - 5.0 - index * 2.0))
 	_last_target = global_position
 
 # HIỆU ỨNG TÙY CHỌN — có thể bỏ cả Node này, yield đã được commit trước khi nó sinh ra.

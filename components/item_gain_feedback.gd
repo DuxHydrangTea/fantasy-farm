@@ -15,6 +15,9 @@ func _ready() -> void:
 	var farming: FarmingController = player.farming_actions.get_farming_controller()
 	if farming != null:
 		farming.harvest_yielded.connect(_on_harvest)
+	var world: FarmWorld = player.get_parent() as FarmWorld
+	if world != null and world.trees != null:
+		world.trees.harvest_yielded.connect(_on_harvest)
 
 # Nhiều đống đồ có thể báo đầy trong cùng một frame. Dùng đồng hồ đếm mili giây của phiên,
 # không dùng Unix/timestamp lớn cây, để giới hạn thông báo mỗi 1,5 giây không bị chỉnh giờ ảnh hưởng.
@@ -43,7 +46,7 @@ func _on_pickup(item: ItemDefinition, amount: int) -> void:
 	_recent[item.item_id] = weakref(popup)
 	_lane += 1
 
-func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent) -> void:
+func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0) -> void:
 	if inventory != player.selection.inventory or item == null or amount <= 0:
 		return
 	# Harvesting while picking up eggs must not stack two rewards on one line.
@@ -65,6 +68,7 @@ func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: Inve
 	var burst: HarvestBurst = HarvestBurst.new()
 	burst.item = item
 	burst.amount = amount
+	burst.drop_height = drop_height
 	burst.target = weakref(player)
 	host.add_child(burst)
 	burst.global_position = at

@@ -3,7 +3,7 @@ extends Resource
 
 enum ItemType { TOOL, SEED, PRODUCE, FEED, HOE, BOOSTER, PLACEABLE }
 enum BoosterKind { FERTILIZER, ANIMAL_TONIC }
-enum ToolType { HOE, WATERING_CAN }
+enum ToolType { HOE, WATERING_CAN, AXE }
 
 @export var item_id: StringName
 @export var display_name: String

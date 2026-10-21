@@ -125,7 +125,7 @@ func test_v9_migration_and_weather_roundtrip_reject_invalid_data_before_mutation
 		row.erase("moisture")
 	var check: Dictionary = SaveSchema.validate(legacy, adapter.catalog)
 	assert_true(check.ok)
-	assert_eq(check.snapshot.version, 10)
+	assert_eq(check.snapshot.version, SaveSchema.VERSION)
 	assert_false(legacy.has("weather"))
 	assert_true(adapter.restore(saved, now).ok)
 	assert_eq(world.weather.current_weather, WeatherManager.Weather.CLOUDY)

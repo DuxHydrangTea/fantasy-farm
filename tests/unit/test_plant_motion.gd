@@ -80,3 +80,20 @@ func test_high_yield_burst_caps_visuals_and_handles_target_removal() -> void:
 	target.free()
 	await wait_seconds(0.8)
 	assert_false(is_instance_valid(burst))
+
+func test_tree_fruit_burst_falls_from_canopy_before_flying_to_player() -> void:
+	var target: Node2D = Node2D.new()
+	target.position = Vector2(48, 40)
+	add_child_autofree(target)
+	var burst: HarvestBurst = HarvestBurst.new()
+	burst.item = load("res://items/trees/apple.tres") as ItemDefinition
+	burst.drop_height = 32.0
+	burst.target = weakref(target)
+	burst.process_mode = Node.PROCESS_MODE_DISABLED
+	add_child_autofree(burst)
+	assert_eq(burst.icons[0].position, Vector2.ZERO)
+	burst._process(0.22)
+	assert_almost_eq(burst.icons[0].position.y, 27.0, 0.001, "Fruit lands below its canopy origin")
+	var before: float = burst.icons[0].global_position.distance_to(target.position + Vector2(0, -12))
+	burst._process(0.15)
+	assert_lt(burst.icons[0].global_position.distance_to(target.position + Vector2(0, -12)), before)

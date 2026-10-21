@@ -49,7 +49,10 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	var data: Dictionary = {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": profile, "revision": revision, "saved_at": now,
 		"player": {"position": _pair(player.position), "facing": String(player.animation.facing_direction), "selected_slot": selection.selected_index},
 		"land_columns": farm.land.unlocked_columns if farm.land != null else LandExpansionState.REGION.size.x, "coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": [], "beehives": []}
-	data.weather = world.weather.schedule.capture() if world.weather != null else WeatherSchedule.new().capture()
+	# Dùng String tường minh: gán key mới bằng dấu chấm tạo StringName trên Godot 4.7,
+	# khiến bộ ghi async từ chối DTO dù dữ liệu có thể stringify thành JSON.
+	data["weather"] = world.weather.schedule.capture() if world.weather != null else WeatherSchedule.new().capture()
+	data["trees"] = world.trees.capture(now) if world.trees != null else []
 	if world.apiary != null:
 		for hive: Beehive in world.apiary.hives:
 			data.beehives.append(hive.capture())
@@ -153,6 +156,14 @@ func preflight(data: Dictionary) -> Dictionary:
 			if _cell(crop.cell) == cell:
 				return SaveSchema.failure("A hive overlaps a saved crop.")
 		hive_cells[cell] = true
+	for row: Dictionary in data.trees:
+		var cell: Vector2i = _cell(row.cell)
+		if world.trees == null or hive_cells.has(cell):
+			return SaveSchema.failure("Invalid tree placement.")
+		var ground: TileMapLayer = world.farming.ground
+		var point: Vector2 = world.trees.point_for(cell)
+		if ground.get_cell_source_id(ground.local_to_map(ground.to_local(point))) < 0:
+			return SaveSchema.failure("Tree ground was not found.")
 	return {"ok": true, "snapshot": data}
 
 func restore(data: Dictionary, now: float) -> Dictionary:
@@ -174,6 +185,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	# tiếp tục commit vào thế giới vừa tải. Xóa entity mặc định trước inventory.changed của restore,
 	# vì signal đó có thể làm sensor thử nhặt các đống cũ; làm ngược thứ tự có thể cấp đồ lại từ mặc định.
 	world.apiary.begin_restore()
+	if world.trees != null:
+		world.trees.reset()
 	world.weather.restore(data.weather, float(data.saved_at))
 	player.shop_interaction.close_for_load()
 	if world.land != null:
@@ -213,6 +226,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	for row: Dictionary in data.crops:
 		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction))
 	world.apiary.restore(data.beehives,float(data.saved_at),maxf(now,data.saved_at))
+	if world.trees != null:
+		world.trees.restore(data.trees, maxf(now, data.saved_at))
 	farm._refresh_crops(maxf(now,data.saved_at))
 	for garden: FlowerGarden in gardens.values():
 		garden.refresh(maxf(now,data.saved_at))

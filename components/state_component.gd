@@ -25,6 +25,7 @@ var hive_placement: BeehivePlacementComponent
 var interactions: PlayerInteractionComponent
 var boosters: BoosterInteractionComponent
 var shop_interaction: ShopInteraction
+var tree_interaction: TreeInteraction
 
 
 var current_state: State = State.IDLE
@@ -154,7 +155,20 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 		active_action = flower_action
 		transition_to(State.WATER if flower_action == &"flower_water" else State.TOOL)
 		return true
+	var tree_action: StringName = tree_interaction.prepare_action(requested_action) if tree_interaction != null else &""
+	if tree_action == &"blocked":
+		return true
+	if tree_action == &"tree_harvest":
+		tree_interaction.harvest_now()
+		return true
+	if not tree_action.is_empty():
+		active_action = tree_action
+		transition_to(State.WATER if tree_action == &"tree_water" else State.TOOL)
+		return true
 	active_action = requested_action if requested_action == &"harvest" else get_selected_tool_action()
+	var selected: ItemDefinition = tool_selection.get_selected_item() if tool_selection != null else null
+	if active_action == &"tool" and selected != null and selected.tool_type == ItemDefinition.ToolType.AXE:
+		return false
 	match active_action:
 		&"tool", &"plant", &"harvest":
 			transition_to(State.TOOL)

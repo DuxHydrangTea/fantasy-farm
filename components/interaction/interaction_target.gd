@@ -1,7 +1,7 @@
 class_name InteractionTarget
 extends RefCounted
 ## A typed, short-lived view of a scene target. IDs/node names never drive behavior.
-enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE }
+enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE }
 var node: Node2D
 var kind: Kind
 var player: FarmPlayer
@@ -23,6 +23,8 @@ func valid() -> bool:
 			return not (node as Crop).is_retiring() and (node as Crop).is_mature()
 		Kind.FLOWER:
 			return (node as FlowerPot).is_mature()
+		Kind.TREE:
+			return not (node as PerennialTree).removed
 	return true
 
 func priority() -> int:
@@ -51,6 +53,7 @@ func sprite() -> Node2D:
 		Kind.ANIMAL: return (node as AnimalActor).sprite
 		Kind.CROP: return (node as Crop).sprite
 		Kind.FLOWER: return (node as FlowerPot).sprite
+		Kind.TREE: return (node as PerennialTree).sprite
 	return null
 
 func reachable_from(position: Vector2, facing: bool = false) -> bool:
@@ -89,4 +92,5 @@ func action_text() -> String:
 		Kind.BEEHIVE: return (node as Beehive).action_text()
 		Kind.CROP: return tr("Harvest crop")
 		Kind.FLOWER: return tr("Harvest flowers")
+		Kind.TREE: return (node as PerennialTree).action_text(player.selection.get_selected_item())
 	return ""

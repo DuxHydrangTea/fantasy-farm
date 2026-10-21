@@ -32,6 +32,13 @@ queued action. An unreachable destination stops movement and reports failure;
 it never invokes a different target. Clicking empty ground keeps focus-only
 navigation and does not automatically use the selected tool.
 
+Repeated movement clicks update the destination without resetting velocity or
+inserting idle frames. Clear approaches use a swept collision check immediately;
+routes around obstacles keep following their validated segments while a replacement
+route is planned. New collisions discard unsafe segments and trigger replanning.
+Repeated clicks on the same object retain the pending approach and execute once
+on arrival. Keyboard movement, menus and tool actions still cancel it.
+
 NPC clicks open their existing trade menu. The land sign opens the existing
 confirmation; arriving or pressing E does not purchase a column by itself.
 Animal interaction inspects it and collects stored output only for species using

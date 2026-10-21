@@ -1,0 +1,80 @@
+class_name FruitTree
+extends PerennialTree
+var fruit_work: float = 0.0
+var _busy: bool = false
+
+func can_water() -> bool:
+	return not removed and growth_started_at < 0.0
+
+func water(now: float) -> bool:
+	if not can_water():
+		return false
+	growth_started_at = maxf(last_at, now)
+	matures_at = growth_started_at + definition.growth_seconds
+	refresh(growth_started_at)
+	react()
+	return true
+
+func refresh(now: float, fruit_rate: float = 1.0) -> void:
+	var until: float = maxf(last_at, now)
+	if growth_started_at >= 0.0:
+		# Chỉ tính phần thời gian SAU trưởng thành, không tính lại khoảng đã lưu.
+		fruit_work = minf(definition.fruit_cycle_seconds, fruit_work + maxf(0.0, until - maxf(last_at, matures_at)) * fruit_rate)
+	super.refresh(until)
+
+func has_fruit() -> bool:
+	return is_mature() and fruit_work >= definition.fruit_cycle_seconds
+
+func harvest(bag: InventoryComponent) -> bool:
+	if _busy or bag == null or not has_fruit():
+		return false
+	if bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
+		bag.report_capacity_blocked(definition.harvest_item, definition.harvest_amount)
+		return false
+	_busy = true
+	var height: float = float(sprite.texture.get_image().get_used_rect().size.y) * 0.6 if sprite != null else 24.0
+	fruit_work = 0.0
+	bag.add(definition.harvest_item, definition.harvest_amount)
+	update_visual()
+	react()
+	if plantation != null:
+		plantation.harvest_yielded.emit(definition.harvest_item, definition.harvest_amount, global_position - Vector2(0, height), bag, height)
+	_busy = false
+	return true
+
+func uproot(bag: InventoryComponent) -> bool:
+	if _busy or removed or bag == null:
+		return false
+	var sapling: ItemDefinition = definition.planting_item()
+	if bag.capacity_for(sapling) < 1:
+		bag.report_capacity_blocked(sapling, 1)
+		return false
+	_busy = true
+	retire()
+	bag.add(sapling, 1)
+	_busy = false
+	return true
+
+func update_visual() -> void:
+	if sprite != null and definition != null:
+		set_texture(definition.ready_texture if has_fruit() else definition.stage_textures[stage])
+
+func action_text(item: ItemDefinition) -> String:
+	if has_fruit():
+		return tr("Harvest fruit")
+	if is_mature():
+		return tr("{tree} · growing").format({"tree": tr(definition.display_name)})
+	if item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.HOE:
+		return tr("Uproot tree (return sapling)")
+	if can_water():
+		return tr("Water sapling to start growth")
+	return tr("Harvest fruit") if has_fruit() else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
+
+func capture() -> Dictionary:
+	var row: Dictionary = super.capture()
+	row["fruit_work"] = fruit_work
+	return row
+
+func restore_state(row: Dictionary) -> void:
+	fruit_work = float(row.fruit_work)
+	super.restore_state(row)

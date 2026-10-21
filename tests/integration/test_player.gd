@@ -327,6 +327,66 @@ func test_keyboard_cancels_click_destination() -> void:
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_false(state.movement.has_target, "Does not resume stale mouse target")
 
+func test_spam_clicks_keep_cruising_without_stopping_or_restarting_walk() -> void:
+	var destination: Vector2 = player.position + Vector2(200, 0)
+	_click_world(destination)
+	for frame: int in range(64):
+		await wait_physics_frames(1)
+		if player.velocity.x >= state.movement.speed - 0.1:
+			break
+	assert_gt(player.velocity.x, 140.0)
+	var idle_frames: int = 0
+	var shortest_step: float = INF
+	for frame: int in range(30):
+		var before: Vector2 = player.position
+		_click_world(destination + Vector2(frame % 3, 0))
+		await wait_physics_frames(1)
+		shortest_step = minf(shortest_step, player.position.x - before.x)
+		if state.current_state != StateComponent.State.WALK:
+			idle_frames += 1
+	assert_eq(idle_frames, 0, "Retargeting must not insert idle animation frames")
+	assert_gt(shortest_step, 2.0, "Every tick keeps cruising instead of braking for a new plan")
+	assert_gt(player.velocity.x, 140.0)
+	await wait_seconds(1.5)
+	assert_false(navigation.is_navigating)
+	assert_lte(player.position.distance_to(navigation.focus_position), navigation.interaction_distance + state.movement.arrival_distance)
+
+func test_cold_cache_spam_clicks_start_moving_immediately_in_open_space() -> void:
+	navigation.invalidate_cache()
+	var start: Vector2 = player.position
+	var destination: Vector2 = start + Vector2(180, 0)
+	for frame: int in range(24):
+		_click_world(destination + Vector2(0, frame % 3 - 1))
+		await wait_physics_frames(1)
+	assert_gt(player.position.x - start.x, 40.0, "Clicks must not keep restarting a cold path scan")
+	assert_eq(state.current_state, StateComponent.State.WALK)
+	assert_almost_eq(player.position.y, start.y, 4.0)
+
+func test_spam_clicks_around_wall_keep_safe_detour_and_reach_latest_destination() -> void:
+	var start: Vector2 = player.position
+	var wall: StaticBody2D = _wall(Vector2(30, 0), Vector2(10, 100))
+	await wait_physics_frames(2)
+	var destination: Vector2 = start + Vector2(120, 0)
+	_click_world(destination)
+	for frame: int in range(90):
+		await wait_physics_frames(1)
+		if state.current_state == StateComponent.State.WALK:
+			break
+	var paused: int = 0
+	var detour: float = 0.0
+	for frame: int in range(70):
+		_click_world(destination + Vector2(frame % 2, 0))
+		await wait_physics_frames(1)
+		detour = maxf(detour, absf(player.position.y - start.y))
+		if navigation.is_navigating and state.current_state != StateComponent.State.WALK:
+			paused += 1
+	assert_lte(paused, 2, "Changing a destination beyond the same wall keeps the validated route")
+	await wait_seconds(2.0)
+	assert_gt(detour, 45.0)
+	assert_gt(player.position.x, wall.position.x)
+	assert_lte(player.position.distance_to(navigation.focus_position), navigation.interaction_distance + state.movement.arrival_distance)
+	assert_false(navigation.is_navigating)
+
 func test_action_cancels_destination_and_ignores_clicks() -> void:
 	_click_world(player.global_position + Vector2(100, 0))
 	await wait_physics_frames(5)

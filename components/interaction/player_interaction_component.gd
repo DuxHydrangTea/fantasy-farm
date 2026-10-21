@@ -42,16 +42,19 @@ func press() -> bool:
 	focused = resolver.resolve()
 	if focused == null:
 		return true
-	return execute(focused)
+	return execute(focused, &"harvest")
 
 func click(point: Vector2) -> bool:
 	var target: InteractionTarget = resolver.clicked(point)
 	if target == null:
 		return false
-	player.state.navigation.cancel()
 	if target.reachable_from(player.global_position):
+		player.state.navigation.cancel()
 		player.animation.face(target.point() - player.global_position)
 		execute(target)
+	elif pending != null and pending.node == target.node and pending.kind == target.kind:
+		# Click dồn cùng đối tượng giữ đường tiếp cận hiện có; tick sẽ theo đích di động.
+		return true
 	else:
 		_navigate(target)
 	refresh()
@@ -87,10 +90,20 @@ func _complete_click(generation: int) -> void:
 		player.animation.face(target.point() - player.global_position)
 		execute(target)
 
-func execute(target: InteractionTarget) -> bool:
+func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 	if player.selection.is_menu_open() or player.state.current_state in [StateComponent.State.TOOL,StateComponent.State.WATER] or not target.reachable_from(player.global_position):
 		return false
 	match target.kind:
+		InteractionTarget.Kind.TREE:
+			var tree: PerennialTree = target.node as PerennialTree
+			var tree_request: StringName = &"harvest" if tree is FruitTree and tree.is_mature() else &""
+			var action: StringName = player.tree_interaction.prepare_target(tree, tree_request)
+			if action == &"tree_harvest":
+				player.tree_interaction.harvest_now()
+			elif action != &"blocked":
+				player.state.active_action = action
+				player.state.transition_to(StateComponent.State.WATER if action == &"tree_water" else StateComponent.State.TOOL)
+			return true
 		InteractionTarget.Kind.MERCHANT:
 			return (target.node as ShopMerchant).open_shop(player)
 		InteractionTarget.Kind.LAND:

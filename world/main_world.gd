@@ -6,6 +6,7 @@ extends Node2D
 var land: LandExpansionComponent
 var apiary: ApiarySystem
 var weather: WeatherManager
+var trees: TreePlantation
 ## Authored window/gate anchors in world-local pixels, independent of sprite names.
 @export var night_light_positions: Array[Vector2] = [Vector2(1350, 308), Vector2(1183, 622), Vector2(1740, 172), Vector2(1666, 622), Vector2(1010, 274), Vector2(1384, 274), Vector2(1480, 274)]
 
@@ -34,6 +35,10 @@ func _enter_tree() -> void:
 	farming.apiary = apiary
 	add_child(apiary)
 	add_child(weather)
+	trees = TreePlantation.new()
+	trees.name = "TreePlantation"
+	trees.world = self
+	add_child(trees)
 
 func _wire_weather(node: Node) -> void:
 	if node is AnimalPen:

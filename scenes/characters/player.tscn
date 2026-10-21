@@ -131,6 +131,7 @@ starting_feed = ExtResource("12_feed")
 selection = NodePath("../ToolSelection")
 
 [node name="InventoryUI" parent="." unique_id=868395166 node_paths=PackedStringArray("selection") instance=ExtResource("7_inventory")]
+visible = false
 selection = NodePath("../ToolSelection")
 
 [node name="ItemCollector" type="Area2D" parent="." unique_id=1951112033 node_paths=PackedStringArray("inventory_source")]

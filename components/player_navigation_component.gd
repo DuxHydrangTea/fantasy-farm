@@ -97,11 +97,25 @@ func _physics_process(_delta: float) -> void:
 			left -= 1
 
 func request_focus(point: Vector2) -> void:
-	cancel()
+	_request(point, interaction_distance, Callable())
+
+func _request(point: Vector2, reach: float, validator: Callable) -> void:
+	if is_navigating and focus_position.is_equal_approx(point) and _interaction_goal == validator and is_equal_approx(_interaction_reach, reach):
+		return
+	# Đổi lệnh hủy hành động tương tác cũ, nhưng giữ đường và vận tốc đang đi.
+	# Đường cũ chỉ được dùng tiếp sau khi quét va chạm, tới khi đường mới sẵn sàng.
+	focus_cancelled.emit()
+	_interaction_goal = validator
+	_interaction_reach = reach
 	focus_position = point
 	has_focus = true
 	is_navigating = true
-	_needs_path = true
+	# Click lệch nhẹ nhưng điểm đứng cuối vẫn hợp lệ: dùng luôn đường hiện tại.
+	# Tránh chạy lại A* chỉ vì con trỏ đổi vài pixel, vẫn giữ chính xác focus mới.
+	_needs_path = _path.is_empty() or not _goal_valid(_path[_path.size() - 1])
+	_planning = false
+	_replans = 0
+	_blocked_cells.clear()
 
 func cancel() -> void:
 	_interaction_goal = Callable()
@@ -123,9 +137,10 @@ func move(delta: float) -> void:
 		_needs_path = false
 		_start_plan()
 	if _planning:
-		movement.stop()
 		_advance_plan()
-		return
+		if _planning and _path.is_empty():
+			movement.stop()
+			return
 	if not is_navigating:
 		movement.stop()
 		_face_focus()
@@ -133,7 +148,11 @@ func move(delta: float) -> void:
 	while _path_index < _path.size() and movement.body.global_position.distance_to(_path[_path_index]) <= movement.arrival_distance:
 		_path_index += 1
 	if _path_index >= _path.size():
-		_finish()
+		if _planning:
+			movement.cancel_target()
+			movement.stop()
+		else:
+			_finish()
 		return
 	var waypoint: Vector2 = _path[_path_index]
 	if not _segment_clear(movement.body.global_position, waypoint):
@@ -147,7 +166,7 @@ func move(delta: float) -> void:
 	movement.move_to_target(delta)
 	if not movement.has_target and movement.body.global_position.distance_to(waypoint) > movement.arrival_distance:
 		_replan()
-	elif _path_index == _path.size() - 1 and movement.body.global_position.distance_to(waypoint) <= movement.arrival_distance:
+	elif not _planning and _path_index == _path.size() - 1 and movement.body.global_position.distance_to(waypoint) <= movement.arrival_distance:
 		_finish()
 
 func _finish() -> void:
@@ -176,6 +195,9 @@ func _replan() -> void:
 	if _path_index < _path.size():
 		region = region.expand(_path[_path_index])
 	invalidate_region(region.grow(64.0))
+	# Vật cản mới làm đường cũ mất an toàn: bỏ đường đó trước khi dò lại.
+	_path.clear()
+	_path_index = 0
 	movement.cancel_target()
 	movement.stop()
 	_replans += 1
@@ -282,9 +304,6 @@ func _sample(cell: Vector2i) -> void:
 func _start_plan() -> void:
 	_prepare_grid()
 	_needs_path = false
-	_face_focus()
-	_path.clear()
-	_path_index = 0
 	_planning = false
 	var origin: Vector2 = movement.body.global_position
 	if _in_focus_range(origin):
@@ -292,6 +311,9 @@ func _start_plan() -> void:
 		return
 	if not _grid.region.has_point(_cell(origin)) or not _grid.region.has_point(_cell(focus_position)):
 		_finish()
+		return
+	# Lối thông không cần chờ dò lưới/A*: cập nhật ngay trong tick nhận lệnh.
+	if _try_direct_path(origin):
 		return
 	var corridor: Rect2i = Rect2i(_cell(origin), Vector2i.ONE).expand(_cell(focus_position))
 	_regions.clear()
@@ -304,6 +326,23 @@ func _start_plan() -> void:
 	_region_index = 0
 	_scan_cursor = 0
 	_planning = true
+
+func _try_direct_path(origin: Vector2) -> bool:
+	var candidates: Array[Vector2] = []
+	var focus_cell: Vector2i = _cell(focus_position)
+	var reach: int = ceili((_interaction_reach if _interaction_goal.is_valid() else interaction_distance) / cell_size)
+	for y: int in range(focus_cell.y - reach, focus_cell.y + reach + 1):
+		for x: int in range(focus_cell.x - reach, focus_cell.x + reach + 1):
+			var goal: Vector2i = Vector2i(x, y)
+			if goal != focus_cell and _grid.region.has_point(goal) and _goal_valid(_point(goal)):
+				candidates.append(_point(goal))
+	candidates.sort_custom(func(a: Vector2, b: Vector2) -> bool: return origin.distance_squared_to(a) < origin.distance_squared_to(b))
+	for goal: Vector2 in candidates:
+		if _segment_clear(origin, goal):
+			_path = PackedVector2Array([goal])
+			_path_index = 0
+			return true
+	return false
 
 func _advance_plan() -> void:
 	var left: int = sampling_budget
@@ -330,7 +369,7 @@ func _advance_plan() -> void:
 # Không bắt player đứng đè lên ô focus, vì ô đó có thể chứa cây, máng hoặc NPC.
 # Nếu chỉ yêu cầu A* đi đến tâm điểm click, player có thể đứng sai chỗ để nông cụ tác động.
 func _build_path_in_region(region: Rect2i) -> bool:
-	_path.clear()
+	var replacement: PackedVector2Array = PackedVector2Array()
 	var origin: Vector2 = movement.body.global_position
 	var start: Vector2i = Vector2i(-1, -1)
 	var start_distance: float = INF
@@ -363,11 +402,13 @@ func _build_path_in_region(region: Rect2i) -> bool:
 			if length >= best_length:
 				continue
 			best_length = length
-			_path.clear()
+			replacement.clear()
 			for cell: Vector2i in ids:
-				_path.append(_point(cell))
-	if _path.is_empty():
+				replacement.append(_point(cell))
+	if replacement.is_empty():
 		return false
+	_path = replacement
+	_path_index = 0
 	_smooth_path(origin)
 	return true
 
@@ -399,6 +440,4 @@ func _smooth_path(origin: Vector2) -> void:
 	_path = smoothed
 
 func request_interaction(point: Vector2, reach: float, validator: Callable) -> void:
-	request_focus(point)
-	_interaction_goal = validator
-	_interaction_reach = maxf(8.0, reach)
+	_request(point, maxf(8.0, reach), validator)

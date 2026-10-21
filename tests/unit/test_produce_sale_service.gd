@@ -120,7 +120,7 @@ func test_duplicate_prices_bad_catalog_and_empty_bag_reject_safely() -> void:
 func test_authored_catalog_prices_every_current_produce_and_only_produce() -> void:
 	var prices: ProducePriceCatalog = load("res://resources/shops/produce_prices.tres") as ProducePriceCatalog
 	assert_true(prices.is_valid())
-	assert_eq(prices.entries.size(), 42)
+	assert_eq(prices.entries.size(), 48)
 	for entry: ProducePrice in prices.entries:
 		assert_eq(entry.item.item_type, ItemDefinition.ItemType.PRODUCE)
 		assert_gte(entry.price, 1)

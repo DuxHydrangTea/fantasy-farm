@@ -41,7 +41,7 @@ func after_each() -> void:
 func _snapshot(revision: int = 1) -> Dictionary:
 	return {"version": SaveSchema.VERSION, "land_columns": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
-		"weather": WeatherSchedule.new().capture(), "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
+		"weather": WeatherSchedule.new().capture(), "trees": [], "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
 
 func _write_raw(path: String, source: String) -> void:
 	DirAccess.make_dir_recursive_absolute(folder)

@@ -1,16 +1,20 @@
-[gd_resource type="Resource" script_class="BeehiveDefinition" format=3]
-[ext_resource type="Script" path="res://components/bees/beehive_definition.gd" id="1"]
-[ext_resource type="Resource" path="res://items/honey/wild_honey.tres" id="wild"]
-[ext_resource type="Resource" path="res://items/honey/sunflower_honey.tres" id="sunflower"]
+[gd_resource type="Resource" script_class="BeehiveDefinition" format=3 uid="uid://drra0ggbn58mp"]
+
+[ext_resource type="Script" uid="uid://bl6hyjwm8qv1n" path="res://components/bees/beehive_definition.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bovc340cd2prq" path="res://assets/Animals/Bee/Bee_Nest.png" id="atlas"]
 [ext_resource type="Resource" path="res://items/honey/floral_honey.tres" id="floral"]
-[ext_resource type="Resource" path="res://items/placeables/beehive.tres" id="item"]
-[ext_resource type="Texture2D" path="res://assets/Animals/Bee/Bee_Nest.png" id="atlas"]
-[sub_resource type="AtlasTexture" id="idle"]
-atlas = ExtResource("atlas")
-region = Rect2(0,0,16,16)
+[ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="item"]
+[ext_resource type="Resource" path="res://items/honey/sunflower_honey.tres" id="sunflower"]
+[ext_resource type="Resource" path="res://items/honey/wild_honey.tres" id="wild"]
+
 [sub_resource type="AtlasTexture" id="full"]
 atlas = ExtResource("atlas")
-region = Rect2(16,0,16,16)
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="idle"]
+atlas = ExtResource("atlas")
+region = Rect2(0, 0, 16, 16)
+
 [resource]
 script = ExtResource("1")
 wild_honey = ExtResource("wild")

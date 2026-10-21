@@ -15,6 +15,7 @@ var wallet: WalletComponent
 var wallet_hud: WalletHUD
 var shop_interaction: ShopInteraction
 var item_feedback: ItemGainFeedback
+var tree_interaction: TreeInteraction
 
 func _enter_tree() -> void:
 	add_to_group(&"farm_players")
@@ -59,3 +60,8 @@ func _enter_tree() -> void:
 	interactions.player = self
 	state.interactions = interactions
 	add_child(interactions)
+	tree_interaction = TreeInteraction.new()
+	tree_interaction.name = "TreeInteraction"
+	tree_interaction.player = self
+	state.tree_interaction = tree_interaction
+	add_child(tree_interaction)

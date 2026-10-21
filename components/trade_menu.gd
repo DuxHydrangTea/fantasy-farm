@@ -26,6 +26,7 @@ func open(owner_npc: ShopMerchant, player: FarmPlayer) -> bool:
 	customer.selection.set_shop_open(true)
 	customer.wallet.changed.connect(_wallet_changed)
 	customer.selection.inventory.changed.connect(_inventory_changed)
+	show() # CanvasLayer có thể đã bị tắt Visible để soạn map trong editor.
 	root.show()
 	visit_started.emit()
 	return true

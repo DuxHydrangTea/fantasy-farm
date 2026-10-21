@@ -42,6 +42,8 @@ func close() -> void:
 	selection.set_inventory_open(false)
 
 func _on_visibility_changed(value: bool) -> void:
+	if value:
+		show() # Cho phép ẩn CanvasLayer trong editor mà vẫn mở túi khi chơi.
 	root.visible = value
 	if value:
 		_fit_panel()

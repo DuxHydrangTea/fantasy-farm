@@ -1,12 +1,12 @@
-[gd_resource type="Resource" format=3]
+[gd_resource type="Resource" script_class="FlowerDefinition" format=3 uid="uid://cyppywcahqnix"]
 
-[ext_resource type="Resource" path="res://items/flowers/flower_09.tres" id="1_0js02"]
-[ext_resource type="Script" path="res://scripts/flower_definition.gd" id="2_8jy8n"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_09_stage_1.tres" id="3_0ianb"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_09_stage_2.tres" id="4_6fmnx"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_09_stage_3.tres" id="5_veby1"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_09_stage_4.tres" id="6_j7gnt"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_09_stage_5.tres" id="7_udtfq"]
+[ext_resource type="Resource" uid="uid://d0xymp0qrejil" path="res://items/flowers/flower_09.tres" id="1_0js02"]
+[ext_resource type="Script" uid="uid://hvr7d106wdyc" path="res://scripts/flower_definition.gd" id="2_8jy8n"]
+[ext_resource type="SpriteFrames" uid="uid://c14qnggylqtbe" path="res://flowers/frames/flower_09_stage_1.tres" id="3_0ianb"]
+[ext_resource type="SpriteFrames" uid="uid://dyy3x7ly71h53" path="res://flowers/frames/flower_09_stage_2.tres" id="4_6fmnx"]
+[ext_resource type="SpriteFrames" uid="uid://d2caytwtetm1w" path="res://flowers/frames/flower_09_stage_3.tres" id="5_veby1"]
+[ext_resource type="SpriteFrames" uid="uid://bxsd5kjayapc5" path="res://flowers/frames/flower_09_stage_4.tres" id="6_j7gnt"]
+[ext_resource type="SpriteFrames" uid="uid://bngajmd758nq2" path="res://flowers/frames/flower_09_stage_5.tres" id="7_udtfq"]
 
 [resource]
 script = ExtResource("2_8jy8n")

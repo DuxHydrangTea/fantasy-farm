@@ -6,9 +6,15 @@ var crops: Dictionary = {}
 var animals: Dictionary = {}
 var skins: Dictionary = {}
 var flowers: Dictionary = {}
+var trees: Dictionary = {}
 
 func _init() -> void:
 	_scan_items("res://items")
+	for file: String in ResourceLoader.list_directory("res://trees/definitions"):
+		if file.ends_with(".tres"):
+			var definition: TreeDefinition = load("res://trees/definitions/" + file) as TreeDefinition
+			if definition != null:
+				trees[String(definition.tree_id)] = definition
 	for file: String in ResourceLoader.list_directory("res://flowers/definitions"):
 		if file.ends_with(".tres"):
 			var flower: FlowerDefinition = load("res://flowers/definitions/" + file) as FlowerDefinition

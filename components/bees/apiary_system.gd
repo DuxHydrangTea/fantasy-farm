@@ -71,6 +71,8 @@ func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 func advance(timestamp: float) -> void:
 	if loading or _advancing:
 		return
+	if world != null and world.trees != null:
+		world.trees.advance(timestamp)
 	_advancing = true
 	timestamp = maxf(timestamp,last_at)
 	if hives.is_empty():

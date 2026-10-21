@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="ShopCatalog" format=3]
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://cv230dc03r0dw"]
 
-[ext_resource type="Script" path="res://scripts/shop_catalog.gd" id="1_catalog"]
-[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="1_f1el3"]
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="1_f1el3"]
 [ext_resource type="Resource" path="res://resources/shops/animals/chicken.tres" id="2_k85ps"]
-[ext_resource type="Script" path="res://scripts/shop_offer.gd" id="2_offer"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="2_offer"]
 [ext_resource type="Resource" path="res://resources/shops/animals/duck.tres" id="3_eqy7j"]
 [ext_resource type="Resource" path="res://resources/shops/animals/goose.tres" id="4_r8s11"]
 [ext_resource type="Resource" path="res://resources/shops/animals/pig.tres" id="5_youwl"]
@@ -12,25 +12,26 @@
 [ext_resource type="Resource" path="res://resources/shops/animals/horse.tres" id="8_f8sdp"]
 [ext_resource type="Resource" path="res://items/boosters/crop_fertilizer.tres" id="44_eqy7j"]
 [ext_resource type="Resource" path="res://items/boosters/animal_tonic.tres" id="45_r8s11"]
-[ext_resource type="Resource" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
-[ext_resource type="Resource" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
+[ext_resource type="Resource" path="res://items/placeables/beehive.tres" id="hive_item"]
+[ext_resource type="Resource" uid="uid://ebpy0mmpjtu3" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://dlc3pj5noacyh" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
 [ext_resource type="Resource" path="res://items/seeds/broccoli_seed.tres" id="item_2"]
 [ext_resource type="Resource" path="res://items/seeds/cabbage_seed.tres" id="item_3"]
-[ext_resource type="Resource" path="res://items/seeds/carrot_seed.tres" id="item_4"]
+[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="item_4"]
 [ext_resource type="Resource" path="res://items/seeds/chili_pepper_seed.tres" id="item_5"]
 [ext_resource type="Resource" path="res://items/seeds/corn_seed.tres" id="item_6"]
 [ext_resource type="Resource" path="res://items/seeds/cucumber_seed.tres" id="item_7"]
 [ext_resource type="Resource" path="res://items/seeds/eggplant_seed.tres" id="item_8"]
-[ext_resource type="Resource" path="res://items/seeds/flower_01_seed.tres" id="item_9"]
-[ext_resource type="Resource" path="res://items/seeds/flower_02_seed.tres" id="item_10"]
-[ext_resource type="Resource" path="res://items/seeds/flower_03_seed.tres" id="item_11"]
-[ext_resource type="Resource" path="res://items/seeds/flower_04_seed.tres" id="item_12"]
-[ext_resource type="Resource" path="res://items/seeds/flower_05_seed.tres" id="item_13"]
-[ext_resource type="Resource" path="res://items/seeds/flower_06_seed.tres" id="item_14"]
-[ext_resource type="Resource" path="res://items/seeds/flower_07_seed.tres" id="item_15"]
-[ext_resource type="Resource" path="res://items/seeds/flower_08_seed.tres" id="item_16"]
-[ext_resource type="Resource" path="res://items/seeds/flower_09_seed.tres" id="item_17"]
-[ext_resource type="Resource" path="res://items/seeds/flower_10_seed.tres" id="item_18"]
+[ext_resource type="Resource" uid="uid://dpv2o2obtmfss" path="res://items/seeds/flower_01_seed.tres" id="item_9"]
+[ext_resource type="Resource" uid="uid://ba1txm51ur5nb" path="res://items/seeds/flower_02_seed.tres" id="item_10"]
+[ext_resource type="Resource" uid="uid://s1jvgss0vdtk" path="res://items/seeds/flower_03_seed.tres" id="item_11"]
+[ext_resource type="Resource" uid="uid://bbodcnt2lfywj" path="res://items/seeds/flower_04_seed.tres" id="item_12"]
+[ext_resource type="Resource" uid="uid://dupjxnr2jocqs" path="res://items/seeds/flower_05_seed.tres" id="item_13"]
+[ext_resource type="Resource" uid="uid://bfebrr6tir1fy" path="res://items/seeds/flower_06_seed.tres" id="item_14"]
+[ext_resource type="Resource" uid="uid://c10ayurnwar76" path="res://items/seeds/flower_07_seed.tres" id="item_15"]
+[ext_resource type="Resource" uid="uid://l4u8rcsm0scp" path="res://items/seeds/flower_08_seed.tres" id="item_16"]
+[ext_resource type="Resource" uid="uid://b5vtqliiybpln" path="res://items/seeds/flower_09_seed.tres" id="item_17"]
+[ext_resource type="Resource" uid="uid://ccbng7ss6wer7" path="res://items/seeds/flower_10_seed.tres" id="item_18"]
 [ext_resource type="Resource" path="res://items/seeds/garlic_seed.tres" id="item_19"]
 [ext_resource type="Resource" path="res://items/seeds/green_bell_pepper_seed.tres" id="item_20"]
 [ext_resource type="Resource" path="res://items/seeds/leek_seed.tres" id="item_21"]
@@ -42,18 +43,19 @@
 [ext_resource type="Resource" path="res://items/seeds/strawberry_seed.tres" id="item_27"]
 [ext_resource type="Resource" path="res://items/seeds/sunflower_seed.tres" id="item_28"]
 [ext_resource type="Resource" path="res://items/seeds/tomato_seed.tres" id="item_29"]
-[ext_resource type="Resource" path="res://items/seeds/wheat_seed.tres" id="item_30"]
+[ext_resource type="Resource" uid="uid://bg270usqa0ayi" path="res://items/seeds/wheat_seed.tres" id="item_30"]
 [ext_resource type="Resource" path="res://items/seeds/yellow_bell_pepper_seed.tres" id="item_31"]
-[ext_resource type="Resource" path="res://items/feeds/livestock_feed.tres" id="item_32"]
-[ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="item_33"]
+[ext_resource type="Resource" uid="uid://imj32f8onlp1" path="res://items/feeds/livestock_feed.tres" id="item_32"]
+[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="item_33"]
 
-[ext_resource type="Resource" path="res://items/placeables/beehive.tres" id="hive_item"]
-
-[sub_resource type="Resource" id="hive_offer"]
-script = ExtResource("2_offer")
-item = ExtResource("hive_item")
-price = 1500
-category = 1
+[ext_resource type="Resource" path="res://items/trees/apple_sapling.tres" id="tree_offer_item_0"]
+[ext_resource type="Resource" path="res://items/trees/peach_sapling.tres" id="tree_offer_item_1"]
+[ext_resource type="Resource" path="res://items/trees/pear_sapling.tres" id="tree_offer_item_2"]
+[ext_resource type="Resource" path="res://items/trees/cherry_sapling.tres" id="tree_offer_item_3"]
+[ext_resource type="Resource" path="res://items/trees/oak_sapling.tres" id="tree_offer_item_4"]
+[ext_resource type="Resource" path="res://items/trees/birch_sapling.tres" id="tree_offer_item_5"]
+[ext_resource type="Resource" path="res://items/trees/spruce_sapling.tres" id="tree_offer_item_6"]
+[ext_resource type="Resource" path="res://items/tools/axe.tres" id="tree_offer_item_7"]
 
 [sub_resource type="Resource" id="Offer_0"]
 script = ExtResource("2_offer")
@@ -227,7 +229,61 @@ item = ExtResource("45_r8s11")
 price = 3
 category = 1
 
+[sub_resource type="Resource" id="hive_offer"]
+script = ExtResource("2_offer")
+item = ExtResource("hive_item")
+price = 1500
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_0"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_0")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_1"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_1")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_2"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_2")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_3"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_3")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_4"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_4")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_5"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_5")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_6"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_6")
+price = 60
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_7"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_7")
+price = 250
+category = 1
+
 [resource]
 script = ExtResource("1_catalog")
-offers = Array[ExtResource("2_offer")]([SubResource("Offer_0"), SubResource("Offer_1"), SubResource("Offer_2"), SubResource("Offer_3"), SubResource("Offer_4"), SubResource("Offer_5"), SubResource("Offer_6"), SubResource("Offer_7"), SubResource("Offer_8"), SubResource("Offer_9"), SubResource("Offer_10"), SubResource("Offer_11"), SubResource("Offer_12"), SubResource("Offer_13"), SubResource("Offer_14"), SubResource("Offer_15"), SubResource("Offer_16"), SubResource("Offer_17"), SubResource("Offer_18"), SubResource("Offer_19"), SubResource("Offer_20"), SubResource("Offer_21"), SubResource("Offer_22"), SubResource("Offer_23"), SubResource("Offer_24"), SubResource("Offer_25"), SubResource("Offer_26"), SubResource("Offer_27"), SubResource("Offer_28"), SubResource("Offer_29"), SubResource("Offer_30"), SubResource("Offer_31"), SubResource("Offer_32"), SubResource("Offer_33"), SubResource("Resource_f8sdp"), SubResource("Resource_in2rt"), SubResource("hive_offer")])
+offers = Array[ExtResource("2_offer")]([SubResource("Offer_0"), SubResource("Offer_1"), SubResource("Offer_2"), SubResource("Offer_3"), SubResource("Offer_4"), SubResource("Offer_5"), SubResource("Offer_6"), SubResource("Offer_7"), SubResource("Offer_8"), SubResource("Offer_9"), SubResource("Offer_10"), SubResource("Offer_11"), SubResource("Offer_12"), SubResource("Offer_13"), SubResource("Offer_14"), SubResource("Offer_15"), SubResource("Offer_16"), SubResource("Offer_17"), SubResource("Offer_18"), SubResource("Offer_19"), SubResource("Offer_20"), SubResource("Offer_21"), SubResource("Offer_22"), SubResource("Offer_23"), SubResource("Offer_24"), SubResource("Offer_25"), SubResource("Offer_26"), SubResource("Offer_27"), SubResource("Offer_28"), SubResource("Offer_29"), SubResource("Offer_30"), SubResource("Offer_31"), SubResource("Offer_32"), SubResource("Offer_33"), SubResource("Resource_f8sdp"), SubResource("Resource_in2rt"), SubResource("hive_offer"), SubResource("tree_offer_0"), SubResource("tree_offer_1"), SubResource("tree_offer_2"), SubResource("tree_offer_3"), SubResource("tree_offer_4"), SubResource("tree_offer_5"), SubResource("tree_offer_6"), SubResource("tree_offer_7")])
 animal_offers = Array[ExtResource("1_f1el3")]([ExtResource("2_k85ps"), ExtResource("3_eqy7j"), ExtResource("4_r8s11"), ExtResource("5_youwl"), ExtResource("6_jxoa0"), ExtResource("7_iuhxw"), ExtResource("8_f8sdp")])

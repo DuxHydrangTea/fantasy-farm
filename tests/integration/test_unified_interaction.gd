@@ -144,6 +144,27 @@ func test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority() 
 	assert_eq(trough.stock,600)
 	assert_eq(trough.feed_reserve,295)
 
+func test_repeated_clicks_on_same_npc_keep_approaching_without_pauses_or_duplicate_actions() -> void:
+	trough.hide()
+	merchant.position = player.position + Vector2(200, 0)
+	await wait_physics_frames(2)
+	assert_true(controller.click(merchant.interaction_sprite().global_position))
+	await wait_physics_frames(10)
+	var chosen: InteractionTarget = controller.pending
+	var shortest_step: float = INF
+	for frame: int in range(20):
+		var before: Vector2 = player.position
+		assert_true(controller.click(merchant.interaction_sprite().global_position))
+		await wait_physics_frames(1)
+		shortest_step = minf(shortest_step, player.position.distance_to(before))
+		assert_eq(controller.pending, chosen, "Keep the same pending interaction while approaching")
+	assert_gt(shortest_step, 2.0)
+	assert_false(merchant.menu.is_open)
+	await wait_seconds(1.5)
+	assert_true(merchant.menu.is_open)
+	assert_null(controller.pending)
+	assert_eq(player.state.current_state, StateComponent.State.IDLE)
+
 func test_new_focus_keyboard_and_deleted_target_cancel_queued_interaction() -> void:
 	trough.hide()
 	merchant.position = player.position + Vector2(160,0)

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="TreeDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://items/trees/wood.tres" id="product"]
+[ext_resource type="Texture2D" path="res://trees/textures/birch_stage1.tres" id="stage1"]
+[ext_resource type="Texture2D" path="res://trees/textures/birch_stage2.tres" id="stage2"]
+[ext_resource type="Texture2D" path="res://trees/textures/birch_stage3.tres" id="stage3"]
+[ext_resource type="Texture2D" path="res://trees/textures/birch_stump.tres" id="stump"]
+[ext_resource type="Texture2D" path="res://trees/textures/birch_canopy.tres" id="canopy"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Birch_Leaf_Particle.png" id="leaf"]
+[ext_resource type="Resource" path="res://items/trees/root_wood.tres" id="root"]
+
+[resource]
+script = ExtResource("script")
+tree_id = &"birch"
+display_name = "Birch Tree"
+kind = 1
+growth_seconds = 240.0
+stump_seconds = 120.0
+chop_hits = 4
+dig_hits = 3
+harvest_amount = 5
+stump_texture = ExtResource("stump")
+canopy_texture = ExtResource("canopy")
+leaf_texture = ExtResource("leaf")
+root_item = ExtResource("root")
+harvest_item = ExtResource("product")
+stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
+ready_texture = ExtResource("stage3")
