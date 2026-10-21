@@ -88,6 +88,12 @@ Code có thể gọi `animal.behaviour.request_behaviour(&"forage")`, `&"rest"`,
 `&"sleep"`, `&"walk"` hoặc `&"idle"`. Con vật đã nằm phải `wake()` và chạy xong
 đứng lên trước khi nhận hành vi đứng/đi. Tín hiệu `state_changed` phục vụ UI/debug.
 
+`animal.set_status_focused(true)` chuyển sang idle và giữ đứng yên khi hover/focus;
+con đang nằm/ngủ trên cạn đi qua `STAND_UP` trước. Lặp lại `true` không khởi động
+lại animation. Gọi `false` nhả giữ để AI chọn hành vi tiếp; request hành vi khác bị
+từ chối trong lúc giữ. Máng đã đặt chỗ được nhả ngay, còn nhu cầu và vòng đời vẫn
+cập nhật bình thường. Xem [luồng hover/focus](context_bars.md).
+
 Riêng vịt đang bơi dùng `swim_idle`/`swim_sleep`, bỏ chuỗi nằm/đứng trên cạn;
 `wake()` chuyển thẳng về IDLE khi ở nước.
 
@@ -111,3 +117,13 @@ lật sprite, đứng yên khi thiếu Pen, skin và khả năng dùng definitio
 `godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit`
 
 Preview thủ công: `godot --path . -s tests/support/animal_preview.gd`.
+
+## Tương tác thống nhất với máng và vật nuôi
+
+E chọn đúng mục tiêu phía trước theo ưu tiên NPC/biển > máng > vật nuôi > cây.
+Chỉ một outline và huy hiệu hành động được hiện. Click sprite để tự tìm đường
+đến và tương tác; E/click máng lấy đúng cám trong toàn bộ túi và đổ tới đầy,
+giữ phần gói còn thừa cho lần sau. Máng nước tìm bình tưới trong túi và đổ đầy.
+Vật nuôi được kiểm tra thông tin, và thu sản phẩm nếu loài đó dùng thu trực tiếp.
+Xem [unified_interaction.md](unified_interaction.md) về tầm với, hủy thao tác,
+phản hồi và schema 8 lưu lượng cám dư.

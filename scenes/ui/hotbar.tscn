@@ -3,9 +3,11 @@
 [ext_resource type="Script" uid="uid://qnlh6s12is40" path="res://components/hotbar_ui.gd" id="1_ui"]
 [ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="2_theme"]
 
-[node name="Hotbar" type="CanvasLayer" unique_id=1967160829 node_paths=PackedStringArray("slots", "selected_name")]
+[node name="Hotbar" type="CanvasLayer" unique_id=1967160829 node_paths=PackedStringArray("root", "hint", "slots", "selected_name")]
 layer = 10
 script = ExtResource("1_ui")
+root = NodePath("Root")
+hint = NodePath("Root/Bottom/Column/Hint")
 slots = NodePath("Root/Bottom/Column/Slots")
 selected_name = NodePath("Root/Bottom/Column/SelectedName")
 
@@ -42,11 +44,11 @@ alignment = 2
 
 [node name="SelectedName" type="Label" parent="Root/Bottom/Column" unique_id=2052340069]
 layout_mode = 2
+theme_override_font_sizes/font_size = 22
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_shadow_color = Color(0.16, 0.13, 0.11, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 
 [node name="Slots" type="HBoxContainer" parent="Root/Bottom/Column" unique_id=19812671]
@@ -57,10 +59,10 @@ theme_override_constants/separation = 6
 
 [node name="Hint" type="Label" parent="Root/Bottom/Column" unique_id=1643133673]
 layout_mode = 2
+theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 0.93, 0.76, 1)
 theme_override_colors/font_shadow_color = Color(0.16, 0.13, 0.11, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 16
-text = "1–6: chọn  •  Chuột phải / Space: dùng  •  E: thu hoạch"
+text = "1-6: select · Right-click / Space: use · E: harvest"
 horizontal_alignment = 1

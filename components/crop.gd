@@ -7,95 +7,52 @@ var planted_at: float = 0.0
 var matures_at: float = 0.0
 var progress: float = 0.0
 var stage: int = 0
+var fertilized: bool = false
+var pollination_reduction: float = 0.0
 var time_manager: FarmClock
 @export var sprite: Sprite2D
 @export var progress_bar: ProgressBar
 @export var progress_frame: Control
-var _status_focused: bool = false
+@export var motion: VisualMotionComponent
 var _retiring: bool = false
-var _motion: Tween
-var _rest_position: Vector2
-var _rest_scale: Vector2
-var _rest_rotation: float = 0.0
-var _bend: float = 0.0:
-	set(value):
-		_bend = value
-		_apply_pose()
-var _stretch: Vector2 = Vector2.ONE:
-	set(value):
-		_stretch = value
-		_apply_pose()
 
 func _ready() -> void:
 	progress_frame.hide()
-	_rest_position = sprite.position
-	_rest_scale = sprite.scale
-	_rest_rotation = sprite.rotation
-	sprite.material = preload("res://resources/effects/crop_wind.tres")
+	if is_instance_valid(motion):
+		motion.effect_finished.connect(_on_motion_finished)
 
 func set_status_focused(value: bool) -> void:
 	if _retiring:
 		progress_frame.hide()
 		return
-	if value and not _status_focused:
-		react(2.5)
-	_status_focused = value
+	if is_instance_valid(motion):
+		motion.set_focused(value)
 	if value and time_manager != null:
 		refresh(time_manager.now())
 	progress_frame.visible = value and definition != null
 
-# Đây là hiệu ứng có thể tắt; dữ liệu cây không phụ thuộc vào độ nghiêng.
-# Sprite có tâm nằm phía trên gốc. Xoay riêng rotation sẽ làm cây quay quanh bụng ảnh,
-# nên phải xoay cả vector từ gốc tới tâm, đồng thời co giãn vector đó cùng với sprite.
-# Nhờ vậy chân vẫn neo ở ô đất. Root/collision/timestamp không được di chuyển theo hiệu ứng.
-func _apply_pose() -> void:
-	if sprite == null:
-		return
-	# Sprite's original center is above the root: rotate/scale around the stem.
-	sprite.position = (_rest_position * _stretch).rotated(_bend)
-	sprite.rotation = _rest_rotation + _bend
-	sprite.scale = _rest_scale * _stretch
-
-# Chỉ giữ một Tween phản ứng và hoàn nguyên pose trước khi tạo nhịp mới.
-# Nếu cộng dồn Tween mỗi lần focus/tưới, nhiều Tween cùng ghi một thuộc tính làm cây giật,
-# nghiêng quá mức hoặc không trở về dáng cũ. Có thể bỏ toàn bộ hiệu ứng, nhưng không nên
-# giữ hiệu ứng mà bỏ bước hủy/khôi phục này.
-func _start_motion() -> void:
-	if _motion != null and _motion.is_valid():
-		_motion.kill()
-	_bend = 0.0
-	_stretch = Vector2.ONE
-	_motion = create_tween()
-
 func react(degrees: float = 5.0, direction: float = 1.0) -> void:
-	if _retiring or not is_inside_tree():
-		return
-	_start_motion()
-	var angle: float = deg_to_rad(degrees) * (-1.0 if direction < 0.0 else 1.0)
-	_motion.tween_property(self, "_bend", angle, 0.07).set_trans(Tween.TRANS_SINE)
-	_motion.tween_property(self, "_bend", -angle * 0.6, 0.09)
-	_motion.tween_property(self, "_bend", angle * 0.25, 0.09)
-	_motion.tween_property(self, "_bend", 0.0, 0.12)
+	if not _retiring and is_instance_valid(motion):
+		motion.react(degrees, direction)
 
 func play_sprout() -> void:
-	_start_motion()
-	_stretch = Vector2(0.65, 0.65)
-	_motion.tween_property(self, "_stretch", Vector2(0.9, 1.1), 0.13)
-	_motion.tween_property(self, "_stretch", Vector2.ONE, 0.12)
+	if not _retiring and is_instance_valid(motion):
+		motion.play_appear()
 
-# Cây đã được gỡ khỏi danh sách gameplay trước khi gọi hàm này; Node còn lại 0,16 giây
-# chỉ để co/mờ. _retiring ngăn thanh tiến độ bị focus làm hiện lại trên cây đang biến mất.
-# Có thể queue_free ngay thay cho nhịp mờ mà không thay phần thưởng; không được trì hoãn
-# việc gỡ cây khỏi dữ liệu tới cuối Tween, vì lúc đó có thể tương tác/thu hoạch lần nữa.
+# Gameplay removes the crop before this cosmetic animation begins.
+# The component reports completion; only the crop owns its lifetime.
 func retire_after_harvest() -> void:
-	_start_motion()
 	_retiring = true
 	add_to_group(&"harvest_effects")
 	progress_frame.hide()
-	_motion.set_parallel(true)
-	_motion.tween_property(self, "_stretch", Vector2(1.15, 0.45), 0.16)
-	_motion.tween_property(sprite, "modulate:a", 0.0, 0.16)
-	_motion.chain().tween_callback(queue_free)
+	if is_instance_valid(motion):
+		motion.play_disappear()
+	else:
+		queue_free()
+
+func _on_motion_finished(effect: StringName) -> void:
+	if _retiring and effect == &"disappear":
+		queue_free()
 
 func is_retiring() -> bool:
 	return _retiring
@@ -104,6 +61,10 @@ func get_status_sprite() -> Node2D:
 	return sprite
 
 func configure(crop: CropDefinition, timestamp: float) -> void:
+	progress = 0.0
+	stage = 0
+	fertilized = false
+	pollination_reduction = 0.0
 	definition = crop
 	planted_at = timestamp
 	matures_at = timestamp + crop.growth_seconds
@@ -137,9 +98,31 @@ func refresh(timestamp: float) -> void:
 func is_mature() -> bool:
 	return progress >= 1.0
 
-func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float) -> void:
+func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float, was_fertilized: bool = false, bee_reduction: float = 0.0) -> void:
 	definition = crop
 	planted_at = planted
 	matures_at = deadline
 	progress = earned
+	fertilized = was_fertilized
+	pollination_reduction = bee_reduction
 	refresh(timestamp)
+
+func fertilizer_error(timestamp: float) -> String:
+	if _retiring or definition == null:
+		return "No crop to fertilize."
+	refresh(timestamp)
+	if fertilized:
+		return "This crop was already fertilized."
+	if progress >= 0.5:
+		return "Fertilizer requires growth below 50%."
+	return ""
+
+func apply_fertilizer(timestamp: float) -> bool:
+	if not fertilizer_error(timestamp).is_empty():
+		return false
+	fertilized = true
+	# Move the original deadline by 20% of the ORIGINAL total duration.
+	matures_at -= (matures_at - planted_at + pollination_reduction) * 0.2
+	refresh(timestamp)
+	react(7.0)
+	return true

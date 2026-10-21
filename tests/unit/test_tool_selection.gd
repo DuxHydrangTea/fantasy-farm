@@ -26,7 +26,7 @@ func test_invalid_slot_does_not_change_selection() -> void:
 func test_empty_slot_has_no_action() -> void:
 	selection.select_slot(2)
 	assert_eq(selection.get_selected_action(), &"")
-	assert_eq(selection.get_selected_name(), "Ô trống")
+	assert_eq(selection.get_selected_name(), "Empty slot")
 
 func test_cycle_selection_wraps_indices() -> void:
 	selection.cycle_selection(-1)

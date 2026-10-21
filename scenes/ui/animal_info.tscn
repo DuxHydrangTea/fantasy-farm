@@ -1,0 +1,97 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/animal_info_panel.gd" id="1_qi3q8"]
+[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="2_adjef"]
+[ext_resource type="Texture2D" path="res://resources/ui/inventory_panel.tres" id="3_0idq6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_634ud"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+texture = ExtResource("3_0idq6")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m1xvk"]
+bg_color = Color(0.38, 0.26, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tsp4"]
+bg_color = Color(0.38, 0.64, 0.26, 1)
+
+[node name="AnimalInfo" type="CanvasLayer" unique_id=655134879 node_paths=PackedStringArray("root", "title", "maturity_label", "lifetime_label", "produce_label", "progress", "state_label")]
+layer = 11
+script = ExtResource("1_qi3q8")
+root = NodePath("Root")
+title = NodePath("Root/Margin/Panel/Body/Title")
+maturity_label = NodePath("Root/Margin/Panel/Body/Maturity")
+lifetime_label = NodePath("Root/Margin/Panel/Body/Lifetime")
+produce_label = NodePath("Root/Margin/Panel/Body/Produce")
+progress = NodePath("Root/Margin/Panel/Body/Progress")
+state_label = NodePath("Root/Margin/Panel/Body/State")
+
+[node name="Root" type="Control" parent="." unique_id=1173367579]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("2_adjef")
+
+[node name="Margin" type="MarginContainer" parent="Root" unique_id=2000656200]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="Root/Margin" unique_id=1865425578]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_634ud")
+
+[node name="Body" type="VBoxContainer" parent="Root/Margin/Panel" unique_id=1644303710]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="Root/Margin/Panel/Body" unique_id=1561710290]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+
+[node name="Maturity" type="Label" parent="Root/Margin/Panel/Body" unique_id=656450854]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Lifetime" type="Label" parent="Root/Margin/Panel/Body" unique_id=356659824]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Produce" type="Label" parent="Root/Margin/Panel/Body" unique_id=1442791493]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Progress" type="ProgressBar" parent="Root/Margin/Panel/Body" unique_id=1839405091]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_m1xvk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3tsp4")
+show_percentage = false
+
+[node name="State" type="Label" parent="Root/Margin/Panel/Body" unique_id=918922463]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3

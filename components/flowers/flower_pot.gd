@@ -36,6 +36,7 @@ func plant(bag: InventoryComponent, index: int, now: float) -> bool:
 	var seed: ItemDefinition = stack.item as ItemDefinition
 	if not can_plant(seed) or stack.count < 1:
 		return false
+	_sync_bees()
 	# Establish state before inventory signals can re-enter the interaction.
 	definition = seed.crop as FlowerDefinition
 	planted_at = now
@@ -57,6 +58,7 @@ func can_water() -> bool:
 func water(now: float) -> bool:
 	if not can_water():
 		return false
+	_sync_bees()
 	growth_started_at = maxf(now, planted_at)
 	matures_at = growth_started_at + definition.growth_seconds
 	_update_visual()
@@ -80,6 +82,7 @@ func harvest(bag: InventoryComponent) -> bool:
 	if bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
 		bag.report_capacity_blocked(definition.harvest_item, definition.harvest_amount)
 		return false
+	_sync_bees()
 	_harvesting = true
 	var count: int = bag.add(definition.harvest_item, definition.harvest_amount)
 	if count == definition.harvest_amount:
@@ -88,6 +91,7 @@ func harvest(bag: InventoryComponent) -> bool:
 	return count > 0
 
 func clear() -> void:
+	_sync_bees()
 	definition = null
 	planted_at = 0.0
 	growth_started_at = -1.0
@@ -148,3 +152,7 @@ func _update_visual() -> void:
 	_update_status_visibility()
 	bar.value = progress
 	bar.modulate = Color(1, 0.85, 0.35) if is_mature() else (Color(0.6, 0.8, 1) if can_water() else Color.WHITE)
+
+func _sync_bees() -> void:
+	if garden != null and garden.apiary != null:
+		garden.apiary.sync()

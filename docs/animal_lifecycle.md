@@ -1,12 +1,21 @@
 # Lớn lên, sản xuất phụ phẩm và nhặt vật phẩm
 
-Các scene kế thừa `scenes/animals/animal.tscn` dùng chung vòng đời này. Trong
-farm mẫu, các con hiện có bắt đầu ở tuổi trưởng thành, riêng `Chicken_8` và
-`Chicken_9` bắt đầu từ tuổi 0 để thử tiến trình lớn lên.
+Các scene kế thừa `scenes/animals/animal.tscn` dùng chung vòng đời này cho cả 7 loài.
+Animal mới có tuổi 0: cần **24 giờ thực** để trưởng thành, và chết khi đủ
+**14 ngày thực tính từ tuổi 0**, bao gồm ngày còn non (13 ngày có thể sản xuất).
+Thời gian đóng game vẫn được tính. Tuổi tăng độc lập với no/nước và hover/focus.
+
+Cửa hàng LaiBuon có mục mua/bán vật nuôi. AnimalTradeService tạo actor với
+`initial_age_seconds = 0` và gán clock trước khi đưa vào chuồng để bắt đầu tuổi
+từ lúc mua. Load khôi phục tuổi từ snapshot và cộng phần offline, không đặt lại tuổi.
+Xem [giá và quy tắc giao dịch](shops.md).
+Các con đặt sẵn trong map vẫn giữ tuổi khởi tạo 120 giây (2 phút), riêng
+`Chicken_8`/`Chicken_9` là 0; tất cả vẫn chưa đủ tuổi trưởng thành theo mốc mới.
 
 ## Cấu hình tuổi và sprite
 
-- `AnimalDefinition.maturity_seconds`: số giây để trưởng thành, mặc định 120.
+- `AnimalDefinition.maturity_seconds`: số giây để trưởng thành, mặc định 86400 (24 giờ).
+- `AnimalDefinition.lifespan_seconds`: tổng tuổi thọ, mặc định 1209600 (14 ngày), phải lớn hơn mốc trưởng thành.
 - `Animal.initial_age_seconds`: tuổi ban đầu riêng của từng instance; mặc định
   0 là con non. Gán bằng hoặc lớn hơn `maturity_seconds` để bắt đầu trưởng thành.
 - `juvenile_frames`: dùng khi con non và resource có animation idle/walk hợp lệ.
@@ -14,8 +23,11 @@ farm mẫu, các con hiện có bắt đầu ở tuổi trưởng thành, riêng
 - Khi trưởng thành, dùng skin trưởng thành riêng. Nếu cần đổi bộ sprite, đợi
   animal đứng yên để giữ nguyên chuỗi ngồi/ngủ/đứng dậy và hành động ăn/uống.
 
-`AnimalGrowthComponent` giữ tuổi riêng của mỗi con và phát `matured` đúng một
-lần khi qua mốc trưởng thành. Tuổi tiếp tục tăng dù con vật đang đói/khát.
+`AnimalGrowthComponent` giữ tuổi riêng của mỗi con, phát `matured` khi qua mốc
+trưởng thành và `lifespan_reached` khi đủ tuổi thọ. Mỗi tín hiệu chỉ phát một lần
+khi advance vượt mốc; tuổi dừng tại tuổi thọ. `seconds_until_adult()` và
+`seconds_until_death()` trả thời gian còn lại. Configure từ save không phát lại
+signal; actor kiểm tra tuổi đã hết ngay cả khi không có thời gian offline.
 
 ## Cấu hình phụ phẩm
 
@@ -40,7 +52,7 @@ Các resource đang cấu hình:
 | Cừu | Len | 60 giây |
 | Ngựa | Phân hữu cơ | 60 giây |
 
-Chỉ thời gian vừa **đã trưởng thành**, vừa có **thức ăn > 0 và nước > 0** mới
+Chỉ thời gian vừa **đã trưởng thành**, **còn sống**, vừa có **thức ăn > 0 và nước > 0** mới
 được cộng. Khi hết thức ăn/nước, giữ tiến độ đang có và tiếp tục sau khi ăn/uống.
 Ví dụ, chu kỳ 30 giây đang đạt 20 giây thì thiếu nước: sau khi có nước chỉ cần
 thêm 10 giây hợp lệ, không tính bù khoảng thời gian khát.
@@ -48,7 +60,19 @@ thêm 10 giây hợp lệ, không tính bù khoảng thời gian khát.
 Clock chung đi qua một khoảng dài vẫn tính đúng phần trước/sau trưởng thành
 và thời điểm thức ăn/nước cạn. Gọi lặp cùng timestamp hoặc lùi timestamp không
 tạo thêm tuổi hay vật phẩm. Nhiều chu kỳ được tính bằng một phép chia, không
-tạo vòng lặp theo từng sản phẩm.
+tạo vòng lặp theo từng sản phẩm. Một lần offline vượt cả mốc trưởng thành và
+mốc chết cũng chỉ cộng khoảng giao giữa thời gian đủ no/nước và tuổi 1–14 ngày.
+
+## Khi hết tuổi thọ
+
+Actor dừng AI/di chuyển, nhả reservation ở máng, bỏ khỏi danh sách hover/focus,
+khóa cấp thức ăn/nước rồi được xóa khỏi chuồng. `AnimalActor.died` phát một lần
+sau khi hoàn tất xử lý và đánh dấu xóa. Không có cơ chế hồi sinh tự động.
+
+Phụ phẩm đã rơi vẫn giữ nguyên. Sản phẩm hoàn tất còn trong kho DIRECT_COLLECTION,
+hoặc trứng chờ đưa lên bờ, được chuyển thành pickup (trứng luôn nằm trên bờ).
+Phần chu kỳ chưa hoàn tất không tạo thêm sản phẩm. Chết không cộng xu hay trả lại
+giá mua. Đói/khát hiện chỉ dừng sản xuất; không làm chết sớm và không kéo dài tuổi thọ.
 
 ## Sinh vật phẩm và nhặt vào túi
 
@@ -79,7 +103,7 @@ và giữ phần dư. Chế độ này không tự tạo item trên đất.
 ## Các phần chịu trách nhiệm
 
 - `AnimalNeedsComponent`: đồng hồ, mức no/nước và khoảng thời gian được cấp đủ.
-- `AnimalGrowthComponent`: tuổi và mốc trưởng thành.
+- `AnimalGrowthComponent`: tuổi, mốc trưởng thành và tuổi thọ.
 - `AnimalProductionComponent`: chu kỳ, tiến độ, số lượng chờ chuyển ra.
 - `Animal` scene/controller: nối các component, lựa chọn sprite và tạo đống phụ phẩm.
 - `ItemPickup`, `ItemCollector`: chuyển vật phẩm vào InventoryComponent dùng chung.
@@ -89,8 +113,13 @@ và giữ phần dư. Chế độ này không tự tạo item trên đất.
 WorldStateAdapter lưu tuổi, no/nước, tiến độ/stock sản xuất và liên kết đống sản
 phẩm theo persistent_id. `restore_lifecycle()` đặt lại baseline tại `saved_at`,
 nối lại pile rồi đồng bộ tới thời điểm tải, tránh cộng lại thời gian/sản phẩm.
-Offline tăng tuổi và chỉ cộng sản xuất trong phần còn đủ cả no và nước, không
+Offline tăng tuổi và chỉ cộng sản xuất trong phần còn sống, đã trưởng thành và đủ cả no/nước, không
 giả lập đi lại hoặc tiêu thụ máng. Trứng còn dưới nước vẫn chờ lên bờ sau tải.
+Nếu hết tuổi thọ khi offline, actor được xử lý chết ngay trong restore; snapshot
+tiếp theo không còn actor đó. Capture cũng bỏ qua actor vừa chết trong chính lần
+đồng bộ thời gian, dù queue_free chưa chạy xong cuối frame. `animal_pens` vẫn ghi
+chuồng đã khởi tạo để không hồi sinh đàn mẫu. Schema 5 hiện có đã lưu age/saved_at
+nên không cần đổi format; tuổi save cũ được giữ, áp các mốc mới khi tải.
 Chi tiết schema, backup và phím F5/F9: [saving.md](saving.md).
 
 ## Kiểm thử
@@ -106,3 +135,9 @@ vật phẩm, túi đầy, nhặt một phần và sensor thật trên scene pla
 
 `--all` chạy thêm các suite khác. Những lỗi UI/camera headless đã có trên mã
 gốc vẫn được báo thất bại bình thường; runner không bỏ qua chúng.
+
+## Animal tonic
+
+A juvenile dose halves the maturity threshold while retaining age and lifespan.
+Adult doses enhance one completed production cycle with a 50% chance of +1 item.
+See [boosters](boosters.md) for pauses, offline catch-up and save flags.

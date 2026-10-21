@@ -233,7 +233,7 @@ func test_full_bag_reports_capacity_problem_and_preserves_mature_crop() -> void:
 	var feedback: ItemGainFeedback = (player as FarmPlayer).item_feedback
 	assert_eq(feedback.get_child_count(), 1)
 	var notice: ItemGainPopup = feedback.get_child(0) as ItemGainPopup
-	assert_eq(notice.message, "Túi đồ đầy")
+	assert_eq(notice.message, "Inventory full")
 	bag.remove(&"hoe", 1)
 	assert_true(farming.harvest(target, bag))
 	assert_eq(bag.count_item(definition.harvest_item.item_id), definition.harvest_amount)

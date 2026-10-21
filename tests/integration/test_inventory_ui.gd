@@ -132,7 +132,7 @@ func test_drag_drop_updates_shared_inventory_and_hotbar() -> void:
 	assert_eq(state.get_selected_tool_action(), &"")
 	assert_true(bag.move_slot(1, 0))
 	assert_eq(state.get_selected_tool_action(), &"water")
-	assert_eq(player.get_node("Hotbar").selected_name.text, "Bình tưới")
+	assert_eq(player.get_node("Hotbar").selected_name.text, "Watering Can")
 
 func test_quantity_labels_refresh_in_bag_and_hotbar() -> void:
 	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
@@ -150,10 +150,10 @@ func test_invalid_drag_payload_cannot_move_or_duplicate_items() -> void:
 	assert_false(target._can_drop_data(Vector2.ZERO, {"inventory": null, "slot": 0, "item_id": &"hoe"}))
 	assert_eq(bag.count_item(&"hoe"), 1)
 
-func test_font_theme_uses_pixelify_sans() -> void:
+func test_font_theme_uses_upheaval() -> void:
 	var font: FontVariation = ui.root.theme.default_font as FontVariation
 	assert_not_null(font)
-	assert_eq(font.base_font.resource_path, "res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf")
+	assert_eq(font.base_font.resource_path, "res://assets/Fonts/upheavtt.ttf")
 	for character: String in ["T", "ú", "đ", "ồ", "ư", "ớ"]:
 		var code: int = character.unicode_at(0)
 		assert_true(font.base_font.has_char(code) or font.fallbacks[0].has_char(code), "Vietnamese glyph in the configured font chain: " + character)

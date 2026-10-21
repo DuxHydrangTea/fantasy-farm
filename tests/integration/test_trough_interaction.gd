@@ -40,7 +40,7 @@ func test_player_uses_shared_inventory_and_refills_once_at_animation_impact() ->
 func test_water_requires_selected_can_and_never_consumes_the_tool() -> void:
 	trough.kind = AnimalTrough.Kind.WATER
 	interaction.refresh()
-	assert_string_contains(interaction.prompt.text, "Chọn bình tưới")
+	assert_string_contains(interaction.prompt.text, "Select a watering can")
 	assert_true(state.use_selected_tool())
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	selection.select_slot(1)
@@ -91,12 +91,12 @@ func test_selecting_another_slot_keeps_original_watering_action() -> void:
 func test_full_and_missing_feed_block_farming_and_show_reason() -> void:
 	selection.inventory.remove(FEED.item_id, 5)
 	interaction.refresh()
-	assert_string_contains(interaction.prompt.text, "Cần Thức ăn gia cầm")
+	assert_string_contains(interaction.prompt.text, "Requires Poultry Feed")
 	assert_true(state.use_selected_tool())
 	assert_eq(state.active_action, &"")
 	trough.stock = trough.capacity
 	interaction.refresh()
-	assert_string_contains(interaction.prompt.text, "Máng đã đầy")
+	assert_string_contains(interaction.prompt.text, "Trough is full")
 	assert_true(state.use_selected_tool())
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 
@@ -154,13 +154,15 @@ func test_prompt_fits_two_viewport_sizes() -> void:
 		component.set_physics_process(false)
 		await wait_physics_frames(2)
 		component.refresh()
-		assert_true(component.prompt.visible)
-		var rect: Rect2 = component.prompt.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, component.prompt.size)
+		(actor as FarmPlayer).interactions.refresh()
+		var badge: PanelContainer = (actor as FarmPlayer).interactions.presenter.badge
+		assert_false(component.prompt.visible, "Only the unified badge is shown")
+		assert_true(badge.visible)
+		var rect: Rect2 = badge.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, badge.size)
 		assert_gt(rect.size.x, 0.0)
 		assert_gt(rect.size.y, 0.0)
 		assert_true(Rect2(Vector2.ZERO, Vector2(viewport_size)).encloses(rect), str(viewport_size))
-		assert_string_contains(component.prompt.text, "400/600")
-		assert_string_contains(component.prompt.text, "Chưa đủ chỗ")
+		assert_string_contains((actor as FarmPlayer).interactions.presenter.label.text, "400/600")
 
 func test_actor_faces_trough_and_checks_new_obstacle_again_at_impact() -> void:
 	# Leave room for a wall between the player and the vertical trough's edge.

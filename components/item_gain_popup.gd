@@ -22,7 +22,7 @@ func _ready() -> void:
 	add_child(row)
 	label = Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	label.add_theme_font_override("font", preload("res://resources/ui/pixelify_sans.tres"))
+	label.add_theme_font_override("font", preload("res://resources/ui/game_font.tres"))
 	label.add_theme_font_size_override("font_size", 14)
 	label.add_theme_color_override("font_color", Color(1.0, 0.96, 0.72))
 	label.add_theme_color_override("font_outline_color", Color(0.12, 0.08, 0.04))
@@ -57,7 +57,7 @@ func start_after(seconds: float) -> void:
 
 func _refresh() -> void:
 	if label != null:
-		label.text = message if not message.is_empty() else "+%d ×" % amount
+		label.text = tr(message) if not message.is_empty() else "+%d ×" % amount
 		icon.texture = item.icon if item != null else null
 		icon.visible = message.is_empty()
 		if not message.is_empty():
@@ -87,3 +87,7 @@ func _process(delta: float) -> void:
 	modulate.a = 1.0 - clampf((age - 0.65) / 0.3, 0.0, 1.0)
 	if age >= 0.95:
 		queue_free()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh()

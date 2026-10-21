@@ -3,10 +3,12 @@ const CHICKEN: PackedScene = preload("res://scenes/animals/chicken.tscn")
 var pen: AnimalPen
 var animal: AnimalActor
 var clock: FarmClock
+var timestamp: float = 1000.0
 
 func before_each() -> void:
+	timestamp = 1000.0
 	clock = FarmClock.new()
-	clock.clock_source = func() -> float: return 1000.0
+	clock.clock_source = func() -> float: return timestamp
 	add_child_autofree(clock)
 	clock.set_process(false)
 	pen = AnimalPen.new()
@@ -60,6 +62,50 @@ func test_hungry_chicken_walks_to_food_and_eats_without_refilling_water() -> voi
 	assert_eq(animal.needs.hydration, 100.0)
 	assert_eq(station.stock, 119)
 	assert_true(station.slot_available(0))
+
+func test_focus_cancels_resource_trip_or_meal_without_spending_and_resumes(state = use_parameters([
+	AnimalBehaviourComponent.State.SEEK_RESOURCE, AnimalBehaviourComponent.State.EAT,
+	AnimalBehaviourComponent.State.DRINK
+])) -> void:
+	var kind: AnimalTrough.Kind = AnimalTrough.Kind.WATER if state == AnimalBehaviourComponent.State.DRINK else AnimalTrough.Kind.FOOD
+	var station: AnimalTrough = _trough(kind, Vector2(160, 70))
+	station.serving_seconds = 0.5
+	if kind == AnimalTrough.Kind.FOOD:
+		animal.needs.satiety = 30.0
+	else:
+		animal.needs.hydration = 30.0
+	assert_true(await _wait_for(state))
+	var slot: int = animal.foraging.target_slot
+	assert_false(station.slot_available(slot))
+	animal.set_status_focused(true)
+	var before: Vector2 = animal.position
+	await wait_physics_frames(40)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_eq(animal.position, before)
+	assert_null(animal.foraging.target)
+	assert_true(station.slot_available(slot))
+	assert_eq(station.stock, 120)
+	assert_eq(animal.needs.satiety if kind == AnimalTrough.Kind.FOOD else animal.needs.hydration, 30.0)
+	animal.set_status_focused(false)
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.EAT if kind == AnimalTrough.Kind.FOOD else AnimalBehaviourComponent.State.DRINK))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
+	assert_eq(station.stock, 119)
+
+func test_late_meal_sync_that_reaches_death_releases_slot_without_spending_stock() -> void:
+	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))
+	animal.behaviour.set_physics_process(false)
+	animal.needs.satiety = 30.0
+	await wait_physics_frames(2)
+	assert_true(animal.foraging.try_begin())
+	var slot: int = animal.foraging.target_slot
+	animal.global_position = station.access_position(slot)
+	animal.growth.configure(0.0, 19.0, 20.0)
+	timestamp += 2.0
+	assert_eq(animal.foraging.finish(), 0.0)
+	assert_true(animal.is_dead())
+	assert_true(station.slot_available(slot))
+	assert_null(animal.foraging.target)
+	assert_eq(station.stock, 120)
 
 func test_more_urgent_water_then_food_are_both_satisfied() -> void:
 	_trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))

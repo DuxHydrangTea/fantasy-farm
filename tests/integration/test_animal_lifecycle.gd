@@ -202,3 +202,84 @@ func test_collecting_a_pile_allows_next_cycle_to_create_a_new_one() -> void:
 	assert_eq(_pickups().size(), 1)
 	assert_eq(_pickups()[0].amount, 1)
 	assert_eq(inventory.count_item(&"chicken_egg"), 1)
+
+func _short_lifetime(animal: AnimalActor, lifetime: float = 20.0) -> void:
+	animal.definition.lifespan_seconds = lifetime
+	animal.growth.configure(animal.definition.maturity_seconds, animal.growth.age_seconds, lifetime)
+
+func test_single_offline_jump_credits_only_adult_living_interval_then_retires_once() -> void:
+	var animal: AnimalActor = _animal()
+	_short_lifetime(animal)
+	watch_signals(animal)
+	_advance(1000.0)
+	assert_true(animal.is_dead())
+	assert_true(animal.is_queued_for_deletion())
+	assert_eq(animal.growth.age_seconds, 20.0)
+	assert_eq(_pickups().size(), 1)
+	assert_eq(_pickups()[0].amount, 2, "Only age 10..20 is productive, with four-second cycles")
+	assert_signal_emit_count(animal, "died", 1)
+	animal.needs.update_at(timestamp + 1000.0)
+	assert_eq(_pickups()[0].amount, 2)
+	assert_signal_emit_count(animal, "died", 1)
+	await wait_physics_frames(2)
+	assert_false(is_instance_valid(animal))
+	assert_eq(_pickups().size(), 1)
+
+func test_split_and_single_ticks_agree_across_maturity_and_death() -> void:
+	var one_tick: AnimalActor = _animal()
+	var split: AnimalActor = _animal()
+	_short_lifetime(one_tick)
+	_short_lifetime(split)
+	one_tick.needs.update_at(1100.0)
+	for second: int in range(1, 101):
+		split.needs.update_at(1000.0 + second)
+	assert_true(one_tick.is_dead())
+	assert_true(split.is_dead())
+	assert_eq(one_tick.growth.age_seconds, split.growth.age_seconds)
+	assert_eq(one_tick.production.progress_seconds, split.production.progress_seconds)
+	assert_eq(_pickups().size(), 2)
+	assert_eq(_pickups()[0].amount, _pickups()[1].amount)
+
+func test_starvation_does_not_delay_death_and_cannot_create_posthumous_produce() -> void:
+	var animal: AnimalActor = _animal()
+	_short_lifetime(animal)
+	animal.needs.configure(5.0, 5.0)
+	_advance(19.0)
+	assert_false(animal.is_dead())
+	_advance(1.0)
+	assert_true(animal.is_dead())
+	assert_eq(_pickups().size(), 0)
+	assert_eq(animal.needs.feed(100.0), 0.0)
+	assert_eq(animal.needs.drink(100.0), 0.0)
+
+func test_death_drops_completed_direct_collection_stock_and_preserves_existing_pile() -> void:
+	var animal: AnimalActor = _animal("cow", 10.0)
+	_short_lifetime(animal)
+	animal.definition.production.collection_mode = AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION
+	_advance(8.0)
+	assert_eq(animal.production.stored_amount, 2)
+	assert_eq(_pickups().size(), 0)
+	_advance(2.0)
+	assert_true(animal.is_dead())
+	assert_eq(animal.production.stored_amount, 0)
+	assert_eq(_pickups()[0].amount, 2)
+	var bag: InventoryComponent = InventoryComponent.new()
+	bag.starting_tools = false
+	add_child_autofree(bag)
+	assert_eq(animal.collect_produce(bag), 0)
+	assert_eq(_pickups()[0].collect(bag), 2)
+
+func test_actual_day_boundary_does_not_credit_the_juvenile_day() -> void:
+	var animal: AnimalActor = _animal()
+	var data: AnimalDefinition = load("res://animals/definitions/chicken.tres") as AnimalDefinition
+	animal.definition.maturity_seconds = data.maturity_seconds
+	animal.growth.configure(data.maturity_seconds, 0.0, data.lifespan_seconds)
+	animal.needs.configure(2000000.0, 2000000.0)
+	_advance(86399.0)
+	assert_false(animal.growth.is_adult())
+	assert_eq(_pickups().size(), 0)
+	_advance(1.0)
+	assert_true(animal.growth.is_adult())
+	assert_eq(animal.production.progress_seconds, 0.0)
+	_advance(4.0)
+	assert_eq(_pickups()[0].amount, 1)

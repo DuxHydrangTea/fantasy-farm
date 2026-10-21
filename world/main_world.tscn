@@ -62,8 +62,8 @@
 [ext_resource type="Script" uid="uid://3ml3jshpyxgx" path="res://persistence/world_persistence.gd" id="65_ptedk"]
 [ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
 [ext_resource type="PackedScene" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
-
-[ext_resource type="Script" path="res://components/shop_merchant.gd" id="79_x28ju"]
+[ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="79_x28ju"]
+[ext_resource type="PackedScene" path="res://scenes/characters/produce_buyer.tscn" id="64_i4q3u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -1260,32 +1260,46 @@ terrain_set_0/terrain_0/name = "road"
 terrain_set_0/terrain_0/color = Color(0.3256452, 0.38956285, 0.49024087, 1)
 sources/0 = SubResource("TileSetAtlasSource_yae5m")
 
-[sub_resource type="Resource" id="Resource_lu7uo"]
+[sub_resource type="Resource" id="Resource_gtd7t"]
 script = ExtResource("5_o0hhk")
 amount = 560
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_4nnau"]
+[sub_resource type="Resource" id="Resource_cissw"]
 script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_lu7uo")])
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_gtd7t")])
 
 [sub_resource type="Resource" id="Resource_t6m8u"]
 script = ExtResource("7_ootrp")
 size = Vector2(2016, 224)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
-[sub_resource type="Resource" id="Resource_7ubxh"]
+[sub_resource type="Resource" id="Resource_lu7uo"]
 script = ExtResource("5_o0hhk")
 amount = 420
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_4nnau"]
+script = ExtResource("3_njfbw")
+stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_lu7uo")])
+
+[sub_resource type="Resource" id="Resource_4g0kw"]
+script = ExtResource("7_ootrp")
+size = Vector2(1888, 128)
+metadata/_custom_type_script = "uid://1wbh6o12u2v4"
+
+[sub_resource type="Resource" id="Resource_7ubxh"]
+script = ExtResource("5_o0hhk")
+amount = 265
 reference_frame = 1
 
 [sub_resource type="Resource" id="Resource_u1taw"]
 script = ExtResource("3_njfbw")
 stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_7ubxh")])
 
-[sub_resource type="Resource" id="Resource_4g0kw"]
+[sub_resource type="Resource" id="Resource_l7j4l"]
 script = ExtResource("7_ootrp")
-size = Vector2(1888, 128)
+size = Vector2(96, 940)
 metadata/_custom_type_script = "uid://1wbh6o12u2v4"
 
 [sub_resource type="Resource" id="Resource_ylm8y"]
@@ -1296,20 +1310,6 @@ reference_frame = 1
 [sub_resource type="Resource" id="Resource_1ibep"]
 script = ExtResource("3_njfbw")
 stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_ylm8y")])
-
-[sub_resource type="Resource" id="Resource_l7j4l"]
-script = ExtResource("7_ootrp")
-size = Vector2(96, 940)
-metadata/_custom_type_script = "uid://1wbh6o12u2v4"
-
-[sub_resource type="Resource" id="Resource_m3gxw"]
-script = ExtResource("5_o0hhk")
-amount = 265
-reference_frame = 1
-
-[sub_resource type="Resource" id="Resource_7bmd6"]
-script = ExtResource("3_njfbw")
-stack = Array[ExtResource("4_xguvr")]([SubResource("Resource_m3gxw")])
 
 [sub_resource type="Resource" id="Resource_onsxo"]
 script = ExtResource("7_ootrp")
@@ -1385,7 +1385,7 @@ y_sort_enabled = true
 position = Vector2(960, 26)
 script = ExtResource("2_2ccdf")
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_4nnau")
+modifier_stack = SubResource("Resource_cissw")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatter2D" unique_id=97407539]
@@ -1417,7 +1417,7 @@ position = Vector2(960, 1072)
 script = ExtResource("2_2ccdf")
 global_seed = 1
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_u1taw")
+modifier_stack = SubResource("Resource_4nnau")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterBottom2D" unique_id=1752056320]
@@ -1449,7 +1449,7 @@ position = Vector2(48, 586)
 script = ExtResource("2_2ccdf")
 global_seed = 2
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_1ibep")
+modifier_stack = SubResource("Resource_u1taw")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterLeft2D" unique_id=455328251]
@@ -1481,7 +1481,7 @@ position = Vector2(1872, 586)
 script = ExtResource("2_2ccdf")
 global_seed = 3
 keep_static_colliders = true
-modifier_stack = SubResource("Resource_7bmd6")
+modifier_stack = SubResource("Resource_1ibep")
 metadata/_custom_type_script = "uid://blehcnoynshbt"
 
 [node name="ScatterShape" type="Node2D" parent="TreeScatterRight2D" unique_id=1671208368]
@@ -1523,6 +1523,7 @@ position = Vector2(1350, 330)
 [node name="CoopPen" parent="." unique_id=1747236029 instance=ExtResource("18_c45uy")]
 position = Vector2(1008, 288)
 persistent_id = &"placed_d2d638f2f4f64f5ca773aba052d29f5a"
+accepted_species = Array[int]([0])
 
 [node name="FeedTrough" parent="CoopPen" unique_id=2042315591 instance=ExtResource("32_feed_trough")]
 position = Vector2(14, 26)
@@ -1650,6 +1651,8 @@ position = Vector2(1202, 648)
 [node name="BarnPen" parent="." unique_id=765373330 instance=ExtResource("18_c45uy")]
 position = Vector2(1008, 592)
 persistent_id = &"placed_bcb6d434c48b4f9fbac1620421e64390"
+accepted_species = Array[int]([2, 3, 4, 6])
+capacity = 36
 bounds = Rect2(0, 0, 384, 272)
 
 [node name="FeedTrough" parent="BarnPen" unique_id=1563140842 instance=ExtResource("41_ykqd1")]
@@ -1792,6 +1795,8 @@ position = Vector2(1666, 647)
 [node name="PondPen" parent="." unique_id=1195389997 node_paths=PackedStringArray("water_layer") instance=ExtResource("71_b3fbx")]
 position = Vector2(1424, 592)
 water_layer = NodePath("../FarmLand")
+accepted_species = Array[int]([1, 5])
+capacity = 20
 
 [node name="House4" parent="." unique_id=1008030250 instance=ExtResource("60_qqiv8")]
 position = Vector2(1746, 197)
@@ -1817,3 +1822,14 @@ animation = &"idle_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LaiBuon" unique_id=1429807084]
 position = Vector2(-39, 6)
 shape = SubResource("RectangleShape2D_vgjnj")
+
+[node name="ProduceBuyer" type="StaticBody2D" parent="." unique_id=1281232383 node_paths=PackedStringArray("menu", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("64_i4q3u")]
+texture_filter = 1
+position = Vector2(1757, 224)
+collision_mask = 0
+script = ExtResource("79_x28ju")
+menu = NodePath("ProduceSalesUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")

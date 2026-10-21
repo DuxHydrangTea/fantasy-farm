@@ -11,8 +11,10 @@ var focused_trough: AnimalTrough
 var _pending: AnimalTrough
 var _action: StringName = &""
 var _water_item: ItemDefinition
+var _auto_fill: bool = false
 var _water_slot: int = -1
 var _feedback: String = ""
+var _feedback_amount: int = 0
 var _feedback_until: int = 0
 
 func _ready() -> void:
@@ -63,16 +65,16 @@ func has_watering_can() -> bool:
 
 func refill_hint(trough: AnimalTrough) -> String:
 	if trough.stock >= trough.capacity:
-		return "Máng đã đầy"
+		return tr("Trough is full")
 	if trough.kind == AnimalTrough.Kind.WATER:
-		return "[E] Thêm nước" if has_watering_can() else "Chọn bình tưới để thêm nước"
+		return tr("[E] Add water") if has_watering_can() else tr("Select a watering can to add water")
 	if trough.feed_item == null:
-		return "Máng chưa được chọn loại thức ăn"
+		return tr("No feed type assigned to this trough")
 	if selection.inventory.count_item(trough.feed_item.item_id) == 0:
-		return "Cần " + trough.feed_item.display_name
+		return tr("Requires {item}").format({"item": tr(trough.feed_item.display_name)})
 	if trough.feed_items_needed(selection.inventory) == 0:
-		return "Chưa đủ chỗ cho 1 gói thức ăn"
-	return "[E] Thêm thức ăn"
+		return tr("Not enough room for one feed pack")
+	return tr("[E] Add feed")
 
 func can_refill(trough: AnimalTrough) -> bool:
 	if trough.stock >= trough.capacity:
@@ -88,9 +90,9 @@ func refresh() -> void:
 	if focused_trough == null:
 		prompt.hide()
 		return
-	var title: String = "Thức ăn" if focused_trough.kind == AnimalTrough.Kind.FOOD else "Nước"
-	var hint: String = _feedback if Time.get_ticks_msec() < _feedback_until else refill_hint(focused_trough)
-	prompt.text = "%s %d/%d\n%s" % [title, focused_trough.stock, focused_trough.capacity, hint]
+	var title: String = tr("Feed") if focused_trough.kind == AnimalTrough.Kind.FOOD else tr("Water")
+	var hint: String = tr(_feedback).format({"amount": _feedback_amount}) if not _feedback.is_empty() and Time.get_ticks_msec() < _feedback_until else refill_hint(focused_trough)
+	prompt.text = tr("{kind} {stock}/{capacity}\n{hint}").format({"kind": title, "stock": focused_trough.stock, "capacity": focused_trough.capacity, "hint": hint})
 	prompt.reset_size()
 	var anchor: Vector2 = get_global_transform_with_canvas() * Vector2(0.0, -44.0)
 	var viewport_size: Vector2 = get_viewport_rect().size
@@ -99,10 +101,11 @@ func refresh() -> void:
 		clampf(desired.x, 8.0, maxf(8.0, viewport_size.x - prompt.size.x - 8.0)),
 		clampf(desired.y, 8.0, maxf(8.0, viewport_size.y - prompt.size.y - 8.0))
 	).round()
-	prompt.show()
+	prompt.visible = not (get_parent() is FarmPlayer and (get_parent() as FarmPlayer).interactions != null)
 
 ## Empty lets farming proceed; blocked consumes the input and explains the reason.
 func prepare_action() -> StringName:
+	_auto_fill = false
 	_pending = null
 	_action = &""
 	refresh()
@@ -137,9 +140,42 @@ func _on_frame_changed() -> void:
 		return
 	var added: int = 0
 	if action == &"refill_food":
-		added = trough.refill_from_inventory(selection.inventory)
-	elif action == &"refill_water" and selection.inventory.slot(_water_slot).item == _water_item:
-		added = trough.refill(trough.water_per_use)
-	_feedback = "Đã thêm %d" % added if added > 0 else refill_hint(trough)
+		added = trough.refill_to_full(selection.inventory) if _auto_fill else trough.refill_from_inventory(selection.inventory)
+	elif action == &"refill_water":
+		if _auto_fill and inventory_has_can():
+			added = trough.refill(trough.capacity - trough.stock)
+		elif not _auto_fill and selection.inventory.slot(_water_slot).item == _water_item:
+			added = trough.refill(trough.water_per_use)
+	_feedback = "Added {amount}" if added > 0 else ""
+	_feedback_amount = added
 	_feedback_until = Time.get_ticks_msec() + 1000
 	refresh()
+
+func inventory_has_can() -> bool:
+	for index: int in range(selection.inventory.slot_count):
+		var item: ItemDefinition = selection.inventory.slot(index).item
+		if item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.WATERING_CAN:
+			return true
+	return false
+
+func auto_hint(trough: AnimalTrough) -> String:
+	if trough.stock >= trough.capacity:
+		return tr("Trough is full")
+	if trough.kind == AnimalTrough.Kind.WATER:
+		return "" if inventory_has_can() else tr("A watering can is required.")
+	if trough.feed_item == null:
+		return tr("No feed type assigned to this trough")
+	if trough.feed_reserve == 0 and selection.inventory.count_item(trough.feed_item.item_id) == 0:
+		return tr("Requires {item}").format({"item": tr(trough.feed_item.display_name)})
+	return ""
+
+func prepare_target(trough: AnimalTrough) -> StringName:
+	_pending = null
+	_action = &""
+	if not can_reach(trough) or not auto_hint(trough).is_empty():
+		return &"blocked"
+	_auto_fill = true
+	_pending = trough
+	animation.update_facing_direction(trough.global_position - global_position)
+	_action = &"refill_food" if trough.kind == AnimalTrough.Kind.FOOD else &"refill_water"
+	return _action

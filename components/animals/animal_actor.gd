@@ -1,5 +1,6 @@
 class_name AnimalActor
 extends CharacterBody2D
+signal died
 @export var collision: CollisionShape2D
 @export var needs_display: Node2D
 @export var satiety_bar: ProgressBar
@@ -11,7 +12,7 @@ const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn
 @export var pen: AnimalPen
 @export var skin_frames: SpriteFrames
 @export var show_needs: bool = true
-@export_range(0.0, 86400.0) var initial_age_seconds: float = 0.0
+@export_range(0.0, 31536000.0) var initial_age_seconds: float = 0.0
 @export var sprite: AnimatedSprite2D
 @export var movement: MovementComponent
 @export var animation: AnimationComponent
@@ -24,6 +25,8 @@ const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn
 var _product_pickup: ItemPickup
 var _stage_visual_pending: bool = false
 var waterfowl: WaterfowlComponent
+var _dead: bool = false
+var _retired: bool = false
 
 func _ready() -> void:
 	needs_display.hide()
@@ -38,13 +41,14 @@ func _ready() -> void:
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = definition.footprint
 	collision.shape = shape
+	needs.weather = pen.weather if pen != null else null
 	needs.configure(definition.satiety_depletion_seconds, definition.hydration_depletion_seconds)
 	needs.changed.connect(_update_needs_display)
 	_update_needs_display(needs.satiety, needs.hydration)
 	wander.pen = pen
 	wander.idle_seconds = definition.idle_seconds
 	wander.margin = maxf(definition.pen_margin, definition.footprint.length() * 0.5)
-	growth.configure(definition.maturity_seconds, initial_age_seconds)
+	growth.configure(definition.maturity_seconds, initial_age_seconds, definition.lifespan_seconds)
 	production.configure(definition.production)
 	growth.matured.connect(_on_matured)
 	production.produced.connect(_on_produced)
@@ -58,6 +62,8 @@ func _ready() -> void:
 		waterfowl.name = "WaterfowlComponent"
 		add_child(waterfowl)
 		waterfowl.configure(self, pen as PondPen)
+	if growth.is_dead():
+		_die()
 
 func _physics_process(_delta: float) -> void:
 	if waterfowl != null:
@@ -85,21 +91,66 @@ func _on_matured() -> void:
 		frames = skin_frames
 	_stage_visual_pending = frames != sprite.sprite_frames
 
-func _advance_lifecycle(_timestamp: float, elapsed: float, supplied_seconds: float) -> void:
-	# Thời gian đủ no/nước là đoạn đầu của elapsed. Trừ số giây còn non khỏi đoạn này,
-	# không trừ khỏi toàn bộ thời gian offline rồi cho sản xuất cả phần đã đói.
-	# Ví dụ còn 5 giây trưởng thành nhưng chỉ đủ nước 10 giây: chỉ có 5 giây được sản xuất.
-	# Bỏ phép trừ sẽ cho con non tạo sản phẩm; đặt phép trừ sai chỗ có thể thưởng khi đã hết nước.
+func _advance_lifecycle(timestamp: float, elapsed: float, supplied_seconds: float) -> void:
+	if _retired or is_queued_for_deletion():
+		return
+	# Intersect the supplied prefix with the adult, still-alive interval.
+	# A single offline jump may cross BOTH maturity and death. Credit only that
+	# overlap, deliver completed output, then retire the actor exactly once.
 	var juvenile_seconds: float = growth.seconds_until_adult()
+	var alive_seconds: float = growth.seconds_until_death()
 	growth.advance(elapsed)
-	# Supplied time is a prefix of this interval; adulthood may begin partway in.
-	production.advance(maxf(0.0, supplied_seconds - juvenile_seconds))
+	var rate: float = 1.0
+	if pen is PondPen and definition.eggs_on_land and needs.weather != null and needs.weather.weather_at(timestamp - elapsed) == WeatherSchedule.Weather.RAIN:
+		rate = 1.1
+	production.advance(maxf(0.0, minf(supplied_seconds, alive_seconds) - juvenile_seconds) * rate)
+	if growth.is_dead():
+		_die()
+
+func is_dead() -> bool:
+	return _dead
+
+func _die() -> void:
+	if _retired:
+		return
+	_dead = true
+	_retire()
+	died.emit()
+
+## Trading retires the living actor without reporting a death.
+func retire_for_sale() -> bool:
+	if _retired or is_queued_for_deletion():
+		return false
+	_retire()
+	return true
+
+func _retire() -> void:
+	_retired = true
+	needs.deactivate()
+	foraging.cancel()
+	wander.set_physics_process(false)
+	behaviour.set_physics_process(false)
+	set_physics_process(false)
+	movement.cancel_target()
+	movement.stop()
+	remove_from_group(&"animal_status_targets")
+	needs_display.hide()
+	hide()
+	queue_free()
+	# Completed stock remains collectible, including direct collection and
+	# eggs awaiting shore delivery. Partial production progress expires.
+	_drop_stored_output()
 
 func _on_produced(_amount: int) -> void:
-	if production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.WORLD_DROP or not is_inside_tree():
+	if _retired or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.WORLD_DROP or not is_inside_tree():
 		return
 	if definition.eggs_on_land and pen is PondPen and (pen as PondPen).is_water(global_position):
 		return # Keep the completed eggs in production stock until physically on shore.
+	_drop_stored_output()
+
+func _drop_stored_output() -> void:
+	if production.definition == null or production.stored_amount <= 0 or not is_inside_tree():
+		return
 	# Mỗi con giữ liên kết với đống sản phẩm của mình: các lô sau cộng vào cùng đống còn sống.
 	# queue_free chưa xóa Node ngay, nên phải kiểm tra cả is_queued_for_deletion, không chỉ is_instance_valid.
 	# Nếu cộng vào đống đã xếp lịch xóa do vừa nhặt hết, lô mới có thể biến mất cuối frame.
@@ -118,7 +169,7 @@ func _on_produced(_amount: int) -> void:
 		_product_pickup.add_amount(production.take_output(production.stored_amount))
 
 func collect_produce(inventory: InventoryComponent) -> int:
-	if production.definition == null or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION:
+	if _retired or production.definition == null or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION:
 		return 0
 	return production.collect(inventory)
 
@@ -130,13 +181,16 @@ func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: Item
 	foraging.cancel()
 	wander.movement.cancel_target()
 	wander.movement.stop()
-	growth.configure(definition.maturity_seconds, float(data.age))
-	production.restore_state(float(data.production_progress), int(data.production_stock))
+	growth.configure(definition.maturity_seconds, float(data.age), definition.lifespan_seconds, bool(data.get("juvenile_tonic_used", false)))
+	production.restore_state(float(data.production_progress), int(data.production_stock), bool(data.get("tonic_pending", false)))
 	needs.restore_state(float(data.satiety), float(data.hydration), saved_at)
 	_product_pickup = pile
 	if production.definition != null and production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.WORLD_DROP and production.stored_amount > 0:
 		_on_produced(0)
 	needs.update_at(now)
+	if growth.is_dead():
+		_die()
+		return
 	_apply_stage_visuals()
 	behaviour.configure(definition)
 
@@ -145,7 +199,24 @@ func _update_needs_display(food: float, water: float) -> void:
 	hydration_bar.value = water
 
 func set_status_focused(value: bool) -> void:
+	if _retired:
+		return
 	needs_display.visible = value and show_needs and definition != null
+	behaviour.set_focused(value)
 
 func get_status_sprite() -> Node2D:
 	return sprite
+
+func tonic_error() -> String:
+	if _retired or is_queued_for_deletion() or definition == null or growth.is_dead():
+		return "Animal unavailable"
+	if not growth.is_adult():
+		return "This juvenile already received a tonic." if growth.juvenile_tonic_used else ""
+	if production.definition == null or not production.definition.is_valid():
+		return "No produce configured"
+	return "A tonic is already active for the next cycle." if production.tonic_pending else ""
+
+func apply_tonic() -> bool:
+	if not tonic_error().is_empty():
+		return false
+	return production.apply_tonic() if growth.is_adult() else growth.apply_juvenile_tonic()

@@ -17,15 +17,18 @@ var adapter: WorldStateAdapter
 var _elapsed: float = 0.0
 var _closing: bool = false
 var _quit_failed: bool = false
+var _status_source: String = ""
+var _status_error: Dictionary = {}
+var _status_success: bool = true
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: String = "local") -> Dictionary:
 	if busy or adapter != null:
-		return SaveSchema.failure("Một thế giới khác đang được sử dụng.", "busy")
+		return SaveSchema.failure("Another world is already in use.", "busy")
 	if not SaveSchema.identifier(profile):
-		return SaveSchema.failure("ID hồ sơ không hợp lệ.")
+		return SaveSchema.failure("Invalid profile ID.")
 	catalog = SaveCatalog.new()
 	repository = backend if backend != null else LocalSaveRepository.new(local_directory, catalog)
 	adapter = WorldStateAdapter.new(world, catalog)
@@ -53,7 +56,7 @@ func _process(delta: float) -> void:
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
 	if busy or adapter == null or not writes_enabled:
-		return SaveSchema.failure("Chưa thể lưu hồ sơ này.", "busy" if busy else "disabled")
+		return SaveSchema.failure("This profile cannot be saved yet.", "busy" if busy else "disabled")
 	busy = true
 	var snapshot: Dictionary = adapter.capture(profile_id, revision + 1, _clock().now())
 	var result: Dictionary = SaveSchema.validate(snapshot, catalog)
@@ -66,13 +69,13 @@ func save_game() -> Dictionary:
 	elif result.get("code") in ["conflict", "corrupt", "future_version"]:
 		writes_enabled = false
 	busy = false
-	status_changed.emit("Đã lưu tiến trình" if result.ok else "Lưu thất bại: " + String(result.error), result.ok)
+	_report_status("Progress saved" if result.ok else "Save failed: {error}", result.ok, result)
 	operation_finished.emit()
 	return result
 
 func load_game() -> Dictionary:
 	if busy or adapter == null:
-		return SaveSchema.failure("Chưa thể tải hồ sơ này.", "busy")
+		return SaveSchema.failure("This profile cannot be loaded yet.", "busy")
 	busy = true
 	var scene: Node = adapter.world
 	var old_mode: Node.ProcessMode = scene.process_mode
@@ -85,7 +88,7 @@ func load_game() -> Dictionary:
 		if result.ok:
 			snapshot = result.snapshot
 		if result.ok and snapshot.profile_id != profile_id:
-			result = SaveSchema.failure("Hồ sơ trả về không khớp.")
+			result = SaveSchema.failure("The returned profile does not match.")
 		if result.ok:
 			result = adapter.preflight(snapshot)
 		if result.ok:
@@ -96,18 +99,18 @@ func load_game() -> Dictionary:
 				result.recovered = recovered
 	elif result.ok and revision != 0:
 		# A file removed during play must not silently turn a load into "new game".
-		result = SaveSchema.failure("File lưu đã bị xóa bên ngoài game.", "missing")
+		result = SaveSchema.failure("The save file was deleted outside the game.", "missing")
 	if is_instance_valid(scene):
 		scene.process_mode = old_mode
 	writes_enabled = bool(result.ok)
 	busy = false
 	_elapsed = 0.0
-	var message: String = "Đã tải tiến trình" if revision > 0 else "F5: lưu · F9: tải · Tự lưu mỗi 30 giây"
+	var message: String = "Progress loaded" if revision > 0 else "F5: save · F9: load · Autosave every 30 seconds"
 	if result.get("recovered", false):
-		message = "Đã khôi phục bản dự phòng"
+		message = "Backup restored"
 	if not result.ok:
-		message = "Tải thất bại; đã tắt tự lưu: " + String(result.error)
-	status_changed.emit(message, result.ok)
+		message = "Load failed; autosave disabled: {error}"
+	_report_status(message, result.ok, result)
 	operation_finished.emit()
 	return result
 
@@ -115,6 +118,8 @@ func _clock() -> FarmClock:
 	return TimeManager
 
 func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and not _status_source.is_empty():
+		_emit_status()
 	if adapter == null:
 		return
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -137,4 +142,13 @@ func _quit_with_save() -> void:
 	else:
 		_quit_failed = true
 		_closing = false
-		status_changed.emit("Không lưu được. F5 để thử lại; đóng lần nữa để thoát không lưu.", false)
+		_report_status("Unable to save. Press F5 to retry; close again to quit without saving.", false)
+
+func _report_status(source: String, success: bool, error: Dictionary = {}) -> void:
+	_status_source = source
+	_status_success = success
+	_status_error = error.duplicate(true) if not success else {}
+	_emit_status()
+
+func _emit_status() -> void:
+	status_changed.emit(tr(_status_source).format({"error": GameText.error(_status_error)}), _status_success)

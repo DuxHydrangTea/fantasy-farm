@@ -50,9 +50,15 @@ func test_harvest_and_mouse_tool_actions_can_be_remapped() -> void:
 	old.pressed = true
 	state._unhandled_input(old)
 	assert_false(state._harvest_requested)
+	var merchant: ShopMerchant = preload("res://scenes/characters/shop_merchant.tscn").instantiate() as ShopMerchant
+	merchant.position = player.position + Vector2(0, 24)
+	viewport.add_child(merchant)
+	state.animation.face(Vector2.DOWN)
 	harvest.pressed = true
 	state._unhandled_input(harvest)
-	assert_true(state._harvest_requested)
+	assert_true(merchant.menu.is_open, "The remapped key goes through the resolver")
+	assert_eq(GameText.action_key(&"harvest"), "F")
+	merchant.menu.close(false)
 	var old_mouse: InputEventMouseButton = InputEventMouseButton.new()
 	old_mouse.button_index = MOUSE_BUTTON_RIGHT
 	old_mouse.pressed = true
@@ -149,14 +155,14 @@ func test_selected_tool_locks_then_resumes_movement(case = use_parameters([
 
 func test_full_hd_camera_uses_requested_zoom_and_follows_within_map_limits() -> void:
 	assert_eq(viewport.get_camera_2d(), camera)
-	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	assert_eq(camera.zoom, Vector2(4.0, 4.0))
 	assert_eq(int(ProjectSettings.get_setting("display/window/size/viewport_width")), 1920)
 	assert_eq(int(ProjectSettings.get_setting("display/window/size/viewport_height")), 1080)
 	player.position = Vector2(1200, 650)
 	await wait_seconds(0.8)
 	var center: Vector2 = camera.get_screen_center_position()
-	assert_almost_eq(center.x, 1120.0, 3.0)
-	assert_almost_eq(center.y, 630.0, 3.0)
+	assert_almost_eq(center.x, 1200.0, 3.0)
+	assert_almost_eq(center.y, 650.0, 3.0)
 
 func test_camera_keeps_view_inside_map(position = use_parameters([
 	Vector2(-500, -500), Vector2(2400, 1600)
@@ -198,7 +204,7 @@ func test_wheel_zoom_is_smooth_and_accumulates_fast_steps() -> void:
 		_wheel(MOUSE_BUTTON_WHEEL_UP)
 	assert_eq(camera.zoom, initial_zoom, "Zoom eases towards its target")
 	await wait_seconds(0.7)
-	assert_almost_eq(camera.zoom.x, 1.2 * pow(1.15, 3), 0.002)
+	assert_almost_eq(camera.zoom.x, initial_zoom.x * pow(1.15, 3), 0.002)
 	assert_eq(camera.zoom.x, camera.zoom.y)
 	for step: int in range(3):
 		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
@@ -209,7 +215,7 @@ func test_wheel_zoom_clamps_and_keeps_map_inside_view() -> void:
 	for step: int in range(40):
 		_wheel(MOUSE_BUTTON_WHEEL_UP)
 	await wait_seconds(0.8)
-	assert_almost_eq(camera.zoom.x, 3.0, 0.002)
+	assert_almost_eq(camera.zoom.x, 8.0, 0.002)
 	for step: int in range(60):
 		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
 	await wait_seconds(0.8)
@@ -240,11 +246,11 @@ func test_inventory_blocks_wheel_zoom() -> void:
 	_wheel(MOUSE_BUTTON_WHEEL_DOWN)
 	_wheel(MOUSE_BUTTON_WHEEL_UP)
 	await wait_seconds(0.6)
-	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	assert_eq(camera.zoom, Vector2(4.0, 4.0))
 	inventory_ui.close()
 	_wheel(MOUSE_BUTTON_WHEEL_UP)
 	await wait_seconds(0.6)
-	assert_gt(camera.zoom.x, 1.2)
+	assert_gt(camera.zoom.x, 4.0)
 
 func test_ui_consumed_wheel_does_not_zoom_world() -> void:
 	var overlay: Control = Control.new()
@@ -255,12 +261,12 @@ func test_ui_consumed_wheel_does_not_zoom_world() -> void:
 	await wait_physics_frames(2)
 	_wheel(MOUSE_BUTTON_WHEEL_UP)
 	await wait_seconds(0.6)
-	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	assert_eq(camera.zoom, Vector2(4.0, 4.0))
 
 func test_wheel_release_is_ignored() -> void:
 	_wheel(MOUSE_BUTTON_WHEEL_UP, false)
 	await wait_seconds(0.6)
-	assert_eq(camera.zoom, Vector2(1.2, 1.2))
+	assert_eq(camera.zoom, Vector2(4.0, 4.0))
 
 func test_click_focus_stays_correct_after_zoom() -> void:
 	_wheel(MOUSE_BUTTON_WHEEL_UP)

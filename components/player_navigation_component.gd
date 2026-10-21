@@ -2,6 +2,11 @@ class_name PlayerNavigationComponent
 extends Node
 ## Approach a clicked focus point using the player's real collision footprint.
 
+signal focus_finished(reached: bool)
+signal focus_cancelled
+var _interaction_goal: Callable
+var _interaction_reach: float = 20.0
+
 @export var movement: MovementComponent
 @export var animation: AnimationComponent
 @export var camera: Camera2D
@@ -99,6 +104,8 @@ func request_focus(point: Vector2) -> void:
 	_needs_path = true
 
 func cancel() -> void:
+	_interaction_goal = Callable()
+	focus_cancelled.emit()
 	has_focus = false
 	is_navigating = false
 	_needs_path = false
@@ -144,16 +151,20 @@ func move(delta: float) -> void:
 		_finish()
 
 func _finish() -> void:
+	var reached: bool = _in_focus_range(movement.body.global_position)
 	is_navigating = false
 	_path.clear()
 	movement.cancel_target()
 	movement.stop()
 	_face_focus()
+	focus_finished.emit(reached)
 
 func _face_focus() -> void:
 	animation.update_facing_direction(_facing_point() - movement.body.global_position)
 
 func _facing_point() -> Vector2:
+	if _interaction_goal.is_valid():
+		return focus_position
 	var farming: FarmingController = farming_actions.get_farming_controller() if farming_actions != null else null
 	if farming == null:
 		return focus_position
@@ -213,6 +224,8 @@ func _point(cell: Vector2i) -> Vector2:
 	return Vector2(camera.limit_left, camera.limit_top) + (Vector2(cell) + Vector2.ONE) * cell_size
 
 func _in_focus_range(point: Vector2) -> bool:
+	if _interaction_goal.is_valid():
+		return point.distance_to(focus_position) <= _interaction_reach and bool(_interaction_goal.call(point))
 	if point.distance_to(focus_position) > interaction_distance:
 		return false
 	var farming: FarmingController = farming_actions.get_farming_controller() if farming_actions != null else null
@@ -334,7 +347,7 @@ func _build_path_in_region(region: Rect2i) -> bool:
 	if start == Vector2i(-1, -1):
 		return false
 	var focus_cell: Vector2i = _cell(focus_position)
-	var reach: int = ceili(interaction_distance / cell_size)
+	var reach: int = ceili((_interaction_reach if _interaction_goal.is_valid() else interaction_distance) / cell_size)
 	var best_length: float = INF
 	for y: int in range(focus_cell.y - reach, focus_cell.y + reach + 1):
 		for x: int in range(focus_cell.x - reach, focus_cell.x + reach + 1):
@@ -384,3 +397,8 @@ func _smooth_path(origin: Vector2) -> void:
 		smoothed.append(origin)
 		next_index = chosen + 1
 	_path = smoothed
+
+func request_interaction(point: Vector2, reach: float, validator: Callable) -> void:
+	request_focus(point)
+	_interaction_goal = validator
+	_interaction_reach = maxf(8.0, reach)

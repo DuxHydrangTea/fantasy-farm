@@ -1,6 +1,6 @@
 class_name ContextBarsComponent
 extends Node2D
-## Player-side presentation only: one focused target and one nearby mouse target.
+## One focused target and one mouse target; targets own their UI and attention response.
 ## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
 @export var mouse_padding: float = 5.0
 @export var animal_focus_reach: float = 32.0
@@ -11,9 +11,15 @@ extends Node2D
 @export var selection: ToolSelectionComponent
 @export var trough_interaction: TroughInteractionComponent
 @export var flower_interaction: FlowerInteraction
+@export var animal_info: AnimalInfoPanel
 var _visible: Array[Node2D] = []
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 var _elapsed: float = 0.0
+
+func _ready() -> void:
+	if animal_info == null:
+		animal_info = preload("res://scenes/ui/animal_info.tscn").instantiate() as AnimalInfoPanel
+		add_child(animal_info)
 
 func _physics_process(delta: float) -> void:
 	_elapsed += delta
@@ -24,26 +30,38 @@ func _physics_process(delta: float) -> void:
 
 func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
 	var next: Array[Node2D] = []
+	var inspected: AnimalActor
 	if not selection.is_menu_open():
 		var focused: Node2D = _focused_target()
 		if is_instance_valid(focused):
 			next.append(focused)
+			inspected = focused as AnimalActor
 		var hovered: Node2D = _hovered_target(mouse_world) if pointer_inside else null
 		if is_instance_valid(hovered) and not next.has(hovered):
 			next.append(hovered)
+		if hovered is AnimalActor:
+			inspected = hovered as AnimalActor
 	for target: Node2D in _visible:
 		if is_instance_valid(target) and not target.is_queued_for_deletion() and not next.has(target):
 			target.set_status_focused(false)
 	for target: Node2D in next:
 		target.set_status_focused(true)
 	_visible = next
+	if is_instance_valid(animal_info):
+		animal_info.inspect(inspected)
 
 func _exit_tree() -> void:
+	if is_instance_valid(animal_info):
+		animal_info.inspect(null)
 	for target: Node2D in _visible:
 		if is_instance_valid(target) and not target.is_queued_for_deletion():
 			target.set_status_focused(false)
 
 func _focused_target() -> Node2D:
+	if player.interactions != null and player.interactions.focused != null:
+		var target: InteractionTarget = player.interactions.focused
+		if target.valid() and target.priority() < 3:
+			return target.node if target.kind == InteractionTarget.Kind.ANIMAL else null
 	if trough_interaction != null and is_instance_valid(trough_interaction.focused_trough):
 		return null
 	if flower_interaction != null and is_instance_valid(flower_interaction.focused_pot):
@@ -52,7 +70,7 @@ func _focused_target() -> Node2D:
 	var distance: float = animal_focus_reach * animal_focus_reach
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
 		var animal: AnimalActor = node as AnimalActor
-		if not is_instance_valid(animal) or animal.is_queued_for_deletion() or not animal.show_needs:
+		if not is_instance_valid(animal) or animal.is_queued_for_deletion():
 			continue
 		var offset: Vector2 = animal.global_position - player.global_position
 		if offset.length_squared() <= distance and offset.normalized().dot(animation.facing_vector) > 0.5:
@@ -72,7 +90,7 @@ func _hovered_target(point: Vector2) -> Node2D:
 	var candidates: Array[Node2D] = []
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
 		var animal: AnimalActor = node as AnimalActor
-		if is_instance_valid(animal) and animal.show_needs:
+		if is_instance_valid(animal):
 			candidates.append(animal)
 	for node: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
 		for pot: FlowerPot in (node as FlowerGarden).pots.values():

@@ -20,13 +20,15 @@ config/icon="res://icon.svg"
 MCPRuntimeServer="*res://addons/godot_mcp_toolkit/runtime/mcp_runtime_server.gd"
 TimeManager="*uid://carbh7lwvbqus"
 SaveManager="*res://persistence/save_manager.gd"
+Language="*res://components/language_settings.gd"
 
 [display]
 
 window/size/viewport_width=1920.0
 window/size/viewport_height=1080.0
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="uid://jk46x1khcgsk"
 
 [editor_plugins]
 
@@ -36,7 +38,7 @@ enabled=PackedStringArray("res://addons/godot_mcp_toolkit/plugin.cfg", "res://ad
 
 theme/default_font_multichannel_signed_distance_field=true
 theme/custom="res://resources/ui/game_theme.tres"
-theme/custom_font="res://resources/ui/pixelify_sans.tres"
+theme/custom_font="res://resources/ui/game_font.tres"
 
 [input]
 
@@ -175,3 +177,8 @@ click_move={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+
+[internationalization]
+
+locale/fallback="en"
+locale/translations=PackedStringArray("res://localization/en.po", "res://localization/vi.po")

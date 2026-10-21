@@ -38,13 +38,21 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
 	var farm: FarmingController = world.farming
+	if world.weather != null:
+		world.weather.advance(now)
+	if world.apiary != null:
+		world.apiary.advance(now)
 	var animals: Array[Node] = _nodes(world, AnimalActor)
 	# Sync needs first: catch-up can create a product pile that belongs in this save.
 	for animal: AnimalActor in animals:
 		animal.needs.update_at(now)
 	var data: Dictionary = {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": profile, "revision": revision, "saved_at": now,
 		"player": {"position": _pair(player.position), "facing": String(player.animation.facing_direction), "selected_slot": selection.selected_index},
-		"coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": []}
+		"land_columns": farm.land.unlocked_columns if farm.land != null else LandExpansionState.REGION.size.x, "coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": [], "beehives": []}
+	data.weather = world.weather.schedule.capture() if world.weather != null else WeatherSchedule.new().capture()
+	if world.apiary != null:
+		for hive: Beehive in world.apiary.hives:
+			data.beehives.append(hive.capture())
 	for pen: AnimalPen in _nodes(world, AnimalPen):
 		data.animal_pens.append(_id(pen))
 	for garden: FlowerGarden in _nodes(world, FlowerGarden):
@@ -55,15 +63,17 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	for cell: Vector2i in farm.crop_cells():
 		var crop: Crop = farm.get_crop(cell)
 		crop.refresh(now)
-		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress})
+		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress, "fertilized": crop.fertilized,"pollination_reduction":crop.pollination_reduction})
 	for animal: AnimalActor in animals:
+		if animal.is_dead() or animal.is_queued_for_deletion():
+			continue # Sync above may have reached the lifetime limit in this very capture.
 		var pile: ItemPickup = animal.product_pickup()
 		data.animals.append({"id": _id(animal), "pen": _id(animal.pen), "position": _pair(animal.pen.to_local(animal.global_position)), "animal": String(animal.definition.animal_id),
 			"skin": catalog.skin_id(animal.skin_frames), "facing": String(animal.animation.facing_direction), "age": animal.growth.age_seconds,
 			"satiety": animal.needs.satiety, "hydration": animal.needs.hydration, "production_progress": animal.production.progress_seconds, "production_stock": animal.production.stored_amount,
-			"pickup": _id(pile) if pile != null else ""})
+			"pickup": _id(pile) if pile != null else "", "juvenile_tonic_used": animal.growth.juvenile_tonic_used, "tonic_pending": animal.production.tonic_pending})
 	for trough: AnimalTrough in _nodes(world, AnimalTrough):
-		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock})
+		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock, "feed_reserve": trough.feed_reserve})
 	for pile: ItemPickup in _nodes(world, ItemPickup):
 		var pen: AnimalPen = pile.get_parent() as AnimalPen
 		data.pickups.append({"id": _id(pile), "pen": _id(pen) if pen != null else "", "position": _pair(pen.to_local(pile.global_position) if pen != null else (world as Node2D).to_local(pile.global_position)), "item": String(pile.item.item_id), "amount": pile.amount})
@@ -97,37 +107,52 @@ func preflight(data: Dictionary) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	if world.apiary == null or world.weather == null:
+		return SaveSchema.failure("Restart the game before loading this save.")
 	var gardens: Dictionary = _index(FlowerGarden)
 	for garden: Dictionary in data.flower_gardens:
 		if not gardens.has(garden.id):
-			return SaveSchema.failure("Không tìm thấy vườn hoa của file lưu.")
+			return SaveSchema.failure("The saved flower garden was not found.")
 	var pens: Dictionary = _index(AnimalPen)
 	var troughs: Dictionary = _index(AnimalTrough)
 	var player: FarmPlayer = world.player
 	var farm: FarmingController = world.farming
 	if pens.is_empty() or player == null or farm == null or farm.farmland == null or farm.farmland.tile_set == null or not farm.can_restore_soil():
-		return SaveSchema.failure("Cấu trúc thế giới chưa hỗ trợ tải.")
+		return SaveSchema.failure("This world layout does not support loading.")
 	var selection: ToolSelectionComponent = player.selection
 	if data.inventory.size() != selection.inventory.slot_count or data.troughs.size() > troughs.size():
-		return SaveSchema.failure("Túi đồ hoặc danh sách máng đã thay đổi; cần migrate file lưu.")
+		return SaveSchema.failure("Inventory or trough layout changed; the save needs migration.")
 	var initialized: Dictionary = _saved_pens(data)
 	for id: String in initialized:
 		if not pens.has(id):
-			return SaveSchema.failure("Không tìm thấy chuồng trong file lưu.")
+			return SaveSchema.failure("The saved pen was not found.")
 	var saved_troughs: Dictionary = {}
 	for row: Dictionary in data.troughs:
 		saved_troughs[row.id] = true
 		if not troughs.has(row.id) or not pens.has(row.pen) or troughs[row.id].pen != pens[row.pen] or row.stock > troughs[row.id].capacity:
-			return SaveSchema.failure("Không tìm thấy máng hoặc sức chứa đã thay đổi.")
+			return SaveSchema.failure("A trough was not found or its capacity changed.")
+		var trough: AnimalTrough = troughs[row.id]
+		if (trough.kind == AnimalTrough.Kind.WATER and row.feed_reserve != 0) or (trough.kind == AnimalTrough.Kind.FOOD and (trough.feed_item == null or row.feed_reserve >= trough.feed_item.food_units_per_item)):
+			return SaveSchema.failure("Invalid retained trough feed.")
 	for id: String in troughs:
 		if initialized.has(_id(troughs[id].pen)) and not saved_troughs.has(id):
-			return SaveSchema.failure("Thiếu máng của chuồng đã lưu.")
+			return SaveSchema.failure("A saved pen is missing a trough.")
 	for row: Dictionary in data.animals:
 		if not pens.has(row.pen):
-			return SaveSchema.failure("Không tìm thấy chuồng của vật nuôi.")
+			return SaveSchema.failure("The animal's pen was not found.")
 	for row: Dictionary in data.pickups:
 		if row.pen != "" and not pens.has(row.pen):
-			return SaveSchema.failure("Không tìm thấy chuồng của vật phẩm.")
+			return SaveSchema.failure("The item's pen was not found.")
+	var hive_cells: Dictionary = {}
+	for row: Dictionary in data.beehives:
+		var point: Vector2 = world.to_global(_point(row.position))
+		var cell: Vector2i = farm.world_to_cell(point)
+		if point.distance_to(world.apiary.snap_position(point)) > 0.01 or hive_cells.has(cell) or not world.apiary.placement_error(point,int(data.land_columns),true).is_empty():
+			return SaveSchema.failure("Invalid beehive placement.")
+		for crop: Dictionary in data.crops:
+			if _cell(crop.cell) == cell:
+				return SaveSchema.failure("A hive overlaps a saved crop.")
+		hive_cells[cell] = true
 	return {"ok": true, "snapshot": data}
 
 func restore(data: Dictionary, now: float) -> Dictionary:
@@ -148,7 +173,13 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	# Dọn menu/hiệu ứng và trạng thái hành động trước khi restore để Tween/hành động cũ không
 	# tiếp tục commit vào thế giới vừa tải. Xóa entity mặc định trước inventory.changed của restore,
 	# vì signal đó có thể làm sensor thử nhặt các đống cũ; làm ngược thứ tự có thể cấp đồ lại từ mặc định.
+	world.apiary.begin_restore()
+	world.weather.restore(data.weather, float(data.saved_at))
 	player.shop_interaction.close_for_load()
+	if world.land != null:
+		world.land.reset_presentation()
+	if farm.land != null:
+		farm.land.restore_columns(int(data.land_columns))
 	player.item_feedback.clear()
 	player.wallet.set_balance(int(data.coins))
 	player.state.reset_after_load()
@@ -174,15 +205,21 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	for row: Dictionary in data.flower_gardens:
 		var garden: FlowerGarden = gardens[row.id]
 		for flower: Dictionary in row.flowers:
-			garden.pots[_cell(flower.cell)].restore_state(flower, catalog.flowers[flower.flower], maxf(now, data.saved_at))
+			garden.pots[_cell(flower.cell)].restore_state(flower, catalog.flowers[flower.flower], float(data.saved_at))
 		garden.starter_flowers_added = bool(row.get("starter_flowers_added", false))
 		garden.add_starter_flowers(maxf(now, data.saved_at))
 	farm.restore_soil(data.soil)
+	world.weather.advance(maxf(now, data.saved_at))
 	for row: Dictionary in data.crops:
-		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, now)
+		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction))
+	world.apiary.restore(data.beehives,float(data.saved_at),maxf(now,data.saved_at))
+	farm._refresh_crops(maxf(now,data.saved_at))
+	for garden: FlowerGarden in gardens.values():
+		garden.refresh(maxf(now,data.saved_at))
 	for row: Dictionary in data.troughs:
 		var trough: AnimalTrough = troughs[row.id]
 		trough.global_position = (pens[row.pen] as AnimalPen).to_global(_point(row.position))
+		trough.feed_reserve = int(row.feed_reserve)
 		trough.stock = int(row.stock)
 	for pen: AnimalPen in pens.values():
 		if pen is PondPen:

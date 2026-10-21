@@ -71,7 +71,9 @@ func refresh() -> void:
 	var count: int = inventory.get_slot_count(slot_index)
 	_icon.texture = item.icon if item != null else null
 	_count.text = str(count) if count > 1 else ""
-	tooltip_text = item.display_name if item != null else "Ô trống"
+	tooltip_text = tr(item.display_name) if item != null else tr("Empty slot")
+	if item != null and not item.description.is_empty():
+		tooltip_text += "\n" + tr(item.description)
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	var item: ItemDefinition = inventory.get_slot_item(slot_index)
@@ -99,3 +101,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 func set_selected(value: bool) -> void:
 	set_pressed_no_signal(value)
 	_selection_frame.visible = value
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		refresh()

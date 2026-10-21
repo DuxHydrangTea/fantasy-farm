@@ -14,14 +14,14 @@ func _init(stock: ShopCatalog, purse: WalletComponent, bag: InventoryComponent) 
 
 func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 	if offer == null or catalog == null or not catalog.offers.has(offer) or offer.item == null or offer.item.item_id.is_empty() or offer.price < 1 or offer.price > 1000000 or quantity < 1 or quantity > 99:
-		return {"ok": false, "error": "Mặt hàng hoặc số lượng không hợp lệ."}
+		return {"ok": false, "error": "Invalid item or quantity."}
 	var total: int = offer.price * quantity
 	if wallet == null or inventory == null:
-		return {"ok": false, "error": "Chưa thể giao dịch."}
+		return {"ok": false, "error": "Trading is unavailable."}
 	if wallet.balance < total:
-		return {"ok": false, "error": "Bạn không đủ xu.", "total": total}
+		return {"ok": false, "error": "Not enough coins.", "total": total}
 	if inventory.capacity_for(offer.item) < quantity:
-		return {"ok": false, "error": "Túi đồ không đủ chỗ.", "total": total}
+		return {"ok": false, "error": "Not enough inventory space.", "total": total}
 	return {"ok": true, "total": total}
 
 # GIAO DỊCH OFFLINE — báo giá không phải cam kết: luôn kiểm tra lại khi bấm Mua.
@@ -31,7 +31,7 @@ func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 # Đây là lệnh đồng bộ trên main thread; sau này online vẫn cần giao dịch nguyên tử ở server.
 func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	if _busy:
-		return {"ok": false, "error": "Đang xử lý giao dịch."}
+		return {"ok": false, "error": "A trade is in progress."}
 	var checked: Dictionary = quote(offer, quantity)
 	if not checked.ok:
 		return checked
@@ -51,7 +51,7 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 			stack.count = moved
 			left -= moved
 	if left != 0:
-		return {"ok": false, "error": "Túi đồ đã thay đổi."}
+		return {"ok": false, "error": "Your inventory has changed."}
 	_busy = true
 	var previous: int = wallet.balance
 	# Đổi ví trước nhưng tạm chưa phát signal; replace_slots sau đó phát inventory.changed
@@ -62,7 +62,7 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	if not inventory.replace_slots(stacks):
 		wallet.set_balance(previous, false)
 		_busy = false
-		return {"ok": false, "error": "Không thể cập nhật túi đồ."}
+		return {"ok": false, "error": "Unable to update your inventory."}
 	# Inventory observers already see the debited wallet; no partial purchase.
 	wallet.changed.emit(wallet.balance)
 	purchased.emit(offer, quantity, int(checked.total))

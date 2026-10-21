@@ -8,6 +8,7 @@ const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn
 const POT_SCENE: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
 @export var persistent_id: StringName = &"flower_garden_01"
 @export var time_manager: FarmClock
+var apiary: ApiarySystem
 var pots: Dictionary[Vector2i, FlowerPot] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
 var starter_flowers_added: bool = false
@@ -60,6 +61,8 @@ func add_starter_flowers(now: float) -> void:
 			"matures_at": planted + flower.growth_seconds if watered else 0.0, "progress": progress[index]}, flower, now)
 
 func refresh(now: float) -> void:
+	if apiary != null:
+		apiary.advance(now)
 	for pot: FlowerPot in _growth.take_due(now):
 		pot.refresh(now)
 		_schedule_pot(pot)

@@ -3,6 +3,8 @@ const CROP: PackedScene = preload("res://scenes/crops/crop.tscn")
 
 func _crop() -> Crop:
 	var crop: Crop = CROP.instantiate() as Crop
+	assert_not_null(crop.motion)
+	assert_eq(crop.motion.target, crop.sprite)
 	add_child_autofree(crop)
 	crop.configure(load("res://crops/field/carrot/carrot.tres"), 1000.0)
 	return crop
@@ -26,11 +28,11 @@ func test_reaction_rotates_about_stem_and_returns_to_rest_without_changing_growt
 
 func test_repeated_focus_does_not_restart_reaction_or_permanently_distort_crop() -> void:
 	var crop: Crop = _crop()
+	watch_signals(crop.motion)
 	crop.set_status_focused(true)
-	var motion: Tween = crop._motion
 	for index: int in range(4):
 		crop.set_status_focused(true)
-		assert_eq(crop._motion, motion)
+	assert_signal_emit_count(crop.motion, "effect_started", 1)
 	crop.react(5.0)
 	crop.play_sprout()
 	await wait_seconds(0.5)
@@ -50,6 +52,19 @@ func test_shared_wind_material_and_retiring_crop_has_no_progress_bar() -> void:
 	await wait_seconds(0.25)
 	assert_false(is_instance_valid(first))
 	assert_true(is_instance_valid(second))
+
+func test_crop_gameplay_still_works_if_optional_motion_component_is_removed() -> void:
+	var crop: Crop = _crop()
+	crop.motion.free()
+	crop.set_status_focused(true)
+	crop.react()
+	crop.play_sprout()
+	crop.refresh(1010.0)
+	assert_true(crop.is_mature())
+	assert_true(crop.progress_frame.visible)
+	crop.retire_after_harvest()
+	await wait_physics_frames(2)
+	assert_false(is_instance_valid(crop))
 
 func test_high_yield_burst_caps_visuals_and_handles_target_removal() -> void:
 	var target: Node2D = Node2D.new()

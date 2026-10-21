@@ -55,7 +55,7 @@ func test_click_selects_tool_without_movement_or_using_it() -> void:
 	_click_slot(1)
 	await wait_physics_frames(2)
 	assert_eq(selection.selected_index, 1)
-	assert_eq(hotbar.selected_name.text, "Bình tưới")
+	assert_eq(hotbar.selected_name.text, "Watering Can")
 	assert_true(hotbar.buttons[1].button_pressed)
 	assert_false(hotbar.buttons[0].button_pressed)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
@@ -114,7 +114,7 @@ func test_empty_slot_does_not_use_any_tool() -> void:
 	_mouse(Vector2(400, 300), MOUSE_BUTTON_RIGHT, true)
 	await wait_physics_frames(2)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
-	assert_eq(hotbar.selected_name.text, "Ô trống")
+	assert_eq(hotbar.selected_name.text, "Empty slot")
 
 func test_wheel_keeps_selected_slot_and_does_not_move() -> void:
 	selection.select_slot(4)

@@ -1,11 +1,14 @@
 class_name ItemDefinition
 extends Resource
 
-enum ItemType { TOOL, SEED, PRODUCE, FEED, HOE }
+enum ItemType { TOOL, SEED, PRODUCE, FEED, HOE, BOOSTER, PLACEABLE }
+enum BoosterKind { FERTILIZER, ANIMAL_TONIC }
 enum ToolType { HOE, WATERING_CAN }
 
 @export var item_id: StringName
 @export var display_name: String
+@export_multiline var description: String
+@export var booster_kind: BoosterKind = BoosterKind.FERTILIZER
 @export var icon: Texture2D
 @export var show_world_quantity: bool = true
 @export var item_type: ItemType = ItemType.TOOL

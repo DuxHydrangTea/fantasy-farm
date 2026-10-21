@@ -8,7 +8,11 @@ extends CharacterBody2D
 @export var farming_actions: FarmingActionComponent
 @export var context_bars: ContextBarsComponent
 
+var hive_placement: BeehivePlacementComponent
+var interactions: PlayerInteractionComponent
+var boosters: BoosterInteractionComponent
 var wallet: WalletComponent
+var wallet_hud: WalletHUD
 var shop_interaction: ShopInteraction
 var item_feedback: ItemGainFeedback
 
@@ -24,10 +28,10 @@ func _enter_tree() -> void:
 	shop_interaction.player = self
 	state.shop_interaction = shop_interaction
 	add_child(shop_interaction)
-	var hud: CanvasLayer = preload("res://components/wallet_hud.gd").new()
-	hud.name = "WalletHUD"
-	hud.wallet = wallet
-	add_child(hud)
+	wallet_hud = WalletHUD.new()
+	wallet_hud.name = "WalletHUD"
+	wallet_hud.wallet = wallet
+	add_child(wallet_hud)
 	item_feedback = ItemGainFeedback.new()
 	item_feedback.name = "ItemGainFeedback"
 	item_feedback.player = self
@@ -37,3 +41,21 @@ func _enter_tree() -> void:
 			item_feedback.collector = child as ItemCollector
 			break
 	add_child(item_feedback)
+
+	boosters = BoosterInteractionComponent.new()
+	boosters.name = "BoosterInteraction"
+	boosters.player = self
+	state.boosters = boosters
+	add_child(boosters)
+
+	hive_placement = BeehivePlacementComponent.new()
+	hive_placement.name = "HivePlacement"
+	hive_placement.player = self
+	state.hive_placement = hive_placement
+	add_child(hive_placement)
+
+	interactions = PlayerInteractionComponent.new()
+	interactions.name = "Interactions"
+	interactions.player = self
+	state.interactions = interactions
+	add_child(interactions)

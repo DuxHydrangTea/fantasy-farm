@@ -13,6 +13,7 @@ var inspected_index: int = 0
 
 func _ready() -> void:
 	root.hide()
+	UIScaleComponent.attach(self, root)
 	for index: int in range(selection.inventory.slot_count):
 		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
@@ -31,8 +32,8 @@ func _ready() -> void:
 	_refresh()
 
 func _fit_panel() -> void:
-	var size: Vector2 = root.get_viewport_rect().size
-	panel.custom_minimum_size = Vector2(minf(520.0, size.x - 32.0), minf(540.0, size.y - 32.0))
+	var size: Vector2 = root.size
+	panel.custom_minimum_size = Vector2(minf(520.0, size.x - 32.0), minf(540.0, size.y - 24.0))
 
 func open() -> void:
 	selection.set_inventory_open(true)
@@ -60,8 +61,8 @@ func _refresh() -> void:
 		if not selection.inventory.is_empty_slot(index):
 			used += 1
 	var item: ItemDefinition = selection.inventory.get_slot_item(inspected_index)
-	details.text = "%s  ×%d" % [item.display_name, selection.inventory.get_slot_count(inspected_index)] if item != null else "Ô trống — kéo vật phẩm vào đây"
-	capacity.text = "%d / %d ô" % [used, buttons.size()]
+	details.text = tr("{item} ×{count}").format({"item": tr(item.display_name), "count": selection.inventory.get_slot_count(inspected_index)}) if item != null else tr("Empty slot - drag an item here")
+	capacity.text = tr("{used} / {total} slots").format({"used": used, "total": buttons.size()})
 
 func _input(event: InputEvent) -> void:
 	if selection.shop_open:
@@ -74,3 +75,7 @@ func _input(event: InputEvent) -> void:
 	elif selection.inventory_open and event.is_action_pressed(&"ui_cancel"):
 		close()
 		get_viewport().set_input_as_handled()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh()

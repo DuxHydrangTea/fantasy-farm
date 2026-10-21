@@ -21,6 +21,9 @@ const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
 @export var flower_interaction: FlowerInteraction
 @export var dust_particles: GPUParticles2D
 @export var navigation: PlayerNavigationComponent
+var hive_placement: BeehivePlacementComponent
+var interactions: PlayerInteractionComponent
+var boosters: BoosterInteractionComponent
 var shop_interaction: ShopInteraction
 
 
@@ -87,7 +90,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if current_state == State.TOOL or current_state == State.WATER:
 		return
 	if (event.is_action_pressed(action_harvest) or event.is_action_pressed(&"interact")) and not event.is_echo():
-		if shop_interaction != null and shop_interaction.try_interact():
+		if interactions != null and interactions.press():
 			get_viewport().set_input_as_handled()
 			return
 		_harvest_requested = true
@@ -106,6 +109,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	# Event coordinates belong to this viewport; undo the camera transform.
 	var point: Vector2 = movement.body.get_canvas_transform().affine_inverse() * click.position
+	if hive_placement != null and hive_placement.click(point):
+		get_viewport().set_input_as_handled()
+		return
+	if interactions != null and interactions.click(point):
+		get_viewport().set_input_as_handled()
+		return
 	if navigation != null:
 		navigation.request_focus(point)
 	get_viewport().set_input_as_handled()
@@ -123,6 +132,14 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 		return false
 	if current_state == State.TOOL or current_state == State.WATER:
 		return false
+	if requested_action.is_empty() and hive_placement != null and hive_placement.click(hive_placement.get_global_mouse_position()):
+		return true
+	if boosters != null and requested_action.is_empty():
+		var booster_action: StringName = boosters.prepare_action()
+		if not booster_action.is_empty():
+			active_action = booster_action
+			transition_to(State.TOOL)
+			return true
 	var refill_action: StringName = trough_interaction.prepare_action() if trough_interaction != null else &""
 	if refill_action == &"blocked":
 		return true

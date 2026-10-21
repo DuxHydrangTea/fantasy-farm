@@ -64,3 +64,36 @@ func test_inventory_limit_and_water_overflow_are_respected() -> void:
 	trough.stock = 590
 	assert_eq(trough.refill(trough.water_per_use), 10)
 	assert_eq(trough.stock, 600)
+
+func test_auto_fill_keeps_partial_package_and_reuses_it_without_spending_another() -> void:
+	trough.stock = 590
+	inventory.add(FEED, 1)
+	assert_eq(trough.refill_to_full(inventory), 10)
+	assert_eq(trough.stock, 600)
+	assert_eq(trough.feed_reserve, 290)
+	assert_eq(inventory.count_item(FEED.item_id), 0)
+	trough.stock = 550
+	assert_eq(trough.refill_to_full(inventory), 50)
+	assert_eq(trough.feed_reserve, 240)
+	assert_eq(trough.stock, 600)
+	assert_eq(trough.refill_to_full(inventory), 0)
+	assert_eq(trough.feed_reserve, 240)
+
+func test_auto_fill_is_atomic_for_inventory_and_stock_observers() -> void:
+	trough.stock = 590
+	inventory.add(FEED, 1)
+	var callbacks: Array[int] = []
+	trough.stock_changed.connect(func(_stock: int) -> void:
+		assert_eq(inventory.count_item(FEED.item_id), 0)
+		assert_eq(trough.feed_reserve, 290)
+		assert_eq(trough.refill_to_full(inventory), 0)
+		callbacks.append(1)
+	)
+	inventory.changed.connect(func() -> void:
+		assert_eq(trough.stock, 600)
+		assert_eq(trough.feed_reserve, 290)
+		assert_eq(trough.refill_to_full(inventory), 0)
+		callbacks.append(1)
+	)
+	assert_eq(trough.refill_to_full(inventory), 10)
+	assert_eq(callbacks.size(), 2)

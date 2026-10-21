@@ -83,7 +83,7 @@ func add(item: ItemDefinition, amount: int = 1) -> int:
 		changed.emit()
 	return amount - left
 
-func remove(item_id: StringName, amount: int = 1) -> int:
+func remove(item_id: StringName, amount: int = 1, notify: bool = true) -> int:
 	_ensure_slots()
 	if amount <= 0:
 		return 0
@@ -95,7 +95,7 @@ func remove(item_id: StringName, amount: int = 1) -> int:
 			left -= removed
 			if stack.count == 0:
 				stack.item = null
-	if left < amount:
+	if left < amount and notify:
 		changed.emit()
 	return amount - left
 

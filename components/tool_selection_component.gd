@@ -63,6 +63,10 @@ func cycle_selection(step: int) -> void:
 
 func get_selected_action() -> StringName:
 	var item: ItemDefinition = get_selected_item()
+	if item != null and item.item_type == ItemDefinition.ItemType.PLACEABLE:
+		return &"place_beehive"
+	if item != null and item.item_type == ItemDefinition.ItemType.BOOSTER:
+		return &"fertilize" if item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else &"animal_tonic"
 	if item != null and item.item_type == ItemDefinition.ItemType.SEED:
 		return &"plant"
 	if item != null and (item.item_type == ItemDefinition.ItemType.TOOL or item.item_type == ItemDefinition.ItemType.HOE):
@@ -71,4 +75,4 @@ func get_selected_action() -> StringName:
 
 func get_selected_name() -> String:
 	var item: ItemDefinition = get_selected_item()
-	return item.display_name if item != null else "Ô trống"
+	return tr(item.display_name) if item != null else tr("Empty slot")

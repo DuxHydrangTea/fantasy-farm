@@ -20,7 +20,7 @@ func path(profile: String) -> String:
 # Đây là bảo vệ tương thích dữ liệu, không phải tối ưu có thể bỏ mà không đổi hành vi.
 func read_profile(profile: String) -> Dictionary:
 	if not SaveSchema.identifier(profile):
-		return SaveSchema.failure("ID hồ sơ không hợp lệ.")
+		return SaveSchema.failure("Invalid profile ID.")
 	var primary: Dictionary = _read(path(profile), profile)
 	if primary.ok or primary.get("code") == "future_version":
 		return primary
@@ -30,7 +30,7 @@ func read_profile(profile: String) -> Dictionary:
 		return backup
 	if primary.get("code") == "missing" and backup.get("code") == "missing":
 		return {"ok": true, "found": false, "revision": 0}
-	return backup if backup.get("code") == "future_version" else SaveSchema.failure("File lưu và bản dự phòng đều không đọc được. Giữ nguyên file để phục hồi.", "corrupt")
+	return backup if backup.get("code") == "future_version" else SaveSchema.failure("The save and backup cannot be read. Files kept for recovery.", "corrupt")
 
 func _read(file_path: String, profile: String) -> Dictionary:
 	return _validate_raw(_read_raw(file_path), profile)
@@ -42,7 +42,7 @@ func _validate_raw(raw: Dictionary, profile: String) -> Dictionary:
 	if not checked.ok:
 		return checked
 	if checked.snapshot.profile_id != profile:
-		return SaveSchema.failure("File thuộc hồ sơ khác.")
+		return SaveSchema.failure("This file belongs to another profile.")
 	return {"ok": true, "found": true, "snapshot": checked.snapshot, "revision": int(checked.snapshot.revision), "recovered": false}
 
 # File bọc nguyên chuỗi payload cùng SHA-256 của chính chuỗi đó để phát hiện hỏng/cắt cụt.
@@ -51,69 +51,69 @@ func _validate_raw(raw: Dictionary, profile: String) -> Dictionary:
 # Giới hạn byte bảo vệ bộ đọc khỏi file quá lớn; catalog/schema còn được kiểm tra ở bước main thread.
 func _read_raw(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
-		return SaveSchema.failure("Chưa có file lưu.", "missing")
+		return SaveSchema.failure("No save file yet.", "missing")
 	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
 	if file == null:
-		return SaveSchema.failure("Không mở được file lưu.", "io")
+		return SaveSchema.failure("Unable to open the save file.", "io")
 	if file.get_length() > MAX_BYTES:
-		return SaveSchema.failure("File lưu quá lớn.")
+		return SaveSchema.failure("The save file is too large.")
 	var source: String = file.get_as_text()
 	file.close()
 	var json: JSON = JSON.new()
 	if json.parse(source) != OK or not json.data is Dictionary:
-		return SaveSchema.failure("File JSON bị hỏng.").merged({"file_hash": source.sha256_text()})
+		return SaveSchema.failure("The JSON file is corrupt.").merged({"file_hash": source.sha256_text()})
 	var envelope: Dictionary = json.data
 	if envelope.get("format") != "fantasy_farm_save" or not envelope.get("payload") is String or not envelope.get("sha256") is String or envelope.payload.sha256_text() != envelope.sha256:
-		return SaveSchema.failure("Checksum file lưu không đúng.").merged({"file_hash": source.sha256_text()})
+		return SaveSchema.failure("The save checksum does not match.").merged({"file_hash": source.sha256_text()})
 	if json.parse(envelope.payload) != OK:
-		return SaveSchema.failure("Nội dung file lưu bị hỏng.").merged({"file_hash": source.sha256_text()})
+		return SaveSchema.failure("The save contents are corrupt.").merged({"file_hash": source.sha256_text()})
 	return {"ok": true, "snapshot": json.data, "file_hash": source.sha256_text()}
 
 func write_profile(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
 	if _async_busy:
-		return SaveSchema.failure("Đang lưu hồ sơ.", "busy")
+		return SaveSchema.failure("This profile is being saved.", "busy")
 	var checked: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if not checked.ok:
 		return checked
 	snapshot = checked.snapshot
 	if snapshot.profile_id != profile or int(snapshot.revision) != expected_revision + 1:
-		return SaveSchema.failure("Revision hoặc hồ sơ không khớp.", "conflict")
+		return SaveSchema.failure("Revision or profile does not match.", "conflict")
 	var current: Dictionary = read_profile(profile)
 	if not current.ok:
 		return current
 	if int(current.revision) != expected_revision:
-		return SaveSchema.failure("File đã được cập nhật. Tải lại trước khi lưu.", "conflict")
+		return SaveSchema.failure("This file was updated. Load it before saving.", "conflict")
 	var error: Error = DirAccess.make_dir_recursive_absolute(directory)
 	if error != OK:
-		return SaveSchema.failure("Không tạo được thư mục lưu: " + error_string(error), "io")
+		return SaveSchema.failure("Unable to create the save directory: {reason}", "io", {"reason": error_string(error)})
 	var target: String = path(profile)
 	var temp: String = target + ".tmp"
 	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
-		return SaveSchema.failure("Không ghi được file tạm.", "io")
+		return SaveSchema.failure("Unable to write the temporary file.", "io")
 	var payload: String = JSON.stringify(snapshot)
 	file.store_string(JSON.stringify({"format": "fantasy_farm_save", "sha256": payload.sha256_text(), "payload": payload}, "\t"))
 	file.flush()
 	error = file.get_error()
 	file.close()
 	if error != OK or not _read(temp, profile).ok:
-		return SaveSchema.failure("Ghi file tạm không hoàn tất.", "io")
+		return SaveSchema.failure("The temporary file was not fully written.", "io")
 	# Never rotate a damaged primary over the last-good backup.
 	if current.get("found", false) and not current.get("recovered", false):
 		if FileAccess.file_exists(target + ".bak"):
 			error = DirAccess.remove_absolute(target + ".bak")
 			if error != OK:
-				return SaveSchema.failure("Không thay được bản dự phòng.", "io")
+				return SaveSchema.failure("Unable to replace the backup.", "io")
 		error = DirAccess.rename_absolute(target, target + ".bak")
 		if error != OK:
-			return SaveSchema.failure("Không tạo được bản dự phòng.", "io")
+			return SaveSchema.failure("Unable to create the backup.", "io")
 	elif FileAccess.file_exists(target):
 		error = DirAccess.remove_absolute(target)
 		if error != OK:
-			return SaveSchema.failure("Không thay được file lưu hỏng.", "io")
+			return SaveSchema.failure("Unable to replace the corrupt save.", "io")
 	error = DirAccess.rename_absolute(temp, target)
 	if error != OK:
-		return SaveSchema.failure("Không hoàn tất đổi file lưu; bản dự phòng được giữ lại.", "io")
+		return SaveSchema.failure("Unable to replace the save file; backup kept.", "io")
 	return {"ok": true, "revision": int(snapshot.revision)}
 
 # Worker làm IO/JSON/hash; main thread nhường từng process_frame trong lúc chờ, rồi join lấy kết quả.
@@ -124,7 +124,7 @@ func _run_io(work: Callable) -> Dictionary:
 	var worker: Thread = Thread.new()
 	var started: Error = worker.start(work)
 	if started != OK:
-		return SaveSchema.failure("Không tạo được luồng lưu: " + error_string(started), "io")
+		return SaveSchema.failure("Unable to start the save thread: {reason}", "io", {"reason": error_string(started)})
 	worker_operations += 1
 	while worker.is_alive():
 		await (Engine.get_main_loop() as SceneTree).process_frame
@@ -147,15 +147,15 @@ func _primitive(value: Variant, depth: int = 0) -> bool:
 
 func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
 	if _async_busy:
-		return SaveSchema.failure("Đang lưu hồ sơ.", "busy")
+		return SaveSchema.failure("This profile is being saved.", "busy")
 	var checked: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if not checked.ok:
 		return checked
 	snapshot = checked.snapshot
 	if snapshot.profile_id != profile or int(snapshot.revision) != expected_revision + 1:
-		return SaveSchema.failure("Revision hoặc hồ sơ không khớp.", "conflict")
+		return SaveSchema.failure("Revision or profile does not match.", "conflict")
 	if not _primitive(snapshot):
-		return SaveSchema.failure("File lưu chỉ nhận dữ liệu nguyên thủy.")
+		return SaveSchema.failure("Save files accept only primitive data.")
 	# Chụp sâu DTO TRƯỚC await đầu tiên. Trong thời gian chờ worker, game vẫn tiếp tục:
 	# player có thể nhặt đồ, mua hàng hoặc caller sửa Dictionary/Array ban đầu.
 	# Nếu worker dùng cùng cấu trúc có thể đổi, file có nguy cơ trộn inventory ở hai thời điểm.
@@ -173,9 +173,9 @@ func write_profile_async(profile: String, snapshot: Dictionary, expected_revisio
 		if not current.ok and primary_raw.get("code") == "missing" and backup_raw.get("code") == "missing":
 			current = {"ok": true, "revision": 0}
 		elif not current.ok and current.get("code") != "future_version":
-			current = SaveSchema.failure("File lưu và bản dự phòng đều không đọc được.", "corrupt")
+			current = SaveSchema.failure("The save and backup cannot be read.", "corrupt")
 	if current.ok and int(current.revision) != expected_revision:
-		current = SaveSchema.failure("File đã được cập nhật. Tải lại trước khi lưu.", "conflict")
+		current = SaveSchema.failure("This file was updated. Load it before saving.", "conflict")
 	var result: Dictionary = current
 	if current.ok:
 		result = await _run_io(_commit_io.bind(profile, snapshot.duplicate(true), String(primary_raw.get("file_hash", "")), primary_valid))
@@ -193,23 +193,23 @@ func _commit_io(profile: String, snapshot: Dictionary, expected_hash: String, pr
 	var target: String = path(profile)
 	if FileAccess.file_exists(target):
 		if expected_hash.is_empty() or FileAccess.get_file_as_string(target).sha256_text() != expected_hash:
-			return SaveSchema.failure("File đã đổi trong lúc lưu.", "conflict")
+			return SaveSchema.failure("The file changed while saving.", "conflict")
 	elif not expected_hash.is_empty():
-		return SaveSchema.failure("File đã bị xóa trong lúc lưu.", "conflict")
+		return SaveSchema.failure("The file was deleted while saving.", "conflict")
 	var error: Error = DirAccess.make_dir_recursive_absolute(directory)
 	if error != OK:
-		return SaveSchema.failure("Không tạo được thư mục lưu.", "io")
+		return SaveSchema.failure("Unable to create the save directory.", "io")
 	var temp: String = target + ".tmp"
 	var payload: String = JSON.stringify(snapshot)
 	var file: FileAccess = FileAccess.open(temp, FileAccess.WRITE)
 	if file == null:
-		return SaveSchema.failure("Không ghi được file tạm.", "io")
+		return SaveSchema.failure("Unable to write the temporary file.", "io")
 	file.store_string(JSON.stringify({"format": "fantasy_farm_save", "sha256": payload.sha256_text(), "payload": payload}, "\t"))
 	file.flush()
 	error = file.get_error()
 	file.close()
 	if error != OK or not _read_raw(temp).ok:
-		return SaveSchema.failure("Ghi file tạm không hoàn tất.", "io")
+		return SaveSchema.failure("The temporary file was not fully written.", "io")
 	# Only a primary validated on the main thread may replace the last-good backup.
 	if primary_valid:
 		if FileAccess.file_exists(target + ".bak"):
@@ -221,5 +221,5 @@ func _commit_io(profile: String, snapshot: Dictionary, expected_hash: String, pr
 	if error == OK:
 		error = DirAccess.rename_absolute(temp, target)
 	if error != OK:
-		return SaveSchema.failure("Không hoàn tất lưu; bản dự phòng được giữ lại.", "io")
+		return SaveSchema.failure("Unable to finish saving; backup kept.", "io")
 	return {"ok": true, "revision": int(snapshot.revision)}

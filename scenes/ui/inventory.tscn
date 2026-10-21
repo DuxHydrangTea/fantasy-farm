@@ -47,7 +47,7 @@ layout_mode = 2
 
 [node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=1800325310]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 
 [node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1017386628]
 layout_mode = 2
@@ -56,19 +56,19 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
-text = "TÚI ĐỒ"
+text = "INVENTORY"
 
 [node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=1951490743]
 custom_minimum_size = Vector2(44, 40)
 layout_mode = 2
-tooltip_text = "Đóng (Esc)"
+tooltip_text = "Close (Esc)"
 focus_mode = 0
 text = "×"
 
 [node name="Subtitle" type="Label" parent="Root/Center/Panel/Body" unique_id=1082757921]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "6 ô đầu dùng chung với hotbar"
+text = "First 6 slots are shared with the hotbar"
 autowrap_mode = 3
 
 [node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body" unique_id=2135767848]
@@ -100,7 +100,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
-text = "Kéo thả để đổi chỗ / gộp"
+text = "Drag to swap or stack"
 autowrap_mode = 3
 
 [node name="Capacity" type="Label" parent="Root/Center/Panel/Body/Footer" unique_id=498918105]

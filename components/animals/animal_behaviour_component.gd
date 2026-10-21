@@ -17,6 +17,7 @@ var _lie_down_action: StringName = &""
 var _expected_action: StringName = &""
 var _sleep_after_lying: bool = false
 var _first_decision: bool = true
+var _focused: bool = false
 
 func _ready() -> void:
 	wander.animation.action_finished.connect(_on_animation_finished)
@@ -45,6 +46,9 @@ func _physics_process(delta: float) -> void:
 		return
 	# Boundary enforcement remains active while sitting or sleeping.
 	wander._keep_inside()
+	if _focused:
+		_stop()
+		return # Hold idle (or finish standing up) before any AI or shore-delivery movement.
 	if wander.traversal != null and wander.traversal.handle_laying(delta):
 		return
 	if current_state == State.SEEK_RESOURCE:
@@ -96,9 +100,25 @@ func _physics_process(delta: float) -> void:
 		State.REST, State.SLEEP:
 			wake()
 
+## Hover and player focus share one hold; repeated refreshes must not restart animations.
+func set_focused(value: bool) -> void:
+	if _focused == value:
+		return
+	_focused = value
+	if not value or definition == null:
+		return
+	foraging.cancel()
+	_sleep_after_lying = false
+	if current_state == State.STAND_UP:
+		_stop()
+	elif current_state in [State.LIE_DOWN, State.REST, State.SLEEP_START, State.SLEEP] and _can_rest() and not (wander.traversal != null and wander.traversal.is_swimming()):
+		_enter(State.STAND_UP)
+	else:
+		_enter(State.IDLE)
+
 ## Upright behaviours can be interrupted. A lying animal must wake() first.
 func request_behaviour(action: StringName) -> bool:
-	if definition == null or not is_instance_valid(wander.pen):
+	if _focused or definition == null or not is_instance_valid(wander.pen):
 		return false
 	if current_state != State.IDLE and current_state != State.WALK and current_state != State.FORAGE:
 		return false

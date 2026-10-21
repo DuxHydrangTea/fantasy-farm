@@ -85,6 +85,46 @@ func test_goose_rejects_water_route_while_duck_can_cross_shore() -> void:
 	assert_false(shore.is_empty())
 	assert_false(pen.is_water(shore[-1]))
 
+func test_focused_swimming_duck_holds_idle_and_defers_shore_delivery_until_release() -> void:
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
+	assert_true(duck.behaviour.request_behaviour(&"sleep"))
+	duck.production.advance(40.0)
+	duck.set_status_focused(true)
+	duck.behaviour.set_physics_process(true)
+	var before: Vector2 = duck.global_position
+	await wait_physics_frames(30)
+	assert_eq(duck.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_eq(duck.sprite.animation, &"swim_idle_down")
+	assert_eq(duck.global_position, before)
+	assert_false(duck.movement.has_target)
+	assert_eq(duck.production.stored_amount, 1)
+	assert_null(duck.product_pickup())
+	duck.set_status_focused(false)
+	for index: int in range(900):
+		if duck.product_pickup() != null:
+			break
+		await wait_physics_frames(1)
+	duck.behaviour.set_physics_process(false)
+	assert_not_null(duck.product_pickup())
+	assert_eq(duck.production.stored_amount, 0)
+
+func test_death_in_water_preserves_completed_eggs_on_shore_without_waiting_for_movement() -> void:
+	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
+	assert_true(pen.is_water(duck.global_position))
+	duck.production.advance(40.0)
+	duck.growth.configure(0.0, 19.0, 20.0)
+	duck.needs.update_at(timestamp + 2.0)
+	assert_true(duck.is_dead())
+	assert_true(duck.is_queued_for_deletion())
+	var pile: ItemPickup = duck.product_pickup()
+	assert_not_null(pile)
+	assert_false(pen.is_water(pile.global_position))
+	assert_eq(pile.amount, 1)
+	assert_false(duck.movement.has_target)
+	await wait_physics_frames(2)
+	assert_false(is_instance_valid(duck))
+	assert_true(is_instance_valid(pile))
+
 func test_egg_waits_in_stock_on_water_then_duck_walks_ashore_to_drop_once() -> void:
 	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
 	duck.production.advance(40.0)
@@ -137,6 +177,7 @@ func test_patrol_keeps_geese_on_land_and_every_bird_inside_fence() -> void:
 
 func test_file_roundtrip_restores_pending_eggs_without_spawning_them_underwater() -> void:
 	var duck: AnimalActor = pen.get_node("Duck_3") as AnimalActor
+	duck.growth.configure(duck.definition.maturity_seconds, duck.definition.maturity_seconds, duck.definition.lifespan_seconds)
 	duck.production.advance(40.0)
 	var id: String = String(duck.persistent_id)
 	var saved: Dictionary = adapter.capture("test", 1, timestamp)

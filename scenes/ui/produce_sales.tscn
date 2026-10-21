@@ -1,0 +1,149 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/produce_sales_ui.gd" id="1_bbk2h"]
+[ext_resource type="Resource" path="res://resources/shops/produce_prices.tres" id="2_xy44j"]
+[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="3_7gi0a"]
+[ext_resource type="Texture2D" path="res://resources/ui/inventory_panel.tres" id="4_47s55"]
+[ext_resource type="Texture2D" path="res://resources/ui/hotbar_selected.tres" id="5_j2uci"]
+
+[sub_resource type="StyleBoxTexture" id="Panel"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+texture = ExtResource("4_47s55")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id="Pressed"]
+texture = ExtResource("5_j2uci")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 7.0
+
+[node name="ProduceSalesUI" type="CanvasLayer" unique_id=2096592076 node_paths=PackedStringArray("panel", "body", "heading", "balance_label", "items", "details", "status", "quantity", "sell_quantity_button", "sell_all_button", "root", "close_button")]
+layer = 25
+script = ExtResource("1_bbk2h")
+catalog = ExtResource("2_xy44j")
+panel = NodePath("Root/Center/Panel")
+body = NodePath("Root/Center/Panel/Body")
+heading = NodePath("Root/Center/Panel/Body/Header/Title")
+balance_label = NodePath("Root/Center/Panel/Body/Header/Balance")
+items = NodePath("Root/Center/Panel/Body/Main/Produce")
+details = NodePath("Root/Center/Panel/Body/Main/Info/Description/Details")
+status = NodePath("Root/Center/Panel/Body/Main/Info/Description/Status")
+quantity = NodePath("Root/Center/Panel/Body/QuantitySale/Quantity")
+sell_quantity_button = NodePath("Root/Center/Panel/Body/QuantitySale/SellQuantity")
+sell_all_button = NodePath("Root/Center/Panel/Body/SellAll")
+root = NodePath("Root")
+close_button = NodePath("Root/Center/Panel/Body/Header/Close")
+
+[node name="Root" type="Control" parent="." unique_id=1805127674]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("3_7gi0a")
+
+[node name="Dim" type="ColorRect" parent="Root" unique_id=906090985]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root" unique_id=1961116466]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=1972296355]
+custom_minimum_size = Vector2(960, 660)
+layout_mode = 2
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=1790785345]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=68221180]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=1180723529]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PRODUCE BUYER"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=545339877]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=1454559977]
+custom_minimum_size = Vector2(44, 40)
+layout_mode = 2
+tooltip_text = "Close (Esc / E)"
+text = "×"
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=296255363]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="Produce" type="ItemList" parent="Root/Center/Panel/Body/Main" unique_id=1587129657]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.28, 0.18, 0.12, 1)
+theme_override_colors/font_selected_color = Color(0.28, 0.18, 0.12, 1)
+theme_override_styles/panel = SubResource("Panel")
+theme_override_styles/selected = SubResource("Pressed")
+max_text_lines = 2
+fixed_icon_size = Vector2i(32, 32)
+
+[node name="Info" type="ScrollContainer" parent="Root/Center/Panel/Body/Main" unique_id=1022537470]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+
+[node name="Description" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Info" unique_id=523671303]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=1607599382]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=890321596]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="QuantitySale" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1467092269]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Root/Center/Panel/Body/QuantitySale" unique_id=1002350596]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Qty"
+
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/QuantitySale" unique_id=459748357]
+custom_minimum_size = Vector2(96, 40)
+layout_mode = 2
+min_value = 1.0
+max_value = 2048000.0
+value = 1.0
+rounded = true
+
+[node name="SellQuantity" type="Button" parent="Root/Center/Panel/Body/QuantitySale" unique_id=1791451000]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SellAll" type="Button" parent="Root/Center/Panel/Body" unique_id=1904638095]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2

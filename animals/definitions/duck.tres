@@ -7,10 +7,10 @@
 [resource]
 script = ExtResource("3_al3q5")
 animal_id = &"duck"
-display_name = "Vịt"
+display_name = "Duck"
 species = 1
+hydration_depletion_seconds = 300.0
+adult_frames = ExtResource("1_r4afy")
 can_swim = true
 eggs_on_land = true
-hydration_depletion_seconds = 300.0
 production = ExtResource("2_bueop")
-adult_frames = ExtResource("1_r4afy")

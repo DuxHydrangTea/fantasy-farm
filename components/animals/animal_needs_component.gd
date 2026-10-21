@@ -10,6 +10,8 @@ var hydration: float = 100.0
 var satiety_depletion_seconds: float = 600.0
 var hydration_depletion_seconds: float = 600.0
 var _updated_at: float = 0.0
+var _active: bool = true
+var weather: WeatherSchedule
 
 func _ready() -> void:
 	if time_manager == null:
@@ -35,26 +37,38 @@ func restore_state(food: float, water: float, timestamp: float) -> void:
 # Nếu bỏ giới hạn này, vật nuôi đói/khát vẫn tạo sản phẩm suốt thời gian offline.
 # Nếu tính sau khi trừ no/nước, khoảng cuối vừa hết nước có thể mất phần sản xuất hợp lệ.
 func update_at(timestamp: float) -> void:
-	var elapsed: float = maxf(0.0, timestamp - _updated_at)
-	_updated_at = maxf(_updated_at, timestamp)
-	var food_seconds: float = satiety * satiety_depletion_seconds / 100.0
-	var water_seconds: float = hydration * hydration_depletion_seconds / 100.0
-	var supplied: float = minf(elapsed, minf(food_seconds, water_seconds))
-	_set_values(satiety - elapsed * 100.0 / satiety_depletion_seconds, hydration - elapsed * 100.0 / hydration_depletion_seconds)
-	if elapsed > 0.0:
-		time_advanced.emit(_updated_at, elapsed, supplied)
+	if not _active:
+		return
+	while _active and _updated_at < timestamp - 0.000001:
+		var end: float = minf(timestamp, weather.next_boundary(_updated_at)) if weather != null else timestamp
+		var elapsed: float = end - _updated_at
+		var water_rate: float = weather.water_rate(_updated_at) if weather != null else 1.0
+		var food_seconds: float = satiety * satiety_depletion_seconds / 100.0
+		var water_seconds: float = hydration * hydration_depletion_seconds / (100.0 * water_rate)
+		var supplied: float = minf(elapsed, minf(food_seconds, water_seconds))
+		_updated_at = end
+		_set_values(satiety - elapsed * 100.0 / satiety_depletion_seconds, hydration - elapsed * water_rate * 100.0 / hydration_depletion_seconds)
+		time_advanced.emit(end, elapsed, supplied)
 
 func feed(amount: float) -> float:
 	_sync()
+	if not _active:
+		return 0.0
 	var before: float = satiety
 	_set_values(satiety + maxf(0.0, amount), hydration)
 	return satiety - before
 
 func drink(amount: float) -> float:
 	_sync()
+	if not _active:
+		return 0.0
 	var before: float = hydration
 	_set_values(satiety, hydration + maxf(0.0, amount))
 	return hydration - before
+
+## Prevent a late trough callback from feeding an actor retired during _sync().
+func deactivate() -> void:
+	_active = false
 
 # Chốt phần thời gian cũ trước khi cho ăn/uống. Nếu cộng no trước rồi mới tính elapsed,
 # thức ăn vừa đổ vào có thể bị xem như đã có trong cả khoảng offline đã qua và sinh thưởng ngược.

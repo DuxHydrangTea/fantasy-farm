@@ -5,7 +5,7 @@ extends Node
 @export var camera: Camera2D
 @export var selection: ToolSelectionComponent
 @export_range(0.1, 5.0, 0.05) var min_zoom: float = 1.0
-@export_range(0.1, 5.0, 0.05) var max_zoom: float = 3.0
+@export_range(0.1, 12.0, 0.1) var max_zoom: float = 8.0
 @export_range(1.01, 2.0, 0.01) var zoom_step: float = 1.15
 @export_range(1.0, 30.0, 0.5) var zoom_speed: float = 12.0
 

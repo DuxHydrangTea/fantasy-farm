@@ -6,9 +6,12 @@ signal stock_changed(amount: int)
 var definition: AnimalProductionDefinition
 var progress_seconds: float = 0.0
 var stored_amount: int = 0
+var tonic_pending: bool = false
+var bonus_roll: Callable = func() -> float: return randf()
 var _collecting: bool = false
 
 func configure(data: AnimalProductionDefinition) -> void:
+	tonic_pending = false
 	definition = data
 	progress_seconds = 0.0
 	stored_amount = 0
@@ -16,8 +19,9 @@ func configure(data: AnimalProductionDefinition) -> void:
 func progress_ratio() -> float:
 	return progress_seconds / definition.production_seconds if definition != null and definition.is_valid() else 0.0
 
-func restore_state(progress: float, amount: int) -> void:
+func restore_state(progress: float, amount: int, pending: bool = false) -> void:
 	progress_seconds = progress
+	tonic_pending = pending
 	stored_amount = amount
 	stock_changed.emit(stored_amount)
 
@@ -35,6 +39,12 @@ func advance(eligible_seconds: float) -> int:
 		return 0
 	progress_seconds = maxf(0.0, progress_seconds - batches * definition.production_seconds)
 	var amount: int = batches * definition.production_amount
+	if tonic_pending:
+		# Only the first completed cycle is enhanced, even after a long offline jump.
+		# Consume before signals; output collection/stock does not control this effect.
+		tonic_pending = false
+		if float(bonus_roll.call()) < 0.5:
+			amount += 1
 	stored_amount += amount
 	stock_changed.emit(stored_amount)
 	produced.emit(amount)
@@ -59,3 +69,9 @@ func collect(inventory: InventoryComponent) -> int:
 	take_output(accepted)
 	_collecting = false
 	return accepted
+
+func apply_tonic() -> bool:
+	if tonic_pending or definition == null or not definition.is_valid():
+		return false
+	tonic_pending = true
+	return true

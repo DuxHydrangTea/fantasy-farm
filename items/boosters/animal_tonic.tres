@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r10_c08.tres" id="1_e8wwb"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="2_hpqaf"]
+
+[resource]
+script = ExtResource("2_hpqaf")
+item_id = &"animal_tonic"
+display_name = "Animal Tonic"
+description = "Juvenile: once, mature at 12h; lifespan stays 14 days. Adult: next cycle has a 50% chance of +1 produce."
+booster_kind = 1
+icon = ExtResource("1_e8wwb")
+item_type = 5

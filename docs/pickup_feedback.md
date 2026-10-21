@@ -17,7 +17,7 @@ phần dư ở nguyên điểm rơi; signal chỉ báo số lượng thực tế
 đòi đủ chỗ cho toàn bộ yield. Chặn gọi thu hoạch lồng nhau từ inventory.changed.
 Không hiện thông báo khi thu hoạch thất bại, mua hàng hoặc restore inventory.
 
-`ItemGainFeedback` quản lý presentation; `ItemGainPopup` dùng Pixelify Sans và
+`ItemGainFeedback` quản lý presentation; `ItemGainPopup` dùng Upheaval qua `game_font.tres` và
 icon của ItemDefinition, nảy nhẹ, bay lên rồi mờ trong 0,95 giây. Popup trên đầu
 đi theo player; popup ô đất đứng tại vị trí thu hoạch. Nhặt cùng một loại liên tiếp
 trong 0,15 giây gộp số trên thông báo, không gộp hay thay đổi giao dịch inventory.
@@ -38,10 +38,14 @@ cạnh dưới và giữ UV gốc; không đọc nhầm ô bên cạnh trong atl
 `_process` hoặc Tween lặp trên hàng nghìn cây. Biên độ nhỏ, chỉnh tại
 `resources/effects/crop_wind.tres` và `tree_wind_32/48.tres` (0 để tắt gió).
 
-`Crop` dùng Tween ngắn, thay thế Tween cũ khi có tác động: mọc nhú khi gieo,
+`VisualMotionComponent` dùng Tween ngắn, thay thế Tween cũ khi có tác động: mọc nhú khi gieo,
 nghiêng khi focus lần đầu/tưới/bắt đầu thu hoạch. Sprite xoay và co giãn quanh
 chân cây, không đổi transform root, collision, tile hoặc timestamp lớn.
 Focus lặp mỗi tick không khởi động lại chuyển động.
+
+`Crop` chỉ gọi component qua tham chiếu typed đã assign trong scene. Component hỗ trợ
+Sprite2D/AnimatedSprite2D, pivot cấu hình được và material gió tùy chọn, nên có thể gắn cho cây
+hoặc con vật khác. Xem [cách dùng VisualMotionComponent](visual_motion.md).
 
 Khi thu hoạch thành công, transaction inventory vẫn commit đúng một lần tại
 frame tác động. Cây rời danh sách logic ngay; hình ảnh co lại/mờ trong 0,16 giây.

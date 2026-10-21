@@ -48,14 +48,14 @@ func refresh() -> void:
 	pot.set_focused(true, allowed)
 	global_position = pot.global_position
 	if pot.definition == null:
-		prompt.text = "Chọn hạt hoa · Chuột phải: gieo"
+		prompt.text = tr("Select flower seeds · Right-click: plant")
 	elif pot.is_mature():
-		prompt.text = "E: thu hoa" if selection.inventory.capacity_for(pot.definition.harvest_item) >= pot.definition.harvest_amount else "Túi đồ đầy"
+		prompt.text = tr("E: harvest flowers") if selection.inventory.capacity_for(pot.definition.harvest_item) >= pot.definition.harvest_amount else tr("Inventory full")
 	elif pot.can_water():
-		prompt.text = "Chọn bình tưới · Chuột phải: tưới"
+		prompt.text = tr("Select watering can · Right-click: water")
 	else:
-		prompt.text = "%s · %d%%" % [pot.definition.display_name, int(pot.progress * 100)]
-	prompt.show()
+		prompt.text = tr("{flower} · {percent}%").format({"flower": tr(pot.definition.display_name), "percent": int(pot.progress * 100)})
+	prompt.visible = not (get_parent() is FarmPlayer and (get_parent() as FarmPlayer).interactions != null and (get_parent() as FarmPlayer).interactions.focused != null)
 
 func prepare_action(requested: StringName) -> StringName:
 	refresh()
@@ -98,3 +98,15 @@ func _on_frame_changed() -> void:
 		_pending.harvest(selection.inventory)
 	_pending = null
 	refresh()
+
+func prepare_target(pot: FlowerPot) -> StringName:
+	_action = &""
+	_pending = null
+	if not _reachable(pot):
+		return &"blocked"
+	pot.refresh(pot.garden.time_manager.now())
+	if not pot.is_mature():
+		return &"blocked"
+	_pending = pot
+	_action = &"flower_harvest"
+	return _action

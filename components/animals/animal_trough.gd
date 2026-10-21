@@ -26,6 +26,7 @@ signal stock_changed(amount: int)
 @export_range(1, 32000) var water_per_use: int = 30
 var _occupants: Dictionary[int, WeakRef] = {}
 var _refilling: bool = false
+var feed_reserve: int = 0
 
 ## Whole packages only: never discard feed when the remaining space is too small.
 func feed_items_needed(inventory: InventoryComponent) -> int:
@@ -116,3 +117,23 @@ func refill(units: int) -> int:
 func _update_visual() -> void:
 	if sprite != null:
 		sprite.texture = full_texture if stock > 0 else empty_texture
+
+func refill_to_full(inventory: InventoryComponent) -> int:
+	if _refilling or kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != ItemDefinition.ItemType.FEED or stock >= capacity:
+		return 0
+	var units: int = maxi(1, feed_item.food_units_per_item)
+	var needed: int = ceili(float(maxi(0, capacity - stock - feed_reserve)) / units)
+	var packages: int = mini(needed, inventory.count_item(feed_item.item_id))
+	if packages == 0 and feed_reserve == 0:
+		return 0
+	_refilling = true
+	# Silence the bag until stock and the retained remainder are also committed.
+	var removed: int = inventory.remove(feed_item.item_id, packages, false)
+	var available: int = feed_reserve + removed * units
+	var added: int = mini(capacity - stock, available)
+	feed_reserve = available - added
+	stock += added
+	if removed > 0:
+		inventory.changed.emit()
+	_refilling = false
+	return added

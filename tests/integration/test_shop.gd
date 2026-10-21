@@ -17,6 +17,7 @@ func before_each() -> void:
 	merchant = MERCHANT.instantiate() as ShopMerchant
 	merchant.position = player.position + Vector2(24, 0)
 	viewport.add_child(merchant)
+	player.animation.face(merchant.interaction_position() - player.global_position)
 	shop = merchant.shop_ui
 	await wait_physics_frames(3)
 
@@ -58,7 +59,7 @@ func test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit()
 	assert_eq(player.wallet.balance, 980)
 	_key(KEY_ESCAPE)
 	assert_true(merchant.bubble.visible)
-	assert_true(merchant.bubble_text.text.contains("Cảm ơn"))
+	assert_true(merchant.bubble_text.text.contains("Thank you"))
 	assert_true(merchant.open_shop(player))
 	assert_false(merchant.bubble.visible)
 	shop.close()
@@ -86,7 +87,7 @@ func test_range_categories_and_checkout_revalidation() -> void:
 	player.position = merchant.position + Vector2(24, 0)
 	assert_true(player.shop_interaction.try_interact())
 	shop.show_category(ShopOffer.Category.FEED)
-	assert_eq(shop.grid.get_child_count(), 2)
+	assert_eq(shop.grid.get_child_count(), 5)
 	shop.show_category(ShopOffer.Category.FLOWER)
 	assert_eq(shop.grid.get_child_count(), 10)
 	shop.quantity.value = 99
@@ -123,8 +124,9 @@ func test_main_world_attaches_shop_to_existing_laibuon_at_sprite_position() -> v
 	assert_eq((merchant.get_node("AnimatedSprite2D") as Node2D).position, Vector2(-38, 1))
 	assert_eq((merchant.get_node("CollisionShape2D") as Node2D).position, Vector2(-39, 6))
 	assert_eq(merchant.interaction_position(), Vector2(1741, 224))
-	assert_eq(viewport.get_tree().get_nodes_in_group(&"shop_merchants").size(), 1)
+	assert_eq(viewport.get_tree().get_nodes_in_group(&"shop_merchants").size(), 2)
 	player.position = merchant.interaction_position() + Vector2(0, 24)
+	player.animation.face(merchant.interaction_position() - player.global_position)
 	shop = merchant.shop_ui
 	_key(KEY_E)
 	assert_true(shop.is_open)
@@ -132,3 +134,94 @@ func test_main_world_attaches_shop_to_existing_laibuon_at_sprite_position() -> v
 	assert_false(merchant.bubble.visible)
 	_key(KEY_ESCAPE)
 	assert_true(merchant.bubble.visible)
+
+func test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal() -> void:
+	var pen: AnimalPen = AnimalPen.new()
+	pen.accepted_species = [AnimalTypes.Species.CHICKEN]
+	pen.capacity = 2
+	viewport.add_child(pen)
+	await wait_physics_frames(2)
+	assert_true(merchant.open_shop(player))
+	assert_eq(shop.categories.get_child_count(), 5)
+	shop.show_category(ShopOffer.Category.ANIMAL)
+	assert_eq(shop.grid.get_child_count(), 7)
+	assert_false(shop.buy_button.disabled)
+	shop.purchase()
+	assert_eq(player.wallet.balance, 840)
+	var actor: AnimalActor = shop.animal_service.owned_animals()[0]
+	assert_eq(actor.growth.age_seconds, 0.0)
+	shop.show_category(ShopOffer.Category.SELL_ANIMAL)
+	assert_eq(shop.grid.get_child_count(), 1)
+	assert_true(shop.buy_button.disabled, "Choose a specific animal before selling")
+	shop.select_animal(actor)
+	assert_false(shop.buy_button.disabled)
+	assert_true(shop.details.text.contains("Young"))
+	assert_true(shop.details.text.contains("Age 0 min"), "A newborn must not display a rounded-up age")
+	shop.purchase()
+	assert_eq(player.wallet.balance, 920)
+	assert_eq(shop.grid.get_child_count(), 0)
+	assert_true(shop.buy_button.disabled)
+	shop.purchase()
+	assert_eq(player.wallet.balance, 920, "Another click cannot sell again")
+	shop.close()
+	assert_true(merchant.bubble.visible)
+
+func test_real_farm_can_buy_all_seven_species_into_configured_pens() -> void:
+	merchant.free()
+	player.free()
+	var world: FarmWorld = load("res://world/main_world.tscn").instantiate() as FarmWorld
+	for child: Node in world.get_children():
+		if String(child.name).begins_with("TreeScatter"):
+			child.free()
+	viewport.add_child(world)
+	await wait_physics_frames(4)
+	player = world.player
+	player.wallet.set_balance(10000)
+	merchant = world.get_node("LaiBuon") as ShopMerchant
+	player.position = merchant.interaction_position() + Vector2(0, 24)
+	assert_true(merchant.open_shop(player))
+	player.animation.face(merchant.interaction_position() - player.global_position)
+	shop = merchant.shop_ui
+	shop.show_category(ShopOffer.Category.ANIMAL)
+	for offer: AnimalShopOffer in merchant.catalog.animal_offers:
+		shop.select_animal_offer(offer)
+		var before: int = shop.animal_service.owned_animals().size()
+		shop.purchase()
+		var actors: Array[AnimalActor] = shop.animal_service.owned_animals()
+		assert_eq(actors.size(), before + 1, String(offer.animal.animal_id))
+		var found: AnimalActor
+		for actor: AnimalActor in actors:
+			if actor.definition == offer.animal and String(actor.persistent_id).begins_with("animal_"):
+				found = actor
+		assert_not_null(found)
+		if found != null:
+			assert_true(found.pen.accepted_species.has(found.definition.species))
+			assert_true(found.pen.contains_world(found.global_position, found.wander.margin))
+			assert_lt(found.growth.age_seconds, 1.0)
+			if found.pen is PondPen:
+				assert_false((found.pen as PondPen).is_water(found.global_position))
+			if found.definition.species in [AnimalTypes.Species.COW, AnimalTypes.Species.SHEEP, AnimalTypes.Species.PIG, AnimalTypes.Species.HORSE]:
+				var food: AnimalTrough = found.pen.get_node("FeedTrough") as AnimalTrough
+				assert_true(food.can_supply(found.definition), "Purchased livestock can eat at the existing barn trough")
+	assert_eq(player.wallet.balance, 6560)
+
+func test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell() -> void:
+	var pen: AnimalPen = AnimalPen.new()
+	pen.accepted_species = [AnimalTypes.Species.CHICKEN]
+	viewport.add_child(pen)
+	await wait_physics_frames(2)
+	merchant.open_shop(player)
+	shop.show_category(ShopOffer.Category.ANIMAL)
+	shop.purchase()
+	var animal: AnimalActor = shop.animal_service.owned_animals()[0]
+	shop.show_category(ShopOffer.Category.SELL_ANIMAL)
+	shop.select_animal(animal)
+	var card: Button = shop.grid.get_child(0) as Button
+	animal.free()
+	card.pressed.emit()
+	assert_null(shop.selected_animal)
+	assert_true(shop.buy_button.disabled)
+	shop.purchase()
+	assert_eq(player.wallet.balance, 840, "A stale selection cannot sell an absent animal")
+	shop.show_category(ShopOffer.Category.SELL_ANIMAL)
+	assert_eq(shop.grid.get_child_count(), 0)

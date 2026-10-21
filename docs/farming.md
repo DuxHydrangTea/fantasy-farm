@@ -3,8 +3,10 @@
 Choose a hotbar slot with **1–6** or by clicking it.
 Scroll up to zoom in on the farm, or down to zoom out; this does not change the selected slot.
 Face the adjacent tile and **right-click** or press **Space** to use the selected tool.
-Left-click focuses a point: the player finds a collision-safe path to a nearby interaction position,
-stops and faces the clicked cell. It does not use a tool automatically.
+Left-click empty ground to approach and face that point. Click a mature crop, flower,
+NPC, trough or animal to approach and interact with that exact target. **E** uses
+the single highlighted target in front of the player, with NPC/sign > trough >
+animal > harvest priority. See [unified interaction](unified_interaction.md).
 Movement keys, tool use and opening the inventory cancel the route.
 Number keys select a slot without immediately using its tool.
 The change happens once on animation frame 3. Changing state before impact cancels it.
@@ -63,3 +65,22 @@ godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit
 `tests/unit/test_farming_rules.gd` tests permissions and soil transitions.
 `tests/integration/test_farming.gd` tests real terrains, four action directions,
 animation impact/cancellation, colliders and transformed maps.
+
+## Farmland ownership
+
+MainWorld's 48 × 34 planting rectangle starts with the rightmost column unlocked.
+Locked plots deny farming actions until purchased at the land sign with E.
+See [farmland expansion](land_expansion.md) for layout, prices and save migration.
+
+## Fertilizer
+
+Crop Fertilizer can be used once before 50% growth to reduce the original total
+crop duration by 20%. See [boosters](boosters.md) for targeting and persistence.
+
+## Bee pollination
+
+Crops within 5 tiles of a hive with an assigned bloom grow 10% faster. Multiple
+hives do not stack. Earned acceleration persists when the source disappears;
+fertilizer still uses the original duration. Mature sunflowers also supply pollen.
+Placed hives occupy their cell and prevent farming under the hive. See
+[beehives](beehives.md).

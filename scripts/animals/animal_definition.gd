@@ -35,11 +35,13 @@ extends Resource
 @export var can_swim: bool = false
 @export var eggs_on_land: bool = false
 @export_group("Growth And Production")
-@export_range(0.0, 86400.0) var maturity_seconds: float = 120.0
+@export_range(0.0, 1209600.0) var maturity_seconds: float = 86400.0
+## Total lifetime from age zero, including the juvenile day, also while offline.
+@export_range(1.0, 31536000.0) var lifespan_seconds: float = 1209600.0
 @export var production: AnimalProductionDefinition
 
 func is_valid() -> bool:
-	return not animal_id.is_empty() and has_movement_frames(adult_frames) and move_speed > 0.0 and footprint.x > 0.0 and footprint.y > 0.0 and satiety_depletion_seconds > 0.0 and hydration_depletion_seconds > 0.0 and idle_seconds.x >= 0.0 and idle_seconds.y >= idle_seconds.x
+	return not animal_id.is_empty() and has_movement_frames(adult_frames) and move_speed > 0.0 and footprint.x > 0.0 and footprint.y > 0.0 and satiety_depletion_seconds > 0.0 and hydration_depletion_seconds > 0.0 and idle_seconds.x >= 0.0 and idle_seconds.y >= idle_seconds.x and is_finite(maturity_seconds) and maturity_seconds >= 0.0 and is_finite(lifespan_seconds) and lifespan_seconds > maturity_seconds
 
 func has_movement_frames(frames: SpriteFrames) -> bool:
 	return frames != null and frames.has_animation(&"idle_down") and frames.has_animation(&"walk_down") and frames.get_frame_count(&"idle_down") > 0 and frames.get_frame_count(&"walk_down") > 0

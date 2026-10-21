@@ -148,3 +148,114 @@ func test_freeing_hovered_crop_and_leaving_scene_clears_bars_safely() -> void:
 	player.remove_child(context)
 	context.free()
 	assert_false(actor.get_node("NeedsDisplay").visible)
+	assert_true(actor.behaviour.request_behaviour(&"walk"), "Removing the player releases animal focus")
+
+func test_hover_holds_only_selected_animal_idle_and_releases_on_leave() -> void:
+	var actor: Actor = _animal()
+	var other: Actor = _animal("cow")
+	other.position.x += 60.0
+	assert_true(actor.behaviour.request_behaviour(&"walk"))
+	assert_true(other.behaviour.request_behaviour(&"walk"))
+	context.refresh_at(_hover_point(actor))
+	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_false(actor.movement.has_target)
+	assert_eq(other.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
+	assert_false(actor.behaviour.request_behaviour(&"walk"))
+	context.refresh_at(Vector2.ZERO, false)
+	assert_true(actor.behaviour.request_behaviour(&"walk"))
+
+func test_focus_and_hover_share_hold_until_both_leave_and_menu_releases_it() -> void:
+	var actor: Actor = _animal()
+	player.position = actor.global_position + Vector2(0, 24)
+	player.get_node("AnimationComponent").face(Vector2.UP)
+	context.refresh_at(_hover_point(actor))
+	context.refresh_at(Vector2.ZERO, false)
+	assert_false(actor.behaviour.request_behaviour(&"walk"), "Focus still holds after mouse leaves")
+	player.get_node("AnimationComponent").face(Vector2.DOWN)
+	context.refresh_at(_hover_point(actor))
+	assert_false(actor.behaviour.request_behaviour(&"walk"), "Hover still holds after turning away")
+	player.get_node("ToolSelection").set_inventory_open(true)
+	context.refresh_at(_hover_point(actor))
+	assert_true(actor.behaviour.request_behaviour(&"walk"), "Menu releases the interaction hold")
+
+func test_hiding_needs_bars_does_not_disable_animal_idle_response() -> void:
+	var actor: Actor = _animal()
+	actor.show_needs = false
+	assert_true(actor.behaviour.request_behaviour(&"walk"))
+	context.refresh_at(_hover_point(actor))
+	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_false(actor.needs_display.visible)
+	context.refresh_at(Vector2.ZERO, false)
+	assert_true(actor.behaviour.request_behaviour(&"walk"))
+
+func after_each() -> void:
+	Language.set_language("en")
+
+func test_animal_inspector_reports_growth_lifetime_cycle_and_all_pause_reasons_without_mutation() -> void:
+	var actor: Actor = _animal()
+	actor.growth.configure(86400.0, 43200.0, 1209600.0)
+	actor.needs.restore_state(0.0, 0.0, TimeManager.now())
+	var info: AnimalInfoPanel = context.animal_info
+	context.refresh_at(_hover_point(actor))
+	assert_true(info.root.visible)
+	assert_eq(info.animal, actor)
+	assert_string_contains(info.maturity_label.text, "12h 0m")
+	assert_string_contains(info.lifetime_label.text, "13d 12h")
+	assert_string_contains(info.produce_label.text, "Chicken Egg")
+	assert_eq(info.progress.value, 0.0)
+	for reason: String in ["Not mature yet", "Needs food", "Needs water"]:
+		assert_string_contains(info.state_label.text, reason)
+	info.refresh()
+	assert_eq(actor.growth.age_seconds, 43200.0)
+	assert_eq(actor.needs.satiety, 0.0)
+	assert_eq(actor.needs.hydration, 0.0)
+	assert_eq(actor.production.progress_seconds, 0.0)
+	actor.growth.age_seconds = 86400.0
+	actor.needs.restore_state(100.0, 100.0, TimeManager.now())
+	actor.production.progress_seconds = actor.production.definition.production_seconds * 0.4
+	info.refresh()
+	assert_eq(info.maturity_label.text, "Adult")
+	assert_eq(info.state_label.text, "Producing", "Focused idle does not block production")
+	assert_almost_eq(info.progress.value, 40.0, 0.001)
+	assert_string_contains(info.produce_label.text, "40%")
+	Language.set_language("vi")
+	info.refresh()
+	assert_eq(info.state_label.text, "Đang sản xuất")
+	assert_string_contains(info.produce_label.text, "Trứng gà")
+	assert_almost_eq(info.progress.value, 40.0, 0.001)
+
+func test_inspector_prefers_hover_animal_then_facing_focus_and_clears_for_menus_and_death() -> void:
+	var focused: Actor = _animal()
+	var hovered: Actor = _animal("cow")
+	hovered.position.x += 70.0
+	player.position = focused.global_position + Vector2(0, 24)
+	player.get_node("AnimationComponent").face(Vector2.UP)
+	context.refresh_at(_hover_point(hovered))
+	assert_eq(context.animal_info.animal, hovered)
+	context.refresh_at(Vector2.ZERO, false)
+	assert_eq(context.animal_info.animal, focused)
+	player.get_node("ToolSelection").set_shop_open(true)
+	context.refresh_at(_hover_point(hovered))
+	assert_false(context.animal_info.root.visible)
+	player.get_node("ToolSelection").set_shop_open(false)
+	context.refresh_at(_hover_point(hovered))
+	hovered.free()
+	context.animal_info.refresh()
+	assert_false(context.animal_info.root.visible)
+	context.refresh_at(Vector2.ZERO, false)
+	focused.growth.age_seconds = focused.growth.lifespan_seconds
+	context.animal_info.refresh()
+	assert_false(context.animal_info.root.visible)
+
+func test_inspector_does_not_report_rest_or_stored_output_as_production_blockers() -> void:
+	var actor: Actor = _animal("cow")
+	actor.growth.age_seconds = actor.growth.maturity_seconds
+	actor.needs.restore_state(100.0, 100.0, TimeManager.now())
+	actor.production.stored_amount = 20
+	var info: AnimalInfoPanel = context.animal_info
+	info.inspect(actor)
+	assert_eq(info.state_label.text, "Producing")
+	actor.needs.restore_state(10.0, 0.0, TimeManager.now())
+	info.refresh()
+	assert_eq(info.state_label.text, "Paused: Needs water")
+	assert_eq(actor.production.stored_amount, 20, "Inspection never collects or discards output")

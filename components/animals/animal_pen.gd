@@ -1,7 +1,11 @@
 @tool
 class_name AnimalPen
 extends Node2D
+var weather: WeatherSchedule
 @export var persistent_id: StringName
+## Only configured pens accept purchases; existing animals are never removed by a capacity change.
+@export var accepted_species: Array[AnimalTypes.Species] = []
+@export_range(1, 200) var capacity: int = 30
 ## Rect in this node's local space, shared by any number of animals.
 @export var bounds: Rect2 = Rect2(0, 0, 384, 256):
 	set(value):

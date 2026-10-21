@@ -24,7 +24,7 @@ func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int)
 	if now - _last_capacity_notice < 1500:
 		return
 	_last_capacity_notice = now
-	var text: String = "Túi đồ đầy" if available == 0 else "Túi đồ không đủ chỗ"
+	var text: String = "Inventory full" if available == 0 else "Not enough inventory space"
 	_spawn(item, 0, self, Vector2(0, -64), text)
 
 # Chỉ nghe sự kiện nhận đồ thực, không nghe mọi inventory.changed: mua hàng/load cũng đổi túi.

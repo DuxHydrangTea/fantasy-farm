@@ -159,7 +159,7 @@ func test_full_bag_allows_existing_egg_stack_but_reports_blocked_milk_and_wool()
 	assert_eq(wool.amount, 1)
 	assert_eq(_popups().size(), 0)
 	assert_eq(player.item_feedback.get_child_count(), 1, "One throttled warning, not one per blocked pile")
-	assert_eq((player.item_feedback.get_child(0) as ItemGainPopup).message, "Túi đồ đầy")
+	assert_eq((player.item_feedback.get_child(0) as ItemGainPopup).message, "Inventory full")
 	item = load("res://items/animal_produces/chicken_egg.tres").duplicate() as ItemDefinition
 	item.max_stack = 3
 	_pickup(1, Vector2(40, -4))

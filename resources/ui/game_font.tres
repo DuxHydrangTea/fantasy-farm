@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" format=3]
+
+[ext_resource type="FontFile" path="res://assets/Fonts/upheavtt.ttf" id="1_7mk5s"]
+[ext_resource type="FontVariation" path="res://resources/ui/pixelify_sans.tres" id="2_utdux"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("2_utdux")])
+base_font = ExtResource("1_7mk5s")

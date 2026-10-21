@@ -6,6 +6,6 @@
 [node name="LivestockFeedTrough" instance=ExtResource("1_base")]
 capacity = 600
 stock = 600
-allowed_species = Array[int]([2, 3])
+allowed_species = Array[int]([2, 3, 4, 6])
 access_offsets = [Vector2(-18, -8), Vector2(-18, 8), Vector2(18, -8), Vector2(18, 8), Vector2(0, -22), Vector2(0, 26)]
 feed_item = ExtResource("2_feed")

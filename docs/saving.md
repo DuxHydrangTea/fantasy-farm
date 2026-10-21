@@ -21,9 +21,14 @@ Các entity đặt sẵn trong MainWorld có `persistent_id` lưu ngay trong sce
 
 Timestamp Unix dùng TimeManager hiện có. Cây lớn tới thời điểm chín đã lưu. Vật nuôi tăng tuổi và giảm no/nước; sản xuất chỉ tính phần thời gian còn đủ no và nước, sau tuổi trưởng thành. Không giả lập đi lại, tự tìm máng hoặc tiêu thụ thức ăn trong thời gian đóng game. Sản phẩm offline cộng vào đúng đống đã lưu. Clock quay lùi không làm mất tiến độ đã đạt. Clock của máy vẫn có thể bị chỉnh trong bản offline.
 
+Vật nuôi trưởng thành sau 24 giờ và chết khi đủ 14 ngày tuổi thực, gồm cả thời gian offline.
+Sản xuất được chặn tại mốc chết; phụ phẩm đã hoàn tất vẫn thành pickup, trứng được thả trên bờ.
+Animal chết khi restore hoặc trong capture không được ghi lại vào danh sách sống; `animal_pens`
+ngăn đàn mặc định hồi sinh. Schema 5 giữ nguyên: `age` và `saved_at` đã đủ để tính các mốc này.
+
 ## File và phục hồi
 
-`save_schema.gd` kiểm tra DTO version 5, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được thêm vườn hoa; version 2 được chuyển từ grid hoa 10 × 6 sang 18 × 10 trong bộ nhớ, giữ nguyên vị trí vật lý và tiến độ hoa cũ. Version 3 được thêm ví 1.000 xu một lần; version 4 lưu số xu nguyên cùng inventory. Version 4 được mở rộng túi từ 24 lên 64 ô, giữ nguyên toàn bộ slot cũ và hotbar; lần lưu tiếp theo ghi version 5. Vườn có 180 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
+`save_schema.gd` kiểm tra DTO version 10, giá trị số hữu hạn, số lượng, ID, ô trùng và liên kết sản phẩm. Version 1 được thêm vườn hoa; version 2 được chuyển từ grid hoa 10 × 6 sang 18 × 10 trong bộ nhớ, giữ nguyên vị trí vật lý và tiến độ hoa cũ. Version 3 được thêm ví 1.000 xu một lần; version 4 lưu số xu nguyên cùng inventory. Version 4 được mở rộng túi từ 24 lên 64 ô, giữ nguyên toàn bộ slot cũ và hotbar; sau đó version 5 được migrate sang version 6 với số cột đất đã mở. Vườn có 180 chậu, gồm 8 chậu trồng sẵn và nguồn hạt ban đầu, sau đó lưu cả trạng thái chậu và hạt đã nhặt. `save_catalog.gd` ánh xạ ID sang resource được đóng gói, không load đường dẫn do file cung cấp. Adapter kiểm tra thế giới hiện tại trước khi thay đổi dữ liệu.
 
 File chứa payload JSON và SHA-256 của chính chuỗi payload. Checksum phát hiện lỗi dữ liệu, không phải mã hóa/chống sửa save. Backend ghi/flush/đọc kiểm tra `.tmp`, chuyển primary hợp lệ thành `.bak`, rồi rename `.tmp` thành primary. Nếu lỗi giữa các bước, bản dự phòng vẫn đọc được. Primary hỏng sẽ thử `.bak`; primary thuộc phiên bản mới hơn sẽ bị từ chối để tránh hạ phiên bản và mất dữ liệu. Không có backup hợp lệ hoặc thế giới không tương thích: giữ file và tắt tự lưu. Không tự ghi game mới đè lên file hỏng. Đã phục hồi `.bak` thì lần lưu kế tiếp chỉ xoay bản hợp lệ, không đè backup bằng primary hỏng.
 
@@ -51,3 +56,43 @@ GUT: `tests/unit/test_save_repository.gd`, `tests/integration/test_world_persist
 Tiền xu và mua hàng: xem [Cửa hàng](shops.md). Save v4 bắt buộc trường `coins` trong khoảng 0–1.000.000.000; tải save cũ tự migrate, không chỉnh trực tiếp file người chơi trong quá trình phát triển.
 
 Save v5 dùng túi mặc định 64 ô. Migration v4 chỉ thêm ô trống sau 24 ô cũ, không đổi item/count, selected_slot, tiền hoặc các tiến trình khác. Custom fixture có số slot khác được giữ để backend vẫn kiểm tra độc lập; adapter kiểm tra số slot của thế giới thực trước restore.
+
+## Schema v6: farmland ownership
+
+`land_columns` records 1…48 contiguous unlocked columns from the right of the
+48 × 34 planting rectangle. Existing v1…v5 saves migrate without losing crops,
+soil, currency or items: all columns needed to contain existing tilled plots
+remain open. See [farmland expansion](land_expansion.md).
+
+## Schema v7: boosters
+
+Crop rows store `fertilized`; animal rows store `juvenile_tonic_used` and
+`tonic_pending`. v1…v6 saves migrate with false flags. Restore applies them before
+offline catch-up so one-use effects cannot be reapplied or lost. See
+[boosters](boosters.md) for details.
+
+## Schema v8: retained trough feed
+
+Each trough row stores integer `feed_reserve`. Automatic E/click refilling keeps
+the unused portion of a feed pack here, and spends it on later fills of the same
+trough. v1…v7 snapshots migrate to zero reserve without changing the input DTO.
+World preflight rejects a water reserve or a food reserve at least as large as
+one configured pack before mutating inventory, wallet or world. Capture/restore
+preserves the reserve with stock and persistent trough ID. See
+[unified interaction](unified_interaction.md).
+
+## Schema v9: beehives and pollination
+
+`beehives` records persistent ID, placement, capped work, per-species pollen
+contributions and ready honey. Crop rows add `pollination_reduction` so fertilizer
+continues to use the original duration. v1…v8 migration gives empty hives/zero
+reduction without resetting existing data. Preflight rejects corrupt work, pollen,
+outputs and placements before mutation; offline replay splits at bloom/maturity
+boundaries. See [beehives](beehives.md).
+
+### Schema 10: weather and soil moisture
+
+Version 9 migrates without resetting progress. `weather` stores the deterministic
+seed and timestamped same-day overrides; `soil[].moisture` stores the remaining
+normal-rate seconds before drying. Restore these before time catch-up. See
+[weather.md](weather.md) for the 06:00 UTC+7 daily boundary and modifiers.

@@ -47,7 +47,10 @@ flowchart TD
     State -->|active_action| FarmAction[FarmingAction]
     FarmAction --> Farm
     Farm --> Crop[Crop + CropDefinition]
-    State --> Refill[TroughInteraction]
+    State --> Interact[PlayerInteractionComponent]
+    Interact --> Resolver[InteractionResolver]
+    Interact --> Presenter[InteractionPresenter]
+    Interact --> Refill[TroughInteraction]
     State --> Flowers[FlowerInteraction]
     World --> Garden[FlowerGarden]
     Flowers --> Pot[FlowerPot + FlowerDefinition]
@@ -153,10 +156,10 @@ Không ghi tuổi/nhu cầu của cá thể lên Resource dùng chung: nếu là
 
 ### 3.1. Di chuyển, chọn vật phẩm và ưu tiên tương tác
 
-1. HotbarUI đổi `ToolSelection.selected_index` từ click hoặc phím 1–6; việc chọn không tự dùng công cụ. Con lăn thuộc CameraZoomComponent: lên phóng to, xuống thu nhỏ, không đổi hotbar. Zoom mượt từ 1× đến 3× ở viewport 1920×1080, mỗi nấc nhân/chia 1.15; giới hạn tối thiểu tăng theo viewport nếu cần để không lộ ngoài bản đồ. Túi đồ đang mở hoặc UI đã xử lý input sẽ chặn zoom.
-2. StateComponent nhận hướng di chuyển. Chuột trái chọn điểm focus; PlayerNavigationComponent tìm đường tránh collision tới chỗ đứng trong tầm 20 px, dừng và quay mặt về đó. Khi có FarmingController, điểm đứng còn phải ở ô kề và hướng nhìn đúng ô đã click. Không tự dùng công cụ. Phím hướng, mở túi, dùng công cụ hoặc tải save hủy focus/đường đi. WALK và bụi dựa trên dịch chuyển thực, không chỉ hướng input.
-3. E/Space/chuột phải được gom thành yêu cầu xử lý ở physics tick. Mở túi hoặc đang TOOL/WATER thì không bắt đầu thao tác mới.
-4. `use_selected_tool()` gọi `TroughInteraction.prepare_action()` trước, rồi `FlowerInteraction.prepare_action()`, cuối cùng mới xử lý đất. Adapter trả rỗng để nhường bước sau, `blocked` để tiêu thụ input hoặc action cụ thể để vào TOOL/WATER. Khi focus chậu, E thu hoa; hạt hoa/bình tưới dùng thao tác gieo/tưới riêng. SoilFocus ẩn khi đang focus máng hoặc chậu.
+1. HotbarUI đổi `ToolSelection.selected_index` từ click hoặc phím 1–6; việc chọn không tự dùng công cụ. Con lăn thuộc CameraZoomComponent: lên phóng to, xuống thu nhỏ, không đổi hotbar. Zoom mượt từ 1× đến 8× ở viewport 1920×1080, mỗi nấc nhân/chia 1.15; giới hạn tối thiểu tăng theo viewport nếu cần để không lộ ngoài bản đồ. Túi đồ đang mở hoặc UI đã xử lý input sẽ chặn zoom.
+2. StateComponent nhận hướng di chuyển. Chuột trái vào nền trống chọn điểm focus; PlayerNavigationComponent tìm đường tránh collision tới chỗ đứng trong tầm 20 px, dừng và quay mặt về đó. Click sprite tương tác chốt chính mục tiêu đó, đi đến rồi thực hiện một lần. Khi có FarmingController, điểm đứng còn phải ở ô kề và hướng nhìn đúng ô đã click. Không tự dùng công cụ. Phím hướng, mở túi, dùng công cụ hoặc tải save hủy focus/đường đi. WALK và bụi dựa trên dịch chuyển thực, không chỉ hướng input.
+3. E/interact đi qua PlayerInteractionComponent: mục tiêu trong tầm, phía trước và không bị collision chắn, ưu tiên NPC/biển > máng > vật nuôi > thu hoạch. Chỉ mục tiêu đó có outline/huy hiệu. Space/chuột phải dùng công cụ đã chọn. Mở túi hoặc đang TOOL/WATER thì không bắt đầu thao tác mới.
+4. Luồng Space/chuột phải: `use_selected_tool()` gọi `TroughInteraction.prepare_action()` trước, rồi `FlowerInteraction.prepare_action()`, cuối cùng mới xử lý đất. Adapter trả rỗng để nhường bước sau, `blocked` để tiêu thụ input hoặc action cụ thể để vào TOOL/WATER. Khi focus chậu, E thu hoa; hạt hoa/bình tưới dùng thao tác gieo/tưới riêng. SoilFocus ẩn khi đang focus máng hoặc chậu.
 5. State TOOL/WATER phát animation; adapter chờ frame 3 để sửa dữ liệu. Kết thúc animation mới quay về IDLE/WALK.
 
 `active_action` diễn tả **việc làm**, còn state TOOL/WATER diễn tả **nhóm hoạt ảnh/khóa vận động**. Vì thế hành động nạp nước dùng state WATER nhưng không gọi tưới đất.
@@ -382,7 +385,8 @@ Resource cấu hình loài: ngoại hình, vận động, trọng số hành vi,
 | `adult_frames` | `SpriteFrames` | SpriteFrames gốc bắt buộc có idle_down và walk_down với ít nhất một frame. |
 | `juvenile_frames` | `SpriteFrames` | SpriteFrames con non tùy chọn; thiếu hoặc không hợp lệ thì dùng adult_frames. |
 | `faces_left` | `bool = true` | Ảnh gốc nhìn trái hay phải, áp vào cơ chế lật sprite một hướng của animal. |
-| `maturity_seconds` | `float = 120.0` | Ngưỡng tuổi để trưởng thành. Tuổi vẫn tăng khi đói/khát theo code hiện tại. |
+| `maturity_seconds` | `float = 86400.0` | Trưởng thành sau 24 giờ thực, kể cả offline. |
+| `lifespan_seconds` | `float = 1209600.0` | Tổng tuổi thọ 14 ngày từ tuổi 0, gồm ngày còn non; phải lớn hơn maturity_seconds. |
 | `production` | `AnimalProductionDefinition` | AnimalProductionDefinition cấu hình phụ phẩm; null nghĩa là không có sản xuất hợp lệ. |
 
 
@@ -715,7 +719,7 @@ FSM người chơi: tập hợp input, ưu tiên máng → chậu hoa → đất
 | `reset_after_load() -> void` | Xóa cờ input, hủy focus/route và đích/dừng movement, xóa active_action và về IDLE để không thực hiện lại thao tác trước khi tải. |
 | `_ready() -> void` | Kiểm tra các component bắt buộc, nối kết thúc hoạt ảnh/đổi trạng thái túi và vào IDLE. |
 | `_physics_process(delta: float) -> void` | Chặn thao tác khi túi mở/đang hành động; đọc hướng, xử lý E rồi yêu cầu dùng đồ, cuối cùng cho navigation đi theo route hoặc movement xử lý phím; IDLE/WALK dựa trên dịch chuyển thực sau collision, rồi cập nhật hoạt ảnh và bụi. |
-| `_unhandled_input(event: InputEvent) -> void` | Gom E/Space/chuột phải thành cờ thao tác; chuột trái gọi navigation.request_focus sau khi chuyển tọa độ qua canvas transform. Bỏ input khi túi mở hoặc đang TOOL/WATER. |
+| `_unhandled_input(event: InputEvent) -> void` | E gọi interactions.press(); Space/chuột phải gom cờ thao tác; chuột trái thử interactions.click() rồi mới navigation.request_focus trên nền trống sau khi đổi canvas transform. Bỏ input khi túi mở hoặc đang TOOL/WATER. |
 | `get_selected_tool_action() -> StringName` | Ủy quyền ToolSelectionComponent.get_selected_action(); thiếu selection thì trả chuỗi rỗng. |
 | `use_selected_tool(requested_action: StringName = &"") -> bool` | Từ chối khi bận/mở túi; ưu tiên TroughInteraction rồi FlowerInteraction. blocked tiêu thụ input; refill_water/flower_water dùng WATER, action hoa khác dùng TOOL. Không có mục tiêu mới xét tool/plant/harvest/water trên đất. |
 | `_on_inventory_visibility_changed(open: bool) -> void` | Khi mở túi, xóa yêu cầu, hủy focus/route và đích, dừng vận động và về IDLE để hủy thao tác đang chờ. |
@@ -765,7 +769,7 @@ Node chứa các stack theo ô cố định. Là nguồn dữ liệu duy nhất 
 | `_ensure_slots() -> void` | Khởi tạo duy nhất một lần và cấp công cụ ban đầu theo cấu hình. |
 | `slot(index: int) -> Dictionary` | Trả bản sao dictionary của ô; index sai trả stack rỗng. Resource item bên trong vẫn là tham chiếu chung. |
 | `add(item: ItemDefinition, amount: int = 1) -> int` | Gộp vào stack cùng ID trước, rồi dùng ô rỗng; trả lượng thực nhận, có thể ít hơn yêu cầu khi đầy. Phát changed nếu có thêm được. |
-| `remove(item_id: StringName, amount: int = 1) -> int` | Trừ theo item_id xuyên nhiều stack; trả lượng thực đã lấy và dọn ô có count=0. |
+| `remove(item_id: StringName, amount: int = 1, notify: bool = true) -> int` | Trừ theo item_id xuyên nhiều stack; trả lượng thực đã lấy và dọn ô có count=0. notify=false cho phép refill commit túi/reserve/stock trước khi tự phát changed một lần. |
 | `remove_from_slot(index: int, amount: int = 1) -> int` | Chỉ trừ một ô đã chỉ định, giới hạn bởi số lượng đang có; trả lượng thực đã lấy. |
 | `capacity_for(item: ItemDefinition) -> int` | Tính tổng chỗ trống cho loại item dựa vào ô trống và phần còn thiếu ở stack cùng ID. |
 | `count_item(item_id: StringName) -> int` | Tổng count của mọi ô có cùng item_id. |
@@ -1076,6 +1080,10 @@ Node2D hiển thị marker ô phía trước người chơi và màu hợp lệ/
 
 Node2D cho một cây đã trồng: giữ timestamp, tiến độ, giai đoạn hình ảnh và thanh tăng trưởng. CropDefinition là dữ liệu giống dùng chung.
 
+Phần rung/nghiêng, xuất hiện/co-mờ và gán material gió nay nằm trong
+VisualMotionComponent; Crop giữ adapter cho các trigger gameplay.
+Xem [hướng dẫn và API VisualMotionComponent](visual_motion.md).
+
 **Property và trạng thái**
 
 | Property | Kiểu / mặc định trong script | Ý nghĩa |
@@ -1088,6 +1096,9 @@ Node2D cho một cây đã trồng: giữ timestamp, tiến độ, giai đoạn 
 | `sprite` | `Sprite2D` | Sprite2D con hiển thị texture của giai đoạn hiện tại. |
 | `progress_bar` | `ProgressBar` | ProgressBar con nhận progress và đổi màu khi chín. |
 | `progress_frame` | `Control` | Control chứa thanh tiến độ, được đặt theo phần lá thật thay vì vùng ảnh trong suốt. |
+| `time_manager` | `FarmClock` | Đồng hồ dùng để làm mới tiến độ khi được focus. |
+| `motion` | `VisualMotionComponent` | Export gán node VisualMotion trong crop.tscn; có thể bỏ component để tắt hiệu ứng. |
+| `_retiring` | `bool = false` | Cây đã rời gameplay và đang chờ phần hình ảnh biến mất. |
 
 
 **Signal**
@@ -1104,6 +1115,14 @@ Node2D cho một cây đã trồng: giữ timestamp, tiến độ, giai đoạn 
 | `configure(crop: CropDefinition, timestamp: float) -> void` | Gán định nghĩa, mốc gieo và hạn trưởng thành rồi refresh ngay. |
 | `refresh(timestamp: float) -> void` | Tính tiến độ theo timestamp, giữ max với tiến độ cũ; chọn texture, căn thanh tiến độ theo used rect và phát matured khi lần đầu đạt 1. |
 | `is_mature() -> bool` | Trả true khi progress >= 1. |
+| `_ready() -> void` | Ẩn thanh tiến độ và nối tín hiệu hoàn thành của component chuyển động. |
+| `set_status_focused(value: bool) -> void` | Cập nhật UI/tiến độ và ủy quyền focus cho component; cây đang rời đi không hiện lại UI. |
+| `react(degrees: float = 5.0, direction: float = 1.0) -> void` | Ủy quyền rung cho motion nếu component còn tồn tại và cây chưa retiring. |
+| `play_sprout() -> void` | Ủy quyền hiệu ứng xuất hiện. |
+| `retire_after_harvest() -> void` | Đánh dấu retiring, ẩn UI và phát co/mờ; không có component thì xóa ngay. |
+| `_on_motion_finished(effect: StringName) -> void` | Khi retiring và hiệu ứng disappear xong thì queue_free cây. |
+| `is_retiring() -> bool` | Cho phép load/cleanup nhận ra cây chỉ còn phần hình ảnh. |
+| `get_status_sprite() -> Node2D` | Trả sprite để hệ thống hover lấy bounds. |
 
 
 ### 4.5. Chăn nuôi
@@ -1116,12 +1135,17 @@ Node2D cho một cây đã trồng: giữ timestamp, tiến độ, giai đoạn 
 
 Node2D @tool biểu diễn vùng giới hạn đi lại bằng Rect2 local. Nhiều animal và máng chia sẻ cùng pen; pen không phải hàng rào vật lý.
 
+LaiBuon có tab mua/bán vật nuôi, dùng `AnimalTradeService` và `AnimalShopOffer`.
+Xem [giá, API giao dịch và sức chứa chuồng](shops.md).
+
 **Property và trạng thái**
 
 | Property | Kiểu / mặc định trong script | Ý nghĩa |
 |---|---|---|
 | `persistent_id` | `StringName` | ID bền vững trong snapshot, độc lập với tên node; scene đặt sẵn ID, adapter sinh ID ngẫu nhiên nếu còn rỗng. |
 | `bounds` | `Rect2 = Rect2(0, 0, 384, 256)` | Rect2 local, mặc định 384×256 tại gốc; setter chuyển về rect kích thước dương và yêu cầu vẽ lại trong editor. |
+| `accepted_species` | `Array[AnimalTypes.Species] = []` | Loài được mua vào chuồng; rỗng không nhận giao dịch. |
+| `capacity` | `int = 30` | Số vật nuôi sống tối đa để mua thêm. Map ghi đè Barn=36, Pond=20. |
 
 **Method**
 
@@ -1167,6 +1191,8 @@ CharacterBody2D gốc của animal, đóng vai trò lắp ráp các component v�
 | `production` | `AnimalProductionComponent` | AnimalProductionComponent giữ tiến độ và sản phẩm chưa chuyển ra ngoài. |
 | `_product_pickup` | `ItemPickup` | ItemPickup đang chứa đầu ra của cá thể; các chu kỳ tiếp theo cộng vào cùng đống cho tới khi đống bị nhặt hết/xóa. |
 | `_stage_visual_pending` | `bool = false` | Cờ chờ đổi art khi đã trưởng thành; chỉ áp lúc behavior IDLE để không cắt chuỗi nằm/ngủ/ăn. |
+| `_dead` | `bool = false` | Đã xử lý hết tuổi thọ; khóa tương tác và xử lý chết lặp. |
+| `_retired` | `bool = false` | Đã rời đàn vì chết hoặc được bán; khóa xử lý/tương tác lặp. |
 
 **Constant và dependency nạp sẵn**
 
@@ -1184,10 +1210,17 @@ CharacterBody2D gốc của animal, đóng vai trò lắp ráp các component v�
 | `_physics_process(_delta: float) -> void` | Nếu có WaterfowlComponent thì refresh_visual() theo bờ/nước; áp art trưởng thành đang chờ khi animal về IDLE rồi configure lại behaviour. |
 | `_apply_stage_visuals() -> void` | Chọn juvenile/adult theo tuổi, áp skin nếu đủ điều kiện, căn chân và NeedsDisplay theo vùng pixel có nội dung. |
 | `_on_matured() -> void` | So sánh bộ frame trưởng thành/skin với frame hiện tại; chỉ đặt cờ chờ nếu có thay đổi thực. |
-| `_advance_lifecycle(_timestamp: float, elapsed: float, supplied_seconds: float) -> void` | Lấy số giây còn non ở đầu khoảng, cộng toàn bộ elapsed vào tuổi, rồi cấp max(0, supplied_seconds - juvenile_seconds) cho production để không sản xuất trước trưởng thành hoặc sau khi hết thức ăn/nước. |
+| `_advance_lifecycle(_timestamp: float, elapsed: float, supplied_seconds: float) -> void` | Giao giữa khoảng đủ no/nước, sau trưởng thành và trước mốc chết: max(0, min(supplied_seconds, alive_seconds) - juvenile_seconds). Giao output hoàn tất rồi xử lý chết nếu đủ tuổi thọ. |
+| `is_dead() -> bool` | Actor đã xử lý chết, kể cả đang đợi queue_free cuối frame. |
+| `_die() -> void` | Chạy một lần: khóa Needs, dừng AI/di chuyển, nhả máng, bỏ hover/focus, thả stock hoàn tất, ẩn/xóa actor và phát died. |
+| `retire_for_sale() -> bool` | Rời đàn để bán, giữ phụ phẩm hoàn tất; không phát died. Chỉ service giao dịch cộng xu. |
+| `_retire() -> void` | Cleanup chung khi chết/bán; queue_free trước khi giao stock để save không ghi lại cá thể đã rời đàn. |
+| `_drop_stored_output() -> void` | Tạo/cộng pickup từ stock hoàn tất; khi chết hỗ trợ cả DIRECT_COLLECTION và trứng chưa lên bờ. |
 | `_on_produced(_amount: int) -> void` | Chỉ xử lý WORLD_DROP; eggs_on_land trong PondPen đang ở nước thì giữ stock. Khi ở đất, tạo/cộng pickup, chọn điểm thả trên bờ và take_output để không giao trùng. |
 | `collect_produce(inventory: InventoryComponent) -> int` | API thu vào inventory dành cho DIRECT_COLLECTION; mode khác hoặc không có cấu hình thì trả 0. |
 | `_update_needs_display(food: float, water: float) -> void` | Gán hai ProgressBar từ giá trị satiety/hydration mới. |
+
+Signal `died` phát một lần sau khi xử lý hết tuổi thọ. Xem [vòng đời theo ngày thực](animal_lifecycle.md).
 
 ItemPickup là node anh em của animal, vì vậy xóa animal không tự xóa đống sản phẩm đã thả. Khi dùng skin fallback, con non vẫn có thể nhìn y hệt con trưởng thành nhưng tuổi và điều kiện sản xuất vẫn được tách riêng.
 
@@ -1209,6 +1242,7 @@ Node giữ mức thức ăn/nước và đo khoảng thời gian cả hai còn d
 | `satiety_depletion_seconds` | `float = 600.0` | Thời gian từ no 100 về 0; configure ép tối thiểu 1 giây. |
 | `hydration_depletion_seconds` | `float = 600.0` | Thời gian từ nước 100 về 0; configure ép tối thiểu 1 giây. |
 | `_updated_at` | `float = 0.0` | Timestamp lớn nhất đã xử lý; tránh trừ hoặc phát thời gian hai lần khi clock lặp/lùi. |
+| `_active` | `bool = true` | False sau deactivate; ngừng tick và cấp no/nước khi actor chết. |
 
 
 **Signal**
@@ -1229,6 +1263,7 @@ Node giữ mức thức ăn/nước và đo khoảng thời gian cả hai còn d
 | `feed(amount: float) -> float` | Đồng bộ thời gian trước, cộng lượng không âm vào satiety và trả số điểm thực được hồi, tối đa 100. |
 | `drink(amount: float) -> float` | Tương tự feed nhưng áp cho hydration. |
 | `_sync() -> void` | Nếu có clock thì xử lý đến now() trước khi phục hồi nhu cầu, tránh hồi tố sản xuất trong khoảng đói/khát. |
+| `deactivate() -> void` | Khóa cập nhật/feed/drink; feed/drink kiểm tra lại sau sync vì sync có thể làm actor chết. |
 | `_set_values(food: float, water: float) -> void` | Clamp hai mức về 0..100; chỉ phát changed nếu ít nhất một mức đổi. |
 
 Công thức: `supplied_seconds = min(elapsed, satiety * food_depletion / 100, hydration * water_depletion / 100)`. Vì nhu cầu chỉ giảm trong khoảng này, thời gian đủ ăn/uống là một đoạn liên tục ở đầu khoảng.
@@ -1246,24 +1281,28 @@ Node model tuổi của từng animal. Không đọc sprite, không tìm máng v
 | Property | Kiểu / mặc định trong script | Ý nghĩa |
 |---|---|---|
 | `age_seconds` | `float = 0.0` | Tuổi tích lũy riêng của cá thể, tính bằng giây. |
-| `maturity_seconds` | `float = 120.0` | Ngưỡng tuổi trưởng thành, mặc định 120; 0 nghĩa là trưởng thành ngay. |
+| `maturity_seconds` | `float = 86400.0` | Ngưỡng trưởng thành 24 giờ thực; 0 nghĩa là trưởng thành ngay khi cấu hình riêng. |
+| `lifespan_seconds` | `float = 1209600.0` | Tổng tuổi thọ 14 ngày từ tuổi 0. |
 
 **Signal**
 
 | Signal | Khi nào / ý nghĩa |
 |---|---|
 | `matured` | Thông báo lần chuyển từ con non sang trưởng thành để actor lên lịch đổi hình ảnh. |
+| `lifespan_reached` | Tuổi vừa chạm tuổi thọ; actor hoàn tất tính sản lượng rồi mới xử lý chết. |
 | `age_changed(age_seconds: float)` | Tuổi mới sau advance(); API cho UI/quan sát, hiện actor không cần signal này để tính production. |
 
 **Method**
 
 | Chữ ký trong source | Ý nghĩa, điều kiện và kết quả |
 |---|---|
-| `configure(duration: float, initial_age: float = 0.0) -> void` | Gán ngưỡng và tuổi ban đầu không âm; không phát matured khi chỉ cấu hình một con vốn đã trưởng thành. |
+| `configure(duration: float, initial_age: float = 0.0, lifetime: float = 1209600.0) -> void` | Gán mốc trưởng thành/tuổi thọ và clamp tuổi vào 0..lifespan; không phát lại signal khi cấu hình từ save. |
 | `is_adult() -> bool` | So sánh age_seconds >= maturity_seconds. |
 | `seconds_until_adult() -> float` | Số giây còn thiếu để trưởng thành, không âm. |
+| `is_dead() -> bool` | Tuổi đã chạm lifespan_seconds. |
+| `seconds_until_death() -> float` | Số giây còn sống, không âm. |
 | `progress_ratio() -> float` | Tỉ lệ tuổi/ngưỡng clamp 0..1; ngưỡng 0 trả 1. |
-| `advance(elapsed: float) -> void` | Bỏ qua elapsed <= 0; tăng tuổi, phát matured khi mới vượt ngưỡng và age_changed khi có tăng. |
+| `advance(elapsed: float) -> void` | Bỏ qua elapsed <= 0 hoặc đã hết tuổi thọ; tăng tuổi tới tối đa lifespan, phát các mốc vừa vượt đúng một lần. |
 
 <a id="animal-production-component"></a>
 
@@ -1479,7 +1518,8 @@ StaticBody2D dùng chung cho máng thức ăn và nước: giữ stock hữu h�
 | `full_texture` | `Texture2D` | Texture dùng khi stock > 0 hoặc bằng 0; không có nhiều mức hình cho stock trung gian. |
 | `empty_texture` | `Texture2D` | Texture dùng khi stock > 0 hoặc bằng 0; không có nhiều mức hình cho stock trung gian. |
 | `feed_item` | `ItemDefinition` | ItemDefinition loại FEED được phép nạp vào máng; quyết định ID và đơn vị/gói, không hardcode gia cầm trong method. |
-| `water_per_use` | `int = 30` | Nước thêm tối đa mỗi lần dùng bình tưới, mặc định 30. |
+| `water_per_use` | `int = 30` | Nước thêm mỗi lần dùng công cụ bằng Space/chuột phải; E/click đổ đầy. |
+| `feed_reserve` | `int = 0` | Phần gói cám đã mở còn dư, dùng cho lần E/click sau và lưu ở schema 8. |
 | `_occupants` | `Dictionary[int, WeakRef] = {}` | Bảng slot đứng -> WeakRef animal, giúp không giữ sống animal chỉ vì reservation. |
 | `_refilling` | `bool = false` | Khóa chống refill_from_inventory() lồng nhau do signal thay đổi inventory. |
 
@@ -1501,6 +1541,7 @@ StaticBody2D dùng chung cho máng thức ăn và nước: giữ stock hữu h�
 | Chữ ký trong source | Ý nghĩa, điều kiện và kết quả |
 |---|---|
 | `feed_items_needed(inventory: InventoryComponent) -> int` | Trả số gói nguyên tối đa có thể nạp, giới hạn bởi chỗ trống và số gói trong inventory; kind sai, thiếu feed hoặc feed không phải FEED thì trả 0. |
+| `refill_to_full(inventory: InventoryComponent) -> int` | Dùng reserve trước, mở đủ gói từ toàn bộ túi để đổ đầy hoặc hết cám; giữ dư. Commit túi/reserve trước signal stock và changed; khóa reentry. |
 | `refill_from_inventory(inventory: InventoryComponent) -> int` | Giữ khóa, trừ đúng số gói được phép từ inventory rồi cộng đơn vị stock. Trả đơn vị thực đã nạp, không phải số gói. |
 | `_ready() -> void` | Resolve pen, clamp stock, đăng ký group animal_troughs và đồng bộ texture. |
 | `portion_size(data: AnimalDefinition) -> int` | Đọc food_per_meal hoặc water_per_drink theo kind và bảo đảm ít nhất 1. |
@@ -1514,7 +1555,7 @@ StaticBody2D dùng chung cho máng thức ăn và nước: giữ stock hữu h�
 | `refill(units: int) -> int` | Cộng đơn vị không âm, setter giới hạn capacity; trả phần stock thực tăng. |
 | `_update_visual() -> void` | Nếu có Sprite2D con thì chọn full_texture/empty_texture theo stock. |
 
-Reservation bảo vệ **điểm đứng**, không cam kết còn stock lúc ăn xong: những con khác có thể ăn trước, vì vậy serve() kiểm tra lại. Nạp thức ăn nhận gói nguyên để không mất phần dư: stock 120/capacity 600, gói 300 -> nạp 1 gói và dừng ở 420.
+Reservation bảo vệ **điểm đứng**, không cam kết còn stock lúc ăn xong: những con khác có thể ăn trước, vì vậy serve() kiểm tra lại. Luồng công cụ cũ nhận gói nguyên: stock 120/capacity 600, gói 300 -> 420. E/click dùng refill_to_full(): mở 2 gói -> 600 và giữ 120 trong feed_reserve cho lần sau.
 
 <a id="trough-interaction-component"></a>
 
@@ -1522,7 +1563,7 @@ Reservation bảo vệ **điểm đứng**, không cam kết còn stock lúc ăn
 
 **Source:** [components/animals/trough_interaction_component.gd](/home/dungnguyen/Projects/test-js/components/animals/trough_interaction_component.gd). **Kế thừa:** `Node2D`. **class_name:** `TroughInteractionComponent`.
 
-Node2D gắn trên player để tìm máng gần, hiển thị lượng còn lại và thực hiện nạp tại frame chạm. StateComponent nhận input và điều khiển FSM.
+Node2D gắn trên player để thực hiện nạp tại frame chạm. PlayerInteractionComponent chốt máng cho E/click qua prepare_target(); StateComponent giữ luồng Space/chuột phải. Prompt riêng bị ẩn khi player có interaction presenter thống nhất.
 
 **Property và trạng thái**
 
@@ -1555,11 +1596,14 @@ Node2D gắn trên player để tìm máng gần, hiển thị lượng còn l�
 | `refill_hint(trough: AnimalTrough) -> String` | Tạo lời nhắc đầy máng, thiếu bình tưới, thiếu cấu hình/thức ăn, thiếu chỗ cho một gói hoặc phím E để nạp. |
 | `can_refill(trough: AnimalTrough) -> bool` | Đòi còn chỗ; WATER cần bình tưới đang chọn, FOOD cần ít nhất một gói có thể nạp từ inventory. |
 | `refresh() -> void` | Ẩn khi mở túi/không có máng; còn lại cập nhật focused_trough và label hai dòng với lượng stock/capacity và hint/phản hồi. |
+| `prepare_target(trough: AnimalTrough) -> StringName` | Chốt đúng máng đã chọn, kiểm reach và auto_hint, quay mặt; E/click lấy cám/bình từ cả túi và nạp tới đầy ở impact. |
+| `auto_hint(trough: AnimalTrough) -> String` | Lý do đầy máng/thiếu feed/thiếu bình, hoặc rỗng khi có thể nạp tự động. |
+| `inventory_has_can() -> bool` | Tìm công cụ WATERING_CAN ở bất kỳ ô túi nào. |
 | `prepare_action() -> StringName` | Xóa lệnh cũ, refresh rồi trả chuỗi rỗng nếu không có máng, blocked nếu có mà không nạp được, hoặc chốt máng/công cụ/slot, quay mặt và trả refill_food/refill_water. |
 | `_on_state_changed(_previous: StringName, current: StringName) -> void` | Hủy _pending/_action khi player rời tool/water, bao gồm mở túi để hủy thao tác. |
 | `_on_frame_changed() -> void` | Tới impact thì xác nhận target còn sống, còn reach, túi đóng và active_action đúng; FOOD gọi refill_from_inventory(), WATER chỉ thêm nếu slot gốc vẫn giữ cùng công cụ. Ghi phản hồi, không tiêu thụ bình tưới. |
 
-Prompt được reparent vào CanvasLayer layer 9 lúc _ready; refresh căn theo tọa độ màn hình, clamp vào viewport và làm tròn pixel để chữ không đổi cỡ theo camera. FlowerInteraction hiện vẫn dùng Label dưới Node2D; chưa có reparent tương tự.
+Prompt cũ được reparent vào CanvasLayer layer 9 lúc _ready nhưng bị ẩn khi FarmPlayer có PlayerInteractionComponent. Trough/flower dùng huy hiệu thống nhất từ InteractionPresenter, theo UI scale và clamp trong viewport.
 
 Cần phân biệt ba kết quả prepare_action(): rỗng cho phép bước chậu hoa/đất tiếp tục; blocked tiêu thụ input nhưng không chạy hoạt ảnh; refill_* bắt đầu hoạt ảnh nạp. Chưa có dung tích bình tưới hữu hạn trong hệ thống hiện tại.
 
@@ -1980,13 +2024,13 @@ RefCounted ánh xạ ID từ DTO sang resource được đóng gói; không load
 
 **Source:** [persistence/save_schema.gd](/home/dungnguyen/Projects/test-js/persistence/save_schema.gd). **Kế thừa:** `RefCounted`. **class_name:** `SaveSchema`.
 
-RefCounted chứa các hàm static kiểm tra DTO primitive-only và migration. VERSION=2; validate() trả snapshot đã migrate để repository/adapter dùng, không sửa scene.
+RefCounted chứa các hàm static kiểm tra DTO primitive-only và migration. VERSION=9; validate() trả snapshot đã migrate để repository/adapter dùng, không sửa scene.
 
 **Constant và dependency nạp sẵn**
 
 | Constant / alias | Giá trị | Ý nghĩa / nguồn |
 |---|---|---|
-| `VERSION` | `2` | Phiên bản DTO hiện tại: 2. |
+| `VERSION` | `9` | Phiên bản DTO hiện tại: 9; thêm beehives và pollination_reduction, migrate v1…v8 trong bộ nhớ. |
 
 **Method**
 
@@ -2172,8 +2216,8 @@ Các số lượng sau là **nội dung khởi tạo của scene**, có thể kh
 | Điều hướng animal | Coop/Barn đi thẳng, kiểm tra shape và timeout. Pond dùng 2 AStarGrid2D bờ và bờ+nước, ô 16 px, 4 hướng; rebuild sau 2 physics tick khi tải. |
 | Thu trực tiếp | Có API DIRECT_COLLECTION; chưa có input/proximity riêng cho mode này. |
 | Công trình | Scene quản lý hình/collision; chưa có xây/dỡ runtime, trú đêm, ra/vào hoặc sức chứa chuồng. |
-| UI/chữ | Hotbar/InventoryUI không còn bị ẩn ở Player scene; theme Pixelify Sans + Mouse Meadow fallback dùng MSDF. Prompt máng ở CanvasLayer; prompt hoa vẫn ở world space. |
-| Lưu/tải | Profile local JSON, schema 2, backup/checksum, F5/F9, tự lưu 30 giây/mất focus/thoát. Migration v1 và khởi tạo chuồng/vườn mới; ID không phụ thuộc tên node. |
+| UI/chữ | Hotbar/InventoryUI không còn bị ẩn ở Player scene; theme Upheaval + Pixelify Sans / Mouse Meadow fallback dùng MSDF. Prompt máng ở CanvasLayer; prompt hoa vẫn ở world space. |
+| Lưu/tải | Profile local JSON, schema 10, backup/checksum, F5/F9, tự lưu 30 giây/mất focus/thoát. Migration v1 và khởi tạo chuồng/vườn mới; ID không phụ thuộc tên node. |
 | Offline | Cây/hoa đã tưới lớn, vật nuôi tăng tuổi/giảm no nước/sản xuất theo phần đủ điều kiện. Không giả lập di chuyển/tự ăn uống hoặc tiêu thụ máng. |
 | Backend | Repository có thể bất đồng bộ; hiện local, chưa cloud/auth/multiplayer. Revision guard local không bảo đảm hai process ghi đồng thời; checksum không chống sửa save. |
 
@@ -2200,3 +2244,80 @@ Sửa cửa ao: xóa tile còn sót tại Fence `(89,38)` bằng Godot; cả `(8
 | World roundtrip, offline và backend bất đồng bộ | [test_world_persistence.gd](/home/dungnguyen/Projects/test-js/tests/integration/test_world_persistence.gd) |
 
 Bảng member liệt kê khai báo trực tiếp trên script, không tính biến cục bộ hoặc API kế thừa của Godot. Tên class đã sửa thành `AnimalProductionDefinition`; controller, focus và needs legacy đã được loại bỏ; tối ưu đang áp dụng được mô tả trong [improvements.md](improvements.md). Khi thêm tính năng, bắt đầu từ entry point: `project.godot` → main scene/autoload → scene/resource/script phụ thuộc → wiring signal và nhánh tạo object. Bổ sung class/member, luồng nghiệp vụ, cấu hình scene và migration tương ứng; không đưa file vào phạm vi chỉ vì tên/thư mục giống hệ thống đang dùng.
+
+## Ngôn ngữ và font
+
+Game mặc định tiếng Anh với font Upheaval. `Language.set_language("en"/"vi")`
+đổi locale qua TranslationServer; danh mục PO, quy tắc dịch tên resource/lỗi,
+font fallback và kiểm thử được mô tả tại [localization.md](localization.md).
+
+## Animal inspector và scale UI riêng
+
+`ContextBarsComponent` chọn một cá thể cho `AnimalInfoPanel` (ưu tiên hover,
+sau đó focus phía trước). `AnimalStatusText` đọc thời gian trưởng thành/tuổi thọ,
+chu kỳ produce và mọi nguyên nhân thiếu điều kiện sản xuất; cửa hàng bán cá thể
+dùng cùng presenter. Xem [animal_status_ui.md](animal_status_ui.md).
+
+`UIScaleComponent` bù stretch trên CanvasLayer với vùng UI ảo tối thiểu 640×360.
+Shop chia thẻ hàng/mô tả thành hai vùng cuộn, giữ checkout và nút đóng cố định;
+inventory vẫn truy cập đủ 64 slot. Camera/viewport thế giới không đổi. Xem
+[ui_text.md](ui_text.md) và [shops.md](shops.md).
+
+## Produce buyer
+
+`ProduceBuyer` là NPC cạnh LaiBuon (điểm tương tác lệch phải 16 px), dùng
+`ProduceSalesUI` và `ProduceSaleService` với bảng giá cố định
+`resources/shops/produce_prices.tres`. Bán theo số lượng áp dụng cho loại được
+chọn; bán toàn bộ áp dụng cho mọi nông sản có giá thu mua trong túi.
+`TradeMenu` dùng chung vòng đời modal/lưu-thoát cho menu mua và bán; tiền/túi
+vẫn lưu theo schema hiện có. Xem [produce_sales.md](produce_sales.md).
+
+### Farmland expansion
+
+MainWorld automatically composes typed `LandExpansionState`,
+`LandExpansionComponent` and `LandPurchaseUI`. FarmingController enforces ownership
+on its measured 48 × 34 planting rectangle. E at the next-column sign opens a
+wallet-backed confirmation; schema v6 persists ownership alongside coins.
+See [farmland expansion](land_expansion.md) for pricing, scope and migration.
+
+### Growth and production boosters
+
+FarmPlayer composes BoosterInteractionComponent and BoosterService by type.
+Per-crop fertilizer and per-animal maturity/production flags stay in their owning
+components and schema v7; see [boosters](boosters.md) for commands and invariants.
+
+### Unified interaction UX
+
+`FarmPlayer.interactions` tự gắn bằng class_name; không yêu cầu gán target qua
+chuỗi. `InteractionTarget` sở hữu mô tả mục tiêu typed, priority/reach/LOS và
+nội dung huy hiệu; `InteractionResolver.resolve()` chọn E theo hướng nhìn,
+`clicked(point)` chọn sprite được click. `InteractionPresenter.show_target()`
+quản lý một outline và một huy hiệu theo UI scale, mirror sprite/atlas frame và
+tránh ví/inspector. `PlayerInteractionComponent.press()` điều phối E;
+`click(point)` chốt mục tiêu, dùng `PlayerNavigationComponent.request_interaction`
+và signal `focus_finished(reached)` để thực thi sau khi tới gần. Callback deferred
+có generation token, tránh input mới kích hoạt mục tiêu cũ.
+
+E/click máng dùng `prepare_target()` và `refill_to_full()`; không cần chọn cám
+hoặc bình tưới. Phần gói dư được lưu ở `feed_reserve` (schema 8), không mất khi
+nạp chưa hết một gói. Space/chuột phải giữ thao tác công cụ cũ.
+Xem [unified_interaction.md](unified_interaction.md) cho điều kiện, hủy route,
+ưu tiên, API, bản địa hóa và kiểm thử đầy đủ.
+
+### Beehives and pollination
+
+FarmWorld composes `ApiarySystem` and assigns it to FarmingController/gardens;
+FarmPlayer composes `BeehivePlacementComponent`. A shared `BeehiveDefinition`
+provides canonical assets and rules. Each `Beehive` owns
+`BeehiveProductionComponent`, `PollinationComponent`, `BeeVisualComponent` and
+a radius display. `ApiarySystem.place()` commits logical occupation and the hive
+before inventory notifications; `advance()` sweeps bloom/crop maturity boundaries.
+The shared interaction resolver gives hives trough priority and supports E/click.
+Schema 9 persists hive work/output/pollen and crop deadline reduction. See
+[beehives.md](beehives.md) for commands, rates, migration and tests.
+
+## Day, night and weather
+
+See [weather.md](weather.md): real UTC+7 day/night, 06:00 daily forecast, world
+CanvasModulate and local lights, rain/cloud/wind visuals, moisture/animal/bee
+modifiers and schema 10 offline boundaries. FarmWorld composes WeatherManager.

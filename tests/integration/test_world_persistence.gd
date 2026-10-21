@@ -51,11 +51,18 @@ func before_each() -> void:
 	for pen_name: String in ["CoopPen", "BarnPen"]:
 		for child: Node in world.get_node(pen_name).get_children():
 			if child is AnimalActor:
+				# Preserve the short maturity fixture used by offline-production tests.
+				child.definition = child.definition.duplicate() as AnimalDefinition
+				child.definition.maturity_seconds = 120.0
 				child.get_node("NeedsComponent").time_manager = clock
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
+	(world as FarmWorld).land.state.restore_columns(48)
 	selection = world.get_node("Player/ToolSelection") as ToolSelectionComponent
 	catalog = SaveCatalog.new()
+	for id: String in catalog.animals:
+		catalog.animals[id] = catalog.animals[id].duplicate() as AnimalDefinition
+		catalog.animals[id].maturity_seconds = 120.0
 	adapter = WorldStateAdapter.new(world, catalog)
 
 func _snapshot() -> Dictionary:
@@ -79,6 +86,32 @@ func test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip() -> v
 	assert_eq(selection.inventory.count_item(stock.offers[0].item.item_id), 3)
 	DirAccess.remove_absolute(repository.path("test"))
 	DirAccess.remove_absolute(directory)
+
+func test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold() -> void:
+	# Trade lifecycle uses production defaults rather than the short-maturity save fixture.
+	adapter.catalog = SaveCatalog.new()
+	var stock: ShopCatalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
+	var trades: AnimalTradeService = AnimalTradeService.new(stock, world.player.wallet, world, clock)
+	var result: Dictionary = trades.buy(stock.animal_offers[0], 1)
+	assert_true(result.ok)
+	var actor: AnimalActor = result.animals[0]
+	var id: String = String(actor.persistent_id)
+	var saved: Dictionary = _snapshot()
+	timestamp += 60.0
+	assert_true(adapter.restore(saved, timestamp).ok)
+	actor = _actor(id)
+	assert_not_null(actor)
+	assert_eq(actor.growth.age_seconds, 60.0)
+	assert_false(actor.growth.is_adult())
+	assert_eq(world.player.wallet.balance, 840)
+	assert_true(trades.sell(actor).ok)
+	assert_eq(world.player.wallet.balance, 920)
+	var sold: Dictionary = _snapshot()
+	assert_eq(sold.animals.size(), 36)
+	await wait_physics_frames(2)
+	assert_true(adapter.restore(sold, timestamp).ok)
+	assert_null(_actor(id))
+	assert_eq(world.player.wallet.balance, 920)
 
 func test_saving_mid_attraction_keeps_ground_quantity_and_position_until_arrival() -> void:
 	var player: FarmPlayer = world.player
@@ -187,6 +220,48 @@ func test_collected_default_pickup_and_removed_animal_do_not_respawn() -> void:
 	var next: Dictionary = _snapshot()
 	assert_eq(next.animals.size(), 35)
 	assert_eq(next.pickups.size(), 10, "Only the ten flower seed supplies remain")
+
+func test_capture_sync_excludes_animals_that_die_before_the_same_frame_save() -> void:
+	var id: String = String((world.get_node("BarnPen/Cow_1") as AnimalActor).persistent_id)
+	timestamp += 14.0 * 86400.0
+	var saved: Dictionary = _snapshot()
+	assert_eq(saved.animals.size(), 0, "Capture must exclude actors retired by its own clock sync")
+	assert_false(saved.animal_pens.is_empty())
+	assert_true(SaveSchema.validate(saved, catalog).ok)
+	assert_true(adapter.restore(saved, timestamp).ok)
+	assert_eq(_snapshot().animals.size(), 0, "Initialized pens cannot respawn their default animals")
+	await wait_physics_frames(2)
+	assert_null(_actor(id))
+
+func test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload() -> void:
+	var cow: AnimalActor = world.get_node("BarnPen/Cow_1") as AnimalActor
+	var id: String = String(cow.persistent_id)
+	cow.growth.configure(cow.definition.maturity_seconds, cow.definition.lifespan_seconds - 10.0, cow.definition.lifespan_seconds)
+	cow.production.restore_state(55.0, 2)
+	var saved: Dictionary = _snapshot()
+	timestamp += 20.0
+	assert_true(adapter.restore(saved, timestamp).ok)
+	cow = _actor(id)
+	assert_true(cow.is_dead())
+	assert_eq(cow.product_pickup().amount, 3, "Only ten seconds before death may complete one last batch")
+	var next: Dictionary = _snapshot()
+	assert_eq(next.animals.size(), 35)
+	var cow_piles: int = 0
+	for row: Dictionary in next.pickups:
+		if row.item == "cow_milk":
+			cow_piles += int(row.amount)
+	assert_eq(cow_piles, 3)
+	await wait_physics_frames(2)
+	assert_null(_actor(id))
+	assert_true(adapter.restore(next, timestamp).ok)
+	assert_true(adapter.restore(next, timestamp).ok)
+	assert_null(_actor(id))
+	assert_eq(_snapshot().animals.size(), 35)
+	cow_piles = 0
+	for row: Dictionary in _snapshot().pickups:
+		if row.item == "cow_milk":
+			cow_piles += int(row.amount)
+	assert_eq(cow_piles, 3)
 
 func test_trough_stock_and_entity_ids_survive_renaming() -> void:
 	var trough: Node = world.get_node("CoopPen/FeedTrough")
@@ -435,3 +510,66 @@ func test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawni
 	assert_true(after.flower_gardens[0].starter_flowers_added)
 	assert_true(adapter.restore(after, timestamp).ok)
 	assert_null(ready.definition, "A harvested starter must remain empty after loading")
+
+func test_produce_sale_wallet_inventory_and_open_menu_roundtrip() -> void:
+	var carrot: ItemDefinition = load("res://items/harvest_produces/carrot_produces.tres") as ItemDefinition
+	var prices: ProducePriceCatalog = load("res://resources/shops/produce_prices.tres") as ProducePriceCatalog
+	selection.inventory.add(carrot, 120)
+	var sale: ProduceSaleService = ProduceSaleService.new(prices, world.player.wallet, selection.inventory)
+	assert_true(sale.sell(prices.find(carrot.item_id), 105).ok)
+	assert_eq(world.player.wallet.balance, 1525)
+	var saved: Dictionary = _snapshot()
+	var directory: String = "res://.godot/produce_sale_save_tests/" + Crypto.new().generate_random_bytes(8).hex_encode()
+	var repository: LocalSaveRepository = LocalSaveRepository.new(directory, catalog)
+	assert_true(repository.write_profile("test", saved, 0).ok)
+	var buyer: ShopMerchant = world.get_node("ProduceBuyer") as ShopMerchant
+	world.player.position = buyer.interaction_position() + Vector2(0, 24)
+	assert_true(buyer.open_shop(world.player))
+	world.player.wallet.set_balance(0)
+	selection.inventory.remove(carrot.item_id, 15)
+	var loaded: Dictionary = repository.read_profile("test")
+	assert_true(loaded.ok)
+	assert_true(adapter.restore(loaded.snapshot, timestamp).ok)
+	assert_false(buyer.menu.is_open)
+	assert_false(selection.shop_open)
+	assert_eq(world.player.wallet.balance, 1525)
+	assert_eq(selection.inventory.count_item(carrot.item_id), 15)
+	DirAccess.remove_absolute(repository.path("test"))
+	DirAccess.remove_absolute(directory)
+
+func test_retained_feed_survives_disk_roundtrip_and_invalid_reserve_is_atomic() -> void:
+	var trough: AnimalTrough = world.get_node("CoopPen/FeedTrough") as AnimalTrough
+	trough.feed_reserve = 123
+	var saved: Dictionary = _snapshot()
+	var directory: String = "res://.godot/feed_save_tests/" + Crypto.new().generate_random_bytes(8).hex_encode()
+	var repository: LocalSaveRepository = LocalSaveRepository.new(directory, catalog)
+	assert_true(repository.write_profile("test", saved, 0).ok)
+	trough.feed_reserve = 0
+	var loaded: Dictionary = repository.read_profile("test")
+	assert_true(loaded.ok)
+	assert_true(adapter.restore(loaded.snapshot, timestamp).ok)
+	assert_eq(trough.feed_reserve,123)
+	var broken: Dictionary = _snapshot()
+	for row: Dictionary in broken.troughs:
+		if row.id == String(trough.persistent_id):
+			row.feed_reserve = trough.feed_item.food_units_per_item
+	broken.coins = 12
+	var coins: int = world.player.wallet.balance
+	assert_false(adapter.restore(broken,timestamp).ok)
+	assert_eq(world.player.wallet.balance,coins)
+	assert_eq(trough.feed_reserve,123)
+	DirAccess.remove_absolute(repository.path("test"))
+	DirAccess.remove_absolute(directory)
+
+func test_v7_trough_migration_starts_with_no_retained_feed_without_mutating_input() -> void:
+	var old: Dictionary = _snapshot()
+	old.version = 7
+	for row: Dictionary in old.troughs:
+		row.erase("feed_reserve")
+	var checked: Dictionary = SaveSchema.validate(old,catalog)
+	assert_true(checked.ok)
+	assert_eq(checked.snapshot.version,SaveSchema.VERSION)
+	for row: Dictionary in checked.snapshot.troughs:
+		assert_eq(row.feed_reserve,0)
+	for row: Dictionary in old.troughs:
+		assert_false(row.has("feed_reserve"))

@@ -26,6 +26,13 @@ func _advance(seconds: float) -> void:
 	timestamp += seconds
 	clock.refresh()
 
+func _make_adults() -> void:
+	# Production tests start from an explicitly adult fixture, without waiting a real day.
+	for child: Node in pen.get_children():
+		if child is AnimalActor:
+			var actor: AnimalActor = child as AnimalActor
+			actor.growth.configure(actor.definition.maturity_seconds, actor.definition.maturity_seconds, actor.definition.lifespan_seconds)
+
 func _piles(item_id: StringName) -> Array[ItemPickup]:
 	var piles: Array[ItemPickup] = []
 	for child: Node in pen.get_children():
@@ -52,7 +59,7 @@ func test_barn_has_nine_cows_and_nine_sheep_sharing_one_pen() -> void:
 		count += 1
 		assert_eq(actor.pen, pen)
 		assert_eq(actor.wander.pen, pen)
-		assert_true(actor.growth.is_adult())
+		assert_false(actor.growth.is_adult(), "Demo age 120 seconds is younger than one real day")
 		assert_true(pen.contains_world(actor.global_position, actor.wander.margin))
 		assert_true(actor.definition.has_movement_frames(actor.sprite.sprite_frames))
 		skins[actor.sprite.sprite_frames.resource_path] = skins.get(actor.sprite.sprite_frames.resource_path, 0) + 1
@@ -63,6 +70,7 @@ func test_barn_has_nine_cows_and_nine_sheep_sharing_one_pen() -> void:
 			assert_eq(skins.get(path, 0), 1)
 
 func test_real_scene_produces_milk_and_wool_at_sixty_seconds() -> void:
+	_make_adults()
 	_advance(59.0)
 	assert_eq(_amount(&"cow_milk"), 0)
 	assert_eq(_amount(&"sheep_wool"), 0)
@@ -82,6 +90,7 @@ func test_real_scene_produces_milk_and_wool_at_sixty_seconds() -> void:
 	assert_eq(_amount(&"cow_milk"), 27, "Repeated timestamps cannot duplicate output")
 
 func test_starving_one_cow_pauses_only_its_own_production() -> void:
+	_make_adults()
 	var cow: AnimalActor = pen.get_node("Cow_1") as AnimalActor
 	_advance(60.0)
 	cow.needs.satiety = 0.0
@@ -95,6 +104,7 @@ func test_starving_one_cow_pauses_only_its_own_production() -> void:
 	assert_eq(_amount(&"sheep_wool"), 27)
 
 func test_products_survive_full_inventory_and_can_be_collected_once() -> void:
+	_make_adults()
 	_advance(60.0)
 	var bag: InventoryComponent = InventoryComponent.new()
 	bag.starting_tools = false
@@ -115,6 +125,7 @@ func test_products_survive_full_inventory_and_can_be_collected_once() -> void:
 	assert_eq(bag.count_item(&"sheep_wool"), 1)
 
 func test_existing_pickup_sensor_collects_both_species_products() -> void:
+	_make_adults()
 	_advance(60.0)
 	var milk: ItemPickup = _piles(&"cow_milk")[0]
 	var wool: ItemPickup = _piles(&"sheep_wool")[0]

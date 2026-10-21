@@ -22,6 +22,11 @@ func refresh() -> void:
 	if actions.state.tool_selection != null and actions.state.tool_selection.is_menu_open():
 		hide()
 		return
+	if actions.state.interactions != null:
+		var target: InteractionTarget = actions.state.interactions.focused
+		if target != null and target.valid() and target.kind != InteractionTarget.Kind.CROP:
+			hide()
+			return
 	if actions.state.trough_interaction != null and actions.state.trough_interaction.focused_trough != null:
 		hide()
 		return
@@ -45,7 +50,9 @@ func refresh() -> void:
 	var selected_action: StringName = actions.state.get_selected_tool_action()
 	if actions.state.current_state == StateComponent.State.TOOL or actions.state.current_state == StateComponent.State.WATER:
 		selected_action = actions.get_action()
-	if selected_action == &"plant":
+	if selected_action == &"fertilize":
+		actionable = farming.fertilizer_error(focused_cell, actor).is_empty()
+	elif selected_action == &"plant":
 		actionable = farming.can_plant(focused_cell, actor)
 	elif selected_action == &"harvest":
 		actionable = farming.can_harvest(focused_cell)
