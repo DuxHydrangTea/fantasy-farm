@@ -152,15 +152,27 @@ func crop_cells() -> Array[Vector2i]:
 	return _crops.keys()
 
 func capture_soil() -> Array[Dictionary]:
-	var cells: Dictionary[Vector2i, bool] = {}
-	for layer: TileMapLayer in [dry_soil, wet_soil]:
-		for point: Vector2i in layer.get_used_cells():
-			cells[world_to_cell(layer.to_global(layer.map_to_local(point)))] = true
 	var result: Array[Dictionary] = []
-	for cell: Vector2i in cells.keys():
-		var state: int = get_soil_state(cell)
-		if state != Soil.UNTILLED:
-			result.append({"cell": [cell.x, cell.y], "state": state, "moisture": _moisture.get(cell, SOIL_MOISTURE_SECONDS) if state == Soil.WET else 0.0})
+	if farmland == null or farmland.tile_set == null:
+		return result
+	var wet_cells: Dictionary[Vector2i, bool] = {}
+	if wet_soil != null and wet_soil.tile_set != null:
+		for point: Vector2i in wet_soil.get_used_cells():
+			var data: TileData = wet_soil.get_cell_tile_data(point)
+			if data != null and data.terrain_set == wet_terrain_set and data.terrain == wet_terrain:
+				var cell: Vector2i = world_to_cell(wet_soil.to_global(wet_soil.map_to_local(point)))
+				if not wet_cells.has(cell):
+					wet_cells[cell] = true
+					result.append({"cell": [cell.x, cell.y], "state": Soil.WET, "moisture": _moisture.get(cell, SOIL_MOISTURE_SECONDS)})
+	if dry_soil != null and dry_soil.tile_set != null:
+		var dry_cells: Dictionary[Vector2i, bool] = {}
+		for point: Vector2i in dry_soil.get_used_cells():
+			var data: TileData = dry_soil.get_cell_tile_data(point)
+			if data != null and data.terrain_set == dry_terrain_set and data.terrain == dry_terrain:
+				var cell: Vector2i = world_to_cell(dry_soil.to_global(dry_soil.map_to_local(point)))
+				if not wet_cells.has(cell) and not dry_cells.has(cell):
+					dry_cells[cell] = true
+					result.append({"cell": [cell.x, cell.y], "state": Soil.DRY, "moisture": 0.0})
 	return result
 
 func can_restore_soil() -> bool:

@@ -20,6 +20,33 @@ func _nodes(node: Node, script: Script) -> Array[Node]:
 		result.append_array(_nodes(child, script))
 	return result
 
+func _collect_world_entities() -> Dictionary:
+	var entities: Dictionary = {
+		"animals": [] as Array[Node],
+		"pens": [] as Array[Node],
+		"gardens": [] as Array[Node],
+		"troughs": [] as Array[Node],
+		"pickups": [] as Array[Node]
+	}
+	_walk_entities(world, entities)
+	return entities
+
+func _walk_entities(node: Node, entities: Dictionary) -> void:
+	for child: Node in node.get_children():
+		if child.is_queued_for_deletion():
+			continue
+		if child is AnimalActor:
+			entities.animals.append(child)
+		elif child is AnimalPen:
+			entities.pens.append(child)
+		elif child is FlowerGarden:
+			entities.gardens.append(child)
+		elif child is AnimalTrough:
+			entities.troughs.append(child)
+		elif child is ItemPickup:
+			entities.pickups.append(child)
+		_walk_entities(child, entities)
+
 func _id(node: Node) -> String:
 	if String(node.persistent_id).is_empty():
 		node.persistent_id = StringName("entity_" + Crypto.new().generate_random_bytes(16).hex_encode())
@@ -42,7 +69,8 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 		world.weather.advance(now)
 	if world.apiary != null:
 		world.apiary.advance(now)
-	var animals: Array[Node] = _nodes(world, AnimalActor)
+	var entities: Dictionary = _collect_world_entities()
+	var animals: Array[Node] = entities.animals
 	# Sync needs first: catch-up can create a product pile that belongs in this save.
 	for animal: AnimalActor in animals:
 		animal.needs.update_at(now)
@@ -56,9 +84,9 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	if world.apiary != null:
 		for hive: Beehive in world.apiary.hives:
 			data.beehives.append(hive.capture())
-	for pen: AnimalPen in _nodes(world, AnimalPen):
+	for pen: AnimalPen in entities.pens:
 		data.animal_pens.append(_id(pen))
-	for garden: FlowerGarden in _nodes(world, FlowerGarden):
+	for garden: FlowerGarden in entities.gardens:
 		data.flower_gardens.append(garden.capture(now))
 	for index: int in range(selection.inventory.slot_count):
 		var stack: Dictionary = selection.inventory.slot(index)
@@ -75,21 +103,24 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 			"skin": catalog.skin_id(animal.skin_frames), "facing": String(animal.animation.facing_direction), "age": animal.growth.age_seconds,
 			"satiety": animal.needs.satiety, "hydration": animal.needs.hydration, "production_progress": animal.production.progress_seconds, "production_stock": animal.production.stored_amount,
 			"pickup": _id(pile) if pile != null else "", "juvenile_tonic_used": animal.growth.juvenile_tonic_used, "tonic_pending": animal.production.tonic_pending})
-	for trough: AnimalTrough in _nodes(world, AnimalTrough):
+	for trough: AnimalTrough in entities.troughs:
 		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock, "feed_reserve": trough.feed_reserve})
-	for pile: ItemPickup in _nodes(world, ItemPickup):
+	for pile: ItemPickup in entities.pickups:
 		var pen: AnimalPen = pile.get_parent() as AnimalPen
 		data.pickups.append({"id": _id(pile), "pen": _id(pen) if pen != null else "", "position": _pair(pen.to_local(pile.global_position) if pen != null else (world as Node2D).to_local(pile.global_position)), "item": String(pile.item.item_id), "amount": pile.amount})
 	return data
 
-func _index(script: Script) -> Dictionary:
+func _index_nodes(nodes: Array[Node]) -> Dictionary:
 	var result: Dictionary = {}
-	for node: Node in _nodes(world, script):
+	for node: Node in nodes:
 		var id: String = _id(node)
 		if result.has(id):
 			return {}
 		result[id] = node
 	return result
+
+func _index(script: Script) -> Dictionary:
+	return _index_nodes(_nodes(world, script))
 
 func _saved_pens(data: Dictionary) -> Dictionary:
 	var result: Dictionary = {}
@@ -112,12 +143,13 @@ func preflight(data: Dictionary) -> Dictionary:
 	data = checked.snapshot
 	if world.apiary == null or world.weather == null:
 		return SaveSchema.failure("Restart the game before loading this save.")
-	var gardens: Dictionary = _index(FlowerGarden)
+	var entities: Dictionary = _collect_world_entities()
+	var gardens: Dictionary = _index_nodes(entities.gardens)
 	for garden: Dictionary in data.flower_gardens:
 		if not gardens.has(garden.id):
 			return SaveSchema.failure("The saved flower garden was not found.")
-	var pens: Dictionary = _index(AnimalPen)
-	var troughs: Dictionary = _index(AnimalTrough)
+	var pens: Dictionary = _index_nodes(entities.pens)
+	var troughs: Dictionary = _index_nodes(entities.troughs)
 	var player: FarmPlayer = world.player
 	var farm: FarmingController = world.farming
 	if pens.is_empty() or player == null or farm == null or farm.farmland == null or farm.farmland.tile_set == null or not farm.can_restore_soil():
@@ -171,12 +203,13 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
-	var gardens: Dictionary = _index(FlowerGarden)
+	var entities: Dictionary = _collect_world_entities()
+	var gardens: Dictionary = _index_nodes(entities.gardens)
 	var saved_gardens: Dictionary = {}
 	for garden: Dictionary in data.flower_gardens:
 		saved_gardens[garden.id] = true
-	var pens: Dictionary = _index(AnimalPen)
-	var troughs: Dictionary = _index(AnimalTrough)
+	var pens: Dictionary = _index_nodes(entities.pens)
+	var troughs: Dictionary = _index_nodes(entities.troughs)
 	var initialized: Dictionary = _saved_pens(data)
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
@@ -198,13 +231,13 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	player.state.reset_after_load()
 	selection.set_inventory_open(false)
 	# Remove default entities before inventory.changed retries nearby pickups.
-	for actor: AnimalActor in _nodes(world, AnimalActor):
+	for actor: AnimalActor in entities.animals:
 		if not initialized.has(_id(actor.pen)):
 			actor.needs.restore_state(actor.needs.satiety, actor.needs.hydration, maxf(now, data.saved_at))
 			continue
 		actor.foraging.cancel()
 		actor.free()
-	for pile: ItemPickup in _nodes(world, ItemPickup):
+	for pile: ItemPickup in entities.pickups:
 		if pile.get_parent() is AnimalPen and not initialized.has(_id(pile.get_parent())):
 			continue
 		pile.free()

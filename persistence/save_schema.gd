@@ -182,13 +182,16 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Invalid item or count.")
 	var soil: Dictionary = {}
 	for row: Variant in data.soil:
-		if not row is Dictionary or not vector(row.get("cell"), true) or not number(row.get("state"), 1, 2, true) or soil.has(str(row.cell)):
+		if not row is Dictionary or not vector(row.get("cell"), true) or not number(row.get("state"), 1, 2, true):
 			return failure("Invalid or duplicate soil cell.")
-		if not LandExpansionState.cell_is_open(Vector2i(int(row.cell[0]), int(row.cell[1])), int(data.land_columns)):
+		var cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))
+		if soil.has(cell):
+			return failure("Invalid or duplicate soil cell.")
+		if not LandExpansionState.cell_is_open(cell, int(data.land_columns)):
 			return failure("Saved soil is on locked farmland.")
 		if not number(row.get("moisture"), 0, FarmingController.SOIL_MOISTURE_SECONDS) or (row.state == 1 and row.moisture != 0) or (row.state == 2 and row.moisture <= 0):
 			return failure("Invalid soil moisture.")
-		soil[str(row.cell)] = true
+		soil[cell] = true
 	var planted: Dictionary = {}
 	for row: Variant in data.crops:
 		if not row is Dictionary or not vector(row.get("cell"), true) or not catalog.crops.has(row.get("crop")) or not number(row.get("planted_at")) or not number(row.get("matures_at")) or not number(row.get("progress"), 0, 1):
@@ -197,9 +200,10 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Invalid crop pollination state.")
 		if not row.get("fertilized") is bool:
 			return failure("Invalid crop fertilizer state.")
-		if row.matures_at <= row.planted_at or row.planted_at > data.saved_at or not soil.has(str(row.cell)) or planted.has(str(row.cell)):
+		var crop_cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))
+		if row.matures_at <= row.planted_at or row.planted_at > data.saved_at or not soil.has(crop_cell) or planted.has(crop_cell):
 			return failure("Invalid crop time or cell.")
-		planted[str(row.cell)] = true
+		planted[crop_cell] = true
 	var ids: Dictionary = {}
 	var piles: Dictionary = {}
 	for row: Variant in data.pickups:

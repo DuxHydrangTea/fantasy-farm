@@ -145,10 +145,10 @@ func _primitive(value: Variant, depth: int = 0) -> bool:
 		return true
 	return typeof(value) in [TYPE_NIL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STRING]
 
-func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
+func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int, pre_validated: bool = false) -> Dictionary:
 	if _async_busy:
 		return SaveSchema.failure("This profile is being saved.", "busy")
-	var checked: Dictionary = SaveSchema.validate(snapshot, catalog)
+	var checked: Dictionary = {"ok": true, "snapshot": snapshot} if pre_validated else SaveSchema.validate(snapshot, catalog)
 	if not checked.ok:
 		return checked
 	snapshot = checked.snapshot
@@ -178,7 +178,7 @@ func write_profile_async(profile: String, snapshot: Dictionary, expected_revisio
 		current = SaveSchema.failure("This file was updated. Load it before saving.", "conflict")
 	var result: Dictionary = current
 	if current.ok:
-		result = await _run_io(_commit_io.bind(profile, snapshot.duplicate(true), String(primary_raw.get("file_hash", "")), primary_valid))
+		result = await _run_io(_commit_io.bind(profile, snapshot, String(primary_raw.get("file_hash", "")), primary_valid))
 	_async_busy = false
 	return result
 
