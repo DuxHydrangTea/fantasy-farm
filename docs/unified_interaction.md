@@ -61,7 +61,7 @@ Full troughs and missing feed/can show a reason. While walking, the badge says
 
 The badge uses the game's Upheaval theme and independent UI scale, wraps long
 text, sizes short actions to their content and stays within the viewport. Its
-placement avoids the wallet and animal inspector where space permits, and
+placement avoids the hotbar and animal inspector where space permits, and
 reserves space above the hotbar. English and Vietnamese use the existing PO
 catalogs; prices use locale-appropriate grouping. These labels do not change
 camera zoom or world scale.

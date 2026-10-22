@@ -35,6 +35,7 @@ func _key(code: int) -> void:
 func test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory() -> void:
 	_key(KEY_E)
 	assert_true(shop.is_open)
+	assert_false(shop.balance_label.visible, "Player balance is exclusive to inventory")
 	assert_true(player.selection.shop_open)
 	assert_false(player.selection.inventory_open)
 	assert_eq(player.state.current_state, StateComponent.State.IDLE)

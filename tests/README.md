@@ -99,3 +99,17 @@ monofloral thresholds, mixed/late pollen, full-bag retention and reentry.
 boundaries, sunflower sources, non-stacking crop bonuses, fertilizer, atomic
 placement, buying/left-click placement, E/click collection, honey sales, schema 9
 migration/validation, disk roundtrip and exactly-once offline crop acceleration.
+
+Idle-processing regressions cover weather fade completion/interruption, camera sleep
+and limit changes, and hotbar feedback priority/expiry/translation without input.
+The beehive async repository test writes two revisions and verifies the previous
+backup, including String-only DTO keys. Player camera/navigation fixtures use the
+authored camera limits rather than assuming the old map dimensions.
+
+UI layout regression: inventory-button clicks use CanvasLayer transforms at
+500/1280/1920 px in English and Vietnamese; menu bounds, maximum grouped balance,
+slot counts, modal input and live wallet updates are covered. Shop, produce sales
+and land-expansion tests ensure the player balance is exclusive to inventory.
+Animal hover regression covers weather/inspector/hotbar separation at
+500/1280/1920 px, all four weather types and live English/Vietnamese switching,
+including a juvenile animal with multiple production blockers.

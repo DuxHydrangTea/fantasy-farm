@@ -197,6 +197,33 @@ func _free_near(point: Vector2) -> Vector2:
 	assert_true(false,"No valid hive position near garden")
 	return point
 
+func test_async_disk_roundtrip_accepts_captured_hive_and_keeps_revision_backup() -> void:
+	var hive: Beehive = _hive(Vector2(888, 360))
+	hive.production.work = 25.0
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var folder: String = "res://.godot/bee_saves/" + Crypto.new().generate_random_bytes(8).hex_encode()
+	var repo: LocalSaveRepository = LocalSaveRepository.new(folder, SaveCatalog.new())
+	var first: Dictionary = adapter.capture("bees", 1, now)
+	var written: Dictionary = await repo.write_profile_async("bees", first, 0)
+	assert_true(written.ok, str(written.get("error", "")))
+	if written.ok:
+		hive.production.work = 50.0
+		var second: Dictionary = adapter.capture("bees", 2, now)
+		var updated: Dictionary = await repo.write_profile_async("bees", second, 1)
+		assert_true(updated.ok, str(updated.get("error", "")))
+		var loaded: Dictionary = await repo.read_profile("bees")
+		assert_true(loaded.ok)
+		assert_eq(int(loaded.snapshot.revision), 2)
+		assert_eq(float(loaded.snapshot.beehives[0].work), 50.0)
+		var previous: Dictionary = repo._read(repo.path("bees") + ".bak", "bees")
+		assert_true(previous.ok)
+		assert_eq(int(previous.snapshot.revision), 1)
+		assert_eq(float(previous.snapshot.beehives[0].work), 25.0)
+	for suffix: String in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(repo.path("bees") + suffix):
+			DirAccess.remove_absolute(repo.path("bees") + suffix)
+	DirAccess.remove_absolute(folder)
+
 func test_invalid_honey_or_placement_rejects_the_whole_load_and_v8_migrates_without_reset() -> void:
 	apiary.definition.cycle_seconds = 86400.0
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world,SaveCatalog.new())

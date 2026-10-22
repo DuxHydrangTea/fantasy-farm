@@ -1,11 +1,15 @@
 class_name BeehivePlacementComponent
 extends Node2D
 ## Placement input adapter and world preview; inventory/world mutations stay in ApiarySystem.
+signal feedback_changed
 var player: FarmPlayer
 var range_display: BeehiveRangeDisplay
 var ghost: Sprite2D
 var _feedback: String = ""
-var _feedback_until: int = 0
+var _feedback_until: int = 0:
+	set(value):
+		_feedback_until = value
+		feedback_changed.emit()
 
 func _ready() -> void:
 	range_display = BeehiveRangeDisplay.new()
@@ -52,3 +56,6 @@ func feedback_source() -> String:
 	if Time.get_ticks_msec() < _feedback_until:
 		return _feedback
 	return "Left-click nearby ground to place. Select another slot to cancel." if selected() else ""
+
+func feedback_expires_at() -> int:
+	return _feedback_until if not _feedback.is_empty() else 0

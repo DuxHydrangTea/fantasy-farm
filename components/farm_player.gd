@@ -12,7 +12,6 @@ var hive_placement: BeehivePlacementComponent
 var interactions: PlayerInteractionComponent
 var boosters: BoosterInteractionComponent
 var wallet: WalletComponent
-var wallet_hud: WalletHUD
 var shop_interaction: ShopInteraction
 var item_feedback: ItemGainFeedback
 var tree_interaction: TreeInteraction
@@ -29,10 +28,6 @@ func _enter_tree() -> void:
 	shop_interaction.player = self
 	state.shop_interaction = shop_interaction
 	add_child(shop_interaction)
-	wallet_hud = WalletHUD.new()
-	wallet_hud.name = "WalletHUD"
-	wallet_hud.wallet = wallet
-	add_child(wallet_hud)
 	item_feedback = ItemGainFeedback.new()
 	item_feedback.name = "ItemGainFeedback"
 	item_feedback.player = self

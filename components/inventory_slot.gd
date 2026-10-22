@@ -12,7 +12,7 @@ var _icon: TextureRect
 var _count: Label
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(52, 56) if compact else Vector2(78, 84)
+	custom_minimum_size = Vector2(52, 56) if compact else Vector2(64, 68)
 	ignore_texture_size = true
 	stretch_mode = TextureButton.STRETCH_SCALE
 	texture_normal = NORMAL
@@ -27,9 +27,9 @@ func _ready() -> void:
 	_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_icon)
 	_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var margin: float = 10.0 if compact else 15.0
+	var margin: float = 10.0
 	_icon.offset_left = margin
-	_icon.offset_top = 8.0 if compact else 12.0
+	_icon.offset_top = 8.0 if compact else 10.0
 	_icon.offset_right = -margin
 	_icon.offset_bottom = -12.0 if compact else -18.0
 	_selection_frame = TextureRect.new()
@@ -58,11 +58,14 @@ func _ready() -> void:
 	_count.add_theme_color_override("font_shadow_color", Color(0.28, 0.18, 0.12))
 	_count.add_theme_constant_override("shadow_offset_x", 1)
 	_count.add_theme_constant_override("shadow_offset_y", 1)
+	var count_style: StyleBoxFlat = StyleBoxFlat.new()
+	count_style.bg_color = Color(0.20, 0.16, 0.10, 0.92)
+	count_style.content_margin_left = 3
+	count_style.content_margin_right = 3
+	_count.add_theme_stylebox_override("normal", count_style)
 	add_child(_count)
-	_count.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	_count.offset_top = -22 if compact else -28
-	_count.offset_right = -7
-	_count.offset_bottom = -5
+	_count.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	resized.connect(_place_count)
 	inventory.changed.connect(refresh)
 	refresh()
 
@@ -71,9 +74,15 @@ func refresh() -> void:
 	var count: int = inventory.get_slot_count(slot_index)
 	_icon.texture = item.icon if item != null else null
 	_count.text = str(count) if count > 1 else ""
+	_count.visible = count > 1
+	_place_count()
 	tooltip_text = tr(item.display_name) if item != null else tr("Empty slot")
 	if item != null and not item.description.is_empty():
 		tooltip_text += "\n" + tr(item.description)
+
+func _place_count() -> void:
+	_count.reset_size()
+	_count.position = size - _count.size - Vector2(6, 6)
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	var item: ItemDefinition = inventory.get_slot_item(slot_index)
@@ -101,6 +110,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 func set_selected(value: bool) -> void:
 	set_pressed_no_signal(value)
 	_selection_frame.visible = value
+	self_modulate = Color.WHITE if value else Color(0.87, 0.84, 0.77)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

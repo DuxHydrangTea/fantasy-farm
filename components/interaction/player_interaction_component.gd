@@ -1,6 +1,7 @@
 class_name PlayerInteractionComponent
 extends Node
 ## Single E/click coordinator; explicit clicked targets stay pinned until arrival.
+signal feedback_changed
 var player: FarmPlayer
 var resolver: InteractionResolver
 var presenter: InteractionPresenter
@@ -9,7 +10,10 @@ var pending: InteractionTarget
 var _generation: int = 0
 var _elapsed: float = 0.0
 var _feedback: String = ""
-var _feedback_until: int = 0
+var _feedback_until: int = 0:
+	set(value):
+		_feedback_until = value
+		feedback_changed.emit()
 
 func _ready() -> void:
 	resolver = InteractionResolver.new(player)
@@ -68,6 +72,7 @@ func _navigate(target: InteractionTarget) -> void:
 
 func _cancelled() -> void:
 	_feedback = ""
+	feedback_changed.emit()
 	pending = null
 	_generation += 1
 
@@ -138,3 +143,6 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 
 func feedback_source() -> String:
 	return _feedback if Time.get_ticks_msec() < _feedback_until else ""
+
+func feedback_expires_at() -> int:
+	return _feedback_until if not _feedback.is_empty() else 0

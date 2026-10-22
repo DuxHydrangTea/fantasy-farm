@@ -2,11 +2,11 @@
 
 Mục tiêu: giảm công việc thừa và hiện tượng khựng hình, đồng thời giữ nguyên kết quả gameplay, dữ liệu lưu và cách tương tác.
 
-Đây là danh sách công việc dựa trên việc đọc code hiện tại. Chưa đo profiler để xác định bottleneck; thứ tự dưới đây ưu tiên phạm vi thay đổi nhỏ và khả năng kiểm chứng. Chưa triển khai các mục trong danh sách.
+Đã có [baseline native dev có render](dev_performance_baseline_2026-10-22.md) và [kết quả triển khai đợt đầu ngày 22/10/2026](performance_optimization_results_2026-10-22.md). Đã sửa khóa StringName trong save tổ ong và triển khai các mục 1–3. Test chức năng đã qua; chưa định lượng được mức tăng FPS vì phép đo lại bị nhiễu bởi stall xuất hiện cả ở source cũ và mới. Chưa profile đến từng hàm hoặc triển khai các mục 4–8.
 
 ## 0. Đo hiệu năng trước khi thay đổi
 
-- [ ] Ghi lại máy thử, độ phân giải, mức zoom và cấu hình đồ họa.
+- [x] Ghi lại máy thử, độ phân giải, mức zoom và cấu hình đồ họa trong báo cáo baseline native dev.
 - [ ] Chuẩn bị các cảnh thử có thể lặp lại:
   - Đứng yên và đi quanh map đã decor, có 48 bướm.
   - Ruộng có nhiều cây; hai vườn có nhiều cây lâu năm.
@@ -24,9 +24,9 @@ Mục tiêu: giảm công việc thừa và hiện tượng khựng hình, đồ
 
 Hiện `_process()` vẫn cập nhật vùng camera, âm lượng và gọi `queue_redraw()` khi hiệu ứng bằng 0.
 
-- [ ] Xác định điều kiện phần hình ảnh thực sự không cần cập nhật.
-- [ ] Ngừng công việc hình ảnh khi không có hiệu ứng và không còn chuyển tiếp.
-- [ ] Đánh thức lại khi bắt đầu chuyển thời tiết; giữ đầy đủ fade out/fade in.
+- [x] Xác định điều kiện phần hình ảnh thực sự không cần cập nhật.
+- [x] Ngừng công việc hình ảnh khi không có hiệu ứng và không còn chuyển tiếp.
+- [x] Đánh thức lại khi bắt đầu chuyển thời tiết; giữ đầy đủ fade out/fade in.
 - [ ] Chỉ cập nhật âm lượng khi cần, nếu số đo cho thấy đáng làm.
 
 **Giữ nguyên logic:** WeatherManager, lịch thời tiết, đồng hồ, mưa tưới đất và ảnh hưởng lên cây/ong vẫn chạy. Không tắt toàn bộ hệ thống thời tiết.
@@ -37,10 +37,10 @@ Hiện `_process()` vẫn cập nhật vùng camera, âm lượng và gọi `que
 
 **Ưu tiên:** cao. **File chính:** `components/camera_zoom_component.gd`.
 
-- [ ] Dừng callback nội suy khi zoom đã đạt đích.
-- [ ] Đánh thức lại khi nhận thao tác zoom.
-- [ ] Tính lại clamp khi cửa sổ hoặc giới hạn camera thay đổi.
-- [ ] Giữ cách nội suy theo thời gian hiện tại.
+- [x] Dừng callback nội suy khi zoom đã đạt đích.
+- [x] Đánh thức lại khi nhận thao tác zoom.
+- [x] Tính lại clamp khi cửa sổ hoặc giới hạn camera thay đổi.
+- [x] Giữ cách nội suy theo thời gian hiện tại.
 
 **Giữ nguyên logic:** giới hạn map, zoom tối thiểu, xử lý input khi mở menu và độ mượt theo FPS.
 
@@ -50,11 +50,11 @@ Hiện `_process()` vẫn cập nhật vùng camera, âm lượng và gọi `que
 
 **Ưu tiên:** cao. **File chính:** `components/hotbar_ui.gd`, `components/ui_scale_component.gd`.
 
-- [ ] Cập nhật tên và tooltip khi lựa chọn hoặc dữ liệu liên quan thay đổi.
-- [ ] Giảm việc lấy feedback, dịch chuỗi và dựng tooltip mỗi frame.
-- [ ] Có cơ chế làm mới khi feedback hết hạn, kể cả người chơi không thao tác.
-- [ ] Rà phần scale UI: tận dụng sự kiện resize và chỉ giữ kiểm tra dự phòng cần thiết cho thay đổi stretch/DPI.
-- [ ] Tránh gán lại thuộc tính UI khi giá trị không đổi.
+- [x] Cập nhật tên và tooltip khi lựa chọn hoặc dữ liệu liên quan thay đổi.
+- [x] Giảm việc lấy feedback, dịch chuỗi và dựng tooltip mỗi frame.
+- [x] Có cơ chế làm mới khi feedback hết hạn, kể cả người chơi không thao tác.
+- [x] Rà phần scale UI: tận dụng sự kiện resize và chỉ giữ kiểm tra dự phòng cần thiết cho thay đổi stretch/DPI.
+- [x] Tránh gán lại thuộc tính UI khi giá trị không đổi.
 
 **Giữ nguyên logic:** đổi slot, booster, feedback tương tác, bản dịch và kích thước UI trên cửa sổ nhỏ.
 

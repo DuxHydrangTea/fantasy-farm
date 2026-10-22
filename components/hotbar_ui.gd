@@ -10,12 +10,17 @@ const SLOT_ACTIONS: Array[StringName] = [&"hotbar_1", &"hotbar_2", &"hotbar_3", 
 @export var selected_name: Label
 var interactions: PlayerInteractionComponent
 var boosters: BoosterInteractionComponent
+var placement: BeehivePlacementComponent
 var buttons: Array[InventorySlot] = []
+var _feedback_deadline: int = 0
+var inventory_button: Button
 
 func _ready() -> void:
 	var player: FarmPlayer = get_parent() as FarmPlayer
 	boosters = player.boosters if player != null else null
 	interactions = player.interactions if player != null else null
+	placement = player.hive_placement if player != null else null
+	set_process(false)
 	selected_name.clip_text = true
 	selected_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	UIScaleComponent.attach(self, root)
@@ -31,17 +36,51 @@ func _ready() -> void:
 		button.pressed.connect(_select_slot.bind(index))
 		slots.add_child(button)
 		buttons.append(button)
+	inventory_button = Button.new()
+	inventory_button.name = "OpenInventory"
+	inventory_button.custom_minimum_size = Vector2(92, 68)
+	inventory_button.add_theme_font_size_override("font_size", 18)
+	inventory_button.focus_mode = Control.FOCUS_NONE
+	inventory_button.pressed.connect(_open_inventory)
+	slots.add_child(inventory_button)
+	selection.inventory_visibility_changed.connect(_menu_changed)
+	selection.shop_visibility_changed.connect(_menu_changed)
 	selection.selection_changed.connect(_on_selection_changed)
+	for source: Node in [interactions, placement, boosters]:
+		if source != null:
+			source.connect("feedback_changed", _refresh_feedback)
 	_on_selection_changed(selection.selected_index, &"")
 
 func _select_slot(index: int) -> void:
 	selection.select_slot(index)
 	_on_selection_changed(selection.selected_index, &"")
 
+func _open_inventory() -> void:
+	selection.set_inventory_open(true)
+
+func _menu_changed(_open: bool) -> void:
+	root.visible = not selection.is_menu_open()
+
 func _on_selection_changed(index: int, _tool: StringName) -> void:
 	for i: int in range(buttons.size()):
 		buttons[i].set_selected(i == index)
-	selected_name.text = selection.get_selected_name()
+	_refresh_feedback()
+	_refresh_controls()
+
+func _refresh_controls() -> void:
+	if inventory_button == null:
+		return
+	inventory_button.text = tr("Bag") + "\n[" + GameText.action_key(&"toggle_inventory") + "]"
+	inventory_button.tooltip_text = tr("Open inventory")
+	var instructions: Dictionary = {
+		&"tool": "Space / Right-click: till soil",
+		&"water": "Space / Right-click: water",
+		&"plant": "Space / Right-click: plant",
+		&"fertilize": "Space / Right-click: fertilize",
+		&"animal_tonic": "Space / Right-click: give tonic",
+		&"place_beehive": "Space / Right-click: place hive",
+	}
+	hint.text = tr(String(instructions.get(selection.get_selected_action(), "Select a tool to use it")))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if selection.is_menu_open():
@@ -60,26 +99,46 @@ func _notification(what: int) -> void:
 		_on_selection_changed(selection.selected_index, &"")
 
 func _fit_layout() -> void:
-	hint.visible = root.size.x >= 1000.0 and root.size.y >= 700.0
+	hint.visible = root.size.x >= 800.0 and root.size.y >= 500.0
+	selected_name.add_theme_font_size_override("font_size", 20)
+	hint.add_theme_font_size_override("font_size", 18)
+	var bottom: MarginContainer = slots.get_parent().get_parent() as MarginContainer
+	bottom.offset_top = -144
+	bottom.offset_bottom = -16
 
 func _process(_delta: float) -> void:
+	if Time.get_ticks_msec() >= _feedback_deadline:
+		_refresh_feedback()
+
+func _refresh_feedback() -> void:
 	if boosters == null:
+		selected_name.text = selection.get_selected_name()
 		return
 	# Reuse the existing hotbar text line so feedback never covers animal details.
 	var feedback: String = interactions.feedback_source() if interactions != null else ""
 	if feedback.is_empty():
-		var player: FarmPlayer = get_parent() as FarmPlayer
-		feedback = player.hive_placement.feedback_source() if player != null and player.hive_placement != null else ""
+		feedback = placement.feedback_source() if placement != null else ""
 	if feedback.is_empty():
 		feedback = boosters.feedback_source()
 	var text: String = tr(feedback) if not feedback.is_empty() else selection.get_selected_name()
 	if selected_name.text != text:
 		selected_name.text = text
 	var item: ItemDefinition = boosters.selected_booster()
+	var tooltip: String = ""
 	if not feedback.is_empty():
-		selected_name.tooltip_text = tr(feedback)
+		tooltip = tr(feedback)
 	elif item != null:
 		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else "Face an animal and right-click / Space to give tonic."
-		selected_name.tooltip_text = tr(item.description) + "\n" + tr(instruction)
-	else:
-		selected_name.tooltip_text = ""
+		tooltip = tr(item.description) + "\n" + tr(instruction)
+	if selected_name.tooltip_text != tooltip:
+		selected_name.tooltip_text = tooltip
+	# Only keep the inexpensive clock check alive while feedback can expire.
+	_feedback_deadline = 0
+	var now: int = Time.get_ticks_msec()
+	for source: Node in [interactions, placement, boosters]:
+		if source == null:
+			continue
+		var deadline: int = int(source.call("feedback_expires_at"))
+		if deadline > now and (_feedback_deadline == 0 or deadline < _feedback_deadline):
+			_feedback_deadline = deadline
+	set_process(_feedback_deadline > 0)

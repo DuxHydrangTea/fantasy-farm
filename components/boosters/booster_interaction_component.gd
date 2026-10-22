@@ -1,6 +1,7 @@
 class_name BoosterInteractionComponent
 extends Node2D
 ## Player-side input/presentation adapter. StateComponent owns the tool animation.
+signal feedback_changed
 var player: FarmPlayer
 var service: BoosterService = BoosterService.new()
 var _animal: AnimalActor
@@ -9,7 +10,10 @@ var _item: ItemDefinition
 var _slot: int = -1
 var _pending: StringName = &""
 var _feedback: String = ""
-var _feedback_until: int = 0
+var _feedback_until: int = 0:
+	set(value):
+		_feedback_until = value
+		feedback_changed.emit()
 
 func _ready() -> void:
 	player.state.state_changed.connect(_state_changed)
@@ -46,6 +50,7 @@ func prepare_action() -> StringName:
 	_cell = player.farming_actions.get_focused_cell()
 	_animal = find_animal() if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_TONIC else null
 	_pending = &"fertilize" if _item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else &"animal_tonic"
+	feedback_changed.emit()
 	return _pending
 
 func _state_changed(_old: StringName, current: StringName) -> void:
@@ -71,3 +76,6 @@ func feedback_source() -> String:
 	if Time.get_ticks_msec() >= _feedback_until or player.selection.selected_index != _slot:
 		return ""
 	return _feedback
+
+func feedback_expires_at() -> int:
+	return _feedback_until if player.selection.selected_index == _slot and not _feedback.is_empty() else 0

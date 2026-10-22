@@ -153,6 +153,30 @@ func test_sequential_fades_and_ui_stay_separate_from_world_tint() -> void:
 	world.weather.day_night.refresh(12 * 3600 - WeatherSchedule.UTC_OFFSET, Color.WHITE)
 	assert_false(world.weather.day_night.lights[0].enabled)
 
+func test_effects_sleep_after_sunny_fade_and_wake_without_skipping_transitions() -> void:
+	var effects: WeatherEffects = world.weather.effects
+	assert_false(effects.is_processing())
+	for next: int in [WeatherManager.Weather.RAIN, WeatherManager.Weather.CLOUDY, WeatherManager.Weather.WINDY, WeatherManager.Weather.SUNNY]:
+		var previous: int = effects.active_weather
+		effects.transition_to(next)
+		assert_true(effects.is_processing())
+		var fade: Tween = effects._tween
+		fade.custom_step(0.5)
+		assert_eq(effects.active_weather, previous, "Fade out the old weather before switching")
+		fade.custom_step(0.6)
+		assert_eq(effects.active_weather, next)
+		assert_true(effects.is_processing(), "Keep the entire fade in")
+		fade.custom_step(1.0)
+		assert_almost_eq(effects.strength, 1.0, 0.00001)
+		assert_eq(effects.is_processing(), next != WeatherManager.Weather.SUNNY)
+		assert_eq(effects.wind_audio.playing, next == WeatherManager.Weather.WINDY)
+	effects.transition_to(WeatherManager.Weather.RAIN)
+	effects._tween.custom_step(1.2)
+	effects.transition_to(WeatherManager.Weather.CLOUDY)
+	effects._tween.custom_step(2.1)
+	assert_eq(effects.active_weather, WeatherManager.Weather.CLOUDY)
+	assert_true(effects.is_processing())
+
 func test_offline_weather_boundaries_do_not_retroactively_extend_pollen_or_crop_bonus() -> void:
 	var cell: Vector2i = Vector2i(56, 22)
 	var point: Vector2 = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))

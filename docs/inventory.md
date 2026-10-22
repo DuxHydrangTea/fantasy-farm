@@ -1,7 +1,15 @@
 # Inventory
 
-Open or close with Tab or I; Escape and the X button also close it.
-The 64 slots use the existing UI sprite sheet and square button sprites.
+Open from the visible **Bag** button beside the hotbar, or toggle with Tab / I.
+Escape and the X button also close it. The button displays the mapped shortcut.
+Hotbar controls hide while inventory or a trade menu is open.
+The 64 slots form an eight-column scrolling grid using the existing UI sprite
+sheet and square button sprites. The fixed header keeps the title, close
+button, coin balance and used-slot count visible while the grid scrolls.
+The player balance appears only inside inventory, grouped by locale
+(`98,052,604 coins` / `98.052.604 xu`) and refreshed on wallet changes.
+Shop, produce sales and land purchase menus still show prices and transaction
+totals, but do not display the player balance.
 The first six slots are shared with the hotbar. Select them using 1–6
 or a click. Space or right click uses the selected tool.
 The mouse wheel zooms the farm while the inventory is closed; it never changes the selected slot.

@@ -44,6 +44,7 @@ func test_sign_interaction_confirm_cancel_reveal_and_full_unlock() -> void:
 	player.wallet.set_balance(50000)
 	assert_true(player.shop_interaction.try_interact())
 	assert_true(land.menu.is_open)
+	assert_false(land.menu.status.text.contains("Balance"))
 	assert_true(player.selection.is_menu_open())
 	assert_eq(land.menu, player.shop_interaction.active_shop)
 	land.menu.close()

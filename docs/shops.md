@@ -19,7 +19,7 @@ nông cụ, hotbar và zoom đều bị khóa; inventory không mở chồng lê
 Các phím lưu/tải vẫn hoạt động. Load đóng cửa hàng và không phát lời cảm ơn.
 
 Menu dùng `game_theme.tres`, Upheaval và khung/ô của sprite UI hiện có.
-Xu hiển thị góc trên bên phải và trong cửa hàng. NPC chỉ cảm ơn sau khi
+Số dư xu chỉ hiển thị trong túi đồ. Cửa hàng giữ giá hàng và tổng giao dịch. NPC chỉ cảm ơn sau khi
 **có ít nhất một giao dịch thành công trong lượt mở đó và menu đã đóng**.
 Bong bóng tồn tại 3,5 giây; mở cửa hàng lại sẽ ẩn và bắt đầu lượt mới.
 

@@ -16,9 +16,16 @@ func _ready() -> void:
 	var panel: PanelContainer = PanelContainer.new()
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.theme = preload("res://resources/ui/game_theme.tres")
+	var style: StyleBoxTexture = panel.theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBoxTexture
+	style.content_margin_left = 14
+	style.content_margin_right = 14
+	style.content_margin_top = 10
+	style.content_margin_bottom = 12
+	panel.add_theme_stylebox_override("panel", style)
 	margin.add_child(panel)
 	label = Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_size_override("font_size", 20)
 	panel.add_child(label)
 
 func refresh(timestamp: float) -> void:

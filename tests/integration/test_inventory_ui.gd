@@ -58,6 +58,18 @@ func test_inventory_opens_with_tab_or_i_and_closes_with_escape() -> void:
 	_key(KEY_I)
 	assert_false(ui.root.visible)
 
+func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
+	var actor: FarmPlayer = player as FarmPlayer
+	assert_null(actor.get_node_or_null("WalletHUD"))
+	assert_false(ui.root.visible)
+	actor.wallet.credit(98051604)
+	ui.open()
+	assert_eq(ui.wallet_label.text, "98,052,604 coins")
+	actor.wallet.credit(1)
+	assert_eq(ui.wallet_label.text, "98,052,605 coins")
+	ui.close()
+	assert_false(ui.wallet_label.is_visible_in_tree())
+
 func test_inventory_toggle_uses_remapped_action_without_hardcoded_i() -> void:
 	var original: Array[InputEvent] = InputMap.action_get_events(&"toggle_inventory")
 	InputMap.action_erase_events(&"toggle_inventory")
@@ -150,10 +162,10 @@ func test_invalid_drag_payload_cannot_move_or_duplicate_items() -> void:
 	assert_false(target._can_drop_data(Vector2.ZERO, {"inventory": null, "slot": 0, "item_id": &"hoe"}))
 	assert_eq(bag.count_item(&"hoe"), 1)
 
-func test_font_theme_uses_upheaval() -> void:
+func test_font_theme_uses_configured_font() -> void:
 	var font: FontVariation = ui.root.theme.default_font as FontVariation
 	assert_not_null(font)
-	assert_eq(font.base_font.resource_path, "res://assets/Fonts/upheavtt.ttf")
+	assert_eq(font.base_font.resource_path, "res://assets/Fonts/SVN-Determination Sans.ttf")
 	for character: String in ["T", "ú", "đ", "ồ", "ư", "ớ"]:
 		var code: int = character.unicode_at(0)
 		assert_true(font.base_font.has_char(code) or font.fallbacks[0].has_char(code), "Vietnamese glyph in the configured font chain: " + character)

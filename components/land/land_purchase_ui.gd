@@ -77,7 +77,7 @@ func _refresh() -> void:
 		return
 	var price: int = expansion.state.next_price()
 	description.text = tr("Spend {price} coins to reclaim the next column ({plots} plots)?").format({"price": price, "plots": LandExpansionState.REGION.size.y})
-	status.text = tr("Unlocked: {owned}/{columns} columns · Balance: {coins} coins").format({"owned": expansion.state.unlocked_columns, "columns": LandExpansionState.REGION.size.x, "coins": customer.wallet.balance})
+	status.text = tr("Unlocked: {owned}/{columns} columns").format({"owned": expansion.state.unlocked_columns, "columns": LandExpansionState.REGION.size.x})
 	if customer.wallet.balance < price:
 		status.text += "\n" + tr("Not enough coins.")
 	confirm.disabled = customer.wallet.balance < price or expansion.state.is_complete()

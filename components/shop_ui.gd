@@ -28,6 +28,7 @@ var _animal_text: AnimalStatusText = AnimalStatusText.new()
 
 func _ready() -> void:
 	super._ready()
+	balance_label.hide() # The player's balance belongs to the inventory only.
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
 	root.resized.connect(_fit_layout)

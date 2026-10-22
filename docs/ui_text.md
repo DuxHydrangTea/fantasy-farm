@@ -5,7 +5,7 @@ its shared font at `resources/ui/game_font.tres`. New Label, Button and other
 Control nodes inherit this font automatically. Avoid per-node font overrides;
 they bypass the shared Vietnamese fallback and rendering settings.
 
-Upheaval (`assets/Fonts/upheavtt.ttf`) is the primary font. Pixelify Sans and
+SVN-Determination Sans (`assets/Fonts/SVN-Determination Sans.ttf`) is the primary font. Pixelify Sans and
 Mouse Meadow provide fallback glyphs for Vietnamese and symbols. All three are
 imported with MSDF enabled.
 The built-in fallback font also has MSDF enabled in Project Settings. Keep these
@@ -36,7 +36,7 @@ stretch transform. The world viewport/camera stays unchanged. UI uses at least a
 Larger windows approach one UI unit per physical pixel. Never scale the game
 camera or change the world viewport to make a menu readable.
 
-Shop, inventory, hotbar, wallet and animal inspector use this component. Roots
+Shop, inventory, hotbar, weather HUD and animal inspector use this component. Roots
 use top-left anchors and an explicit virtual size. Measure/input-test controls
 through `get_global_transform_with_canvas()` when the layer has a scale; a plain
 `get_global_rect()` omits the CanvasLayer transform.
@@ -46,3 +46,15 @@ areas for cards/details, a persistent quantity/checkout row and no bottom hint.
 The close button stays reachable. Resizing/retranslation retains selections and
 quantity. Inventory retains all 64 slots through its scroll area. See
 [animal status](animal_status_ui.md) for the field inspector.
+
+## Gameplay HUD layout
+
+A compact clock/weather card occupies the upper-left safe margin. The bottom
+dock contains six 64×68 tool slots and a visible Bag button. Selection corners
+and contrasting slot frames identify the active tool; stack counts have a dark
+backing and stay inside each slot. The selected item sits above the dock and
+a contextual use hint sits below it when space permits. Menus hide the dock.
+
+Interaction prompts use a separate keycap and smaller action text, avoid the
+dock/animal inspector, and keep a faint hive radius during ordinary interaction.
+The placement preview retains its full-strength range and footprint.

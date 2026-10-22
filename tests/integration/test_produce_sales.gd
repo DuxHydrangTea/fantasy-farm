@@ -47,6 +47,7 @@ func _pixels(control: Control) -> Rect2:
 
 func test_entered_quantity_commits_text_and_sell_all_sells_other_types() -> void:
 	assert_true(buyer.open_shop(player))
+	assert_false(menu.balance_label.visible, "Sales show quotes, not the player balance")
 	assert_eq(player.shop_interaction.active_shop, menu)
 	assert_true(player.selection.shop_open)
 	assert_eq(menu.items.item_count, 2)

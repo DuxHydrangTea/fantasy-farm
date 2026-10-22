@@ -62,6 +62,7 @@ func action_text() -> String:
 
 func capture() -> Dictionary:
 	var result: Dictionary = production.capture()
-	result.id = String(persistent_id)
-	result.position = [position.x,position.y]
+	# New DTO keys must remain Strings for the async repository boundary.
+	result["id"] = String(persistent_id)
+	result["position"] = [position.x,position.y]
 	return result

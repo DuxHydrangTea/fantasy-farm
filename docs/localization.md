@@ -50,10 +50,10 @@ câu nguồn/tham số của thông báo gần nhất và phát lại bản dị
 
 ## Font
 
-`resources/ui/game_font.tres` dùng `assets/Fonts/upheavtt.ttf` làm font chính.
+`resources/ui/game_font.tres` dùng `assets/Fonts/SVN-Determination Sans.ttf` làm font chính.
 Theme toàn cục, HUD, menu, thoại NPC và popup nhặt đồ đều dùng resource này.
 Font được import với MSDF để giữ nét khi UI/camera thay đổi tỉ lệ.
-Upheaval thiếu một số ký tự có dấu; chuỗi fallback hiện có
+SVN-Determination Sans nếu thiếu một số ký tự có dấu; chuỗi fallback hiện có
 `pixelify_sans.tres` → Pixelify Sans / Mouse Meadow giữ tiếng Việt và ký tự
 đặc biệt hiển thị được. Vì vậy các chữ có dấu có thể khác nét với chữ ASCII.
 
@@ -62,4 +62,4 @@ Upheaval thiếu một số ký tự có dấu; chuỗi fallback hiện có
 `tests/integration/test_localization.gd` kiểm tra đổi Anh–Việt khi đang mở túi,
 cửa hàng và bán vật nuôi; giữ dữ liệu/lựa chọn; dịch lỗi có tham số; đối chiếu
 placeholder và glyph của toàn bộ bản dịch tiếng Việt. Chạy cùng bộ GUT của dự
-án. `test_inventory_ui.gd` kiểm tra font chính là `upheavtt.ttf`.
+án. `test_inventory_ui.gd` kiểm tra font chính là `SVN-Determination Sans.ttf`.

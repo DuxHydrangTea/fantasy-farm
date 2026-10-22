@@ -6,6 +6,10 @@ is shown; the existing needs bars and idle response still support both targets.
 Opening inventory/shop hides the inspector and releases the interaction hold.
 Removing, selling or killing the animal clears the panel safely.
 
+The inspector occupies the upper-right safe margin; the compact weather/time
+card retains the upper-left corner. Both follow the same independent UI scaling
+when resizing. Interaction badges avoid the inspector and the hotbar.
+
 The screen-space panel shows species and short persistent ID, time until
 maturity (or Adult), remaining lifetime, current produce, cycle percentage
 and the reason production is paused. It refreshes

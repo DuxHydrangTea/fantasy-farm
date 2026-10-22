@@ -64,6 +64,28 @@ func test_click_selects_tool_without_movement_or_using_it() -> void:
 	_click_slot(1)
 	assert_true(hotbar.buttons[1].button_pressed, "Active slot remains selected after re-click")
 
+func test_feedback_changes_expire_without_input_and_keep_source_priority() -> void:
+	var actor: FarmPlayer = player as FarmPlayer
+	assert_false(hotbar.is_processing(), "No per-frame label rebuilding while idle")
+	actor.hive_placement.set("_feedback", "Hive placed!")
+	actor.hive_placement.set("_feedback_until", Time.get_ticks_msec() + 300)
+	actor.interactions.set("_feedback", "Cannot reach that target.")
+	actor.interactions.set("_feedback_until", Time.get_ticks_msec() + 100)
+	assert_eq(hotbar.selected_name.text, "Cannot reach that target.")
+	assert_eq(hotbar.selected_name.tooltip_text, "Cannot reach that target.")
+	assert_true(hotbar.is_processing())
+	await wait_seconds(0.15)
+	assert_eq(hotbar.selected_name.text, "Hive placed!", "Lower priority feedback remains until its own deadline")
+	await wait_seconds(0.2)
+	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
+	assert_eq(hotbar.selected_name.tooltip_text, "")
+	assert_false(hotbar.is_processing())
+	actor.interactions.set("_feedback", "Cannot reach that target.")
+	actor.interactions.set("_feedback_until", Time.get_ticks_msec() + 1800)
+	actor.interactions._cancelled()
+	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
+	assert_false(hotbar.is_processing())
+
 func test_right_click_uses_selected_watering_can() -> void:
 	_click_slot(1)
 	_mouse(Vector2(400, 300), MOUSE_BUTTON_RIGHT, true)
@@ -71,6 +93,26 @@ func test_right_click_uses_selected_watering_can() -> void:
 	await wait_physics_frames(2)
 	assert_eq(state.current_state, StateComponent.State.WATER)
 	assert_false(state.movement.has_target)
+
+func test_booster_feedback_tracks_slot_and_live_translation_while_idle() -> void:
+	var actor: FarmPlayer = player as FarmPlayer
+	actor.boosters.set("_slot", selection.selected_index)
+	actor.boosters.set("_feedback", "Booster applied!")
+	actor.boosters.set("_feedback_until", Time.get_ticks_msec() + 1800)
+	assert_eq(hotbar.selected_name.text, "Booster applied!")
+	Language.set_language("vi")
+	await wait_process_frames(2)
+	assert_eq(hotbar.selected_name.text, tr("Booster applied!"))
+	assert_eq(hotbar.selected_name.tooltip_text, tr("Booster applied!"))
+	selection.select_slot(1)
+	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
+	assert_false(hotbar.is_processing(), "Feedback in another slot need not be polled")
+	selection.select_slot(0)
+	assert_eq(hotbar.selected_name.text, tr("Booster applied!"))
+	actor.boosters.set("_feedback_until", Time.get_ticks_msec() - 1)
+	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
+	assert_false(hotbar.is_processing())
+	Language.set_language("en")
 
 func test_space_after_hotbar_click_uses_selected_tool() -> void:
 	_click_slot(1)

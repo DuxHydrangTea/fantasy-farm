@@ -175,10 +175,10 @@ func test_camera_keeps_view_inside_map(position = use_parameters([
 	await wait_physics_frames(2)
 	var center: Vector2 = camera.get_screen_center_position()
 	var half_view: Vector2 = Vector2(viewport.size) / camera.zoom / 2.0
-	assert_gte(center.x - half_view.x, -0.01)
-	assert_gte(center.y - half_view.y, -0.01)
-	assert_lte(center.x + half_view.x, 1920.01)
-	assert_lte(center.y + half_view.y, 1080.01)
+	assert_gte(center.x - half_view.x, float(camera.limit_left) - 0.01)
+	assert_gte(center.y - half_view.y, float(camera.limit_top) - 0.01)
+	assert_lte(center.x + half_view.x, float(camera.limit_right) + 0.01)
+	assert_lte(center.y + half_view.y, float(camera.limit_bottom) + 0.01)
 
 func _click_world(world_position: Vector2, button: MouseButton = MOUSE_BUTTON_LEFT) -> void:
 	var click: InputEventMouseButton = InputEventMouseButton.new()
@@ -211,6 +211,23 @@ func test_wheel_zoom_is_smooth_and_accumulates_fast_steps() -> void:
 	await wait_seconds(0.7)
 	assert_almost_eq(camera.zoom.x, initial_zoom.x, 0.002)
 
+func test_zoom_sleeps_at_target_wakes_for_input_and_rechecks_limits() -> void:
+	var zoom: CameraZoomComponent = player.get_node("CameraZoom") as CameraZoomComponent
+	assert_false(zoom.is_processing())
+	_wheel(MOUSE_BUTTON_WHEEL_UP)
+	assert_true(zoom.is_processing())
+	zoom._process(1.0)
+	assert_almost_eq(camera.zoom.x, 4.6, 0.00001)
+	assert_false(zoom.is_processing())
+	_wheel(MOUSE_BUTTON_WHEEL_DOWN)
+	assert_true(zoom.is_processing())
+	zoom._process(1.0)
+	assert_false(zoom.is_processing())
+	camera.limit_right = 320
+	await wait_seconds(0.15)
+	assert_gte(camera.zoom.x, 6.0, "Changed camera limits must still keep the viewport inside the map while idle")
+	assert_false(zoom.is_processing())
+
 func test_wheel_zoom_clamps_and_keeps_map_inside_view() -> void:
 	for step: int in range(40):
 		_wheel(MOUSE_BUTTON_WHEEL_UP)
@@ -232,12 +249,16 @@ func test_wheel_zoom_clamps_and_keeps_map_inside_view() -> void:
 
 func test_zoom_minimum_adapts_to_viewport_resize() -> void:
 	viewport.size = Vector2i(3840, 2160)
+	var zoom: CameraZoomComponent = player.get_node("CameraZoom") as CameraZoomComponent
+	var minimum: float = maxf(zoom.min_zoom, maxf(
+		float(viewport.size.x) / (camera.limit_right - camera.limit_left),
+		float(viewport.size.y) / (camera.limit_bottom - camera.limit_top)))
 	await wait_physics_frames(3)
-	assert_gte(camera.zoom.x, 2.0, "Larger viewport must not expose outside the map")
+	assert_gte(camera.zoom.x, minimum, "Larger viewport must not expose outside the map")
 	for step: int in range(20):
 		_wheel(MOUSE_BUTTON_WHEEL_DOWN)
 	await wait_seconds(0.7)
-	assert_almost_eq(camera.zoom.x, 2.0, 0.002)
+	assert_almost_eq(camera.zoom.x, minimum, 0.002)
 
 func test_inventory_blocks_wheel_zoom() -> void:
 	var inventory_ui: InventoryUI = player.get_node("InventoryUI") as InventoryUI
@@ -449,7 +470,8 @@ func test_click_focus_finds_a_path_around_collision() -> void:
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 
 func test_unreachable_focus_stops_without_walking_in_place() -> void:
-	_wall(Vector2(30, 0), Vector2(10, 1080))
+	var barrier: StaticBody2D = _wall(Vector2(30, 0), Vector2(10, camera.limit_bottom - camera.limit_top + 32))
+	barrier.position.y = (camera.limit_top + camera.limit_bottom) * 0.5
 	await wait_physics_frames(2)
 	var start: Vector2 = player.position
 	_click_world(start + Vector2(96, 0))

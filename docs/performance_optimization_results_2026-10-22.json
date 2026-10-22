@@ -1,0 +1,794 @@
+{
+  "recorded_at": "2026-10-22T09:57:33.011887+07:00",
+  "implemented": [
+    "String keys in captured beehive DTO for strict async-save boundary",
+    "Weather visual processing sleeps after sunny transition, wakes on transition",
+    "Zoom interpolation sleeps at destination; input, resize and constraints wake it",
+    "Hotbar refreshes on selection, inventory, translation and feedback signals; expiry clock runs only while needed",
+    "UI scale refreshes on resize plus cached 100ms stretch/DPI fallback"
+  ],
+  "save_verification": {
+    "backup_ok": true,
+    "backup_revision": 55.0,
+    "completed": true,
+    "functional_check_only": true,
+    "read_ok": true,
+    "read_revision": 56.0,
+    "revision_after": 56,
+    "revision_before": 55,
+    "save_error": "",
+    "save_ok": true,
+    "saved_hives": 5,
+    "world_hives": 5
+  },
+  "original_save_unchanged": true,
+  "tests": {
+    "regression_red": "New async hive save test failed on original code with primitive-data rejection",
+    "full_suite": {
+      "scripts": 55,
+      "tests": 514,
+      "passing": 511,
+      "failing": 3,
+      "failure_cause": "Three existing player tests still assumed the old 1920x1080 map bounds; all reproduced on the before-change fixture"
+    },
+    "player_hotbar_recheck": {
+      "scripts": 2,
+      "tests": 46,
+      "passing": 46,
+      "failing": 0
+    },
+    "lint_before": {
+      "total": 11,
+      "errors": 0,
+      "warnings": 11,
+      "parse_errors": 0
+    },
+    "lint_after": {
+      "total": 11,
+      "errors": 0,
+      "warnings": 11,
+      "parse_errors": 0
+    }
+  },
+  "before_rendered": {
+    "butterflies": 48,
+    "completed": true,
+    "config": {
+      "butterfly_seed": 20261022.0,
+      "clock_start": 1792637197.06431,
+      "isolate_benchmark": true,
+      "output": "/home/dungnguyen/Projects/test-js/.godot/dev-profile/after/isolated/before.json",
+      "rounds": 3.0,
+      "scenarios": [
+        "idle"
+      ],
+      "seconds": 6.0,
+      "warmup_seconds": 2.0
+    },
+    "display_server": "X11",
+    "engine": {
+      "build": "official",
+      "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+      "hex": 263938,
+      "major": 4,
+      "minor": 7,
+      "patch": 2,
+      "status": "stable",
+      "string": "4.7.2-stable (official)",
+      "timestamp": 0
+    },
+    "gpu": "Intel(R) UHD Graphics 730 (ADL-S GT1)",
+    "hotbar_found": true,
+    "isolate_benchmark": true,
+    "low_processor_mode": false,
+    "max_fps": 0,
+    "renderer": "forward_plus",
+    "samples": [
+      {
+        "distance_travelled": 0.0,
+        "fps": 229.357727554422,
+        "frames_over_33ms": 3,
+        "frames_over_50ms": 3,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.496402,
+        "stats": {
+          "draw_calls": {
+            "avg": 126.481879194631,
+            "max": 129.0,
+            "min": 124.0,
+            "p50": 127.0,
+            "p95": 129.0,
+            "p99": 129.0,
+            "samples": 1490
+          },
+          "frame_ms": {
+            "avg": 4.35912080536913,
+            "max": 1007.433,
+            "min": 0.916,
+            "p50": 1.905,
+            "p95": 5.142,
+            "p99": 8.607,
+            "samples": 1490
+          },
+          "nodes": {
+            "avg": 4992.0,
+            "max": 4992.0,
+            "min": 4992.0,
+            "p50": 4992.0,
+            "p95": 4992.0,
+            "p99": 4992.0,
+            "samples": 1490
+          },
+          "physics_ms": {
+            "avg": 8.68610268456366,
+            "max": 14.033,
+            "min": 4.996,
+            "p50": 7.961,
+            "p95": 14.033,
+            "p99": 14.033,
+            "samples": 1490
+          },
+          "process_ms": {
+            "avg": 165.297140939598,
+            "max": 995.274,
+            "min": 5.155,
+            "p50": 7.26,
+            "p95": 995.274,
+            "p99": 995.274,
+            "samples": 1490
+          },
+          "render_cpu_ms": {
+            "avg": 0.824546979477742,
+            "max": 3.04900002479553,
+            "min": 0.395000010728836,
+            "p50": 0.754000008106232,
+            "p95": 1.39999997615814,
+            "p99": 1.87600004673004,
+            "samples": 1490
+          },
+          "render_gpu_ms": {
+            "avg": 0.694622819135653,
+            "max": 2.7590000629425,
+            "min": 0.592000007629395,
+            "p50": 0.651000022888184,
+            "p95": 0.869000017642975,
+            "p99": 1.34599995613098,
+            "samples": 1490
+          },
+          "render_setup_ms": {
+            "avg": 0.00776442953020129,
+            "max": 0.044,
+            "min": 0.002,
+            "p50": 0.007,
+            "p95": 0.016,
+            "p99": 0.021,
+            "samples": 1490
+          },
+          "static_mib": {
+            "avg": 166.0225130414,
+            "max": 166.187026023865,
+            "min": 165.802878379822,
+            "p50": 166.06055355072,
+            "p95": 166.185614585876,
+            "p99": 166.186026573181,
+            "samples": 1490
+          },
+          "video_mib": {
+            "avg": 70.1804014474754,
+            "max": 70.1956787109375,
+            "min": 70.1800231933594,
+            "p50": 70.1800231933594,
+            "p95": 70.1852416992188,
+            "p99": 70.1852416992188,
+            "samples": 1490
+          }
+        },
+        "trial": 1,
+        "window_focused": false,
+        "window_mode": 0
+      },
+      {
+        "distance_travelled": 0.0,
+        "fps": 212.620971479229,
+        "frames_over_33ms": 4,
+        "frames_over_50ms": 4,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.495126,
+        "stats": {
+          "draw_calls": {
+            "avg": 119.618392469225,
+            "max": 123.0,
+            "min": 118.0,
+            "p50": 119.0,
+            "p95": 123.0,
+            "p99": 123.0,
+            "samples": 1381
+          },
+          "frame_ms": {
+            "avg": 4.70234105720492,
+            "max": 1016.391,
+            "min": 0.846,
+            "p50": 1.541,
+            "p95": 3.616,
+            "p99": 6.255,
+            "samples": 1381
+          },
+          "nodes": {
+            "avg": 4992.0,
+            "max": 4992.0,
+            "min": 4992.0,
+            "p50": 4992.0,
+            "p95": 4992.0,
+            "p99": 4992.0,
+            "samples": 1381
+          },
+          "physics_ms": {
+            "avg": 5.99428167994212,
+            "max": 11.849,
+            "min": 1.964,
+            "p50": 4.406,
+            "p95": 11.849,
+            "p99": 11.849,
+            "samples": 1381
+          },
+          "process_ms": {
+            "avg": 684.466163649523,
+            "max": 998.554,
+            "min": 3.291,
+            "p50": 998.182,
+            "p95": 998.554,
+            "p99": 998.554,
+            "samples": 1381
+          },
+          "render_cpu_ms": {
+            "avg": 0.589180304380882,
+            "max": 1.57299995422363,
+            "min": 0.368999987840652,
+            "p50": 0.531000018119812,
+            "p95": 0.957000017166138,
+            "p99": 1.28600001335144,
+            "samples": 1381
+          },
+          "render_gpu_ms": {
+            "avg": 0.604459087629408,
+            "max": 2.21000003814697,
+            "min": 0.563000023365021,
+            "p50": 0.583000004291534,
+            "p95": 0.689000010490417,
+            "p99": 1.04499995708466,
+            "samples": 1381
+          },
+          "render_setup_ms": {
+            "avg": 0.00526864590876171,
+            "max": 0.025,
+            "min": 0.002,
+            "p50": 0.004,
+            "p95": 0.011,
+            "p99": 0.016,
+            "samples": 1381
+          },
+          "static_mib": {
+            "avg": 166.046032708076,
+            "max": 166.217726707458,
+            "min": 165.846457481384,
+            "p50": 166.012084007263,
+            "p95": 166.216788291931,
+            "p99": 166.217001914978,
+            "samples": 1381
+          },
+          "video_mib": {
+            "avg": 70.1803368327412,
+            "max": 70.2008972167969,
+            "min": 70.1800231933594,
+            "p50": 70.1800231933594,
+            "p95": 70.1852416992188,
+            "p99": 70.1852416992188,
+            "samples": 1381
+          }
+        },
+        "trial": 2,
+        "window_focused": false,
+        "window_mode": 0
+      },
+      {
+        "distance_travelled": 0.0,
+        "fps": 219.178374903118,
+        "frames_over_33ms": 4,
+        "frames_over_50ms": 4,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.364679,
+        "stats": {
+          "draw_calls": {
+            "avg": 118.714695340502,
+            "max": 120.0,
+            "min": 118.0,
+            "p50": 119.0,
+            "p95": 120.0,
+            "p99": 120.0,
+            "samples": 1395
+          },
+          "frame_ms": {
+            "avg": 4.56164014336918,
+            "max": 1010.803,
+            "min": 0.864,
+            "p50": 1.456,
+            "p95": 3.263,
+            "p99": 5.441,
+            "samples": 1395
+          },
+          "nodes": {
+            "avg": 4992.0,
+            "max": 4992.0,
+            "min": 4992.0,
+            "p50": 4992.0,
+            "p95": 4992.0,
+            "p99": 4992.0,
+            "samples": 1395
+          },
+          "physics_ms": {
+            "avg": 3.41537634408602,
+            "max": 5.823,
+            "min": 1.693,
+            "p50": 3.048,
+            "p95": 5.082,
+            "p99": 5.082,
+            "samples": 1395
+          },
+          "process_ms": {
+            "avg": 395.874653046597,
+            "max": 999.886,
+            "min": 1.999,
+            "p50": 5.036,
+            "p95": 999.886,
+            "p99": 999.886,
+            "samples": 1395
+          },
+          "render_cpu_ms": {
+            "avg": 0.547518279091004,
+            "max": 1.47599995136261,
+            "min": 0.370999991893768,
+            "p50": 0.505999982357025,
+            "p95": 0.843999981880188,
+            "p99": 1.11600005626678,
+            "samples": 1395
+          },
+          "render_gpu_ms": {
+            "avg": 0.601134765660891,
+            "max": 2.28699994087219,
+            "min": 0.560999989509583,
+            "p50": 0.579999983310699,
+            "p95": 0.674000024795532,
+            "p99": 1.06900000572205,
+            "samples": 1395
+          },
+          "render_setup_ms": {
+            "avg": 0.00478781362007166,
+            "max": 0.031,
+            "min": 0.002,
+            "p50": 0.004,
+            "p95": 0.01,
+            "p99": 0.016,
+            "samples": 1395
+          },
+          "static_mib": {
+            "avg": 166.070305486563,
+            "max": 166.240149497986,
+            "min": 165.869559288025,
+            "p50": 166.035178184509,
+            "p95": 166.238486289978,
+            "p99": 166.238715171814,
+            "samples": 1395
+          },
+          "video_mib": {
+            "avg": 70.1803299442414,
+            "max": 70.2008972167969,
+            "min": 70.1800231933594,
+            "p50": 70.1800231933594,
+            "p95": 70.1852416992188,
+            "p99": 70.1852416992188,
+            "samples": 1395
+          }
+        },
+        "trial": 3,
+        "window_focused": false,
+        "window_mode": 0
+      }
+    ],
+    "save_revision_loaded": 55,
+    "viewport_visible_rect": "[P: (0.0, 0.0), S: (1920.0, 1080.0)]",
+    "vsync_mode": 0,
+    "window_size": "(1280, 720)",
+    "zoom": "(4.0, 4.0)",
+    "zoom_component_found": true
+  },
+  "after_rendered": {
+    "butterflies": 48,
+    "completed": true,
+    "config": {
+      "butterfly_seed": 20261022.0,
+      "clock_start": 1792637197.06431,
+      "isolate_benchmark": true,
+      "output": "/home/dungnguyen/Projects/test-js/.godot/dev-profile/after/isolated/after.json",
+      "rounds": 3.0,
+      "scenarios": [
+        "idle"
+      ],
+      "seconds": 6.0,
+      "warmup_seconds": 2.0
+    },
+    "display_server": "X11",
+    "engine": {
+      "build": "official",
+      "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+      "hex": 263938,
+      "major": 4,
+      "minor": 7,
+      "patch": 2,
+      "status": "stable",
+      "string": "4.7.2-stable (official)",
+      "timestamp": 0
+    },
+    "gpu": "Intel(R) UHD Graphics 730 (ADL-S GT1)",
+    "hotbar_found": true,
+    "isolate_benchmark": true,
+    "low_processor_mode": false,
+    "max_fps": 0,
+    "renderer": "forward_plus",
+    "samples": [
+      {
+        "distance_travelled": 0.0,
+        "fps": 287.543071069952,
+        "frames_over_33ms": 3,
+        "frames_over_50ms": 3,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.002579,
+        "stats": {
+          "draw_calls": {
+            "avg": 110.908458864426,
+            "max": 111.0,
+            "min": 110.0,
+            "p50": 111.0,
+            "p95": 111.0,
+            "p99": 111.0,
+            "samples": 1726
+          },
+          "frame_ms": {
+            "avg": 3.47682502896871,
+            "max": 1037.066,
+            "min": 0.774,
+            "p50": 1.415,
+            "p95": 3.276,
+            "p99": 7.366,
+            "samples": 1726
+          },
+          "nodes": {
+            "avg": 5002.0,
+            "max": 5002.0,
+            "min": 5002.0,
+            "p50": 5002.0,
+            "p95": 5002.0,
+            "p99": 5002.0,
+            "samples": 1726
+          },
+          "physics_ms": {
+            "avg": 4.32482966396294,
+            "max": 14.25,
+            "min": 1.708,
+            "p50": 2.993,
+            "p95": 14.25,
+            "p99": 14.25,
+            "samples": 1726
+          },
+          "process_ms": {
+            "avg": 445.939745075317,
+            "max": 1001.083,
+            "min": 4.741,
+            "p50": 5.335,
+            "p95": 1001.083,
+            "p99": 1001.083,
+            "samples": 1726
+          },
+          "render_cpu_ms": {
+            "avg": 0.548253765888728,
+            "max": 3.52099990844727,
+            "min": 0.340999990701675,
+            "p50": 0.48199999332428,
+            "p95": 0.934000015258789,
+            "p99": 1.30599999427795,
+            "samples": 1726
+          },
+          "render_gpu_ms": {
+            "avg": 0.560702201285478,
+            "max": 2.38199996948242,
+            "min": 0.518999993801117,
+            "p50": 0.53600001335144,
+            "p95": 0.633000016212463,
+            "p99": 1.06500005722046,
+            "samples": 1726
+          },
+          "render_setup_ms": {
+            "avg": 0.00491251448435687,
+            "max": 0.138,
+            "min": 0.002,
+            "p50": 0.004,
+            "p95": 0.011,
+            "p99": 0.018,
+            "samples": 1726
+          },
+          "static_mib": {
+            "avg": 166.051040451607,
+            "max": 166.375309944153,
+            "min": 165.79983997345,
+            "p50": 166.044339179993,
+            "p95": 166.374371528625,
+            "p99": 166.374844551086,
+            "samples": 1726
+          },
+          "video_mib": {
+            "avg": 74.179681647556,
+            "max": 74.1950378417969,
+            "min": 74.1793823242188,
+            "p50": 74.1793823242188,
+            "p95": 74.1846008300781,
+            "p99": 74.1846008300781,
+            "samples": 1726
+          }
+        },
+        "trial": 1,
+        "window_focused": true,
+        "window_mode": 0
+      },
+      {
+        "distance_travelled": 0.0,
+        "fps": 219.599895260852,
+        "frames_over_33ms": 4,
+        "frames_over_50ms": 4,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.698546,
+        "stats": {
+          "draw_calls": {
+            "avg": 111.910944935418,
+            "max": 116.0,
+            "min": 109.0,
+            "p50": 111.0,
+            "p95": 116.0,
+            "p99": 116.0,
+            "samples": 1471
+          },
+          "frame_ms": {
+            "avg": 4.55286879673691,
+            "max": 1009.817,
+            "min": 0.76,
+            "p50": 1.484,
+            "p95": 4.057,
+            "p99": 6.321,
+            "samples": 1471
+          },
+          "nodes": {
+            "avg": 5002.0,
+            "max": 5002.0,
+            "min": 5002.0,
+            "p50": 5002.0,
+            "p95": 5002.0,
+            "p99": 5002.0,
+            "samples": 1471
+          },
+          "physics_ms": {
+            "avg": 7.01973555404475,
+            "max": 9.827,
+            "min": 4.572,
+            "p50": 7.315,
+            "p95": 9.827,
+            "p99": 9.827,
+            "samples": 1471
+          },
+          "process_ms": {
+            "avg": 725.047169952417,
+            "max": 999.287,
+            "min": 3.824,
+            "p50": 996.618,
+            "p95": 999.287,
+            "p99": 999.287,
+            "samples": 1471
+          },
+          "render_cpu_ms": {
+            "avg": 0.544088375661585,
+            "max": 1.57599997520447,
+            "min": 0.342999994754791,
+            "p50": 0.509999990463257,
+            "p95": 0.822000026702881,
+            "p99": 1.01900005340576,
+            "samples": 1471
+          },
+          "render_gpu_ms": {
+            "avg": 0.556197824525152,
+            "max": 1.06900000572205,
+            "min": 0.519999980926514,
+            "p50": 0.540000021457672,
+            "p95": 0.629000008106232,
+            "p99": 0.948000013828278,
+            "samples": 1471
+          },
+          "render_setup_ms": {
+            "avg": 0.00486131883072737,
+            "max": 0.094,
+            "min": 0.001,
+            "p50": 0.004,
+            "p95": 0.01,
+            "p99": 0.015,
+            "samples": 1471
+          },
+          "static_mib": {
+            "avg": 166.069506895453,
+            "max": 166.230759620667,
+            "min": 165.859299659729,
+            "p50": 166.105996131897,
+            "p95": 166.229882240295,
+            "p99": 166.230149269104,
+            "samples": 1471
+          },
+          "video_mib": {
+            "avg": 74.1797016073781,
+            "max": 74.2002563476562,
+            "min": 74.1793823242188,
+            "p50": 74.1793823242188,
+            "p95": 74.1846008300781,
+            "p99": 74.1846008300781,
+            "samples": 1471
+          }
+        },
+        "trial": 2,
+        "window_focused": false,
+        "window_mode": 0
+      },
+      {
+        "distance_travelled": 0.0,
+        "fps": 260.294988723616,
+        "frames_over_33ms": 3,
+        "frames_over_50ms": 3,
+        "save_code": "",
+        "save_completed": null,
+        "save_error": "",
+        "save_ok": null,
+        "save_rejected_types": [],
+        "save_wall_ms": 0.0,
+        "scenario": "idle",
+        "seconds": 6.523368,
+        "stats": {
+          "draw_calls": {
+            "avg": 108.757950530035,
+            "max": 110.0,
+            "min": 108.0,
+            "p50": 109.0,
+            "p95": 110.0,
+            "p99": 110.0,
+            "samples": 1698
+          },
+          "frame_ms": {
+            "avg": 3.84092049469964,
+            "max": 1013.043,
+            "min": 0.782,
+            "p50": 1.521,
+            "p95": 4.97,
+            "p99": 9.97,
+            "samples": 1698
+          },
+          "nodes": {
+            "avg": 5002.0,
+            "max": 5002.0,
+            "min": 5002.0,
+            "p50": 5002.0,
+            "p95": 5002.0,
+            "p99": 5002.0,
+            "samples": 1698
+          },
+          "physics_ms": {
+            "avg": 9.74534098939939,
+            "max": 17.158,
+            "min": 4.26,
+            "p50": 10.897,
+            "p95": 17.158,
+            "p99": 17.158,
+            "samples": 1698
+          },
+          "process_ms": {
+            "avg": 410.792237926972,
+            "max": 1001.397,
+            "min": 3.377,
+            "p50": 9.012,
+            "p95": 1001.397,
+            "p99": 1001.397,
+            "samples": 1698
+          },
+          "render_cpu_ms": {
+            "avg": 0.611840400559602,
+            "max": 2.65100002288818,
+            "min": 0.349000006914139,
+            "p50": 0.522000014781952,
+            "p95": 1.12899994850159,
+            "p99": 1.47699999809265,
+            "samples": 1698
+          },
+          "render_gpu_ms": {
+            "avg": 0.563127797469935,
+            "max": 2.40799999237061,
+            "min": 0.515999972820282,
+            "p50": 0.537999987602234,
+            "p95": 0.637000024318695,
+            "p99": 1.03299999237061,
+            "samples": 1698
+          },
+          "render_setup_ms": {
+            "avg": 0.00552002355712601,
+            "max": 0.034,
+            "min": 0.001,
+            "p50": 0.004,
+            "p95": 0.012,
+            "p99": 0.02,
+            "samples": 1698
+          },
+          "static_mib": {
+            "avg": 166.13777033151,
+            "max": 166.449875831604,
+            "min": 165.89272403717,
+            "p50": 166.143151283264,
+            "p95": 166.448998451233,
+            "p99": 166.449357032776,
+            "samples": 1698
+          },
+          "video_mib": {
+            "avg": 74.1797265366194,
+            "max": 74.2002563476562,
+            "min": 74.1793823242188,
+            "p50": 74.1793823242188,
+            "p95": 74.1846008300781,
+            "p99": 74.1846008300781,
+            "samples": 1698
+          }
+        },
+        "trial": 3,
+        "window_focused": false,
+        "window_mode": 0
+      }
+    ],
+    "save_revision_loaded": 56,
+    "viewport_visible_rect": "[P: (0.0, 0.0), S: (1920.0, 1080.0)]",
+    "vsync_mode": 0,
+    "window_size": "(1280, 720)",
+    "zoom": "(4.0, 4.0)",
+    "zoom_component_found": true
+  },
+  "quantified_fps_gain_accepted": false,
+  "reason": "Approximately 1-second stalls remain in both pre-change and post-change native runs, including isolated input/tooling runs. Earlier unisolated idle also had unintended movement. Results are retained for audit, not used for an FPS improvement claim.",
+  "next_scope": "Profile physics/interaction callbacks and frame spikes separately; registry/navigation/culling/pooling changes remain unimplemented."
+}

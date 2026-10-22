@@ -10,12 +10,29 @@ extends Node
 @export_range(1.0, 30.0, 0.5) var zoom_speed: float = 12.0
 
 var _target_zoom: float = 1.2
+var _last_limits: Rect2i
+var _last_min_zoom: float
+var _last_max_zoom: float
 
 func _ready() -> void:
 	assert(camera != null and selection != null, "Assign camera zoom references")
 	_target_zoom = camera.zoom.x
 	get_viewport().size_changed.connect(_on_viewport_size_changed)
 	_on_viewport_size_changed()
+	# Camera2D has no signal for limits changed by scripts/inspector.
+	var constraints_timer: Timer = Timer.new()
+	constraints_timer.wait_time = 0.1
+	constraints_timer.timeout.connect(_check_constraints)
+	add_child(constraints_timer)
+	constraints_timer.start()
+
+func _limits() -> Rect2i:
+	return Rect2i(camera.limit_left, camera.limit_top,
+		camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top)
+
+func _check_constraints() -> void:
+	if _last_limits != _limits() or _last_min_zoom != min_zoom or _last_max_zoom != max_zoom:
+		_on_viewport_size_changed()
 
 # Zoom càng lớn thì phần thế giới nhìn thấy càng nhỏ: kích thước nhìn được = viewport / zoom.
 # Muốn không thấy ngoài map phải có zoom >= viewport_rộng/map_rộng và tương tự chiều cao;
@@ -39,10 +56,14 @@ func _clamp_zoom(value: float) -> float:
 	return clampf(value, minimum, maxf(minimum, max_zoom))
 
 func _on_viewport_size_changed() -> void:
+	_last_limits = _limits()
+	_last_min_zoom = min_zoom
+	_last_max_zoom = max_zoom
 	_target_zoom = _clamp_zoom(_target_zoom)
 	# A larger viewport can immediately require a tighter view to avoid map edges.
 	var value: float = _clamp_zoom(camera.zoom.x)
 	camera.zoom = Vector2.ONE * value
+	set_process(not is_equal_approx(value, _target_zoom))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if selection.is_menu_open():
@@ -56,6 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_target_zoom = _clamp_zoom(_target_zoom / zoom_step)
 	else:
 		return
+	set_process(true)
 	get_viewport().set_input_as_handled()
 
 # Hệ số nội suy a = 1 - exp(-k * delta) làm khoảng cách tới zoom đích giảm theo hàm mũ.
@@ -67,3 +89,5 @@ func _process(delta: float) -> void:
 	if is_equal_approx(value, _target_zoom):
 		value = _target_zoom
 	camera.zoom = Vector2.ONE * _clamp_zoom(value)
+	if is_equal_approx(camera.zoom.x, _target_zoom):
+		set_process(false)

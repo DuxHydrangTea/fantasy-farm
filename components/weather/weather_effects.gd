@@ -36,8 +36,10 @@ func _ready() -> void:
 	wind_audio.stream = preload("res://assets/audio/farm_wind.wav")
 	wind_audio.volume_db = -80.0
 	add_child(wind_audio)
+	set_process(false)
 
 func transition_to(next: int) -> void:
+	set_process(true)
 	if _tween != null and _tween.is_valid():
 		_tween.kill()
 	_tween = create_tween()
@@ -45,6 +47,13 @@ func transition_to(next: int) -> void:
 	_tween.tween_property(self, "strength", 0.0, 1.0)
 	_tween.tween_callback(_activate.bind(next))
 	_tween.tween_property(self, "strength", 1.0, 1.0)
+	_tween.finished.connect(_finish_transition)
+
+func _finish_transition() -> void:
+	_tween = null
+	if active_weather == WeatherManager.Weather.SUNNY:
+		set_process(false)
+		queue_redraw()
 
 func _activate(next: int) -> void:
 	active_weather = next

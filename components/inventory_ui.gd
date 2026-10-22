@@ -10,10 +10,14 @@ extends CanvasLayer
 @export var capacity: Label
 var buttons: Array[InventorySlot] = []
 var inspected_index: int = 0
+var wallet_label: Label
+var _wallet: WalletComponent
 
 func _ready() -> void:
 	root.hide()
 	UIScaleComponent.attach(self, root)
+	_build_wallet_row()
+	grid.columns = 8
 	for index: int in range(selection.inventory.slot_count):
 		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
@@ -33,7 +37,30 @@ func _ready() -> void:
 
 func _fit_panel() -> void:
 	var size: Vector2 = root.size
-	panel.custom_minimum_size = Vector2(minf(520.0, size.x - 32.0), minf(540.0, size.y - 24.0))
+	panel.custom_minimum_size = Vector2(minf(560.0, size.x - 32.0), minf(580.0, size.y - 24.0))
+
+func _build_wallet_row() -> void:
+	var player: FarmPlayer = get_parent() as FarmPlayer
+	_wallet = player.wallet if player != null else null
+	var body: VBoxContainer = details.get_parent() as VBoxContainer
+	var row: HBoxContainer = HBoxContainer.new()
+	row.name = "WalletRow"
+	row.add_theme_constant_override("separation", 16)
+	body.add_child(row)
+	body.move_child(row, 1)
+	wallet_label = Label.new()
+	wallet_label.name = "Balance"
+	wallet_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	wallet_label.add_theme_font_size_override("font_size", 24)
+	row.add_child(wallet_label)
+	capacity.reparent(row)
+	capacity.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	if _wallet != null:
+		_wallet.changed.connect(_refresh_wallet)
+		_refresh_wallet(_wallet.balance)
+
+func _refresh_wallet(balance: int) -> void:
+	wallet_label.text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
 
 func open() -> void:
 	selection.set_inventory_open(true)
@@ -81,3 +108,5 @@ func _input(event: InputEvent) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		_refresh()
+		if _wallet != null:
+			_refresh_wallet(_wallet.balance)

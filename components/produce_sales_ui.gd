@@ -18,6 +18,7 @@ var _refreshing: bool = false
 
 func _ready() -> void:
 	super._ready()
+	balance_label.hide()
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
 	items.item_selected.connect(_select_index)
