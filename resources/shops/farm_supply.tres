@@ -12,7 +12,7 @@
 [ext_resource type="Resource" path="res://resources/shops/animals/horse.tres" id="8_f8sdp"]
 [ext_resource type="Resource" path="res://items/boosters/crop_fertilizer.tres" id="44_eqy7j"]
 [ext_resource type="Resource" path="res://items/boosters/animal_tonic.tres" id="45_r8s11"]
-[ext_resource type="Resource" path="res://items/placeables/beehive.tres" id="hive_item"]
+[ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="hive_item"]
 [ext_resource type="Resource" uid="uid://ebpy0mmpjtu3" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
 [ext_resource type="Resource" uid="uid://dlc3pj5noacyh" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
 [ext_resource type="Resource" path="res://items/seeds/broccoli_seed.tres" id="item_2"]
@@ -47,7 +47,6 @@
 [ext_resource type="Resource" path="res://items/seeds/yellow_bell_pepper_seed.tres" id="item_31"]
 [ext_resource type="Resource" uid="uid://imj32f8onlp1" path="res://items/feeds/livestock_feed.tres" id="item_32"]
 [ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="item_33"]
-
 [ext_resource type="Resource" path="res://items/trees/apple_sapling.tres" id="tree_offer_item_0"]
 [ext_resource type="Resource" path="res://items/trees/peach_sapling.tres" id="tree_offer_item_1"]
 [ext_resource type="Resource" path="res://items/trees/pear_sapling.tres" id="tree_offer_item_2"]

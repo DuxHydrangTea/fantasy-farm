@@ -56,6 +56,7 @@
 [ext_resource type="Script" uid="uid://3ml3jshpyxgx" path="res://persistence/world_persistence.gd" id="65_ptedk"]
 [ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
 [ext_resource type="PackedScene" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
+[ext_resource type="PackedScene" uid="uid://cugh3omny8lsm" path="res://world/farm_landscape.tscn" id="79_4qylm"]
 [ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="79_x28ju"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
@@ -1643,5 +1644,7 @@ visible = false
 
 [node name="Trees" type="TileMapLayer" parent="." unique_id=1875929668]
 tile_set = SubResource("TileSet_vgjnj")
+
+[node name="FarmLandscape" parent="." unique_id=2596747 instance=ExtResource("79_4qylm")]
 
 [editable path="ProduceBuyer"]

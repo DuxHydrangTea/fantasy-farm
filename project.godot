@@ -30,6 +30,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="fantasy-farm"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_mcp_toolkit/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/scatter2d/plugin.cfg")
@@ -162,6 +166,10 @@ click_move={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://localization/en.po", "res://localization/vi.po")
+
 [layer_names]
 
 2d_physics/layer_1="World"
@@ -177,8 +185,3 @@ click_move={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
-
-[internationalization]
-
-locale/fallback="en"
-locale/translations=PackedStringArray("res://localization/en.po", "res://localization/vi.po")

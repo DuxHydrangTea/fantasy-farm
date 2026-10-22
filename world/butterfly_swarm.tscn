@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/landscape/butterfly_swarm.gd" id="1_swarm"]
+
+[node name="ButterflySwarm" type="Node2D"]
+z_index = 2
+texture_filter = 1
+script = ExtResource("1_swarm")
