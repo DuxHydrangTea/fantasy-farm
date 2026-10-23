@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="TreeDefinition" format=3]
+[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://5slhxvo1jsga"]
 
-[ext_resource type="Script" path="res://scripts/tree_definition.gd" id="script"]
-[ext_resource type="Resource" path="res://items/trees/wood.tres" id="product"]
-[ext_resource type="Texture2D" path="res://trees/textures/birch_stage1.tres" id="stage1"]
-[ext_resource type="Texture2D" path="res://trees/textures/birch_stage2.tres" id="stage2"]
-[ext_resource type="Texture2D" path="res://trees/textures/birch_stage3.tres" id="stage3"]
-[ext_resource type="Texture2D" path="res://trees/textures/birch_stump.tres" id="stump"]
-[ext_resource type="Texture2D" path="res://trees/textures/birch_canopy.tres" id="canopy"]
-[ext_resource type="Texture2D" path="res://assets/Trees/Birch_Leaf_Particle.png" id="leaf"]
-[ext_resource type="Resource" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Texture2D" uid="uid://qpg4db110ixi" path="res://trees/textures/birch_canopy.tres" id="canopy"]
+[ext_resource type="Texture2D" uid="uid://d387vctdikrul" path="res://assets/Trees/Birch_Leaf_Particle.png" id="leaf"]
+[ext_resource type="Resource" uid="uid://4qkvortmmesq" path="res://items/trees/wood.tres" id="product"]
+[ext_resource type="Resource" uid="uid://b30ng4mpiur4n" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Script" uid="uid://dexpywdsy1ft0" path="res://scripts/tree_definition.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://d38uo6v5hsx5q" path="res://trees/textures/birch_stage1.tres" id="stage1"]
+[ext_resource type="Texture2D" uid="uid://brx3er4emdx3n" path="res://trees/textures/birch_stage2.tres" id="stage2"]
+[ext_resource type="Texture2D" uid="uid://b25jp6qf3tw0w" path="res://trees/textures/birch_stage3.tres" id="stage3"]
+[ext_resource type="Texture2D" uid="uid://do36gtrd506qr" path="res://trees/textures/birch_stump.tres" id="stump"]
 
 [resource]
 script = ExtResource("script")
@@ -16,14 +16,11 @@ tree_id = &"birch"
 display_name = "Birch Tree"
 kind = 1
 growth_seconds = 240.0
-stump_seconds = 120.0
-chop_hits = 4
-dig_hits = 3
 harvest_amount = 5
+harvest_item = ExtResource("product")
+root_item = ExtResource("root")
+stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
+ready_texture = ExtResource("stage3")
 stump_texture = ExtResource("stump")
 canopy_texture = ExtResource("canopy")
 leaf_texture = ExtResource("leaf")
-root_item = ExtResource("root")
-harvest_item = ExtResource("product")
-stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
-ready_texture = ExtResource("stage3")

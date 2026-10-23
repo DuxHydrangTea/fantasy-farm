@@ -1,13 +1,12 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://t4ko7gyg4qmx"]
 
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
 [ext_resource type="Texture2D" path="res://icons/no_outline/tools/tools_r01_c04.tres" id="icon"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
 
 [resource]
 script = ExtResource("script")
 item_id = &"axe"
 display_name = "Axe"
-item_type = 0
+description = "Chop mature timber trees. Use a hoe to dig their stumps."
 icon = ExtResource("icon")
 tool_type = 2
-description = "Chop mature timber trees. Use a hoe to dig their stumps."

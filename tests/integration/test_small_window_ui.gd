@@ -155,5 +155,7 @@ func test_hover_inspector_never_overlaps_weather_or_hotbar_after_resize_or_trans
 				assert_true(info.root.visible)
 				assert_true(bounds.encloses(_pixels(panel)))
 				assert_true(bounds.encloses(_pixels(hud.label.get_parent() as Control)))
+				assert_true(bounds.encloses(_pixels(hud.debug_bar)), "Debug controls stay inside the small window")
 				assert_false(_pixels(panel).intersects(_pixels(hud.label.get_parent() as Control)), "Hover inspector and weather must have separate space")
+				assert_false(_pixels(panel).intersects(_pixels(hud.debug_bar)), "Debug %s must not cover inspector %s" % [_pixels(hud.debug_bar), _pixels(panel)])
 				assert_false(_pixels(panel).intersects(_pixels(hotbar.slots)), "Inspector stays above the tool dock")

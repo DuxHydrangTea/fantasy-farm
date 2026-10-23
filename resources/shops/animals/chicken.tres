@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3 uid="uid://dyaeojqahlgy5"]
 
-[ext_resource type="Resource" path="res://animals/definitions/chicken.tres" id="1_d82m3"]
-[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_8o163"]
+[ext_resource type="Resource" uid="uid://dkgtvc6cyu172" path="res://animals/definitions/chicken.tres" id="1_d82m3"]
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="2_8o163"]
 
 [resource]
 script = ExtResource("2_8o163")

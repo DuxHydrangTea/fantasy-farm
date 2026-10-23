@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://4qkvortmmesq"]
 
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
 [ext_resource type="Texture2D" path="res://icons/no_outline/materials/materials_r06_c03.tres" id="icon"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
 
 [resource]
 script = ExtResource("script")
 item_id = &"wood"
 display_name = "Wood"
-item_type = 2
 icon = ExtResource("icon")
+item_type = 2

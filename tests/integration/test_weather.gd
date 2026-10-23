@@ -153,6 +153,23 @@ func test_sequential_fades_and_ui_stay_separate_from_world_tint() -> void:
 	world.weather.day_night.refresh(12 * 3600 - WeatherSchedule.UTC_OFFSET, Color.WHITE)
 	assert_false(world.weather.day_night.lights[0].enabled)
 
+func test_lamps_never_darken_daylight_while_fading_at_dawn_and_dusk() -> void:
+	var lighting: DayNightComponent = world.weather.day_night
+	assert_eq(lighting.lights.size(), world.night_light_positions.size() + 1, "Include the moving land sign lamp")
+	for light: PointLight2D in lighting.lights:
+		assert_eq(light.blend_mode, Light2D.BLEND_MODE_ADD, "A fading lamp must add light, never mix a darker color over the world")
+	for hour: float in [6.0, 17.5, 23.0]:
+		lighting.refresh(hour * 3600.0 - WeatherSchedule.UTC_OFFSET, Color.WHITE)
+		for light: PointLight2D in lighting.lights:
+			assert_true(light.enabled, "Visible lamps stay lit through dawn, dusk and night")
+			assert_gt(light.energy, 0.0)
+	for tint: Color in [Color.WHITE, Color(0.8, 0.85, 0.9)]:
+		lighting.refresh(12 * 3600 - WeatherSchedule.UTC_OFFSET, tint)
+		assert_eq(lighting.ambient.color, tint)
+		for light: PointLight2D in lighting.lights:
+			assert_false(light.enabled, "No lamps at noon, including overcast weather")
+			assert_eq(light.energy, 0.0)
+
 func test_effects_sleep_after_sunny_fade_and_wake_without_skipping_transitions() -> void:
 	var effects: WeatherEffects = world.weather.effects
 	assert_false(effects.is_processing())
@@ -176,6 +193,111 @@ func test_effects_sleep_after_sunny_fade_and_wake_without_skipping_transitions()
 	effects._tween.custom_step(2.1)
 	assert_eq(effects.active_weather, WeatherManager.Weather.CLOUDY)
 	assert_true(effects.is_processing())
+
+func test_debug_time_buttons_preview_day_night_without_advancing_the_farm_clock() -> void:
+	var manager: WeatherManager = world.weather
+	var hud: WeatherHUD = manager.hud
+	assert_not_null(hud.debug_bar)
+	assert_eq(hud.time_buttons.size(), 3)
+	var original_time: float = manager.last_at
+	var original_apiary_time: float = world.apiary.last_at
+	var original_history_size: int = manager.schedule.changes.size()
+	var original_text: String = hud.label.text
+	hud.time_buttons[1].pressed.emit()
+	assert_eq(manager.debug_hour, 23)
+	assert_string_contains(hud.label.text, "23:00")
+	assert_eq(manager.day_night.ambient.color, Color(0.22, 0.25, 0.45))
+	manager._process(0.1)
+	assert_eq(manager.day_night.ambient.color, Color(0.22, 0.25, 0.45), "Weather fade updates must retain the preview")
+	hud.time_buttons[0].pressed.emit()
+	assert_string_contains(hud.label.text, "12:00")
+	assert_eq(manager.day_night.ambient.color, Color.WHITE)
+	assert_true(hud.time_buttons[0].button_pressed)
+	assert_false(hud.time_buttons[1].button_pressed)
+	assert_eq(clock.now(), now)
+	assert_eq(manager.last_at, original_time)
+	assert_eq(world.apiary.last_at, original_apiary_time)
+	assert_eq(manager.schedule.changes.size(), original_history_size)
+	hud.time_buttons[2].pressed.emit()
+	assert_eq(manager.debug_hour, -1)
+	assert_eq(hud.label.text, original_text)
+	assert_true(hud.time_buttons[2].button_pressed)
+
+func test_cloud_and_wind_paths_do_not_follow_camera_pan_zoom_or_world_transform() -> void:
+	var effects: WeatherEffects = world.weather.effects
+	var camera: Camera2D = world.player.camera
+	world.position = Vector2(96, 48)
+	world.scale = Vector2(1.5, 1.25)
+	for kind: int in [WeatherManager.Weather.CLOUDY, WeatherManager.Weather.WINDY]:
+		# Start after rain to catch a stale camera-following origin on transitions.
+		effects._activate(WeatherManager.Weather.RAIN)
+		effects._process(0.0)
+		effects._activate(kind)
+		effects._phase = 7.5
+		effects._process(0.0)
+		var cell: Vector2i = Vector2i(2, -1)
+		var local_point: Vector2 = effects._cloud_point(cell) if kind == WeatherManager.Weather.CLOUDY else effects._wind_point(cell)
+		var world_point: Vector2 = effects.to_global(local_point)
+		var origin: Vector2 = effects.global_position
+		camera.global_position += Vector2(240, 128)
+		camera.zoom = Vector2(5, 5)
+		camera.force_update_scroll()
+		effects._process(0.0)
+		var moved_point: Vector2 = effects._cloud_point(cell) if kind == WeatherManager.Weather.CLOUDY else effects._wind_point(cell)
+		assert_eq(effects.position, Vector2.ZERO)
+		assert_eq(effects.global_position, origin)
+		assert_eq(effects.to_global(moved_point), world_point, "A stationary weather feature stays over the same world location")
+		effects._process(1.0)
+		var drifted: Vector2 = effects._cloud_point(cell) if kind == WeatherManager.Weather.CLOUDY else effects._wind_point(cell)
+		if kind == WeatherManager.Weather.CLOUDY:
+			assert_true((drifted - local_point).is_equal_approx(Vector2(5, 1)))
+		else:
+			assert_almost_eq(drifted.x - local_point.x, 100.0, 0.001)
+			assert_ne(drifted, local_point, "Wind still moves independently with time")
+
+func test_weather_grid_covers_resized_views_without_changing_existing_feature_positions() -> void:
+	var view: SubViewport = SubViewport.new()
+	view.size = Vector2i(640, 360)
+	add_child_autofree(view)
+	var effects: WeatherEffects = WeatherEffects.new()
+	view.add_child(effects)
+	effects._phase = 10000.0
+	for kind: int in [WeatherManager.Weather.CLOUDY, WeatherManager.Weather.WINDY]:
+		var spacing: Vector2 = WeatherEffects.CLOUD_SPACING if kind == WeatherManager.Weather.CLOUDY else WeatherEffects.WIND_SPACING
+		var drift: Vector2 = Vector2(5, 1) * effects._phase if kind == WeatherManager.Weather.CLOUDY else Vector2(100, 18) * effects._phase
+		var padding: float = 160.0 if kind == WeatherManager.Weather.CLOUDY else 40.0
+		view.canvas_transform = Transform2D(0.0, Vector2(320, 180))
+		var small: Rect2i = effects._visible_cells(spacing, drift, padding)
+		var cell: Vector2i = small.position + small.size / 2
+		var point: Vector2 = effects._cloud_point(cell) if kind == WeatherManager.Weather.CLOUDY else effects._wind_point(cell)
+		for size: Vector2i in [Vector2i(500, 281), Vector2i(1920, 1080)]:
+			view.size = size
+			var cells: Rect2i = effects._visible_cells(spacing, drift, padding)
+			var local_view: Rect2 = effects.get_global_transform_with_canvas().affine_inverse() * effects.get_viewport_rect()
+			var covered: Rect2 = Rect2(Vector2(cells.position) * spacing + drift, Vector2(cells.size) * spacing)
+			assert_true(covered.encloses(local_view.grow(padding)), "Drawing cells cover the viewport, including the entry margin")
+			assert_lt(cells.get_area(), 400, "Work stays bounded by visible area after a long session")
+			var same_point: Vector2 = effects._cloud_point(cell) if kind == WeatherManager.Weather.CLOUDY else effects._wind_point(cell)
+			assert_eq(same_point, point)
+	view.canvas_transform = Transform2D.IDENTITY
+	effects._activate(WeatherManager.Weather.SUNNY)
+
+func test_debug_weather_buttons_use_normal_transitions_and_track_the_active_choice() -> void:
+	var hud: WeatherHUD = world.weather.hud
+	assert_eq(hud.weather_buttons.size(), 4)
+	for kind: int in [WeatherManager.Weather.WINDY, WeatherManager.Weather.RAIN, WeatherManager.Weather.CLOUDY, WeatherManager.Weather.SUNNY]:
+		hud.weather_buttons[kind].pressed.emit()
+		assert_eq(world.weather.current_weather, kind)
+		assert_eq(world.weather.schedule.weather_at(now), kind)
+		world.weather.effects._tween.custom_step(2.1)
+		assert_eq(world.weather.effects.active_weather, kind)
+		for index: int in range(4):
+			assert_eq(hud.weather_buttons[index].button_pressed, index == kind)
+	assert_eq(hud.weather_buttons[0].text, "Sunny")
+	Language.set_language("vi")
+	assert_eq(hud.weather_buttons[0].text, "Nắng")
+	assert_eq(hud.time_buttons[1].text, "Đêm")
+	Language.set_language("en")
 
 func test_offline_weather_boundaries_do_not_retroactively_extend_pollen_or_crop_bonus() -> void:
 	var cell: Vector2i = Vector2i(56, 22)

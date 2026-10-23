@@ -47,21 +47,31 @@ func test_priority_is_merchant_then_trough_then_animal_then_crop_and_one_outline
 	animal.global_position = player.global_position + Vector2(0,25)
 	controller.refresh()
 	assert_eq(controller.focused.node,merchant)
+	var soil_focus: SoilFocusComponent = player.get_node("SoilFocus") as SoilFocusComponent
+	soil_focus.refresh()
+	assert_false(soil_focus.visible, "Highlight the merchant instead of unrelated ground")
 	assert_eq(controller.presenter.outline.get_parent(),merchant.interaction_sprite())
 	var only_outline: Sprite2D = controller.presenter.outline
 	merchant.hide()
 	merchant.collision_layer = 0
 	controller.refresh()
 	assert_eq(controller.focused.node,trough)
+	soil_focus.refresh()
+	assert_false(soil_focus.visible)
 	assert_eq(controller.presenter.outline,only_outline)
 	trough.hide()
 	trough.collision_layer = 0
 	controller.refresh()
 	assert_eq(controller.focused.node,animal)
+	soil_focus.refresh()
+	assert_false(soil_focus.visible)
 	animal.hide()
 	controller.refresh()
 	assert_eq(controller.focused.node,farm.get_crop(crop_cell))
 	assert_eq(controller.presenter.outline,only_outline)
+	soil_focus.refresh()
+	assert_false(soil_focus.visible, "The crop outline replaces the duplicate ground square")
+	assert_true(only_outline.visible)
 
 func test_e_requires_facing_and_obstacle_clearance_and_never_falls_back_to_trough() -> void:
 	player.animation.face(Vector2.UP)

@@ -25,8 +25,19 @@ stay readable. Palette stops interpolate smoothly: navy `(0.22,0.25,0.45)` until
 darkness at the authored building/window/gate anchors and follow the moving land
 sign. Twelve small fireflies per garden appear at dusk/night and hide in rain.
 
+Debug builds show a compact control bar immediately below the clock. Day (12:00),
+Night (23:00) and Live time switch the lighting/HUD preview without advancing the
+farm clock, growth, animal age or save timestamps. The preview is session-only.
+Sunny, Rainy, Cloudy and Windy buttons use the normal weather override API, including
+its visual fades, gameplay effects and saved daily history. Release builds omit
+the bar. Buttons indicate the active choices and follow English/Vietnamese changes.
+
 Rain uses the existing drop and five-frame splash assets. Cloud shadows drift
-across the farm at 15% opacity. Wind uses small procedural pink petal accents and a quiet, seamless eight-second
+across the farm at 15% opacity. Cloud shadows and wind petals use stable world-space
+grid cells: moving/zooming the camera or resizing the window only changes which
+cells are drawn, never their paths, phase or size in world units. Padded viewport
+culling keeps offscreen work bounded and lets effects enter/leave the view naturally.
+Wind uses small procedural pink petal accents and a quiet, seamless eight-second
 audio loop. It does not emit leaf sprites. Camera
 coverage follows zoom and viewport resizing. Old weather fades out for one second,
 then the next effect fades in for one second; renderers never overlap. Rapid

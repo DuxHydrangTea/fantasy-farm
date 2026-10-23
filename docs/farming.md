@@ -11,9 +11,13 @@ Movement keys, tool use and opening the inventory cancel the route.
 Number keys select a slot without immediately using its tool.
 The change happens once on animation frame 3. Changing state before impact cancels it.
 
-The four-corner highlight follows the adjacent cell in the facing direction.
-White means the selected tool can affect the cell; red means blocked/unmarked or
-an invalid soil state for that tool. Empty slots hide the highlight. During Tool/Water the marker
+The four-corner highlight follows the adjacent farming cell in the facing direction.
+It stays hidden on ordinary grass, paths and unmarked/border tiles. White means
+the selected field tool can affect the plot; red means a known plot is blocked,
+locked or in an invalid soil state for that tool. Empty slots, axes, flower seeds
+and tree saplings hide the soil highlight. Focused objects (including mature crops,
+flower pots and beehives) use their own outline/marker without a duplicate soil square.
+During Tool/Water the marker
 stays on the same cell as the action, including after impact until the animation
 finishes. It hides outside the Ground map or when Player runs without a farming world.
 

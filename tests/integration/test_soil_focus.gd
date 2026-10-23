@@ -53,15 +53,39 @@ func test_focus_tracks_player_crossing_grid_cells() -> void:
 	await wait_physics_frames(2)
 	assert_eq(focus.focused_cell, before + Vector2i.RIGHT)
 
-func test_unmarked_soil_uses_blocked_color() -> void:
+func test_unmarked_ground_hides_focus_and_marked_soil_restores_it() -> void:
+	focus.refresh()
+	assert_false(focus.visible)
+	assert_false(focus.actionable)
+	Fixture.mark_cell(field, cell + Vector2i.DOWN)
+	focus.refresh()
+	assert_true(focus.visible)
+	assert_true(focus.actionable)
+	assert_eq(focus.marker.modulate, focus.available_color)
+	farming.farmland.erase_cell(cell + Vector2i.DOWN)
+	focus.refresh()
+	assert_false(focus.visible)
+	assert_false(focus.actionable, "Hiding focus must clear stale action availability")
+
+func test_locked_farming_plot_still_shows_blocked_feedback() -> void:
+	var target: Vector2i = cell + Vector2i.DOWN
+	Fixture.mark_cell(field, target)
+	farming.land = LandExpansionState.new()
 	focus.refresh()
 	assert_true(focus.visible)
 	assert_false(focus.actionable)
 	assert_eq(focus.marker.modulate, focus.blocked_color)
+
+func test_axe_and_tree_sapling_hide_the_soil_marker_even_on_farmland() -> void:
 	Fixture.mark_cell(field, cell + Vector2i.DOWN)
-	focus.refresh()
-	assert_true(focus.actionable)
-	assert_eq(focus.marker.modulate, focus.available_color)
+	var bag: InventoryComponent = state.tool_selection.inventory
+	for path: String in ["res://items/tools/axe.tres", "res://items/trees/apple_sapling.tres"]:
+		bag.remove_from_slot(0, bag.slot(0).count)
+		bag.add(load(path) as ItemDefinition, 1)
+		state.tool_selection.select_slot(0)
+		focus.refresh()
+		assert_false(focus.visible, "Only field tools/seeds use the soil marker")
+		assert_false(focus.actionable)
 
 func test_focus_color_respects_active_tool_and_soil_state() -> void:
 	var target: Vector2i = cell + Vector2i.DOWN

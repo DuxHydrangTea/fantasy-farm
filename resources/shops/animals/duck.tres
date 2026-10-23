@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3 uid="uid://boqrxlf2qifs7"]
 
-[ext_resource type="Resource" path="res://animals/definitions/duck.tres" id="1_hfai4"]
-[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_n0js7"]
+[ext_resource type="Resource" uid="uid://ccmw03u1mgskq" path="res://animals/definitions/duck.tres" id="1_hfai4"]
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="2_n0js7"]
 
 [resource]
 script = ExtResource("2_n0js7")

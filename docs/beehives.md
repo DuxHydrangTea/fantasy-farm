@@ -77,7 +77,7 @@ immediately; bee animations never drive gameplay time.
 | `ApiarySystem` | Farm clock, exclusive source assignment, interval simulation and placement command. |
 | `BeehivePlacementComponent` | Player input and ghost preview. |
 | `BeehiveRangeDisplay` | Radius/footprint drawing. |
-| `BeeVisualComponent` | Two cosmetic bees; pauses offscreen. |
+| `BeeVisualComponent` | Six cosmetic bees; pauses offscreen or in rain. |
 
 `FarmWorld` and `FarmPlayer` compose these types automatically. No actor names
 are used to discover hives. `ItemType.PLACEABLE` is appended to preserve existing
@@ -86,10 +86,13 @@ offer and honey prices use the existing shop/produce catalogs.
 
 The hive uses the 16×16 idle/full regions at `(0,0)` / `(16,0)` in
 `Bee_Nest.png`. The reusable bee SpriteFrames contain `fly` and `fly_alt`, each
-four 16×16 frames at 12 FPS. Two bees follow sinusoidal paths toward the selected
-source and stop both animation/process work outside the screen. Only the bee
+four 16×16 frames at 12 FPS. Six bees use separate flight phases and alternate
+wing animations, with 64px free-flight routes in different directions when no
+flower source is assigned. Supplied bees follow wider sinusoidal paths toward
+the selected source. This visual spread does not change pollination radius or
+honey production. They stop animation/process work outside the screen. Only the bee
 sprites are hidden: the parent CanvasItem and its screen notifier stay visible,
-so moving the camera back wakes both bees again. Honey uses the
+so moving the camera back wakes all six bees again. Honey uses the
 existing jar icon. No animal hunger, thirst, aging or death components are added.
 
 ## Interaction, UI and persistence

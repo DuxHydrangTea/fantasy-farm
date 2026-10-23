@@ -364,16 +364,16 @@ func test_continuous_pollination_does_not_append_stage_heap_entries_each_tick() 
 	assert_lte(farm._growth._heap.size(),initial+1)
 	assert_almost_eq(farm.get_crop(cell).pollination_reduction,1.0,0.00001)
 
-func test_bees_culling_keeps_notifier_visible_and_wakes_both_flying_sprites() -> void:
+func test_bees_culling_keeps_notifier_visible_and_wakes_all_six_flying_sprites() -> void:
 	var hive: Beehive = _hive(Vector2(1608,408))
 	var visual: BeeVisualComponent = hive.bees
-	var notifier: VisibleOnScreenNotifier2D = visual.get_child(2) as VisibleOnScreenNotifier2D
+	var notifier: VisibleOnScreenNotifier2D = visual.get_child(visual.get_child_count() - 1) as VisibleOnScreenNotifier2D
 	assert_true(visual.is_visible_in_tree(),"The notifier's parent must stay visible while bees are culled")
 	assert_true(notifier.is_visible_in_tree())
 	assert_false(visual.is_processing())
 	visual._visibility(true)
 	assert_true(visual.is_processing())
-	assert_eq(visual._bees.size(),2)
+	assert_eq(visual._bees.size(),6)
 	var first_position: Vector2 = visual._bees[0].position
 	for bee: AnimatedSprite2D in visual._bees:
 		assert_true(bee.is_visible_in_tree())
@@ -390,3 +390,32 @@ func test_bees_culling_keeps_notifier_visible_and_wakes_both_flying_sprites() ->
 	for bee: AnimatedSprite2D in visual._bees:
 		assert_true(bee.is_visible_in_tree())
 		assert_true(bee.is_playing())
+	visual.set_sheltered(true)
+	assert_false(visual.is_processing())
+	for bee: AnimatedSprite2D in visual._bees:
+		assert_false(bee.visible)
+		assert_false(bee.is_playing())
+	visual.set_sheltered(false)
+	for bee: AnimatedSprite2D in visual._bees:
+		assert_true(bee.visible)
+		assert_true(bee.is_playing())
+
+func test_bees_spread_across_wider_routes_without_duplicate_positions() -> void:
+	var hive: Beehive = _hive(Vector2(1608,408))
+	var visual: BeeVisualComponent = hive.bees
+	var notifier: VisibleOnScreenNotifier2D = visual.get_child(visual.get_child_count() - 1) as VisibleOnScreenNotifier2D
+	assert_false(hive.pollination.active())
+	visual._visibility(true)
+	var left: float = 0.0
+	var right: float = 0.0
+	for step: int in range(120):
+		visual._process(0.05)
+		var positions: Array[Vector2] = []
+		for bee: AnimatedSprite2D in visual._bees:
+			assert_false(positions.has(bee.position), "Each bee needs a separate route/phase")
+			positions.append(bee.position)
+			assert_true(notifier.rect.encloses(Rect2(bee.position - Vector2(8,8), Vector2(16,16))))
+			left = minf(left, bee.position.x)
+			right = maxf(right, bee.position.x)
+	assert_lt(left, -48.0, "Explore beyond the old small orbit to the left")
+	assert_gt(right, 48.0, "Explore beyond the old small orbit to the right")

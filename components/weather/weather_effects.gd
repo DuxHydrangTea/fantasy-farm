@@ -1,9 +1,11 @@
 class_name WeatherEffects
 extends Node2D
-## Bounded camera-relative decoration; only one weather renderer is active.
+## Cloud/wind paths stay in world space; only visible grid cells are drawn.
 const RAIN: Texture2D = preload("res://assets/Weather effects/Rain_Drop.png")
 const SPLASH: Texture2D = preload("res://assets/Weather effects/Rain_Drop_Impact.png")
 const CLOUDS: Texture2D = preload("res://assets/Weather effects/Clouds.png")
+const CLOUD_SPACING: Vector2 = Vector2(256, 192)
+const WIND_SPACING: Vector2 = Vector2(128, 112)
 var world: FarmWorld
 var active_weather: int = WeatherManager.Weather.SUNNY
 var strength: float = 0.0
@@ -58,6 +60,8 @@ func _finish_transition() -> void:
 func _activate(next: int) -> void:
 	active_weather = next
 	z_index = 1 if next == WeatherManager.Weather.CLOUDY else 100
+	if next == WeatherManager.Weather.CLOUDY or next == WeatherManager.Weather.WINDY:
+		position = Vector2.ZERO
 	if next == WeatherManager.Weather.WINDY:
 		wind_audio.play()
 	else:
@@ -69,11 +73,30 @@ func weather_tint() -> Color:
 
 func _process(delta: float) -> void:
 	_phase += delta
-	var camera: Camera2D = world.player.camera
-	_area = get_viewport_rect().size / camera.zoom
-	global_position = camera.get_screen_center_position()
+	if active_weather == WeatherManager.Weather.RAIN:
+		var camera: Camera2D = world.player.camera
+		_area = get_viewport_rect().size / camera.zoom
+		global_position = camera.get_screen_center_position()
 	wind_audio.volume_db = linear_to_db(maxf(0.0001, strength * 0.17))
 	queue_redraw()
+
+func _visible_cells(spacing: Vector2, drift: Vector2, padding: float) -> Rect2i:
+	# Camera changes only select cells; they never change a cell's path or phase.
+	var view: Rect2 = get_global_transform_with_canvas().affine_inverse() * get_viewport_rect()
+	view = view.grow(padding)
+	var start: Vector2i = Vector2i(((view.position - drift) / spacing).floor())
+	var end: Vector2i = Vector2i(((view.end - drift) / spacing).ceil()) + Vector2i.ONE
+	return Rect2i(start, end - start)
+
+func _cloud_point(cell: Vector2i) -> Vector2:
+	var seed: float = float(cell.x * 73 + cell.y * 137)
+	var jitter: Vector2 = Vector2(sin(seed) * 52.0, cos(seed * 1.7) * 38.0)
+	return Vector2(cell) * CLOUD_SPACING + Vector2(5, 1) * _phase + jitter
+
+func _wind_point(cell: Vector2i) -> Vector2:
+	var seed: float = float(cell.x * 107 + cell.y * 53)
+	var jitter: Vector2 = Vector2(sin(seed) * 32.0, cos(seed * 1.3) * 28.0)
+	return Vector2(cell) * WIND_SPACING + Vector2(100, 18) * _phase + jitter + Vector2(0, sin(_phase * 3 + seed) * 4)
 
 func _draw() -> void:
 	if strength <= 0.001:
@@ -90,13 +113,19 @@ func _draw() -> void:
 				var point: Vector2 = Vector2(fposmod(index * 137.3, extent.x), fposmod(index * 47.7, extent.y)) - extent * 0.5
 				draw_texture(_splashes[frame], point, Color(0.65, 0.82, 1.0, strength * 0.6))
 	elif active_weather == WeatherManager.Weather.CLOUDY:
-		for index: int in range(9):
-			var point: Vector2 = Vector2(fposmod(index * 173.7 + _phase * 5.0, extent.x + 220), fposmod(index * 97.3 + _phase, extent.y + 180)) - extent * 0.5 - Vector2(110, 90)
-			draw_texture_rect(_clouds[index % _clouds.size()], Rect2(point, Vector2(192, 144)), false, Color(0, 0, 0, 0.15 * strength))
+		var cells: Rect2i = _visible_cells(CLOUD_SPACING, Vector2(5, 1) * _phase, 160.0)
+		for y: int in range(cells.position.y, cells.end.y):
+			for x: int in range(cells.position.x, cells.end.x):
+				var cell: Vector2i = Vector2i(x, y)
+				var point: Vector2 = _cloud_point(cell) - Vector2(96, 72)
+				var index: int = posmod(x * 3 + y, _clouds.size())
+				draw_texture_rect(_clouds[index], Rect2(point, Vector2(192, 144)), false, Color(0, 0, 0, 0.15 * strength))
 
 	elif active_weather == WeatherManager.Weather.WINDY:
-		for index: int in range(12):
-			var point: Vector2 = Vector2(fposmod(index * 107.31 + _phase * 100.0, extent.x), fposmod(index * 51.73 + _phase * 18.0 + sin(_phase * 3 + index) * 4, extent.y)) - extent * 0.5
-			draw_set_transform(point, sin(_phase * 4 + index))
-			draw_rect(Rect2(-1, -0.5, 2, 1), Color(1.0, 0.67, 0.73, strength * 0.8))
+		var cells: Rect2i = _visible_cells(WIND_SPACING, Vector2(100, 18) * _phase, 40.0)
+		for y: int in range(cells.position.y, cells.end.y):
+			for x: int in range(cells.position.x, cells.end.x):
+				var cell: Vector2i = Vector2i(x, y)
+				draw_set_transform(_wind_point(cell), sin(_phase * 4 + float(x * 107 + y * 53)))
+				draw_rect(Rect2(-1, -0.5, 2, 1), Color(1.0, 0.67, 0.73, strength * 0.8))
 		draw_set_transform(Vector2.ZERO)

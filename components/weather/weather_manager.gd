@@ -10,6 +10,8 @@ var day_night: DayNightComponent
 var effects: WeatherEffects
 var hud: WeatherHUD
 var last_at: float = 0.0
+## Debug lighting preview only; never change the simulation clock or save timestamps.
+var debug_hour: int = -1
 var _rain_day: int = -9223372036854775807
 var _rain_columns: int = -1
 var _advancing: bool = false
@@ -46,8 +48,8 @@ func advance(timestamp: float) -> void:
 		current_weather = next
 		effects.transition_to(next)
 		weather_changed.emit(next)
-	day_night.refresh(timestamp, effects.weather_tint())
-	hud.refresh(timestamp)
+	day_night.refresh(display_timestamp(timestamp), effects.weather_tint())
+	hud.refresh(display_timestamp(timestamp))
 	_advancing = false
 
 func _apply_rain(timestamp: float) -> void:
@@ -83,6 +85,18 @@ func restore(data: Dictionary, timestamp: float) -> void:
 	_rain_day = -9223372036854775807
 	_rain_columns = -1
 
+func display_timestamp(timestamp: float) -> float:
+	if debug_hour < 0:
+		return timestamp
+	return timestamp - fposmod(timestamp + WeatherSchedule.UTC_OFFSET, 86400.0) + debug_hour * 3600.0
+
+func set_debug_hour(hour: int) -> void:
+	if not OS.is_debug_build() or hour < -1 or hour > 23:
+		return
+	debug_hour = hour
+	day_night.refresh(display_timestamp(last_at), effects.weather_tint())
+	hud.refresh(display_timestamp(last_at))
+
 func _process(_delta: float) -> void:
 	if day_night != null:
-		day_night.refresh(last_at, effects.weather_tint())
+		day_night.refresh(display_timestamp(last_at), effects.weather_tint())

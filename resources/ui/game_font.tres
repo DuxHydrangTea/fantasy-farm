@@ -1,7 +1,7 @@
 [gd_resource type="FontVariation" format=3 uid="uid://dodei4nophgsq"]
 
 [ext_resource type="FontFile" uid="uid://dnrmxogjymr7k" path="res://assets/Fonts/SVN-Determination Sans.ttf" id="1_7mk5s"]
-[ext_resource type="FontVariation" path="res://resources/ui/pixelify_sans.tres" id="2_utdux"]
+[ext_resource type="FontVariation" uid="uid://y8d1w1r3dstq" path="res://resources/ui/pixelify_sans.tres" id="2_utdux"]
 
 [resource]
 fallbacks = Array[Font]([ExtResource("2_utdux")])

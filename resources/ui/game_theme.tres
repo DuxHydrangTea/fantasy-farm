@@ -1,9 +1,9 @@
 [gd_resource type="Theme" format=3 uid="uid://c62o43wc52lav"]
 
 [ext_resource type="FontVariation" uid="uid://dodei4nophgsq" path="res://resources/ui/game_font.tres" id="1_font"]
-[ext_resource type="Texture2D" path="res://resources/ui/inventory_panel.tres" id="2_panel"]
-[ext_resource type="Texture2D" path="res://resources/ui/hotbar_slot.tres" id="3_button"]
-[ext_resource type="Texture2D" path="res://resources/ui/hotbar_selected.tres" id="4_pressed"]
+[ext_resource type="Texture2D" uid="uid://byaw201k0n0og" path="res://resources/ui/inventory_panel.tres" id="2_panel"]
+[ext_resource type="Texture2D" uid="uid://boox4awj25c4c" path="res://resources/ui/hotbar_slot.tres" id="3_button"]
+[ext_resource type="Texture2D" uid="uid://cswp0ogv7k338" path="res://resources/ui/hotbar_selected.tres" id="4_pressed"]
 
 [sub_resource type="StyleBoxTexture" id="Pressed"]
 texture = ExtResource("4_pressed")

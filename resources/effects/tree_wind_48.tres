@@ -1,7 +1,11 @@
-[gd_resource type="ShaderMaterial" format=3]
-[ext_resource type="Shader" path="res://shaders/plant_wind.gdshader" id="1_wind"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bshwdge4kp8fc"]
+
+[ext_resource type="Shader" uid="uid://dptyv5vecw4e6" path="res://shaders/plant_wind.gdshader" id="1_wind"]
+
 [resource]
 shader = ExtResource("1_wind")
 shader_parameter/plant_height = 48.0
 shader_parameter/amplitude = 1.1
 shader_parameter/speed = 1.1
+shader_parameter/anchor_visible_root = false
+shader_parameter/ground_y = 0.0

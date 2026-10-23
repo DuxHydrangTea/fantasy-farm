@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://bnkqgeiejfult"]
 
-[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="1_script"]
-[ext_resource type="Resource" path="res://items/animal_produces/horse_compost.tres" id="2_item"]
+[ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://slglfgo172ty" path="res://items/animal_produces/horse_compost.tres" id="2_item"]
 
 [resource]
 script = ExtResource("1_script")

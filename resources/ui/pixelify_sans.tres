@@ -1,6 +1,8 @@
-[gd_resource type="FontVariation" format=3]
-[ext_resource type="FontFile" path="res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf" id="1_font"]
-[ext_resource type="FontFile" path="res://assets/Fonts/Mouse_Meadow/MouseMeadow-Regular.ttf" id="2_fallback"]
+[gd_resource type="FontVariation" format=3 uid="uid://y8d1w1r3dstq"]
+
+[ext_resource type="FontFile" uid="uid://cweato48t7jwx" path="res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf" id="1_font"]
+[ext_resource type="FontFile" uid="uid://dc2liuf14m4pm" path="res://assets/Fonts/Mouse_Meadow/MouseMeadow-Regular.ttf" id="2_fallback"]
+
 [resource]
-base_font = ExtResource("1_font")
 fallbacks = Array[Font]([ExtResource("2_fallback")])
+base_font = ExtResource("1_font")

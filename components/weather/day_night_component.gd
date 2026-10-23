@@ -36,13 +36,14 @@ func _ready() -> void:
 	glow.fill = GradientTexture2D.FILL_RADIAL
 	glow.fill_from = Vector2(0.5, 0.5)
 	glow.fill_to = Vector2(0.5, 1.0)
+	# MIX darkens daylight when the lamp fades below the ambient brightness.
 	for anchor: Vector2 in world.night_light_positions:
 		var light: PointLight2D = PointLight2D.new()
 		light.position = anchor
 		light.texture = glow
 		light.texture_scale = 1.05
 		light.color = Color(1.0, 0.72, 0.36)
-		light.blend_mode = Light2D.BLEND_MODE_MIX
+		light.blend_mode = Light2D.BLEND_MODE_ADD
 		if world.night_light_positions.find(anchor) >= 4:
 			var lantern: Sprite2D = Sprite2D.new()
 			lantern.texture = preload("res://assets/Outdoor decoration/Lantern.png")
@@ -56,7 +57,7 @@ func _ready() -> void:
 		light.texture = glow
 		light.texture_scale = 0.55
 		light.color = Color(1.0, 0.78, 0.4)
-		light.blend_mode = Light2D.BLEND_MODE_MIX
+		light.blend_mode = Light2D.BLEND_MODE_ADD
 		world.land.sign.add_child(light)
 		lights.append(light)
 

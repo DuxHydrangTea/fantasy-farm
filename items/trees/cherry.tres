@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bvanc2qkjkaaw"]
 
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Texture2D" path="res://trees/textures/cherry_fruit.tres" id="icon"]
+[ext_resource type="Texture2D" uid="uid://4uftdktwb3yb" path="res://trees/textures/cherry_fruit.tres" id="icon"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
 
 [resource]
 script = ExtResource("script")
 item_id = &"cherry"
 display_name = "Cherry"
-item_type = 2
 icon = ExtResource("icon")
+item_type = 2
