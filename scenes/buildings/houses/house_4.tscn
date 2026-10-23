@@ -1,11 +1,28 @@
 [gd_scene format=3 uid="uid://cp4akcetkdos2"]
 
 [ext_resource type="Texture2D" uid="uid://bwsalljkamc2c" path="res://assets/Buildings/Buildings/Houses/Limestone/House_4_Limestone_Base_Black.png" id="1_texture"]
-[ext_resource type="Script" path="res://scenes/buildings/houses/house_4.gd" id="2_variant"]
+[ext_resource type="Script" uid="uid://bnv1k1kgpbtyu" path="res://scenes/buildings/houses/house_4.gd" id="2_variant"]
+[ext_resource type="Texture2D" uid="uid://dqh21imrnxfl1" path="res://assets/Buildings/House_Decor/Chimney_smoke_Anim.png" id="3_3ywfq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
 resource_local_to_scene = true
 size = Vector2(80, 20)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r5h7i"]
+texture = ExtResource("3_3ywfq")
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/animation_columns = 5
+0:0/animation_speed = 8.0
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/animation_frame_4/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vgjnj"]
+tile_size = Vector2i(4, 4)
+sources/0 = SubResource("TileSetAtlasSource_r5h7i")
 
 [node name="House4" type="StaticBody2D" unique_id=1008030250]
 texture_filter = 1
@@ -18,3 +35,7 @@ texture = ExtResource("1_texture")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=401865871]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_building")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=723612293]
+tile_map_data = PackedByteArray(0, 0, 10, 0, 238, 255, 0, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_vgjnj")
