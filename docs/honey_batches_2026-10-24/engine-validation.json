@@ -1,0 +1,497 @@
+{
+  "ok": true,
+  "project_path": "C:\\projects\\fantasy-farm\\.godot\\web-stage",
+  "static": {
+    "checked": 8,
+    "config_hint_count": 0,
+    "config_warning_count": 0,
+    "config_warnings": [],
+    "config_warnings_enabled": true,
+    "counts": {
+      "extensions": 0,
+      "plugins": 0,
+      "resources": 0,
+      "scenes": 0,
+      "scripts": 8,
+      "shaders": 0
+    },
+    "failed": [],
+    "failed_count": 0,
+    "instantiate": true,
+    "ok": 8,
+    "physics_layers": {
+      "2d": {
+        "layers": [
+          {
+            "bit": 1,
+            "name": "World",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 1
+          },
+          {
+            "bit": 2,
+            "name": "Player",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 2
+          },
+          {
+            "bit": 3,
+            "name": "Animal",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 4
+          },
+          {
+            "bit": 4,
+            "name": "Interactable",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 8
+          }
+        ]
+      },
+      "3d": {
+        "layers": []
+      },
+      "finding_count": 0,
+      "findings": [],
+      "truncated": false
+    },
+    "project_path": "res://components/bees/",
+    "scenes_instantiated": 0
+  },
+  "counts": {
+    "total": 26,
+    "errors": 0,
+    "parse_errors": 0,
+    "warnings": 26,
+    "info": 0
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "category": "group_ref",
+      "rule": "unknown_group",
+      "message": "`get_nodes_in_group()` uses the group `flower_gardens`, which nothing in this project ever joins: no `.tscn` node carries it in `groups=[\u2026]`, no script calls `add_to_group(\"flower_gardens\")`, and project.godot has no `[global_group]` entry for it. The call succeeds and returns nothing, so the feature just never happens. Groups this project provides: beehives.",
+      "file": "res://components/bees/apiary_system.gd",
+      "line": 19,
+      "suggested_fix": "Put the nodes in the group \u2014 `configure_node` with `{\"groups\": [\"flower_gardens\"]}`, the line `groups=[\"flower_gardens\"]` on the [node] header, or `add_to_group(\"flower_gardens\")` in `_ready()` \u2014 or fix the spelling. A group that only ever exists at runtime can also be declared under `[global_group]` in project.godot.",
+      "function": null,
+      "stack": [],
+      "raw": "",
+      "occurrences": 1,
+      "source": "lint"
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "\"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.",
+      "file": "res://persistence/save_repository.gd",
+      "line": 13,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: \"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.\n   at: GDScript::reload (res://persistence/save_repository.gd:13)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The signal \"item_acquired\" is declared but never explicitly used in the class.",
+      "file": "res://components/item_collector.gd",
+      "line": 3,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The signal \"item_acquired\" is declared but never explicitly used in the class.\n   at: GDScript::reload (res://components/item_collector.gd:3)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"seed\" has the same name as a built-in function.",
+      "file": "res://components/weather/weather_schedule.gd",
+      "line": 8,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_schedule.gd:8)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "res://resources/bees/beehive.tres:5 - ext_resource, invalid UID: uid://dfmbrigvsrn55 - using text path instead: res://items/honey/floral_honey.tres",
+      "file": "res://resources/bees/beehive.tres",
+      "line": 5,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: res://resources/bees/beehive.tres:5 - ext_resource, invalid UID: uid://dfmbrigvsrn55 - using text path instead: res://items/honey/floral_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "res://resources/bees/beehive.tres:7 - ext_resource, invalid UID: uid://2lqfpeyxh5qf - using text path instead: res://items/honey/sunflower_honey.tres",
+      "file": "res://resources/bees/beehive.tres",
+      "line": 7,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: res://resources/bees/beehive.tres:7 - ext_resource, invalid UID: uid://2lqfpeyxh5qf - using text path instead: res://items/honey/sunflower_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "res://resources/bees/beehive.tres:8 - ext_resource, invalid UID: uid://b3qqo73l1t5wh - using text path instead: res://items/honey/wild_honey.tres",
+      "file": "res://resources/bees/beehive.tres",
+      "line": 8,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: res://resources/bees/beehive.tres:8 - ext_resource, invalid UID: uid://b3qqo73l1t5wh - using text path instead: res://items/honey/wild_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/animals/animal_status_text.gd",
+      "line": 11,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:11)",
+      "occurrences": 2
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/animals/animal_status_text.gd",
+      "line": 13,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:13)",
+      "occurrences": 2
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/animals/animal_status_text.gd",
+      "line": 15,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:15)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/growth_schedule.gd",
+      "line": 30,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/growth_schedule.gd:30)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/player_navigation_component.gd",
+      "line": 293,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/player_navigation_component.gd:293)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"best\" is used before being assigned a value.",
+      "file": "res://components/interaction/interaction_resolver.gd",
+      "line": 64,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"best\" is used before being assigned a value.\n   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:64)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"best\" is used before being assigned a value.",
+      "file": "res://components/interaction/interaction_resolver.gd",
+      "line": 73,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"best\" is used before being assigned a value.\n   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:73)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The local variable \"clear\" is shadowing an already-declared function at line 62 in the current class.",
+      "file": "res://components/interaction/interaction_presenter.gd",
+      "line": 140,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The local variable \"clear\" is shadowing an already-declared function at line 62 in the current class.\n   at: GDScript::reload (res://components/interaction/interaction_presenter.gd:140)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The local variable \"body\" is shadowing an already-declared variable at line 12 in the current class.",
+      "file": "res://components/shop_ui.gd",
+      "line": 111,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The local variable \"body\" is shadowing an already-declared variable at line 12 in the current class.\n   at: GDScript::reload (res://components/shop_ui.gd:111)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/shop_ui.gd",
+      "line": 194,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/shop_ui.gd:194)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"sign\" has the same name as a built-in function.",
+      "file": "res://components/land/land_expansion_component.gd",
+      "line": 12,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"sign\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/land/land_expansion_component.gd:12)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"seed\" has the same name as a built-in function.",
+      "file": "res://components/weather/weather_effects.gd",
+      "line": 93,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_effects.gd:93)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"seed\" has the same name as a built-in function.",
+      "file": "res://components/weather/weather_effects.gd",
+      "line": 98,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_effects.gd:98)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "Integer division. Decimal part will be discarded.",
+      "file": "res://components/weather/weather_hud.gd",
+      "line": 116,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/weather/weather_hud.gd:116)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"seed\" has the same name as a built-in function.",
+      "file": "res://components/farming_controller.gd",
+      "line": 73,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/farming_controller.gd:73)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"nearest\" is used before being assigned a value.",
+      "file": "res://components/bees/apiary_system.gd",
+      "line": 65,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"nearest\" is used before being assigned a value.\n   at: GDScript::reload (res://components/bees/apiary_system.gd:65)",
+      "occurrences": 2
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The function parameter \"seed\" has the same name as a built-in function.",
+      "file": "res://components/flowers/flower_pot.gd",
+      "line": 32,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The function parameter \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/flowers/flower_pot.gd:32)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "The variable \"seed\" has the same name as a built-in function.",
+      "file": "res://components/flowers/flower_pot.gd",
+      "line": 39,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/flowers/flower_pot.gd:39)",
+      "occurrences": 1
+    },
+    {
+      "severity": "warning",
+      "category": "unknown",
+      "message": "\"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.",
+      "file": "res://persistence/save_manager.gd",
+      "line": 83,
+      "function": null,
+      "stack": [],
+      "suggested_fix": "Open the referenced file:line, read the message, and fix the offending statement. Re-run to confirm the diagnostic clears.",
+      "raw": "WARNING: \"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.\n   at: GDScript::reload (res://persistence/save_manager.gd:83)",
+      "occurrences": 1
+    }
+  ],
+  "lint": {
+    "ran": true,
+    "ok": true,
+    "counts": {
+      "total": 1,
+      "errors": 0,
+      "warnings": 1,
+      "parse_errors": 0
+    },
+    "categories": {
+      "godot3_api": 0,
+      "godot3_shader": 0,
+      "inference": 0,
+      "node_ref": 0,
+      "unique_name": 0,
+      "signal_target": 0,
+      "missing_resource": 0,
+      "input_action": 0,
+      "group_ref": 1,
+      "res_path": 0,
+      "animation_ref": 0
+    },
+    "scan_summary": {
+      "gd": 8,
+      "tscn": 0,
+      "tres": 0,
+      "shader": 0,
+      "project_godot": 1,
+      "scene_script_pairs": 0,
+      "node_paths_checked": 0,
+      "skipped_dynamic_paths": 0,
+      "skipped_gdignore_dirs": 0
+    }
+  },
+  "node_config": {
+    "ran": true,
+    "counts": {
+      "warnings": 0,
+      "hints": 0
+    },
+    "hints": [],
+    "physics_layers": {
+      "2d": {
+        "layers": [
+          {
+            "bit": 1,
+            "name": "World",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 1
+          },
+          {
+            "bit": 2,
+            "name": "Player",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 2
+          },
+          {
+            "bit": 3,
+            "name": "Animal",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 4
+          },
+          {
+            "bit": 4,
+            "name": "Interactable",
+            "occupied_by": [],
+            "occupied_count": 0,
+            "scanned_by": [],
+            "scanned_count": 0,
+            "value": 8
+          }
+        ]
+      },
+      "3d": {
+        "layers": []
+      },
+      "finding_count": 0,
+      "findings": [],
+      "truncated": false
+    }
+  },
+  "godot": {
+    "returncode": 0,
+    "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[INFO] Operation: check_project\n[INFO] Checking project resources under: res://components/bees/\n[INFO] Check complete. Checked 8 files, 0 failed to load.\n{\"checked\":8,\"config_hint_count\":0,\"config_warning_count\":0,\"config_warnings\":[],\"config_warnings_enabled\":true,\"counts\":{\"extensions\":0,\"plugins\":0,\"resources\":0,\"scenes\":0,\"scripts\":8,\"shaders\":0},\"failed\":[],\"failed_count\":0,\"instantiate\":true,\"ok\":8,\"physics_layers\":{\"2d\":{\"layers\":[{\"bit\":1,\"name\":\"World\",\"occupied_by\":[],\"occupied_count\":0,\"scanned_by\":[],\"scanned_count\":0,\"value\":1},{\"bit\":2,\"name\":\"Player\",\"occupied_by\":[],\"occupied_count\":0,\"scanned_by\":[],\"scanned_count\":0,\"value\":2},{\"bit\":3,\"name\":\"Animal\",\"occupied_by\":[],\"occupied_count\":0,\"scanned_by\":[],\"scanned_count\":0,\"value\":4},{\"bit\":4,\"name\":\"Interactable\",\"occupied_by\":[],\"occupied_count\":0,\"scanned_by\":[],\"scanned_count\":0,\"value\":8}]},\"3d\":{\"layers\":[]},\"finding_count\":0,\"findings\":[],\"truncated\":false},\"project_path\":\"res://components/bees/\",\"scenes_instantiated\":0}\n",
+    "stderr": "WARNING: \"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.\n   at: GDScript::reload (res://persistence/save_repository.gd:13)\nWARNING: The signal \"item_acquired\" is declared but never explicitly used in the class.\n   at: GDScript::reload (res://components/item_collector.gd:3)\nWARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_schedule.gd:8)\nWARNING: res://resources/bees/beehive.tres:5 - ext_resource, invalid UID: uid://dfmbrigvsrn55 - using text path instead: res://items/honey/floral_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)\nWARNING: res://resources/bees/beehive.tres:7 - ext_resource, invalid UID: uid://2lqfpeyxh5qf - using text path instead: res://items/honey/sunflower_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)\nWARNING: res://resources/bees/beehive.tres:8 - ext_resource, invalid UID: uid://b3qqo73l1t5wh - using text path instead: res://items/honey/wild_honey.tres\n   at: load (scene/resources/resource_format_text.cpp:501)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:11)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:11)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:13)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:13)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/animals/animal_status_text.gd:15)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/growth_schedule.gd:30)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/player_navigation_component.gd:293)\nWARNING: The variable \"best\" is used before being assigned a value.\n   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:64)\nWARNING: The variable \"best\" is used before being assigned a value.\n   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:73)\nWARNING: The local variable \"clear\" is shadowing an already-declared function at line 62 in the current class.\n   at: GDScript::reload (res://components/interaction/interaction_presenter.gd:140)\nWARNING: The local variable \"body\" is shadowing an already-declared variable at line 12 in the current class.\n   at: GDScript::reload (res://components/shop_ui.gd:111)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/shop_ui.gd:194)\nWARNING: The variable \"sign\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/land/land_expansion_component.gd:12)\nWARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_effects.gd:93)\nWARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/weather/weather_effects.gd:98)\nWARNING: Integer division. Decimal part will be discarded.\n   at: GDScript::reload (res://components/weather/weather_hud.gd:116)\nWARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/farming_controller.gd:73)\nWARNING: The variable \"nearest\" is used before being assigned a value.\n   at: GDScript::reload (res://components/bees/apiary_system.gd:65)\nWARNING: The variable \"nearest\" is used before being assigned a value.\n   at: GDScript::reload (res://components/bees/apiary_system.gd:65)\nWARNING: The function parameter \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/flowers/flower_pot.gd:32)\nWARNING: The variable \"seed\" has the same name as a built-in function.\n   at: GDScript::reload (res://components/flowers/flower_pot.gd:39)\nWARNING: \"await\" keyword is unnecessary because the expression isn't a coroutine nor a signal.\n   at: GDScript::reload (res://persistence/save_manager.gd:83)\n"
+  },
+  "csharp": {
+    "requested": false,
+    "ran": false,
+    "projects": [],
+    "ok": true
+  }
+}

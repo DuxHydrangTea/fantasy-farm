@@ -14,7 +14,17 @@ var _elapsed: float = 0.0
 
 func _ready() -> void:
 	UIScaleComponent.attach(self, root)
+	root.resized.connect(_fit_layout)
+	_fit_layout()
 	root.hide()
+
+func _fit_layout() -> void:
+	var touch: bool = MobileLayout.is_touch(get_viewport())
+	var panel: PanelContainer = title.get_parent().get_parent() as PanelContainer
+	panel.custom_minimum_size.x = 320 if touch else 340
+	title.add_theme_font_size_override("font_size", 20 if touch else 24)
+	for caption: Label in [maturity_label, lifetime_label, produce_label, state_label]:
+		caption.add_theme_font_size_override("font_size", 18 if touch else 20)
 
 func inspect(target: AnimalActor) -> void:
 	animal = target

@@ -1,0 +1,79 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-o84qm_ls] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_unified_interaction.gd
+* test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and_one_outline
+* test_e_requires_facing_and_obstacle_clearance_and_never_falls_back_to_trough
+* test_badge_has_live_stock_and_auto_fill_without_selecting_feed
+    --- Awaiting 0.9 seconds  ---
+* test_e_water_finds_can_anywhere_in_bag_and_full_trough_blocks_lower_targets
+    --- Awaiting 0.9 seconds  ---
+* test_click_npc_navigates_around_collision_and_opens_only_at_arrival
+    --- Awaiting 4.0 seconds  ---
+* test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority
+    --- Awaiting 3.0 seconds  ---
+* test_repeated_clicks_on_same_npc_keep_approaching_without_pauses_or_duplicate_actions
+    --- Awaiting 1.5 seconds  ---
+* test_new_focus_keyboard_and_deleted_target_cancel_queued_interaction
+    --- Awaiting 0.8 seconds  ---
+* test_unreachable_click_does_not_open_or_harvest
+    --- Awaiting 5.0 seconds  ---
+* test_land_price_badge_translation_and_confirm_only_debits
+* test_click_mature_crop_walks_then_harvests_once_and_empty_ground_only_focuses
+    --- Awaiting 3.0 seconds  ---
+    --- Awaiting 1.5 seconds  ---
+* test_animal_is_only_targeted_for_available_direct_output_and_collection_does_not_freeze_it
+12/12 passed.
+
+
+res://tests/integration/test_animal_lifecycle.gd
+* test_only_post_maturity_time_counts_towards_first_product
+* test_empty_needs_pause_production_without_reset_or_retroactive_refill
+* test_late_refill_syncs_elapsed_starvation_before_restoring_food
+* test_supply_expires_before_maturity_so_no_productive_time_is_credited
+* test_one_large_tick_and_split_ticks_agree_at_maturity_and_starvation
+* test_repeated_or_backward_timestamps_cannot_duplicate_age_or_products
+* test_large_catchup_is_stacked_in_one_pickup_and_survives_animal_removal
+* test_missing_or_invalid_juvenile_art_preserves_individual_adult_skin
+* test_real_juvenile_sprite_switches_to_adult_skin_while_idle
+* test_sprite_transition_waits_for_sleep_and_standing_to_finish
+* test_all_species_use_their_configured_produce<parameterized>
+    - params[0](chicken)
+    - params[1](cow)
+    - params[2](duck)
+    - params[3](goose)
+    - params[4](pig)
+    - params[5](sheep)
+    - params[6](horse)
+* test_direct_collection_mode_keeps_output_until_inventory_accepts_it
+* test_collecting_a_pile_allows_next_cycle_to_create_a_new_one
+* test_single_offline_jump_credits_only_adult_living_interval_then_retires_once
+* test_split_and_single_ticks_agree_across_maturity_and_death
+* test_starvation_does_not_delay_death_and_cannot_create_posthumous_produce
+* test_death_drops_completed_direct_collection_stock_and_preserves_existing_pile
+* test_actual_day_boundary_does_not_credit_the_juvenile_day
+18/18 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                30
+Passing Tests        30
+Asserts             238
+Time              9.553s
+
+
+---- All tests passed! ----
+

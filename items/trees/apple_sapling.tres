@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://vh45my6tmc8i"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://gi8573nwgyvm"]
 
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_01.tres" id="icon"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Resource" uid="uid://mi1y60hxvgd0" path="res://trees/definitions/apple.tres" id="tree"]
+[ext_resource type="Resource" uid="uid://ixtwgxusnk1r" path="res://trees/definitions/apple.tres" id="tree"]
 
 [resource]
 script = ExtResource("script")
@@ -12,3 +12,4 @@ description = "Plant in the left orchard. Water once to start growth."
 icon = ExtResource("icon")
 item_type = 1
 crop = ExtResource("tree")
+max_stack = 999

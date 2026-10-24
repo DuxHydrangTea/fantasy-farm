@@ -1,0 +1,22 @@
+{
+  "phase": "M2",
+  "date": "2026-10-23",
+  "gut_suites": 12,
+  "gut_tests": 102,
+  "gut_passed": 102,
+  "assertions": 4072,
+  "native_touch_checks": 22,
+  "native_touch_passed": 22,
+  "native_input_method": "Input.parse_input_event: ScreenTouch/ScreenDrag with engine mouse emulation enabled",
+  "landscape_viewports": [[667, 375], [740, 360], [844, 390]],
+  "point_scales": [1, 3],
+  "locales": ["en", "vi"],
+  "lint_errors": 0,
+  "lint_warnings": 0,
+  "release_export": "passed",
+  "browser_checks": ["release reload", "mouse drag of touch joystick moves player", "Bag opens", "Auto/On/Off/Auto switches overlay", "no collected console warnings or errors"],
+  "browser_native_touch_tested": false,
+  "physical_android_tested": false,
+  "physical_iphone_tested": false,
+  "remaining": ["physical device acceptance", "M3 performance and lifecycle", "persistent input-mode setting in menu phase"]
+}

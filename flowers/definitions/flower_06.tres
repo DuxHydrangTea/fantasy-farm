@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="FlowerDefinition" format=3 uid="uid://dnqr0pyugghud"]
+[gd_resource type="Resource" script_class="FlowerDefinition" format=3 uid="uid://cxynth2k0rmq8"]
 
-[ext_resource type="Resource" uid="uid://ckkhta3bhxbmy" path="res://items/flowers/flower_06.tres" id="1_6kmm2"]
+[ext_resource type="Resource" uid="uid://c0oso8fnhia5f" path="res://items/flowers/flower_06.tres" id="1_6kmm2"]
 [ext_resource type="Script" uid="uid://hvr7d106wdyc" path="res://scripts/flower_definition.gd" id="2_bh0d6"]
 [ext_resource type="SpriteFrames" uid="uid://cxmx4rwj3653f" path="res://flowers/frames/flower_06_stage_1.tres" id="3_xubx1"]
 [ext_resource type="SpriteFrames" uid="uid://tp30nmxul31f" path="res://flowers/frames/flower_06_stage_2.tres" id="4_xkvd8"]
@@ -13,4 +13,6 @@ script = ExtResource("2_bh0d6")
 flower_id = &"flower_06"
 display_name = "Flower 06"
 stage_frames = Array[SpriteFrames]([ExtResource("3_xubx1"), ExtResource("4_xkvd8"), ExtResource("5_wvypn"), ExtResource("6_bm5pi"), ExtResource("7_cmaak")])
+growth_seconds = 14400.0
 harvest_item = ExtResource("1_6kmm2")
+harvest_amount = 100

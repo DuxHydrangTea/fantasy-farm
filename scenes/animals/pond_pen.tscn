@@ -1,29 +1,22 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dt652hcc7i8t1"]
 
-[ext_resource type="Script" path="res://components/animals/pond_pen.gd" id="1_gvknp"]
-[ext_resource type="PackedScene" path="res://scenes/animals/feed_trough.tscn" id="2_b5n8e"]
-[ext_resource type="Script" path="res://components/animals/animal_trough.gd" id="3_e01s2"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="4_dkfll"]
+[ext_resource type="Script" uid="uid://deod30tqmk35b" path="res://components/animals/pond_pen.gd" id="1_gvknp"]
+[ext_resource type="PackedScene" uid="uid://cn2ms4ioidlvh" path="res://scenes/animals/feed_trough.tscn" id="2_b5n8e"]
+[ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="4_dkfll"]
 [ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="5_g1m05"]
-[ext_resource type="PackedScene" path="res://scenes/animals/water_trough.tscn" id="6_kff10"]
+[ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="6_kff10"]
 [ext_resource type="PackedScene" path="res://scenes/animals/duck.tscn" id="7_1egdl"]
-[ext_resource type="Script" path="res://components/animals/animal_actor.gd" id="8_0xrma"]
-[ext_resource type="Resource" path="res://animals/definitions/duck.tres" id="9_sokjx"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_01_frames.tres" id="10_eh0fk"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_02_frames.tres" id="11_242hp"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_03_frames.tres" id="12_m1um4"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_04_frames.tres" id="13_jvg15"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_in_a_hat_frames.tres" id="14_34fvk"]
+[ext_resource type="SpriteFrames" uid="uid://0njsy44k5n0o" path="res://sprite_frames/animals/duck_02_frames.tres" id="11_242hp"]
+[ext_resource type="SpriteFrames" uid="uid://bom085xef1tkc" path="res://sprite_frames/animals/duck_03_frames.tres" id="12_m1um4"]
+[ext_resource type="SpriteFrames" uid="uid://cnlhp7wsefpx3" path="res://sprite_frames/animals/duck_04_frames.tres" id="13_jvg15"]
+[ext_resource type="SpriteFrames" uid="uid://s4xwhmtcqa3j" path="res://sprite_frames/animals/duck_in_a_hat_frames.tres" id="14_34fvk"]
 [ext_resource type="PackedScene" path="res://scenes/animals/goose.tscn" id="15_s3yga"]
-[ext_resource type="Resource" path="res://animals/definitions/goose.tres" id="16_e41cn"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_01_frames.tres" id="17_2b1w4"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_02_frames.tres" id="18_pkhdw"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_03_frames.tres" id="19_u4fm7"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_04_frames.tres" id="20_u4bip"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_05_frames.tres" id="21_wkb2v"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_06_frames.tres" id="22_483df"]
-[ext_resource type="PackedScene" path="res://scenes/objects/item_pickup.tscn" id="23_8e3lu"]
-[ext_resource type="Script" path="res://components/item_pickup.gd" id="24_i5n8y"]
+[ext_resource type="SpriteFrames" uid="uid://muljw1afcina" path="res://sprite_frames/animals/goose_02_frames.tres" id="18_pkhdw"]
+[ext_resource type="SpriteFrames" uid="uid://bd3d73n4u1eyh" path="res://sprite_frames/animals/goose_03_frames.tres" id="19_u4fm7"]
+[ext_resource type="SpriteFrames" uid="uid://bkanqk6d6e8qt" path="res://sprite_frames/animals/goose_04_frames.tres" id="20_u4bip"]
+[ext_resource type="SpriteFrames" uid="uid://dj837w0emrfc0" path="res://sprite_frames/animals/goose_05_frames.tres" id="21_wkb2v"]
+[ext_resource type="SpriteFrames" uid="uid://dpe7b8k8lfoi5" path="res://sprite_frames/animals/goose_06_frames.tres" id="22_483df"]
+[ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="23_8e3lu"]
 
 [sub_resource type="AtlasTexture" id="Full"]
 atlas = ExtResource("4_dkfll")
@@ -47,159 +40,90 @@ script = ExtResource("1_gvknp")
 persistent_id = &"waterfowl_pen_01"
 bounds = Rect2(0, 0, 384, 272)
 
-[node name="FeedTrough" type="StaticBody2D" parent="." unique_id=624608384 instance=ExtResource("2_b5n8e")]
-texture_filter = 1
+[node name="FeedTrough" parent="." unique_id=624608384 instance=ExtResource("2_b5n8e")]
 position = Vector2(48, 24)
-script = ExtResource("3_e01s2")
 persistent_id = &"pond_feedtrough"
-kind = 0
-capacity = 600
+capacity = 1200.0
 stock = 600
 allowed_species = Array[int]([1, 5])
-access_offsets = Array[Vector2]([Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)])
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
-feed_item = ExtResource("5_g1m05")
 
-[node name="WaterTrough" type="StaticBody2D" parent="." unique_id=684452871 instance=ExtResource("6_kff10")]
-texture_filter = 1
+[node name="WaterTrough" parent="." unique_id=684452871 instance=ExtResource("6_kff10")]
 position = Vector2(112, 24)
-script = ExtResource("3_e01s2")
 persistent_id = &"pond_watertrough"
-capacity = 600
+capacity = 1200.0
 stock = 600
 allowed_species = Array[int]([1, 5])
 full_texture = SubResource("AtlasTexture_no06q")
 empty_texture = SubResource("AtlasTexture_qanod")
 
-[node name="Duck_1" type="CharacterBody2D" parent="." unique_id=877260834 instance=ExtResource("7_1egdl")]
-texture_filter = 1
+[node name="Duck_1" parent="." unique_id=877260834 instance=ExtResource("7_1egdl")]
 position = Vector2(72, 40)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_duck_01"
-definition = ExtResource("9_sokjx")
-skin_frames = ExtResource("10_eh0fk")
 initial_age_seconds = 120.0
 
-[node name="Duck_2" type="CharacterBody2D" parent="." unique_id=1389559881 instance=ExtResource("7_1egdl")]
-texture_filter = 1
+[node name="Duck_2" parent="." unique_id=1389559881 instance=ExtResource("7_1egdl")]
 position = Vector2(152, 72)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_duck_02"
-definition = ExtResource("9_sokjx")
 skin_frames = ExtResource("11_242hp")
 initial_age_seconds = 120.0
 
-[node name="Duck_3" type="CharacterBody2D" parent="." unique_id=1507268649 instance=ExtResource("7_1egdl")]
-texture_filter = 1
+[node name="Duck_3" parent="." unique_id=1507268649 instance=ExtResource("7_1egdl")]
 position = Vector2(120, 200)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_duck_03"
-definition = ExtResource("9_sokjx")
 skin_frames = ExtResource("12_m1um4")
 initial_age_seconds = 120.0
 
-[node name="Duck_4" type="CharacterBody2D" parent="." unique_id=842589534 instance=ExtResource("7_1egdl")]
-texture_filter = 1
+[node name="Duck_4" parent="." unique_id=842589534 instance=ExtResource("7_1egdl")]
 position = Vector2(304, 160)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_duck_04"
-definition = ExtResource("9_sokjx")
 skin_frames = ExtResource("13_jvg15")
 initial_age_seconds = 120.0
 
-[node name="Duck_5" type="CharacterBody2D" parent="." unique_id=1863409276 instance=ExtResource("7_1egdl")]
-texture_filter = 1
+[node name="Duck_5" parent="." unique_id=1863409276 instance=ExtResource("7_1egdl")]
 position = Vector2(208, 88)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_duck_05"
-definition = ExtResource("9_sokjx")
 skin_frames = ExtResource("14_34fvk")
 initial_age_seconds = 120.0
 
-[node name="Goose_1" type="CharacterBody2D" parent="." unique_id=1367482854 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_1" parent="." unique_id=1367482854 instance=ExtResource("15_s3yga")]
 position = Vector2(56, 72)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_01"
-definition = ExtResource("16_e41cn")
-skin_frames = ExtResource("17_2b1w4")
 initial_age_seconds = 120.0
 
-[node name="Goose_2" type="CharacterBody2D" parent="." unique_id=1891998967 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_2" parent="." unique_id=1891998967 instance=ExtResource("15_s3yga")]
 position = Vector2(120, 40)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_02"
-definition = ExtResource("16_e41cn")
 skin_frames = ExtResource("18_pkhdw")
 initial_age_seconds = 120.0
 
-[node name="Goose_3" type="CharacterBody2D" parent="." unique_id=1005061667 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_3" parent="." unique_id=1005061667 instance=ExtResource("15_s3yga")]
 position = Vector2(168, 24)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_03"
-definition = ExtResource("16_e41cn")
 skin_frames = ExtResource("19_u4fm7")
 initial_age_seconds = 120.0
 
-[node name="Goose_4" type="CharacterBody2D" parent="." unique_id=1844005527 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_4" parent="." unique_id=1844005527 instance=ExtResource("15_s3yga")]
 position = Vector2(200, 88)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_04"
-definition = ExtResource("16_e41cn")
 skin_frames = ExtResource("20_u4bip")
 initial_age_seconds = 120.0
 
-[node name="Goose_5" type="CharacterBody2D" parent="." unique_id=1901283590 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_5" parent="." unique_id=1901283590 instance=ExtResource("15_s3yga")]
 position = Vector2(56, 104)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_05"
-definition = ExtResource("16_e41cn")
 skin_frames = ExtResource("21_wkb2v")
 initial_age_seconds = 120.0
 
-[node name="Goose_6" type="CharacterBody2D" parent="." unique_id=331113009 instance=ExtResource("15_s3yga")]
-texture_filter = 1
+[node name="Goose_6" parent="." unique_id=331113009 instance=ExtResource("15_s3yga")]
 position = Vector2(136, 72)
-collision_layer = 4
-motion_mode = 1
-script = ExtResource("8_0xrma")
 persistent_id = &"pond_goose_06"
-definition = ExtResource("16_e41cn")
 skin_frames = ExtResource("22_483df")
 initial_age_seconds = 120.0
 
-[node name="PoultryFeed" type="Area2D" parent="." unique_id=1466488313 instance=ExtResource("23_8e3lu")]
-texture_filter = 1
+[node name="PoultryFeed" parent="." unique_id=1466488313 instance=ExtResource("23_8e3lu")]
 position = Vector2(24, 40)
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("24_i5n8y")
 persistent_id = &"pond_feed_supply"
 item = ExtResource("5_g1m05")
 amount = 5

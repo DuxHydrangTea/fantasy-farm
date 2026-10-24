@@ -108,7 +108,7 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 	outline.show()
 	var action: String = target.action_text()
 	keycap.text = GameText.action_key(player.state.action_harvest)
-	keycap.visible = not walking
+	keycap.visible = not walking and not MobileLayout.is_touch(get_viewport())
 	label.text = tr("Walking to: {action}").format({"action":action}) if walking else action
 	if not feedback.is_empty():
 		label.text += "\n" + tr(feedback)
@@ -120,7 +120,7 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 	badge.reset_size()
 	var local_rect: Rect2 = resolver.visual_rect(target)
 	var world_anchor: Vector2 = sprite.to_global(Vector2(local_rect.get_center().x,local_rect.position.y))
-	var screen: Vector2 = player.get_canvas_transform() * world_anchor / scale
+	var screen: Vector2 = player.get_canvas_transform() * world_anchor / scale - root.position
 	var position: Vector2 = screen - Vector2(badge.size.x * 0.5,badge.size.y + 12)
 	badge.position = _place_badge(position,screen).round()
 	badge.show()
@@ -129,9 +129,18 @@ func _place_badge(preferred: Vector2, anchor: Vector2) -> Vector2:
 	var occupied: Array[Rect2] = []
 	if is_instance_valid(_hotbar) and _hotbar.root.visible:
 		occupied.append(_ui_rect(_hotbar.slots.get_parent() as Control,_hotbar).grow(8))
-	var inspector: AnimalInfoPanel = player.context_bars.animal_info
-	if inspector.root.visible:
-		occupied.append(_ui_rect(inspector.title.get_parent().get_parent() as Control,inspector).grow(6))
+	var world: FarmWorld = player.get_parent() as FarmWorld
+	if world != null:
+		if world.objective_ui != null and world.objective_ui.hud.is_visible_in_tree():
+			occupied.append(_ui_rect(world.objective_ui.hud, world.objective_ui).grow(8))
+		if world.tutorial_hints != null and world.tutorial_hints.button.is_visible_in_tree():
+			occupied.append(_ui_rect(world.tutorial_hints.button, world.objective_ui).grow(8))
+		if world.weather != null and world.weather.hud != null:
+			var weather_hud: WeatherHUD = world.weather.hud
+			if weather_hud.label.is_visible_in_tree():
+				occupied.append(_ui_rect(weather_hud.label.get_parent() as Control, weather_hud).grow(8))
+			if is_instance_valid(weather_hud.debug_bar) and weather_hud.debug_bar.is_visible_in_tree():
+				occupied.append(_ui_rect(weather_hud.debug_bar, weather_hud).grow(8))
 	var choices: Array[Vector2] = [preferred, anchor + Vector2(-badge.size.x * 0.5,24), Vector2(8,preferred.y), Vector2(root.size.x-badge.size.x-8,preferred.y), Vector2(8,root.size.y-badge.size.y-128)]
 	for rect: Rect2 in occupied:
 		choices.append(Vector2(rect.end.x + 8,preferred.y))
@@ -152,7 +161,7 @@ func _place_badge(preferred: Vector2, anchor: Vector2) -> Vector2:
 func _ui_rect(control: Control, canvas: CanvasLayer) -> Rect2:
 	var rect: Rect2 = control.get_global_rect()
 	var factor: Vector2 = canvas.scale / scale
-	return Rect2(rect.position * factor,rect.size * factor)
+	return Rect2(rect.position * factor - root.position,rect.size * factor)
 
 func _exit_tree() -> void:
 	clear()

@@ -80,6 +80,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	set_process(true)
 	get_viewport().set_input_as_handled()
 
+func pinch(ratio: float) -> void:
+	if selection.is_menu_open() or not is_finite(ratio) or ratio <= 0.0:
+		return
+	_target_zoom = _clamp_zoom(_target_zoom * ratio)
+	set_process(true)
+
 # Hệ số nội suy a = 1 - exp(-k * delta) làm khoảng cách tới zoom đích giảm theo hàm mũ.
 # Với đích cố định, sau cùng một khoảng thời gian, mức tiến gần đích gần như không phụ thuộc FPS.
 # Lerp với một hệ số cố định mỗi frame sẽ nhanh hơn trên máy FPS cao; k*delta còn có thể

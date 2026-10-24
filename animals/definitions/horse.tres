@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://co07tj7pjy0hv"]
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://c5fa8i38audfc"]
 
 [ext_resource type="SpriteFrames" uid="uid://dqt8ftbnc07ln" path="res://sprite_frames/animals/horse_01_frames.tres" id="1_0h4fm"]
 [ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="2_gvvte"]
-[ext_resource type="Resource" uid="uid://bnkqgeiejfult" path="res://animals/productions/horse_compost_production.tres" id="3_production"]
+[ext_resource type="Resource" uid="uid://bqp28fmdubflk" path="res://animals/productions/horse_compost_production.tres" id="3_production"]
 
 [resource]
 script = ExtResource("2_gvvte")
 animal_id = &"horse"
 display_name = "Horse"
 species = 6
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
 adult_frames = ExtResource("1_0h4fm")
 production = ExtResource("3_production")

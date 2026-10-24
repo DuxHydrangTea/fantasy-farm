@@ -1,0 +1,317 @@
+{
+  "source_texture": "assets/Outdoor decoration/Outdoor_Decor.png",
+  "runtime_uses_original_texture": true,
+  "diagnostic_only_texture": "resources/grass/farm_grass_atlas.png",
+  "source_sha256": "a8701a589560c54d1b99507e0fa3f62318ab0bdb630b9d3e906cbd91349e2f3a",
+  "diagnostic_sha256": "9028ed555a6720f55c197b14d6bfb4ca14d6adb3512c799ced6a7e73abdfecce",
+  "trial_region": [
+    1008,
+    592,
+    384,
+    272
+  ],
+  "types": [
+    {
+      "coords": [
+        6,
+        2
+      ],
+      "fps": 0,
+      "frames": 8,
+      "id": "farm_grass_6_2",
+      "opaque_bounds": [
+        2,
+        1,
+        11,
+        13
+      ],
+      "path": "res://assets/Outdoor decoration/Outdoor_Decor.png",
+      "root_y": 14,
+      "row": 0,
+      "size": [
+        16,
+        16
+      ],
+      "source_region": [
+        96,
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "coords": [
+        6,
+        3
+      ],
+      "fps": 0,
+      "frames": 8,
+      "id": "farm_grass_6_3",
+      "opaque_bounds": [
+        2,
+        1,
+        12,
+        13
+      ],
+      "path": "res://assets/Outdoor decoration/Outdoor_Decor.png",
+      "root_y": 14,
+      "row": 1,
+      "size": [
+        16,
+        16
+      ],
+      "source_region": [
+        96,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "coords": [
+        7,
+        3
+      ],
+      "fps": 0,
+      "frames": 8,
+      "id": "farm_grass_7_3",
+      "opaque_bounds": [
+        3,
+        1,
+        10,
+        14
+      ],
+      "path": "res://assets/Outdoor decoration/Outdoor_Decor.png",
+      "root_y": 15,
+      "row": 2,
+      "size": [
+        16,
+        16
+      ],
+      "source_region": [
+        112,
+        48,
+        16,
+        16
+      ]
+    },
+    {
+      "coords": [
+        8,
+        3
+      ],
+      "fps": 0,
+      "frames": 8,
+      "id": "farm_grass_8_3",
+      "opaque_bounds": [
+        3,
+        1,
+        11,
+        14
+      ],
+      "path": "res://assets/Outdoor decoration/Outdoor_Decor.png",
+      "root_y": 15,
+      "row": 3,
+      "size": [
+        16,
+        16
+      ],
+      "source_region": [
+        128,
+        48,
+        16,
+        16
+      ]
+    }
+  ],
+  "candidate_count": 13,
+  "selected": [
+    {
+      "cell": [
+        342,
+        186
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1370.0,
+        746.0
+      ]
+    },
+    {
+      "cell": [
+        345,
+        153
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1382.0,
+        614.0
+      ]
+    },
+    {
+      "cell": [
+        344,
+        204
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1378.0,
+        818.0
+      ]
+    },
+    {
+      "cell": [
+        345,
+        210
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1382.0,
+        842.0
+      ]
+    },
+    {
+      "cell": [
+        340,
+        213
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1362.0,
+        854.0
+      ]
+    },
+    {
+      "cell": [
+        337,
+        213
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1350.0,
+        854.0
+      ]
+    },
+    {
+      "cell": [
+        256,
+        212
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1026.0,
+        850.0
+      ]
+    },
+    {
+      "cell": [
+        317,
+        206
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1270.0,
+        826.0
+      ]
+    },
+    {
+      "cell": [
+        323,
+        204
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1294.0,
+        818.0
+      ]
+    },
+    {
+      "cell": [
+        327,
+        204
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1310.0,
+        818.0
+      ]
+    }
+  ],
+  "retained_at_source": [
+    {
+      "cell": [
+        345,
+        211
+      ],
+      "coords": [
+        6,
+        2
+      ],
+      "point": [
+        1382.0,
+        846.0
+      ],
+      "reason": "same Y-sort row overlaps protected decoration within 12px motion bounds"
+    },
+    {
+      "cell": [
+        312,
+        162
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1250.0,
+        650.0
+      ],
+      "reason": "same Y-sort row overlaps protected decoration within 12px motion bounds"
+    },
+    {
+      "cell": [
+        312,
+        163
+      ],
+      "coords": [
+        6,
+        3
+      ],
+      "point": [
+        1250.0,
+        654.0
+      ],
+      "reason": "same Y-sort row overlaps protected decoration within 12px motion bounds"
+    }
+  ]
+}

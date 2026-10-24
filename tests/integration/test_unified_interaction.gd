@@ -32,7 +32,7 @@ func after_each() -> void:
 	Input.action_release(&"move_left")
 	Language.set_language("en")
 
-func test_priority_is_merchant_then_trough_then_animal_then_crop_and_one_outline() -> void:
+func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and_one_outline() -> void:
 	var crop_cell: Vector2i = Vector2i(20,21)
 	FIXTURE.mark_cell(field,crop_cell)
 	var seed: ItemDefinition = load("res://items/seeds/wheat_seed.tres")
@@ -42,6 +42,9 @@ func test_priority_is_merchant_then_trough_then_animal_then_crop_and_one_outline
 	field.add_child(pen)
 	var animal: AnimalActor = preload("res://scenes/animals/chicken.tscn").instantiate() as AnimalActor
 	pen.add_child(animal)
+	animal.production.definition = animal.production.definition.duplicate() as AnimalProductionDefinition
+	animal.production.definition.collection_mode = AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION
+	animal.production.stored_amount = 1
 	animal.wander.set_physics_process(false)
 	animal.behaviour.set_physics_process(false)
 	animal.global_position = player.global_position + Vector2(0,25)
@@ -101,7 +104,7 @@ func test_badge_has_live_stock_and_auto_fill_without_selecting_feed() -> void:
 	assert_true(controller.press())
 	await wait_seconds(0.9)
 	assert_eq(trough.stock,600)
-	assert_eq(trough.feed_reserve,150)
+	assert_eq(trough.feed_reserve,trough.feed_item.food_units_per_item - 150)
 	assert_eq(player.selection.selected_index,0)
 	assert_eq(player.selection.inventory.count_item(trough.feed_item.item_id),before-1)
 	controller.refresh()
@@ -152,7 +155,7 @@ func test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority() 
 	await wait_seconds(3.0)
 	assert_false(merchant.menu.is_open)
 	assert_eq(trough.stock,600)
-	assert_eq(trough.feed_reserve,295)
+	assert_eq(trough.feed_reserve,trough.feed_item.food_units_per_item - 5)
 
 func test_repeated_clicks_on_same_npc_keep_approaching_without_pauses_or_duplicate_actions() -> void:
 	trough.hide()
@@ -216,10 +219,10 @@ func test_land_price_badge_translation_and_confirm_only_debits() -> void:
 	world.player.wallet.set_balance(20000)
 	world.player.interactions.refresh()
 	assert_eq(world.player.interactions.focused.node,world.land)
-	assert_string_contains(world.player.interactions.presenter.label.text,"15,000")
+	assert_string_contains(world.player.interactions.presenter.label.text,"60,000")
 	Language.set_language("vi")
 	world.player.interactions.refresh()
-	assert_string_contains(world.player.interactions.presenter.label.text,"15.000")
+	assert_string_contains(world.player.interactions.presenter.label.text,"60.000")
 	assert_true(world.player.interactions.press())
 	assert_true(world.land.menu.is_open)
 	assert_eq(world.player.wallet.balance,20000)
@@ -267,3 +270,30 @@ func test_click_mature_crop_walks_then_harvests_once_and_empty_ground_only_focus
 	assert_eq(player.state.navigation.focus_position,empty)
 	await wait_seconds(1.5)
 	assert_eq(player.selection.inventory.count_item(reward.item_id),before+quantity)
+
+func test_animal_is_only_targeted_for_available_direct_output_and_collection_does_not_freeze_it() -> void:
+	merchant.hide()
+	merchant.collision_layer = 0
+	trough.hide()
+	trough.collision_layer = 0
+	var pen: AnimalPen = AnimalPen.new()
+	field.add_child(pen)
+	var animal: AnimalActor = preload("res://scenes/animals/chicken.tscn").instantiate() as AnimalActor
+	pen.add_child(animal)
+	animal.global_position = player.global_position + Vector2(0, 24)
+	animal.production.definition = animal.production.definition.duplicate() as AnimalProductionDefinition
+	animal.production.definition.collection_mode = AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION
+	controller.refresh()
+	assert_null(controller.focused)
+	animal.production.stored_amount = 2
+	assert_true(animal.behaviour.request_behaviour(&"walk"))
+	controller.refresh()
+	assert_eq(controller.focused.node, animal)
+	var item_id: StringName = animal.production.definition.production_item.item_id
+	var before: int = player.selection.inventory.count_item(item_id)
+	assert_true(controller.press())
+	assert_eq(player.selection.inventory.count_item(item_id), before + 2)
+	assert_eq(animal.production.stored_amount, 0)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
+	controller.refresh()
+	assert_null(controller.focused)

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b6yt0w283wqmh"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bkch5xnn0kjun"]
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r11_c02.tres" id="1_tsxev"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_0xqmw"]
@@ -10,3 +10,4 @@ display_name = "Crop Fertilizer"
 description = "Use once per crop before 50% growth. Reduces total growth time by 20%."
 icon = ExtResource("1_tsxev")
 item_type = 5
+max_stack = 999

@@ -62,6 +62,7 @@ func _cell(pair: Array) -> Vector2i:
 	return Vector2i(int(pair[0]), int(pair[1]))
 
 func capture(profile: String, revision: int, now: float) -> Dictionary:
+	world.starter_content.refresh()
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
 	var farm: FarmingController = world.farming
@@ -74,6 +75,9 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	# Sync needs first: catch-up can create a product pile that belongs in this save.
 	for animal: AnimalActor in animals:
 		animal.needs.update_at(now)
+	# Catch-up may retire actors and create product piles. Collect the committed result.
+	entities = _collect_world_entities()
+	animals = entities.animals
 	var data: Dictionary = {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": profile, "revision": revision, "saved_at": now,
 		"player": {"position": _pair(player.position), "facing": String(player.animation.facing_direction), "selected_slot": selection.selected_index},
 		"land_columns": farm.land.unlocked_columns if farm.land != null else LandExpansionState.REGION.size.x, "coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": [], "beehives": []}
@@ -81,11 +85,18 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	# khiến bộ ghi async từ chối DTO dù dữ liệu có thể stringify thành JSON.
 	data["weather"] = world.weather.schedule.capture() if world.weather != null else WeatherSchedule.new().capture()
 	data["trees"] = world.trees.capture(now) if world.trees != null else []
+	data["objectives"] = world.objectives.progress.capture() if world.objectives != null and world.objectives.progress != null else ObjectiveSaveSchema.fresh(ObjectiveProgress.DEFAULT_CATALOG)
+	data["orders"] = world.orders.service.capture() if world.orders != null and world.orders.service != null else OrderSaveSchema.fresh()
+	data["tutorial"] = world.tutorial.capture()
+	data["land_starting_columns"] = farm.land.starting_columns
+	data["flower_garden_unlocked"] = world.starter_content.flower_garden_unlocked
+	data["pen_updated_at"] = {}
 	if world.apiary != null:
 		for hive: Beehive in world.apiary.hives:
 			data.beehives.append(hive.capture())
 	for pen: AnimalPen in entities.pens:
 		data.animal_pens.append(_id(pen))
+		data.pen_updated_at[_id(pen)] = now
 	for garden: FlowerGarden in entities.gardens:
 		data.flower_gardens.append(garden.capture(now))
 	for index: int in range(selection.inventory.slot_count):
@@ -104,7 +115,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 			"satiety": animal.needs.satiety, "hydration": animal.needs.hydration, "production_progress": animal.production.progress_seconds, "production_stock": animal.production.stored_amount,
 			"pickup": _id(pile) if pile != null else "", "juvenile_tonic_used": animal.growth.juvenile_tonic_used, "tonic_pending": animal.production.tonic_pending})
 	for trough: AnimalTrough in entities.troughs:
-		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock, "feed_reserve": trough.feed_reserve})
+		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock, "feed_reserve": trough.feed_reserve, "consumed_fraction": trough.consumed_fraction})
 	for pile: ItemPickup in entities.pickups:
 		var pen: AnimalPen = pile.get_parent() as AnimalPen
 		data.pickups.append({"id": _id(pile), "pen": _id(pen) if pen != null else "", "position": _pair(pen.to_local(pile.global_position) if pen != null else (world as Node2D).to_local(pile.global_position)), "item": String(pile.item.item_id), "amount": pile.amount})
@@ -141,7 +152,7 @@ func preflight(data: Dictionary) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
-	if world.apiary == null or world.weather == null:
+	if world.apiary == null or world.weather == null or world.objectives == null or world.objectives.progress == null or world.orders == null or world.orders.service == null:
 		return SaveSchema.failure("Restart the game before loading this save.")
 	var entities: Dictionary = _collect_world_entities()
 	var gardens: Dictionary = _index_nodes(entities.gardens)
@@ -150,6 +161,9 @@ func preflight(data: Dictionary) -> Dictionary:
 			return SaveSchema.failure("The saved flower garden was not found.")
 	var pens: Dictionary = _index_nodes(entities.pens)
 	var troughs: Dictionary = _index_nodes(entities.troughs)
+	for id: String in data.pen_updated_at:
+		if not pens.has(id):
+			return SaveSchema.failure("The saved simulation pen was not found.")
 	var player: FarmPlayer = world.player
 	var farm: FarmingController = world.farming
 	if pens.is_empty() or player == null or farm == null or farm.farmland == null or farm.farmland.tile_set == null or not farm.can_restore_soil():
@@ -203,6 +217,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	world.objectives.progress.suspended = true
+	world.starter_content.begin_restore(data.flower_garden_unlocked)
 	var entities: Dictionary = _collect_world_entities()
 	var gardens: Dictionary = _index_nodes(entities.gardens)
 	var saved_gardens: Dictionary = {}
@@ -222,13 +238,16 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		world.trees.reset()
 	world.weather.restore(data.weather, float(data.saved_at))
 	player.shop_interaction.close_for_load()
+	player.selection.set_objectives_open(false)
 	if world.land != null:
 		world.land.reset_presentation()
 	if farm.land != null:
-		farm.land.restore_columns(int(data.land_columns))
+		farm.land.restore_columns(int(data.land_columns), int(data.land_starting_columns))
 	player.item_feedback.clear()
 	player.wallet.set_balance(int(data.coins))
 	player.state.reset_after_load()
+	if player.mobile_controls != null:
+		player.mobile_controls.reset_input()
 	selection.set_inventory_open(false)
 	# Remove default entities before inventory.changed retries nearby pickups.
 	for actor: AnimalActor in entities.animals:
@@ -269,6 +288,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		trough.global_position = (pens[row.pen] as AnimalPen).to_global(_point(row.position))
 		trough.feed_reserve = int(row.feed_reserve)
 		trough.stock = int(row.stock)
+		trough.consumed_fraction = float(row.consumed_fraction)
 	for pen: AnimalPen in pens.values():
 		if pen is PondPen:
 			(pen as PondPen).rebuild_after_load()
@@ -305,7 +325,17 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		actor.pen.add_child(actor)
 		actor.global_position = actor.pen.clamp_world(actor.pen.to_global(_point(row.position)), actor.wander.margin)
 		actor.animation.facing_direction = StringName(row.facing)
-		actor.restore_lifecycle(row, data.saved_at, maxf(now, data.saved_at), piles.get(row.pickup) as ItemPickup)
+		# Build the entire herd at the same checkpoint before sharing any trough stock.
+		actor.restore_lifecycle(row, float(data.pen_updated_at[row.pen]), float(data.pen_updated_at[row.pen]), piles.get(row.pickup) as ItemPickup)
+	for pen: AnimalPen in pens.values():
+		pen.advance_offline(maxf(now, data.saved_at), true)
 	if player.state.navigation != null:
 		player.state.navigation.invalidate_cache()
+	world.orders.service.restore(data.orders)
+	world.tutorial.restore(data.tutorial)
+	world.objectives.progress.restore(data.objectives)
+	world.objectives.progress.suspended = false
+	world.starter_content.finish_restore()
+	world.objectives.progress.restored.emit()
+	world.objectives.progress.changed.emit()
 	return {"ok": true}

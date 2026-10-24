@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="AnimalShopOffer" format=3 uid="uid://bi0eket1pdnkr"]
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3 uid="uid://oy4or8tj7464"]
 
-[ext_resource type="Resource" uid="uid://b5xcvik3wyt4g" path="res://animals/definitions/goose.tres" id="1_bapko"]
+[ext_resource type="Resource" uid="uid://chqvpkxydb4pv" path="res://animals/definitions/goose.tres" id="1_bapko"]
 [ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="2_2cqvh"]
 
 [resource]
 script = ExtResource("2_2cqvh")
 animal = ExtResource("1_bapko")
-price = 320
+price = 36000

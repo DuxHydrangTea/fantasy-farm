@@ -1,0 +1,16 @@
+{
+	"checks": 189,
+	"engine": "4.7.2-stable (official)",
+	"failures": [],
+	"fractional_rotation_edge_cases": [
+		{
+			"different_pixels": 1,
+			"frame": 3,
+			"max_channel_delta_255": 107.0,
+			"type": 10
+		}
+	],
+	"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+	"max_channel_delta_255": 107.0,
+	"renderer": "gl_compatibility"
+}

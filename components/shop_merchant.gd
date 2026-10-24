@@ -9,7 +9,6 @@ extends PhysicsBody2D
 @export var bubble_text: Label
 @export var prompt: Label
 @export var bubble_timer: Timer
-@export var bubble_tail: Polygon2D
 var _player: FarmPlayer
 
 func _enter_tree() -> void:
@@ -39,11 +38,6 @@ func _ready() -> void:
 	bubble.hide()
 	prompt.hide()
 	bubble_timer.timeout.connect(bubble.hide)
-	if bubble_tail == null:
-		for child: Node in bubble.get_children():
-			if child is Polygon2D:
-				bubble_tail = child as Polygon2D
-				break
 	bubble.resized.connect(_place_bubble)
 	_place_bubble()
 	for child: Node in get_children():
@@ -51,9 +45,10 @@ func _ready() -> void:
 			(child as AnimatedSprite2D).play(&"idle_down")
 
 func _place_bubble() -> void:
-	bubble.position = Vector2(-bubble.size.x * bubble.scale.x * 0.5, -36.0 - bubble.size.y * bubble.scale.y)
-	if is_instance_valid(bubble_tail):
-		bubble_tail.position = Vector2(bubble.size.x * 0.5, bubble.size.y)
+	# The atlas keeps its tail in the fixed right/bottom nine-patch borders.
+	# Anchor its tip to the NPC body, including presentations offset for interaction.
+	var anchor: Vector2 = (bubble.get_parent() as Node2D).to_local(global_position)
+	bubble.position = anchor + Vector2(-(bubble.size.x - 5.5) * bubble.scale.x, -36.0 - bubble.size.y * bubble.scale.y)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):

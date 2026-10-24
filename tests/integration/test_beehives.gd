@@ -37,11 +37,13 @@ func before_each() -> void:
 	player = world.player
 	bag = player.selection.inventory
 	garden = apiary.gardens[0]
+	world.starter_content.begin_restore(true)
+	world.starter_content.finish_restore()
 	for pot: FlowerPot in garden.pots.values():
 		pot.clear()
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 
-func _pot(cell: Vector2i, seconds_until_bloom: float = 0, kind: int = 1) -> FlowerPot:
+func _pot(cell: Vector2i, seconds_until_bloom: float = 0, kind: int = 6) -> FlowerPot:
 	var pot: FlowerPot = garden.pots[cell]
 	var path: String = "res://flowers/definitions/flower_%02d.tres" % kind
 	var flower: FlowerDefinition = load(path)
@@ -64,15 +66,15 @@ func test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable() -> v
 	assert_true(a.pollination.active())
 	assert_false(b.pollination.active())
 	_jump(10)
-	assert_almost_eq(a.production.work,13.0,0.00001)
+	assert_almost_eq(a.production.work,20.0,0.00001)
 	assert_almost_eq(b.production.work,10.0,0.00001)
 
 func test_offline_bloom_boundary_does_not_apply_pollen_retroactively() -> void:
 	var pot: FlowerPot = _pot(Vector2i(0,0),50.0)
 	var hive: Beehive = _hive(pot.global_position+Vector2(-24,0))
 	_jump(60)
-	assert_almost_eq(hive.production.work,63.0,0.00001)
-	assert_almost_eq(hive.production.contributions.flower_01,13.0,0.00001)
+	assert_almost_eq(hive.production.work,70.0,0.00001)
+	assert_almost_eq(hive.production.contributions.flower_06,20.0,0.00001)
 	_jump(1000)
 	assert_eq(hive.production.ready_item,apiary.definition.floral_honey)
 	assert_eq(hive.production.work,100.0)
@@ -83,8 +85,8 @@ func test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset() -
 	now += 20
 	assert_true(pot.harvest(bag))
 	_jump(20)
-	assert_almost_eq(hive.production.work,46.0,0.00001)
-	assert_almost_eq(hive.production.contributions.flower_01,26.0,0.00001)
+	assert_almost_eq(hive.production.work,60.0,0.00001)
+	assert_almost_eq(hive.production.contributions.flower_06,40.0,0.00001)
 	assert_false(hive.pollination.active())
 
 func test_crop_buff_is_ten_percent_non_stacking_and_fertilizer_uses_original_duration() -> void:
@@ -120,7 +122,7 @@ func test_sunflower_maturing_mid_interval_becomes_a_pollen_source() -> void:
 	farm.restore_crop(cell,data,now,now+50,0,now)
 	var hive: Beehive = _hive(point+Vector2(32,0))
 	_jump(60)
-	assert_almost_eq(hive.production.work,63.0,0.00001)
+	assert_almost_eq(hive.production.work,50.0 + 10.0 * 4.0 / 3.0,0.00001)
 	assert_eq(hive.pollination.source_id,"sunflower")
 	_jump(1000)
 	assert_eq(hive.production.ready_item,apiary.definition.sunflower_honey)
@@ -142,7 +144,7 @@ func test_placement_is_atomic_spends_one_item_and_rejects_locked_occupied_and_di
 	assert_eq(observations,[true])
 	assert_eq(bag.count_item(&"beehive"),before-1)
 	assert_false(apiary.place(point,player,5).ok)
-	assert_false(apiary.place(point-Vector2(32,0),player,5).ok)
+	assert_false(apiary.place(point-Vector2(64,0),player,5).ok)
 	assert_false(apiary.place(point+Vector2(0,160),player,5).ok)
 	assert_eq(bag.count_item(&"beehive"),before-1)
 	assert_eq(apiary.hives.size(),1)
@@ -168,11 +170,11 @@ func test_disk_roundtrip_preserves_pollen_offline_bloom_and_ready_honey_without_
 	now += 60
 	assert_true(adapter.restore(loaded.snapshot,now).ok)
 	hive = apiary.hives[0]
-	assert_almost_eq(hive.production.work,63.0,0.00001)
-	assert_almost_eq(hive.production.contributions.flower_01,13.0,0.00001)
+	assert_almost_eq(hive.production.work,70.0,0.00001)
+	assert_almost_eq(hive.production.contributions.flower_06,20.0,0.00001)
 	var halfway: Dictionary = adapter.capture("bees",2,now)
 	assert_true(adapter.restore(halfway,now).ok)
-	assert_almost_eq(apiary.hives[0].production.work,63.0,0.00001)
+	assert_almost_eq(apiary.hives[0].production.work,70.0,0.00001)
 	now += 1000000
 	assert_true(adapter.restore(halfway,now).ok)
 	hive = apiary.hives[0]
@@ -180,11 +182,11 @@ func test_disk_roundtrip_preserves_pollen_offline_bloom_and_ready_honey_without_
 	assert_eq(hive.production.work,86400.0)
 	assert_true(hive.collect(bag))
 	assert_false(hive.collect(bag))
-	assert_eq(bag.count_item(&"floral_honey"),1)
+	assert_eq(bag.count_item(&"floral_honey"),100)
 	var emptied: Dictionary = adapter.capture("bees",3,now)
 	assert_true(adapter.restore(emptied,now).ok)
 	assert_null(apiary.hives[0].production.ready_item)
-	assert_eq(bag.count_item(&"floral_honey"),1)
+	assert_eq(bag.count_item(&"floral_honey"),100)
 	DirAccess.remove_absolute(repo.path("bees"))
 	DirAccess.remove_absolute(folder)
 
@@ -269,7 +271,7 @@ func test_unified_e_click_priority_collection_and_honey_sale() -> void:
 	assert_true(hive.range_display.visible)
 	assert_string_contains(player.interactions.presenter.label.text,"Collect Wild Honey")
 	assert_true(player.interactions.press())
-	assert_eq(bag.count_item(&"wild_honey"),1)
+	assert_eq(bag.count_item(&"wild_honey"),100)
 	assert_null(hive.production.ready_item)
 	var prices: ProducePriceCatalog = load("res://resources/shops/produce_prices.tres")
 	var sale: ProduceSaleService = ProduceSaleService.new(prices,player.wallet,bag)
@@ -293,7 +295,7 @@ func test_click_approaches_a_full_hive_and_collects_only_on_arrival() -> void:
 	assert_true(player.interactions.click(hive.sprite.global_position))
 	assert_eq(bag.count_item(&"wild_honey"),0)
 	await wait_seconds(3)
-	assert_eq(bag.count_item(&"wild_honey"),1)
+	assert_eq(bag.count_item(&"wild_honey"),100)
 	assert_null(player.interactions.pending)
 	assert_lte(player.position.distance_to(hive.global_position),32.0)
 
@@ -304,8 +306,8 @@ func test_bought_hive_can_be_placed_by_left_click_without_navigation() -> void:
 		if entry.item == apiary.definition.hive_item:
 			offer = entry
 	assert_not_null(offer)
-	assert_eq(offer.price,1500)
-	player.wallet.set_balance(3000)
+	assert_eq(offer.price,150000)
+	player.wallet.set_balance(300000)
 	assert_true(ShopService.new(stock,player.wallet,bag).buy(offer,1).ok)
 	bag.move_slot(_slot(&"beehive"),5)
 	player.selection.select_slot(5)
@@ -319,7 +321,7 @@ func test_bought_hive_can_be_placed_by_left_click_without_navigation() -> void:
 	assert_eq(apiary.hives.size(),1)
 	assert_eq(bag.count_item(&"beehive"),0)
 	assert_false(player.state.navigation.is_navigating)
-	assert_eq(player.wallet.balance,1500)
+	assert_eq(player.wallet.balance,150000)
 
 func test_pollination_saving_keeps_reduction_and_replays_offline_growth_once() -> void:
 	apiary.definition.cycle_seconds = 86400.0
@@ -419,3 +421,76 @@ func test_bees_spread_across_wider_routes_without_duplicate_positions() -> void:
 			right = maxf(right, bee.position.x)
 	assert_lt(left, -48.0, "Explore beyond the old small orbit to the left")
 	assert_gt(right, 48.0, "Explore beyond the old small orbit to the right")
+
+func test_v18_full_batch_preserves_old_honey_one_jar_then_new_batch_gives_100() -> void:
+	apiary.definition.cycle_seconds = 86400.0
+	var hive: Beehive = _hive(_free_near(garden.pots[Vector2i.ZERO].global_position))
+	bag.add(apiary.definition.floral_honey, 7)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var old: Dictionary = adapter.capture("bees", 1, now)
+	old.version = 18
+	old.beehives[0].erase("legacy_batch")
+	old.beehives[0].work = 86400.0
+	old.beehives[0].contributions = {"flower_01": 86400.0}
+	old.beehives[0].ready_item = "floral_honey"
+	var checked: Dictionary = SaveSchema.validate(old, adapter.catalog)
+	assert_true(checked.ok)
+	assert_false(old.beehives[0].has("legacy_batch"))
+	assert_eq(checked.snapshot.inventory, old.inventory)
+	assert_true(adapter.restore(old, now).ok)
+	hive = apiary.hives[0]
+	assert_true(hive.production.legacy_batch)
+	assert_string_contains(hive.action_text(), "×1")
+	assert_true(hive.collect(bag))
+	assert_eq(bag.count_item(&"floral_honey"), 8)
+	assert_false(hive.production.legacy_batch)
+	assert_false(hive.collect(bag))
+	hive.production.advance(43200.0, "flower_06")
+	assert_string_contains(hive.action_text(), "×100")
+	assert_true(hive.collect(bag))
+	assert_eq(bag.count_item(&"floral_honey"), 108)
+	var after: Dictionary = adapter.capture("bees", 2, now)
+	assert_true(adapter.restore(after, now).ok)
+	assert_false(apiary.hives[0].collect(bag))
+	assert_eq(bag.count_item(&"floral_honey"), 108)
+
+func test_v18_partial_batch_keeps_work_sources_and_historic_speed_until_collected() -> void:
+	apiary.definition.cycle_seconds = 86400.0
+	var pot: FlowerPot = _pot(Vector2i.ZERO, 0, 1)
+	_hive(_free_near(pot.global_position))
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var old: Dictionary = adapter.capture("bees", 1, now)
+	old.version = 18
+	old.beehives[0].erase("legacy_batch")
+	old.beehives[0].work = 1000.0
+	old.beehives[0].contributions = {"flower_01": 650.0}
+	assert_true(adapter.restore(old, now).ok)
+	assert_true(apiary.hives[0].production.legacy_batch)
+	assert_eq(apiary.hives[0].production.work, 1000.0)
+	_jump(100)
+	assert_almost_eq(apiary.hives[0].production.work, 1130.0, 0.00001)
+	assert_almost_eq(apiary.hives[0].production.contributions.flower_01, 780.0, 0.00001)
+	var snapshot: Dictionary = adapter.capture("bees", 2, now)
+	assert_true(adapter.restore(snapshot, now).ok)
+	assert_eq(apiary.hives[0].production.work, 1130.0)
+	assert_true(apiary.hives[0].production.legacy_batch)
+
+func test_v18_empty_hive_uses_new_rules_and_invalid_batch_flags_do_not_mutate_world() -> void:
+	apiary.definition.cycle_seconds = 86400.0
+	_hive(_free_near(garden.pots[Vector2i.ZERO].global_position))
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var old: Dictionary = adapter.capture("bees", 1, now)
+	old.version = 18
+	old.beehives[0].erase("legacy_batch")
+	assert_true(adapter.restore(old, now).ok)
+	assert_false(apiary.hives[0].production.legacy_batch)
+	var stable: Dictionary = adapter.capture("bees", 2, now)
+	var bad: Dictionary = stable.duplicate(true)
+	bad.beehives[0].legacy_batch = "true"
+	assert_false(adapter.restore(bad, now).ok)
+	assert_eq(apiary.hives[0].production.work, 0.0)
+	bad = stable.duplicate(true)
+	bad.beehives[0].work = 1000.0
+	bad.beehives[0].contributions = {"flower_01": 500.0}
+	assert_false(adapter.restore(bad, now).ok)
+	assert_eq(apiary.hives[0].production.work, 0.0)

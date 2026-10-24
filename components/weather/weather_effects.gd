@@ -4,7 +4,8 @@ extends Node2D
 const RAIN: Texture2D = preload("res://assets/Weather effects/Rain_Drop.png")
 const SPLASH: Texture2D = preload("res://assets/Weather effects/Rain_Drop_Impact.png")
 const CLOUDS: Texture2D = preload("res://assets/Weather effects/Clouds.png")
-const CLOUD_SPACING: Vector2 = Vector2(256, 192)
+# Roughly twice as many cloud shadows per world area during cloudy weather.
+const CLOUD_SPACING: Vector2 = Vector2(176, 132)
 const WIND_SPACING: Vector2 = Vector2(128, 112)
 var world: FarmWorld
 var active_weather: int = WeatherManager.Weather.SUNNY

@@ -37,7 +37,7 @@ func _ready() -> void:
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size", 20)
 	panel.add_child(label)
-	if OS.is_debug_build():
+	if OS.is_debug_build() and not MobileLayout.is_touch(get_viewport()):
 		_build_debug_bar(column, panel.theme)
 
 func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:

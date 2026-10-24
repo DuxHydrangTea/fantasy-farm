@@ -1,0 +1,66 @@
+[gd_resource type="Resource" script_class="OrderCatalog" format=3 uid="uid://c4bqxi3a6uiqc"]
+
+[ext_resource type="Resource" uid="uid://dhr1e4rllnp7m" path="res://items/harvest_produces/cabbage_produces.tres" id="5_dh1ot"]
+[ext_resource type="Resource" uid="uid://4qdtgflo1gay" path="res://items/animal_produces/chicken_egg.tres" id="7_k6tcb"]
+[ext_resource type="Resource" uid="uid://c0b5ad7m218x6" path="res://items/animal_produces/cow_milk.tres" id="8_qx2c3"]
+[ext_resource type="Resource" uid="uid://csacaahblfygu" path="res://items/harvest_produces/pumpkin_produces.tres" id="9_a3jrs"]
+[ext_resource type="Resource" path="res://resources/orders/legacy_orders_v15.tres" id="10_l6nxb"]
+[ext_resource type="Script" uid="uid://bt2hmhu1ih0cy" path="res://scripts/order_catalog.gd" id="catalog"]
+[ext_resource type="Script" uid="uid://bk4cnqh7fc5ro" path="res://scripts/order_definition.gd" id="definition"]
+[ext_resource type="Resource" uid="uid://uoen08knamnu" path="res://items/harvest_produces/tomato_produces.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://drigommwbpugf" path="res://items/harvest_produces/potato_produces.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://bmg4rg65ai1nk" path="res://items/harvest_produces/corn_produces.tres" id="item_3"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="item_definition"]
+
+[sub_resource type="Resource" id="Resource_tmcqp"]
+script = ExtResource("definition")
+order_id = &"tomato_crate_bulk"
+title = "Bulk tomato delivery"
+items = Array[ExtResource("item_definition")]([ExtResource("item_1")])
+amounts = Array[int]([1000])
+reward_coins = 100000
+
+[sub_resource type="Resource" id="Resource_rwvrv"]
+script = ExtResource("definition")
+order_id = &"potato_military"
+title = "Potatoes for the army"
+items = Array[ExtResource("item_definition")]([ExtResource("item_2")])
+amounts = Array[int]([2000])
+reward_coins = 162500
+
+[sub_resource type="Resource" id="Resource_on75e"]
+script = ExtResource("definition")
+order_id = &"grand_salad_basket"
+title = "A grand salad basket"
+items = Array[ExtResource("item_definition")]([ExtResource("item_1"), ExtResource("5_dh1ot")])
+amounts = Array[int]([1000, 800])
+reward_coins = 224000
+
+[sub_resource type="Resource" id="Resource_bbww5"]
+script = ExtResource("definition")
+order_id = &"winter_soup_barrel"
+title = "Winter soup delivery"
+items = Array[ExtResource("item_definition")]([ExtResource("item_2"), ExtResource("item_3")])
+amounts = Array[int]([1000, 1000])
+reward_coins = 161000
+
+[sub_resource type="Resource" id="Resource_ft662"]
+script = ExtResource("definition")
+order_id = &"dairy_egg_express"
+title = "Milk and egg delivery"
+items = Array[ExtResource("item_definition")]([ExtResource("7_k6tcb"), ExtResource("8_qx2c3")])
+amounts = Array[int]([1000, 400])
+reward_coins = 56000
+
+[sub_resource type="Resource" id="Resource_nyihy"]
+script = ExtResource("definition")
+order_id = &"royal_pumpkin_contract"
+title = "Royal pumpkin contract"
+items = Array[ExtResource("item_definition")]([ExtResource("9_a3jrs")])
+amounts = Array[int]([1000])
+reward_coins = 3625000
+
+[resource]
+script = ExtResource("catalog")
+entries = Array[ExtResource("definition")]([SubResource("Resource_tmcqp"), SubResource("Resource_rwvrv"), SubResource("Resource_on75e"), SubResource("Resource_bbww5"), SubResource("Resource_ft662"), SubResource("Resource_nyihy")])
+legacy_catalog = ExtResource("10_l6nxb")

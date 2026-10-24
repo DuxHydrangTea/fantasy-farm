@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://cmijh4nyswxoe"]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://buplvoe05kek6"]
 
-[ext_resource type="Resource" uid="uid://cbodrmbkyh775" path="res://items/animal_produces/cow_milk.tres" id="1_y5s0e"]
+[ext_resource type="Resource" uid="uid://c0b5ad7m218x6" path="res://items/animal_produces/cow_milk.tres" id="1_y5s0e"]
 [ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="2_llw8d"]
 
 [resource]
 script = ExtResource("2_llw8d")
 production_item = ExtResource("1_y5s0e")
-production_seconds = 60.0
+production_amount = 100
+production_seconds = 14400.0

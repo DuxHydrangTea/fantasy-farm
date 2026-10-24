@@ -1,11 +1,10 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c1vdsb5iy067i"]
 
-[ext_resource type="Script" path="res://components/shop_merchant.gd" id="1_6cpxk"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/character/farmer_buba_frames.tres" id="2_o0pap"]
-[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="3_x0pey"]
+[ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="1_6cpxk"]
+[ext_resource type="SpriteFrames" uid="uid://1g6ajdx4jgti" path="res://sprite_frames/character/farmer_buba_frames.tres" id="2_o0pap"]
+[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="3_x0pey"]
+[ext_resource type="StyleBox" path="res://resources/ui/merchant_bubble_panel.tres" id="4_8cdsg"]
 [ext_resource type="PackedScene" path="res://scenes/ui/produce_sales.tscn" id="4_c7r0l"]
-[ext_resource type="Script" path="res://components/produce_sales_ui.gd" id="5_0svti"]
-[ext_resource type="Resource" path="res://resources/shops/produce_prices.tres" id="6_wg868"]
 
 [sub_resource type="RectangleShape2D" id="Trunk"]
 size = Vector2(12, 8)
@@ -32,6 +31,7 @@ shape = SubResource("Trunk")
 
 [node name="Bubble" type="PanelContainer" parent="." unique_id=212661190]
 z_index = 20
+texture_filter = 1
 offset_left = -64.0
 offset_top = -78.0
 offset_right = 64.0
@@ -39,18 +39,16 @@ offset_bottom = -38.0
 scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 theme = ExtResource("3_x0pey")
+theme_override_styles/panel = ExtResource("4_8cdsg")
 
 [node name="Text" type="Label" parent="Bubble" unique_id=1765854233]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 0
 theme_override_font_sizes/font_size = 20
 text = "Thank you!
 See you again!"
 horizontal_alignment = 1
-
-[node name="Tail" type="Polygon2D" parent="Bubble" unique_id=727882655]
-position = Vector2(128, 90)
-color = Color(0.88, 0.75, 0.56, 1)
-polygon = PackedVector2Array(-6, 0, 6, 0, 0, 8)
 
 [node name="Prompt" type="Label" parent="." unique_id=1763084052]
 offset_left = -85.0
@@ -68,19 +66,4 @@ horizontal_alignment = 1
 [node name="BubbleTimer" type="Timer" parent="." unique_id=1016759557]
 one_shot = true
 
-[node name="ProduceSalesUI" type="CanvasLayer" parent="." unique_id=2096592076 node_paths=PackedStringArray("panel", "body", "heading", "balance_label", "items", "details", "status", "quantity", "sell_quantity_button", "sell_all_button", "root", "close_button") instance=ExtResource("4_c7r0l")]
-layer = 25
-script = ExtResource("5_0svti")
-catalog = ExtResource("6_wg868")
-panel = NodePath("Root/Center/Panel")
-body = NodePath("Root/Center/Panel/Body")
-heading = NodePath("Root/Center/Panel/Body/Header/Title")
-balance_label = NodePath("Root/Center/Panel/Body/Header/Balance")
-items = NodePath("Root/Center/Panel/Body/Main/Produce")
-details = NodePath("Root/Center/Panel/Body/Main/Info/Description/Details")
-status = NodePath("Root/Center/Panel/Body/Main/Info/Description/Status")
-quantity = NodePath("Root/Center/Panel/Body/QuantitySale/Quantity")
-sell_quantity_button = NodePath("Root/Center/Panel/Body/QuantitySale/SellQuantity")
-sell_all_button = NodePath("Root/Center/Panel/Body/SellAll")
-root = NodePath("Root")
-close_button = NodePath("Root/Center/Panel/Body/Header/Close")
+[node name="ProduceSalesUI" parent="." unique_id=2096592076 instance=ExtResource("4_c7r0l")]

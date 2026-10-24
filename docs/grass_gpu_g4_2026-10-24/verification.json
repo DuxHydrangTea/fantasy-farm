@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-24",
+  "gut_tests_passed": 57,
+  "gut_assertions": 864,
+  "native_renderers": {
+    "compatibility": {
+      "g4_checks": 49,
+      "g1_regression_checks": 189,
+      "failures": []
+    },
+    "forward-plus": {
+      "g4_checks": 49,
+      "g1_regression_checks": 189,
+      "failures": []
+    }
+  },
+  "lint": {
+    "total": 0,
+    "errors": 0,
+    "warnings": 0,
+    "parse_errors": 0
+  },
+  "engine_validation_ok": true,
+  "engine_diagnostic_counts": {
+    "total": 25,
+    "errors": 0,
+    "parse_errors": 0,
+    "warnings": 25,
+    "info": 0
+  },
+  "web_export_ok": true,
+  "browser_runtime_tested": false,
+  "physical_phone_tested": false,
+  "personal_save_used": false,
+  "selected_cells": 10,
+  "retained_overlaps": 3,
+  "added_feature_nodes": 1,
+  "trial_region": [
+    1008,
+    592,
+    384,
+    272
+  ],
+  "runtime_uses_original_texture": true,
+  "production_sha256": {
+    "world/main_world.gd": "d81c05dc7ed3efa10a5f24b8b7d43fc305dc5925243b5a7576874b290aeff036",
+    "components/grass/farm_grass_field.gd": "92aa64076292975bebed4233397876bd528afa16c515fb63316387438345e2ab",
+    "components/grass/grass_source_transfer.gd": "86bbe47bdf77c1a03f4dd9f627e9b5b8d6948ce99676062188d75da70b308f5e",
+    "shaders/grass_farm.gdshader": "493dd383784ac485e96e913b66e3831168b5807ca1f33ea55ffa00eb80d23f44",
+    "shaders/grass_field_core.gdshaderinc": "29dedd40edb173d51a1efe10d2bd84db155853092e88623ff8fa0c7af68ea91b"
+  }
+}

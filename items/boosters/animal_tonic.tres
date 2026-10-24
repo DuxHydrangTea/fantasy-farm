@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://2f1ttbn6y60s"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://btwdtqq0ewgad"]
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r10_c08.tres" id="1_e8wwb"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_hpqaf"]
@@ -11,3 +11,4 @@ description = "Juvenile: once, mature at 12h; lifespan stays 14 days. Adult: nex
 booster_kind = 1
 icon = ExtResource("1_e8wwb")
 item_type = 5
+max_stack = 999

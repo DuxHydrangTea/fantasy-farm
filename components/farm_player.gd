@@ -15,6 +15,7 @@ var wallet: WalletComponent
 var shop_interaction: ShopInteraction
 var item_feedback: ItemGainFeedback
 var tree_interaction: TreeInteraction
+var mobile_controls: MobileControls
 
 func _enter_tree() -> void:
 	add_to_group(&"farm_players")
@@ -60,3 +61,7 @@ func _enter_tree() -> void:
 	tree_interaction.player = self
 	state.tree_interaction = tree_interaction
 	add_child(tree_interaction)
+	mobile_controls = MobileControls.new()
+	mobile_controls.name = "MobileControls"
+	mobile_controls.player = self
+	add_child(mobile_controls)

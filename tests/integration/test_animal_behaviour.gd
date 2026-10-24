@@ -150,48 +150,13 @@ func test_all_chicken_and_rooster_assets_support_the_transition_chain() -> void:
 			assert_true(frames.has_animation(action))
 			assert_true(frames.get_animation_loop(action))
 
-func test_focus_holds_idle_beyond_scheduler_timeout_then_automatic_walk_resumes() -> void:
-	animal.definition.walk_weight = 1.0
-	animal.definition.forage_weight = 0.0
-	animal.definition.rest_weight = 0.0
-	animal.definition.sleep_weight = 0.0
+func test_legacy_focus_never_cancels_walk_or_wakes_sleeping_animal() -> void:
 	assert_true(behaviour.request_behaviour(&"walk"))
 	animal.set_status_focused(true)
-	var before: Vector2 = animal.position
-	watch_signals(behaviour)
-	for index: int in range(30):
-		animal.set_status_focused(true)
-		await wait_physics_frames(1)
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
-	assert_eq(animal.sprite.animation, &"idle_down")
-	assert_eq(animal.position, before)
-	assert_eq(animal.velocity, Vector2.ZERO)
-	assert_false(animal.movement.has_target)
-	assert_signal_emit_count(behaviour, "state_changed", 0, "Refresh does not restart idle")
-	animal.set_status_focused(false)
-	assert_true(await _wait_for(AnimalBehaviourComponent.State.WALK))
-
-func test_focus_wakes_lying_animal_and_ignores_stale_completion(state = use_parameters([
-	AnimalBehaviourComponent.State.LIE_DOWN, AnimalBehaviourComponent.State.REST,
-	AnimalBehaviourComponent.State.SLEEP_START, AnimalBehaviourComponent.State.SLEEP,
-	AnimalBehaviourComponent.State.STAND_UP
-])) -> void:
-	animal.definition.rest_seconds = Vector2(10, 10)
-	animal.definition.sleep_seconds = Vector2(10, 10)
-	assert_true(behaviour.request_behaviour(&"rest" if state == AnimalBehaviourComponent.State.REST else &"sleep"))
-	if state == AnimalBehaviourComponent.State.STAND_UP:
-		assert_true(await _wait_for(AnimalBehaviourComponent.State.SLEEP))
-		assert_true(behaviour.wake())
-	else:
-		assert_true(await _wait_for(state))
+	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.WALK)
+	assert_true(animal.movement.has_target)
+	assert_false(animal.needs_display.visible)
+	assert_true(behaviour.request_behaviour(&"sleep"))
+	assert_true(await _wait_for(AnimalBehaviourComponent.State.SLEEP))
 	animal.set_status_focused(true)
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.STAND_UP)
-	animal.animation.action_finished.emit("sit")
-	animal.animation.action_finished.emit("sleep_start")
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.STAND_UP)
-	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
-	await wait_physics_frames(15)
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
-	assert_eq(animal.sprite.animation, &"idle_down")
-	animal.set_status_focused(false)
-	assert_true(behaviour.request_behaviour(&"walk"))
+	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.SLEEP)

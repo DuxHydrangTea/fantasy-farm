@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://c5kf85yr0uvqq"]
+[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://bg6h2expgw2mr"]
 
 [ext_resource type="Texture2D" uid="uid://g75o6aif734i" path="res://trees/textures/spruce_canopy.tres" id="canopy"]
 [ext_resource type="Texture2D" uid="uid://bavli1fs4opq1" path="res://assets/Trees/Spruce_Needle_Particle.png" id="leaf"]
-[ext_resource type="Resource" uid="uid://4qkvortmmesq" path="res://items/trees/wood.tres" id="product"]
-[ext_resource type="Resource" uid="uid://b30ng4mpiur4n" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="product"]
+[ext_resource type="Resource" uid="uid://ds0v0j538alt6" path="res://items/trees/root_wood.tres" id="root"]
 [ext_resource type="Script" uid="uid://dexpywdsy1ft0" path="res://scripts/tree_definition.gd" id="script"]
 [ext_resource type="Texture2D" uid="uid://2r2hfi0qld65" path="res://trees/textures/spruce_stage1.tres" id="stage1"]
 [ext_resource type="Texture2D" uid="uid://bguvrejlytm7" path="res://trees/textures/spruce_stage2.tres" id="stage2"]
@@ -15,8 +15,8 @@ script = ExtResource("script")
 tree_id = &"spruce"
 display_name = "Spruce Tree"
 kind = 1
-growth_seconds = 240.0
-harvest_amount = 5
+growth_seconds = 86400.0
+harvest_amount = 400
 harvest_item = ExtResource("product")
 root_item = ExtResource("root")
 stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])

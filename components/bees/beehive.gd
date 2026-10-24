@@ -41,24 +41,28 @@ func refresh_visual() -> void:
 
 func collect(bag: InventoryComponent) -> bool:
 	apiary.sync()
+	var amount: int = production.batch_amount()
 	var item: ItemDefinition = production.collect(bag)
 	refresh_visual()
 	if item != null:
-		apiary.farming.harvest_yielded.emit(item,1,global_position,bag)
+		apiary.farming.harvest_yielded.emit(item,amount,global_position,bag)
 	return item != null
 
 func action_text() -> String:
+	var legacy_notice: String = "\n" + tr("Legacy batch · Next batch: {amount} jars").format({"amount": definition.batch_amount}) if production.legacy_batch else ""
 	if production.ready_item != null:
-		return tr("Collect {item}").format({"item":tr(production.ready_item.display_name)})
-	var rate: float = definition.pollen_speed if pollination.active() else 1.0
+		return tr("Collect {item} ×{amount}").format({"item":tr(production.ready_item.display_name), "amount": production.batch_amount()}) + legacy_notice
+	var rate: float = definition.honey_rate(pollination.source_id, production.legacy_batch)
 	var remaining: String = AnimalStatusText.new().remaining((definition.cycle_seconds-production.work)/rate)
-	var headline: String = tr("Honey: {percent}% · {time}").format({"percent":floori(production.work/definition.cycle_seconds*100),"time":remaining})
-	var source: String = tr("{flower} · Honey +{honey}% · Crops +{crops}%").format({"flower":tr(pollination.source_name),"honey":roundi((definition.pollen_speed-1.0)*100),"crops":roundi(definition.crop_bonus*100)}) if pollination.active() else tr("No blooming flowers · Wild Honey")
+	var headline: String = tr("Honey: {percent}% · {time} · {amount} jars/batch").format({"percent":floori(production.work/definition.cycle_seconds*100),"time":remaining,"amount": production.batch_amount()})
+	var source: String = tr("{flower} · Honey +{honey}% · Crops +{crops}%").format({"flower":tr(pollination.source_name),"honey":roundi((rate-1.0)*100),"crops":roundi(definition.crop_bonus*100)}) if pollination.active() else tr("No blooming flowers · Wild Honey")
+	if pollination.active() and rate == 1.0:
+		source += "\n" + tr("Common flowers · Wild Honey")
 	if apiary != null and apiary.raining(apiary.last_at):
 		source = tr("Rain: bees sheltering · Wild Honey")
 	elif apiary != null and apiary.effective_radius(apiary.last_at) > definition.radius:
 		source += "\n" + tr("Wind: pollination radius +50%")
-	return headline + "\n" + source
+	return headline + "\n" + source + legacy_notice
 
 func capture() -> Dictionary:
 	var result: Dictionary = production.capture()

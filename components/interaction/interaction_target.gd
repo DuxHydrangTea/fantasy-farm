@@ -1,7 +1,7 @@
 class_name InteractionTarget
 extends RefCounted
 ## A typed, short-lived view of a scene target. IDs/node names never drive behavior.
-enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE }
+enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE, ORDER_BOARD, PEN_BOARD }
 var node: Node2D
 var kind: Kind
 var player: FarmPlayer
@@ -15,10 +15,13 @@ func valid() -> bool:
 	if not is_instance_valid(node) or node.is_queued_for_deletion() or not node.is_inside_tree() or not node.is_visible_in_tree():
 		return false
 	match kind:
+		Kind.PEN_BOARD:
+			return is_instance_valid((node as PenBoard).pen) and (node as PenBoard).pen.is_visible_in_tree()
 		Kind.LAND:
 			return (node as LandExpansionComponent).sign != null and (node as LandExpansionComponent).sign.visible
 		Kind.ANIMAL:
-			return not (node as AnimalActor).is_dead()
+			var animal: AnimalActor = node as AnimalActor
+			return not animal.is_dead() and animal.production.definition != null and animal.production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION and animal.production.stored_amount > 0
 		Kind.CROP:
 			return not (node as Crop).is_retiring() and (node as Crop).is_mature()
 		Kind.FLOWER:
@@ -28,7 +31,7 @@ func valid() -> bool:
 	return true
 
 func priority() -> int:
-	return 0 if kind in [Kind.MERCHANT, Kind.LAND] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3
+	return 0 if kind in [Kind.MERCHANT, Kind.LAND, Kind.ORDER_BOARD, Kind.PEN_BOARD] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3
 
 func reach() -> float:
 	return 48.0 if kind == Kind.MERCHANT else 30.0 if kind == Kind.TROUGH else 20.0 if kind == Kind.CROP else 28.0 if kind == Kind.FLOWER else 32.0
@@ -54,6 +57,8 @@ func sprite() -> Node2D:
 		Kind.CROP: return (node as Crop).sprite
 		Kind.FLOWER: return (node as FlowerPot).sprite
 		Kind.TREE: return (node as PerennialTree).sprite
+		Kind.ORDER_BOARD: return (node as OrderBoard).sprite
+		Kind.PEN_BOARD: return (node as PenBoard).sprite
 	return null
 
 func reachable_from(position: Vector2, facing: bool = false) -> bool:
@@ -76,6 +81,8 @@ func reachable_from(position: Vector2, facing: bool = false) -> bool:
 
 func action_text() -> String:
 	match kind:
+		Kind.PEN_BOARD: return tr("Manage pen")
+		Kind.ORDER_BOARD: return tr("View orders")
 		Kind.MERCHANT:
 			return tr("Sell produce") if (node as ShopMerchant).menu is ProduceSalesUI else tr("Trade")
 		Kind.LAND:

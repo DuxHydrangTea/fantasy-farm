@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cqqjo8sout64k"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cyv1fu028ly8l"]
 
 [ext_resource type="Texture2D" uid="uid://bpfx1ly3lnloi" path="res://trees/textures/oak_stage1.tres" id="icon"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Resource" uid="uid://n2isubqkx7hm" path="res://trees/definitions/oak.tres" id="tree"]
+[ext_resource type="Resource" uid="uid://biuncxfp4ljwa" path="res://trees/definitions/oak.tres" id="tree"]
 
 [resource]
 script = ExtResource("script")
@@ -12,3 +12,4 @@ description = "Plant in the right timber grove. Chop mature trees with an axe."
 icon = ExtResource("icon")
 item_type = 1
 crop = ExtResource("tree")
+max_stack = 999

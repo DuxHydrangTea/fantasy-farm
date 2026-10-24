@@ -1,0 +1,39 @@
+{
+  "native_render_checks": [
+    {
+      "renderer": "gl_compatibility",
+      "checks": 189,
+      "failures": [],
+      "desktop_only": true
+    },
+    {
+      "renderer": "forward_plus",
+      "checks": 189,
+      "failures": [],
+      "desktop_only": true
+    }
+  ],
+  "gut_tests_passed": 4,
+  "gut_assertions": 174,
+  "lint": {
+    "total": 0,
+    "errors": 0,
+    "warnings": 0,
+    "parse_errors": 0
+  },
+  "engine_validation_ok": true,
+  "existing_engine_warnings": 25,
+  "grass_engine_diagnostics": [],
+  "web_export_ok": true,
+  "web_poc_browser_tested": false,
+  "mobile_tested": false,
+  "main_world_grass_replaced": false,
+  "actor_interactions_implemented": false,
+  "core_sha256": {
+    "shaders/grass_field.gdshader": "1f0c39d416f8757939ad706efa5c3729258b5222e3cce95d1b6e3957341b2f7b",
+    "components/grass/grass_field.gd": "0953b8a185711a962edf1d84a3c5af237703bc86fb8fbebcf08519769998b0a3",
+    "components/grass/grass_poc_renderer.gd": "5a69580379ca2ae057e22db40c75dbe0819119fc1df44d27be44e836e1dcb012",
+    "components/grass/grass_source_catalog.gd": "438507bfea1061d12c749c1572e37ecbc24179d5014e98761fb91c2a0bed1627",
+    "resources/grass/grass_poc_atlas.png": "0fc9d896a4a58a7aeae581fc34c1ca5d460d93f09998b65340bbe4df73021130"
+  }
+}

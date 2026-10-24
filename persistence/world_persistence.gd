@@ -7,9 +7,13 @@ var _label: Label
 var _hide_at: int = 0
 
 func _ready() -> void:
-	_start.call_deferred()
+	# A signal connection is removed if this preview is freed before the frame.
+	# An awaiting coroutine instead resumes on a deleted instance during teardown.
+	get_tree().process_frame.connect(_start, CONNECT_ONE_SHOT)
 
 func _start() -> void:
+	# Web startup can flush deferred calls before the main scene is assigned.
+	# Wait one frame before applying the guard that keeps previews isolated.
 	if get_tree().current_scene != world:
 		return
 	_service = SaveManager

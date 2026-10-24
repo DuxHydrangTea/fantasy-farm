@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://doxdawe2fkkt"]
+[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://di7dbxdbb24yu"]
 
-[ext_resource type="Resource" uid="uid://bvanc2qkjkaaw" path="res://items/trees/cherry.tres" id="product"]
+[ext_resource type="Resource" uid="uid://cie0uhpb7hs1j" path="res://items/trees/cherry.tres" id="product"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/cherry/ready.tres" id="ready"]
 [ext_resource type="Script" uid="uid://dexpywdsy1ft0" path="res://scripts/tree_definition.gd" id="script"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_01.tres" id="stage1"]
@@ -11,6 +11,9 @@
 script = ExtResource("script")
 tree_id = &"cherry"
 display_name = "Cherry Tree"
+growth_seconds = 72000.0
+fruit_cycle_seconds = 28800.0
+harvest_amount = 300
 harvest_item = ExtResource("product")
 stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
 ready_texture = ExtResource("ready")

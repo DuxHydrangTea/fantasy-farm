@@ -1,0 +1,687 @@
+{
+  "resources": {
+    "res://crops/field/carrot/carrot.tres": {
+      "growth_seconds": 60.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/radish/radish.tres": {
+      "growth_seconds": 120.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/parsnip/parsnip.tres": {
+      "growth_seconds": 180.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/beetroot/beetroot.tres": {
+      "growth_seconds": 240.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/cabbage/cabbage.tres": {
+      "growth_seconds": 300.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/potato/potato.tres": {
+      "growth_seconds": 600.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/tomato/tomato.tres": {
+      "growth_seconds": 900.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/cucumber/cucumber.tres": {
+      "growth_seconds": 1200.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/onion/onion.tres": {
+      "growth_seconds": 1500.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/wheat/wheat.tres": {
+      "growth_seconds": 1800.0,
+      "harvest_amount": 400
+    },
+    "res://crops/field/garlic/garlic.tres": {
+      "growth_seconds": 2700.0,
+      "harvest_amount": 500
+    },
+    "res://crops/field/leek/leek.tres": {
+      "growth_seconds": 3600.0,
+      "harvest_amount": 300
+    },
+    "res://crops/field/broccoli/broccoli.tres": {
+      "growth_seconds": 5400.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/corn/corn.tres": {
+      "growth_seconds": 7200.0,
+      "harvest_amount": 300
+    },
+    "res://crops/field/eggplant/eggplant.tres": {
+      "growth_seconds": 10800.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/chili_pepper/chili_pepper.tres": {
+      "growth_seconds": 14400.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/green_bell_pepper/green_bell_pepper.tres": {
+      "growth_seconds": 21600.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/yellow_bell_pepper/yellow_bell_pepper.tres": {
+      "growth_seconds": 28800.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/bell_pepper/bell_pepper.tres": {
+      "growth_seconds": 36000.0,
+      "harvest_amount": 200
+    },
+    "res://crops/field/sunflower/sunflower.tres": {
+      "growth_seconds": 43200.0,
+      "harvest_amount": 100
+    },
+    "res://crops/field/strawberry/strawberry.tres": {
+      "growth_seconds": 64800.0,
+      "harvest_amount": 500
+    },
+    "res://crops/field/pumpkin/pumpkin.tres": {
+      "growth_seconds": 86400.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_01.tres": {
+      "growth_seconds": 300.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_02.tres": {
+      "growth_seconds": 900.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_03.tres": {
+      "growth_seconds": 1800.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_04.tres": {
+      "growth_seconds": 3600.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_05.tres": {
+      "growth_seconds": 7200.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_06.tres": {
+      "growth_seconds": 14400.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_07.tres": {
+      "growth_seconds": 28800.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_08.tres": {
+      "growth_seconds": 43200.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_09.tres": {
+      "growth_seconds": 64800.0,
+      "harvest_amount": 100
+    },
+    "res://flowers/definitions/flower_10.tres": {
+      "growth_seconds": 86400.0,
+      "harvest_amount": 100
+    },
+    "res://animals/definitions/chicken.tres": {
+      "maturity_seconds": 3600.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/chicken_egg_production.tres": {
+      "production_seconds": 900.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/duck.tres": {
+      "maturity_seconds": 7200.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/duck_egg_production.tres": {
+      "production_seconds": 1800.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/goose.tres": {
+      "maturity_seconds": 14400.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/goose_egg_production.tres": {
+      "production_seconds": 3600.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/sheep.tres": {
+      "maturity_seconds": 21600.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/sheep_wool_production.tres": {
+      "production_seconds": 10800.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/cow.tres": {
+      "maturity_seconds": 28800.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/cow_milk_production.tres": {
+      "production_seconds": 14400.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/pig.tres": {
+      "maturity_seconds": 43200.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/pig_truffle_production.tres": {
+      "production_seconds": 28800.0,
+      "production_amount": 100
+    },
+    "res://animals/definitions/horse.tres": {
+      "maturity_seconds": 86400.0,
+      "satiety_depletion_seconds": 3600.0,
+      "hydration_depletion_seconds": 3600.0
+    },
+    "res://animals/productions/horse_compost_production.tres": {
+      "production_seconds": 43200.0,
+      "production_amount": 100
+    },
+    "res://trees/definitions/apple.tres": {
+      "growth_seconds": 43200.0,
+      "fruit_cycle_seconds": 14400.0,
+      "harvest_amount": 300
+    },
+    "res://trees/definitions/peach.tres": {
+      "growth_seconds": 43200.0,
+      "fruit_cycle_seconds": 18000.0,
+      "harvest_amount": 300
+    },
+    "res://trees/definitions/pear.tres": {
+      "growth_seconds": 57600.0,
+      "fruit_cycle_seconds": 21600.0,
+      "harvest_amount": 300
+    },
+    "res://trees/definitions/cherry.tres": {
+      "growth_seconds": 72000.0,
+      "fruit_cycle_seconds": 28800.0,
+      "harvest_amount": 300
+    },
+    "res://trees/definitions/oak.tres": {
+      "growth_seconds": 86400.0,
+      "harvest_amount": 400
+    },
+    "res://trees/definitions/birch.tres": {
+      "growth_seconds": 86400.0,
+      "harvest_amount": 400
+    },
+    "res://trees/definitions/spruce.tres": {
+      "growth_seconds": 86400.0,
+      "harvest_amount": 400
+    },
+    "res://items/feeds/poultry_feed.tres": {
+      "food_units_per_item": 200,
+      "max_stack": 999
+    },
+    "res://items/feeds/livestock_feed.tres": {
+      "food_units_per_item": 200,
+      "max_stack": 999
+    },
+    "res://items/harvest_produces/beetroot_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/bell_pepper_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/broccoli_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/cabbage_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/carrot_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/chili_pepper_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/corn_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/cucumber_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/eggplant_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/garlic_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/green_bell_pepper_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/leek_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/onion_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/parsnip_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/potato_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/pumpkin_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/radish_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/strawberry_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/sunflower_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/tomato_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/wheat_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/harvest_produces/yellow_bell_pepper_produces.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/chicken_egg.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/cow_milk.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/duck_egg.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/goose_egg.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/horse_compost.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/pig_truffle.tres": {
+      "max_stack": 32000
+    },
+    "res://items/animal_produces/sheep_wool.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_01.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_02.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_03.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_04.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_05.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_06.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_07.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_08.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_09.tres": {
+      "max_stack": 32000
+    },
+    "res://items/flowers/flower_10.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/apple.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/apple_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/birch_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/cherry.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/cherry_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/oak_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/peach.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/peach_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/pear.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/pear_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/root_wood.tres": {
+      "max_stack": 32000
+    },
+    "res://items/trees/spruce_sapling.tres": {
+      "max_stack": 999
+    },
+    "res://items/trees/wood.tres": {
+      "max_stack": 32000
+    },
+    "res://items/honey/floral_honey.tres": {
+      "max_stack": 32000
+    },
+    "res://items/honey/sunflower_honey.tres": {
+      "max_stack": 32000
+    },
+    "res://items/honey/wild_honey.tres": {
+      "max_stack": 32000
+    },
+    "res://items/seeds/beetroot_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/bell_pepper_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/broccoli_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/cabbage_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/carrot_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/chili_pepper_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/corn_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/cucumber_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/eggplant_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_01_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_02_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_03_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_04_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_05_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_06_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_07_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_08_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_09_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/flower_10_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/garlic_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/green_bell_pepper_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/leek_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/onion_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/parsnip_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/potato_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/pumpkin_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/radish_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/strawberry_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/sunflower_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/tomato_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/wheat_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/seeds/yellow_bell_pepper_seed.tres": {
+      "max_stack": 999
+    },
+    "res://items/boosters/animal_tonic.tres": {
+      "max_stack": 999
+    },
+    "res://items/boosters/crop_fertilizer.tres": {
+      "max_stack": 999
+    }
+  },
+  "buy": {
+    "carrot_seed": 2700,
+    "radish_seed": 3600,
+    "parsnip_seed": 4500,
+    "beetroot_seed": 5500,
+    "cabbage_seed": 6800,
+    "potato_seed": 8000,
+    "tomato_seed": 9500,
+    "cucumber_seed": 12000,
+    "onion_seed": 13000,
+    "wheat_seed": 6000,
+    "garlic_seed": 9000,
+    "leek_seed": 8000,
+    "broccoli_seed": 12000,
+    "corn_seed": 5000,
+    "eggplant_seed": 12000,
+    "chili_pepper_seed": 15000,
+    "green_bell_pepper_seed": 16000,
+    "yellow_bell_pepper_seed": 18000,
+    "bell_pepper_seed": 20000,
+    "sunflower_seed": 25000,
+    "strawberry_seed": 30000,
+    "pumpkin_seed": 50000,
+    "flower_01_seed": 10000,
+    "flower_02_seed": 15000,
+    "flower_03_seed": 20000,
+    "flower_04_seed": 25000,
+    "flower_05_seed": 30000,
+    "flower_06_seed": 40000,
+    "flower_07_seed": 50000,
+    "flower_08_seed": 60000,
+    "flower_09_seed": 75000,
+    "flower_10_seed": 100000,
+    "chicken": 16000,
+    "duck": 25000,
+    "goose": 36000,
+    "sheep": 50000,
+    "cow": 75000,
+    "pig": 100000,
+    "horse": 150000,
+    "apple_sapling": 20000,
+    "peach_sapling": 20000,
+    "pear_sapling": 25000,
+    "cherry_sapling": 30000,
+    "oak_sapling": 25000,
+    "birch_sapling": 25000,
+    "spruce_sapling": 25000,
+    "beehive": 150000,
+    "poultry_feed": 2000,
+    "livestock_feed": 2000
+  },
+  "sell": {
+    "carrot_produces": 35,
+    "radish_produces": 50,
+    "parsnip_produces": 65,
+    "beetroot_produces": 80,
+    "cabbage_produces": 100,
+    "potato_produces": 65,
+    "tomato_produces": 80,
+    "cucumber_produces": 100,
+    "onion_produces": 110,
+    "wheat_produces": 30,
+    "garlic_produces": 35,
+    "leek_produces": 60,
+    "broccoli_produces": 280,
+    "corn_produces": 50,
+    "eggplant_produces": 150,
+    "chili_pepper_produces": 200,
+    "green_bell_pepper_produces": 250,
+    "yellow_bell_pepper_produces": 300,
+    "bell_pepper_produces": 350,
+    "sunflower_produces": 850,
+    "strawberry_produces": 200,
+    "pumpkin_produces": 2900,
+    "flower_01": 180,
+    "flower_02": 280,
+    "flower_03": 380,
+    "flower_04": 500,
+    "flower_05": 650,
+    "flower_06": 900,
+    "flower_07": 1300,
+    "flower_08": 1800,
+    "flower_09": 2500,
+    "flower_10": 4500,
+    "chicken_egg": 8,
+    "duck_egg": 15,
+    "goose_egg": 28,
+    "sheep_wool": 65,
+    "cow_milk": 80,
+    "pig_truffle": 180,
+    "horse_compost": 250,
+    "apple": 25,
+    "peach": 30,
+    "pear": 38,
+    "cherry": 55,
+    "wood": 25,
+    "wild_honey": 150,
+    "sunflower_honey": 250,
+    "floral_honey": 400
+  },
+  "objective_rewards": {
+    "first_soil": 5000,
+    "first_seed": 5000,
+    "first_water": 5000,
+    "first_harvest": 10000,
+    "first_sale": 10000,
+    "first_animal": 10000,
+    "first_feed": 5000,
+    "first_trough_water": 5000,
+    "first_expansion": 25000
+  },
+  "orders": [
+    {
+      "id": "tomato_crate_bulk",
+      "title": "Bulk tomato delivery",
+      "items": [
+        "tomato_produces"
+      ],
+      "amounts": [
+        1000
+      ],
+      "reward": 100000
+    },
+    {
+      "id": "potato_military",
+      "title": "Potatoes for the army",
+      "items": [
+        "potato_produces"
+      ],
+      "amounts": [
+        2000
+      ],
+      "reward": 162500
+    },
+    {
+      "id": "grand_salad_basket",
+      "title": "A grand salad basket",
+      "items": [
+        "tomato_produces",
+        "cabbage_produces"
+      ],
+      "amounts": [
+        1000,
+        800
+      ],
+      "reward": 224000
+    },
+    {
+      "id": "winter_soup_barrel",
+      "title": "Winter soup delivery",
+      "items": [
+        "potato_produces",
+        "corn_produces"
+      ],
+      "amounts": [
+        1000,
+        1000
+      ],
+      "reward": 161000
+    },
+    {
+      "id": "dairy_egg_express",
+      "title": "Milk and egg delivery",
+      "items": [
+        "chicken_egg",
+        "cow_milk"
+      ],
+      "amounts": [
+        1000,
+        400
+      ],
+      "reward": 56000
+    },
+    {
+      "id": "royal_pumpkin_contract",
+      "title": "Royal pumpkin contract",
+      "items": [
+        "pumpkin_produces"
+      ],
+      "amounts": [
+        1000
+      ],
+      "reward": 3625000
+    }
+  ]
+}

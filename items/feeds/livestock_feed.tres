@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://imj32f8onlp1"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c2ii5df2nr7md"]
 
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://crops/field/wheat/harvest_icon.tres" id="2_icon"]
@@ -9,3 +9,5 @@ item_id = &"livestock_feed"
 display_name = "Livestock Feed"
 icon = ExtResource("2_icon")
 item_type = 3
+max_stack = 999
+food_units_per_item = 200

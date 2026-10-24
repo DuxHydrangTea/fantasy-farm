@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://conqxk0aj0w8b"]
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://kksto84uai2v"]
 
 [ext_resource type="SpriteFrames" uid="uid://ceakca84lmx3v" path="res://sprite_frames/animals/pig_01_frames.tres" id="1_wurm3"]
-[ext_resource type="Resource" uid="uid://x1ip6gi3i8ww" path="res://animals/productions/pig_truffle_production.tres" id="2_n204y"]
+[ext_resource type="Resource" uid="uid://wilcyvsx7h5o" path="res://animals/productions/pig_truffle_production.tres" id="2_n204y"]
 [ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="3_t6ync"]
 
 [resource]
@@ -9,5 +9,8 @@ script = ExtResource("3_t6ync")
 animal_id = &"pig"
 display_name = "Pig"
 species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
 adult_frames = ExtResource("1_wurm3")
+maturity_seconds = 43200.0
 production = ExtResource("2_n204y")

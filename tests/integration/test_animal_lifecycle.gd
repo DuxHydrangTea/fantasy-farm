@@ -17,6 +17,7 @@ func _animal(species: String = "chicken", initial_age: float = 0.0, juvenile: Sp
 	animal.definition = load("res://animals/definitions/" + species + ".tres").duplicate() as AnimalDefinition
 	animal.definition.production = animal.definition.production.duplicate() as AnimalProductionDefinition
 	animal.definition.production.production_seconds = 4.0
+	animal.definition.production.production_amount = 1
 	animal.definition.maturity_seconds = 10.0
 	animal.definition.satiety_depletion_seconds = 10000.0
 	animal.definition.hydration_depletion_seconds = 10000.0
@@ -269,13 +270,13 @@ func test_death_drops_completed_direct_collection_stock_and_preserves_existing_p
 	assert_eq(animal.collect_produce(bag), 0)
 	assert_eq(_pickups()[0].collect(bag), 2)
 
-func test_actual_day_boundary_does_not_credit_the_juvenile_day() -> void:
+func test_actual_maturity_boundary_does_not_credit_the_juvenile_interval() -> void:
 	var animal: AnimalActor = _animal()
 	var data: AnimalDefinition = load("res://animals/definitions/chicken.tres") as AnimalDefinition
 	animal.definition.maturity_seconds = data.maturity_seconds
 	animal.growth.configure(data.maturity_seconds, 0.0, data.lifespan_seconds)
 	animal.needs.configure(2000000.0, 2000000.0)
-	_advance(86399.0)
+	_advance(data.maturity_seconds - 1.0)
 	assert_false(animal.growth.is_adult())
 	assert_eq(_pickups().size(), 0)
 	_advance(1.0)

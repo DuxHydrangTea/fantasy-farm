@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://dy715opsbf6lt"]
+[gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://b0oceyjs30n62"]
 
 [ext_resource type="Script" uid="uid://c6xdvb1xr63p3" path="res://scripts/crop_definition.gd" id="1_j20b1"]
 [ext_resource type="Texture2D" path="res://crops/field/onion/stage_01.tres" id="2_bmtk1"]
 [ext_resource type="Texture2D" path="res://crops/field/onion/stage_02.tres" id="3_eemvj"]
 [ext_resource type="Texture2D" path="res://crops/field/onion/stage_03.tres" id="4_ir8o3"]
 [ext_resource type="Texture2D" path="res://crops/field/onion/stage_04.tres" id="5_sum8w"]
-[ext_resource type="Resource" uid="uid://pgcl7tlfhjp2" path="res://items/harvest_produces/onion_produces.tres" id="harvest_produce"]
+[ext_resource type="Resource" uid="uid://0yoj34v2jlfi" path="res://items/harvest_produces/onion_produces.tres" id="harvest_produce"]
 
 [resource]
 script = ExtResource("1_j20b1")
 crop_id = &"onion"
 stage_textures = Array[Texture2D]([ExtResource("2_bmtk1"), ExtResource("3_eemvj"), ExtResource("4_ir8o3"), ExtResource("5_sum8w")])
-growth_seconds = 10.0
+growth_seconds = 1500.0
 harvest_item = ExtResource("harvest_produce")
-harvest_amount = 400
+harvest_amount = 200
 metadata/_custom_type_script = "uid://c6xdvb1xr63p3"

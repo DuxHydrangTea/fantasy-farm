@@ -45,7 +45,9 @@ func _ready() -> void:
 	slots.add_child(inventory_button)
 	selection.inventory_visibility_changed.connect(_menu_changed)
 	selection.shop_visibility_changed.connect(_menu_changed)
+	selection.objectives_visibility_changed.connect(_menu_changed)
 	selection.selection_changed.connect(_on_selection_changed)
+	_fit_layout()
 	for source: Node in [interactions, placement, boosters]:
 		if source != null:
 			source.connect("feedback_changed", _refresh_feedback)
@@ -70,7 +72,7 @@ func _on_selection_changed(index: int, _tool: StringName) -> void:
 func _refresh_controls() -> void:
 	if inventory_button == null:
 		return
-	inventory_button.text = tr("Bag") + "\n[" + GameText.action_key(&"toggle_inventory") + "]"
+	inventory_button.text = tr("Bag") if MobileLayout.is_touch(get_viewport()) else tr("Bag") + "\n[" + GameText.action_key(&"toggle_inventory") + "]"
 	inventory_button.tooltip_text = tr("Open inventory")
 	var instructions: Dictionary = {
 		&"tool": "Space / Right-click: till soil",
@@ -99,12 +101,34 @@ func _notification(what: int) -> void:
 		_on_selection_changed(selection.selected_index, &"")
 
 func _fit_layout() -> void:
-	hint.visible = root.size.x >= 800.0 and root.size.y >= 500.0
+	var touch: bool = MobileLayout.is_touch(get_viewport())
+	hint.visible = not touch and root.size.x >= 800.0 and root.size.y >= 500.0
 	selected_name.add_theme_font_size_override("font_size", 20)
 	hint.add_theme_font_size_override("font_size", 18)
 	var bottom: MarginContainer = slots.get_parent().get_parent() as MarginContainer
 	bottom.offset_top = -144
 	bottom.offset_bottom = -16
+	bottom.offset_left = 88 if touch else 0
+	bottom.offset_right = -88 if touch else 0
+	if touch:
+		bottom.offset_top = -104
+		bottom.offset_bottom = -8
+	for button: InventorySlot in buttons:
+		button.custom_minimum_size = Vector2(48, 52) if touch else Vector2(64, 68)
+		button.refresh()
+	if inventory_button != null:
+		inventory_button.custom_minimum_size = Vector2(64, 52) if touch else Vector2(92, 68)
+		inventory_button.clip_text = touch
+		inventory_button.add_theme_font_size_override("font_size", 16 if touch else 18)
+		for state: StringName in [&"normal", &"hover", &"pressed"]:
+			if touch:
+				var style: StyleBox = root.theme.get_stylebox(state, &"Button").duplicate() as StyleBox
+				style.set_content_margin(SIDE_LEFT, 3)
+				style.set_content_margin(SIDE_RIGHT, 3)
+				inventory_button.add_theme_stylebox_override(state, style)
+			else:
+				inventory_button.remove_theme_stylebox_override(state)
+		_refresh_controls()
 
 func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() >= _feedback_deadline:

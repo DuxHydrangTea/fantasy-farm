@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cqyciu8fdl8bb"]
 
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r09_c04.tres" id="1_fi3dm"]
-[ext_resource type="Resource" path="res://crops/field/radish/radish.tres" id="1_n4gri"]
+[ext_resource type="Resource" uid="uid://oiko7m0qjr4i" path="res://crops/field/radish/radish.tres" id="1_n4gri"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1_rbit6"]
 
 [resource]
@@ -11,4 +11,5 @@ display_name = "Radish Seed"
 icon = ExtResource("1_fi3dm")
 item_type = 1
 crop = ExtResource("1_n4gri")
+max_stack = 999
 metadata/_custom_type_script = "uid://bg2be8miqe4ud"

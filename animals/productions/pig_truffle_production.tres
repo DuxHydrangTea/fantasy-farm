@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://x1ip6gi3i8ww"]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://wilcyvsx7h5o"]
 
-[ext_resource type="Resource" uid="uid://bfiabq8lkm6qn" path="res://items/animal_produces/pig_truffle.tres" id="1_0r561"]
+[ext_resource type="Resource" uid="uid://d35osrbwka1k4" path="res://items/animal_produces/pig_truffle.tres" id="1_0r561"]
 [ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="2_rom02"]
 
 [resource]
 script = ExtResource("2_rom02")
 production_item = ExtResource("1_0r561")
-production_seconds = 60.0
+production_amount = 100
+production_seconds = 28800.0

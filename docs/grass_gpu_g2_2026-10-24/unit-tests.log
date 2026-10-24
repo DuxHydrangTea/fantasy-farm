@@ -1,0 +1,53 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+WARNING: res://resources/bees/beehive.tres:5 - ext_resource, invalid UID: uid://dfmbrigvsrn55 - using text path instead: res://items/honey/floral_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/bees/beehive.tres:7 - ext_resource, invalid UID: uid://2lqfpeyxh5qf - using text path instead: res://items/honey/sunflower_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/bees/beehive.tres:8 - ext_resource, invalid UID: uid://b3qqo73l1t5wh - using text path instead: res://items/honey/wild_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/fantasy-farm-web-preview] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_grass_chunks.gd
+* test_negative_cells_exact_fractional_rows_z_and_low_grass_grouping
+* test_parent_transform_is_baked_into_sort_space_and_bounds
+* test_static_view_does_not_rebuild_or_query_whole_map
+* test_lru_cache_is_bounded_and_live_rids_accounted_for
+* test_budget_overflow_is_explicit_and_never_silently_truncates
+* test_hide_disable_reenter_and_transform_rebuild
+* test_fractional_rows_cannot_exceed_the_gpu_batch_budget
+* test_dense_single_chunk_respects_instance_budget
+* test_extreme_zoom_rejects_before_enumerating_millions_of_empty_cells
+* test_query_expands_for_oversized_transformed_grass_and_wind
+10/10 passed.
+
+
+res://tests/unit/test_grass_gpu.gd
+* test_baked_atlas_keeps_every_pixel_of_all_original_strips
+* test_manifest_root_is_constant_for_every_original_animation_frame
+* test_owning_node_has_no_per_tuft_children_or_process_loops
+* test_bounds_include_flips_nonuniform_scale_and_transparent_pixels_below_root
+4/4 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                14
+Passing Tests        14
+Asserts             326
+Time              0.169s
+
+
+---- All tests passed! ----
+

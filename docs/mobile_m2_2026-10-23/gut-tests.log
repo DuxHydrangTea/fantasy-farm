@@ -1,0 +1,252 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-bbwutm_p] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_touch_gestures.gd
+* test_joystick_keeps_its_finger_outside_zone_and_second_finger_acts_once
+* test_only_short_stationary_world_release_is_a_tap
+* test_pinch_suppresses_both_taps_and_rebases_when_finger_pair_changes
+* test_ui_and_action_fingers_cannot_turn_into_world_pinch_or_tap
+* test_cancel_forgets_all_touches_and_late_releases_do_nothing
+5/5 passed.
+
+
+res://tests/integration/test_mobile_controls.gd
+* test_joystick_moves_and_second_touch_uses_tool_without_waiting_for_release
+    --- Awaiting 0.9 seconds  ---
+* test_native_touch_tap_commits_on_release_and_pinch_never_moves_or_uses
+* test_hotbar_and_modals_consume_touch_and_emulated_mouse_cannot_click_world
+* test_rotation_focus_loss_cancel_and_mode_switch_release_all_input
+* test_touch_farming_loop_uses_existing_impact_frames_and_interaction_resolver
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_context_button_opens_shop_and_modal_blocks_actions
+* test_ui_swipe_scrolls_without_selecting_items_or_leaking_into_world
+* test_session_touch_toggle_keeps_keyboard_available_and_changes_layout
+* test_controls_fit_safe_area_and_do_not_overlap_hotbar_at_high_dpi
+9/9 passed.
+
+
+res://tests/integration/test_player.gd
+* test_navigation_reuses_grid_and_bounds_physics_queries_per_frame
+* test_harvest_and_mouse_tool_actions_can_be_remapped
+* test_physical_movement_keys<parameterized>
+    - params[0]([4194319, (-1.0, 0.0)])
+    - params[1]([4194321, (1.0, 0.0)])
+    - params[2]([4194320, (0.0, -1.0)])
+    - params[3]([4194322, (0.0, 1.0)])
+    - params[4]([65, (-1.0, 0.0)])
+    - params[5]([68, (1.0, 0.0)])
+    - params[6]([87, (0.0, -1.0)])
+    - params[7]([83, (0.0, 1.0)])
+* test_selected_tool_locks_then_resumes_movement<parameterized>
+    - params[0]([0, 2, &"tool_down"])
+    --- Awaiting 1.5 seconds  ---
+    - params[1]([1, 3, &"water_down"])
+    --- Awaiting 1.5 seconds  ---
+* test_full_hd_camera_uses_requested_zoom_and_follows_within_map_limits
+    --- Awaiting 0.8 seconds  ---
+* test_camera_keeps_view_inside_map<parameterized>
+    - params[0]((-500.0, -500.0))
+    - params[1]((2400.0, 1600.0))
+* test_wheel_zoom_is_smooth_and_accumulates_fast_steps
+    --- Awaiting 0.7 seconds  ---
+    --- Awaiting 0.7 seconds  ---
+* test_zoom_sleeps_at_target_wakes_for_input_and_rechecks_limits
+* test_wheel_zoom_clamps_and_keeps_map_inside_view
+    --- Awaiting 0.8 seconds  ---
+    --- Awaiting 0.8 seconds  ---
+* test_zoom_minimum_adapts_to_viewport_resize
+    --- Awaiting 0.7 seconds  ---
+* test_inventory_blocks_wheel_zoom
+    --- Awaiting 0.6 seconds  ---
+    --- Awaiting 0.6 seconds  ---
+* test_ui_consumed_wheel_does_not_zoom_world
+    --- Awaiting 0.6 seconds  ---
+* test_wheel_release_is_ignored
+    --- Awaiting 0.6 seconds  ---
+* test_click_focus_stays_correct_after_zoom
+    --- Awaiting 0.7 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_left_click_approaches_focus_then_faces_it_without_stepping_on_it
+    --- Awaiting 0.9 seconds  ---
+* test_new_click_replaces_destination
+    --- Awaiting 0.8 seconds  ---
+* test_keyboard_cancels_click_destination
+* test_spam_clicks_keep_cruising_without_stopping_or_restarting_walk
+    --- Awaiting 1.5 seconds  ---
+* test_cold_cache_spam_clicks_start_moving_immediately_in_open_space
+* test_spam_clicks_around_wall_keep_safe_detour_and_reach_latest_destination
+    --- Awaiting 2.0 seconds  ---
+* test_action_cancels_destination_and_ignores_clicks
+    --- Awaiting 1.5 seconds  ---
+* test_right_click_uses_tool_without_moving
+* test_ui_consumes_click_before_movement
+* test_click_focus_finds_a_path_around_collision
+* test_unreachable_focus_stops_without_walking_in_place
+* test_collidable_focus_is_approached_without_entering_it
+    --- Awaiting 1.5 seconds  ---
+* test_new_collision_replans_the_route
+    --- Awaiting 3.0 seconds  ---
+* test_focus_route_fits_a_one_tile_wide_gate
+    --- Awaiting 2.0 seconds  ---
+* test_nearby_focus_only_turns_without_walking
+* test_inventory_cancels_focus_route
+* test_collision_plays_idle_and_resumes_walking_when_path_clears
+* test_movement_dust_particles_emit_while_walking_and_stop_when_idle
+32/32 passed.
+
+
+res://tests/integration/test_farming.gd
+* test_click_focus_approaches_the_clicked_farm_cell_before_manual_tool_use<parameterized>
+    - params[0]((-7.0, -7.0))
+    --- Awaiting 2.0 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[1]((7.0, 7.0))
+    --- Awaiting 2.0 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_tool_then_water_changes_only_facing_tile_at_impact<parameterized>
+    - params[0]((0.0, 1.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[1]((0.0, -1.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[2]((-1.0, 0.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[3]((1.0, 0.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_dry_and_wet_terrain_join_adjacent_cells<parameterized>
+    - params[0]((1, 0))
+    - params[1]((0, 1))
+* test_rectangle_keeps_all_soil_cells_connected
+* test_tree_collision_blocks_till_water_and_plant
+* test_cancel_before_impact_does_not_modify_soil
+    --- Awaiting 0.9 seconds  ---
+* test_unmarked_ground_remains_protected_after_actions
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_target_mapping_handles_translated_and_scaled_field
+    --- Awaiting 0.9 seconds  ---
+8/8 passed.
+
+
+res://tests/integration/test_unified_interaction.gd
+* test_priority_is_merchant_then_trough_then_animal_then_crop_and_one_outline
+* test_e_requires_facing_and_obstacle_clearance_and_never_falls_back_to_trough
+* test_badge_has_live_stock_and_auto_fill_without_selecting_feed
+    --- Awaiting 0.9 seconds  ---
+* test_e_water_finds_can_anywhere_in_bag_and_full_trough_blocks_lower_targets
+    --- Awaiting 0.9 seconds  ---
+* test_click_npc_navigates_around_collision_and_opens_only_at_arrival
+    --- Awaiting 4.0 seconds  ---
+* test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority
+    --- Awaiting 3.0 seconds  ---
+* test_repeated_clicks_on_same_npc_keep_approaching_without_pauses_or_duplicate_actions
+    --- Awaiting 1.5 seconds  ---
+* test_new_focus_keyboard_and_deleted_target_cancel_queued_interaction
+    --- Awaiting 0.8 seconds  ---
+* test_unreachable_click_does_not_open_or_harvest
+    --- Awaiting 5.0 seconds  ---
+* test_land_price_badge_translation_and_confirm_only_debits
+* test_click_mature_crop_walks_then_harvests_once_and_empty_ground_only_focuses
+    --- Awaiting 3.0 seconds  ---
+    --- Awaiting 1.5 seconds  ---
+11/11 passed.
+
+
+res://tests/integration/test_mobile_layout.gd
+* test_safe_area_and_touch_targets_survive_high_density_and_resize_in_both_languages
+* test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize
+* test_touch_bag_moves_to_last_slot_without_drag_or_spending_items
+* test_sales_checkout_and_land_confirmation_fit_safe_landscape_height
+* test_animal_inspector_keeps_clear_of_dock_on_short_vietnamese_screen
+5/5 passed.
+
+
+res://tests/integration/test_small_window_ui.gd
+* test_small_window_has_readable_scale_contained_menu_and_working_transformed_clicks
+* test_inventory_button_and_balance_fit_and_click_in_both_languages
+* test_resize_and_language_keep_checkout_and_inventory_scrolls_inside_small_window
+* test_hover_inspector_never_overlaps_weather_or_hotbar_after_resize_or_translation
+4/4 passed.
+
+
+res://tests/integration/test_inventory_ui.gd
+* test_inventory_opens_with_tab_or_i_and_closes_with_escape
+* test_balance_is_inside_inventory_and_updates_without_reopening
+* test_inventory_toggle_uses_remapped_action_without_hardcoded_i
+* test_inventory_does_not_consume_unrelated_shortcuts
+* test_modal_cancels_movement_and_blocks_world_input
+* test_opening_inventory_cancels_in_progress_tool_action
+    --- Awaiting 0.8 seconds  ---
+* test_drag_drop_updates_shared_inventory_and_hotbar
+* test_quantity_labels_refresh_in_bag_and_hotbar
+* test_invalid_drag_payload_cannot_move_or_duplicate_items
+* test_font_theme_uses_configured_font
+* test_panel_fits_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+11/11 passed.
+
+
+res://tests/integration/test_localization.gd
+* test_english_default_and_live_inventory_hotbar_wallet_and_tooltips
+* test_shop_retranslates_scene_and_generated_cards_without_changing_checkout
+* test_animal_sale_selection_survives_language_change
+* test_backend_errors_keep_source_keys_and_localize_only_for_display
+* test_catalog_placeholders_and_vietnamese_font_coverage
+5/5 passed.
+
+
+res://tests/integration/test_produce_sales.gd
+* test_entered_quantity_commits_text_and_sell_all_sells_other_types
+* test_over_quantity_rejected_and_menu_close_for_load_or_removal_releases_lock
+* test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quantity
+* test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_menu
+4/4 passed.
+
+
+res://tests/integration/test_land_expansion.gd
+* test_actual_map_permissions_are_exact_rectangle_and_locked_tools_fail
+* test_sign_interaction_confirm_cancel_reveal_and_full_unlock
+    --- Awaiting 1.0 seconds  ---
+* test_distance_and_funds_guard_menu_and_purchase
+* test_purchase_save_reload_migration_and_corrupt_ownership_preflight
+* test_menu_fits_small_window_and_releases_lock_for_load
+* test_legacy_empty_farm_starts_with_one_column_and_bad_counts_fail
+6/6 passed.
+
+
+res://tests/integration/test_persistence_bootstrap.gd
+* test_deferred_main_scene_assignment_still_binds_persistence
+* test_preview_world_never_binds_the_save_service
+2/2 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts              12
+Tests               102
+Passing Tests       102
+Asserts            4072
+Time              21.579s
+
+
+---- All tests passed! ----
+

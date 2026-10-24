@@ -1,0 +1,9636 @@
+{
+	"atlas_size": [
+		128,
+		288
+	],
+	"engine": "4.7.2-stable (official)",
+	"scenes": [
+		{
+			"authored_nodes": 404,
+			"entered_tree": false,
+			"layers": [
+				{
+					"cells": 16854,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Ground",
+					"sources": {
+						"0": {
+							"cells": 16560,
+							"texture": "res://assets/Tiles/Grass/Grass_1_Middle.png"
+						},
+						"2": {
+							"cells": 294,
+							"texture": "res://assets/Tiles/Grass/Grass_2_Middle.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 16560,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 294,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_2wbs0",
+					"y_sort": false,
+					"z_index": -4
+				},
+				{
+					"cells": 2809,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "NoGrass",
+					"sources": {
+						"0": {
+							"cells": 2284,
+							"texture": "res://assets/Tiles/Grass/Grass_Tiles_1.png"
+						},
+						"2": {
+							"cells": 437,
+							"texture": "res://assets/Tiles/Grass/Grass_Tiles_2.png"
+						},
+						"3": {
+							"cells": 88,
+							"texture": "res://assets/Tiles/Grass/Path_Decoration.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								5
+							],
+							"cells": 18,
+							"first_frame_region": [
+								0,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								6
+							],
+							"cells": 66,
+							"first_frame_region": [
+								0,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								7
+							],
+							"cells": 15,
+							"first_frame_region": [
+								0,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								8
+							],
+							"cells": 9,
+							"first_frame_region": [
+								0,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								9
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								5
+							],
+							"cells": 118,
+							"first_frame_region": [
+								16,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								6
+							],
+							"cells": 1821,
+							"first_frame_region": [
+								16,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								7
+							],
+							"cells": 114,
+							"first_frame_region": [
+								16,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								8
+							],
+							"cells": 5,
+							"first_frame_region": [
+								16,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								9
+							],
+							"cells": 8,
+							"first_frame_region": [
+								16,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:10,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								6
+							],
+							"cells": 1,
+							"first_frame_region": [
+								160,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:10,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								160,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:10,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								8
+							],
+							"cells": 1,
+							"first_frame_region": [
+								160,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								5
+							],
+							"cells": 12,
+							"first_frame_region": [
+								32,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								6
+							],
+							"cells": 68,
+							"first_frame_region": [
+								32,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 19,
+							"first_frame_region": [
+								32,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:8,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								6
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:8,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:8,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								8
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:9,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								6
+							],
+							"cells": 1,
+							"first_frame_region": [
+								144,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:9,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								144,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:9,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								8
+							],
+							"cells": 1,
+							"first_frame_region": [
+								144,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:10,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								2
+							],
+							"cells": 6,
+							"first_frame_region": [
+								160,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:10,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								160,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:10,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								10,
+								4
+							],
+							"cells": 4,
+							"first_frame_region": [
+								160,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:8,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								2
+							],
+							"cells": 2,
+							"first_frame_region": [
+								128,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:8,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								3
+							],
+							"cells": 4,
+							"first_frame_region": [
+								128,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:8,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								4
+							],
+							"cells": 4,
+							"first_frame_region": [
+								128,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:9,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								2
+							],
+							"cells": 152,
+							"first_frame_region": [
+								144,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:9,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								3
+							],
+							"cells": 113,
+							"first_frame_region": [
+								144,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:9,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								9,
+								4
+							],
+							"cells": 151,
+							"first_frame_region": [
+								144,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 30,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 28,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 30,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_1dwwi",
+					"y_sort": false,
+					"z_index": -3
+				},
+				{
+					"cells": 2684,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Water",
+					"sources": {
+						"0": {
+							"cells": 2684,
+							"texture": "res://assets/Tiles/Water/Water_Stone_Tile_1.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 23,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 102,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								2
+							],
+							"cells": 4,
+							"first_frame_region": [
+								0,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								3
+							],
+							"cells": 11,
+							"first_frame_region": [
+								0,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								4
+							],
+							"cells": 24,
+							"first_frame_region": [
+								0,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 136,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 2062,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								2
+							],
+							"cells": 168,
+							"first_frame_region": [
+								16,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								3
+							],
+							"cells": 3,
+							"first_frame_region": [
+								16,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								4
+							],
+							"cells": 22,
+							"first_frame_region": [
+								16,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 25,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								1
+							],
+							"cells": 92,
+							"first_frame_region": [
+								32,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								2
+							],
+							"cells": 12,
+							"first_frame_region": [
+								32,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_8gev4",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 2062,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "FarmLand",
+					"sources": {
+						"0": {
+							"cells": 1800,
+							"texture": "res://assets/Tiles/Grass/Grass_Tiles_1.png"
+						},
+						"1": {
+							"cells": 262,
+							"texture": "res://assets/Tiles/Water/Water_Stone_Tile_1.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								6
+							],
+							"cells": 34,
+							"first_frame_region": [
+								0,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								5
+							],
+							"cells": 48,
+							"first_frame_region": [
+								16,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								6
+							],
+							"cells": 1632,
+							"first_frame_region": [
+								16,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								7
+							],
+							"cells": 48,
+							"first_frame_region": [
+								16,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								6
+							],
+							"cells": 34,
+							"first_frame_region": [
+								32,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 14,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								2
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 19,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 188,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								2
+							],
+							"cells": 20,
+							"first_frame_region": [
+								16,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								4
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:2,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								1
+							],
+							"cells": 15,
+							"first_frame_region": [
+								32,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:2,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								2
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_1dwwi",
+					"y_sort": false,
+					"z_index": -3
+				},
+				{
+					"cells": 479,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Decor",
+					"sources": {
+						"0": {
+							"cells": 458,
+							"texture": "res://assets/Outdoor decoration/barrels.png"
+						},
+						"1": {
+							"cells": 21,
+							"texture": "res://assets/Outdoor decoration/Benches.png"
+						}
+					},
+					"tile_size": [
+						4,
+						4
+					],
+					"tiles": {
+						"0:0,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								20,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								6
+							],
+							"cells": 16,
+							"first_frame_region": [
+								0,
+								24,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								28,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								5
+							],
+							"cells": 24,
+							"first_frame_region": [
+								4,
+								20,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								6
+							],
+							"cells": 374,
+							"first_frame_region": [
+								4,
+								24,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								7
+							],
+							"cells": 24,
+							"first_frame_region": [
+								4,
+								28,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								20,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								6
+							],
+							"cells": 16,
+							"first_frame_region": [
+								8,
+								24,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								28,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 8,
+							"source": 1,
+							"source_tile_exists": false
+						},
+						"1:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 6,
+							"source": 1,
+							"source_tile_exists": false
+						},
+						"1:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 7,
+							"source": 1,
+							"source_tile_exists": false
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_qgnko",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 1130,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "TinyDecor",
+					"sources": {
+						"0": {
+							"cells": 26,
+							"texture": "res://assets/Outdoor decoration/barrels.png"
+						},
+						"1": {
+							"cells": 11,
+							"texture": "res://assets/Outdoor decoration/Benches.png"
+						},
+						"2": {
+							"cells": 20,
+							"texture": "res://assets/Outdoor decoration/Cave_Decorations.png"
+						},
+						"3": {
+							"cells": 46,
+							"texture": "res://assets/Outdoor decoration/Flowers.png"
+						},
+						"4": {
+							"cells": 1010,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor.png"
+						},
+						"5": {
+							"cells": 12,
+							"texture": "res://assets/Outdoor decoration/Hay_Bales.png"
+						},
+						"7": {
+							"cells": 5,
+							"texture": "res://assets/Outdoor decoration/Scarecrows.png"
+						}
+					},
+					"tile_size": [
+						4,
+						4
+					],
+					"tiles": {
+						"0:0,10:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								10
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								40,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,11:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								11
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								44,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,12:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								12
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								48,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,13:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								13
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								52,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,14:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								14
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								56,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,15:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								15
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								60,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,10:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								10
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								40,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,11:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								11
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								44,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,12:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								12
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								48,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,13:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								13
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								52,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,14:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								14
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								56,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,15:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								15
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								60,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								4,
+								36,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,10:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								10
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								40,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,11:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								11
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								44,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,12:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								12
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								48,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,13:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								13
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								52,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,14:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								14
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								56,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,15:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								15
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								60,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								8,
+								36,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,10:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								10
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								40,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,11:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								11
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								44,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,12:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								12
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								48,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,13:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								13
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								52,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,14:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								14
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								56,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,15:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								15
+							],
+							"cells": 1,
+							"first_frame_region": [
+								12,
+								60,
+								4,
+								4
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 3,
+							"source": 1,
+							"source_tile_exists": false
+						},
+						"1:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 4,
+							"source": 1,
+							"source_tile_exists": false
+						},
+						"1:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 4,
+							"source": 1,
+							"source_tile_exists": false
+						},
+						"2:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 3,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 2,
+							"z_index": 0
+						},
+						"2:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 7,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 2,
+							"z_index": 0
+						},
+						"2:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 6,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 2,
+							"z_index": 0
+						},
+						"2:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 4,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 2,
+							"z_index": 0
+						},
+						"3:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:0,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:0,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								4
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:0,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								5
+							],
+							"cells": 4,
+							"first_frame_region": [
+								0,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:0,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								8
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:1,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								2
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:1,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								4
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:1,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								6
+							],
+							"cells": 2,
+							"first_frame_region": [
+								16,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:1,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								8
+							],
+							"cells": 3,
+							"first_frame_region": [
+								16,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:1,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								1
+							],
+							"cells": 2,
+							"first_frame_region": [
+								32,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								2
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								4
+							],
+							"cells": 2,
+							"first_frame_region": [
+								32,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:2,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								4
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								7
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								8
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:3,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								64,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:4,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								64,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:4,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								2
+							],
+							"cells": 2,
+							"first_frame_region": [
+								64,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:4,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								3
+							],
+							"cells": 2,
+							"first_frame_region": [
+								64,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:4,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								64,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 5,
+							"z_index": 0
+						},
+						"3:6,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								8
+							],
+							"cells": 1,
+							"first_frame_region": [
+								96,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:7,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								112,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:8,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 10,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								19
+							],
+							"cells": 3,
+							"first_frame_region": [
+								0,
+								304,
+								32,
+								48
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 16,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,22:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								22
+							],
+							"cells": 5,
+							"first_frame_region": [
+								0,
+								352,
+								32,
+								48
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:0,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								2
+							],
+							"cells": 28,
+							"first_frame_region": [
+								0,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								3
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								4
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								6
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								7
+							],
+							"cells": 4,
+							"first_frame_region": [
+								0,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,7:4096": {
+							"alternative_includes_transform_flags": 4096,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								7
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:0,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								144,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 14,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 9,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:1,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								2
+							],
+							"cells": 20,
+							"first_frame_region": [
+								16,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:1,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								4
+							],
+							"cells": 2,
+							"first_frame_region": [
+								16,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 5,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								19
+							],
+							"cells": 5,
+							"first_frame_region": [
+								32,
+								304,
+								32,
+								48
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:2,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								1
+							],
+							"cells": 12,
+							"first_frame_region": [
+								32,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,22:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								22
+							],
+							"cells": 4,
+							"first_frame_region": [
+								32,
+								352,
+								32,
+								48
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:2,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								2
+							],
+							"cells": 21,
+							"first_frame_region": [
+								32,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								3
+							],
+							"cells": 2,
+							"first_frame_region": [
+								32,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								4
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								6
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 6,
+							"first_frame_region": [
+								32,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,7:4096": {
+							"alternative_includes_transform_flags": 4096,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								7
+							],
+							"cells": 4,
+							"first_frame_region": [
+								32,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:2,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								9
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 14,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								1
+							],
+							"cells": 14,
+							"first_frame_region": [
+								48,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								2
+							],
+							"cells": 17,
+							"first_frame_region": [
+								48,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								3
+							],
+							"cells": 7,
+							"first_frame_region": [
+								48,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								4
+							],
+							"cells": 6,
+							"first_frame_region": [
+								48,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								6
+							],
+							"cells": 12,
+							"first_frame_region": [
+								48,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:3,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								9
+							],
+							"cells": 18,
+							"first_frame_region": [
+								48,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 9,
+							"first_frame_region": [
+								64,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								1
+							],
+							"cells": 9,
+							"first_frame_region": [
+								64,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,20:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								20
+							],
+							"cells": 3,
+							"first_frame_region": [
+								64,
+								320,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,21:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								21
+							],
+							"cells": 34,
+							"first_frame_region": [
+								64,
+								336,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,22:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								22
+							],
+							"cells": 46,
+							"first_frame_region": [
+								64,
+								352,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,23:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								23
+							],
+							"cells": 58,
+							"first_frame_region": [
+								64,
+								368,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,24:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								24
+							],
+							"cells": 2,
+							"first_frame_region": [
+								64,
+								384,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,25:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								25
+							],
+							"cells": 6,
+							"first_frame_region": [
+								64,
+								400,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								2
+							],
+							"cells": 11,
+							"first_frame_region": [
+								64,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								3
+							],
+							"cells": 23,
+							"first_frame_region": [
+								64,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								4
+							],
+							"cells": 7,
+							"first_frame_region": [
+								64,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								5
+							],
+							"cells": 1,
+							"first_frame_region": [
+								64,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								6
+							],
+							"cells": 9,
+							"first_frame_region": [
+								64,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								7
+							],
+							"cells": 5,
+							"first_frame_region": [
+								64,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,7:4096": {
+							"alternative_includes_transform_flags": 4096,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								7
+							],
+							"cells": 2,
+							"first_frame_region": [
+								64,
+								112,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:4,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								9
+							],
+							"cells": 3,
+							"first_frame_region": [
+								64,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								0
+							],
+							"cells": 9,
+							"first_frame_region": [
+								80,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,17:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								17
+							],
+							"cells": 9,
+							"first_frame_region": [
+								80,
+								272,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,18:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								18
+							],
+							"cells": 6,
+							"first_frame_region": [
+								80,
+								288,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								19
+							],
+							"cells": 3,
+							"first_frame_region": [
+								80,
+								304,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								1
+							],
+							"cells": 8,
+							"first_frame_region": [
+								80,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,20:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								20
+							],
+							"cells": 5,
+							"first_frame_region": [
+								80,
+								320,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,21:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								21
+							],
+							"cells": 10,
+							"first_frame_region": [
+								80,
+								336,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,23:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								23
+							],
+							"cells": 9,
+							"first_frame_region": [
+								80,
+								368,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								2
+							],
+							"cells": 8,
+							"first_frame_region": [
+								80,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								3
+							],
+							"cells": 28,
+							"first_frame_region": [
+								80,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								4
+							],
+							"cells": 5,
+							"first_frame_region": [
+								80,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								5
+							],
+							"cells": 30,
+							"first_frame_region": [
+								80,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:5,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								9
+							],
+							"cells": 11,
+							"first_frame_region": [
+								80,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								19
+							],
+							"cells": 1,
+							"first_frame_region": [
+								96,
+								304,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,20:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								20
+							],
+							"cells": 7,
+							"first_frame_region": [
+								96,
+								320,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								2
+							],
+							"cells": 39,
+							"first_frame_region": [
+								96,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								3
+							],
+							"cells": 73,
+							"first_frame_region": [
+								96,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								4
+							],
+							"cells": 14,
+							"first_frame_region": [
+								96,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								5
+							],
+							"cells": 8,
+							"first_frame_region": [
+								96,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								6
+							],
+							"cells": 7,
+							"first_frame_region": [
+								96,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								7
+							],
+							"cells": 8,
+							"first_frame_region": [
+								96,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:6,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								9
+							],
+							"cells": 6,
+							"first_frame_region": [
+								96,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,18:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								18
+							],
+							"cells": 1,
+							"first_frame_region": [
+								112,
+								288,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								19
+							],
+							"cells": 2,
+							"first_frame_region": [
+								112,
+								304,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								1
+							],
+							"cells": 4,
+							"first_frame_region": [
+								112,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,20:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								20
+							],
+							"cells": 6,
+							"first_frame_region": [
+								112,
+								320,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,21:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								21
+							],
+							"cells": 7,
+							"first_frame_region": [
+								112,
+								336,
+								16,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,23:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								23
+							],
+							"cells": 6,
+							"first_frame_region": [
+								112,
+								368,
+								16,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								2
+							],
+							"cells": 3,
+							"first_frame_region": [
+								112,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								3
+							],
+							"cells": 39,
+							"first_frame_region": [
+								112,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								4
+							],
+							"cells": 18,
+							"first_frame_region": [
+								112,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								5
+							],
+							"cells": 15,
+							"first_frame_region": [
+								112,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								6
+							],
+							"cells": 8,
+							"first_frame_region": [
+								112,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,7:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								7
+							],
+							"cells": 12,
+							"first_frame_region": [
+								112,
+								112,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								8
+							],
+							"cells": 2,
+							"first_frame_region": [
+								112,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:7,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								7,
+								9
+							],
+							"cells": 9,
+							"first_frame_region": [
+								112,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,17:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								17
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								272,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,18:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								18
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								288,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,19:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								19
+							],
+							"cells": 2,
+							"first_frame_region": [
+								128,
+								304,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								1
+							],
+							"cells": 2,
+							"first_frame_region": [
+								128,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,21:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								21
+							],
+							"cells": 7,
+							"first_frame_region": [
+								128,
+								336,
+								16,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,23:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								23
+							],
+							"cells": 11,
+							"first_frame_region": [
+								128,
+								368,
+								16,
+								32
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								2
+							],
+							"cells": 3,
+							"first_frame_region": [
+								128,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								3
+							],
+							"cells": 18,
+							"first_frame_region": [
+								128,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,4:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								4
+							],
+							"cells": 9,
+							"first_frame_region": [
+								128,
+								64,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								5
+							],
+							"cells": 8,
+							"first_frame_region": [
+								128,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,6:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								6
+							],
+							"cells": 7,
+							"first_frame_region": [
+								128,
+								96,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,8:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								8
+							],
+							"cells": 2,
+							"first_frame_region": [
+								128,
+								128,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"4:8,9:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								9
+							],
+							"cells": 5,
+							"first_frame_region": [
+								128,
+								144,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 12,
+							"z_index": 0
+						},
+						"5:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 5,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 5,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"5:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 7,
+							"first_frame_region": [
+								16,
+								0,
+								32,
+								16
+							],
+							"frames": 1,
+							"source": 5,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:16,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								16,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								64,
+								0,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:24,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								24,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								96,
+								0,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:32,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								32,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								128,
+								0,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:8,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								8,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								32,
+								0,
+								32,
+								32
+							],
+							"frames": 1,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_qgnko",
+					"y_sort": true,
+					"z_index": 0
+				},
+				{
+					"cells": 0,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "DrySoil",
+					"sources": {},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {},
+					"tileset": "res://world/main_world.tscn::TileSet_tq527",
+					"y_sort": false,
+					"z_index": -2
+				},
+				{
+					"cells": 39,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "GreenFence",
+					"sources": {
+						"0": {
+							"cells": 39,
+							"texture": "res://assets/Tiles/Hedge_Tiles.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 14,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 19,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_ei2gk",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 0,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "WetSoil",
+					"sources": {},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {},
+					"tileset": "res://world/main_world.tscn::TileSet_yy780",
+					"y_sort": false,
+					"z_index": -1
+				},
+				{
+					"cells": 1980,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Road",
+					"sources": {
+						"0": {
+							"cells": 1980,
+							"texture": "res://assets/Tiles/Pavement_Tiles.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 207,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 168,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 190,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 171,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								1
+							],
+							"cells": 241,
+							"first_frame_region": [
+								32,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								2
+							],
+							"cells": 3,
+							"first_frame_region": [
+								32,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 365,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								2
+							],
+							"cells": 365,
+							"first_frame_region": [
+								48,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 3,
+							"first_frame_region": [
+								64,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:4,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								1
+							],
+							"cells": 241,
+							"first_frame_region": [
+								64,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:4,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								2
+							],
+							"cells": 2,
+							"first_frame_region": [
+								64,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:5,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								0
+							],
+							"cells": 5,
+							"first_frame_region": [
+								80,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:5,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								5,
+								1
+							],
+							"cells": 6,
+							"first_frame_region": [
+								80,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:6,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								0
+							],
+							"cells": 6,
+							"first_frame_region": [
+								96,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:6,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								6,
+								1
+							],
+							"cells": 5,
+							"first_frame_region": [
+								96,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_d2y13",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 413,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Fence",
+					"sources": {
+						"0": {
+							"cells": 80,
+							"texture": "res://assets/Outdoor decoration/Fences.png"
+						},
+						"1": {
+							"cells": 253,
+							"texture": "res://assets/Outdoor decoration/Fence_Big.png"
+						},
+						"3": {
+							"cells": 80,
+							"texture": "res://assets/Outdoor decoration/Stone_Fence_Big.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 34,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 40,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:3,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 98,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								2
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 3,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 2,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:1,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								3
+							],
+							"cells": 2,
+							"first_frame_region": [
+								16,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 138,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:3,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								1
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:3,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								3
+							],
+							"cells": 2,
+							"first_frame_region": [
+								48,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								1
+							],
+							"cells": 27,
+							"first_frame_region": [
+								0,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,2:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								2
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								32,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:1,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:1,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								16,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 44,
+							"first_frame_region": [
+								32,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:3,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:3,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								1
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:3,3:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								3,
+								3
+							],
+							"cells": 1,
+							"first_frame_region": [
+								48,
+								48,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://resources/tilesets/fence.tres",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 150,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Tree",
+					"sources": {
+						"0": {
+							"cells": 23,
+							"texture": "res://assets/Trees/Big_Birch_Tree.png"
+						},
+						"1": {
+							"cells": 42,
+							"texture": "res://assets/Trees/Big_Fruit_Tree.png"
+						},
+						"2": {
+							"cells": 70,
+							"texture": "res://assets/Trees/Big_Oak_Tree.png"
+						},
+						"3": {
+							"cells": 15,
+							"texture": "res://assets/Trees/Big_Spruce_tree.png"
+						}
+					},
+					"tile_size": [
+						4,
+						4
+					],
+					"tiles": {
+						"0:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 23,
+							"first_frame_region": [
+								32,
+								0,
+								32,
+								80
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 20,
+							"z_index": 0
+						},
+						"1:2,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								2,
+								0
+							],
+							"cells": 42,
+							"first_frame_region": [
+								32,
+								0,
+								32,
+								64
+							],
+							"frames": 1,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 15,
+							"z_index": 0
+						},
+						"2:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 70,
+							"first_frame_region": [
+								64,
+								0,
+								64,
+								80
+							],
+							"frames": 1,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 19,
+							"z_index": 0
+						},
+						"3:4,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								4,
+								0
+							],
+							"cells": 15,
+							"first_frame_region": [
+								64,
+								0,
+								64,
+								80
+							],
+							"frames": 1,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 21,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/main_world.tscn::TileSet_6x4i3",
+					"y_sort": true,
+					"z_index": 0
+				},
+				{
+					"cells": 0,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "TileMapLayer6",
+					"sources": {},
+					"tile_size": [],
+					"tiles": {},
+					"tileset": "",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 384,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "FlowerGarden/Floor",
+					"sources": {
+						"0": {
+							"cells": 384,
+							"texture": "res://assets/Tiles/Pavement_Tiles.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:1,1:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								1
+							],
+							"cells": 144,
+							"first_frame_region": [
+								16,
+								16,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"0:1,5:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								1,
+								5
+							],
+							"cells": 240,
+							"first_frame_region": [
+								16,
+								80,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://flowers/garden_floor.tres",
+					"y_sort": false,
+					"z_index": -2
+				},
+				{
+					"cells": 1,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "House4/TileMapLayer",
+					"sources": {
+						"0": {
+							"cells": 1,
+							"texture": "res://assets/Buildings/House_Decor/Chimney_smoke_Anim.png"
+						}
+					},
+					"tile_size": [
+						4,
+						4
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								32,
+								32
+							],
+							"frames": 5,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://scenes/buildings/houses/house_4.tscn::TileSet_vgjnj",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 0,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Trees",
+					"sources": {},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {},
+					"tileset": "res://world/main_world.tscn::TileSet_vgjnj",
+					"y_sort": false,
+					"z_index": 0
+				}
+			],
+			"path": "res://world/main_world.tscn"
+		},
+		{
+			"authored_nodes": 509,
+			"entered_tree": false,
+			"layers": [
+				{
+					"cells": 2222,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "MeadowShade",
+					"sources": {
+						"0": {
+							"cells": 2222,
+							"texture": "res://assets/Tiles/Grass/Grass_1_Middle.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 2222,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/farm_landscape.tscn::TileSet_2wbs0",
+					"y_sort": false,
+					"z_index": -3
+				},
+				{
+					"cells": 1289,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "MeadowSun",
+					"sources": {
+						"0": {
+							"cells": 1289,
+							"texture": "res://assets/Tiles/Grass/Grass_1_Middle.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 1.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1289,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 1,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://world/farm_landscape.tscn::TileSet_2wbs0",
+					"y_sort": false,
+					"z_index": -3
+				},
+				{
+					"cells": 1062,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "MeadowGrass",
+					"sources": {
+						"2": {
+							"cells": 153,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_12_Anim.png"
+						},
+						"3": {
+							"cells": 144,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_13_Anim.png"
+						},
+						"4": {
+							"cells": 148,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_14_Anim.png"
+						},
+						"7": {
+							"cells": 184,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_2_Anim.png"
+						},
+						"8": {
+							"cells": 219,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_3_Anim.png"
+						},
+						"9": {
+							"cells": 214,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_4_Anim.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"2:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 153,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 144,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 148,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"7:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 184,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 7,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"8:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 219,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 8,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"9:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 214,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 9,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://tilesets/my_decor_grass_tileset.tres",
+					"y_sort": false,
+					"z_index": -1
+				},
+				{
+					"cells": 186,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "Wildflowers",
+					"sources": {
+						"0": {
+							"cells": 40,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_1_Anim.png"
+						},
+						"1": {
+							"cells": 37,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_2_Anim.png"
+						},
+						"2": {
+							"cells": 36,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_3_Anim.png"
+						},
+						"3": {
+							"cells": 31,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_4_Anim.png"
+						},
+						"4": {
+							"cells": 42,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_5_Anim.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"0:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 40,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 6,
+							"source": 0,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"1:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 37,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 6,
+							"source": 1,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"2:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 36,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 6,
+							"source": 2,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"3:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 31,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 6,
+							"source": 3,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"4:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 42,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 6,
+							"source": 4,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://tilesets/my_decor_not_potted_flower_tileset.tres",
+					"y_sort": false,
+					"z_index": -1
+				},
+				{
+					"cells": 12,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "PondPlants",
+					"sources": {
+						"16": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Green_2_Anim.png"
+						},
+						"19": {
+							"cells": 2,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Green_5_Anim.png"
+						},
+						"20": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Green_6_Anim.png"
+						},
+						"21": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Purple_1_Anim.png"
+						},
+						"22": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Purple_2_Anim.png"
+						},
+						"24": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Purple_4_Anim.png"
+						},
+						"25": {
+							"cells": 5,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Purple_5_Anim.png"
+						}
+					},
+					"tile_size": [
+						4,
+						4
+					],
+					"tiles": {
+						"16:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 16,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"19:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 19,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"20:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 20,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"21:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 21,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"22:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 22,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"24:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 24,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"25:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 5,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 25,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://tilesets/my_decor_water_tileset.tres",
+					"y_sort": false,
+					"z_index": 0
+				},
+				{
+					"cells": 4,
+					"conversion_enabled": false,
+					"mixed_atlas_requires_explicit_allowlist": true,
+					"node": "EdgeStones",
+					"sources": {
+						"10": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Rock_Animations/Rock_2_Anim.png"
+						},
+						"12": {
+							"cells": 1,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Rock_Animations/Rock_4_Anim.png"
+						},
+						"13": {
+							"cells": 2,
+							"texture": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Rock_Animations/Rock_5_Anim.png"
+						}
+					},
+					"tile_size": [
+						16,
+						16
+					],
+					"tiles": {
+						"10:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 10,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"12:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 1,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 12,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						},
+						"13:0,0:0": {
+							"alternative_includes_transform_flags": 0,
+							"animation_speed": 8.0,
+							"atlas_coords": [
+								0,
+								0
+							],
+							"cells": 2,
+							"first_frame_region": [
+								0,
+								0,
+								16,
+								16
+							],
+							"frames": 8,
+							"source": 13,
+							"source_tile_exists": true,
+							"texture_origin": [
+								0,
+								0
+							],
+							"y_sort_origin": 0,
+							"z_index": 0
+						}
+					},
+					"tileset": "res://tilesets/my_decor_rock_tileset.tres",
+					"y_sort": false,
+					"z_index": -1
+				}
+			],
+			"path": "res://world/farm_landscape.tscn"
+		}
+	],
+	"source_count": 18,
+	"source_images_modified": false,
+	"types": [
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_1_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_1_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 0,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_2_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_2_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 1,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_3_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_3_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 2,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_4_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_4_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 3,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_5_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_5_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 4,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_6_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_6_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 5,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_7_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_7_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 6,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_8_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_8_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 7,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_9_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_9_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 8,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					12,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				],
+				[
+					1,
+					4,
+					13,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_10_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_10_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 9,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					2,
+					14,
+					13
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					2,
+					15,
+					13
+				],
+				[
+					1,
+					2,
+					14,
+					13
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_11_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_11_Anim.png",
+			"root_stable": true,
+			"root_y": 15,
+			"row": 10,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					2,
+					14,
+					13
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					2,
+					15,
+					13
+				],
+				[
+					1,
+					2,
+					14,
+					13
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_12_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_12_Anim.png",
+			"root_stable": true,
+			"root_y": 15,
+			"row": 11,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					2,
+					14,
+					13
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					2,
+					15,
+					13
+				],
+				[
+					1,
+					2,
+					14,
+					13
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_13_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_13_Anim.png",
+			"root_stable": true,
+			"root_y": 15,
+			"row": 12,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					2,
+					14,
+					13
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					2,
+					15,
+					13
+				],
+				[
+					1,
+					2,
+					14,
+					13
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_14_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_14_Anim.png",
+			"root_stable": true,
+			"root_y": 15,
+			"row": 13,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					1,
+					2,
+					14,
+					13
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					0,
+					15,
+					15
+				],
+				[
+					0,
+					1,
+					15,
+					14
+				],
+				[
+					0,
+					2,
+					15,
+					13
+				],
+				[
+					1,
+					2,
+					14,
+					13
+				]
+			],
+			"frames": 8,
+			"id": "Flower_Grass_15_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Flower_Grass_15_Anim.png",
+			"root_stable": true,
+			"root_y": 15,
+			"row": 14,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					3,
+					6,
+					9,
+					4
+				],
+				[
+					2,
+					6,
+					10,
+					4
+				],
+				[
+					2,
+					5,
+					10,
+					5
+				],
+				[
+					1,
+					5,
+					10,
+					5
+				],
+				[
+					1,
+					5,
+					10,
+					5
+				],
+				[
+					1,
+					5,
+					10,
+					5
+				],
+				[
+					2,
+					5,
+					10,
+					5
+				],
+				[
+					3,
+					6,
+					9,
+					4
+				]
+			],
+			"frames": 8,
+			"id": "Grass_1_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Grass_1_Anim.png",
+			"root_stable": true,
+			"root_y": 10,
+			"row": 15,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					6,
+					8,
+					4
+				],
+				[
+					4,
+					6,
+					8,
+					4
+				],
+				[
+					4,
+					5,
+					8,
+					5
+				],
+				[
+					3,
+					4,
+					8,
+					6
+				],
+				[
+					3,
+					4,
+					8,
+					6
+				],
+				[
+					3,
+					4,
+					8,
+					6
+				],
+				[
+					4,
+					5,
+					8,
+					5
+				],
+				[
+					4,
+					6,
+					8,
+					4
+				]
+			],
+			"frames": 8,
+			"id": "Grass_2_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Grass_2_Anim.png",
+			"root_stable": true,
+			"root_y": 10,
+			"row": 16,
+			"size": [
+				16,
+				16
+			]
+		},
+		{
+			"fps": 8.0,
+			"frame_bounds": [
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					9,
+					8
+				],
+				[
+					3,
+					4,
+					10,
+					8
+				],
+				[
+					4,
+					4,
+					9,
+					8
+				]
+			],
+			"frames": 8,
+			"id": "Grass_3_Anim",
+			"path": "res://assets/Outdoor decoration/Outdoor_Decor_Animations/Grass_Animations/Grass_3_Anim.png",
+			"root_stable": true,
+			"root_y": 12,
+			"row": 17,
+			"size": [
+				16,
+				16
+			]
+		}
+	]
+}

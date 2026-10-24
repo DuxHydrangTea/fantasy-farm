@@ -25,7 +25,8 @@ static func valid(rows: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 			return false
 		else:
 			var duration: float = float(row.matures_at) - float(row.growth_started_at)
-			if not is_equal_approx(duration, definition.growth_seconds) and not (definition.kind == TreeDefinition.Kind.TIMBER and is_equal_approx(duration, definition.growth_seconds * 0.5)):
+			var legacy_duration: bool = is_equal_approx(duration, 180.0) if definition.kind == TreeDefinition.Kind.FRUIT else (is_equal_approx(duration, 240.0) or is_equal_approx(duration, 120.0))
+			if not legacy_duration and not is_equal_approx(duration, definition.growth_seconds) and not (definition.kind == TreeDefinition.Kind.TIMBER and is_equal_approx(duration, definition.growth_seconds * 0.5)):
 				return false
 		if definition.kind == TreeDefinition.Kind.FRUIT:
 			if not SaveSchema.number(row.get("fruit_work"), 0, definition.fruit_cycle_seconds) or ((row.growth_started_at < 0 or row.last_at < row.matures_at) and row.fruit_work != 0):

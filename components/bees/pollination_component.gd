@@ -7,7 +7,7 @@ var source_name: String = ""
 var source_point: Vector2
 var source_count: int = 0
 
-func resolve(origin: Vector2) -> void:
+func resolve(origin: Vector2, rules: BeehiveDefinition = null, legacy: bool = false) -> void:
 	source_id = ""
 	source_name = ""
 	source_count = 0
@@ -19,14 +19,17 @@ func resolve(origin: Vector2) -> void:
 		if not closest.has(key) or origin.distance_squared_to(source.point) < origin.distance_squared_to(closest[key].point):
 			closest[key] = source
 	var distance: float = INF
+	var priority: float = -1.0
 	for key: String in counts:
 		var candidate: float = origin.distance_squared_to(closest[key].point)
-		if int(counts[key]) > source_count or (int(counts[key]) == source_count and (candidate < distance or (is_equal_approx(candidate,distance) and key < source_id))):
+		var rank: float = rules.honey_rate(key) if rules != null and not legacy else 1.0
+		if rank > priority or (is_equal_approx(rank, priority) and (int(counts[key]) > source_count or (int(counts[key]) == source_count and (candidate < distance or (is_equal_approx(candidate,distance) and key < source_id))))):
 			source_id = key
 			source_name = closest[key].name
 			source_point = closest[key].point
 			source_count = int(counts[key])
 			distance = candidate
+			priority = rank
 
 func active() -> bool:
 	return not source_id.is_empty()

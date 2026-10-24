@@ -1,0 +1,530 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 610.74 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3050 Ti Laptop GPU
+
+WARNING: res://resources/orders/farm_orders.tres:3 - ext_resource, invalid UID: uid://dhr1e4rllnp7m - using text path instead: res://items/harvest_produces/cabbage_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:4 - ext_resource, invalid UID: uid://4qdtgflo1gay - using text path instead: res://items/animal_produces/chicken_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:5 - ext_resource, invalid UID: uid://c0b5ad7m218x6 - using text path instead: res://items/animal_produces/cow_milk.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:6 - ext_resource, invalid UID: uid://csacaahblfygu - using text path instead: res://items/harvest_produces/pumpkin_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:5 - ext_resource, invalid UID: uid://dhfbyhkt2hey3 - using text path instead: res://items/harvest_produces/carrot_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:6 - ext_resource, invalid UID: uid://uoen08knamnu - using text path instead: res://items/harvest_produces/tomato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:7 - ext_resource, invalid UID: uid://drigommwbpugf - using text path instead: res://items/harvest_produces/potato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:8 - ext_resource, invalid UID: uid://bmg4rg65ai1nk - using text path instead: res://items/harvest_produces/corn_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:9 - ext_resource, invalid UID: uid://dsyskgnd4g2q2 - using text path instead: res://items/flowers/flower_01.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/legacy_orders_v15.tres:10 - ext_resource, invalid UID: uid://dxyde4mrx1wsn - using text path instead: res://items/flowers/flower_02.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:10 - ext_resource, invalid UID: uid://uoen08knamnu - using text path instead: res://items/harvest_produces/tomato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:11 - ext_resource, invalid UID: uid://drigommwbpugf - using text path instead: res://items/harvest_produces/potato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/orders/farm_orders.tres:12 - ext_resource, invalid UID: uid://bmg4rg65ai1nk - using text path instead: res://items/harvest_produces/corn_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:5 - ext_resource, invalid UID: uid://jms8lvhuyipw - using text path instead: res://resources/shops/animals/chicken.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/chicken.tres:3 - ext_resource, invalid UID: uid://dtr3qa26r4rqj - using text path instead: res://animals/definitions/chicken.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/chicken.tres:4 - ext_resource, invalid UID: uid://wfdla10jccm0 - using text path instead: res://animals/productions/chicken_egg_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/chicken_egg_production.tres:4 - ext_resource, invalid UID: uid://4qdtgflo1gay - using text path instead: res://items/animal_produces/chicken_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:7 - ext_resource, invalid UID: uid://creg2yit3ood4 - using text path instead: res://resources/shops/animals/duck.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/duck.tres:3 - ext_resource, invalid UID: uid://m8lichsqco0c - using text path instead: res://animals/definitions/duck.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/duck.tres:4 - ext_resource, invalid UID: uid://db3v0twqa0a18 - using text path instead: res://animals/productions/duck_egg_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/duck_egg_production.tres:3 - ext_resource, invalid UID: uid://bsvaphmvtkvsd - using text path instead: res://items/animal_produces/duck_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:8 - ext_resource, invalid UID: uid://oy4or8tj7464 - using text path instead: res://resources/shops/animals/goose.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/goose.tres:3 - ext_resource, invalid UID: uid://chqvpkxydb4pv - using text path instead: res://animals/definitions/goose.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/goose.tres:4 - ext_resource, invalid UID: uid://ccth2s41byp0p - using text path instead: res://animals/productions/goose_egg_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/goose_egg_production.tres:3 - ext_resource, invalid UID: uid://dn15gm58w0reo - using text path instead: res://items/animal_produces/goose_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:9 - ext_resource, invalid UID: uid://cjbl4yb3hp8d5 - using text path instead: res://resources/shops/animals/pig.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/pig.tres:3 - ext_resource, invalid UID: uid://kksto84uai2v - using text path instead: res://animals/definitions/pig.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/pig.tres:4 - ext_resource, invalid UID: uid://wilcyvsx7h5o - using text path instead: res://animals/productions/pig_truffle_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/pig_truffle_production.tres:3 - ext_resource, invalid UID: uid://d35osrbwka1k4 - using text path instead: res://items/animal_produces/pig_truffle.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:10 - ext_resource, invalid UID: uid://gflfbkk7r8qo - using text path instead: res://resources/shops/animals/sheep.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/sheep.tres:3 - ext_resource, invalid UID: uid://cjuxypoad8fbn - using text path instead: res://animals/definitions/sheep.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/sheep.tres:4 - ext_resource, invalid UID: uid://catwmdsfqbwf7 - using text path instead: res://animals/productions/sheep_wool_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/sheep_wool_production.tres:3 - ext_resource, invalid UID: uid://cnrrbglgak6pd - using text path instead: res://items/animal_produces/sheep_wool.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:11 - ext_resource, invalid UID: uid://cvlq6nc5ustwu - using text path instead: res://resources/shops/animals/cow.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/cow.tres:3 - ext_resource, invalid UID: uid://d0bti06po5ll1 - using text path instead: res://animals/definitions/cow.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/cow.tres:4 - ext_resource, invalid UID: uid://buplvoe05kek6 - using text path instead: res://animals/productions/cow_milk_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/cow_milk_production.tres:3 - ext_resource, invalid UID: uid://c0b5ad7m218x6 - using text path instead: res://items/animal_produces/cow_milk.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:12 - ext_resource, invalid UID: uid://dl5aht8o7lg2c - using text path instead: res://resources/shops/animals/horse.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/animals/horse.tres:3 - ext_resource, invalid UID: uid://c5fa8i38audfc - using text path instead: res://animals/definitions/horse.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/definitions/horse.tres:5 - ext_resource, invalid UID: uid://bqp28fmdubflk - using text path instead: res://animals/productions/horse_compost_production.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://animals/productions/horse_compost_production.tres:4 - ext_resource, invalid UID: uid://31iwcxw1jyrh - using text path instead: res://items/animal_produces/horse_compost.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:13 - ext_resource, invalid UID: uid://bkch5xnn0kjun - using text path instead: res://items/boosters/crop_fertilizer.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:14 - ext_resource, invalid UID: uid://btwdtqq0ewgad - using text path instead: res://items/boosters/animal_tonic.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:16 - ext_resource, invalid UID: uid://d3u31scn2lmn7 - using text path instead: res://items/seeds/beetroot_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/beetroot_seed.tres:4 - ext_resource, invalid UID: uid://dnysha86ljv1f - using text path instead: res://crops/field/beetroot/beetroot.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/beetroot/beetroot.tres:8 - ext_resource, invalid UID: uid://ccsewv7urhwlm - using text path instead: res://items/harvest_produces/beetroot_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:17 - ext_resource, invalid UID: uid://bnuneadnyl63o - using text path instead: res://items/seeds/bell_pepper_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/bell_pepper_seed.tres:4 - ext_resource, invalid UID: uid://b1wafkxy2fh5v - using text path instead: res://crops/field/bell_pepper/bell_pepper.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/bell_pepper/bell_pepper.tres:8 - ext_resource, invalid UID: uid://hvdnb4d8hf08 - using text path instead: res://items/harvest_produces/bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:18 - ext_resource, invalid UID: uid://hfi6tumxf1gf - using text path instead: res://items/seeds/broccoli_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/broccoli_seed.tres:4 - ext_resource, invalid UID: uid://cj4x7w27h5pjx - using text path instead: res://crops/field/broccoli/broccoli.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/broccoli/broccoli.tres:8 - ext_resource, invalid UID: uid://b22eabf0e4pms - using text path instead: res://items/harvest_produces/broccoli_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:19 - ext_resource, invalid UID: uid://brm6xbaqufev1 - using text path instead: res://items/seeds/cabbage_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/cabbage_seed.tres:4 - ext_resource, invalid UID: uid://8whmsq8mpg1r - using text path instead: res://crops/field/cabbage/cabbage.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/cabbage/cabbage.tres:8 - ext_resource, invalid UID: uid://dhr1e4rllnp7m - using text path instead: res://items/harvest_produces/cabbage_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:20 - ext_resource, invalid UID: uid://bbckhpm2lr067 - using text path instead: res://items/seeds/carrot_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/carrot_seed.tres:4 - ext_resource, invalid UID: uid://d36ls7my4jqr3 - using text path instead: res://crops/field/carrot/carrot.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/carrot/carrot.tres:8 - ext_resource, invalid UID: uid://dhfbyhkt2hey3 - using text path instead: res://items/harvest_produces/carrot_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:21 - ext_resource, invalid UID: uid://cgvr23idhq4gx - using text path instead: res://items/seeds/chili_pepper_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/chili_pepper_seed.tres:4 - ext_resource, invalid UID: uid://dfj07e2xgjavc - using text path instead: res://crops/field/chili_pepper/chili_pepper.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/chili_pepper/chili_pepper.tres:8 - ext_resource, invalid UID: uid://dtm6yfjrrqjli - using text path instead: res://items/harvest_produces/chili_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:22 - ext_resource, invalid UID: uid://di11lnq3n268k - using text path instead: res://items/seeds/corn_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/corn_seed.tres:4 - ext_resource, invalid UID: uid://cpdqkbsstvywa - using text path instead: res://crops/field/corn/corn.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/corn/corn.tres:8 - ext_resource, invalid UID: uid://bmg4rg65ai1nk - using text path instead: res://items/harvest_produces/corn_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:23 - ext_resource, invalid UID: uid://dyi5coaxrbw14 - using text path instead: res://items/seeds/cucumber_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/cucumber_seed.tres:4 - ext_resource, invalid UID: uid://b16axybpighpk - using text path instead: res://crops/field/cucumber/cucumber.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/cucumber/cucumber.tres:8 - ext_resource, invalid UID: uid://bbhpm28q6wwrf - using text path instead: res://items/harvest_produces/cucumber_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:24 - ext_resource, invalid UID: uid://c514js3vx1kij - using text path instead: res://items/seeds/eggplant_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/eggplant_seed.tres:4 - ext_resource, invalid UID: uid://btiffy67q3rrc - using text path instead: res://crops/field/eggplant/eggplant.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/eggplant/eggplant.tres:8 - ext_resource, invalid UID: uid://8ler1use8ujr - using text path instead: res://items/harvest_produces/eggplant_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:25 - ext_resource, invalid UID: uid://b2rfstir7l7i2 - using text path instead: res://items/seeds/flower_01_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_01_seed.tres:3 - ext_resource, invalid UID: uid://ckh0o4f64bkxn - using text path instead: res://flowers/definitions/flower_01.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_01.tres:3 - ext_resource, invalid UID: uid://dsyskgnd4g2q2 - using text path instead: res://items/flowers/flower_01.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:26 - ext_resource, invalid UID: uid://dbetjtr0xtlt2 - using text path instead: res://items/seeds/flower_02_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_02_seed.tres:3 - ext_resource, invalid UID: uid://chuc4drata6b1 - using text path instead: res://flowers/definitions/flower_02.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_02.tres:3 - ext_resource, invalid UID: uid://dxyde4mrx1wsn - using text path instead: res://items/flowers/flower_02.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:27 - ext_resource, invalid UID: uid://biwflle2a807t - using text path instead: res://items/seeds/flower_03_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_03_seed.tres:3 - ext_resource, invalid UID: uid://dfr3tc3sbkg2m - using text path instead: res://flowers/definitions/flower_03.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_03.tres:3 - ext_resource, invalid UID: uid://qp0yqheqlh8w - using text path instead: res://items/flowers/flower_03.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:28 - ext_resource, invalid UID: uid://cf5jd6qs0k0pu - using text path instead: res://items/seeds/flower_04_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_04_seed.tres:3 - ext_resource, invalid UID: uid://7w0collijikq - using text path instead: res://flowers/definitions/flower_04.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_04.tres:3 - ext_resource, invalid UID: uid://dw1giqor2knx - using text path instead: res://items/flowers/flower_04.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:29 - ext_resource, invalid UID: uid://8pwu1aep0l0y - using text path instead: res://items/seeds/flower_05_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_05_seed.tres:3 - ext_resource, invalid UID: uid://dw36nti33uy3t - using text path instead: res://flowers/definitions/flower_05.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_05.tres:3 - ext_resource, invalid UID: uid://du2dprhnxm8yj - using text path instead: res://items/flowers/flower_05.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:30 - ext_resource, invalid UID: uid://c0n3qw4i60yq6 - using text path instead: res://items/seeds/flower_06_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_06_seed.tres:3 - ext_resource, invalid UID: uid://cxynth2k0rmq8 - using text path instead: res://flowers/definitions/flower_06.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_06.tres:3 - ext_resource, invalid UID: uid://c0oso8fnhia5f - using text path instead: res://items/flowers/flower_06.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:31 - ext_resource, invalid UID: uid://xwlvnwgrdeog - using text path instead: res://items/seeds/flower_07_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_07_seed.tres:3 - ext_resource, invalid UID: uid://c5avqslerq7eq - using text path instead: res://flowers/definitions/flower_07.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_07.tres:3 - ext_resource, invalid UID: uid://k7ami1grdrqs - using text path instead: res://items/flowers/flower_07.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:32 - ext_resource, invalid UID: uid://oc1m5iynubip - using text path instead: res://items/seeds/flower_08_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_08_seed.tres:3 - ext_resource, invalid UID: uid://btg1d7r8jbd4w - using text path instead: res://flowers/definitions/flower_08.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_08.tres:3 - ext_resource, invalid UID: uid://bjg3cygq4cke2 - using text path instead: res://items/flowers/flower_08.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:33 - ext_resource, invalid UID: uid://b0vbs0nau4ce5 - using text path instead: res://items/seeds/flower_09_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_09_seed.tres:3 - ext_resource, invalid UID: uid://cx73yjsewq145 - using text path instead: res://flowers/definitions/flower_09.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_09.tres:3 - ext_resource, invalid UID: uid://cb77jqqmysnpl - using text path instead: res://items/flowers/flower_09.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:34 - ext_resource, invalid UID: uid://bl7ve8t12yjfo - using text path instead: res://items/seeds/flower_10_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/flower_10_seed.tres:3 - ext_resource, invalid UID: uid://cdgwqldi8cuux - using text path instead: res://flowers/definitions/flower_10.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://flowers/definitions/flower_10.tres:3 - ext_resource, invalid UID: uid://2hnx2n7fpl6p - using text path instead: res://items/flowers/flower_10.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:35 - ext_resource, invalid UID: uid://cdfosp824ruxh - using text path instead: res://items/seeds/garlic_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/garlic_seed.tres:4 - ext_resource, invalid UID: uid://cpxnwsg602mgp - using text path instead: res://crops/field/garlic/garlic.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/garlic/garlic.tres:8 - ext_resource, invalid UID: uid://db2t4jmc7wr2f - using text path instead: res://items/harvest_produces/garlic_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:36 - ext_resource, invalid UID: uid://k2lq2ho3vp6k - using text path instead: res://items/seeds/green_bell_pepper_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/green_bell_pepper_seed.tres:4 - ext_resource, invalid UID: uid://e10jtsuj5foo - using text path instead: res://crops/field/green_bell_pepper/green_bell_pepper.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/green_bell_pepper/green_bell_pepper.tres:8 - ext_resource, invalid UID: uid://dw3bduo6c5lk1 - using text path instead: res://items/harvest_produces/green_bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:37 - ext_resource, invalid UID: uid://cqxt4cqf0q1sd - using text path instead: res://items/seeds/leek_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/leek_seed.tres:4 - ext_resource, invalid UID: uid://di16cdd2y6wp2 - using text path instead: res://crops/field/leek/leek.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/leek/leek.tres:8 - ext_resource, invalid UID: uid://b1iak8ny6qxwt - using text path instead: res://items/harvest_produces/leek_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:38 - ext_resource, invalid UID: uid://cblfl65bahv58 - using text path instead: res://items/seeds/onion_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/onion_seed.tres:4 - ext_resource, invalid UID: uid://b0oceyjs30n62 - using text path instead: res://crops/field/onion/onion.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/onion/onion.tres:8 - ext_resource, invalid UID: uid://0yoj34v2jlfi - using text path instead: res://items/harvest_produces/onion_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:39 - ext_resource, invalid UID: uid://cmjs3s1jf8c3h - using text path instead: res://items/seeds/parsnip_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/parsnip_seed.tres:4 - ext_resource, invalid UID: uid://ds5j2x42586bl - using text path instead: res://crops/field/parsnip/parsnip.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/parsnip/parsnip.tres:8 - ext_resource, invalid UID: uid://d0npe2kfs524c - using text path instead: res://items/harvest_produces/parsnip_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:40 - ext_resource, invalid UID: uid://u0txknb11dj - using text path instead: res://items/seeds/potato_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/potato_seed.tres:4 - ext_resource, invalid UID: uid://w0kunmgg2mbt - using text path instead: res://crops/field/potato/potato.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/potato/potato.tres:8 - ext_resource, invalid UID: uid://drigommwbpugf - using text path instead: res://items/harvest_produces/potato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:41 - ext_resource, invalid UID: uid://dnpvb1khrupek - using text path instead: res://items/seeds/pumpkin_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/pumpkin_seed.tres:4 - ext_resource, invalid UID: uid://chwevxrlfhrgf - using text path instead: res://crops/field/pumpkin/pumpkin.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/pumpkin/pumpkin.tres:8 - ext_resource, invalid UID: uid://csacaahblfygu - using text path instead: res://items/harvest_produces/pumpkin_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:42 - ext_resource, invalid UID: uid://cqyciu8fdl8bb - using text path instead: res://items/seeds/radish_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/radish_seed.tres:4 - ext_resource, invalid UID: uid://oiko7m0qjr4i - using text path instead: res://crops/field/radish/radish.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/radish/radish.tres:8 - ext_resource, invalid UID: uid://nb6ljpb4g4ti - using text path instead: res://items/harvest_produces/radish_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:43 - ext_resource, invalid UID: uid://canjm4gmiyong - using text path instead: res://items/seeds/strawberry_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/strawberry_seed.tres:4 - ext_resource, invalid UID: uid://nis25c4ha1vg - using text path instead: res://crops/field/strawberry/strawberry.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/strawberry/strawberry.tres:8 - ext_resource, invalid UID: uid://caaybya6quwfv - using text path instead: res://items/harvest_produces/strawberry_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:44 - ext_resource, invalid UID: uid://cd0ro570dliao - using text path instead: res://items/seeds/sunflower_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/sunflower_seed.tres:4 - ext_resource, invalid UID: uid://bn5bfxrit38pv - using text path instead: res://crops/field/sunflower/sunflower.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/sunflower/sunflower.tres:8 - ext_resource, invalid UID: uid://b0gkbuoi66r3h - using text path instead: res://items/harvest_produces/sunflower_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:45 - ext_resource, invalid UID: uid://p5dbpgkbmhdh - using text path instead: res://items/seeds/tomato_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/tomato_seed.tres:4 - ext_resource, invalid UID: uid://cmekys0w8secs - using text path instead: res://crops/field/tomato/tomato.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/tomato/tomato.tres:8 - ext_resource, invalid UID: uid://uoen08knamnu - using text path instead: res://items/harvest_produces/tomato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:46 - ext_resource, invalid UID: uid://bja6prlt8d6o7 - using text path instead: res://items/seeds/wheat_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/wheat_seed.tres:4 - ext_resource, invalid UID: uid://dhh62ml5i6ig5 - using text path instead: res://crops/field/wheat/wheat.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/wheat/wheat.tres:3 - ext_resource, invalid UID: uid://b8blcg5flfwn - using text path instead: res://items/harvest_produces/wheat_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:47 - ext_resource, invalid UID: uid://c5g7yqsv8xebb - using text path instead: res://items/seeds/yellow_bell_pepper_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/seeds/yellow_bell_pepper_seed.tres:4 - ext_resource, invalid UID: uid://c3jhg5w0kh4p1 - using text path instead: res://crops/field/yellow_bell_pepper/yellow_bell_pepper.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://crops/field/yellow_bell_pepper/yellow_bell_pepper.tres:8 - ext_resource, invalid UID: uid://deeafikeg5vpd - using text path instead: res://items/harvest_produces/yellow_bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:48 - ext_resource, invalid UID: uid://c2ii5df2nr7md - using text path instead: res://items/feeds/livestock_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:49 - ext_resource, invalid UID: uid://cgtfrgb0o2mup - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:50 - ext_resource, invalid UID: uid://gi8573nwgyvm - using text path instead: res://items/trees/apple_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/apple_sapling.tres:5 - ext_resource, invalid UID: uid://ixtwgxusnk1r - using text path instead: res://trees/definitions/apple.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/apple.tres:3 - ext_resource, invalid UID: uid://bbl8hjd8ejmns - using text path instead: res://items/trees/apple.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:51 - ext_resource, invalid UID: uid://c7ylms4br4tvn - using text path instead: res://items/trees/peach_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/peach_sapling.tres:5 - ext_resource, invalid UID: uid://car30ij4fp5mo - using text path instead: res://trees/definitions/peach.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/peach.tres:3 - ext_resource, invalid UID: uid://6m5aib3uy7ky - using text path instead: res://items/trees/peach.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:52 - ext_resource, invalid UID: uid://suq3ph47mrdl - using text path instead: res://items/trees/pear_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/pear_sapling.tres:5 - ext_resource, invalid UID: uid://prby7gj65b5o - using text path instead: res://trees/definitions/pear.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/pear.tres:3 - ext_resource, invalid UID: uid://bpjlvlvuxpli0 - using text path instead: res://items/trees/pear.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:53 - ext_resource, invalid UID: uid://h45dmonqtqb3 - using text path instead: res://items/trees/cherry_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/cherry_sapling.tres:5 - ext_resource, invalid UID: uid://di7dbxdbb24yu - using text path instead: res://trees/definitions/cherry.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/cherry.tres:3 - ext_resource, invalid UID: uid://cie0uhpb7hs1j - using text path instead: res://items/trees/cherry.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:54 - ext_resource, invalid UID: uid://cyv1fu028ly8l - using text path instead: res://items/trees/oak_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/oak_sapling.tres:5 - ext_resource, invalid UID: uid://biuncxfp4ljwa - using text path instead: res://trees/definitions/oak.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/oak.tres:5 - ext_resource, invalid UID: uid://bmtw2l638aakq - using text path instead: res://items/trees/wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/oak.tres:6 - ext_resource, invalid UID: uid://ds0v0j538alt6 - using text path instead: res://items/trees/root_wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:55 - ext_resource, invalid UID: uid://d4jdch55rpo55 - using text path instead: res://items/trees/birch_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/birch_sapling.tres:5 - ext_resource, invalid UID: uid://bs86ciiv6ou3m - using text path instead: res://trees/definitions/birch.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/birch.tres:5 - ext_resource, invalid UID: uid://bmtw2l638aakq - using text path instead: res://items/trees/wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/birch.tres:6 - ext_resource, invalid UID: uid://ds0v0j538alt6 - using text path instead: res://items/trees/root_wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://resources/shops/farm_supply.tres:56 - ext_resource, invalid UID: uid://c70ygql7pch63 - using text path instead: res://items/trees/spruce_sapling.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://items/trees/spruce_sapling.tres:5 - ext_resource, invalid UID: uid://bg6h2expgw2mr - using text path instead: res://trees/definitions/spruce.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/spruce.tres:5 - ext_resource, invalid UID: uid://bmtw2l638aakq - using text path instead: res://items/trees/wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://trees/definitions/spruce.tres:6 - ext_resource, invalid UID: uid://ds0v0j538alt6 - using text path instead: res://items/trees/root_wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/characters/shop_merchant.tscn:5 - ext_resource, invalid UID: uid://dcpf35xdsqen2 - using text path instead: res://resources/shops/farm_supply.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:13)
+WARNING: res://resources/shops/produce_prices.tres:4 - ext_resource, invalid UID: uid://ccsewv7urhwlm - using text path instead: res://items/harvest_produces/beetroot_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:5 - ext_resource, invalid UID: uid://hvdnb4d8hf08 - using text path instead: res://items/harvest_produces/bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:6 - ext_resource, invalid UID: uid://b22eabf0e4pms - using text path instead: res://items/harvest_produces/broccoli_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:7 - ext_resource, invalid UID: uid://dhr1e4rllnp7m - using text path instead: res://items/harvest_produces/cabbage_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:8 - ext_resource, invalid UID: uid://dhfbyhkt2hey3 - using text path instead: res://items/harvest_produces/carrot_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:9 - ext_resource, invalid UID: uid://dtm6yfjrrqjli - using text path instead: res://items/harvest_produces/chili_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:10 - ext_resource, invalid UID: uid://bmg4rg65ai1nk - using text path instead: res://items/harvest_produces/corn_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:11 - ext_resource, invalid UID: uid://bbhpm28q6wwrf - using text path instead: res://items/harvest_produces/cucumber_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:12 - ext_resource, invalid UID: uid://8ler1use8ujr - using text path instead: res://items/harvest_produces/eggplant_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:13 - ext_resource, invalid UID: uid://db2t4jmc7wr2f - using text path instead: res://items/harvest_produces/garlic_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:14 - ext_resource, invalid UID: uid://dw3bduo6c5lk1 - using text path instead: res://items/harvest_produces/green_bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:15 - ext_resource, invalid UID: uid://b1iak8ny6qxwt - using text path instead: res://items/harvest_produces/leek_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:16 - ext_resource, invalid UID: uid://0yoj34v2jlfi - using text path instead: res://items/harvest_produces/onion_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:17 - ext_resource, invalid UID: uid://d0npe2kfs524c - using text path instead: res://items/harvest_produces/parsnip_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:18 - ext_resource, invalid UID: uid://drigommwbpugf - using text path instead: res://items/harvest_produces/potato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:19 - ext_resource, invalid UID: uid://csacaahblfygu - using text path instead: res://items/harvest_produces/pumpkin_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:20 - ext_resource, invalid UID: uid://nb6ljpb4g4ti - using text path instead: res://items/harvest_produces/radish_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:21 - ext_resource, invalid UID: uid://caaybya6quwfv - using text path instead: res://items/harvest_produces/strawberry_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:22 - ext_resource, invalid UID: uid://b0gkbuoi66r3h - using text path instead: res://items/harvest_produces/sunflower_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:23 - ext_resource, invalid UID: uid://uoen08knamnu - using text path instead: res://items/harvest_produces/tomato_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:24 - ext_resource, invalid UID: uid://b8blcg5flfwn - using text path instead: res://items/harvest_produces/wheat_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:25 - ext_resource, invalid UID: uid://deeafikeg5vpd - using text path instead: res://items/harvest_produces/yellow_bell_pepper_produces.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:26 - ext_resource, invalid UID: uid://4qdtgflo1gay - using text path instead: res://items/animal_produces/chicken_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:27 - ext_resource, invalid UID: uid://bsvaphmvtkvsd - using text path instead: res://items/animal_produces/duck_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:28 - ext_resource, invalid UID: uid://dn15gm58w0reo - using text path instead: res://items/animal_produces/goose_egg.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:29 - ext_resource, invalid UID: uid://c0b5ad7m218x6 - using text path instead: res://items/animal_produces/cow_milk.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:30 - ext_resource, invalid UID: uid://cnrrbglgak6pd - using text path instead: res://items/animal_produces/sheep_wool.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:31 - ext_resource, invalid UID: uid://d35osrbwka1k4 - using text path instead: res://items/animal_produces/pig_truffle.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:32 - ext_resource, invalid UID: uid://31iwcxw1jyrh - using text path instead: res://items/animal_produces/horse_compost.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:33 - ext_resource, invalid UID: uid://dsyskgnd4g2q2 - using text path instead: res://items/flowers/flower_01.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:34 - ext_resource, invalid UID: uid://dxyde4mrx1wsn - using text path instead: res://items/flowers/flower_02.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:35 - ext_resource, invalid UID: uid://qp0yqheqlh8w - using text path instead: res://items/flowers/flower_03.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:36 - ext_resource, invalid UID: uid://dw1giqor2knx - using text path instead: res://items/flowers/flower_04.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:37 - ext_resource, invalid UID: uid://du2dprhnxm8yj - using text path instead: res://items/flowers/flower_05.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:38 - ext_resource, invalid UID: uid://c0oso8fnhia5f - using text path instead: res://items/flowers/flower_06.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:39 - ext_resource, invalid UID: uid://k7ami1grdrqs - using text path instead: res://items/flowers/flower_07.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:40 - ext_resource, invalid UID: uid://bjg3cygq4cke2 - using text path instead: res://items/flowers/flower_08.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:41 - ext_resource, invalid UID: uid://cb77jqqmysnpl - using text path instead: res://items/flowers/flower_09.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:42 - ext_resource, invalid UID: uid://2hnx2n7fpl6p - using text path instead: res://items/flowers/flower_10.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:44 - ext_resource, invalid UID: uid://bqa1tdrryywsl - using text path instead: res://items/honey/floral_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:45 - ext_resource, invalid UID: uid://3w1qw3pdu5be - using text path instead: res://items/honey/sunflower_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:46 - ext_resource, invalid UID: uid://bbl8hjd8ejmns - using text path instead: res://items/trees/apple.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:47 - ext_resource, invalid UID: uid://6m5aib3uy7ky - using text path instead: res://items/trees/peach.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:48 - ext_resource, invalid UID: uid://bpjlvlvuxpli0 - using text path instead: res://items/trees/pear.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:49 - ext_resource, invalid UID: uid://cie0uhpb7hs1j - using text path instead: res://items/trees/cherry.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:50 - ext_resource, invalid UID: uid://bmtw2l638aakq - using text path instead: res://items/trees/wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:51 - ext_resource, invalid UID: uid://ds0v0j538alt6 - using text path instead: res://items/trees/root_wood.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+WARNING: res://resources/shops/produce_prices.tres:52 - ext_resource, invalid UID: uid://cshtk8qpvet1k - using text path instead: res://items/honey/wild_honey.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://.godot/bubble_preview.gd:14)
+{"checks":33,"failures":[]}

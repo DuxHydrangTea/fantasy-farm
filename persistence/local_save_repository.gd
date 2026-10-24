@@ -120,7 +120,15 @@ func write_profile(profile: String, snapshot: Dictionary, expected_revision: int
 # Nếu gọi wait_to_finish ngay mà không chờ như trên, main thread sẽ bị chặn và autosave gây khựng.
 # Không truy cập Node, UI hoặc duyệt Resource/catalog từ worker: đó là trạng thái của scene/main thread.
 # Có thể thay cơ chế thread bằng backend async khác; yêu cầu cần giữ là không race dữ liệu sống.
+func _uses_worker_threads() -> bool:
+	return not OS.has_feature("web")
+
 func _run_io(work: Callable) -> Dictionary:
+	if not _uses_worker_threads():
+		# Single-threaded Web cannot start Thread. Yield before each IO phase so
+		# callers keep the same async/busy contract and frozen snapshot semantics.
+		await (Engine.get_main_loop() as SceneTree).process_frame
+		return work.call() as Dictionary
 	var worker: Thread = Thread.new()
 	var started: Error = worker.start(work)
 	if started != OK:

@@ -32,6 +32,8 @@ func sync() -> void:
 func _flowers() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	for garden: FlowerGarden in gardens:
+		if garden.starter_content_locked:
+			continue
 		for pot: FlowerPot in garden.pots.values():
 			if pot.definition != null and pot.growth_started_at >= 0:
 				result.append({"type":String(pot.definition.flower_id),"name":pot.definition.display_name,"point":pot.global_position,"ready_at":pot.matures_at})
@@ -66,7 +68,7 @@ func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 		if nearest != null:
 			nearest.pollination.sources.append(source)
 	for hive: Beehive in hives:
-		hive.pollination.resolve(hive.global_position)
+		hive.pollination.resolve(hive.global_position, definition, hive.production.legacy_batch)
 
 func advance(timestamp: float) -> void:
 	if loading or _advancing:
@@ -218,7 +220,8 @@ func restore(rows: Array, saved_at: float, now: float) -> void:
 		var hive: Beehive = create_hive(world.to_global(Vector2(row.position[0],row.position[1])),StringName(row.id))
 		hive.production.work = float(row.work)
 		hive.production.contributions = row.contributions.duplicate()
-		hive.production.ready_item = definition.honey_for(hive.production.dominant_source()) if row.ready_item != "" else null
+		hive.production.legacy_batch = bool(row.legacy_batch)
+		hive.production.ready_item = hive.production.expected_item() if row.ready_item != "" else null
 		hive.refresh_visual()
 	last_at = saved_at
 	loading = false

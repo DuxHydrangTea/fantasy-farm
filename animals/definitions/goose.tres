@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://b5xcvik3wyt4g"]
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3 uid="uid://chqvpkxydb4pv"]
 
 [ext_resource type="SpriteFrames" uid="uid://pf5rrpchr3ax" path="res://sprite_frames/animals/goose_01_frames.tres" id="1_5gxe4"]
-[ext_resource type="Resource" uid="uid://imj7wepep0yj" path="res://animals/productions/goose_egg_production.tres" id="2_7gw8x"]
+[ext_resource type="Resource" uid="uid://ccth2s41byp0p" path="res://animals/productions/goose_egg_production.tres" id="2_7gw8x"]
 [ext_resource type="Script" uid="uid://b84j7anwcdy17" path="res://scripts/animals/animal_definition.gd" id="3_fc0eu"]
 
 [resource]
@@ -9,7 +9,9 @@ script = ExtResource("3_fc0eu")
 animal_id = &"goose"
 display_name = "Goose"
 species = 5
-hydration_depletion_seconds = 300.0
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
 adult_frames = ExtResource("1_5gxe4")
 eggs_on_land = true
+maturity_seconds = 14400.0
 production = ExtResource("2_7gw8x")

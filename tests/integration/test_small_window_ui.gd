@@ -139,23 +139,6 @@ func test_hover_inspector_never_overlaps_weather_or_hotbar_after_resize_or_trans
 	context.set_physics_process(false)
 	var sprite: Node2D = actor.get_status_sprite()
 	context.refresh_at(sprite.to_global(context._sprite_bounds(sprite).get_center()))
-	var info: AnimalInfoPanel = context.animal_info
-	var panel: Control = info.title.get_parent().get_parent() as Control
-	var hotbar: HotbarUI = player.get_node("Hotbar") as HotbarUI
-	assert_eq(info.animal, actor, "Exercise the real hover path")
-	for language: String in ["en", "vi"]:
-		Language.set_language(language)
-		for screen_size: Vector2i in [Vector2i(500, 281), Vector2i(1280, 720), Vector2i(1920, 1080)]:
-			viewport.size = screen_size
-			for kind: int in range(4):
-				weather.current_weather = kind as WeatherSchedule.Weather
-				hud.refresh(TimeManager.now())
-				await wait_process_frames(4)
-				var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(screen_size))
-				assert_true(info.root.visible)
-				assert_true(bounds.encloses(_pixels(panel)))
-				assert_true(bounds.encloses(_pixels(hud.label.get_parent() as Control)))
-				assert_true(bounds.encloses(_pixels(hud.debug_bar)), "Debug controls stay inside the small window")
-				assert_false(_pixels(panel).intersects(_pixels(hud.label.get_parent() as Control)), "Hover inspector and weather must have separate space")
-				assert_false(_pixels(panel).intersects(_pixels(hud.debug_bar)), "Debug %s must not cover inspector %s" % [_pixels(hud.debug_bar), _pixels(panel)])
-				assert_false(_pixels(panel).intersects(_pixels(hotbar.slots)), "Inspector stays above the tool dock")
+	for child: Node in context.get_children():
+		assert_false(child is AnimalInfoPanel)
+	assert_false(actor.needs_display.visible)

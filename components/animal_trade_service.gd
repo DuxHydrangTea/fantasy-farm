@@ -99,6 +99,9 @@ func quote_buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 func buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}
+	if is_instance_valid(clock):
+		for pen: AnimalPen in _pens():
+			pen.sync_before_change(clock.now())
 	var checked: Dictionary = quote_buy(offer, quantity)
 	if not checked.ok:
 		return checked

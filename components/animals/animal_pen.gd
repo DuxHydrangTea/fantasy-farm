@@ -2,6 +2,8 @@
 class_name AnimalPen
 extends Node2D
 var weather: WeatherSchedule
+var offline_simulation: PenOfflineSimulation
+
 @export var persistent_id: StringName
 ## Only configured pens accept purchases; existing animals are never removed by a capacity change.
 @export var accepted_species: Array[AnimalTypes.Species] = []
@@ -9,8 +11,19 @@ var weather: WeatherSchedule
 ## Rect in this node's local space, shared by any number of animals.
 @export var bounds: Rect2 = Rect2(0, 0, 384, 256):
 	set(value):
-		bounds = value.abs()
-		queue_redraw()
+		if value is Rect2:
+			bounds = value.abs()
+			queue_redraw()
+
+func advance_offline(timestamp: float, force: bool = false) -> bool:
+	if offline_simulation == null:
+		offline_simulation = (PenOfflineSimulation as Variant).new(self)
+	return offline_simulation.advance(timestamp, force)
+
+func sync_before_change(timestamp: float) -> void:
+	if offline_simulation == null:
+		offline_simulation = (PenOfflineSimulation as Variant).new(self)
+	offline_simulation.sync_before_change(timestamp)
 
 func allowed_bounds(margin: float = 0.0) -> Rect2:
 	var inset: Vector2 = Vector2.ONE * maxf(0.0, margin)
@@ -32,6 +45,6 @@ func sample_world(rng: RandomNumberGenerator, margin: float = 0.0) -> Vector2:
 	return to_global(Vector2(rng.randf_range(area.position.x, area.end.x), rng.randf_range(area.position.y, area.end.y)))
 
 func _draw() -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() and bounds is Rect2:
 		draw_rect(bounds, Color(0.4, 0.9, 0.7, 0.08))
 		draw_rect(bounds, Color(0.4, 0.9, 0.7, 0.8), false, 1.0)

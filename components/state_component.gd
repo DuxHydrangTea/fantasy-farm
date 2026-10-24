@@ -33,6 +33,7 @@ var _initialized: bool = false
 var _use_requested: bool = false
 var active_action: StringName = &""
 var _harvest_requested: bool = false
+var touch_direction: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	assert(movement != null and animation != null, "StateComponent requires movement and animation components")
@@ -40,6 +41,7 @@ func _ready() -> void:
 	if tool_selection != null:
 		tool_selection.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
 		tool_selection.shop_visibility_changed.connect(_on_inventory_visibility_changed)
+		tool_selection.objectives_visibility_changed.connect(_on_inventory_visibility_changed)
 	transition_to(State.IDLE)
 
 func _physics_process(delta: float) -> void:
@@ -55,7 +57,7 @@ func _physics_process(delta: float) -> void:
 		movement.stop()
 		_update_dust(false)
 		return
-	var keyboard: Vector2 = Input.get_vector(action_left, action_right, action_up, action_down)
+	var keyboard: Vector2 = _movement_direction()
 	if not keyboard.is_zero_approx():
 		if navigation != null:
 			navigation.cancel()
@@ -86,6 +88,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
+		return
 	if tool_selection != null and tool_selection.is_menu_open():
 		return
 	if current_state == State.TOOL or current_state == State.WATER:
@@ -108,17 +112,36 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if current_state == State.TOOL or current_state == State.WATER:
 		return
-	# Event coordinates belong to this viewport; undo the camera transform.
-	var point: Vector2 = movement.body.get_canvas_transform().affine_inverse() * click.position
+	click_world(movement.body.get_canvas_transform().affine_inverse() * click.position)
+	get_viewport().set_input_as_handled()
+
+func click_world(point: Vector2) -> void:
+	if tool_selection.is_menu_open() or current_state in [State.TOOL, State.WATER]:
+		return
 	if hive_placement != null and hive_placement.click(point):
-		get_viewport().set_input_as_handled()
 		return
 	if interactions != null and interactions.click(point):
-		get_viewport().set_input_as_handled()
 		return
 	if navigation != null:
 		navigation.request_focus(point)
-	get_viewport().set_input_as_handled()
+
+func request_use() -> void:
+	if not tool_selection.is_menu_open() and current_state not in [State.TOOL, State.WATER]:
+		_use_requested = true
+
+func request_interaction() -> void:
+	if not tool_selection.is_menu_open() and current_state not in [State.TOOL, State.WATER]:
+		if interactions == null or not interactions.press():
+			_harvest_requested = true
+
+func cancel_input() -> void:
+	_use_requested = false
+	_harvest_requested = false
+	touch_direction = Vector2.ZERO
+	if navigation != null:
+		navigation.cancel()
+	movement.cancel_target()
+	movement.stop()
 
 func get_selected_tool_action() -> StringName:
 	return tool_selection.get_selected_action() if tool_selection != null else &""
@@ -133,7 +156,7 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 		return false
 	if current_state == State.TOOL or current_state == State.WATER:
 		return false
-	if requested_action.is_empty() and hive_placement != null and hive_placement.click(hive_placement.get_global_mouse_position()):
+	if requested_action.is_empty() and hive_placement != null and hive_placement.click(hive_placement.action_point()):
 		return true
 	if boosters != null and requested_action.is_empty():
 		var booster_action: StringName = boosters.prepare_action()
@@ -189,12 +212,7 @@ func _on_inventory_visibility_changed(open: bool) -> void:
 		transition_to(State.IDLE)
 
 func reset_after_load() -> void:
-	_use_requested = false
-	_harvest_requested = false
-	if navigation != null:
-		navigation.cancel()
-	movement.cancel_target()
-	movement.stop()
+	cancel_input()
 	active_action = &""
 	transition_to(State.IDLE)
 
@@ -229,7 +247,8 @@ func _update_dust(emitting: bool) -> void:
 
 
 func _movement_direction() -> Vector2:
-	return Input.get_vector(action_left, action_right, action_up, action_down)
+	var keyboard: Vector2 = Input.get_vector(action_left, action_right, action_up, action_down)
+	return keyboard if not keyboard.is_zero_approx() else touch_direction
 
 func _on_action_finished(action: String) -> void:
 	if current_state != State.TOOL and current_state != State.WATER:

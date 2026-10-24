@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://ckkhta3bhxbmy"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c0oso8fnhia5f"]
 
 [ext_resource type="Texture2D" uid="uid://ycn2asim76xy" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_5_Anim.png" id="1_8s5xb"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_njd7r"]
@@ -14,3 +14,4 @@ item_id = &"flower_06"
 display_name = "Flower 06"
 icon = SubResource("AtlasTexture_uf2u7")
 item_type = 2
+max_stack = 32000

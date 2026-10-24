@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://8wy7xnrq2u4r"]
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3 uid="uid://catwmdsfqbwf7"]
 
-[ext_resource type="Resource" uid="uid://c40vbe4htjo4u" path="res://items/animal_produces/sheep_wool.tres" id="1_rebxe"]
+[ext_resource type="Resource" uid="uid://cnrrbglgak6pd" path="res://items/animal_produces/sheep_wool.tres" id="1_rebxe"]
 [ext_resource type="Script" uid="uid://d4e18ad0kq75s" path="res://scripts/animals/animal_production_definition.gd" id="2_ci0ws"]
 
 [resource]
 script = ExtResource("2_ci0ws")
 production_item = ExtResource("1_rebxe")
-production_seconds = 60.0
+production_amount = 100
+production_seconds = 10800.0

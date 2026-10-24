@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://s1jvgss0vdtk"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://biwflle2a807t"]
 
-[ext_resource type="Resource" uid="uid://cl2dljwabfkft" path="res://flowers/definitions/flower_03.tres" id="1_f3pni"]
+[ext_resource type="Resource" uid="uid://dfr3tc3sbkg2m" path="res://flowers/definitions/flower_03.tres" id="1_f3pni"]
 [ext_resource type="Texture2D" uid="uid://dhjo8olc6uuyc" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_1_Anim.png" id="2_vcyre"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_2syah"]
 
@@ -16,3 +16,4 @@ display_name = "Flower 03 Seed"
 icon = SubResource("AtlasTexture_2xpf4")
 item_type = 1
 crop = ExtResource("1_f3pni")
+max_stack = 999

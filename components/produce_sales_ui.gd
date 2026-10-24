@@ -18,6 +18,7 @@ var _refreshing: bool = false
 
 func _ready() -> void:
 	super._ready()
+	TouchQuantityComponent.attach(quantity, root)
 	balance_label.hide()
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
@@ -67,6 +68,7 @@ func _refresh() -> void:
 	balance_label.text = tr("{coins} coins").format({"coins": customer.wallet.balance})
 	quantity.max_value = maxi(1, customer.selection.inventory.slot_count * 32000)
 	quantity.editable = selected != null
+	TouchQuantityComponent.refresh_for(quantity)
 	var checked: Dictionary = service.quote(selected, int(quantity.value))
 	sell_quantity_button.disabled = not checked.ok
 	sell_quantity_button.text = tr("Sell ×{count} - {coins} coins").format({"count": int(quantity.value), "coins": selected.price * int(quantity.value) if selected != null else 0})
@@ -80,7 +82,17 @@ func _refresh() -> void:
 	else:
 		details.text = tr("No produce to sell.")
 		status.text = tr("Bring harvested crops, flowers or animal produce.")
+	var warning: String = _order_warning()
+	if not warning.is_empty():
+		status.text += "\n" + warning
+		sell_all_button.tooltip_text = warning
 	_refreshing = false
+
+func _order_warning() -> String:
+	var farm: FarmWorld = customer.get_parent() as FarmWorld
+	if farm != null and farm.orders != null and farm.orders.service.requested_in_bag():
+		return tr("Sell all also sells items requested by your orders. Deliver them at the order board first if you want to keep them.")
+	return ""
 
 func sell_quantity() -> void:
 	if not is_open or sell_quantity_button.disabled:
@@ -99,6 +111,9 @@ func _show_result(result: Dictionary) -> void:
 		status.text = tr("Sold {count} items for {coins} coins!").format({"count": int(result.quantity), "coins": int(result.total)})
 	else:
 		status.text = GameText.error(result)
+	var warning: String = _order_warning()
+	if not warning.is_empty():
+		status.text += "\n" + warning
 
 func _fit_layout() -> void:
 	var view: Vector2 = root.size
@@ -109,6 +124,11 @@ func _fit_layout() -> void:
 	balance_label.add_theme_font_size_override("font_size", 20 if compact else 24)
 	items.add_theme_font_size_override("font_size", 20 if compact else 24)
 	quantity.custom_minimum_size = Vector2(96, 40) if compact else Vector2(108, 48)
+	if MobileLayout.is_touch(get_viewport()):
+		panel.custom_minimum_size = Vector2(minf(960.0, view.x - 16.0), minf(660.0, view.y - 16.0))
+		quantity.custom_minimum_size = Vector2(72, 48)
+		items.add_theme_constant_override("v_separation", 16)
+		MobileLayout.prepare_buttons(root)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

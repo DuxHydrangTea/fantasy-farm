@@ -11,4 +11,6 @@ func set_language(language: String) -> bool:
 	if not SUPPORTED_LANGUAGES.has(language):
 		return false
 	TranslationServer.set_locale(language)
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("document.documentElement.lang = '" + language + "'")
 	return true

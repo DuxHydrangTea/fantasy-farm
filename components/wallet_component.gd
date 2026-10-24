@@ -2,7 +2,7 @@ class_name WalletComponent
 extends Node
 ## Integer currency owned by the player; persisted as a primitive value.
 signal changed(balance: int)
-const STARTING_COINS: int = 1000
+const STARTING_COINS: int = 10000
 const MAX_COINS: int = 1000000000
 var balance: int = STARTING_COINS
 

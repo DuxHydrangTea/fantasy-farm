@@ -26,6 +26,8 @@ func before_each() -> void:
 	_clocks(world)
 	add_child_autofree(world)
 	world.process_mode = Node.PROCESS_MODE_DISABLED
+	world.starter_content.begin_restore(true)
+	world.starter_content.finish_restore()
 	for garden: FlowerGarden in world.apiary.gardens:
 		for pot: FlowerPot in garden.pots.values():
 			pot.clear()
@@ -64,7 +66,7 @@ func test_wind_extends_actual_assignment_crop_buff_and_preview_without_mutating_
 	var hive: Beehive = world.apiary.create_hive(point, &"weather_hive")
 	var pot: FlowerPot = world.apiary.gardens[0].pots[Vector2i(0, 0)]
 	pot.global_position = point + Vector2(112, 0)
-	pot.restore_state({"planted_at": 800.0, "growth_started_at": 800.0, "matures_at": 900.0, "progress": 1.0}, load("res://flowers/definitions/flower_01.tres"), now)
+	pot.restore_state({"planted_at": 800.0, "growth_started_at": 800.0, "matures_at": 900.0, "progress": 1.0}, load("res://flowers/definitions/flower_06.tres"), now)
 	world.apiary.advance(now)
 	assert_false(hive.pollination.active())
 	world.weather.set_weather(WeatherManager.Weather.WINDY)
@@ -79,7 +81,7 @@ func test_wind_extends_actual_assignment_crop_buff_and_preview_without_mutating_
 func test_rain_shelters_bees_and_retains_existing_honey_and_pollen_credit() -> void:
 	var hive: Beehive = world.apiary.create_hive(Vector2(1608, 408), &"rain_hive")
 	hive.production.work = 50
-	hive.production.contributions = {"flower_01": 30.0}
+	hive.production.contributions = {"flower_06": 30.0}
 	hive.bees._visibility(true)
 	assert_true(hive.bees._bees[0].visible)
 	world.weather.set_weather(WeatherManager.Weather.RAIN)
@@ -89,17 +91,20 @@ func test_rain_shelters_bees_and_retains_existing_honey_and_pollen_credit() -> v
 	now += 10
 	world.apiary.advance(now)
 	assert_eq(hive.production.work, 60.0)
-	assert_eq(hive.production.contributions.flower_01, 30.0)
+	assert_eq(hive.production.contributions.flower_06, 30.0)
 	world.weather.set_weather(WeatherManager.Weather.SUNNY)
 	assert_true(hive.bees._bees[0].visible)
 
 func test_rain_waterfowl_produce_ten_percent_faster_only_while_supplied_and_adult() -> void:
 	var pen: PondPen = world.get_node("PondPen") as PondPen
-	var duck: AnimalActor
+	var duck: AnimalActor = preload("res://scenes/animals/animal.tscn").instantiate() as AnimalActor
+	duck.definition = preload("res://animals/definitions/duck.tres")
+	duck.pen = pen
+	duck.needs.time_manager = clock
+	pen.add_child(duck)
 	for child: Node in pen.get_children():
-		if child is AnimalActor and (child as AnimalActor).definition.animal_id == &"duck":
-			duck = child as AnimalActor
-			break
+		if child is AnimalTrough:
+			(child as AnimalTrough).stock = 0
 	assert_not_null(duck)
 	duck.growth.configure(0, 0, 100000)
 	duck.needs.configure(10000, 10000)
@@ -305,7 +310,7 @@ func test_offline_weather_boundaries_do_not_retroactively_extend_pollen_or_crop_
 	var hive: Beehive = world.apiary.create_hive(point - Vector2(112, 0), &"offline_weather")
 	var pot: FlowerPot = world.apiary.gardens[0].pots[Vector2i(0, 0)]
 	pot.global_position = point
-	pot.restore_state({"planted_at": 800.0, "growth_started_at": 800.0, "matures_at": 900.0, "progress": 1.0}, load("res://flowers/definitions/flower_01.tres"), now)
+	pot.restore_state({"planted_at": 800.0, "growth_started_at": 800.0, "matures_at": 900.0, "progress": 1.0}, load("res://flowers/definitions/flower_06.tres"), now)
 	assert_true(world.farming.till(cell, world.player))
 	var crop: CropDefinition = load("res://crops/field/wheat/wheat.tres").duplicate() as CropDefinition
 	crop.growth_seconds = 1000
@@ -313,12 +318,12 @@ func test_offline_weather_boundaries_do_not_retroactively_extend_pollen_or_crop_
 	world.weather.schedule.changes = [{"at": 1050.0, "weather": WeatherManager.Weather.WINDY}, {"at": 1075.0, "weather": WeatherManager.Weather.RAIN}]
 	now = 1100
 	world.apiary.advance(now)
-	assert_almost_eq(hive.production.work, 107.5, 0.00001)
-	assert_almost_eq(hive.production.contributions.flower_01, 32.5, 0.00001)
+	assert_almost_eq(hive.production.work, 125.0, 0.00001)
+	assert_almost_eq(hive.production.contributions.flower_06, 50.0, 0.00001)
 	assert_almost_eq(world.farming.get_crop(cell).pollination_reduction, 2.5, 0.00001)
 	assert_false(hive.pollination.active())
 	world.apiary.advance(now)
-	assert_almost_eq(hive.production.work, 107.5, 0.00001)
+	assert_almost_eq(hive.production.work, 125.0, 0.00001)
 
 func test_crossing_rainy_dawn_offline_waters_only_owned_soil() -> void:
 	var day: int = 1
@@ -330,4 +335,6 @@ func test_crossing_rainy_dawn_offline_waters_only_owned_soil() -> void:
 	world.weather.advance(now)
 	assert_eq(world.weather.current_weather, WeatherManager.Weather.RAIN)
 	assert_eq(world.farming.get_soil_state(Vector2i(56, 22)), FarmingController.Soil.WET)
-	assert_ne(world.farming.get_soil_state(Vector2i(55, 22)), FarmingController.Soil.WET)
+	# Fresh profiles open four columns (53..56); 52 is the first locked column.
+	assert_eq(world.farming.land.unlocked_columns, 4)
+	assert_ne(world.farming.get_soil_state(Vector2i(52, 22)), FarmingController.Soil.WET)

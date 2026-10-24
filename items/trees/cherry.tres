@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bvanc2qkjkaaw"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://cie0uhpb7hs1j"]
 
 [ext_resource type="Texture2D" uid="uid://4uftdktwb3yb" path="res://trees/textures/cherry_fruit.tres" id="icon"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
@@ -9,3 +9,4 @@ item_id = &"cherry"
 display_name = "Cherry"
 icon = ExtResource("icon")
 item_type = 2
+max_stack = 32000

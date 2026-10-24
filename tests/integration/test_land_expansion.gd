@@ -12,6 +12,7 @@ func before_each() -> void:
 			child.free()
 	add_child_autofree(world)
 	land = world.land
+	land.state.restore_columns(1) # Keep the original ownership/migration fixture.
 	farm = world.farming
 	player = world.player
 	player.position = Vector2(900, 310)
@@ -41,20 +42,20 @@ func test_actual_map_permissions_are_exact_rectangle_and_locked_tools_fail() -> 
 
 func test_sign_interaction_confirm_cancel_reveal_and_full_unlock() -> void:
 	player.global_position = land.interaction_position() + Vector2(0, 16)
-	player.wallet.set_balance(50000)
+	player.wallet.set_balance(100000)
 	assert_true(player.shop_interaction.try_interact())
 	assert_true(land.menu.is_open)
 	assert_false(land.menu.status.text.contains("Balance"))
 	assert_true(player.selection.is_menu_open())
 	assert_eq(land.menu, player.shop_interaction.active_shop)
 	land.menu.close()
-	assert_eq(player.wallet.balance, 50000)
+	assert_eq(player.wallet.balance, 100000)
 	assert_eq(land.state.unlocked_columns, 1)
 	assert_true(player.shop_interaction.try_interact())
 	land.menu.confirm.pressed.emit()
 	assert_false(land.menu.is_open)
 	assert_false(player.selection.is_menu_open())
-	assert_eq(player.wallet.balance, 35000)
+	assert_eq(player.wallet.balance, 40000)
 	assert_eq(land.state.unlocked_columns, 2)
 	assert_false(land.sign.visible)
 	await wait_seconds(1.0)
@@ -73,14 +74,14 @@ func test_distance_and_funds_guard_menu_and_purchase() -> void:
 	assert_true(land.open_purchase(player))
 	assert_true(land.menu.confirm.disabled)
 	land.menu.confirm.pressed.emit()
-	assert_eq(player.wallet.balance, 1000)
+	assert_eq(player.wallet.balance, WalletComponent.STARTING_COINS)
 	assert_eq(land.state.unlocked_columns, 1)
 
 func test_purchase_save_reload_migration_and_corrupt_ownership_preflight() -> void:
 	var catalog: SaveCatalog = SaveCatalog.new()
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, catalog)
 	player.global_position = land.interaction_position() + Vector2(0, 16)
-	player.wallet.set_balance(50000)
+	player.wallet.set_balance(100000)
 	assert_true(land.purchase(1).ok)
 	var snapshot: Dictionary = adapter.capture("land_test", 1, TimeManager.now())
 	assert_eq(snapshot.land_columns, 2)
@@ -97,7 +98,7 @@ func test_purchase_save_reload_migration_and_corrupt_ownership_preflight() -> vo
 	land.state.restore_columns(3)
 	assert_true(adapter.restore(snapshot, TimeManager.now()).ok)
 	assert_eq(land.state.unlocked_columns, 2)
-	assert_eq(player.wallet.balance, 35000)
+	assert_eq(player.wallet.balance, 40000)
 	assert_eq(land._reveal_column, -1)
 	var legacy: Dictionary = snapshot.duplicate(true)
 	legacy.version = 5

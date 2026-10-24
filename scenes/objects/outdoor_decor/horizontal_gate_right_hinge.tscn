@@ -1,12 +1,14 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://vgjyw7vjrd6w"]
 
-[ext_resource type="SpriteFrames" path="res://sprite_frames/outdoor_decor/horizontal_gate_02_frames.tres" id="1_vxigs"]
+[ext_resource type="Script" path="res://components/automatic_gate.gd" id="1_h0ivr"]
+[ext_resource type="SpriteFrames" uid="uid://d1g4lw4i478jr" path="res://sprite_frames/outdoor_decor/horizontal_gate_02_frames.tres" id="1_vxigs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bjr27"]
 size = Vector2(33.6, 3.2)
 
 [node name="HorizontalGateRightHinge" type="StaticBody2D" unique_id=536039094]
 texture_filter = 1
+script = ExtResource("1_h0ivr")
 metadata/object_id = "horizontal_gate_right_hinge"
 metadata/object_kind = "horizontal_gate_right_hinge"
 metadata/source_visual = "res://sprite_frames/outdoor_decor/horizontal_gate_02_frames.tres"

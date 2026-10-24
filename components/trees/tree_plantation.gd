@@ -1,6 +1,6 @@
 class_name TreePlantation
 extends Node
-## Hai vùng dùng cùng lưới; giữ cây mới tách khỏi farmland và flower pots.
+## Stable saved cells map to staggered rows in both tree regions.
 @warning_ignore("unused_signal") # FruitTree phát sau khi giao dịch nhận quả đã thành công.
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float)
 const FRUIT_REGION: Rect2i = Rect2i(10, 58, 53, 30)
@@ -30,16 +30,39 @@ static func valid_cell(cell: Vector2i, kind: TreeDefinition.Kind) -> bool:
 	# 48 px giữa hai gốc, lùi tán khỏi đường viền khu đất.
 	return region.has_point(cell) and cell.x >= region.position.x + 2 and cell.y >= region.position.y + 3 and cell.x <= region.end.x - 2 and cell.y <= region.end.y - 2 and posmod(cell.x - region.position.x - 2, 3) == 0 and posmod(cell.y - region.position.y - 3, 3) == 0
 
+func _column_spacing(kind: TreeDefinition.Kind) -> float:
+	var region: Rect2i = region_for(kind)
+	var columns: int = floori(float(region.size.x - 4) / 3.0) + 1
+	var old_step: float = world.farming.farmland.tile_set.tile_size.x * 3.0
+	# Reserve half a step for alternate rows without pushing the last canopy
+	# past the old edge. Whole local pixels keep the pixel art crisp.
+	return floorf((columns - 1) * old_step / (columns - 0.5))
+
 func point_for(cell: Vector2i) -> Vector2:
-	return world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
+	var farmland: TileMapLayer = world.farming.farmland
+	var local: Vector2 = farmland.map_to_local(cell)
+	var kind: TreeDefinition.Kind = TreeDefinition.Kind.FRUIT if FRUIT_REGION.has_point(cell) else TreeDefinition.Kind.TIMBER
+	if valid_cell(cell, kind):
+		var origin: Vector2i = region_for(kind).position + Vector2i(2, 3)
+		var column: int = floori(float(cell.x - origin.x) / 3.0)
+		var row: int = floori(float(cell.y - origin.y) / 3.0)
+		var spacing: float = _column_spacing(kind)
+		local.x += column * (spacing - farmland.tile_set.tile_size.x * 3.0) + posmod(row, 2) * spacing * 0.5
+	return farmland.to_global(local)
 
 func cell_for(point: Vector2) -> Vector2i:
 	return world.farming.world_to_cell(point)
 
 func planting_cell(point: Vector2, kind: TreeDefinition.Kind) -> Vector2i:
-	var cell: Vector2i = cell_for(point)
 	var origin: Vector2i = region_for(kind).position + Vector2i(2, 3)
-	return origin + Vector2i(roundi(float(cell.x - origin.x) / 3.0), roundi(float(cell.y - origin.y) / 3.0)) * 3
+	var row: int = roundi(float(cell_for(point).y - origin.y) / 3.0)
+	var row_cell: Vector2i = origin + Vector2i(0, row * 3)
+	var farmland: TileMapLayer = world.farming.farmland
+	var local: Vector2 = farmland.to_local(point)
+	var spacing: float = _column_spacing(kind)
+	var offset: float = posmod(row, 2) * spacing * 0.5
+	var column: int = roundi((local.x - farmland.map_to_local(row_cell).x - offset) / spacing)
+	return row_cell + Vector2i(column * 3, 0)
 
 func in_region(point: Vector2) -> bool:
 	var cell: Vector2i = cell_for(point)

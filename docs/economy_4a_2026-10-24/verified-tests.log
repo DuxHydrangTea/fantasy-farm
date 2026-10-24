@@ -1,0 +1,197 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-yset4a84] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_economy_balance.gd
+* test_crop_purchase_harvest_sale_and_first_land_milestones
+* test_new_orders_match_npc_multiplier_and_large_deliveries_are_atomic
+* test_v15_roundtrip_preserves_issued_orders_assets_timers_and_feed_units
+* test_all_pens_have_24_hour_capacity_when_filled_with_new_needs
+* test_invalid_v15_orders_or_duplicate_troughs_are_rejected_without_mutation
+* test_fruit_and_timber_use_new_yields_and_keep_one_batch_and_regrowth
+6/6 passed.
+
+
+res://tests/unit/test_orders.gd
+* test_catalog_is_authored_and_rewards_reference_normal_sales
+* test_atomic_delivery_across_split_stacks_and_reentry
+* test_missing_items_and_full_wallet_leave_all_state_unchanged
+* test_roundtrip_keeps_instances_and_cursor_and_abandon_has_no_reward
+* test_rotation_skips_unavailable_and_active_templates_and_handles_empty
+* test_corrupt_saves_rejected_before_mutation
+* test_multiple_requirements_are_all_checked_before_any_removal
+* test_repeatable_rotation_keeps_three_unique_instances_and_bounded_state
+* test_restore_notifies_once_and_blocks_reentrant_delivery
+9/9 passed.
+
+
+res://tests/integration/test_orders.gd
+* test_board_is_separate_reachable_and_uses_shared_interaction_modal
+* test_all_authored_templates_have_real_world_sources_and_missing_source_is_skipped
+* test_confirmation_cancel_inventory_change_double_click_and_localization
+* test_save_load_preserves_orders_and_closes_pending_confirmation
+* test_legacy_v13_migration_and_corrupt_order_preflight_are_pure
+* test_sell_all_warns_but_does_not_fulfill_orders
+* test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three
+7/7 passed.
+
+
+res://tests/unit/test_save_repository.gd
+* test_v3_coins_migrate_once_and_current_coin_values_are_validated
+* test_missing_profile_is_a_new_game
+* test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks
+* test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
+* test_roundtrip_and_previous_revision_backup
+* test_truncated_primary_recovers_backup_and_can_save_again
+* test_checksum_damage_is_detected
+* test_stale_revision_does_not_overwrite_file
+* test_future_version_is_not_downgraded_to_backup
+* test_schema_rejects_unknown_resource_and_path_injection
+* test_schema_rejects_invalid_numbers_types_and_duplicate_cells
+* test_catalog_contains_all_current_gameplay_definitions
+* test_version_one_file_migrates_to_current_and_remains_a_valid_backup
+* test_dense_garden_file_roundtrip_accepts_all_180_planted_pots
+* test_version_two_garden_migration_is_complete_and_does_not_mutate_input
+* test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
+* test_async_save_roundtrip_recovery_and_revision_guard
+* test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard
+* test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto
+* test_async_save_detects_external_change_between_validation_and_commit
+* test_async_save_rejects_future_version_and_resource_objects_without_overwriting
+21/21 passed.
+
+
+res://tests/unit/test_objectives.gd
+* test_preferences_round_trip_and_follow_next_goal_after_claim
+* test_definitions_have_vietnamese_titles_and_descriptions
+* test_counts_only_active_matching_events_and_caps_progress_until_claim
+* test_all_steps_state_activation_and_exact_total_reward
+* test_reentrant_claim_observers_see_wallet_and_claimed_flags_together
+* test_full_wallet_retains_pending_reward_then_can_retry
+* test_roundtrip_pending_and_claimed_does_not_grant_or_replay_rewards
+* test_validation_rejects_unknown_ids_future_progress_noninteger_and_skipped_claims
+* test_suspend_blocks_record_claim_and_state_observation
+* test_partial_progress_roundtrips_without_unlocking_next_step
+10/10 passed.
+
+
+res://tests/integration/test_objective_progress.gd
+* test_actual_farming_commits_count_but_invalid_actions_and_rain_do_not
+* test_sale_service_hooks_each_visit_once_and_ignores_inventory_grants
+* test_trough_refill_counts_at_impact_only_and_stock_restore_does_not_count
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_snapshot_roundtrip_migration_atomic_claim_and_rollback
+* test_bad_progress_rejected_in_preflight_without_suspending_or_mutating_world
+* test_fresh_profile_baseline_and_land_owned_before_activation
+OBJECTIVE_BASELINE={"animals":11,"coins":10000,"first_land_price":60000,"growth_seconds":60.0,"harvest_amount":100,"land_columns":1,"objective_rewards":775,"produce_sell_price":35,"seed":"carrot_seed","seed_count":12}
+* test_fully_prepared_legacy_farm_is_not_stuck_on_an_impossible_till_action
+7/7 passed.
+
+
+res://tests/integration/test_objective_ui.gd
+* test_modal_exclusion_claim_once_and_load_closes_page
+* test_tracking_collapse_language_and_menu_exclusion
+* test_v12_migrates_preferences_and_preserves_progress
+* test_preferences_and_ready_state_restore_without_completion_replay
+* test_phone_safe_area_and_targets_in_both_languages_and_densities
+5/5 passed.
+
+
+res://tests/integration/test_onboarding.gd
+* test_help_and_skip_do_not_complete_or_reward_goals_and_modal_excludes_bag
+* test_context_follows_real_success_and_hint_timer_never_completes_gameplay
+* test_supply_audit_and_one_time_recovery_with_save_load
+* test_migration_seen_preferences_and_corrupt_preflight
+* test_recovery_blocked_by_planted_crops_or_a_full_bag
+* test_help_safe_area_targets_and_long_status_in_en_vi_at_densities_one_and_three
+6/6 passed.
+
+
+res://tests/unit/test_land_expansion.gd
+* test_initial_right_column_and_every_grid_cell
+* test_insufficient_funds_and_stale_confirmation_do_not_mutate
+* test_purchase_is_atomic_and_reentrant_signals_cannot_double_charge
+* test_all_47_purchases_cover_exact_rectangle_and_price_curve
+* test_restore_rejects_invalid_column_counts
+5/5 passed.
+
+
+res://tests/integration/test_land_expansion.gd
+* test_actual_map_permissions_are_exact_rectangle_and_locked_tools_fail
+* test_sign_interaction_confirm_cancel_reveal_and_full_unlock
+    --- Awaiting 1.0 seconds  ---
+* test_distance_and_funds_guard_menu_and_purchase
+* test_purchase_save_reload_migration_and_corrupt_ownership_preflight
+* test_menu_fits_small_window_and_releases_lock_for_load
+* test_legacy_empty_farm_starts_with_one_column_and_bad_counts_fail
+6/6 passed.
+
+
+res://tests/unit/test_shop_service.gd
+* test_purchase_commits_both_models_before_notifying_and_blocks_reentry
+* test_insufficient_coins_never_adds_items
+* test_full_bag_never_spends_or_partially_adds
+* test_invalid_quantities_or_foreign_offers_cannot_purchase
+* test_catalog_has_all_seeds_and_feed_once_with_valid_prices
+* test_wallet_rejects_invalid_bounds_and_credit_overflow
+6/6 passed.
+
+
+res://tests/integration/test_persistence_bootstrap.gd
+* test_preview_can_be_freed_before_first_frame_without_resuming_a_dead_instance
+* test_deferred_main_scene_assignment_still_binds_persistence
+* test_preview_world_never_binds_the_save_service
+3/3 passed.
+
+
+res://tests/integration/test_animal_lifecycle.gd
+* test_only_post_maturity_time_counts_towards_first_product
+* test_empty_needs_pause_production_without_reset_or_retroactive_refill
+* test_late_refill_syncs_elapsed_starvation_before_restoring_food
+* test_supply_expires_before_maturity_so_no_productive_time_is_credited
+* test_one_large_tick_and_split_ticks_agree_at_maturity_and_starvation
+* test_repeated_or_backward_timestamps_cannot_duplicate_age_or_products
+* test_large_catchup_is_stacked_in_one_pickup_and_survives_animal_removal
+* test_missing_or_invalid_juvenile_art_preserves_individual_adult_skin
+* test_real_juvenile_sprite_switches_to_adult_skin_while_idle
+* test_sprite_transition_waits_for_sleep_and_standing_to_finish
+* test_all_species_use_their_configured_produce<parameterized>
+    - params[0](chicken)
+    - params[1](cow)
+    - params[2](duck)
+    - params[3](goose)
+    - params[4](pig)
+    - params[5](sheep)
+    - params[6](horse)
+* test_direct_collection_mode_keeps_output_until_inventory_accepts_it
+* test_collecting_a_pile_allows_next_cycle_to_create_a_new_one
+* test_single_offline_jump_credits_only_adult_living_interval_then_retires_once
+* test_split_and_single_ticks_agree_across_maturity_and_death
+* test_starvation_does_not_delay_death_and_cannot_create_posthumous_produce
+* test_death_drops_completed_direct_collection_stock_and_preserves_existing_pile
+* test_actual_maturity_boundary_does_not_credit_the_juvenile_interval
+18/18 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts              13
+Tests               109
+Passing Tests       109
+Asserts            3639
+Time              18.058s
+
+
+---- All tests passed! ----
+

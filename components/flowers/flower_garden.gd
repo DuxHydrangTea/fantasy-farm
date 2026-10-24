@@ -12,6 +12,8 @@ var apiary: ApiarySystem
 var pots: Dictionary[Vector2i, FlowerPot] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
 var starter_flowers_added: bool = false
+var starter_content_locked: bool = false
+var _lock_notice: Label
 var _initial_supplies: Array[Dictionary] = []
 const SIZE: Vector2 = Vector2(384, 256)
 
@@ -34,15 +36,40 @@ func _ready() -> void:
 	for child: Node in get_children():
 		if child is ItemPickup:
 			_initial_supplies.append({"id": child.persistent_id, "position": child.position, "item": child.item, "amount": child.amount})
+			if starter_content_locked:
+				child.free()
 	add_to_group(&"flower_gardens")
 	if time_manager == null:
 		time_manager = TimeManager
 	time_manager.tick.connect(refresh)
 	add_starter_flowers(time_manager.now())
+	set_starter_content_locked(starter_content_locked)
+
+func set_starter_content_locked(value: bool) -> void:
+	starter_content_locked = value
+	if not is_node_ready() or Engine.is_editor_hint():
+		return
+	if _lock_notice == null:
+		_lock_notice = Label.new()
+		_lock_notice.text = "Buy your first land expansion to unlock the flower garden."
+		_lock_notice.position = Vector2(32, 112)
+		_lock_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_lock_notice.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_lock_notice.add_theme_color_override("font_color", Color.WHITE)
+		_lock_notice.add_theme_color_override("font_outline_color", Color(0.12, 0.08, 0.04))
+		_lock_notice.add_theme_constant_override("outline_size", 2)
+		_lock_notice.add_theme_font_size_override("font_size", 10)
+		_lock_notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_lock_notice)
+		_lock_notice.size = Vector2(320, 24)
+	_lock_notice.visible = value
 
 ## One-time starting plants, also applied to old saves without this content flag.
 ## Occupied pots are preserved; harvested starting plants never respawn on load.
 func add_starter_flowers(now: float) -> void:
+	if starter_content_locked:
+		starter_flowers_added = true
+		return
 	if starter_flowers_added:
 		return
 	starter_flowers_added = true
@@ -86,6 +113,8 @@ func reset() -> void:
 		pot.clear()
 
 func restore_initial_supplies() -> void:
+	if starter_content_locked:
+		return
 	for row: Dictionary in _initial_supplies:
 		var pickup: ItemPickup = PICKUP_SCENE.instantiate() as ItemPickup
 		pickup.persistent_id = row.id

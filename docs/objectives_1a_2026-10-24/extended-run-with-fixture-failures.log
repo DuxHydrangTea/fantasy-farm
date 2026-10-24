@@ -1,0 +1,450 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-k_6aeea9] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_objectives.gd
+* test_definitions_have_vietnamese_titles_and_descriptions
+* test_counts_only_active_matching_events_and_caps_progress_until_claim
+* test_all_steps_state_activation_and_exact_total_reward
+* test_reentrant_claim_observers_see_wallet_and_claimed_flags_together
+* test_full_wallet_retains_pending_reward_then_can_retry
+* test_roundtrip_pending_and_claimed_does_not_grant_or_replay_rewards
+* test_validation_rejects_unknown_ids_future_progress_noninteger_and_skipped_claims
+* test_suspend_blocks_record_claim_and_state_observation
+* test_partial_progress_roundtrips_without_unlocking_next_step
+9/9 passed.
+
+
+res://tests/integration/test_objective_progress.gd
+* test_actual_farming_commits_count_but_invalid_actions_and_rain_do_not
+* test_sale_service_hooks_each_visit_once_and_ignores_inventory_grants
+* test_trough_refill_counts_at_impact_only_and_stock_restore_does_not_count
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_snapshot_roundtrip_migration_atomic_claim_and_rollback
+    [Failed]:  DICTIONARY({ "steps": [{ "claimed": false, "id": "first_soil", "progress": 1.0 }, { "claim... 0.0 }] }) != DICTIONARY({ "steps": [{ "id": "first_soil", "progress": 1, "claimed": false }, { "id": "f...alse }] }).
+    { "steps": [{ "claimed": false, "id": "f...: 0.0 }] } != { "steps": [{ "id": "first_soil", "progr...false }] }  1 of 1 keys do not match.  
+      at line 133
+    [Failed]:  DICTIONARY({ "steps": [{ "claimed": true, "id": "first_soil", "progress": 1.0 }, { "claime... 0.0 }] }) != DICTIONARY({ "steps": [{ "id": "first_soil", "progress": 1, "claimed": true }, { "id": "fi...alse }] }).
+    { "steps": [{ "claimed": true, "id": "fi...: 0.0 }] } != { "steps": [{ "id": "first_soil", "progr...false }] }  1 of 1 keys do not match.  
+      at line 136
+* test_bad_progress_rejected_in_preflight_without_suspending_or_mutating_world
+* test_fresh_profile_baseline_and_land_owned_before_activation
+OBJECTIVE_BASELINE={"animals":11,"coins":1000,"first_land_price":15000,"growth_seconds":10.0,"harvest_amount":100,"land_columns":1,"objective_rewards":775,"produce_sell_price":5,"seed":"carrot_seed","seed_count":12}
+5/6 passed.
+
+
+res://tests/unit/test_save_repository.gd
+* test_v3_coins_migrate_once_and_current_coin_values_are_validated
+* test_missing_profile_is_a_new_game
+* test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks
+* test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
+* test_roundtrip_and_previous_revision_backup
+* test_truncated_primary_recovers_backup_and_can_save_again
+* test_checksum_damage_is_detected
+* test_stale_revision_does_not_overwrite_file
+* test_future_version_is_not_downgraded_to_backup
+* test_schema_rejects_unknown_resource_and_path_injection
+* test_schema_rejects_invalid_numbers_types_and_duplicate_cells
+* test_catalog_contains_all_current_gameplay_definitions
+* test_version_one_file_migrates_to_current_and_remains_a_valid_backup
+* test_dense_garden_file_roundtrip_accepts_all_180_planted_pots
+* test_version_two_garden_migration_is_complete_and_does_not_mutate_input
+* test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
+* test_async_save_roundtrip_recovery_and_revision_guard
+* test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard
+* test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto
+* test_async_save_detects_external_change_between_validation_and_commit
+* test_async_save_rejects_future_version_and_resource_objects_without_overwriting
+21/21 passed.
+
+
+res://tests/integration/test_persistence_bootstrap.gd
+* test_deferred_main_scene_assignment_still_binds_persistence
+* test_preview_world_never_binds_the_save_service
+2/2 passed.
+
+
+res://tests/integration/test_farming.gd
+* test_click_focus_approaches_the_clicked_farm_cell_before_manual_tool_use<parameterized>
+    - params[0]((-7.0, -7.0))
+    --- Awaiting 2.0 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[1]((7.0, 7.0))
+    --- Awaiting 2.0 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_tool_then_water_changes_only_facing_tile_at_impact<parameterized>
+    - params[0]((0.0, 1.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[1]((0.0, -1.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[2]((-1.0, 0.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    - params[3]((1.0, 0.0))
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_dry_and_wet_terrain_join_adjacent_cells<parameterized>
+    - params[0]((1, 0))
+    - params[1]((0, 1))
+* test_rectangle_keeps_all_soil_cells_connected
+* test_tree_collision_blocks_till_water_and_plant
+* test_cancel_before_impact_does_not_modify_soil
+    --- Awaiting 0.9 seconds  ---
+* test_unmarked_ground_remains_protected_after_actions
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_target_mapping_handles_translated_and_scaled_field
+    --- Awaiting 0.9 seconds  ---
+8/8 passed.
+
+
+res://tests/integration/test_produce_sales.gd
+* test_entered_quantity_commits_text_and_sell_all_sells_other_types
+* test_over_quantity_rejected_and_menu_close_for_load_or_removal_releases_lock
+* test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quantity
+* test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_menu
+4/4 passed.
+
+
+res://tests/integration/test_land_expansion.gd
+* test_actual_map_permissions_are_exact_rectangle_and_locked_tools_fail
+* test_sign_interaction_confirm_cancel_reveal_and_full_unlock
+    --- Awaiting 1.0 seconds  ---
+* test_distance_and_funds_guard_menu_and_purchase
+* test_purchase_save_reload_migration_and_corrupt_ownership_preflight
+* test_menu_fits_small_window_and_releases_lock_for_load
+* test_legacy_empty_farm_starts_with_one_column_and_bad_counts_fail
+6/6 passed.
+
+
+res://tests/integration/test_trough_interaction.gd
+* test_player_uses_shared_inventory_and_refills_once_at_animation_impact
+* test_water_requires_selected_can_and_never_consumes_the_tool
+* test_inventory_open_cancels_before_spending_any_feed
+* test_moving_out_of_reach_before_impact_spends_nothing
+* test_deleting_target_before_impact_is_safe
+* test_water_slot_swap_cannot_redirect_the_action
+* test_selecting_another_slot_keeps_original_watering_action
+* test_full_and_missing_feed_block_farming_and_show_reason
+* test_wall_blocks_refill_and_prompt
+* test_no_nearby_trough_preserves_farming_action
+* test_e_input_is_routed_to_trough_and_nearest_target_is_stable
+* test_prompt_fits_two_viewport_sizes
+* test_actor_faces_trough_and_checks_new_obstacle_again_at_impact
+13/13 passed.
+
+
+res://tests/integration/test_localization.gd
+* test_english_default_and_live_inventory_hotbar_wallet_and_tooltips
+* test_shop_retranslates_scene_and_generated_cards_without_changing_checkout
+* test_animal_sale_selection_survives_language_change
+* test_backend_errors_keep_source_keys_and_localize_only_for_display
+* test_catalog_placeholders_and_vietnamese_font_coverage
+5/5 passed.
+
+
+res://tests/integration/test_tree_plantation.gd
+* test_planting_checks_zone_spacing_occupancy_and_spends_only_one_seed
+* test_uproot_frees_cell_for_replanting_and_full_timber_rewards_drop_safely
+ERROR: Resumed function '_start()' after await, but class instance is gone. At script: res://persistence/world_persistence.gd:15
+   at: resume (modules/gdscript/gdscript_function.cpp:323)
+* test_save_roundtrip_preserves_tree_and_stump_and_rejects_corrupt_state_first
+* test_selected_tool_routes_to_tree_with_one_impact_and_slot_change_cancels
+* test_c_harvest_keeps_mature_tree_even_when_holding_hoe
+* test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward<parameterized>
+    - params[0](apple)
+    - params[1](peach)
+    - params[2](pear)
+    - params[3](cherry)
+* test_distant_click_walks_to_tree_and_harvests_only_on_arrival_without_tool_state
+    --- Awaiting 0.9 seconds  ---
+* test_full_bag_click_preserves_fruit_and_does_not_show_reward_or_swing_hoe
+* test_bee_bonus_obeys_range_and_weather_boundaries_in_offline_catchup
+* test_legacy_save_adds_empty_trees_and_current_save_rejects_invalid_tree_fields
+* test_shop_supplies_sell_all_tree_starters_and_axe_and_buyer_accepts_outputs
+* test_captured_world_with_fruit_tree_uses_string_keys_and_saves_asynchronously
+12/12 passed.
+
+
+res://tests/integration/test_weather.gd
+* test_rain_waters_only_open_columns_and_keeps_them_wet_until_rain_ends
+* test_cloudy_soil_lasts_eight_hours_and_offline_moisture_is_not_reset_on_load
+* test_wind_extends_actual_assignment_crop_buff_and_preview_without_mutating_resource
+* test_rain_shelters_bees_and_retains_existing_honey_and_pollen_credit
+* test_rain_waterfowl_produce_ten_percent_faster_only_while_supplied_and_adult
+* test_v9_migration_and_weather_roundtrip_reject_invalid_data_before_mutation
+* test_sequential_fades_and_ui_stay_separate_from_world_tint
+* test_lamps_never_darken_daylight_while_fading_at_dawn_and_dusk
+* test_effects_sleep_after_sunny_fade_and_wake_without_skipping_transitions
+* test_debug_time_buttons_preview_day_night_without_advancing_the_farm_clock
+* test_cloud_and_wind_paths_do_not_follow_camera_pan_zoom_or_world_transform
+* test_weather_grid_covers_resized_views_without_changing_existing_feature_positions
+* test_debug_weather_buttons_use_normal_transitions_and_track_the_active_choice
+* test_offline_weather_boundaries_do_not_retroactively_extend_pollen_or_crop_bonus
+* test_crossing_rainy_dawn_offline_waters_only_owned_soil
+15/15 passed.
+
+
+res://tests/integration/test_beehives.gd
+* test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable
+* test_offline_bloom_boundary_does_not_apply_pollen_retroactively
+* test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset
+* test_crop_buff_is_ten_percent_non_stacking_and_fertilizer_uses_original_duration
+* test_sunflower_maturing_mid_interval_becomes_a_pollen_source
+* test_placement_is_atomic_spends_one_item_and_rejects_locked_occupied_and_distant_land
+* test_disk_roundtrip_preserves_pollen_offline_bloom_and_ready_honey_without_duplication
+* test_async_disk_roundtrip_accepts_captured_hive_and_keeps_revision_backup
+* test_invalid_honey_or_placement_rejects_the_whole_load_and_v8_migrates_without_reset
+* test_unified_e_click_priority_collection_and_honey_sale
+* test_click_approaches_a_full_hive_and_collects_only_on_arrival
+    --- Awaiting 3 seconds  ---
+* test_bought_hive_can_be_placed_by_left_click_without_navigation
+* test_pollination_saving_keeps_reduction_and_replays_offline_growth_once
+* test_continuous_pollination_does_not_append_stage_heap_entries_each_tick
+* test_bees_culling_keeps_notifier_visible_and_wakes_all_six_flying_sprites
+* test_bees_spread_across_wider_routes_without_duplicate_positions
+16/16 passed.
+
+
+res://tests/integration/test_boosters.gd
+* test_fertilizer_action_consumes_at_impact_only_and_reschedules_growth
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  [0] expected to equal [5]:  
+      at line 70
+    --- Awaiting 0.9 seconds  ---
+    [Failed] 
+      at line 72
+    [Failed]:  [1100.0] expected to equal [1080.0]:  
+      at line 73
+    [Failed]:  [0] expected to equal [4]:  
+      at line 74
+    [Failed]:  The heap uses the shortened maturity deadline
+      at line 77
+    --- Awaiting 0.9 seconds  ---
+    [Failed]:  [0] expected to equal [4]:  
+      at line 80
+* test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    --- Awaiting 0.9 seconds  ---
+    [Failed]:  [0] expected to equal [5]:  
+      at line 89
+    --- Awaiting 0.9 seconds  ---
+    [Failed] 
+      at line 97
+    [Failed]:  [0] expected to equal [4]:  
+      at line 98
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Dictionary]')
+   at: test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items (res://tests/integration/test_boosters.gd:99)
+   GDScript backtrace (most recent call first):
+       [0] test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items (res://tests/integration/test_boosters.gd:99)
+       [1] _end_wait (res://addons/gut/awaiter.gd:126)
+       [2] _physics_process (res://addons/gut/awaiter.gd:88)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[Dictionary]')
+      at line 99
+* test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'growth' on a base object of type 'Nil'.
+   at: test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce (res://tests/integration/test_boosters.gd:105)
+   GDScript backtrace (most recent call first):
+       [0] test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce (res://tests/integration/test_boosters.gd:105)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+      at line -1
+* test_juvenile_once_only_and_dead_animal_never_consume_tonic
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'growth' on a base object of type 'Nil'.
+   at: test_juvenile_once_only_and_dead_animal_never_consume_tonic (res://tests/integration/test_boosters.gd:123)
+   GDScript backtrace (most recent call first):
+       [0] test_juvenile_once_only_and_dead_animal_never_consume_tonic (res://tests/integration/test_boosters.gd:123)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+      at line -1
+* test_tonic_action_requires_facing_range_and_unobstructed_target
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'pen' on a base object of type 'Nil'.
+   at: test_tonic_action_requires_facing_range_and_unobstructed_target (res://tests/integration/test_boosters.gd:132)
+   GDScript backtrace (most recent call first):
+       [0] test_tonic_action_requires_facing_range_and_unobstructed_target (res://tests/integration/test_boosters.gd:132)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'pen' on a base object of type 'Nil'.
+      at line -1
+* test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed] 
+      at line 167
+SCRIPT ERROR: Invalid access to property or key 'growth' on a base object of type 'Nil'.
+   at: test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline (res://tests/integration/test_boosters.gd:168)
+   GDScript backtrace (most recent call first):
+       [0] test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline (res://tests/integration/test_boosters.gd:168)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+      at line -1
+* test_legacy_migration_and_bad_flags_reject_before_world_changes
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_merchant_sells_canonical_booster_items_with_working_inventory_identity
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Node]')
+   at: before_each (res://tests/integration/test_boosters.gd:40)
+   GDScript backtrace (most recent call first):
+       [0] before_each (res://tests/integration/test_boosters.gd:40)
+       [1] _run_test (res://addons/gut/gut.gd:612)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  [2] expected to equal [7]:  
+      at line 250
+    [Failed]:  [2] expected to equal [7]:  
+      at line 250
+1/8 passed.
+
+
+res://tests/integration/test_mobile_controls.gd
+* test_joystick_moves_and_second_touch_uses_tool_without_waiting_for_release
+    --- Awaiting 0.9 seconds  ---
+* test_native_touch_tap_commits_on_release_and_pinch_never_moves_or_uses
+* test_hotbar_and_modals_consume_touch_and_emulated_mouse_cannot_click_world
+* test_rotation_focus_loss_cancel_and_mode_switch_release_all_input
+* test_touch_farming_loop_uses_existing_impact_frames_and_interaction_resolver
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_context_button_opens_shop_and_modal_blocks_actions
+* test_ui_swipe_scrolls_without_selecting_items_or_leaking_into_world
+* test_session_touch_toggle_keeps_keyboard_available_and_changes_layout
+* test_controls_fit_safe_area_and_do_not_overlap_hotbar_at_high_dpi
+9/9 passed.
+
+
+res://tests/integration/test_mobile_layout.gd
+* test_safe_area_and_touch_targets_survive_high_density_and_resize_in_both_languages
+* test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize
+* test_touch_bag_moves_to_last_slot_without_drag_or_spending_items
+* test_sales_checkout_and_land_confirmation_fit_safe_landscape_height
+* test_animal_inspector_keeps_clear_of_dock_on_short_vietnamese_screen
+5/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_objective_progress.gd
+- test_snapshot_roundtrip_migration_atomic_claim_and_rollback
+    [Failed]:  DICTIONARY({ "steps": [{ "claimed": false, "id": "first_soil", "progress": 1.0 }, { "claim... 0.0 }] }) != DICTIONARY({ "steps": [{ "id": "first_soil", "progress": 1, "claimed": false }, { "id": "f...alse }] }).
+    { "steps": [{ "claimed": false, "id": "f...: 0.0 }] } != { "steps": [{ "id": "first_soil", "progr...false }] }  1 of 1 keys do not match.  
+          at line 133
+    [Failed]:  DICTIONARY({ "steps": [{ "claimed": true, "id": "first_soil", "progress": 1.0 }, { "claime... 0.0 }] }) != DICTIONARY({ "steps": [{ "id": "first_soil", "progress": 1, "claimed": true }, { "id": "fi...alse }] }).
+    { "steps": [{ "claimed": true, "id": "fi...: 0.0 }] } != { "steps": [{ "id": "first_soil", "progr...false }] }  1 of 1 keys do not match.  
+          at line 136
+
+res://tests/integration/test_boosters.gd
+- test_fertilizer_action_consumes_at_impact_only_and_reschedules_growth
+    [Failed]:  [0] expected to equal [5]:  
+          at line 70
+    [Failed]:  
+          at line 72
+    [Failed]:  [1100.0] expected to equal [1080.0]:  
+          at line 73
+    [Failed]:  [0] expected to equal [4]:  
+          at line 74
+    [Failed]:  The heap uses the shortened maturity deadline
+          at line 77
+    [Failed]:  [0] expected to equal [4]:  
+          at line 80
+- test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items
+    [Failed]:  [0] expected to equal [5]:  
+          at line 89
+    [Failed]:  
+          at line 97
+    [Failed]:  [0] expected to equal [4]:  
+          at line 98
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[Dictionary]')
+          at line 99
+- test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+          at line -1
+- test_juvenile_once_only_and_dead_animal_never_consume_tonic
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+          at line -1
+- test_tonic_action_requires_facing_range_and_unobstructed_target
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'pen' on a base object of type 'Nil'.
+          at line -1
+- test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline
+    [Failed]:  
+          at line 167
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'growth' on a base object of type 'Nil'.
+          at line -1
+- test_merchant_sells_canonical_booster_items_with_working_inventory_identity
+    [Failed]:  [2] expected to equal [7]:  
+          at line 250
+    [Failed]:  [2] expected to equal [7]:  
+          at line 250
+
+Totals
+------
+Scripts              15
+Tests               139
+Passing Tests       131
+Failing Tests         8
+Asserts           6058/6077
+Time              18.049s
+
+
+---- 8 failing tests ----
+

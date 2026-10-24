@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://tests/support/grass_gpu_poc.gd" id="1"]
+[ext_resource type="Script" path="res://components/grass/grass_field.gd" id="2"]
+
+[node name="GrassGpuPoc" type="Node2D" node_paths=PackedStringArray("field", "camera")]
+script = ExtResource("1")
+field = NodePath("GrassField")
+camera = NodePath("Camera2D")
+
+[node name="GrassField" type="Node2D" parent="."]
+position = Vector2(104, 82)
+script = ExtResource("2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(320, 260)

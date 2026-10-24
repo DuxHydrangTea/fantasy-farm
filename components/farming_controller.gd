@@ -5,6 +5,7 @@ extends Node
 const CROP_SCENE: PackedScene = preload("res://scenes/crops/crop.tscn")
 
 signal soil_changed(cell: Vector2i, previous: int, current: int)
+signal action_committed(condition: StringName, amount: int)
 signal crop_planted(cell: Vector2i, crop: Node2D)
 signal crop_harvested(cell: Vector2i)
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent)
@@ -28,6 +29,9 @@ var land: LandExpansionState
 var _crops: Dictionary[Vector2i, Crop] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
 var _harvesting: bool = false
+
+func has_planted_crops() -> bool:
+	return not _crops.is_empty()
 
 # Runtime occupation, for future crops/placed objects without a physics body.
 var _occupied: Dictionary[Vector2i, bool] = {}
@@ -86,6 +90,7 @@ func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor
 	_crops[cell] = crop
 	inventory.remove_from_slot(slot_index, 1)
 	crop_planted.emit(cell, crop)
+	action_committed.emit(&"plant", 1)
 	return true
 
 func can_harvest(cell: Vector2i) -> bool:
@@ -123,6 +128,7 @@ func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 	crop.retire_after_harvest()
 	crop_harvested.emit(cell)
 	harvest_yielded.emit(produce, accepted, origin, inventory)
+	action_committed.emit(&"harvest", 1)
 	_harvesting = false
 	return true
 
@@ -230,6 +236,7 @@ func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	if get_soil_state(cell) != Soil.DRY:
 		return false
 	soil_changed.emit(cell, Soil.UNTILLED, Soil.DRY)
+	action_committed.emit(&"till", 1)
 	return true
 
 func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
@@ -247,6 +254,8 @@ func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 		crop.react(4.0)
 	_moisture[cell] = SOIL_MOISTURE_SECONDS
 	soil_changed.emit(cell, Soil.DRY, Soil.WET)
+	if crop != null:
+		action_committed.emit(&"water_crop", 1)
 	return true
 
 func _layer_cell(layer: TileMapLayer, cell: Vector2i) -> Vector2i:

@@ -7,6 +7,7 @@ var service: ShopService
 
 func before_each() -> void:
 	wallet = WalletComponent.new()
+	wallet.set_balance(1000)
 	bag = InventoryComponent.new()
 	bag.starting_tools = false
 	bag.slot_count = 2
@@ -14,7 +15,8 @@ func before_each() -> void:
 	add_child_autofree(bag)
 	catalog = ShopCatalog.new()
 	offer = ShopOffer.new()
-	offer.item = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
+	offer.item = load("res://items/seeds/carrot_seed.tres").duplicate() as ItemDefinition
+	offer.item.max_stack = 99
 	offer.price = 10
 	catalog.offers.append(offer)
 	service = ShopService.new(catalog, wallet, bag)

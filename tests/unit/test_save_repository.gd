@@ -5,6 +5,10 @@ var folder: String
 var _async_finished: bool = false
 var _async_result: Dictionary = {}
 
+class SingleThreadRepository extends LocalSaveRepository:
+	func _uses_worker_threads() -> bool:
+		return false
+
 class SlowRepository extends LocalSaveRepository:
 	func _commit_io(profile: String, data: Dictionary, expected_hash: String, primary_valid: bool) -> Dictionary:
 		OS.delay_msec(150)
@@ -40,6 +44,12 @@ func after_each() -> void:
 
 func _snapshot(revision: int = 1) -> Dictionary:
 	return {"version": SaveSchema.VERSION, "land_columns": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
+		"objectives": ObjectiveSaveSchema.fresh(ObjectiveProgress.DEFAULT_CATALOG),
+		"orders": OrderSaveSchema.fresh(),
+		"tutorial": TutorialSaveSchema.fresh(),
+		"flower_garden_unlocked": false,
+		"pen_updated_at": {},
+		"land_starting_columns": 1,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
 		"weather": WeatherSchedule.new().capture(), "trees": [], "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
 
@@ -266,6 +276,28 @@ func test_async_save_roundtrip_recovery_and_revision_guard() -> void:
 	var conflict: Dictionary = await repo.write_profile_async("test", _snapshot(2), 1)
 	assert_false(conflict.ok)
 	assert_eq(conflict.code, "conflict")
+
+func test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard() -> void:
+	repo = SingleThreadRepository.new(folder, catalog)
+	var data: Dictionary = _snapshot()
+	_launch_async(data)
+	assert_false(_async_finished, "Web IO yields instead of completing reentrantly")
+	data.inventory[0].count = 0
+	assert_eq((await repo.write_profile_async("test", _snapshot(), 0)).code, "busy")
+	assert_eq(repo.write_profile("test", _snapshot(), 0).code, "busy")
+	var started: int = Time.get_ticks_msec()
+	while not _async_finished and Time.get_ticks_msec() - started < 4000:
+		await get_tree().process_frame
+	assert_true(_async_finished)
+	assert_true(_async_result.ok)
+	assert_eq(repo.worker_operations, 0)
+	assert_eq(int(repo.read_profile("test").snapshot.inventory[0].count), 1)
+	assert_true((await repo.write_profile_async("test", _snapshot(2), 1)).ok)
+	assert_eq(int(repo._read(repo.path("test") + ".bak", "test").revision), 1)
+	assert_eq((await repo.write_profile_async("test", _snapshot(2), 1)).code, "conflict")
+	_write_raw(repo.path("test"), "corrupt")
+	assert_true((await repo.write_profile_async("test", _snapshot(2), 1)).ok)
+	assert_eq(int(repo.read_profile("test").revision), 2)
 
 func test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto() -> void:
 	repo = SlowRepository.new(folder, catalog)

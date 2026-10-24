@@ -1,0 +1,42 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-n9vmqsbh] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_pen_dashboard.gd
+* test_signs_exist_before_world_enters_tree_for_editor_preview
+* test_each_pen_has_a_separate_reachable_nonblocking_board
+* test_cards_are_per_pen_and_portraits_are_independent_idle_animations
+* test_trough_percent_is_capacity_weighted_and_excludes_other_pens
+* test_roster_removes_freed_animals_and_load_closes_dashboard_without_losing_ids
+* test_cards_and_overview_fit_en_vi_phone_safe_areas_at_one_and_three_density
+6/6 passed.
+
+
+res://tests/integration/test_persistence_bootstrap.gd
+* test_preview_can_be_freed_before_first_frame_without_resuming_a_dead_instance
+* test_deferred_main_scene_assignment_still_binds_persistence
+* test_preview_world_never_binds_the_save_service
+3/3 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                 9
+Passing Tests         9
+Asserts             139
+Time              6.174s
+
+
+---- All tests passed! ----
+

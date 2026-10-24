@@ -7,6 +7,18 @@ var land: LandExpansionComponent
 var apiary: ApiarySystem
 var weather: WeatherManager
 var trees: TreePlantation
+var objectives: ObjectiveTracker
+var objective_ui: ObjectiveUI
+var orders: OrderBoard
+var tutorial: TutorialProgress = TutorialProgress.new()
+var help_ui: HelpUI
+var tutorial_hints: TutorialHints
+var pen_boards: Array[PenBoard] = []
+var starter_content: StarterContent
+var grass: FarmGrassField
+@export var gpu_grass_enabled: bool = true
+@export var grass_trial_region: Rect2 = Rect2(1008, 592, 384, 272)
+@export var order_board_position: Vector2 = Vector2(1664, 248)
 ## Authored window/gate anchors in world-local pixels, independent of sprite names.
 @export var night_light_positions: Array[Vector2] = [Vector2(1350, 308), Vector2(1183, 622), Vector2(1740, 172), Vector2(1666, 622), Vector2(1010, 274), Vector2(1384, 274), Vector2(1480, 274)]
 
@@ -16,6 +28,8 @@ func _enter_tree() -> void:
 
 	if is_instance_valid(land):
 		return
+	starter_content = StarterContent.new(self)
+	starter_content.prepare()
 	weather = WeatherManager.new()
 	weather.world = self
 	weather.name = "WeatherManager"
@@ -39,6 +53,42 @@ func _enter_tree() -> void:
 	trees.name = "TreePlantation"
 	trees.world = self
 	add_child(trees)
+	objectives = ObjectiveTracker.new()
+	objectives.name = "Objectives"
+	objectives.world = self
+	add_child(objectives)
+
+func _ready() -> void:
+	starter_content.setup()
+	objectives.setup()
+	objective_ui = ObjectiveUI.new()
+	objective_ui.name = "ObjectiveUI"
+	objective_ui.model = objectives.progress
+	objective_ui.selection = player.selection
+	add_child(objective_ui)
+	orders = OrderBoard.new()
+	orders.name = "OrderBoard"
+	orders.world = self
+	orders.position = order_board_position
+	add_child(orders)
+	help_ui = HelpUI.new()
+	help_ui.name = "HelpUI"
+	help_ui.world = self
+	add_child(help_ui)
+	objective_ui.help_requested.connect(help_ui.open_help)
+	tutorial_hints = TutorialHints.new()
+	tutorial_hints.name = "TutorialHints"
+	tutorial_hints.world = self
+	add_child(tutorial_hints)
+	for child: Node in get_children():
+		if child is AnimalPen:
+			for node: Node in child.get_children():
+				if node is PenBoard:
+					pen_boards.append(node as PenBoard)
+	grass = FarmGrassField.new()
+	grass.name = "GPUGrass"
+	grass.world = self
+	add_child(grass)
 
 func _wire_weather(node: Node) -> void:
 	if node is AnimalPen:

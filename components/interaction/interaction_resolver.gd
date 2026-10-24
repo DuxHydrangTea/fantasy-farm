@@ -9,11 +9,19 @@ func _init(customer: FarmPlayer) -> void:
 
 func candidates() -> Array[InteractionTarget]:
 	var result: Array[InteractionTarget] = []
-	for group: StringName in [&"shop_merchants", &"land_expansions", &"animal_troughs", &"animal_status_targets", &"beehives", &"perennial_trees"]:
+	for group: StringName in [&"shop_merchants", &"land_expansions", &"animal_troughs", &"animal_status_targets", &"beehives", &"perennial_trees", &"order_boards", &"pen_boards"]:
 		for node: Node in player.get_tree().get_nodes_in_group(group):
 			if not node is Node2D or not _same_world(node):
 				continue
+			if node is AnimalActor:
+				var animal: AnimalActor = node as AnimalActor
+				if animal.production.definition == null or animal.production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION or animal.production.stored_amount <= 0:
+					continue
 			var kind: InteractionTarget.Kind = InteractionTarget.Kind.TREE if node is PerennialTree else InteractionTarget.Kind.MERCHANT if node is ShopMerchant else InteractionTarget.Kind.LAND if node is LandExpansionComponent else InteractionTarget.Kind.TROUGH if node is AnimalTrough else InteractionTarget.Kind.BEEHIVE if node is Beehive else InteractionTarget.Kind.ANIMAL
+			if node is OrderBoard:
+				kind = InteractionTarget.Kind.ORDER_BOARD
+			if node is PenBoard:
+				kind = InteractionTarget.Kind.PEN_BOARD
 			result.append(InteractionTarget.new(node as Node2D, kind, player))
 	return result
 

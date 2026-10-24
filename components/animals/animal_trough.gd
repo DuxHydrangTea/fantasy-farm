@@ -5,12 +5,16 @@ extends StaticBody2D
 ## Shared, finite food/water supply. Reservations prevent two animals using one slot.
 enum Kind { FOOD, WATER }
 signal stock_changed(amount: int)
+## Fraction of the last visible unit already consumed by offline simulation.
+var consumed_fraction: float = 0.0
 @export var kind: Kind = Kind.WATER
 @export var pen: AnimalPen
 @export_range(1, 32000) var capacity: int = 120
 @export_range(0, 32000) var stock: int = 120:
 	set(value):
 		stock = clampi(value, 0, capacity)
+		if stock == 0:
+			consumed_fraction = 0.0
 		stock_changed.emit(stock)
 		if is_node_ready():
 			_update_visual()
@@ -36,6 +40,7 @@ func feed_items_needed(inventory: InventoryComponent) -> int:
 	return mini(floori(float(maxi(0, capacity - stock)) / units), inventory.count_item(feed_item.item_id))
 
 func refill_from_inventory(inventory: InventoryComponent) -> int:
+	_sync_pen()
 	if _refilling:
 		return 0
 	var packages: int = feed_items_needed(inventory)
@@ -58,7 +63,26 @@ func portion_size(data: AnimalDefinition) -> int:
 	return maxi(1, data.food_per_meal if kind == Kind.FOOD else data.water_per_drink)
 
 func can_supply(data: AnimalDefinition) -> bool:
-	return data != null and restoration_per_unit > 0.0 and stock >= portion_size(data) and (allowed_species.is_empty() or int(data.species) in allowed_species)
+	return data != null and restoration_per_unit > 0.0 and available_units() >= portion_size(data) and (allowed_species.is_empty() or int(data.species) in allowed_species)
+
+func available_units() -> float:
+	return maxf(0.0, float(stock) - consumed_fraction)
+
+func restore_offline_stock(units: float) -> void:
+	units = clampf(units, 0.0, float(capacity))
+	var whole: int = ceili(units)
+	stock = whole
+	consumed_fraction = maxf(0.0, float(whole) - units)
+
+func _sync_pen() -> void:
+	if pen == null:
+		return
+	for child: Node in pen.get_children():
+		if child is AnimalActor and not child.is_queued_for_deletion():
+			var clock: FarmClock = (child as AnimalActor).needs.time_manager
+			if clock != null:
+				pen.sync_before_change(clock.now())
+				return
 
 func access_position(slot: int) -> Vector2:
 	return to_global(access_offsets[slot])
@@ -98,6 +122,7 @@ func release(animal: Node2D) -> void:
 # con vật có thể bị chắn, máng có thể bị dời/xóa hoặc con vật bị hủy giữa đường.
 # Nếu bỏ kiểm tra khoảng cách/quyền chỗ, vật nuôi có thể ăn từ xa hoặc tranh cùng phần cuối.
 func serve(animal: Node2D, needs: AnimalNeedsComponent, data: AnimalDefinition, slot: int) -> float:
+	_sync_pen()
 	if not is_instance_valid(animal) or not is_instance_valid(needs) or not can_supply(data) or not owns_slot(animal, slot):
 		return 0.0
 	if slot < 0 or slot >= access_offsets.size() or animal.global_position.distance_to(access_position(slot)) > 3.0:
@@ -110,6 +135,7 @@ func serve(animal: Node2D, needs: AnimalNeedsComponent, data: AnimalDefinition, 
 	return restored
 
 func refill(units: int) -> int:
+	_sync_pen()
 	var before: int = stock
 	stock += maxi(0, units)
 	return stock - before
@@ -119,6 +145,7 @@ func _update_visual() -> void:
 		sprite.texture = full_texture if stock > 0 else empty_texture
 
 func refill_to_full(inventory: InventoryComponent) -> int:
+	_sync_pen()
 	if _refilling or kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != ItemDefinition.ItemType.FEED or stock >= capacity:
 		return 0
 	var units: int = maxi(1, feed_item.food_units_per_item)

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dfmbrigvsrn55"]
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bqa1tdrryywsl"]
 
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="1"]
 [ext_resource type="Texture2D" path="res://icons/no_outline/food/food_r08_c08.tres" id="2"]
@@ -9,3 +9,4 @@ item_id = &"floral_honey"
 display_name = "Floral Honey"
 icon = ExtResource("2")
 item_type = 2
+max_stack = 32000

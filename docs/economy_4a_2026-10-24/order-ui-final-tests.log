@@ -1,0 +1,36 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/farm-tree-tests-t281ipax] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_orders.gd
+* test_board_is_separate_reachable_and_uses_shared_interaction_modal
+* test_all_authored_templates_have_real_world_sources_and_missing_source_is_skipped
+* test_confirmation_cancel_inventory_change_double_click_and_localization
+* test_save_load_preserves_orders_and_closes_pending_confirmation
+* test_legacy_v13_migration_and_corrupt_order_preflight_are_pure
+* test_sell_all_warns_but_does_not_fulfill_orders
+* test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three
+7/7 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 7
+Passing Tests         7
+Asserts             258
+Time              3.241s
+
+
+---- All tests passed! ----
+

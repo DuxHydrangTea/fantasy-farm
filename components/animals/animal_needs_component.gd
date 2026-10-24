@@ -12,6 +12,17 @@ var hydration_depletion_seconds: float = 600.0
 var _updated_at: float = 0.0
 var _active: bool = true
 var weather: WeatherSchedule
+var pen: AnimalPen
+
+func updated_at() -> float:
+	return _updated_at
+
+func apply_offline_step(timestamp: float, elapsed: float, supplied: float, food: float, water: float) -> void:
+	if not _active:
+		return
+	_updated_at = timestamp
+	_set_values(food, water)
+	time_advanced.emit(timestamp, elapsed, supplied)
 
 func _ready() -> void:
 	if time_manager == null:
@@ -38,6 +49,8 @@ func restore_state(food: float, water: float, timestamp: float) -> void:
 # Nếu tính sau khi trừ no/nước, khoảng cuối vừa hết nước có thể mất phần sản xuất hợp lệ.
 func update_at(timestamp: float) -> void:
 	if not _active:
+		return
+	if pen != null and timestamp - _updated_at > PenOfflineSimulation.SUSPENSION_GAP and pen.advance_offline(timestamp):
 		return
 	while _active and _updated_at < timestamp - 0.000001:
 		var end: float = minf(timestamp, weather.next_boundary(_updated_at)) if weather != null else timestamp

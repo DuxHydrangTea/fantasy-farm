@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="OrderCatalog" format=3 uid="uid://bwvyw2h7y8f50"]
+
+[ext_resource type="Script" uid="uid://bk4cnqh7fc5ro" path="res://scripts/order_definition.gd" id="1_17hjf"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_dyiu5"]
+[ext_resource type="Resource" uid="uid://dhfbyhkt2hey3" path="res://items/harvest_produces/carrot_produces.tres" id="3_xnm3g"]
+[ext_resource type="Resource" uid="uid://uoen08knamnu" path="res://items/harvest_produces/tomato_produces.tres" id="4_f2hik"]
+[ext_resource type="Resource" uid="uid://drigommwbpugf" path="res://items/harvest_produces/potato_produces.tres" id="5_cwtb7"]
+[ext_resource type="Resource" uid="uid://bmg4rg65ai1nk" path="res://items/harvest_produces/corn_produces.tres" id="6_4ujc3"]
+[ext_resource type="Resource" uid="uid://dsyskgnd4g2q2" path="res://items/flowers/flower_01.tres" id="7_p5xxn"]
+[ext_resource type="Resource" uid="uid://dxyde4mrx1wsn" path="res://items/flowers/flower_02.tres" id="8_wdsdj"]
+[ext_resource type="Script" uid="uid://bt2hmhu1ih0cy" path="res://scripts/order_catalog.gd" id="9_2bfsl"]
+
+[sub_resource type="Resource" id="order_0"]
+script = ExtResource("1_17hjf")
+order_id = &"carrot_crate"
+title = "Carrots for the kitchen"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("3_xnm3g")])
+amounts = Array[int]([12])
+reward_coins = 72
+
+[sub_resource type="Resource" id="order_1"]
+script = ExtResource("1_17hjf")
+order_id = &"tomato_crate"
+title = "Fresh tomato delivery"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("4_f2hik")])
+amounts = Array[int]([10])
+reward_coins = 84
+
+[sub_resource type="Resource" id="order_2"]
+script = ExtResource("1_17hjf")
+order_id = &"potato_crate"
+title = "Potatoes for supper"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("5_cwtb7")])
+amounts = Array[int]([12])
+reward_coins = 87
+
+[sub_resource type="Resource" id="order_3"]
+script = ExtResource("1_17hjf")
+order_id = &"corn_crate"
+title = "Corn for the market"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("6_4ujc3")])
+amounts = Array[int]([10])
+reward_coins = 84
+
+[sub_resource type="Resource" id="order_4"]
+script = ExtResource("1_17hjf")
+order_id = &"salad_basket"
+title = "A colorful salad"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("3_xnm3g"), ExtResource("4_f2hik")])
+amounts = Array[int]([8, 6])
+reward_coins = 99
+
+[sub_resource type="Resource" id="order_5"]
+script = ExtResource("1_17hjf")
+order_id = &"soup_basket"
+title = "Vegetables for soup"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("5_cwtb7"), ExtResource("6_4ujc3")])
+amounts = Array[int]([8, 6])
+reward_coins = 108
+
+[sub_resource type="Resource" id="order_6"]
+script = ExtResource("1_17hjf")
+order_id = &"flower_bouquet"
+title = "Flowers for a neighbor"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("7_p5xxn")])
+amounts = Array[int]([6])
+reward_coins = 144
+
+[sub_resource type="Resource" id="order_7"]
+script = ExtResource("1_17hjf")
+order_id = &"mixed_bouquet"
+title = "A two-color bouquet"
+items = Array[ExtResource("2_dyiu5")]([ExtResource("7_p5xxn"), ExtResource("8_wdsdj")])
+amounts = Array[int]([4, 4])
+reward_coins = 192
+
+[resource]
+script = ExtResource("9_2bfsl")
+entries = Array[ExtResource("1_17hjf")]([SubResource("order_0"), SubResource("order_1"), SubResource("order_2"), SubResource("order_3"), SubResource("order_4"), SubResource("order_5"), SubResource("order_6"), SubResource("order_7")])

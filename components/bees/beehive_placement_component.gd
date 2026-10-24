@@ -35,13 +35,18 @@ func _process(_delta: float) -> void:
 		range_display.hide()
 		return
 	var system: ApiarySystem = apiary()
-	var point: Vector2 = system.snap_position(get_global_mouse_position())
+	var point: Vector2 = system.snap_position(action_point())
 	range_display.global_position = point
 	range_display.radius = system.effective_radius(system.clock.now())
 	range_display.allowed = system.placement_error(point).is_empty() and player.global_position.distance_to(point) <= 96.0
 	ghost.modulate = Color(1,1,1,0.7) if range_display.allowed else Color(1,0.35,0.3,0.7)
 	range_display.queue_redraw()
 	range_display.show()
+
+func action_point() -> Vector2:
+	if MobileLayout.is_touch(get_viewport()) or (player.mobile_controls != null and player.mobile_controls.root.visible):
+		return player.global_position + player.animation.facing_vector * 32.0
+	return get_global_mouse_position()
 
 func click(point: Vector2) -> bool:
 	if not selected():
@@ -55,7 +60,9 @@ func click(point: Vector2) -> bool:
 func feedback_source() -> String:
 	if Time.get_ticks_msec() < _feedback_until:
 		return _feedback
-	return "Left-click nearby ground to place. Select another slot to cancel." if selected() else ""
+	if not selected():
+		return ""
+	return "Tap nearby ground or press Use to place. Select another slot to cancel." if MobileLayout.is_touch(get_viewport()) else "Left-click nearby ground to place. Select another slot to cancel."
 
 func feedback_expires_at() -> int:
 	return _feedback_until if not _feedback.is_empty() else 0

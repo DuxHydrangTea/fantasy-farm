@@ -1,0 +1,84 @@
+[gd_resource type="Resource" script_class="ObjectiveCatalog" format=3 uid="uid://eymv6qg1x8ky"]
+
+[ext_resource type="Script" uid="uid://bnomulg4jxwha" path="res://scripts/objective_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://pnyxgt8jde2b" path="res://scripts/objective_definition.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Till"]
+script = ExtResource("2_step")
+objective_id = &"first_soil"
+title = "Prepare the soil"
+description = "Have one prepared plot on unlocked farmland. Existing tilled soil counts."
+condition = &"prepared_soil"
+reward_coins = 5000
+state_condition = true
+
+[sub_resource type="Resource" id="Plant"]
+script = ExtResource("2_step")
+objective_id = &"first_seed"
+title = "Plant a seed"
+description = "Plant any crop seed in a prepared plot."
+condition = &"plant"
+reward_coins = 5000
+
+[sub_resource type="Resource" id="Water"]
+script = ExtResource("2_step")
+objective_id = &"first_water"
+title = "Water your crop"
+description = "Use the watering can on a dry plot containing a crop. Rain does not count."
+condition = &"water_crop"
+reward_coins = 5000
+
+[sub_resource type="Resource" id="Harvest"]
+script = ExtResource("2_step")
+objective_id = &"first_harvest"
+title = "Harvest a crop"
+description = "Harvest one mature crop after this objective becomes active."
+condition = &"harvest"
+reward_coins = 10000
+
+[sub_resource type="Resource" id="Sell"]
+script = ExtResource("2_step")
+objective_id = &"first_sale"
+title = "Sell your produce"
+description = "Sell at least one accepted produce item to the produce buyer."
+condition = &"sell_produce"
+reward_coins = 10000
+
+[sub_resource type="Resource" id="Animal"]
+script = ExtResource("2_step")
+objective_id = &"first_animal"
+title = "Care for an animal"
+description = "Own a living farm animal. Animals you already own count."
+condition = &"own_animal"
+reward_coins = 10000
+state_condition = true
+
+[sub_resource type="Resource" id="Food"]
+script = ExtResource("2_step")
+objective_id = &"first_feed"
+title = "Refill a feed trough"
+description = "Successfully add feed to a trough after this objective becomes active."
+condition = &"refill_food"
+reward_coins = 5000
+
+[sub_resource type="Resource" id="WaterTrough"]
+script = ExtResource("2_step")
+objective_id = &"first_trough_water"
+title = "Refill a water trough"
+description = "Successfully add water to a trough after this objective becomes active."
+condition = &"refill_water"
+reward_coins = 5000
+
+[sub_resource type="Resource" id="Land"]
+script = ExtResource("2_step")
+objective_id = &"first_expansion"
+title = "Expand your farm"
+description = "Expand beyond your starting farmland. Previous land purchases count."
+condition = &"land_columns"
+required = 2
+reward_coins = 25000
+state_condition = true
+
+[resource]
+script = ExtResource("1_catalog")
+steps = Array[ExtResource("2_step")]([SubResource("Till"), SubResource("Plant"), SubResource("Water"), SubResource("Harvest"), SubResource("Sell"), SubResource("Animal"), SubResource("Food"), SubResource("WaterTrough"), SubResource("Land")])

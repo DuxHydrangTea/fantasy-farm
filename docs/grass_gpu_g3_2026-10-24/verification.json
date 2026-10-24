@@ -1,0 +1,44 @@
+{
+  "native": [
+    {
+      "renderer": "gl_compatibility",
+      "checks": 48,
+      "failures": [],
+      "capacity_rendered": 96,
+      "real_adapter_actors": 87
+    },
+    {
+      "renderer": "forward_plus",
+      "checks": 48,
+      "failures": [],
+      "capacity_rendered": 96,
+      "real_adapter_actors": 87
+    }
+  ],
+  "unit_tests": 23,
+  "unit_assertions": 353,
+  "regression_g1_checks_per_renderer": 189,
+  "regression_g2_checks_per_renderer": 74,
+  "lint_full_project": {
+    "total": 0,
+    "errors": 0,
+    "warnings": 0,
+    "parse_errors": 0
+  },
+  "engine_validation_ok": true,
+  "engine_validation_note": "Scoped engine validation uses --no-lint; separate full-project lint has cross-module group declarations",
+  "existing_engine_warnings": 25,
+  "grass_engine_diagnostics": [],
+  "web_export_ok": true,
+  "browser_mobile_tested": false,
+  "main_world_grass_integrated": false,
+  "default_upload_hz": 60,
+  "optional_upload_hz": 30,
+  "runtime_gpu_readback": false,
+  "sha256": {
+    "components/grass/grass_interaction_feed.gd": "b6b6454dc7839354ac33e14cfb08fd9ed04678b8efae65ce1601c8ccf02ff157",
+    "components/grass/grass_chunk_field.gd": "42b6cbb2169538ebc7d15bb6e92b4e0c9ed3219ee5ded09b88c883da9eccf10a",
+    "shaders/grass_field.gdshader": "28297e7790043e4603e2561ea350d8fe44508f8d5b2af365cde289cc3d2a93aa",
+    "shaders/grass_actor_bend.gdshaderinc": "730df6541265dfebca07bb5b46ccd9aeee06760b50e85e1e5a7a50feb11e0103"
+  }
+}

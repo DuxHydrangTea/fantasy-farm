@@ -99,6 +99,10 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 	if player.selection.is_menu_open() or player.state.current_state in [StateComponent.State.TOOL,StateComponent.State.WATER] or not target.reachable_from(player.global_position):
 		return false
 	match target.kind:
+		InteractionTarget.Kind.PEN_BOARD:
+			return (target.node as PenBoard).open_board(player)
+		InteractionTarget.Kind.ORDER_BOARD:
+			return (target.node as OrderBoard).open_board(player)
 		InteractionTarget.Kind.TREE:
 			var tree: PerennialTree = target.node as PerennialTree
 			var tree_request: StringName = &"harvest" if tree is FruitTree and tree.is_mature() else &""
@@ -125,9 +129,7 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 			return true
 		InteractionTarget.Kind.ANIMAL:
 			var animal: AnimalActor = target.node as AnimalActor
-			animal.set_status_focused(true)
 			animal.collect_produce(player.selection.inventory)
-			player.context_bars.animal_info.inspect(animal)
 			return true
 		InteractionTarget.Kind.CROP:
 			player.state.active_action = &"harvest"

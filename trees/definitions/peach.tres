@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://dr37jlg4x85pv"]
+[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://car30ij4fp5mo"]
 
-[ext_resource type="Resource" uid="uid://bbt7217q5umme" path="res://items/trees/peach.tres" id="product"]
+[ext_resource type="Resource" uid="uid://6m5aib3uy7ky" path="res://items/trees/peach.tres" id="product"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/peach/ready.tres" id="ready"]
 [ext_resource type="Script" uid="uid://dexpywdsy1ft0" path="res://scripts/tree_definition.gd" id="script"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_01.tres" id="stage1"]
@@ -11,6 +11,9 @@
 script = ExtResource("script")
 tree_id = &"peach"
 display_name = "Peach Tree"
+growth_seconds = 43200.0
+fruit_cycle_seconds = 18000.0
+harvest_amount = 300
 harvest_item = ExtResource("product")
 stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
 ready_texture = ExtResource("ready")

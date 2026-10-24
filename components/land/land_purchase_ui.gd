@@ -63,6 +63,8 @@ func _build() -> void:
 
 func _fit() -> void:
 	panel.custom_minimum_size.x = minf(560.0, maxf(280.0, root.size.x - 32.0))
+	if MobileLayout.is_touch(get_viewport()):
+		MobileLayout.prepare_buttons(root)
 
 func open_offer(player: FarmPlayer) -> bool:
 	if not super.open(null, player):

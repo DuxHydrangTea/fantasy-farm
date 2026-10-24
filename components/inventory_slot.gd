@@ -10,6 +10,7 @@ var compact: bool = false
 var show_shortcut: bool = false
 var _icon: TextureRect
 var _count: Label
+var _shortcut: Label
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(52, 56) if compact else Vector2(64, 68)
@@ -41,14 +42,14 @@ func _ready() -> void:
 	add_child(_selection_frame)
 	_selection_frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_selection_frame.hide()
-	var shortcut: Label = Label.new()
-	shortcut.name = "Shortcut"
-	shortcut.text = str(slot_index + 1) if show_shortcut else ""
-	shortcut.position = Vector2(6, 1)
-	shortcut.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	shortcut.add_theme_font_size_override("font_size", 14 if compact else 16)
-	shortcut.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12))
-	add_child(shortcut)
+	_shortcut = Label.new()
+	_shortcut.name = "Shortcut"
+	_shortcut.text = str(slot_index + 1) if show_shortcut else ""
+	_shortcut.position = Vector2(6, 1)
+	_shortcut.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_shortcut.add_theme_font_size_override("font_size", 14 if compact else 16)
+	_shortcut.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12))
+	add_child(_shortcut)
 	_count = Label.new()
 	_count.name = "Count"
 	_count.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -72,6 +73,7 @@ func _ready() -> void:
 func refresh() -> void:
 	var item: ItemDefinition = inventory.get_slot_item(slot_index)
 	var count: int = inventory.get_slot_count(slot_index)
+	_shortcut.visible = show_shortcut and not MobileLayout.is_touch(get_viewport())
 	_icon.texture = item.icon if item != null else null
 	_count.text = str(count) if count > 1 else ""
 	_count.visible = count > 1
@@ -85,6 +87,8 @@ func _place_count() -> void:
 	_count.position = size - _count.size - Vector2(6, 6)
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
+	if MobileLayout.is_touch(get_viewport()):
+		return null # A swipe scrolls the bag; touch moves use its explicit Move button.
 	var item: ItemDefinition = inventory.get_slot_item(slot_index)
 	if item == null:
 		return null

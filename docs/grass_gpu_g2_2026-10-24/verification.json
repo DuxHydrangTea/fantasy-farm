@@ -1,0 +1,36 @@
+{
+  "native": [
+    {
+      "renderer": "gl_compatibility",
+      "checks": 74,
+      "failures": []
+    },
+    {
+      "renderer": "forward_plus",
+      "checks": 74,
+      "failures": []
+    }
+  ],
+  "unit_tests": 14,
+  "unit_assertions": 326,
+  "lint": {
+    "total": 0,
+    "errors": 0,
+    "warnings": 0,
+    "parse_errors": 0
+  },
+  "engine_validation_ok": true,
+  "existing_engine_warnings": 25,
+  "grass_engine_diagnostics": [],
+  "web_export_ok": true,
+  "g1_core_unchanged": true,
+  "default_desktop_chunk_pixels": 512,
+  "mobile_browser_tested": false,
+  "main_world_integrated": false,
+  "actor_bending_implemented": false,
+  "sha256": {
+    "components/grass/grass_chunk_field.gd": "3fb5c5f40d3ebf5892311e2dde5473318bd6e72d38a1572b93f488ea7e3ba7ae",
+    "components/grass/grass_chunk_index.gd": "56133045b7af11d942e9f48e0f4953f81f5d2682b3850bc5b3c226ad788f42f0",
+    "components/grass/grass_chunk_renderer.gd": "0fd1a53b49fb1cffafe7dfa81a79f46cce67e68ee3c2e5d500ae802a83736332"
+  }
+}

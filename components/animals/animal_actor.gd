@@ -29,6 +29,8 @@ var _dead: bool = false
 var _retired: bool = false
 
 func _ready() -> void:
+	if persistent_id.is_empty():
+		persistent_id = StringName("entity_" + Crypto.new().generate_random_bytes(16).hex_encode())
 	needs_display.hide()
 	add_to_group(&"animal_status_targets")
 	if pen == null:
@@ -42,6 +44,7 @@ func _ready() -> void:
 	shape.size = definition.footprint
 	collision.shape = shape
 	needs.weather = pen.weather if pen != null else null
+	needs.pen = pen
 	needs.configure(definition.satiety_depletion_seconds, definition.hydration_depletion_seconds)
 	needs.changed.connect(_update_needs_display)
 	_update_needs_display(needs.satiety, needs.hydration)
@@ -169,6 +172,8 @@ func _drop_stored_output() -> void:
 		_product_pickup.add_amount(production.take_output(production.stored_amount))
 
 func collect_produce(inventory: InventoryComponent) -> int:
+	if needs.time_manager != null:
+		needs.update_at(needs.time_manager.now())
 	if _retired or production.definition == null or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION:
 		return 0
 	return production.collect(inventory)
@@ -198,11 +203,9 @@ func _update_needs_display(food: float, water: float) -> void:
 	satiety_bar.value = food
 	hydration_bar.value = water
 
-func set_status_focused(value: bool) -> void:
-	if _retired:
-		return
-	needs_display.visible = value and show_needs and definition != null
-	behaviour.set_focused(value)
+func set_status_focused(_value: bool) -> void:
+	# Legacy callers cannot expose world bars or stop behaviour.
+	needs_display.hide()
 
 func get_status_sprite() -> Node2D:
 	return sprite
@@ -217,6 +220,8 @@ func tonic_error() -> String:
 	return "A tonic is already active for the next cycle." if production.tonic_pending else ""
 
 func apply_tonic() -> bool:
+	if needs.time_manager != null:
+		needs.update_at(needs.time_manager.now())
 	if not tonic_error().is_empty():
 		return false
 	return production.apply_tonic() if growth.is_adult() else growth.apply_juvenile_tonic()

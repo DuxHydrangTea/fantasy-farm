@@ -24,10 +24,13 @@ func _ready() -> void:
 	_update_visual()
 
 func is_mature() -> bool:
-	return definition != null and progress >= 1.0
+	return not is_locked() and definition != null and progress >= 1.0
+
+func is_locked() -> bool:
+	return garden != null and garden.starter_content_locked
 
 func can_plant(seed: ItemDefinition) -> bool:
-	return definition == null and seed != null and seed.item_type == ItemDefinition.ItemType.SEED and seed.crop is FlowerDefinition and seed.crop.is_valid()
+	return not is_locked() and definition == null and seed != null and seed.item_type == ItemDefinition.ItemType.SEED and seed.crop is FlowerDefinition and seed.crop.is_valid()
 
 func plant(bag: InventoryComponent, index: int, now: float) -> bool:
 	if bag == null:
@@ -50,7 +53,7 @@ func plant(bag: InventoryComponent, index: int, now: float) -> bool:
 	return true
 
 func can_water() -> bool:
-	return definition != null and growth_started_at < 0.0
+	return not is_locked() and definition != null and growth_started_at < 0.0
 
 # Với hoa chậu, lần tưới đầu mới bắt đầu đồng hồ lớn; -1 nghĩa là chưa bắt đầu.
 # max(now, planted_at) tránh giờ bắt đầu nằm trước lúc gieo khi đồng hồ bị lùi.

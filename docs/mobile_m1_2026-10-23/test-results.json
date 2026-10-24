@@ -1,0 +1,18 @@
+{
+  "phase": "M1",
+  "date": "2026-10-23",
+  "tests": 35,
+  "passed": 35,
+  "assertions": 3387,
+  "suites": ["test_mobile_layout", "test_small_window_ui", "test_localization", "test_inventory_ui", "test_produce_sales", "test_land_expansion"],
+  "landscape_viewports": [[844, 390], [667, 375], [740, 360]],
+  "point_scales": [1, 3],
+  "locales": ["en", "vi"],
+  "lint_errors": 0,
+  "lint_warnings": 0,
+  "web_release_export": "passed",
+  "browser_checks": ["landscape safe-area layout", "portrait rotation overlay", "tap-select and move stack", "save and reload moved stack", "no collected console warnings or errors"],
+  "physical_android_tested": false,
+  "physical_iphone_tested": false,
+  "gameplay_touch_controls": "pending M2"
+}

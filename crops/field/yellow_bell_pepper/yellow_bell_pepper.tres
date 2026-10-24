@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://5dibbu7pyejk"]
+[gd_resource type="Resource" script_class="CropDefinition" format=3 uid="uid://c3jhg5w0kh4p1"]
 
 [ext_resource type="Script" uid="uid://c6xdvb1xr63p3" path="res://scripts/crop_definition.gd" id="1_j20b1"]
 [ext_resource type="Texture2D" path="res://crops/field/yellow_bell_pepper/stage_01.tres" id="2_bmtk1"]
 [ext_resource type="Texture2D" path="res://crops/field/yellow_bell_pepper/stage_02.tres" id="3_eemvj"]
 [ext_resource type="Texture2D" path="res://crops/field/yellow_bell_pepper/stage_03.tres" id="4_ir8o3"]
 [ext_resource type="Texture2D" path="res://crops/field/yellow_bell_pepper/stage_04.tres" id="5_sum8w"]
-[ext_resource type="Resource" uid="uid://bbkvy2mlat2on" path="res://items/harvest_produces/yellow_bell_pepper_produces.tres" id="harvest_produce"]
+[ext_resource type="Resource" uid="uid://deeafikeg5vpd" path="res://items/harvest_produces/yellow_bell_pepper_produces.tres" id="harvest_produce"]
 
 [resource]
 script = ExtResource("1_j20b1")
 crop_id = &"yellow_bell_pepper"
 stage_textures = Array[Texture2D]([ExtResource("2_bmtk1"), ExtResource("3_eemvj"), ExtResource("4_ir8o3"), ExtResource("5_sum8w")])
-growth_seconds = 10.0
+growth_seconds = 28800.0
 harvest_item = ExtResource("harvest_produce")
 harvest_amount = 200
 metadata/_custom_type_script = "uid://c6xdvb1xr63p3"

@@ -3,8 +3,10 @@ extends RefCounted
 ## Contiguous ownership from right to left in the measured planting rectangle.
 signal changed
 const REGION: Rect2i = Rect2i(9, 19, 48, 34)
-const BASE_PRICE: int = 15000
-var unlocked_columns: int = 1
+const BASE_PRICE: int = 60000
+const STARTING_COLUMNS: int = 4
+var starting_columns: int = STARTING_COLUMNS
+var unlocked_columns: int = STARTING_COLUMNS
 var _buying: bool = false
 
 static func cell_is_open(cell: Vector2i, columns: int) -> bool:
@@ -20,11 +22,19 @@ func next_column() -> int:
 	return REGION.end.x - unlocked_columns - 1
 
 func next_price() -> int:
-	return 0 if is_complete() else roundi(BASE_PRICE * pow(float(unlocked_columns), 1.8))
+	if is_complete():
+		return 0
+	var purchase_number: int = unlocked_columns - starting_columns + 1
+	if purchase_number == 2:
+		return 150000
+	if purchase_number == 3:
+		return 350000
+	return roundi(350000.0 * pow(float(purchase_number) / 3.0, 1.8)) if purchase_number > 3 else BASE_PRICE
 
-func restore_columns(columns: int) -> bool:
-	if _buying or columns < 1 or columns > REGION.size.x:
+func restore_columns(columns: int, initial_columns: int = 1) -> bool:
+	if _buying or initial_columns < 1 or initial_columns > columns or columns > REGION.size.x:
 		return false
+	starting_columns = initial_columns
 	unlocked_columns = columns
 	changed.emit()
 	return true

@@ -1,0 +1,5405 @@
+{
+	"animals": [
+		{
+			"animal_id": "chicken",
+			"can_swim": false,
+			"display_name": "Chicken",
+			"eggs_on_land": false,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(10.0, 6.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 300.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 28.0,
+			"path": "res://animals/definitions/chicken.tres",
+			"pen_margin": 12.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/chicken_egg_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Chicken Egg",
+					"food_units_per_item": 300,
+					"item_id": "chicken_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/chicken_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 30.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 0,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "cow",
+			"can_swim": false,
+			"display_name": "Cow",
+			"eggs_on_land": false,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(18.0, 10.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 600.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 22.0,
+			"path": "res://animals/definitions/cow.tres",
+			"pen_margin": 16.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/cow_milk_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Cow Milk",
+					"food_units_per_item": 300,
+					"item_id": "cow_milk",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/cow_milk.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 60.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 2,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "duck",
+			"can_swim": true,
+			"display_name": "Duck",
+			"eggs_on_land": true,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(10.0, 6.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 300.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 28.0,
+			"path": "res://animals/definitions/duck.tres",
+			"pen_margin": 12.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/duck_egg_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Duck Egg",
+					"food_units_per_item": 300,
+					"item_id": "duck_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/duck_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 40.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 1,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "goose",
+			"can_swim": false,
+			"display_name": "Goose",
+			"eggs_on_land": true,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(10.0, 6.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 300.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 28.0,
+			"path": "res://animals/definitions/goose.tres",
+			"pen_margin": 12.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/goose_egg_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Goose Egg",
+					"food_units_per_item": 300,
+					"item_id": "goose_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/goose_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 50.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 5,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "horse",
+			"can_swim": false,
+			"display_name": "Horse",
+			"eggs_on_land": false,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(10.0, 6.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 600.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 28.0,
+			"path": "res://animals/definitions/horse.tres",
+			"pen_margin": 12.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/horse_compost_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Compost",
+					"food_units_per_item": 300,
+					"item_id": "horse_compost",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/horse_compost.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 60.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 6,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "pig",
+			"can_swim": false,
+			"display_name": "Pig",
+			"eggs_on_land": false,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(10.0, 6.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 600.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 28.0,
+			"path": "res://animals/definitions/pig.tres",
+			"pen_margin": 12.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/pig_truffle_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Truffle",
+					"food_units_per_item": 300,
+					"item_id": "pig_truffle",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/pig_truffle.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 60.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 4,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		},
+		{
+			"animal_id": "sheep",
+			"can_swim": false,
+			"display_name": "Sheep",
+			"eggs_on_land": false,
+			"faces_left": true,
+			"food_per_meal": 1,
+			"food_seek_threshold": 50.0,
+			"footprint": "(14.0, 8.0)",
+			"forage_action": "",
+			"forage_seconds": "(1.5, 3.5)",
+			"forage_weight": 3.0,
+			"hydration_depletion_seconds": 600.0,
+			"idle_seconds": "(0.6, 1.8)",
+			"lie_down_action": "",
+			"lifespan_seconds": 1209600.0,
+			"maturity_seconds": 86400.0,
+			"move_speed": 26.0,
+			"path": "res://animals/definitions/sheep.tres",
+			"pen_margin": 14.0,
+			"production": {
+				"collection_mode": 0,
+				"path": "res://animals/productions/sheep_wool_production.tres",
+				"production_amount": 1,
+				"production_item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Wool",
+					"food_units_per_item": 300,
+					"item_id": "sheep_wool",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/sheep_wool.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"production_seconds": 60.0
+			},
+			"rest_seconds": "(2.0, 4.0)",
+			"rest_weight": 1.0,
+			"satiety_depletion_seconds": 600.0,
+			"sleep_seconds": "(4.0, 8.0)",
+			"sleep_weight": 1.0,
+			"species": 3,
+			"walk_weight": 5.0,
+			"water_per_drink": 1,
+			"water_seek_threshold": 50.0
+		}
+	],
+	"flowers": [
+		{
+			"display_name": "Flower 01",
+			"flower_id": "flower_01",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 01",
+				"food_units_per_item": 300,
+				"item_id": "flower_01",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_01.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_01.tres"
+		},
+		{
+			"display_name": "Flower 02",
+			"flower_id": "flower_02",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 02",
+				"food_units_per_item": 300,
+				"item_id": "flower_02",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_02.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_02.tres"
+		},
+		{
+			"display_name": "Flower 03",
+			"flower_id": "flower_03",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 03",
+				"food_units_per_item": 300,
+				"item_id": "flower_03",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_03.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_03.tres"
+		},
+		{
+			"display_name": "Flower 04",
+			"flower_id": "flower_04",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 04",
+				"food_units_per_item": 300,
+				"item_id": "flower_04",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_04.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_04.tres"
+		},
+		{
+			"display_name": "Flower 05",
+			"flower_id": "flower_05",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 05",
+				"food_units_per_item": 300,
+				"item_id": "flower_05",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_05.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_05.tres"
+		},
+		{
+			"display_name": "Flower 06",
+			"flower_id": "flower_06",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 06",
+				"food_units_per_item": 300,
+				"item_id": "flower_06",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_06.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_06.tres"
+		},
+		{
+			"display_name": "Flower 07",
+			"flower_id": "flower_07",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 07",
+				"food_units_per_item": 300,
+				"item_id": "flower_07",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_07.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_07.tres"
+		},
+		{
+			"display_name": "Flower 08",
+			"flower_id": "flower_08",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 08",
+				"food_units_per_item": 300,
+				"item_id": "flower_08",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_08.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_08.tres"
+		},
+		{
+			"display_name": "Flower 09",
+			"flower_id": "flower_09",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 09",
+				"food_units_per_item": 300,
+				"item_id": "flower_09",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_09.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_09.tres"
+		},
+		{
+			"display_name": "Flower 10",
+			"flower_id": "flower_10",
+			"growth_seconds": 120.0,
+			"harvest_amount": 1,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Flower 10",
+				"food_units_per_item": 300,
+				"item_id": "flower_10",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/flowers/flower_10.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"path": "res://flowers/definitions/flower_10.tres"
+		}
+	],
+	"hive": {
+		"crop_bonus": 0.1,
+		"cycle_seconds": 86400.0,
+		"floral_honey": {
+			"booster_kind": 0,
+			"crop": null,
+			"description": "",
+			"display_name": "Floral Honey",
+			"food_units_per_item": 300,
+			"item_id": "floral_honey",
+			"item_type": 2,
+			"max_stack": 99,
+			"path": "res://items/honey/floral_honey.tres",
+			"show_world_quantity": true,
+			"tool_type": 0
+		},
+		"hive_item": {
+			"booster_kind": 0,
+			"crop": null,
+			"description": "",
+			"display_name": "Beehive",
+			"food_units_per_item": 300,
+			"item_id": "beehive",
+			"item_type": 6,
+			"max_stack": 20,
+			"path": "res://items/placeables/beehive.tres",
+			"show_world_quantity": true,
+			"tool_type": 0
+		},
+		"path": "res://resources/bees/beehive.tres",
+		"pollen_speed": 1.3,
+		"radius": 80.0,
+		"specialty_ratio": 0.5,
+		"sunflower_honey": {
+			"booster_kind": 0,
+			"crop": null,
+			"description": "",
+			"display_name": "Sunflower Honey",
+			"food_units_per_item": 300,
+			"item_id": "sunflower_honey",
+			"item_type": 2,
+			"max_stack": 99,
+			"path": "res://items/honey/sunflower_honey.tres",
+			"show_world_quantity": true,
+			"tool_type": 0
+		},
+		"wild_honey": {
+			"booster_kind": 0,
+			"crop": null,
+			"description": "",
+			"display_name": "Wild Honey",
+			"food_units_per_item": 300,
+			"item_id": "wild_honey",
+			"item_type": 2,
+			"max_stack": 99,
+			"path": "res://items/honey/wild_honey.tres",
+			"show_world_quantity": true,
+			"tool_type": 0
+		}
+	},
+	"land": [
+		{
+			"owned_columns": 1,
+			"price": 15000
+		},
+		{
+			"owned_columns": 2,
+			"price": 52233
+		},
+		{
+			"owned_columns": 3,
+			"price": 108370
+		},
+		{
+			"owned_columns": 4,
+			"price": 181886
+		},
+		{
+			"owned_columns": 5,
+			"price": 271792
+		},
+		{
+			"owned_columns": 6,
+			"price": 377367
+		},
+		{
+			"owned_columns": 7,
+			"price": 498044
+		},
+		{
+			"owned_columns": 8,
+			"price": 633364
+		},
+		{
+			"owned_columns": 9,
+			"price": 782939
+		},
+		{
+			"owned_columns": 10,
+			"price": 946436
+		},
+		{
+			"owned_columns": 11,
+			"price": 1123565
+		},
+		{
+			"owned_columns": 12,
+			"price": 1314067
+		},
+		{
+			"owned_columns": 13,
+			"price": 1517712
+		},
+		{
+			"owned_columns": 14,
+			"price": 1734290
+		},
+		{
+			"owned_columns": 15,
+			"price": 1963611
+		},
+		{
+			"owned_columns": 16,
+			"price": 2205501
+		},
+		{
+			"owned_columns": 17,
+			"price": 2459797
+		},
+		{
+			"owned_columns": 18,
+			"price": 2726351
+		},
+		{
+			"owned_columns": 19,
+			"price": 3005023
+		},
+		{
+			"owned_columns": 20,
+			"price": 3295682
+		},
+		{
+			"owned_columns": 21,
+			"price": 3598206
+		},
+		{
+			"owned_columns": 22,
+			"price": 3912480
+		},
+		{
+			"owned_columns": 23,
+			"price": 4238394
+		},
+		{
+			"owned_columns": 24,
+			"price": 4575847
+		},
+		{
+			"owned_columns": 25,
+			"price": 4924740
+		},
+		{
+			"owned_columns": 26,
+			"price": 5284979
+		},
+		{
+			"owned_columns": 27,
+			"price": 5656477
+		},
+		{
+			"owned_columns": 28,
+			"price": 6039149
+		},
+		{
+			"owned_columns": 29,
+			"price": 6432913
+		},
+		{
+			"owned_columns": 30,
+			"price": 6837692
+		},
+		{
+			"owned_columns": 31,
+			"price": 7253411
+		},
+		{
+			"owned_columns": 32,
+			"price": 7680000
+		},
+		{
+			"owned_columns": 33,
+			"price": 8117389
+		},
+		{
+			"owned_columns": 34,
+			"price": 8565512
+		},
+		{
+			"owned_columns": 35,
+			"price": 9024304
+		},
+		{
+			"owned_columns": 36,
+			"price": 9493706
+		},
+		{
+			"owned_columns": 37,
+			"price": 9973655
+		},
+		{
+			"owned_columns": 38,
+			"price": 10464096
+		},
+		{
+			"owned_columns": 39,
+			"price": 10964973
+		},
+		{
+			"owned_columns": 40,
+			"price": 11476230
+		},
+		{
+			"owned_columns": 41,
+			"price": 11997816
+		},
+		{
+			"owned_columns": 42,
+			"price": 12529680
+		},
+		{
+			"owned_columns": 43,
+			"price": 13071772
+		},
+		{
+			"owned_columns": 44,
+			"price": 13624045
+		},
+		{
+			"owned_columns": 45,
+			"price": 14186452
+		},
+		{
+			"owned_columns": 46,
+			"price": 14758946
+		},
+		{
+			"owned_columns": 47,
+			"price": 15341485
+		}
+	],
+	"objectives": [
+		{
+			"path": "res://resources/objectives/onboarding.tres",
+			"steps": [
+				{
+					"condition": "prepared_soil",
+					"description": "Have one prepared plot on unlocked farmland. Existing tilled soil counts.",
+					"objective_id": "first_soil",
+					"path": "res://resources/objectives/onboarding.tres::Till",
+					"required": 1,
+					"reward_coins": 25,
+					"state_condition": true,
+					"title": "Prepare the soil"
+				},
+				{
+					"condition": "plant",
+					"description": "Plant any crop seed in a prepared plot.",
+					"objective_id": "first_seed",
+					"path": "res://resources/objectives/onboarding.tres::Plant",
+					"required": 1,
+					"reward_coins": 50,
+					"state_condition": false,
+					"title": "Plant a seed"
+				},
+				{
+					"condition": "water_crop",
+					"description": "Use the watering can on a dry plot containing a crop. Rain does not count.",
+					"objective_id": "first_water",
+					"path": "res://resources/objectives/onboarding.tres::Water",
+					"required": 1,
+					"reward_coins": 50,
+					"state_condition": false,
+					"title": "Water your crop"
+				},
+				{
+					"condition": "harvest",
+					"description": "Harvest one mature crop after this objective becomes active.",
+					"objective_id": "first_harvest",
+					"path": "res://resources/objectives/onboarding.tres::Harvest",
+					"required": 1,
+					"reward_coins": 100,
+					"state_condition": false,
+					"title": "Harvest a crop"
+				},
+				{
+					"condition": "sell_produce",
+					"description": "Sell at least one accepted produce item to the produce buyer.",
+					"objective_id": "first_sale",
+					"path": "res://resources/objectives/onboarding.tres::Sell",
+					"required": 1,
+					"reward_coins": 100,
+					"state_condition": false,
+					"title": "Sell your produce"
+				},
+				{
+					"condition": "own_animal",
+					"description": "Own a living farm animal. Animals you already own count.",
+					"objective_id": "first_animal",
+					"path": "res://resources/objectives/onboarding.tres::Animal",
+					"required": 1,
+					"reward_coins": 100,
+					"state_condition": true,
+					"title": "Care for an animal"
+				},
+				{
+					"condition": "refill_food",
+					"description": "Successfully add feed to a trough after this objective becomes active.",
+					"objective_id": "first_feed",
+					"path": "res://resources/objectives/onboarding.tres::Food",
+					"required": 1,
+					"reward_coins": 50,
+					"state_condition": false,
+					"title": "Refill a feed trough"
+				},
+				{
+					"condition": "refill_water",
+					"description": "Successfully add water to a trough after this objective becomes active.",
+					"objective_id": "first_trough_water",
+					"path": "res://resources/objectives/onboarding.tres::WaterTrough",
+					"required": 1,
+					"reward_coins": 50,
+					"state_condition": false,
+					"title": "Refill a water trough"
+				},
+				{
+					"condition": "land_columns",
+					"description": "Own at least two farmland columns. Land you already reclaimed counts.",
+					"objective_id": "first_expansion",
+					"path": "res://resources/objectives/onboarding.tres::Land",
+					"required": 2,
+					"reward_coins": 250,
+					"state_condition": true,
+					"title": "Expand your farm"
+				}
+			]
+		}
+	],
+	"orders": [
+		{
+			"entries": [
+				{
+					"amounts": [
+						12
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Carrot",
+							"food_units_per_item": 300,
+							"item_id": "carrot_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/carrot_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "carrot_crate",
+					"path": "res://resources/orders/farm_orders.tres::order_0",
+					"reward_coins": 72,
+					"title": "Carrots for the kitchen"
+				},
+				{
+					"amounts": [
+						10
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Tomato",
+							"food_units_per_item": 300,
+							"item_id": "tomato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/tomato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "tomato_crate",
+					"path": "res://resources/orders/farm_orders.tres::order_1",
+					"reward_coins": 84,
+					"title": "Fresh tomato delivery"
+				},
+				{
+					"amounts": [
+						12
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Potato",
+							"food_units_per_item": 300,
+							"item_id": "potato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/potato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "potato_crate",
+					"path": "res://resources/orders/farm_orders.tres::order_2",
+					"reward_coins": 87,
+					"title": "Potatoes for supper"
+				},
+				{
+					"amounts": [
+						10
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Corn",
+							"food_units_per_item": 300,
+							"item_id": "corn_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/corn_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "corn_crate",
+					"path": "res://resources/orders/farm_orders.tres::order_3",
+					"reward_coins": 84,
+					"title": "Corn for the market"
+				},
+				{
+					"amounts": [
+						8,
+						6
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Carrot",
+							"food_units_per_item": 300,
+							"item_id": "carrot_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/carrot_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Tomato",
+							"food_units_per_item": 300,
+							"item_id": "tomato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/tomato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "salad_basket",
+					"path": "res://resources/orders/farm_orders.tres::order_4",
+					"reward_coins": 99,
+					"title": "A colorful salad"
+				},
+				{
+					"amounts": [
+						8,
+						6
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Potato",
+							"food_units_per_item": 300,
+							"item_id": "potato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/potato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Corn",
+							"food_units_per_item": 300,
+							"item_id": "corn_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/corn_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "soup_basket",
+					"path": "res://resources/orders/farm_orders.tres::order_5",
+					"reward_coins": 108,
+					"title": "Vegetables for soup"
+				},
+				{
+					"amounts": [
+						6
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 01",
+							"food_units_per_item": 300,
+							"item_id": "flower_01",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_01.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "flower_bouquet",
+					"path": "res://resources/orders/farm_orders.tres::order_6",
+					"reward_coins": 144,
+					"title": "Flowers for a neighbor"
+				},
+				{
+					"amounts": [
+						4,
+						4
+					],
+					"items": [
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 01",
+							"food_units_per_item": 300,
+							"item_id": "flower_01",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_01.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						{
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 02",
+							"food_units_per_item": 300,
+							"item_id": "flower_02",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_02.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						}
+					],
+					"order_id": "mixed_bouquet",
+					"path": "res://resources/orders/farm_orders.tres::order_7",
+					"reward_coins": 192,
+					"title": "A two-color bouquet"
+				}
+			],
+			"path": "res://resources/orders/farm_orders.tres"
+		}
+	],
+	"prices": {
+		"entries": [
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Beetroot",
+					"food_units_per_item": 300,
+					"item_id": "beetroot_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/beetroot_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_0fndo",
+				"price": 8
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Bell Pepper",
+					"food_units_per_item": 300,
+					"item_id": "bell_pepper_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/bell_pepper_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_x43wm",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Broccoli",
+					"food_units_per_item": 300,
+					"item_id": "broccoli_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/broccoli_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_xcals",
+				"price": 12
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Cabbage",
+					"food_units_per_item": 300,
+					"item_id": "cabbage_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/cabbage_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_rs8fh",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Carrot",
+					"food_units_per_item": 300,
+					"item_id": "carrot_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/carrot_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_rhuqv",
+				"price": 5
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Chili Pepper",
+					"food_units_per_item": 300,
+					"item_id": "chili_pepper_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/chili_pepper_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_0i1yd",
+				"price": 8
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Corn",
+					"food_units_per_item": 300,
+					"item_id": "corn_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/corn_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_r4udf",
+				"price": 7
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Cucumber",
+					"food_units_per_item": 300,
+					"item_id": "cucumber_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/cucumber_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_w2v6e",
+				"price": 7
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Eggplant",
+					"food_units_per_item": 300,
+					"item_id": "eggplant_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/eggplant_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_tebb4",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Garlic",
+					"food_units_per_item": 300,
+					"item_id": "garlic_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/garlic_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_b16g0",
+				"price": 9
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Green Bell Pepper",
+					"food_units_per_item": 300,
+					"item_id": "green_bell_pepper_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/green_bell_pepper_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_lrpvc",
+				"price": 9
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Leek",
+					"food_units_per_item": 300,
+					"item_id": "leek_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/leek_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_ipnsn",
+				"price": 8
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Onion",
+					"food_units_per_item": 300,
+					"item_id": "onion_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/onion_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_8d1v1",
+				"price": 6
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Parsnip",
+					"food_units_per_item": 300,
+					"item_id": "parsnip_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/parsnip_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_dulss",
+				"price": 8
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Potato",
+					"food_units_per_item": 300,
+					"item_id": "potato_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/potato_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_hooul",
+				"price": 6
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Pumpkin",
+					"food_units_per_item": 300,
+					"item_id": "pumpkin_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/pumpkin_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_rni36",
+				"price": 18
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Radish",
+					"food_units_per_item": 300,
+					"item_id": "radish_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/radish_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_t0u1j",
+				"price": 5
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Strawberry",
+					"food_units_per_item": 300,
+					"item_id": "strawberry_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/strawberry_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_782nf",
+				"price": 12
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Sunflower",
+					"food_units_per_item": 300,
+					"item_id": "sunflower_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/sunflower_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_l7ag6",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Tomato",
+					"food_units_per_item": 300,
+					"item_id": "tomato_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/tomato_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_0306e",
+				"price": 7
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Wheat",
+					"food_units_per_item": 300,
+					"item_id": "wheat_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/wheat_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_yx11b",
+				"price": 4
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Yellow Bell Pepper",
+					"food_units_per_item": 300,
+					"item_id": "yellow_bell_pepper_produces",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/harvest_produces/yellow_bell_pepper_produces.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_av65g",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Chicken Egg",
+					"food_units_per_item": 300,
+					"item_id": "chicken_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/chicken_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_8fv8d",
+				"price": 8
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Duck Egg",
+					"food_units_per_item": 300,
+					"item_id": "duck_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/duck_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_wlb54",
+				"price": 10
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Goose Egg",
+					"food_units_per_item": 300,
+					"item_id": "goose_egg",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/goose_egg.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_014y7",
+				"price": 14
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Cow Milk",
+					"food_units_per_item": 300,
+					"item_id": "cow_milk",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/cow_milk.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_fdaq5",
+				"price": 24
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Wool",
+					"food_units_per_item": 300,
+					"item_id": "sheep_wool",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/sheep_wool.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_0rwu8",
+				"price": 30
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Truffle",
+					"food_units_per_item": 300,
+					"item_id": "pig_truffle",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/pig_truffle.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_jfof3",
+				"price": 40
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Compost",
+					"food_units_per_item": 300,
+					"item_id": "horse_compost",
+					"item_type": 2,
+					"max_stack": 32000,
+					"path": "res://items/animal_produces/horse_compost.tres",
+					"show_world_quantity": false,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_eoonp",
+				"price": 6
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 01",
+					"food_units_per_item": 300,
+					"item_id": "flower_01",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_01.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_1150w",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 02",
+					"food_units_per_item": 300,
+					"item_id": "flower_02",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_02.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_rbqce",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 03",
+					"food_units_per_item": 300,
+					"item_id": "flower_03",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_03.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_wca75",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 04",
+					"food_units_per_item": 300,
+					"item_id": "flower_04",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_04.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_hxvgg",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 05",
+					"food_units_per_item": 300,
+					"item_id": "flower_05",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_05.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_iqyux",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 06",
+					"food_units_per_item": 300,
+					"item_id": "flower_06",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_06.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_xabf5",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 07",
+					"food_units_per_item": 300,
+					"item_id": "flower_07",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_07.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_1croc",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 08",
+					"food_units_per_item": 300,
+					"item_id": "flower_08",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_08.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_jnyvx",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 09",
+					"food_units_per_item": 300,
+					"item_id": "flower_09",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_09.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_wtlhn",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Flower 10",
+					"food_units_per_item": 300,
+					"item_id": "flower_10",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/flowers/flower_10.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::Resource_7syqy",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Wild Honey",
+					"food_units_per_item": 300,
+					"item_id": "wild_honey",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/honey/wild_honey.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::price_wild_honey",
+				"price": 150
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Sunflower Honey",
+					"food_units_per_item": 300,
+					"item_id": "sunflower_honey",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/honey/sunflower_honey.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::price_sunflower_honey",
+				"price": 225
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Floral Honey",
+					"food_units_per_item": 300,
+					"item_id": "floral_honey",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/honey/floral_honey.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::price_floral_honey",
+				"price": 300
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Apple",
+					"food_units_per_item": 300,
+					"item_id": "apple",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/apple.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_0",
+				"price": 40
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Peach",
+					"food_units_per_item": 300,
+					"item_id": "peach",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/peach.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_1",
+				"price": 40
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Pear",
+					"food_units_per_item": 300,
+					"item_id": "pear",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/pear.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_2",
+				"price": 40
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Cherry",
+					"food_units_per_item": 300,
+					"item_id": "cherry",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/cherry.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_3",
+				"price": 40
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Wood",
+					"food_units_per_item": 300,
+					"item_id": "wood",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/wood.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_4",
+				"price": 20
+			},
+			{
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Root Wood",
+					"food_units_per_item": 300,
+					"item_id": "root_wood",
+					"item_type": 2,
+					"max_stack": 99,
+					"path": "res://items/trees/root_wood.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/produce_prices.tres::tree_price_5",
+				"price": 20
+			}
+		],
+		"path": "res://resources/shops/produce_prices.tres"
+	},
+	"shop": {
+		"animal_offers": [
+			{
+				"animal": {
+					"animal_id": "chicken",
+					"can_swim": false,
+					"display_name": "Chicken",
+					"eggs_on_land": false,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(10.0, 6.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 300.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 28.0,
+					"path": "res://animals/definitions/chicken.tres",
+					"pen_margin": 12.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/chicken_egg_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Chicken Egg",
+							"food_units_per_item": 300,
+							"item_id": "chicken_egg",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/chicken_egg.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 30.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 0,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/chicken.tres",
+				"price": 160
+			},
+			{
+				"animal": {
+					"animal_id": "duck",
+					"can_swim": true,
+					"display_name": "Duck",
+					"eggs_on_land": true,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(10.0, 6.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 300.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 28.0,
+					"path": "res://animals/definitions/duck.tres",
+					"pen_margin": 12.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/duck_egg_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Duck Egg",
+							"food_units_per_item": 300,
+							"item_id": "duck_egg",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/duck_egg.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 40.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 1,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/duck.tres",
+				"price": 240
+			},
+			{
+				"animal": {
+					"animal_id": "goose",
+					"can_swim": false,
+					"display_name": "Goose",
+					"eggs_on_land": true,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(10.0, 6.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 300.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 28.0,
+					"path": "res://animals/definitions/goose.tres",
+					"pen_margin": 12.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/goose_egg_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Goose Egg",
+							"food_units_per_item": 300,
+							"item_id": "goose_egg",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/goose_egg.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 50.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 5,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/goose.tres",
+				"price": 320
+			},
+			{
+				"animal": {
+					"animal_id": "pig",
+					"can_swim": false,
+					"display_name": "Pig",
+					"eggs_on_land": false,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(10.0, 6.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 600.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 28.0,
+					"path": "res://animals/definitions/pig.tres",
+					"pen_margin": 12.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/pig_truffle_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Truffle",
+							"food_units_per_item": 300,
+							"item_id": "pig_truffle",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/pig_truffle.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 60.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 4,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/pig.tres",
+				"price": 480
+			},
+			{
+				"animal": {
+					"animal_id": "sheep",
+					"can_swim": false,
+					"display_name": "Sheep",
+					"eggs_on_land": false,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(14.0, 8.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 600.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 26.0,
+					"path": "res://animals/definitions/sheep.tres",
+					"pen_margin": 14.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/sheep_wool_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Wool",
+							"food_units_per_item": 300,
+							"item_id": "sheep_wool",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/sheep_wool.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 60.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 3,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/sheep.tres",
+				"price": 560
+			},
+			{
+				"animal": {
+					"animal_id": "cow",
+					"can_swim": false,
+					"display_name": "Cow",
+					"eggs_on_land": false,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(18.0, 10.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 600.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 22.0,
+					"path": "res://animals/definitions/cow.tres",
+					"pen_margin": 16.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/cow_milk_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Cow Milk",
+							"food_units_per_item": 300,
+							"item_id": "cow_milk",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/cow_milk.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 60.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 2,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/cow.tres",
+				"price": 720
+			},
+			{
+				"animal": {
+					"animal_id": "horse",
+					"can_swim": false,
+					"display_name": "Horse",
+					"eggs_on_land": false,
+					"faces_left": true,
+					"food_per_meal": 1,
+					"food_seek_threshold": 50.0,
+					"footprint": "(10.0, 6.0)",
+					"forage_action": "",
+					"forage_seconds": "(1.5, 3.5)",
+					"forage_weight": 3.0,
+					"hydration_depletion_seconds": 600.0,
+					"idle_seconds": "(0.6, 1.8)",
+					"lie_down_action": "",
+					"lifespan_seconds": 1209600.0,
+					"maturity_seconds": 86400.0,
+					"move_speed": 28.0,
+					"path": "res://animals/definitions/horse.tres",
+					"pen_margin": 12.0,
+					"production": {
+						"collection_mode": 0,
+						"path": "res://animals/productions/horse_compost_production.tres",
+						"production_amount": 1,
+						"production_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Compost",
+							"food_units_per_item": 300,
+							"item_id": "horse_compost",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/animal_produces/horse_compost.tres",
+							"show_world_quantity": false,
+							"tool_type": 0
+						},
+						"production_seconds": 60.0
+					},
+					"rest_seconds": "(2.0, 4.0)",
+					"rest_weight": 1.0,
+					"satiety_depletion_seconds": 600.0,
+					"sleep_seconds": "(4.0, 8.0)",
+					"sleep_weight": 1.0,
+					"species": 6,
+					"walk_weight": 5.0,
+					"water_per_drink": 1,
+					"water_seek_threshold": 50.0
+				},
+				"path": "res://resources/shops/animals/horse.tres",
+				"price": 960
+			}
+		],
+		"offers": [
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "beetroot",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Beetroot",
+							"food_units_per_item": 300,
+							"item_id": "beetroot_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/beetroot_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/beetroot/beetroot.tres"
+					},
+					"description": "",
+					"display_name": "Beetroot Seed",
+					"food_units_per_item": 300,
+					"item_id": "beetroot_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/beetroot_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_0",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "bell_pepper",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Bell Pepper",
+							"food_units_per_item": 300,
+							"item_id": "bell_pepper_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/bell_pepper_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/bell_pepper/bell_pepper.tres"
+					},
+					"description": "",
+					"display_name": "Bell Pepper Seed",
+					"food_units_per_item": 300,
+					"item_id": "bell_pepper_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/bell_pepper_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_1",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "broccoli",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Broccoli",
+							"food_units_per_item": 300,
+							"item_id": "broccoli_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/broccoli_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/broccoli/broccoli.tres"
+					},
+					"description": "",
+					"display_name": "Broccoli Seed",
+					"food_units_per_item": 300,
+					"item_id": "broccoli_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/broccoli_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_2",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "cabbage",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Cabbage",
+							"food_units_per_item": 300,
+							"item_id": "cabbage_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/cabbage_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/cabbage/cabbage.tres"
+					},
+					"description": "",
+					"display_name": "Cabbage Seed",
+					"food_units_per_item": 300,
+					"item_id": "cabbage_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/cabbage_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_3",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "carrot",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Carrot",
+							"food_units_per_item": 300,
+							"item_id": "carrot_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/carrot_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/carrot/carrot.tres"
+					},
+					"description": "",
+					"display_name": "Carrot Seed",
+					"food_units_per_item": 300,
+					"item_id": "carrot_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/carrot_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_4",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "chili_pepper",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Chili Pepper",
+							"food_units_per_item": 300,
+							"item_id": "chili_pepper_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/chili_pepper_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/chili_pepper/chili_pepper.tres"
+					},
+					"description": "",
+					"display_name": "Chili Pepper Seed",
+					"food_units_per_item": 300,
+					"item_id": "chili_pepper_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/chili_pepper_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_5",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "corn",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Corn",
+							"food_units_per_item": 300,
+							"item_id": "corn_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/corn_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/corn/corn.tres"
+					},
+					"description": "",
+					"display_name": "Corn Seed",
+					"food_units_per_item": 300,
+					"item_id": "corn_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/corn_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_6",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "cucumber",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Cucumber",
+							"food_units_per_item": 300,
+							"item_id": "cucumber_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/cucumber_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/cucumber/cucumber.tres"
+					},
+					"description": "",
+					"display_name": "Cucumber Seed",
+					"food_units_per_item": 300,
+					"item_id": "cucumber_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/cucumber_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_7",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "eggplant",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Eggplant",
+							"food_units_per_item": 300,
+							"item_id": "eggplant_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/eggplant_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/eggplant/eggplant.tres"
+					},
+					"description": "",
+					"display_name": "Eggplant Seed",
+					"food_units_per_item": 300,
+					"item_id": "eggplant_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/eggplant_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_8",
+				"price": 10
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 01",
+						"flower_id": "flower_01",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 01",
+							"food_units_per_item": 300,
+							"item_id": "flower_01",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_01.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_01.tres"
+					},
+					"description": "",
+					"display_name": "Flower 01 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_01_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_01_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_9",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 02",
+						"flower_id": "flower_02",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 02",
+							"food_units_per_item": 300,
+							"item_id": "flower_02",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_02.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_02.tres"
+					},
+					"description": "",
+					"display_name": "Flower 02 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_02_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_02_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_10",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 03",
+						"flower_id": "flower_03",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 03",
+							"food_units_per_item": 300,
+							"item_id": "flower_03",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_03.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_03.tres"
+					},
+					"description": "",
+					"display_name": "Flower 03 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_03_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_03_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_11",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 04",
+						"flower_id": "flower_04",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 04",
+							"food_units_per_item": 300,
+							"item_id": "flower_04",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_04.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_04.tres"
+					},
+					"description": "",
+					"display_name": "Flower 04 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_04_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_04_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_12",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 05",
+						"flower_id": "flower_05",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 05",
+							"food_units_per_item": 300,
+							"item_id": "flower_05",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_05.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_05.tres"
+					},
+					"description": "",
+					"display_name": "Flower 05 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_05_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_05_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_13",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 06",
+						"flower_id": "flower_06",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 06",
+							"food_units_per_item": 300,
+							"item_id": "flower_06",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_06.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_06.tres"
+					},
+					"description": "",
+					"display_name": "Flower 06 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_06_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_06_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_14",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 07",
+						"flower_id": "flower_07",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 07",
+							"food_units_per_item": 300,
+							"item_id": "flower_07",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_07.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_07.tres"
+					},
+					"description": "",
+					"display_name": "Flower 07 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_07_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_07_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_15",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 08",
+						"flower_id": "flower_08",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 08",
+							"food_units_per_item": 300,
+							"item_id": "flower_08",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_08.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_08.tres"
+					},
+					"description": "",
+					"display_name": "Flower 08 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_08_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_08_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_16",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 09",
+						"flower_id": "flower_09",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 09",
+							"food_units_per_item": 300,
+							"item_id": "flower_09",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_09.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_09.tres"
+					},
+					"description": "",
+					"display_name": "Flower 09 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_09_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_09_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_17",
+				"price": 15
+			},
+			{
+				"category": 2,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"display_name": "Flower 10",
+						"flower_id": "flower_10",
+						"growth_seconds": 120.0,
+						"harvest_amount": 1,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Flower 10",
+							"food_units_per_item": 300,
+							"item_id": "flower_10",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/flowers/flower_10.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://flowers/definitions/flower_10.tres"
+					},
+					"description": "",
+					"display_name": "Flower 10 Seed",
+					"food_units_per_item": 300,
+					"item_id": "flower_10_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/flower_10_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_18",
+				"price": 15
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "garlic",
+						"growth_seconds": 10.0,
+						"harvest_amount": 600,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Garlic",
+							"food_units_per_item": 300,
+							"item_id": "garlic_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/garlic_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/garlic/garlic.tres"
+					},
+					"description": "",
+					"display_name": "Garlic Seed",
+					"food_units_per_item": 300,
+					"item_id": "garlic_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/garlic_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_19",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "green_bell_pepper",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Green Bell Pepper",
+							"food_units_per_item": 300,
+							"item_id": "green_bell_pepper_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/green_bell_pepper_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/green_bell_pepper/green_bell_pepper.tres"
+					},
+					"description": "",
+					"display_name": "Green Bell Pepper Seed",
+					"food_units_per_item": 300,
+					"item_id": "green_bell_pepper_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/green_bell_pepper_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_20",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "leek",
+						"growth_seconds": 10.0,
+						"harvest_amount": 300,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Leek",
+							"food_units_per_item": 300,
+							"item_id": "leek_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/leek_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/leek/leek.tres"
+					},
+					"description": "",
+					"display_name": "Leek Seed",
+					"food_units_per_item": 300,
+					"item_id": "leek_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/leek_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_21",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "onion",
+						"growth_seconds": 10.0,
+						"harvest_amount": 400,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Onion",
+							"food_units_per_item": 300,
+							"item_id": "onion_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/onion_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/onion/onion.tres"
+					},
+					"description": "",
+					"display_name": "Onion Seed",
+					"food_units_per_item": 300,
+					"item_id": "onion_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/onion_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_22",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "parsnip",
+						"growth_seconds": 10.0,
+						"harvest_amount": 300,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Parsnip",
+							"food_units_per_item": 300,
+							"item_id": "parsnip_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/parsnip_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/parsnip/parsnip.tres"
+					},
+					"description": "",
+					"display_name": "Parsnip Seed",
+					"food_units_per_item": 300,
+					"item_id": "parsnip_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/parsnip_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_23",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "potato",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Potato",
+							"food_units_per_item": 300,
+							"item_id": "potato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/potato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/potato/potato.tres"
+					},
+					"description": "",
+					"display_name": "Potato Seed",
+					"food_units_per_item": 300,
+					"item_id": "potato_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/potato_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_24",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "pumpkin",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Pumpkin",
+							"food_units_per_item": 300,
+							"item_id": "pumpkin_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/pumpkin_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/pumpkin/pumpkin.tres"
+					},
+					"description": "",
+					"display_name": "Pumpkin Seed",
+					"food_units_per_item": 300,
+					"item_id": "pumpkin_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/pumpkin_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_25",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "radish",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Radish",
+							"food_units_per_item": 300,
+							"item_id": "radish_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/radish_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/radish/radish.tres"
+					},
+					"description": "",
+					"display_name": "Radish Seed",
+					"food_units_per_item": 300,
+					"item_id": "radish_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/radish_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_26",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "strawberry",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Strawberry",
+							"food_units_per_item": 300,
+							"item_id": "strawberry_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/strawberry_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/strawberry/strawberry.tres"
+					},
+					"description": "",
+					"display_name": "Strawberry Seed",
+					"food_units_per_item": 300,
+					"item_id": "strawberry_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/strawberry_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_27",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "sunflower",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Sunflower",
+							"food_units_per_item": 300,
+							"item_id": "sunflower_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/sunflower_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/sunflower/sunflower.tres"
+					},
+					"description": "",
+					"display_name": "Sunflower Seed",
+					"food_units_per_item": 300,
+					"item_id": "sunflower_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/sunflower_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_28",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "tomato",
+						"growth_seconds": 10.0,
+						"harvest_amount": 100,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Tomato",
+							"food_units_per_item": 300,
+							"item_id": "tomato_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/tomato_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/tomato/tomato.tres"
+					},
+					"description": "",
+					"display_name": "Tomato Seed",
+					"food_units_per_item": 300,
+					"item_id": "tomato_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/tomato_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_29",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "wheat",
+						"growth_seconds": 10.0,
+						"harvest_amount": 400,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Wheat",
+							"food_units_per_item": 300,
+							"item_id": "wheat_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/wheat_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/wheat/wheat.tres"
+					},
+					"description": "",
+					"display_name": "Wheat Seed",
+					"food_units_per_item": 300,
+					"item_id": "wheat_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/wheat_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_30",
+				"price": 10
+			},
+			{
+				"category": 0,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"crop_id": "yellow_bell_pepper",
+						"growth_seconds": 10.0,
+						"harvest_amount": 200,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Yellow Bell Pepper",
+							"food_units_per_item": 300,
+							"item_id": "yellow_bell_pepper_produces",
+							"item_type": 2,
+							"max_stack": 32000,
+							"path": "res://items/harvest_produces/yellow_bell_pepper_produces.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"path": "res://crops/field/yellow_bell_pepper/yellow_bell_pepper.tres"
+					},
+					"description": "",
+					"display_name": "Yellow Bell Pepper Seed",
+					"food_units_per_item": 300,
+					"item_id": "yellow_bell_pepper_seed",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/seeds/yellow_bell_pepper_seed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_31",
+				"price": 10
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Livestock Feed",
+					"food_units_per_item": 300,
+					"item_id": "livestock_feed",
+					"item_type": 3,
+					"max_stack": 99,
+					"path": "res://items/feeds/livestock_feed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_32",
+				"price": 25
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Poultry Feed",
+					"food_units_per_item": 300,
+					"item_id": "poultry_feed",
+					"item_type": 3,
+					"max_stack": 99,
+					"path": "res://items/feeds/poultry_feed.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Offer_33",
+				"price": 25
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "Use once per crop before 50% growth. Reduces total growth time by 20%.",
+					"display_name": "Crop Fertilizer",
+					"food_units_per_item": 300,
+					"item_id": "crop_fertilizer",
+					"item_type": 5,
+					"max_stack": 99,
+					"path": "res://items/boosters/crop_fertilizer.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Resource_f8sdp",
+				"price": 5
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 1,
+					"crop": null,
+					"description": "Juvenile: once, mature at 12h; lifespan stays 14 days. Adult: next cycle has a 50% chance of +1 produce.",
+					"display_name": "Animal Tonic",
+					"food_units_per_item": 300,
+					"item_id": "animal_tonic",
+					"item_type": 5,
+					"max_stack": 99,
+					"path": "res://items/boosters/animal_tonic.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::Resource_in2rt",
+				"price": 3
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "",
+					"display_name": "Beehive",
+					"food_units_per_item": 300,
+					"item_id": "beehive",
+					"item_type": 6,
+					"max_stack": 20,
+					"path": "res://items/placeables/beehive.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::hive_offer",
+				"price": 1500
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Apple Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 180.0,
+						"harvest_amount": 3,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Apple",
+							"food_units_per_item": 300,
+							"item_id": "apple",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/apple.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 0,
+						"path": "res://trees/definitions/apple.tres",
+						"root_item": null,
+						"stump_seconds": 120.0,
+						"tree_id": "apple"
+					},
+					"description": "Plant in the left orchard. Water once to start growth.",
+					"display_name": "Apple Sapling",
+					"food_units_per_item": 300,
+					"item_id": "apple_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/apple_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_0",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Peach Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 180.0,
+						"harvest_amount": 3,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Peach",
+							"food_units_per_item": 300,
+							"item_id": "peach",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/peach.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 0,
+						"path": "res://trees/definitions/peach.tres",
+						"root_item": null,
+						"stump_seconds": 120.0,
+						"tree_id": "peach"
+					},
+					"description": "Plant in the left orchard. Water once to start growth.",
+					"display_name": "Peach Sapling",
+					"food_units_per_item": 300,
+					"item_id": "peach_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/peach_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_1",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Pear Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 180.0,
+						"harvest_amount": 3,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Pear",
+							"food_units_per_item": 300,
+							"item_id": "pear",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/pear.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 0,
+						"path": "res://trees/definitions/pear.tres",
+						"root_item": null,
+						"stump_seconds": 120.0,
+						"tree_id": "pear"
+					},
+					"description": "Plant in the left orchard. Water once to start growth.",
+					"display_name": "Pear Sapling",
+					"food_units_per_item": 300,
+					"item_id": "pear_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/pear_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_2",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Cherry Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 180.0,
+						"harvest_amount": 3,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Cherry",
+							"food_units_per_item": 300,
+							"item_id": "cherry",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/cherry.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 0,
+						"path": "res://trees/definitions/cherry.tres",
+						"root_item": null,
+						"stump_seconds": 120.0,
+						"tree_id": "cherry"
+					},
+					"description": "Plant in the left orchard. Water once to start growth.",
+					"display_name": "Cherry Sapling",
+					"food_units_per_item": 300,
+					"item_id": "cherry_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/cherry_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_3",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Oak Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 240.0,
+						"harvest_amount": 5,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Wood",
+							"food_units_per_item": 300,
+							"item_id": "wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 1,
+						"path": "res://trees/definitions/oak.tres",
+						"root_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Root Wood",
+							"food_units_per_item": 300,
+							"item_id": "root_wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/root_wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"stump_seconds": 120.0,
+						"tree_id": "oak"
+					},
+					"description": "Plant in the right timber grove. Chop mature trees with an axe.",
+					"display_name": "Oak Seed",
+					"food_units_per_item": 300,
+					"item_id": "oak_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/oak_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_4",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Birch Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 240.0,
+						"harvest_amount": 5,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Wood",
+							"food_units_per_item": 300,
+							"item_id": "wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 1,
+						"path": "res://trees/definitions/birch.tres",
+						"root_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Root Wood",
+							"food_units_per_item": 300,
+							"item_id": "root_wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/root_wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"stump_seconds": 120.0,
+						"tree_id": "birch"
+					},
+					"description": "Plant in the right timber grove. Chop mature trees with an axe.",
+					"display_name": "Birch Seed",
+					"food_units_per_item": 300,
+					"item_id": "birch_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/birch_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_5",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": {
+						"chop_hits": 4,
+						"dig_hits": 3,
+						"display_name": "Spruce Tree",
+						"fruit_cycle_seconds": 90.0,
+						"growth_seconds": 240.0,
+						"harvest_amount": 5,
+						"harvest_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Wood",
+							"food_units_per_item": 300,
+							"item_id": "wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"kind": 1,
+						"path": "res://trees/definitions/spruce.tres",
+						"root_item": {
+							"booster_kind": 0,
+							"crop": null,
+							"description": "",
+							"display_name": "Root Wood",
+							"food_units_per_item": 300,
+							"item_id": "root_wood",
+							"item_type": 2,
+							"max_stack": 99,
+							"path": "res://items/trees/root_wood.tres",
+							"show_world_quantity": true,
+							"tool_type": 0
+						},
+						"stump_seconds": 120.0,
+						"tree_id": "spruce"
+					},
+					"description": "Plant in the right timber grove. Chop mature trees with an axe.",
+					"display_name": "Spruce Seed",
+					"food_units_per_item": 300,
+					"item_id": "spruce_sapling",
+					"item_type": 1,
+					"max_stack": 99,
+					"path": "res://items/trees/spruce_sapling.tres",
+					"show_world_quantity": true,
+					"tool_type": 0
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_6",
+				"price": 60
+			},
+			{
+				"category": 1,
+				"item": {
+					"booster_kind": 0,
+					"crop": null,
+					"description": "Chop mature timber trees. Use a hoe to dig their stumps.",
+					"display_name": "Axe",
+					"food_units_per_item": 300,
+					"item_id": "axe",
+					"item_type": 0,
+					"max_stack": 99,
+					"path": "res://items/tools/axe.tres",
+					"show_world_quantity": true,
+					"tool_type": 2
+				},
+				"path": "res://resources/shops/farm_supply.tres::tree_offer_7",
+				"price": 250
+			}
+		],
+		"path": "res://resources/shops/farm_supply.tres"
+	},
+	"snapshot_date": "2026-10-24",
+	"starter": {
+		"coins": 1000,
+		"feed": {
+			"booster_kind": 0,
+			"crop": null,
+			"description": "",
+			"display_name": "Poultry Feed",
+			"food_units_per_item": 300,
+			"item_id": "poultry_feed",
+			"item_type": 3,
+			"max_stack": 99,
+			"path": "res://items/feeds/poultry_feed.tres",
+			"show_world_quantity": true,
+			"tool_type": 0
+		},
+		"feed_amount": 5,
+		"seed_amount": 12,
+		"seeds": [
+			{
+				"booster_kind": 0,
+				"crop": {
+					"crop_id": "carrot",
+					"growth_seconds": 10.0,
+					"harvest_amount": 100,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Carrot",
+						"food_units_per_item": 300,
+						"item_id": "carrot_produces",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/harvest_produces/carrot_produces.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://crops/field/carrot/carrot.tres"
+				},
+				"description": "",
+				"display_name": "Carrot Seed",
+				"food_units_per_item": 300,
+				"item_id": "carrot_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/carrot_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			}
+		],
+		"slots": 64,
+		"starting_tools": true
+	},
+	"trees": [
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Apple Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 180.0,
+			"harvest_amount": 3,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Apple",
+				"food_units_per_item": 300,
+				"item_id": "apple",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/apple.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 0,
+			"path": "res://trees/definitions/apple.tres",
+			"root_item": null,
+			"stump_seconds": 120.0,
+			"tree_id": "apple"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Birch Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 240.0,
+			"harvest_amount": 5,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Wood",
+				"food_units_per_item": 300,
+				"item_id": "wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 1,
+			"path": "res://trees/definitions/birch.tres",
+			"root_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Root Wood",
+				"food_units_per_item": 300,
+				"item_id": "root_wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/root_wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"stump_seconds": 120.0,
+			"tree_id": "birch"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Cherry Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 180.0,
+			"harvest_amount": 3,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Cherry",
+				"food_units_per_item": 300,
+				"item_id": "cherry",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/cherry.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 0,
+			"path": "res://trees/definitions/cherry.tres",
+			"root_item": null,
+			"stump_seconds": 120.0,
+			"tree_id": "cherry"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Oak Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 240.0,
+			"harvest_amount": 5,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Wood",
+				"food_units_per_item": 300,
+				"item_id": "wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 1,
+			"path": "res://trees/definitions/oak.tres",
+			"root_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Root Wood",
+				"food_units_per_item": 300,
+				"item_id": "root_wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/root_wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"stump_seconds": 120.0,
+			"tree_id": "oak"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Peach Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 180.0,
+			"harvest_amount": 3,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Peach",
+				"food_units_per_item": 300,
+				"item_id": "peach",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/peach.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 0,
+			"path": "res://trees/definitions/peach.tres",
+			"root_item": null,
+			"stump_seconds": 120.0,
+			"tree_id": "peach"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Pear Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 180.0,
+			"harvest_amount": 3,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Pear",
+				"food_units_per_item": 300,
+				"item_id": "pear",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/pear.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 0,
+			"path": "res://trees/definitions/pear.tres",
+			"root_item": null,
+			"stump_seconds": 120.0,
+			"tree_id": "pear"
+		},
+		{
+			"chop_hits": 4,
+			"dig_hits": 3,
+			"display_name": "Spruce Tree",
+			"fruit_cycle_seconds": 90.0,
+			"growth_seconds": 240.0,
+			"harvest_amount": 5,
+			"harvest_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Wood",
+				"food_units_per_item": 300,
+				"item_id": "wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": 1,
+			"path": "res://trees/definitions/spruce.tres",
+			"root_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Root Wood",
+				"food_units_per_item": 300,
+				"item_id": "root_wood",
+				"item_type": 2,
+				"max_stack": 99,
+				"path": "res://items/trees/root_wood.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"stump_seconds": 120.0,
+			"tree_id": "spruce"
+		}
+	],
+	"world": [
+		{
+			"bounds": "[P: (0.0, 0.0), S: (384.0, 256.0)]",
+			"capacity": 30,
+			"kind": "pen",
+			"node": "CoopPen",
+			"species": [
+				0
+			]
+		},
+		{
+			"capacity": 600,
+			"feed_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Poultry Feed",
+				"food_units_per_item": 300,
+				"item_id": "poultry_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/poultry_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "trough",
+			"node": "FeedTrough",
+			"parent": "CoopPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 120,
+			"type": 0,
+			"water_per_use": 30
+		},
+		{
+			"capacity": 600,
+			"feed_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Poultry Feed",
+				"food_units_per_item": 300,
+				"item_id": "poultry_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/poultry_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "trough",
+			"node": "FeedTrough2",
+			"parent": "CoopPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 120,
+			"type": 0,
+			"water_per_use": 30
+		},
+		{
+			"capacity": 120,
+			"feed_item": null,
+			"kind": "trough",
+			"node": "WaterTrough",
+			"parent": "CoopPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 120,
+			"type": 1,
+			"water_per_use": 30
+		},
+		{
+			"capacity": 120,
+			"feed_item": null,
+			"kind": "trough",
+			"node": "WaterTrough2",
+			"parent": "CoopPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 120,
+			"type": 1,
+			"water_per_use": 30
+		},
+		{
+			"bounds": "[P: (0.0, 0.0), S: (384.0, 272.0)]",
+			"capacity": 36,
+			"kind": "pen",
+			"node": "BarnPen",
+			"species": [
+				2,
+				3,
+				4,
+				6
+			]
+		},
+		{
+			"capacity": 600,
+			"feed_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Livestock Feed",
+				"food_units_per_item": 300,
+				"item_id": "livestock_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/livestock_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "trough",
+			"node": "FeedTrough",
+			"parent": "BarnPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 600,
+			"type": 0,
+			"water_per_use": 30
+		},
+		{
+			"capacity": 600,
+			"feed_item": null,
+			"kind": "trough",
+			"node": "WaterTrough",
+			"parent": "BarnPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 600,
+			"type": 1,
+			"water_per_use": 30
+		},
+		{
+			"amount": 5,
+			"item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Livestock Feed",
+				"food_units_per_item": 300,
+				"item_id": "livestock_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/livestock_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "LivestockFeed"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 01",
+					"flower_id": "flower_01",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 01",
+						"food_units_per_item": 300,
+						"item_id": "flower_01",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_01.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_01.tres"
+				},
+				"description": "",
+				"display_name": "Flower 01 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_01_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_01_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_01"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 02",
+					"flower_id": "flower_02",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 02",
+						"food_units_per_item": 300,
+						"item_id": "flower_02",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_02.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_02.tres"
+				},
+				"description": "",
+				"display_name": "Flower 02 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_02_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_02_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_02"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 03",
+					"flower_id": "flower_03",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 03",
+						"food_units_per_item": 300,
+						"item_id": "flower_03",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_03.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_03.tres"
+				},
+				"description": "",
+				"display_name": "Flower 03 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_03_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_03_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_03"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 04",
+					"flower_id": "flower_04",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 04",
+						"food_units_per_item": 300,
+						"item_id": "flower_04",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_04.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_04.tres"
+				},
+				"description": "",
+				"display_name": "Flower 04 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_04_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_04_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_04"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 05",
+					"flower_id": "flower_05",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 05",
+						"food_units_per_item": 300,
+						"item_id": "flower_05",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_05.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_05.tres"
+				},
+				"description": "",
+				"display_name": "Flower 05 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_05_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_05_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_05"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 06",
+					"flower_id": "flower_06",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 06",
+						"food_units_per_item": 300,
+						"item_id": "flower_06",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_06.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_06.tres"
+				},
+				"description": "",
+				"display_name": "Flower 06 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_06_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_06_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_06"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 07",
+					"flower_id": "flower_07",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 07",
+						"food_units_per_item": 300,
+						"item_id": "flower_07",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_07.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_07.tres"
+				},
+				"description": "",
+				"display_name": "Flower 07 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_07_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_07_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_07"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 08",
+					"flower_id": "flower_08",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 08",
+						"food_units_per_item": 300,
+						"item_id": "flower_08",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_08.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_08.tres"
+				},
+				"description": "",
+				"display_name": "Flower 08 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_08_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_08_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_08"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 09",
+					"flower_id": "flower_09",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 09",
+						"food_units_per_item": 300,
+						"item_id": "flower_09",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_09.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_09.tres"
+				},
+				"description": "",
+				"display_name": "Flower 09 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_09_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_09_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_09"
+		},
+		{
+			"amount": 6,
+			"item": {
+				"booster_kind": 0,
+				"crop": {
+					"display_name": "Flower 10",
+					"flower_id": "flower_10",
+					"growth_seconds": 120.0,
+					"harvest_amount": 1,
+					"harvest_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Flower 10",
+						"food_units_per_item": 300,
+						"item_id": "flower_10",
+						"item_type": 2,
+						"max_stack": 99,
+						"path": "res://items/flowers/flower_10.tres",
+						"show_world_quantity": true,
+						"tool_type": 0
+					},
+					"path": "res://flowers/definitions/flower_10.tres"
+				},
+				"description": "",
+				"display_name": "Flower 10 Seed",
+				"food_units_per_item": 300,
+				"item_id": "flower_10_seed",
+				"item_type": 1,
+				"max_stack": 99,
+				"path": "res://items/seeds/flower_10_seed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "FlowerSeedSupply_10"
+		},
+		{
+			"bounds": "[P: (0.0, 0.0), S: (384.0, 272.0)]",
+			"capacity": 20,
+			"kind": "pen",
+			"node": "PondPen",
+			"species": [
+				1,
+				5
+			]
+		},
+		{
+			"capacity": 600,
+			"feed_item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Poultry Feed",
+				"food_units_per_item": 300,
+				"item_id": "poultry_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/poultry_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "trough",
+			"node": "FeedTrough",
+			"parent": "PondPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 600,
+			"type": 0,
+			"water_per_use": 30
+		},
+		{
+			"capacity": 600,
+			"feed_item": null,
+			"kind": "trough",
+			"node": "WaterTrough",
+			"parent": "PondPen",
+			"restoration_per_unit": 40.0,
+			"serving_seconds": 1.5,
+			"stock": 600,
+			"type": 1,
+			"water_per_use": 30
+		},
+		{
+			"definition": {
+				"animal_id": "duck",
+				"can_swim": true,
+				"display_name": "Duck",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/duck.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/duck_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Duck Egg",
+						"food_units_per_item": 300,
+						"item_id": "duck_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/duck_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 40.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 1,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Duck_1",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "duck",
+				"can_swim": true,
+				"display_name": "Duck",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/duck.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/duck_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Duck Egg",
+						"food_units_per_item": 300,
+						"item_id": "duck_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/duck_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 40.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 1,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Duck_2",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "duck",
+				"can_swim": true,
+				"display_name": "Duck",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/duck.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/duck_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Duck Egg",
+						"food_units_per_item": 300,
+						"item_id": "duck_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/duck_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 40.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 1,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Duck_3",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "duck",
+				"can_swim": true,
+				"display_name": "Duck",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/duck.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/duck_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Duck Egg",
+						"food_units_per_item": 300,
+						"item_id": "duck_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/duck_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 40.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 1,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Duck_4",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "duck",
+				"can_swim": true,
+				"display_name": "Duck",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/duck.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/duck_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Duck Egg",
+						"food_units_per_item": 300,
+						"item_id": "duck_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/duck_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 40.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 1,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Duck_5",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_1",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_2",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_3",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_4",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_5",
+			"parent": "PondPen"
+		},
+		{
+			"definition": {
+				"animal_id": "goose",
+				"can_swim": false,
+				"display_name": "Goose",
+				"eggs_on_land": true,
+				"faces_left": true,
+				"food_per_meal": 1,
+				"food_seek_threshold": 50.0,
+				"footprint": "(10.0, 6.0)",
+				"forage_action": "",
+				"forage_seconds": "(1.5, 3.5)",
+				"forage_weight": 3.0,
+				"hydration_depletion_seconds": 300.0,
+				"idle_seconds": "(0.6, 1.8)",
+				"lie_down_action": "",
+				"lifespan_seconds": 1209600.0,
+				"maturity_seconds": 86400.0,
+				"move_speed": 28.0,
+				"path": "res://animals/definitions/goose.tres",
+				"pen_margin": 12.0,
+				"production": {
+					"collection_mode": 0,
+					"path": "res://animals/productions/goose_egg_production.tres",
+					"production_amount": 1,
+					"production_item": {
+						"booster_kind": 0,
+						"crop": null,
+						"description": "",
+						"display_name": "Goose Egg",
+						"food_units_per_item": 300,
+						"item_id": "goose_egg",
+						"item_type": 2,
+						"max_stack": 32000,
+						"path": "res://items/animal_produces/goose_egg.tres",
+						"show_world_quantity": false,
+						"tool_type": 0
+					},
+					"production_seconds": 50.0
+				},
+				"rest_seconds": "(2.0, 4.0)",
+				"rest_weight": 1.0,
+				"satiety_depletion_seconds": 600.0,
+				"sleep_seconds": "(4.0, 8.0)",
+				"sleep_weight": 1.0,
+				"species": 5,
+				"walk_weight": 5.0,
+				"water_per_drink": 1,
+				"water_seek_threshold": 50.0
+			},
+			"initial_age_seconds": 120.0,
+			"kind": "animal",
+			"node": "Goose_6",
+			"parent": "PondPen"
+		},
+		{
+			"amount": 5,
+			"item": {
+				"booster_kind": 0,
+				"crop": null,
+				"description": "",
+				"display_name": "Poultry Feed",
+				"food_units_per_item": 300,
+				"item_id": "poultry_feed",
+				"item_type": 3,
+				"max_stack": 99,
+				"path": "res://items/feeds/poultry_feed.tres",
+				"show_world_quantity": true,
+				"tool_type": 0
+			},
+			"kind": "pickup",
+			"node": "PoultryFeed"
+		}
+	]
+}

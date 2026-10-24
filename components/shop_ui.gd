@@ -28,6 +28,7 @@ var _animal_text: AnimalStatusText = AnimalStatusText.new()
 
 func _ready() -> void:
 	super._ready()
+	TouchQuantityComponent.attach(quantity, root)
 	balance_label.hide() # The player's balance belongs to the inventory only.
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
@@ -282,3 +283,12 @@ func _fit_layout() -> void:
 		tab.tooltip_text = full_titles[index]
 	var width: float = maxf(100.0, (panel.custom_minimum_size.x - 72.0) * 0.5 - 16.0)
 	grid.columns = maxi(1, floori((width + 8.0) / 128.0))
+	if MobileLayout.is_touch(get_viewport()):
+		panel.custom_minimum_size = Vector2(minf(960.0, view.x - 16.0), minf(660.0, view.y - 16.0))
+		quantity.custom_minimum_size = Vector2(72, 48)
+		quantity_label.hide()
+		MobileLayout.prepare_buttons(root)
+		for button: Button in categories.get_children():
+			button.add_theme_font_size_override("font_size", 18)
+	else:
+		quantity_label.show()

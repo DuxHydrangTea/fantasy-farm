@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-23",
+  "engine_export": "4.7.2.stable.official.ed1daf0bf",
+  "engine_native_tests": "4.7.1.stable.mono.official.a13da4feb",
+  "focused_tests": {
+    "suites": {
+      "tests/unit/test_save_repository.gd": {"passed": 21, "failed": 0},
+      "tests/integration/test_persistence_bootstrap.gd": {"passed": 2, "failed": 0}
+    },
+    "passed": 23,
+    "failed": 0,
+    "assertions": 337
+  },
+  "browser_checks": {
+    "boot": true,
+    "inventory_drag": true,
+    "manual_save_reload": true,
+    "close_reopen_tab": true,
+    "manual_load": true,
+    "autosave_then_reload": true,
+    "console_errors_or_warnings_in_final_tab": 0,
+    "retained_inventory": "12 carrot seeds in slot 5, slot 3 empty",
+    "retained_wallet": 1000,
+    "autosave_selection": "slot 4, Poultry Feed",
+    "physical_android_or_ios_tested": false
+  },
+  "static_lint": {"errors": 0, "warnings": 0},
+  "engine_persistence_validation": {"scripts_checked": 8, "errors": 0, "warnings_in_existing_code": 23},
+  "expanded_wiring_suite": {
+    "passed": 1,
+    "failed": 1,
+    "reason": "Renaming every scene child breaks gate sprite lookup; fixture expects 47 animals but current map has 11. Not changed in M0."
+  }
+}

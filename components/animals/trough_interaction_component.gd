@@ -1,5 +1,6 @@
 class_name TroughInteractionComponent
 extends Node2D
+signal refill_committed(condition: StringName, amount: int)
 ## Player-side adapter for any AnimalTrough. StateComponent owns input/animation.
 @export var selection: ToolSelectionComponent
 @export var animation: AnimationComponent
@@ -147,6 +148,8 @@ func _on_frame_changed() -> void:
 		elif not _auto_fill and selection.inventory.slot(_water_slot).item == _water_item:
 			added = trough.refill(trough.water_per_use)
 	_feedback = "Added {amount}" if added > 0 else ""
+	if added > 0:
+		refill_committed.emit(action, 1)
 	_feedback_amount = added
 	_feedback_until = Time.get_ticks_msec() + 1000
 	refresh()
