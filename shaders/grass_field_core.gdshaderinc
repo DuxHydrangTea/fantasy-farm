@@ -8,8 +8,14 @@ uniform bool debug_anchor_only = false;
 
 #ifdef GRASS_AUTHORED_UV
 // Preserve the original atlas's normalized UV interpolation at fractional zoom.
-uniform vec4 farm_source_regions[4];
+uniform vec4 farm_source_regions[128];
 varying vec2 farm_source_uv;
+#endif
+
+#ifdef GRASS_TILEMAP
+uniform vec2 tile_source_pixel;
+uniform vec2 tile_size_pixel = vec2(16.0);
+uniform float tile_root_pixel = 14.0;
 #endif
 
 #include "res://shaders/grass_actor_bend.gdshaderinc"
@@ -20,6 +26,15 @@ varying float frame_phase;
 varying vec4 vertex_tint;
 
 void vertex() {
+	#ifdef GRASS_TILEMAP
+	ground_pixel = tile_root_pixel;
+	frame_phase = 0.0;
+	vec2 tile_uv = (UV * vec2(144.0, 416.0) - tile_source_pixel) / tile_size_pixel;
+	vec2 to_root = vec2((0.5 - tile_uv.x) * tile_size_pixel.x, ground_pixel - tile_uv.y * tile_size_pixel.y);
+	vec2 root = VERTEX + (MODEL_MATRIX * vec4(to_root, 0.0, 0.0)).xy;
+	float reach = (ground_pixel - tile_uv.y * tile_size_pixel.y) / max(16.0, tile_size_pixel.y);
+	vertex_tint = COLOR;
+	#else
 	strip_row = INSTANCE_CUSTOM.r;
 	ground_pixel = INSTANCE_CUSTOM.g;
 	frame_phase = INSTANCE_CUSTOM.b;
@@ -34,6 +49,7 @@ void vertex() {
 	// Unclamped linear shear through transparent bottom padding is intentional.
 	// Interpolated displacement is EXACTLY zero at the opaque ground line.
 	float reach = (ground_pixel - UV.y * 16.0) / 16.0;
+	#endif
 	float time = use_test_time ? test_time : TIME;
 	float phase = root.x * 0.071 + root.y * 0.043 + frame_phase * TAU;
 	// Both periods divide Godot's default 3600s TIME rollover: no hourly jump.
@@ -51,6 +67,9 @@ void vertex() {
 }
 
 void fragment() {
+	#ifdef GRASS_TILEMAP
+	COLOR = texture(TEXTURE, UV) * vertex_tint;
+	#else
 	#ifdef GRASS_AUTHORED_UV
 	COLOR = texture(TEXTURE, farm_source_uv) * vertex_tint;
 	#else
@@ -61,6 +80,7 @@ void fragment() {
 	vec2 pixel = clamp(UV * 16.0, vec2(0.5), vec2(15.5));
 	vec2 atlas_uv = (vec2(frame * 16.0, strip_row * 16.0) + pixel) / vec2(128.0, 288.0);
 	COLOR = texture(TEXTURE, atlas_uv) * vertex_tint;
+	#endif
 	#endif
 	if (debug_anchor_only) {
 		COLOR = abs(UV.y * 16.0 - ground_pixel) < 0.125 ? vec4(1.0, 0.0, 1.0, 1.0) : vec4(0.0);

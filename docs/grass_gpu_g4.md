@@ -1,5 +1,7 @@
 # Cỏ GPU — G4: tích hợp một vùng nông trại
 
+**Cập nhật 25/10/2026:** đã [bật cỏ GPU trên toàn map](grass_gpu_world.md), gồm cả nhóm overlap bằng shader TileMap. Nội dung bên dưới là báo cáo lịch sử của bản vùng thử 24/10.
+
 Ngày 24/10/2026. Đã bật G4 trong MainWorld: **10 cụm cỏ GPU ở khu chuồng gia súc**, ba cụm chồng props cùng hàng giữ nguồn cũ. [Kế hoạch tổng thể](grass_gpu_implementation_plan.md).
 
 ## Xem trong game

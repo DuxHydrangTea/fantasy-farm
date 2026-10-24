@@ -4864,26 +4864,28 @@ accepted_species = Array[int]([0])
 [node name="FeedTrough" parent="CoopPen" unique_id=2042315591 instance=ExtResource("32_feed_trough")]
 position = Vector2(14, 26)
 persistent_id = &"placed_2042315591"
-capacity = 120
+capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="FeedTrough2" parent="CoopPen" unique_id=144181841 instance=ExtResource("32_feed_trough")]
 position = Vector2(14, 63)
 persistent_id = &"placed_144181841"
-capacity = 120
+capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough" parent="CoopPen" unique_id=2041273187 instance=ExtResource("33_water_trough")]
 position = Vector2(48, 21)
 persistent_id = &"placed_2041273187"
+capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
 [node name="WaterTrough2" parent="CoopPen" unique_id=1891560272 instance=ExtResource("33_water_trough")]
 position = Vector2(88, 20)
 persistent_id = &"placed_1891560272"
+capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
@@ -4904,13 +4906,14 @@ bounds = Rect2(0, 0, 384, 272)
 [node name="FeedTrough" parent="BarnPen" unique_id=1563140842 instance=ExtResource("41_ykqd1")]
 position = Vector2(13, 217)
 persistent_id = &"placed_1563140842"
-capacity = 120
+capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough" parent="BarnPen" unique_id=203535476 instance=ExtResource("33_water_trough")]
 position = Vector2(21, 257)
 persistent_id = &"placed_203535476"
+capacity = 1200
 stock = 600
 allowed_species = Array[int]([2, 3])
 full_texture = SubResource("AtlasTexture_k0hid")
@@ -4927,12 +4930,15 @@ position = Vector2(-24, 128)
 
 [node name="FeedTrough2" parent="BarnPen" unique_id=1564523007 instance=ExtResource("41_ykqd1")]
 position = Vector2(96, 192)
-capacity = 120
+persistent_id = &"barn_feedtrough_02"
+capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough2" parent="BarnPen" unique_id=450736599 instance=ExtResource("33_water_trough")]
 position = Vector2(144, 192)
+persistent_id = &"barn_watertrough_02"
+capacity = 1200
 stock = 600
 allowed_species = Array[int]([2, 3, 4, 6])
 full_texture = SubResource("AtlasTexture_k0hid")
@@ -4960,7 +4966,8 @@ position = Vector2(114, -12)
 
 [node name="FeedTrough2" parent="PondPen" unique_id=624608384 instance=ExtResource("32_feed_trough")]
 position = Vector2(48, 72)
-capacity = 120
+persistent_id = &"pond_feedtrough_02"
+capacity = 1200
 stock = 600
 allowed_species = Array[int]([1, 5])
 full_texture = SubResource("AtlasTexture_7c4vb")
@@ -4968,6 +4975,8 @@ empty_texture = SubResource("AtlasTexture_e688v")
 
 [node name="WaterTrough2" parent="PondPen" unique_id=276141886 instance=ExtResource("33_water_trough")]
 position = Vector2(112, 72)
+persistent_id = &"pond_watertrough_02"
+capacity = 1200
 stock = 600
 allowed_species = Array[int]([1, 5])
 full_texture = SubResource("AtlasTexture_no06q")

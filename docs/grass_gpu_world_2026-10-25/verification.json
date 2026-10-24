@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-25",
+  "scope": "whole TinyDecor layer; no trial region",
+  "animated_grass_cells": 169,
+  "chunk_cells": 138,
+  "gpu_tilemap_cells": 31,
+  "feature_nodes_added": 1,
+  "shared_tile_materials": 4,
+  "gut_tests_passed": 33,
+  "gut_assertions": 451,
+  "native": {
+    "compatibility": {
+      "world_checks": 60,
+      "g1_regression_checks": 189,
+      "failures": []
+    },
+    "forward-plus": {
+      "world_checks": 60,
+      "g1_regression_checks": 189,
+      "failures": []
+    }
+  },
+  "lint": {
+    "total": 0,
+    "errors": 0,
+    "warnings": 0,
+    "parse_errors": 0
+  },
+  "engine_validation_ok": true,
+  "web_export_ok": true,
+  "personal_save_used": false,
+  "browser_runtime_tested": false,
+  "physical_phone_tested": false,
+  "production_sha256": {
+    "world/main_world.gd": "afeee1f2fa78e4de859d80e538a3306fa25968d294947f202aba7d710906e24c",
+    "components/grass/farm_grass_field.gd": "fb533b3d21c3307833720cd455b43a18374537c81fe8be2b4811fa80b80fcb92",
+    "components/grass/grass_source_transfer.gd": "c55749beaced15356716c9c2ffb14766f246057e9798461d4207e2e4a0d36e6b",
+    "components/grass/grass_tile_materials.gd": "f4f596ae967c210bbd45a418f8ba10a346a601b2dbe085c68d3512dca49c14e3",
+    "shaders/grass_tilemap.gdshader": "9b38c4e134791ea2f025d7803622573a4bb24d77f99874404b383ee0a0a00dff",
+    "shaders/grass_field_core.gdshaderinc": "9dae66bd992d6e97d5add93359f3f6d0cb5e6fec9c297a79a44db2bd3a67088d"
+  }
+}

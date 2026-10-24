@@ -331,7 +331,7 @@ Web cần thử riêng cơ chế lưu qua lần tải lại/trình duyệt và k
 | 3A | Chưa bắt đầu | Menu bắt đầu/vòng đời phiên |
 | 3B | Chưa bắt đầu | Esc/Settings |
 | 4 | Đang triển khai 4A — thông số thử nghiệm | Xem `economy_4a.md`: Resource/giá/thưởng/máng và tương thích save; gói hồ sơ mới và offline cấp chuồng đã triển khai (xem `starter_content.md`, `pen_offline.md`); mẻ mật mới đã triển khai (xem `honey_batches.md`); còn đo cân bằng theo phiên chơi |
-| 5 | Cỏ GPU đã tới G4, bật một vùng trong MainWorld | Xem `grass_gpu_g4.md`: 10 cụm BarnPen chạy GPU, ba overlap giữ nguồn; weather/light/fallback, 49 checks/bên và 57 GUT; tiếp theo G5 benchmark/chốt cấu hình thiết bị |
+| 5 | Cỏ/hoa/bụi/nấm GPU đã bật toàn map MainWorld | Xem `foliage_gpu.md`: 80 mẫu, gồm hoa nhiều tile; 815 cụm có hiệu ứng; 138 chunk + 677 shader tile; vẽ thêm tự nhận; native QA 224 checks/bên và 34 GUT; tiếp theo G5 benchmark/chốt cấu hình thiết bị |
 | M3 | Chưa bắt đầu | Hiệu năng, lưu và lifecycle điện thoại; rà lại UI mới |
 | 6 | Chưa bắt đầu | Kiểm thử và export |
 

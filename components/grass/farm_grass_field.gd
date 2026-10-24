@@ -1,10 +1,11 @@
 class_name FarmGrassField
 extends GrassChunkField
-## G4 world adapter. This is the sole added grass node; transfer/feed are plain data.
+## Whole-map world adapter. The sole added node; transfer/feed/materials are data.
 const LIT_SHADER: Shader = preload("res://shaders/grass_farm.gdshader")
 const FARM_DATA = preload("res://resources/grass/farm_grass_data.gd")
 var world: FarmWorld
 var transfer: GrassSourceTransfer = GrassSourceTransfer.new()
+var tile_materials: GrassTileMaterials = GrassTileMaterials.new()
 var active: bool = false
 var wanted: bool = true
 var fallback_reason: String = ""
@@ -26,7 +27,7 @@ func _ready() -> void:
 	var mesh: ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	renderer.mesh_override = mesh
-	samples = transfer.prepare(world.get_node_or_null("TinyDecor") as TileMapLayer, world, world.grass_trial_region)
+	samples = transfer.prepare(world.get_node_or_null("TinyDecor") as TileMapLayer, world)
 	if catalog.texture == null:
 		samples.clear() # Keep source cells if an imported atlas cannot be loaded.
 	wanted = world.gpu_grass_enabled
@@ -34,7 +35,8 @@ func _ready() -> void:
 	effect.set_shader_parameter(&"animate_frames", false)
 	var regions: PackedVector4Array = PackedVector4Array()
 	for row: Dictionary in FARM_DATA.TYPES:
-		regions.append(Vector4(float(row.source_region[0]) / 144.0, float(row.source_region[1]) / 416.0, 16.0 / 144.0, 16.0 / 416.0))
+		regions.append(Vector4(float(row.source_region[0]) / 144.0, float(row.source_region[1]) / 416.0, float(row["size"][0]) / 144.0, float(row["size"][1]) / 416.0))
+	regions.resize(128)
 	effect.set_shader_parameter(&"farm_source_regions", regions)
 	effect.set_shader_parameter(&"wind_direction", Vector2(100, 18).normalized())
 	if not world.objectives.progress.restored.is_connected(_after_restore):
@@ -52,6 +54,8 @@ func render_preflight() -> String:
 		return "Grass atlas unavailable"
 	if field_shader == null:
 		return "Grass shader unavailable"
+	if FARM_DATA.TYPES.size() > 128:
+		return "Foliage palette exceeds shader capacity"
 	var uniforms: Array = field_shader.get_shader_uniform_list()
 	var names: Array[StringName] = []
 	for uniform: Dictionary in uniforms:
@@ -66,8 +70,8 @@ func set_conversion(value: bool) -> bool:
 		_fallback("")
 		return true
 	var reason: String = render_preflight()
-	if not reason.is_empty() or samples.is_empty():
-		_fallback(reason if not reason.is_empty() else "No eligible grass in trial region")
+	if not reason.is_empty() or (samples.is_empty() and transfer.retained_overlaps == 0):
+		_fallback(reason if not reason.is_empty() else "No eligible authored grass")
 		return false
 	set_enabled(true)
 	update_view()
@@ -78,15 +82,24 @@ func set_conversion(value: bool) -> bool:
 	if not transfer.suppress():
 		_fallback("Authored source changed before grass transaction committed")
 		return false
+	if transfer.retained_overlaps > 0 and not tile_materials.install(world.get_node("TinyDecor") as TileMapLayer):
+		_fallback("TileMap grass material unavailable")
+		return false
 	active = true
 	fallback_reason = ""
 	_sync_environment()
+	sync_tile_materials()
 	return true
+
+func sync_tile_materials() -> void:
+	if active:
+		tile_materials.sync_from(effect)
 
 func _fallback(reason: String) -> void:
 	set_enabled(false)
 	renderer.clear()
 	_last_region = Rect2i(0, 0, -1, -1)
+	tile_materials.restore()
 	transfer.restore()
 	active = false
 	fallback_reason = reason
@@ -102,6 +115,7 @@ func _sync_environment() -> void:
 func _process(delta: float) -> void:
 	_sync_environment()
 	super._process(delta)
+	sync_tile_materials()
 	if not renderer.last_error.is_empty() or not interactions.last_error.is_empty():
 		_fallback(renderer.last_error if not renderer.last_error.is_empty() else interactions.last_error)
 
@@ -113,6 +127,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _exit_tree() -> void:
 	if is_instance_valid(world.objectives) and world.objectives.progress.restored.is_connected(_after_restore):
 		world.objectives.progress.restored.disconnect(_after_restore)
+	tile_materials.restore()
 	transfer.restore()
 	active = false
 	super._exit_tree()

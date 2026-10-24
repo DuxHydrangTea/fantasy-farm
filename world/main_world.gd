@@ -17,7 +17,6 @@ var pen_boards: Array[PenBoard] = []
 var starter_content: StarterContent
 var grass: FarmGrassField
 @export var gpu_grass_enabled: bool = true
-@export var grass_trial_region: Rect2 = Rect2(1008, 592, 384, 272)
 @export var order_board_position: Vector2 = Vector2(1664, 248)
 ## Authored window/gate anchors in world-local pixels, independent of sprite names.
 @export var night_light_positions: Array[Vector2] = [Vector2(1350, 308), Vector2(1183, 622), Vector2(1740, 172), Vector2(1666, 622), Vector2(1010, 274), Vector2(1384, 274), Vector2(1480, 274)]

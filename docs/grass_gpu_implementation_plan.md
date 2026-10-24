@@ -8,7 +8,7 @@ Bàn giao G2: [chunk, Y-sort và lifecycle](grass_gpu_g2.md). Đạt 74 native c
 
 Bàn giao G3: [player/vật nuôi làm cỏ nghiêng](grass_gpu_g3.md). Registry và GPU capsule/footprint, 48 checks mỗi renderer, 23 unit tests gồm hồi quy; adapter player + 86 AnimalActor thật đã kiểm chứng. Chưa bật vào map chính.
 
-Bàn giao G4: [tích hợp một vùng nông trại](grass_gpu_g4.md). Đã bật 10 cụm BarnPen, giữ ba cụm chồng props ở nguồn; giữ artwork/ánh sáng và có fallback. 49 native checks/bên, 57 GUT; chưa nghiệm thu browser/điện thoại.
+Bàn giao hiện tại: [80 mẫu cỏ/hoa/bụi/nấm GPU, 25/10](foliage_gpu.md), gồm hoa 16×32/32×32. Toàn bộ 815 cụm được hỗ trợ trong TinyDecor có hiệu ứng (138 chunk, 677 shader tile); vẽ thêm tự nhận khi chạy lại. Native QA 224 checks/bên, 34 GUT hồi quy; chưa nghiệm thu browser/điện thoại. [Báo cáo G4 vùng thử cũ](grass_gpu_g4.md).
 
 Căn cứ: [quyết định kiến trúc](grass_gpu_design.md) và [ba vòng trao đổi với Antigravity](grass_gpu_design_2026-10-24/). Model đã dùng: Gemini 3.8 Flash (High).
 
@@ -182,7 +182,7 @@ Chỉ manager là node mới. Tách module dữ liệu/renderer/feed để trán
 | G1 — POC pivot/atlas/gió | G0 | Đạt gate hình học hai renderer: 189 checks/bên, 4/4 unit tests; xem báo cáo G0/G1 |
 | G2 — Chunk/Y-sort/lifecycle | G1 đạt | Đã triển khai trong scene thử; hai renderer đạt, cache ba giới hạn và benchmark 4.096/65.536 bụi |
 | G3 — Player/animals | G2 đạt | Đạt fixture hai renderer, đủ 87/96 slots; upload 60Hz mặc định, có 30Hz; xem báo cáo G3 |
-| G4 — Một vùng map thật | G3 đạt | Đã tích hợp 10 cụm BarnPen, giữ ba overlap ở nguồn, weather/light, F10/fallback, save/load và AI thật; hai renderer đạt |
+| G4 — Tích hợp map thật | G3 đạt | Đã mở toàn map và 80 mẫu cỏ/hoa/bụi/nấm: 815 cụm, 138 chunk + 677 shader tile; hoa nhiều tile giữ đúng kích thước; weather/light, F10/fallback, save/load và AI thật; xem verification cuối trong báo cáo foliage |
 | G5 — Benchmark/chốt backend | G4, thiết bị đo | Chưa bắt đầu |
 | G6 — Hồi quy/export/mở rộng | G5 đạt cho profile tương ứng | Chưa bắt đầu |
 

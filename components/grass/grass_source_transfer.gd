@@ -8,7 +8,7 @@ var suppressed: bool = false
 var restore_conflicts: int = 0
 var retained_overlaps: int = 0
 
-func prepare(layer: TileMapLayer, root: Node2D, region: Rect2) -> Array[Dictionary]:
+func prepare(layer: TileMapLayer, root: Node2D, region: Rect2 = Rect2()) -> Array[Dictionary]:
 	restore()
 	records.clear()
 	retained_overlaps = 0
@@ -29,13 +29,22 @@ func prepare(layer: TileMapLayer, root: Node2D, region: Rect2) -> Array[Dictiona
 			if coords == Vector2i(row.coords[0], row.coords[1]):
 				type = int(row.row)
 				break
-		if type < 0 or source.get_tile_texture_region(coords) != Rect2i(coords * 16, Vector2i(16, 16)) or source.get_tile_animation_frames_count(coords) != 1:
+		if type < 0:
+			continue
+		var size: Vector2i = Vector2i(DATA.TYPES[type]["size"][0], DATA.TYPES[type]["size"][1])
+		if source.get_tile_texture_region(coords) != Rect2i(coords * 16, size) or source.get_tile_animation_frames_count(coords) != 1:
 			continue
 		var tile: TileData = layer.get_cell_tile_data(cell)
 		if not _plain_visual(tile, layer.tile_set):
 			continue
 		var center: Vector2 = layer.map_to_local(cell)
-		if not region.has_point(space * center):
+		# An empty region means the entire authored layer, including future cells.
+		if region.size != Vector2.ZERO and not region.has_point(space * center):
+			continue
+		# Extra foliage retains native atlas UVs and mixed-row ordering. Its
+		# TileData material still performs all bending on GPU, without new nodes.
+		if bool(DATA.TYPES[type].get("tilemap_only", false)):
+			retained_overlaps += 1
 			continue
 		var physical: Vector2 = center + Vector2(0, float(DATA.TYPES[type].root_y) - 8.0)
 		var sorting: Vector2 = Vector2(0, center.y + tile.y_sort_origin + layer.y_sort_origin)

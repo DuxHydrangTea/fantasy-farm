@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-25",
+  "species": 64,
+  "added_shrubs": [
+    [
+      5,
+      5
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      7,
+      9
+    ]
+  ],
+  "excluded_rock": [
+    4,
+    9
+  ],
+  "animated_cells": 750,
+  "chunk_cells": 138,
+  "gpu_tilemap_cells": 612,
+  "gut_tests_passed": 11,
+  "gut_assertions": 900,
+  "native_renderers": {
+    "compatibility": {
+      "checks": 192,
+      "failures": []
+    },
+    "forward-plus": {
+      "checks": 192,
+      "failures": []
+    }
+  },
+  "lint_ok": true,
+  "web_export_ok": true,
+  "personal_save_used": false,
+  "browser_runtime_tested": false,
+  "physical_phone_tested": false,
+  "first_attempt_note": "Initial Compatibility run timed out at 120 seconds while other import/export jobs were active; subsequent run after these finished passed both renderers. No pixel thresholds changed.",
+  "source_texture_sha256": "a8701a589560c54d1b99507e0fa3f62318ab0bdb630b9d3e906cbd91349e2f3a"
+}
