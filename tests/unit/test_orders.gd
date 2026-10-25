@@ -32,7 +32,7 @@ func test_atomic_delivery_across_split_stacks_and_reentry() -> void:
 	var serial: int = _first()
 	var item: ItemDefinition = orders.definition(serial).items[0]
 	bag.add(item, 5)
-	bag._slots[8] = {"item": item, "count": 10}
+	bag._slots[8] = {"item": item, "count": 10, "tiers": [10, 0, 0]}
 	var attempts: Array = []
 	bag.changed.connect(func() -> void:
 		assert_eq(wallet.balance, 1072)

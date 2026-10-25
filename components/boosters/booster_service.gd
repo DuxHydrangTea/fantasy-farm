@@ -15,6 +15,10 @@ func use(farm: FarmingController, cell: Vector2i, animal: AnimalActor, bag: Inve
 		error = farm.fertilizer_error(cell, actor) if is_instance_valid(farm) else "No crop to fertilize."
 		if error.is_empty():
 			applied = farm.fertilize(cell, actor)
+	elif item.booster_kind == ItemDefinition.BoosterKind.ROOT_TONIC:
+		error = farm.root_error(cell, actor) if is_instance_valid(farm) else "No crop to fertilize."
+		if error.is_empty():
+			applied = farm.apply_root(cell, actor)
 	else:
 		if is_instance_valid(animal) and not animal.is_queued_for_deletion():
 			# Never give an offline interval the benefit of a tonic applied afterward.

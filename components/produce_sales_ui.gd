@@ -15,9 +15,18 @@ var service: ProduceSaleService
 var selected: ProducePrice
 var _rows: Array[ProducePrice] = []
 var _refreshing: bool = false
+var tier_choice: OptionButton
 
 func _ready() -> void:
 	super._ready()
+	tier_choice = OptionButton.new()
+	tier_choice.name = "SaleQuality"
+	tier_choice.custom_minimum_size.y = 48
+	for tier: int in range(3):
+		tier_choice.add_item(ItemQuality.label(tier), tier)
+	body.add_child(tier_choice)
+	body.move_child(tier_choice, 1)
+	tier_choice.item_selected.connect(_choose_tier)
 	TouchQuantityComponent.attach(quantity, root)
 	balance_label.hide()
 	visit_started.connect(_start_visit)
@@ -32,6 +41,7 @@ func _ready() -> void:
 
 func _start_visit() -> void:
 	service = ProduceSaleService.new(catalog, customer.wallet, customer.selection.inventory)
+	service.tier = tier_choice.selected
 	selected = null
 	_rows.clear()
 	items.clear()
@@ -71,17 +81,20 @@ func _refresh() -> void:
 	TouchQuantityComponent.refresh_for(quantity)
 	var checked: Dictionary = service.quote(selected, int(quantity.value))
 	sell_quantity_button.disabled = not checked.ok
-	sell_quantity_button.text = tr("Sell ×{count} - {coins} coins").format({"count": int(quantity.value), "coins": selected.price * int(quantity.value) if selected != null else 0})
+	sell_quantity_button.text = tr("Sell ×{count} - {coins} coins").format({"count": int(quantity.value), "coins": ItemQuality.unit_price(selected.price, service.tier) * int(quantity.value) if selected != null else 0})
+	sell_quantity_button.text = ItemQuality.label(service.tier) + " · " + sell_quantity_button.text
 	var all: Dictionary = service.quote_all()
 	sell_all_button.disabled = not all.ok
 	sell_all_button.tooltip_text = tr("Enter a quantity, or sell all accepted produce in your bag.") if all.ok else GameText.error(all)
 	sell_all_button.text = tr("Sell all produce - {coins} coins").format({"coins": int(all.get("total", 0))})
+	sell_all_button.text = ItemQuality.label(service.tier) + " · " + sell_all_button.text
 	if selected != null:
-		details.text = tr("{item}\nIn bag: {count}\nPrice: {price} coins each").format({"item": tr(selected.item.display_name), "count": service.quantity(selected), "price": selected.price})
+		details.text = tr("{item}\nIn bag: {count}\nPrice: {price} coins each").format({"item": tr(selected.item.display_name), "count": service.quantity(selected), "price": ItemQuality.unit_price(selected.price, service.tier)})
 		status.text = tr("Enter a quantity, or sell all accepted produce in your bag.") if checked.ok else GameText.error(checked)
 	else:
 		details.text = tr("No produce to sell.")
 		status.text = tr("Bring harvested crops, flowers or animal produce.")
+	details.text += "\n" + tr("Quality") + ": " + ItemQuality.label(service.tier)
 	var warning: String = _order_warning()
 	if not warning.is_empty():
 		status.text += "\n" + warning
@@ -132,4 +145,10 @@ func _fit_layout() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_refresh()
+
+func _choose_tier(index: int) -> void:
+	if service != null:
+		service.tier = index
+		selected = null
 		_refresh()

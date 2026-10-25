@@ -18,9 +18,37 @@ var _hint: Label
 var move_button: Button
 var touch_mode_button: Button
 var _moving_from: int = -1
+var quality_popup: PopupPanel
+var _quality_rows: Array[Label] = []
 
 func _ready() -> void:
 	root.hide()
+	quality_popup = PopupPanel.new()
+	quality_popup.name = "QualityBreakdown"
+	var popup_theme: Theme = preload("res://resources/ui/game_theme.tres").duplicate() as Theme
+	var popup_style: StyleBoxFlat = StyleBoxFlat.new()
+	popup_style.bg_color = Color(0.91, 0.81, 0.64)
+	popup_style.border_color = Color(0.44, 0.28, 0.16)
+	popup_style.border_width_left = 2
+	popup_style.border_width_right = 2
+	popup_style.border_width_top = 2
+	popup_style.border_width_bottom = 2
+	popup_style.content_margin_left = 16
+	popup_style.content_margin_right = 16
+	popup_style.content_margin_top = 12
+	popup_style.content_margin_bottom = 12
+	popup_theme.set_stylebox(&"panel", &"PopupPanel", popup_style)
+	quality_popup.theme = popup_theme
+	add_child(quality_popup)
+	var quality_body: VBoxContainer = VBoxContainer.new()
+	quality_body.add_theme_constant_override("separation", 8)
+	quality_popup.add_child(quality_body)
+	for tier: int in range(3):
+		var row: Label = Label.new()
+		row.add_theme_font_size_override("font_size", 20)
+		row.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12))
+		quality_body.add_child(row)
+		_quality_rows.append(row)
 	UIScaleComponent.attach(self, root)
 	_build_wallet_row()
 	_build_details_scroll()
@@ -51,7 +79,7 @@ func _fit_panel() -> void:
 		MobileLayout.prepare_buttons(root)
 	for button: InventorySlot in buttons:
 		button.refresh()
-	_details_scroll.custom_minimum_size.y = 48 if touch else 28
+	_details_scroll.custom_minimum_size.y = 88 if touch else 76
 	_subtitle.visible = not touch
 	_hint.visible = not touch
 	move_button.visible = touch
@@ -124,6 +152,7 @@ func open() -> void:
 	selection.set_inventory_open(true)
 
 func close() -> void:
+	quality_popup.hide()
 	selection.set_inventory_open(false)
 
 func _on_visibility_changed(value: bool) -> void:
@@ -131,6 +160,8 @@ func _on_visibility_changed(value: bool) -> void:
 	if value:
 		show() # Cho phép ẩn CanvasLayer trong editor mà vẫn mở túi khi chơi.
 	root.visible = value
+	if not value:
+		quality_popup.hide()
 	if value:
 		_fit_panel()
 		_refresh()
@@ -144,6 +175,12 @@ func _inspect_slot(index: int) -> void:
 	if index < selection.HOTBAR_SIZE:
 		selection.select_slot(index)
 	_refresh()
+	var item: ItemDefinition = selection.inventory.get_slot_item(index)
+	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and _moving_from < 0:
+		var tiers: Array = selection.inventory.slot(index).tiers
+		for tier: int in range(3):
+			_quality_rows[tier].text = "%s: %d" % [ItemQuality.label(tier), tiers[tier]]
+		quality_popup.popup_centered(Vector2i(280, 160))
 
 func _refresh() -> void:
 	var used: int = 0
@@ -152,12 +189,28 @@ func _refresh() -> void:
 		buttons[index].set_selected(selected)
 		if not selection.inventory.is_empty_slot(index):
 			used += 1
+	var ordered: Array[InventorySlot] = buttons.duplicate()
+	ordered.sort_custom(func(a: InventorySlot, b: InventorySlot) -> bool:
+		if a.slot_index < selection.HOTBAR_SIZE or b.slot_index < selection.HOTBAR_SIZE:
+			return a.slot_index < b.slot_index
+		var left: ItemDefinition = selection.inventory.get_slot_item(a.slot_index)
+		var right: ItemDefinition = selection.inventory.get_slot_item(b.slot_index)
+		var left_id: String = String(left.item_id) if left != null else "~"
+		var right_id: String = String(right.item_id) if right != null else "~"
+		return left_id < right_id or (left_id == right_id and a.slot_index < b.slot_index)
+	)
+	for index: int in range(ordered.size()):
+		grid.move_child(ordered[index], index)
 	var item: ItemDefinition = selection.inventory.get_slot_item(inspected_index)
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	if item != null:
 		details.text = tr("{item} ×{count}").format({"item": tr(item.display_name), "count": selection.inventory.get_slot_count(inspected_index)})
 	else:
 		details.text = tr("Empty slot") if touch else tr("Empty slot - drag an item here")
+	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE:
+		var tiers: Array = selection.inventory.slot(inspected_index).tiers
+		for tier: int in range(3):
+			details.text += "\n%s: %d" % [ItemQuality.label(tier), tiers[tier]]
 	if item != null and MobileLayout.is_touch(get_viewport()) and not item.description.is_empty():
 		details.text += "\n" + tr(item.description)
 	if _moving_from >= 0:

@@ -11,6 +11,9 @@ var dismiss_button: Button
 var collect_button: Button
 var deposit_button: Button
 var withdraw_button: Button
+var auto_plant_button: Button
+var auto_fertilize_button: Button
+var pause_crop_button: Button
 var zones: OptionButton
 var _confirm: bool = false
 var _elapsed: float = 0.0
@@ -55,9 +58,12 @@ func _ready() -> void:
 	zones.custom_minimum_size.y = 44
 	content.add_child(zones)
 	hire_button = _button(content, tr("Hire worker"), _hire)
+	auto_plant_button = _button(content, "", _toggle_auto_plant)
+	auto_fertilize_button = _button(content, "", _toggle_auto_fertilize)
+	pause_crop_button = _button(content, "", _toggle_crop_pause)
 	deposit_button = _button(content, tr("Deposit feed"), _deposit)
-	collect_button = _button(content, tr("Collect products"), _collect)
-	withdraw_button = _button(content, tr("Withdraw feed"), _withdraw)
+	collect_button = _button(content, tr("Recover old basket products"), _collect)
+	withdraw_button = _button(content, tr("Recover old basket feed"), _withdraw)
 	dismiss_button = _button(content, tr("Dismiss worker"), _dismiss)
 	status = Label.new()
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -107,6 +113,49 @@ func _refresh() -> void:
 	zones.disabled = employed
 	var lines: PackedStringArray = [tr("Workers") + " · " + tr(role), tr("Daily wage: %d coins · paid at dawn") % int(WorkerRole.WAGES[role])]
 	lines.append(tr("First shift is free once per role. Rehiring costs today's wage."))
+	lines.append(tr("Harvested products go directly to the produce warehouse."))
+	if role == "crop":
+		lines.append(tr("Automatically uses any crop seed in supply storage. One seed per successful plot."))
+		var state: CropAutomationState = service.crop_automation
+		for button: Button in [auto_plant_button, auto_fertilize_button, pause_crop_button]:
+			button.disabled = not employed or not service.available()
+		auto_plant_button.text = tr("Auto till and replant") + ": " + tr("On" if state.auto_plant else "Off")
+		auto_fertilize_button.text = tr("Auto fertilize worker crops") + ": " + tr("On" if state.auto_fertilize else "Off")
+		pause_crop_button.text = tr("Resume crop work") if state.paused else tr("Pause crop work (wages continue)")
+		if not state.auto_plant:
+			lines.append(tr("Enable auto till and replant to use stored seeds."))
+		if state.paused:
+			lines.append(tr("Crop work is manually paused. Wages still apply."))
+		elif row.is_empty() or row.task.is_empty() or row.task.kind == "patrol":
+			lines.append(tr(service.crop_policy.waiting))
+		var source: InventoryComponent = world.storages.inventory("farm_supply_storage")
+		var seeds: int = 0
+		var fertilizer: int = 0
+		for i: int in range(source.slot_count):
+			var slot: Dictionary = source.slot(i)
+			if slot.item != null and slot.item.item_type == ItemDefinition.ItemType.SEED:
+				seeds += int(slot.count)
+			elif slot.item != null and slot.item.item_type == ItemDefinition.ItemType.BOOSTER and slot.item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER:
+				fertilizer += int(slot.count)
+		lines.append(tr("Supply storage: {seeds} crop seeds · {fertilizer} fertilizer").format({"seeds": seeds, "fertilizer": fertilizer}))
+	for button: Button in [auto_plant_button, auto_fertilize_button, pause_crop_button]:
+		button.visible = role == "crop"
+	if role == "ranch":
+		lines.append(tr("Feed comes from farm supply storage. Deposit feed at that building."))
+		lines.append(tr("Feed in supply storage:"))
+		var shared_feed: InventoryComponent = service.feed_inventory(role)
+		var totals: Dictionary = {}
+		for i: int in range(shared_feed.slot_count):
+			var slot: Dictionary = shared_feed.slot(i)
+			if slot.item != null and slot.item.item_type == ItemDefinition.ItemType.FEED:
+				var title: String = tr(slot.item.display_name)
+				totals[title] = int(totals.get(title, 0)) + int(slot.count)
+		for title: String in totals:
+			lines.append("%s × %d" % [title, totals[title]])
+		if totals.is_empty():
+			lines.append(tr("Empty"))
+	if bool(service.bridge.storage_waiting.get(role, false)):
+		lines.append(tr("Not enough warehouse space for harvest."))
 	if row.is_empty():
 		lines.append(tr(service.unlock_error(role)))
 	else:
@@ -131,11 +180,21 @@ func _refresh() -> void:
 	hire_button.disabled = employed or not service.available() or not service.unlock_error(role).is_empty()
 	dismiss_button.disabled = not employed or not service.available()
 	dismiss_button.text = tr("Confirm dismissal (basket is kept)") if _confirm else tr("Dismiss worker")
-	collect_button.disabled = row.is_empty() or not service.available()
-	deposit_button.visible = role == "ranch"
+	var legacy_count: int = 0
+	var legacy_feed: int = 0
+	if not row.is_empty():
+		var basket: InventoryComponent = service.bag_for(role)
+		for i: int in range(basket.slot_count):
+			var slot: Dictionary = basket.slot(i)
+			if slot.item != null and slot.item.item_type == ItemDefinition.ItemType.PRODUCE:
+				legacy_count += int(slot.count)
+			elif slot.item != null and slot.item.item_type == ItemDefinition.ItemType.FEED:
+				legacy_feed += int(slot.count)
+	collect_button.disabled = legacy_count == 0 or not service.available()
+	deposit_button.visible = false
 	withdraw_button.visible = role == "ranch"
 	deposit_button.disabled = row.is_empty() or not service.available()
-	withdraw_button.disabled = row.is_empty() or not service.available()
+	withdraw_button.disabled = legacy_feed == 0 or not service.available()
 
 func _hire() -> void:
 	if world == null:
@@ -143,6 +202,23 @@ func _hire() -> void:
 	var zone: String = String(zones.get_item_metadata(zones.selected)) if role == "ranch" and zones.selected >= 0 else ""
 	var error: String = world.workers.hire(role, zone)
 	status.text = tr(error) if not error.is_empty() else tr("Worker hired.")
+	_refresh()
+	_save.call_deferred()
+
+func _toggle_auto_plant() -> void:
+	var state: CropAutomationState = world.workers.crop_automation
+	_configure_crop(not state.auto_plant, state.auto_fertilize, state.paused)
+
+func _toggle_auto_fertilize() -> void:
+	var state: CropAutomationState = world.workers.crop_automation
+	_configure_crop(state.auto_plant, not state.auto_fertilize, state.paused)
+
+func _toggle_crop_pause() -> void:
+	var state: CropAutomationState = world.workers.crop_automation
+	_configure_crop(state.auto_plant, state.auto_fertilize, not state.paused)
+
+func _configure_crop(plant: bool, fertilizer: bool, pause: bool) -> void:
+	status.text = tr(world.workers.configure_crop(plant, fertilizer, pause))
 	_refresh()
 	_save.call_deferred()
 

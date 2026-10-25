@@ -87,3 +87,6 @@ func interaction_sprite() -> Node2D:
 		if child is Sprite2D or child is AnimatedSprite2D:
 			return child as Node2D
 	return null
+
+func interaction_action_text() -> String:
+	return tr("Sell produce") if menu is ProduceSalesUI else tr("Trade")

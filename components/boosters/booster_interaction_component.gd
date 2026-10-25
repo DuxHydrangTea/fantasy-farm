@@ -49,7 +49,7 @@ func prepare_action() -> StringName:
 	_slot = player.selection.selected_index
 	_cell = player.farming_actions.get_focused_cell()
 	_animal = find_animal() if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_TONIC else null
-	_pending = &"fertilize" if _item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else &"animal_tonic"
+	_pending = &"fertilize" if _item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else &"animal_tonic"
 	feedback_changed.emit()
 	return _pending
 

@@ -16,6 +16,24 @@ var selected_index: int = 0
 var inventory_open: bool = false
 var shop_open: bool = false
 var objectives_open: bool = false
+var storage_service: FarmStorageService
+var storage_seed_id: StringName = &""
+var revision: int = 0
+
+func select_storage_seed(id: StringName) -> bool:
+	if not id.is_empty() and (storage_service == null or storage_service.seed_item(id) == null):
+		return false
+	storage_seed_id = id
+	revision += 1
+	_on_inventory_changed()
+	return true
+
+func planting_inventory() -> InventoryComponent:
+	return storage_service.inventory("farm_supply_storage") if uses_storage_seeds() else inventory
+
+func uses_storage_seeds() -> bool:
+	var item: ItemDefinition = get_selected_item()
+	return storage_service != null and item != null and item.item_type == ItemDefinition.ItemType.SEED and item.crop is CropDefinition
 
 func _ready() -> void:
 	if inventory == null:
@@ -53,6 +71,8 @@ func set_objectives_open(open: bool) -> void:
 		objectives_visibility_changed.emit(open)
 
 func get_selected_item() -> ItemDefinition:
+	if not storage_seed_id.is_empty() and storage_service != null:
+		return storage_service.seed_item(storage_seed_id)
 	return inventory.get_slot_item(selected_index) if inventory != null else null
 
 func _on_inventory_changed() -> void:
@@ -62,7 +82,9 @@ func _on_inventory_changed() -> void:
 func select_slot(index: int) -> bool:
 	if index < 0 or index >= HOTBAR_SIZE:
 		return false
-	if index != selected_index:
+	if index != selected_index or not storage_seed_id.is_empty():
+		storage_seed_id = &""
+		revision += 1
 		selected_index = index
 		_on_inventory_changed()
 	return true
@@ -75,7 +97,7 @@ func get_selected_action() -> StringName:
 	if item != null and item.item_type == ItemDefinition.ItemType.PLACEABLE:
 		return &"place_beehive"
 	if item != null and item.item_type == ItemDefinition.ItemType.BOOSTER:
-		return &"fertilize" if item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else &"animal_tonic"
+		return &"fertilize" if item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else &"animal_tonic"
 	if item != null and item.item_type == ItemDefinition.ItemType.SEED:
 		return &"plant"
 	if item != null and (item.item_type == ItemDefinition.ItemType.TOOL or item.item_type == ItemDefinition.ItemType.HOE):

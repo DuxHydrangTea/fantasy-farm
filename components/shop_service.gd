@@ -43,12 +43,14 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 		if stack.item != null and offer.item.matches(stack.item):
 			var moved: int = mini(left, offer.item.get_stack_limit() - int(stack.count))
 			stack.count += moved
+			stack.tiers[0] += moved
 			left -= moved
 	for stack: Dictionary in stacks:
 		if stack.item == null and left > 0:
 			var moved: int = mini(left, offer.item.get_stack_limit())
 			stack.item = offer.item
 			stack.count = moved
+			stack.tiers[0] += moved
 			left -= moved
 	if left != 0:
 		return {"ok": false, "error": "Your inventory has changed."}

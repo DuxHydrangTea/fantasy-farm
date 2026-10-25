@@ -6,6 +6,7 @@ var catalog: ProducePriceCatalog
 var wallet: WalletComponent
 var inventory: InventoryComponent
 var _busy: bool = false
+var tier: int = 0
 
 func _init(prices: ProducePriceCatalog, purse: WalletComponent, bag: InventoryComponent) -> void:
 	catalog = prices
@@ -19,7 +20,7 @@ func quantity(entry: ProducePrice) -> int:
 	for index: int in range(inventory.slot_count):
 		var stack: Dictionary = inventory.slot(index)
 		if _matches(stack.item, entry):
-			count += int(stack.count)
+			count += int(stack.tiers[tier]) if tier >= 0 and tier <= 2 else 0
 	return count
 
 func owned_entries() -> Array[ProducePrice]:
@@ -50,7 +51,7 @@ func sell_all() -> Dictionary:
 	return _commit(_prepare(null, 0, true))
 
 func _prepare(entry: ProducePrice, amount: int, all_produce: bool) -> Dictionary:
-	if catalog == null or not catalog.is_valid() or not is_instance_valid(wallet) or not is_instance_valid(inventory):
+	if tier < 0 or tier > 2 or catalog == null or not catalog.is_valid() or not is_instance_valid(wallet) or not is_instance_valid(inventory):
 		return {"ok": false, "error": "Produce trading is unavailable."}
 	if not all_produce and (entry == null or not catalog.entries.has(entry) or amount < 1):
 		return {"ok": false, "error": "Invalid item or quantity."}
@@ -62,11 +63,12 @@ func _prepare(entry: ProducePrice, amount: int, all_produce: bool) -> Dictionary
 		var stack: Dictionary = inventory.slot(index)
 		var price: ProducePrice = catalog.find(stack.item.item_id) if stack.item != null else null
 		if price != null and _matches(stack.item, price) and (all_produce or price == entry):
-			var removed: int = int(stack.count) if all_produce else mini(left, int(stack.count))
+			var removed: int = int(stack.tiers[tier]) if all_produce else mini(left, int(stack.tiers[tier]))
 			count += removed
-			total += removed * price.price
+			total += removed * ItemQuality.unit_price(price.price, tier)
 			left -= removed
 			stack.count -= removed
+			stack.tiers[tier] -= removed
 			if stack.count == 0:
 				stack.item = null
 		stacks.append(stack)

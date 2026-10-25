@@ -1,10 +1,18 @@
 # Kế hoạch hoàn thiện Fantasy Farm
 
+Planting Depth: **S0–S1 đã hoàn thành, save v28** — stack ba tầng giữ sức chứa, chuyển kho bảo toàn tầng, tưới cho Bạc và Root Tonic cho Vàng. Xem [hướng dẫn và kiểm chứng](planting_depth_s0_s1.md); các slice còn lại trong [kế hoạch](planting_depth_plan_2026-10-25.md) chưa triển khai.
+
+Đã hoàn thành W0–W5, save v26: [Crop worker v2 — tự cuốc, gieo, trồng lại và bón phân](crop_worker_automation_plan.md). Đã đơn giản hóa theo yêu cầu: tự lấy hạt bất kỳ trong kho, làm trên đất đã mở, mỗi ô gieo thành công trừ một hạt; không chọn giống/vùng hoặc quota. Đã triển khai gameplay; xem [hướng dẫn và kiểm chứng](crop_worker_automation.md).
+
+Kế hoạch bổ sung: [kho nông sản và kho vật tư dùng chung](farm_storage_implementation_plan.md) — S0–S5 đã hoàn thành: gửi/rút, sản phẩm worker về Warehouse, feed/gieo từ kho vật tư và save v25; xem [hướng dẫn và kiểm chứng S3–S5](farm_storage_s3_s5.md).
+
 Bổ sung 25/10/2026: [người làm thuê v1](workers_v1.md) đã có cả ba vai, biển quản lý, giỏ, lương và save/offline v23.
 
 Bổ sung 25/10/2026: [nấu ăn với Chef Chloe](kitchen.md) đã triển khai, gồm hàng chờ, thành phẩm và offline/save v22.
 
 Kế hoạch bổ sung theo yêu cầu: [nâng cấp cuốc, tưới và gieo hạt tại NPC hiện có](tool_upgrade_implementation_plan.md), U1–U6 đã hoàn thành bản v1; xem [hướng dẫn và kiểm chứng](tool_upgrades.md).
+
+Bổ sung 25/10/2026: [chiều sâu 4 hệ trồng trọt](planting_depth_plan_2026-10-25.md) — kế hoạch v2.1 (sau 2 vòng review độc lập) gồm S0–S5 + S3b deferred: stack đa tầng chất lượng không đổi sức chứa với API EXACT_TIER/TIER_SET, nước→Bạc/root→Vàng, lâm nghiệp hoàn chỉnh, ghép cành tách trục Orders/Kitchen bằng quả Star (đổi hướng hiệu lực từ vụ sau), vườn ong 3 cụm snapshot đầu mẻ + tốc độ theo hoa hiện có, Perfect Delivery, ô màu mỡ hash theo ô; đã chốt qua [tranh biện 3 giai đoạn + 2 review](planting_depth_debate_2026-10-25.md); **S0 được phép triển khai** sau khi rà tương thích farm storage v25 và crop worker v26; hệ số kinh tế là giá thử nghiệm chờ phần 4.
 
 Ngày lập: 23/10/2026. Trạng thái: đang triển khai; xem bảng tiến độ cuối tài liệu.
 

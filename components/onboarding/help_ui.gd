@@ -135,7 +135,7 @@ func _skip() -> void:
 
 func _support() -> void:
 	var result: Dictionary = support.claim()
-	_message = "Received one carrot seed. Move it to the hotbar, plant it, water it and sell the harvest." if result.ok else String(result.error)
+	_message = "Received one carrot seed. Deposit it at supply storage, choose Stored seeds, then plant, water and sell the harvest." if result.ok else String(result.error)
 	_refresh()
 
 func _refresh() -> void:

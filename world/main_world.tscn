@@ -55,6 +55,8 @@
 [ext_resource type="PackedScene" path="res://scenes/animals/pen_board.tscn" id="pen_management_sign"]
 [ext_resource type="PackedScene" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
 
+[ext_resource type="PackedScene" path="res://scenes/storage/storage_access.tscn" id="storage_access"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
 0:0/0 = 0
@@ -4851,7 +4853,7 @@ tile_set = SubResource("TileSet_6x4i3")
 [node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1502539275]
 
 [node name="Player" parent="." unique_id=1882155096 instance=ExtResource("20_farmer_bob")]
-position = Vector2(1731, 988)
+position = Vector2(1752, 1008)
 
 [node name="FarmingController" type="Node" parent="." unique_id=2051324060 node_paths=PackedStringArray("ground", "farmland", "dry_soil", "wet_soil")]
 script = ExtResource("13_2bho7")
@@ -5069,5 +5071,19 @@ role = "ranch"
 [node name="CropWorkers" parent="." unique_id=1042322091 instance=ExtResource("worker_board")]
 position = Vector2(945, 253)
 role = "crop"
+
+[node name="Warehouse" parent="." unique_id=1790325500 instance=ExtResource("31_fdd8g")]
+position = Vector2(932, 199)
+
+[node name="SeedInventory" parent="." unique_id=701774952 instance=ExtResource("31_fdd8g")]
+position = Vector2(1047, 199)
+variant = 5
+
+[node name="StorageAccess" parent="Warehouse" unique_id=2046009266 instance=ExtResource("storage_access")]
+position = Vector2(0, 14)
+
+[node name="StorageAccess" parent="SeedInventory" unique_id=1577681328 instance=ExtResource("storage_access")]
+position = Vector2(0, 14)
+storage_id = "farm_supply_storage"
 
 [editable path="ProduceBuyer"]

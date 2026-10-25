@@ -57,6 +57,8 @@ func _process(delta: float) -> void:
 # Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
+	if adapter != null and adapter.world.storages != null and adapter.world.storages.busy:
+		return SaveSchema.failure("A storage transaction is in progress.", "busy")
 	if adapter != null and adapter.world.workers != null and adapter.world.workers.busy:
 		return SaveSchema.failure("A worker transaction is in progress.", "busy")
 	if busy or adapter == null or not writes_enabled:

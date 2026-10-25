@@ -20,10 +20,15 @@ func quote() -> Dictionary:
 	if world.player.wallet.balance >= cheapest:
 		return {"ok": false, "error": "You can buy seeds at the supply shop."}
 	var bag: InventoryComponent = world.player.selection.inventory
-	for index: int in range(bag.slot_count):
-		var item: ItemDefinition = bag.get_slot_item(index)
-		if item != null and item.item_type in [ItemDefinition.ItemType.SEED, ItemDefinition.ItemType.PRODUCE]:
-			return {"ok": false, "error": "Use your seeds, or sell produce to buy more seeds."}
+	var inventories: Array[InventoryComponent] = [bag]
+	if world.storages != null:
+		inventories.append(world.storages.inventory("farm_supply_storage"))
+		inventories.append(world.storages.inventory("produce_warehouse"))
+	for inventory: InventoryComponent in inventories:
+		for index: int in range(inventory.slot_count):
+			var item: ItemDefinition = inventory.get_slot_item(index)
+			if item != null and item.item_type in [ItemDefinition.ItemType.SEED, ItemDefinition.ItemType.PRODUCE]:
+				return {"ok": false, "error": "Use your seeds, or sell produce to buy more seeds."}
 	if world.farming.has_planted_crops():
 		return {"ok": false, "error": "Water and harvest the crops already in your field."}
 	if bag.capacity_for(SEED) < 1:

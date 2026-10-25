@@ -14,6 +14,9 @@ var upgrades: ToolUpgradeState
 var _targets: Array[Vector2i] = []
 var last_preview: Array[Dictionary] = []
 var last_result: Dictionary = {}
+var _storage_seed: bool = false
+var _selection_revision: int = -1
+var _plant_source: InventoryComponent
 
 func _ready() -> void:
 	assert(animation != null and state != null, "Farming actions require animation and state")
@@ -38,6 +41,9 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 	if _action == &"plant" and state.tool_selection != null:
 		_seed = state.tool_selection.get_selected_item()
 		_slot_index = state.tool_selection.selected_index
+		_storage_seed = state.tool_selection.uses_storage_seeds()
+		_selection_revision = state.tool_selection.revision
+		_plant_source = state.tool_selection.planting_inventory()
 
 func get_farming_controller() -> FarmingController:
 	return farming if is_instance_valid(farming) else null
@@ -71,7 +77,8 @@ func target_cells(action: StringName = &"", frozen: bool = true) -> Array[Vector
 
 func preview() -> Array[Dictionary]:
 	var action: StringName = get_action() if state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] else state.get_selected_tool_action()
-	last_preview = FarmingAreaPolicy.evaluate(farming, action, target_cells(action), state.tool_selection.inventory, state.tool_selection.selected_index, get_parent() as PhysicsBody2D)
+	var selection: ToolSelectionComponent = state.tool_selection
+	last_preview = FarmingAreaPolicy.evaluate(farming, action, target_cells(action), selection.planting_inventory(), selection.selected_index, get_parent() as PhysicsBody2D, selection.get_selected_item(), selection.uses_storage_seeds())
 	return last_preview
 
 # Thao tác chỉ commit ở frame chạm đất, không ở thời điểm người chơi vừa bấm nút.
@@ -90,7 +97,14 @@ func _on_frame_changed() -> void:
 	elif action == &"water" and state.current_state == StateComponent.State.WATER:
 		last_result = farming.apply_area(action, _targets, null, -1, null, get_parent() as PhysicsBody2D)
 	elif action == &"plant" and state.current_state == StateComponent.State.TOOL:
-		var inventory: InventoryComponent = state.tool_selection.inventory
+		var selection: ToolSelectionComponent = state.tool_selection
+		if selection.revision != _selection_revision or selection.is_menu_open():
+			return
+		if _storage_seed:
+			if selection.storage_service != null and selection.planting_inventory() == _plant_source and selection.get_selected_item() == _seed:
+				last_result = selection.storage_service.plant_from_storage(_seed.item_id, _selection_revision, _targets)
+			return
+		var inventory: InventoryComponent = selection.inventory
 		# Selection changes cannot redirect the seed or spend a different stack mid-action.
 		if state.tool_selection.selected_index == _slot_index and inventory.slot(_slot_index).item == _seed:
 			last_result = farming.apply_area(action, _targets, inventory, _slot_index, _seed, get_parent() as PhysicsBody2D)

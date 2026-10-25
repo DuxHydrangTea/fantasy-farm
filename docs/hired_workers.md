@@ -1,5 +1,7 @@
 # Người làm thuê — 3 vai chuyên biệt (Hired Workers)
 
+> **Cập nhật 25/10/2026 — save v26:** Crop đã tự cuốc, lấy hạt bất kỳ từ kho vật tư, gieo lại và tùy chọn bón phân. Nông sản worker về Warehouse; Ranch lấy feed từ kho vật tư, giỏ worker chỉ còn phục vụ dữ liệu cũ. Xem [hướng dẫn hiện hành](crop_worker_automation.md). Phần v1 bên dưới là tài liệu lịch sử; giới hạn không cuốc/gieo/bón và yêu cầu chọn giống/vùng đã được thay thế bởi [kế hoạch v2](crop_worker_automation_plan.md).
+
 Worker là NPC có thân đi tuần tự tìm việc, **tách theo 3 vai chuyên biệt** —
 mỗi vai một địa bàn và một nhóm việc, người chơi tuyển theo điểm nghẽn của
 nông trại. Kiến trúc: **một `WorkerActor` generic + `WorkerRole` strategy**

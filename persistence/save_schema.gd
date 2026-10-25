@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 23
+const VERSION: int = 28
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,13 +65,13 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
 		if data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT:
 			while data.inventory.size() < InventoryComponent.DEFAULT_SLOT_COUNT:
-				data.inventory.append({"item": "", "count": 0})
+				data.inventory.append({"item": "", "count": 0, "tiers": [0, 0, 0]})
 		if data.version == 4:
 			data.version = 5
 	# Land ownership is new in v6. Preserve every previously tilled/planted cell
@@ -210,9 +210,47 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if data.get("version") == 22:
 		data = data.duplicate(true)
 		data["workers"] = WorkerSaveSchema.fresh()
+		data.version = 23
+	if data.get("version") == 23:
+		data = data.duplicate(true)
+		data["storages"] = FarmStorageSaveSchema.fresh()
+		data.version = 24
+	if data.get("version") == 24:
+		data = data.duplicate(true)
+		data["storage_seed"] = ""
+		data.version = 25
+	if data.get("version") == 25:
+		if not data.get("workers") is Dictionary:
+			return failure("Invalid worker state.")
+		data = data.duplicate(true)
+		data.workers["crop_automation"] = CropAutomationState.fresh()
+		data.version = 26
+	if data.get("version") == 26:
+		data = data.duplicate(true)
+		if not QualitySaveSchema.migrate(data):
+			return failure("Invalid legacy quality inventory.")
+		data.version = 27
+	if data.get("version") == 27:
+		if not data.get("crops") is Array:
+			return failure("Invalid legacy crops.")
+		data = data.duplicate(true)
+		for crop: Variant in data.crops:
+			if not crop is Dictionary:
+				return failure("Invalid legacy crop.")
+			crop["watered"] = true
+			crop["root_boost"] = false
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
+	var storage_seed: Variant = data.get("storage_seed")
+	if not storage_seed is String:
+		return failure("Invalid stored seed selection.")
+	if not storage_seed.is_empty():
+		var item: ItemDefinition = catalog.items.get(storage_seed) as ItemDefinition
+		if item == null or item.item_type != ItemDefinition.ItemType.SEED or not FarmStorageSaveSchema.DEFINITIONS["farm_supply_storage"].accepts(item):
+			return failure("Invalid stored seed selection.")
+	if not FarmStorageSaveSchema.valid(data.get("storages"), catalog):
+		return failure("Invalid farm storage state.")
 	if not data.get("flower_garden_unlocked") is bool:
 		return failure("Invalid flower garden unlock state.")
 	if not WorkerSaveSchema.valid(data.get("workers"), catalog, float(data.saved_at)):
@@ -246,6 +284,12 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		return failure("Invalid unlocked farmland columns.")
 	if not number(data.get("land_starting_columns"), 1, data.land_columns, true):
 		return failure("Invalid starting farmland columns.")
+	var automation: Dictionary = data.workers.crop_automation
+	if automation.prepared.size() == 2 and not LandExpansionState.cell_is_open(Vector2i(int(automation.prepared[0]), int(automation.prepared[1])), int(data.land_columns)):
+		return failure("Invalid crop automation plot.")
+	for plot: Dictionary in automation.plots:
+		if not LandExpansionState.cell_is_open(Vector2i(int(plot.cell[0]), int(plot.cell[1])), int(data.land_columns)):
+			return failure("Invalid crop automation plot.")
 	if not number(data.get("coins"), 0, WalletComponent.MAX_COINS, true):
 		return failure("Invalid coin balance.")
 	for key: String in ["inventory", "soil", "crops", "animals", "troughs", "pickups", "flower_gardens", "beehives"]:
@@ -273,13 +317,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if data.inventory.size() < 1 or data.inventory.size() > 256:
 		return failure("Invalid inventory slot count.")
 	for stack: Variant in data.inventory:
-		if not stack is Dictionary or not stack.get("item") is String or not number(stack.get("count"), 0, 32000, true):
-			return failure("Invalid inventory slot.")
-		if stack.item == "":
-			if stack.count != 0:
-				return failure("An empty slot has a nonzero count.")
-		elif not catalog.items.has(stack.item) or not number(stack.count, 1, catalog.items[stack.item].get_stack_limit(), true):
-			return failure("Invalid item or count.")
+		if not QualitySaveSchema.slot_valid(stack, catalog):
+			return failure("Invalid inventory quality slot.")
 	var soil: Dictionary = {}
 	for row: Variant in data.soil:
 		if not row is Dictionary or not vector(row.get("cell"), true) or not number(row.get("state"), 1, 2, true):
@@ -298,6 +337,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Invalid crop.")
 		if not number(row.get("pollination_reduction")):
 			return failure("Invalid crop pollination state.")
+		if not row.get("watered") is bool or not row.get("root_boost") is bool or (row.root_boost and not row.watered):
+			return failure("Invalid crop quality state.")
 		if not row.get("fertilized") is bool:
 			return failure("Invalid crop fertilizer state.")
 		var crop_cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))

@@ -3,7 +3,7 @@ extends RefCounted
 ## One serial queue owned by the farm, independent of the Chef scene and UI.
 signal changed
 const CAPACITY: int = 20
-const RECIPES: Array[CookingRecipe] = [preload("res://resources/kitchen/recipes/fried_egg.tres"), preload("res://resources/kitchen/recipes/steamed_egg.tres"), preload("res://resources/kitchen/recipes/bread.tres"), preload("res://resources/kitchen/recipes/fruit_salad.tres"), preload("res://resources/kitchen/recipes/honey_bread.tres")]
+const RECIPES: Array[CookingRecipe] = [preload("res://resources/kitchen/recipes/fried_egg.tres"), preload("res://resources/kitchen/recipes/steamed_egg.tres"), preload("res://resources/kitchen/recipes/bread.tres"), preload("res://resources/kitchen/recipes/fruit_salad.tres"), preload("res://resources/kitchen/recipes/honey_bread.tres"), preload("res://resources/kitchen/recipes/root_tonic.tres")]
 var queue: Array[Dictionary] = []
 var ready: Array[String] = []
 var updated_at: float = 0.0
@@ -63,7 +63,7 @@ func quote(id: String, amount: int, inventory: InventoryComponent) -> String:
 	if queue.size() + ready.size() + amount > CAPACITY:
 		return "Chef is full. Collect dishes first (20 maximum)."
 	for i: int in range(recipe.ingredients.size()):
-		if inventory.count_item(recipe.ingredients[i].item_id) < recipe.amounts[i] * amount:
+		if inventory.count_item(recipe.ingredients[i].item_id, recipe.tier_at(i)) < recipe.amounts[i] * amount:
 			return "Not enough ingredients."
 	return ""
 
@@ -77,7 +77,7 @@ func start(id: String, amount: int, inventory: InventoryComponent, now: float) -
 	busy = true
 	var recipe: CookingRecipe = find(id)
 	for i: int in range(recipe.ingredients.size()):
-		inventory.remove(recipe.ingredients[i].item_id, recipe.amounts[i] * amount, false)
+		inventory.consume(recipe.ingredients[i].item_id, recipe.amounts[i] * amount, ItemQuality.exact(recipe.tier_at(i)), false)
 	var finish: float = maxf(updated_at, float(queue.back().finish_at) if not queue.is_empty() else updated_at)
 	for i: int in range(amount):
 		finish += recipe.cook_seconds

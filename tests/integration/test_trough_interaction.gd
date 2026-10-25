@@ -1,5 +1,6 @@
 extends GutTest
 const FEED: Resource = preload("res://items/feeds/poultry_feed.tres")
+var world: FarmWorld
 var player: CharacterBody2D
 var state: StateComponent
 var selection: ToolSelectionComponent
@@ -7,9 +8,13 @@ var interaction: TroughInteractionComponent
 var trough: AnimalTrough
 
 func before_each() -> void:
-	player = preload("res://scenes/characters/player.tscn").instantiate() as CharacterBody2D
+	world = preload("res://world/main_world.tscn").instantiate() as FarmWorld
+	world.process_mode = Node.PROCESS_MODE_DISABLED
+	add_child_autofree(world)
+	world.tool_upgrades.profile_ready = true
+	player = world.player
 	player.position = Vector2(200, 200)
-	add_child_autofree(player)
+	world.storages.inventory("farm_supply_storage").add(FEED, 5)
 	state = player.get_node("StateComponent") as StateComponent
 	state.set_physics_process(false)
 	selection = player.get_node("ToolSelection") as ToolSelectionComponent
@@ -17,7 +22,7 @@ func before_each() -> void:
 	interaction.set_physics_process(false)
 	trough = preload("res://scenes/animals/feed_trough.tscn").instantiate() as AnimalTrough
 	trough.position = player.position + Vector2(0, 20)
-	add_child_autofree(trough)
+	world.add_child(trough)
 	trough.stock = 0
 	await wait_physics_frames(2)
 
@@ -34,7 +39,8 @@ func test_player_uses_shared_inventory_and_refills_once_at_animation_impact() ->
 	_impact()
 	_impact()
 	assert_eq(trough.stock, 600)
-	assert_eq(selection.inventory.count_item(FEED.item_id), 3)
+	assert_eq(selection.inventory.count_item(FEED.item_id), 5)
+	assert_eq(interaction.feed_inventory().count_item(FEED.item_id), 5 - 600 / FEED.food_units_per_item)
 	assert_string_contains(interaction.prompt.text, "600/600")
 
 func test_water_requires_selected_can_and_never_consumes_the_tool() -> void:
@@ -89,9 +95,9 @@ func test_selecting_another_slot_keeps_original_watering_action() -> void:
 	assert_eq(trough.stock, 30)
 
 func test_full_and_missing_feed_block_farming_and_show_reason() -> void:
-	selection.inventory.remove(FEED.item_id, 5)
+	interaction.feed_inventory().remove(FEED.item_id, 5)
 	interaction.refresh()
-	assert_string_contains(interaction.prompt.text, "Requires Poultry Feed")
+	assert_string_contains(interaction.prompt.text, "Supply storage requires Poultry Feed")
 	assert_true(state.use_selected_tool())
 	assert_eq(state.active_action, &"")
 	trough.stock = trough.capacity

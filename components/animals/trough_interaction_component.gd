@@ -64,6 +64,15 @@ func has_watering_can() -> bool:
 	var item: ItemDefinition = selection.get_selected_item() if selection != null else null
 	return item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.WATERING_CAN
 
+
+func feed_inventory() -> InventoryComponent:
+	var world: FarmWorld = get_parent().get_parent() as FarmWorld
+	return world.storages.inventory("farm_supply_storage") if world != null and world.storages != null else null
+
+func feed_stock(trough: AnimalTrough) -> int:
+	var source: InventoryComponent = feed_inventory()
+	return source.count_item(trough.feed_item.item_id) if source != null and trough.feed_item != null else 0
+
 func refill_hint(trough: AnimalTrough) -> String:
 	if trough.stock >= trough.capacity:
 		return tr("Trough is full")
@@ -71,16 +80,16 @@ func refill_hint(trough: AnimalTrough) -> String:
 		return tr("[E] Add water") if has_watering_can() else tr("Select a watering can to add water")
 	if trough.feed_item == null:
 		return tr("No feed type assigned to this trough")
-	if selection.inventory.count_item(trough.feed_item.item_id) == 0:
-		return tr("Requires {item}").format({"item": tr(trough.feed_item.display_name)})
-	if trough.feed_items_needed(selection.inventory) == 0:
+	if feed_stock(trough) == 0:
+		return tr("Supply storage requires {item}").format({"item": tr(trough.feed_item.display_name)})
+	if trough.feed_items_needed(feed_inventory()) == 0:
 		return tr("Not enough room for one feed pack")
-	return tr("[E] Add feed")
+	return tr("[E] Add feed · Storage: {count}").format({"count": feed_stock(trough)})
 
 func can_refill(trough: AnimalTrough) -> bool:
 	if trough.stock >= trough.capacity:
 		return false
-	return has_watering_can() if trough.kind == AnimalTrough.Kind.WATER else trough.feed_items_needed(selection.inventory) > 0
+	return has_watering_can() if trough.kind == AnimalTrough.Kind.WATER else trough.feed_items_needed(feed_inventory()) > 0
 
 func refresh() -> void:
 	if selection == null or selection.is_menu_open():
@@ -141,7 +150,9 @@ func _on_frame_changed() -> void:
 		return
 	var added: int = 0
 	if action == &"refill_food":
-		added = trough.refill_to_full(selection.inventory) if _auto_fill else trough.refill_from_inventory(selection.inventory)
+		var world: FarmWorld = get_parent().get_parent() as FarmWorld
+		if world != null:
+			added = world.storages.refill_feed(trough, _auto_fill)
 	elif action == &"refill_water":
 		if _auto_fill and inventory_has_can():
 			added = trough.refill(trough.capacity - trough.stock)
@@ -168,8 +179,8 @@ func auto_hint(trough: AnimalTrough) -> String:
 		return "" if inventory_has_can() else tr("A watering can is required.")
 	if trough.feed_item == null:
 		return tr("No feed type assigned to this trough")
-	if trough.feed_reserve == 0 and selection.inventory.count_item(trough.feed_item.item_id) == 0:
-		return tr("Requires {item}").format({"item": tr(trough.feed_item.display_name)})
+	if trough.feed_reserve == 0 and feed_stock(trough) == 0:
+		return tr("Supply storage requires {item}").format({"item": tr(trough.feed_item.display_name)})
 	return ""
 
 func prepare_target(trough: AnimalTrough) -> StringName:

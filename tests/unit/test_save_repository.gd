@@ -43,18 +43,23 @@ func after_each() -> void:
 		DirAccess.remove_absolute(folder)
 
 func _snapshot(revision: int = 1) -> Dictionary:
-	return {"version": SaveSchema.VERSION, "land_columns": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
+	var data: Dictionary = {"version": SaveSchema.VERSION, "land_columns": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
 		"objectives": ObjectiveSaveSchema.fresh(ObjectiveProgress.DEFAULT_CATALOG),
 		"orders": OrderSaveSchema.fresh(),
 		"tutorial": TutorialSaveSchema.fresh(),
 		"tool_upgrades": ToolUpgradeState.fresh(),
 		"cooking": ChefCooking.fresh(),
 		"workers": WorkerSaveSchema.fresh(),
+		"storages": FarmStorageSaveSchema.fresh(),
+		"storage_seed": "",
 		"flower_garden_unlocked": false,
 		"pen_updated_at": {},
 		"land_starting_columns": 1,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
 		"weather": WeatherSchedule.new().capture(), "trees": [], "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
+
+	QualitySaveSchema.migrate(data)
+	return data
 
 func _write_raw(path: String, source: String) -> void:
 	DirAccess.make_dir_recursive_absolute(folder)
@@ -93,18 +98,20 @@ func test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks(
 	old.player.selected_slot = 5
 	old.inventory = []
 	for index: int in range(24):
-		old.inventory.append({"item": "hoe", "count": 1})
+		old.inventory.append({"item": "hoe", "count": 1, "tiers": [1, 0, 0]})
 	old.inventory[5] = {"item": "cow_milk", "count": 234}
 	var original: String = JSON.stringify(old)
 	var checked: Dictionary = SaveSchema.validate(old, catalog)
 	assert_true(checked.ok)
 	assert_eq(JSON.stringify(old), original)
 	assert_eq(checked.snapshot.inventory.size(), 64)
-	assert_eq(checked.snapshot.inventory.slice(0, 24), old.inventory)
+	for i: int in range(24):
+		assert_eq(checked.snapshot.inventory[i].item, old.inventory[i].item)
+		assert_eq(checked.snapshot.inventory[i].count, old.inventory[i].count)
 	assert_eq(checked.snapshot.coins, 731)
 	assert_eq(checked.snapshot.player.selected_slot, 5)
 	for index: int in range(24, 64):
-		assert_eq(checked.snapshot.inventory[index], {"item": "", "count": 0})
+		assert_eq(checked.snapshot.inventory[index], {"item": "", "count": 0, "tiers": [0, 0, 0]})
 	var again: Dictionary = SaveSchema.validate(checked.snapshot, catalog)
 	assert_eq(again.snapshot, checked.snapshot, "Migration only runs once")
 	assert_true(repo.write_profile("test", checked.snapshot, 0).ok)
@@ -117,7 +124,7 @@ func test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
 	old.version = SaveSchema.VERSION
 	old.inventory = []
 	for index: int in range(24):
-		old.inventory.append({"item": "hoe", "count": 1})
+		old.inventory.append({"item": "hoe", "count": 1, "tiers": [1, 0, 0]})
 	var current_legacy: Dictionary = SaveSchema.validate(old, catalog)
 	assert_true(current_legacy.ok)
 	assert_eq(current_legacy.snapshot.inventory.size(), 64, "Live reload can still write an old-sized bag")
@@ -131,11 +138,16 @@ func test_roundtrip_and_previous_revision_backup() -> void:
 	assert_true(repo.write_profile("test", _snapshot(), 0).ok)
 	var latest: Dictionary = _snapshot(2)
 	latest.player.position = [100.5, 200.25]
+	latest.storages.produce_warehouse.slots[0] = {"item": "apple", "count": 37, "tiers": [37, 0, 0]}
+	latest.storages.farm_supply_storage.slots[0] = {"item": "carrot_seed", "count": 24, "tiers": [24, 0, 0]}
+	latest.storages.farm_supply_storage.slots[1] = {"item": "poultry_feed", "count": 5, "tiers": [5, 0, 0]}
 	assert_true(repo.write_profile("test", latest, 1).ok)
 	var result: Dictionary = repo.read_profile("test")
 	assert_true(result.ok)
 	assert_eq(int(result.snapshot.revision), 2)
 	assert_eq(float(result.snapshot.player.position[0]), 100.5)
+	# JSON decodes numbers as floats; compare both DTOs through the same boundary.
+	assert_eq(result.snapshot.storages, JSON.parse_string(JSON.stringify(latest.storages)), "Both nonempty storages survive disk JSON roundtrip")
 	assert_true(FileAccess.file_exists(repo.path("test") + ".bak"))
 
 func test_truncated_primary_recovers_backup_and_can_save_again() -> void:

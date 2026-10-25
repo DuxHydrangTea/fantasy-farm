@@ -92,6 +92,8 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["tool_upgrades"] = world.tool_upgrade_state.capture()
 	data["cooking"] = world.cooking.capture(now)
 	data["workers"] = world.workers.capture(now)
+	data["storages"] = world.storages.capture()
+	data["storage_seed"] = String(selection.storage_seed_id)
 	data["land_starting_columns"] = farm.land.starting_columns
 	data["flower_garden_unlocked"] = world.starter_content.flower_garden_unlocked
 	data["pen_updated_at"] = {}
@@ -105,11 +107,11 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 		data.flower_gardens.append(garden.capture(now))
 	for index: int in range(selection.inventory.slot_count):
 		var stack: Dictionary = selection.inventory.slot(index)
-		data.inventory.append({"item": String(stack.item.item_id) if stack.item != null else "", "count": int(stack.count)})
+		data.inventory.append({"item": String(stack.item.item_id) if stack.item != null else "", "count": int(stack.count), "tiers": stack.tiers.duplicate()})
 	for cell: Vector2i in farm.crop_cells():
 		var crop: Crop = farm.get_crop(cell)
 		crop.refresh(now)
-		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress, "fertilized": crop.fertilized,"pollination_reduction":crop.pollination_reduction})
+		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress, "watered": crop.watered, "root_boost": crop.root_boost, "fertilized": crop.fertilized,"pollination_reduction":crop.pollination_reduction})
 	for animal: AnimalActor in animals:
 		if animal.is_dead() or animal.is_queued_for_deletion():
 			continue # Sync above may have reached the lifetime limit in this very capture.
@@ -158,6 +160,8 @@ func preflight(data: Dictionary) -> Dictionary:
 	data = checked.snapshot
 	if world.farming != null and world.farming.is_area_busy():
 		return SaveSchema.failure("A farming action is in progress.", "busy")
+	if world.storages == null or world.storages.busy:
+		return SaveSchema.failure("A storage transaction is in progress.", "busy")
 	if world.workers == null or world.workers.busy:
 		return SaveSchema.failure("A worker transaction is in progress.", "busy")
 	for row: Dictionary in data.workers.rows:
@@ -260,6 +264,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		world.trees.reset()
 	world.weather.restore(data.weather, float(data.saved_at))
 	player.shop_interaction.close_for_load()
+	world.storages.restore(data.storages, catalog)
 	player.selection.set_objectives_open(false)
 	if world.land != null:
 		world.land.reset_presentation()
@@ -300,7 +305,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	farm.restore_soil(data.soil)
 	world.weather.advance(float(data.saved_at))
 	for row: Dictionary in data.crops:
-		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction))
+		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction), bool(row.watered), bool(row.root_boost))
 	world.apiary.restore(data.beehives,float(data.saved_at),float(data.saved_at))
 	if world.trees != null:
 		world.trees.restore(data.trees, float(data.saved_at))
@@ -324,9 +329,10 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		camera.reset_smoothing()
 	var slots: Array[Dictionary] = []
 	for stack: Dictionary in data.inventory:
-		slots.append({"item": catalog.items.get(stack.item), "count": int(stack.count)})
+		slots.append({"item": catalog.items.get(stack.item), "count": int(stack.count), "tiers": stack.tiers.duplicate()})
 	selection.inventory.replace_slots(slots)
 	selection.select_slot(int(data.player.selected_slot))
+	selection.select_storage_seed(StringName(data.storage_seed))
 	var piles: Dictionary = {}
 	for row: Dictionary in data.pickups:
 		var pile: ItemPickup = PICKUP_SCENE.instantiate() as ItemPickup

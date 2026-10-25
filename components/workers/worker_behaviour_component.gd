@@ -88,7 +88,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 	if _badge_elapsed >= 0.25:
 		_badge_elapsed = 0.0
 		_update_badge(actor, row)
-	if not row.employed or not row.active:
+	if not actor.worker_service.running(row):
 		movement.cancel_target()
 		movement.stop()
 		animation.play("idle")
@@ -128,8 +128,14 @@ func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
 	var used: int = 0
 	for i: int in range(actor.basket.slot_count):
 		used += 0 if actor.basket.is_empty_slot(i) else 1
-	actor.badge.text = tr("Basket %d/16") % used
-	if not row.employed or not row.active:
+	actor.badge.text = tr("Products → Warehouse")
+	if actor.worker_role == "crop" and (row.task.is_empty() or row.task.kind == "patrol"):
+		actor.badge.text += "\n" + tr(actor.worker_service.crop_policy.waiting)
+	if used > 0:
+		actor.badge.text += "\n" + tr("Basket %d/16") % used
+	if bool(actor.worker_service.bridge.storage_waiting.get(actor.worker_role, false)):
+		actor.badge.text += "\n" + tr("Warehouse needs space")
+	if not actor.worker_service.running(row):
 		actor.badge.text += "\n" + tr("Resting")
 	elif not row.task.is_empty():
 		actor.badge.text += "\n" + tr(String(row.task.kind))

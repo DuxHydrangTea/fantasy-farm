@@ -65,7 +65,7 @@ func _menu_changed(_open: bool) -> void:
 
 func _on_selection_changed(index: int, _tool: StringName) -> void:
 	for i: int in range(buttons.size()):
-		buttons[i].set_selected(i == index)
+		buttons[i].set_selected(i == index and selection.storage_seed_id.is_empty())
 	_refresh_feedback()
 	_refresh_controls()
 
@@ -152,7 +152,7 @@ func _refresh_feedback() -> void:
 	if not feedback.is_empty():
 		tooltip = tr(feedback)
 	elif item != null:
-		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER else "Face an animal and right-click / Space to give tonic."
+		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else "Face an animal and right-click / Space to give tonic."
 		tooltip = tr(item.description) + "\n" + tr(instruction)
 	if selected_name.tooltip_text != tooltip:
 		selected_name.tooltip_text = tooltip

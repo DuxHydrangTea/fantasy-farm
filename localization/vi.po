@@ -1917,3 +1917,209 @@ msgstr "Tiếp thức ăn"
 
 msgid "patrol"
 msgstr "Đi tuần"
+
+msgid "Open storage"
+msgstr "Mở kho"
+
+msgid "Produce warehouse"
+msgstr "Kho nông sản"
+
+msgid "Farm supply storage"
+msgstr "Kho giống và thức ăn"
+
+msgid "Your bag"
+msgstr "Túi của bạn"
+
+msgid "Storage"
+msgstr "Trong kho"
+
+msgid "Occupied slots: {used}/{total}"
+msgstr "Ô đã dùng: {used}/{total}"
+
+msgid "Produce only"
+msgstr "Chỉ nhận nông sản"
+
+msgid "Crop seeds and animal feed only"
+msgstr "Chỉ nhận hạt giống cây trồng và thức ăn"
+
+msgid "Deposit"
+msgstr "Gửi vào kho"
+
+msgid "Withdraw"
+msgstr "Rút về túi"
+
+msgid "Deposit matching items"
+msgstr "Gửi tất cả đồ phù hợp"
+
+msgid "Withdraw all"
+msgstr "Rút tất cả"
+
+msgid "Select an item, then choose a quantity."
+msgstr "Chọn vật phẩm, rồi chọn số lượng."
+
+msgid "Empty"
+msgstr "Trống"
+
+msgid "Moved {count} items."
+msgstr "Đã chuyển {count} vật phẩm."
+
+msgid "Storage is unavailable."
+msgstr "Kho chưa sẵn sàng."
+
+msgid "Move closer to the storage entrance."
+msgstr "Hãy đến gần cửa kho hơn."
+
+msgid "This item does not belong in this storage."
+msgstr "Kho này không nhận loại vật phẩm này."
+
+msgid "Nothing can be moved. Check the source and destination capacity."
+msgstr "Không chuyển được đồ. Kiểm tra số lượng và chỗ trống ở nơi nhận."
+
+msgid "Unable to update storage."
+msgstr "Không thể cập nhật kho."
+
+msgid "A storage transaction is in progress."
+msgstr "Đang chuyển vật phẩm trong kho."
+
+msgid "Invalid farm storage state."
+msgstr "Dữ liệu kho nông trại không hợp lệ."
+
+msgid "Recover old basket products"
+msgstr "Nhận nông sản còn trong giỏ cũ"
+
+msgid "Harvested products go directly to the produce warehouse."
+msgstr "Nông sản thu hoạch được đưa thẳng vào kho nông sản."
+
+msgid "Not enough warehouse space for harvest."
+msgstr "Kho không đủ chỗ cho đợt thu hoạch."
+
+msgid "Products → Warehouse"
+msgstr "Nông sản → Kho"
+
+msgid "Warehouse needs space"
+msgstr "Kho cần thêm chỗ trống"
+
+msgid "Feed comes from farm supply storage. Deposit feed at that building."
+msgstr "Thức ăn lấy từ kho vật tư. Hãy gửi thức ăn tại công trình đó."
+
+msgid "[E] Add feed · Storage: {count}"
+msgstr "[E] Tiếp thức ăn · Trong kho: {count}"
+
+msgid "Supply storage requires {item}"
+msgstr "Kho vật tư cần {item}"
+
+msgid "Storage feed: {count}"
+msgstr "Thức ăn trong kho: {count}"
+
+msgid "Stored seeds · G"
+msgstr "Giống trong kho · G"
+
+msgid "Stored seeds"
+msgstr "Giống trong kho"
+
+msgid "Sow from farm supply storage"
+msgstr "Chọn giống để gieo từ kho"
+
+msgid "Deposit crop seeds at supply storage, then choose a variety here. Select a hotbar slot to leave this mode."
+msgstr "Gửi hạt vào kho vật tư, rồi chọn giống tại đây. Chọn ô hotbar để thoát chế độ này."
+
+msgid "Deposit this seed at farm supply storage."
+msgstr "Hãy gửi hạt giống này tại kho vật tư."
+
+msgid "Field crops consume stored seeds. Flower seeds and saplings still use your bag."
+msgstr "Cây trồng dùng hạt từ kho. Hạt hoa và cây giống lâu năm vẫn dùng túi."
+
+msgid "Invalid stored seed selection."
+msgstr "Giống đang chọn trong kho không hợp lệ."
+
+msgid "Received one carrot seed. Deposit it at supply storage, choose Stored seeds, then plant, water and sell the harvest."
+msgstr "Đã nhận một hạt cà rốt. Gửi hạt vào kho vật tư, chọn Giống trong kho, gieo, tưới và bán nông sản."
+
+msgid "Recover old basket feed"
+msgstr "Nhận thức ăn còn trong giỏ cũ"
+
+msgid "Feed in supply storage:"
+msgstr "Thức ăn trong kho vật tư:"
+
+msgid "Deposit crop seeds at supply storage. Choose Stored seeds and use them on prepared soil."
+msgstr "Gửi hạt vào kho vật tư. Chọn Giống trong kho rồi gieo lên đất đã cuốc."
+
+msgid "Deposit crop seeds at the farm supply storage building. Open Stored seeds (G on keyboard), choose a variety, then face prepared empty farmland and use it. Only planting after this step unlocks counts."
+msgstr "Gửi hạt tại kho vật tư. Mở Giống trong kho (phím G), chọn giống, hướng về đất trống đã cuốc rồi gieo. Chỉ lượt gieo thành công sau khi mở bước này mới được tính."
+
+msgid "Deposit feed at supply storage. Stand near a food trough and interact."
+msgstr "Gửi thức ăn vào kho vật tư. Đến gần máng ăn và tương tác."
+
+msgid "Buy feed if needed and deposit it at farm supply storage. Stand beside a food trough and interact. The matching stored feed is consumed only at refill impact. A full trough does not count."
+msgstr "Mua thức ăn nếu cần rồi gửi vào kho vật tư. Đứng cạnh máng ăn và tương tác. Chỉ trừ đúng loại thức ăn trong kho tại lúc nạp máng. Máng đầy không được tính."
+
+msgid "Automatically uses any crop seed in supply storage. One seed per successful plot."
+msgstr "Tự lấy hạt cây trồng bất kỳ trong kho. Mỗi ô gieo thành công dùng một hạt."
+
+msgid "Auto till and replant"
+msgstr "Tự cuốc và gieo lại"
+
+msgid "Auto fertilize worker crops"
+msgstr "Tự bón cây do người làm trồng"
+
+msgid "Resume crop work"
+msgstr "Tiếp tục làm ruộng"
+
+msgid "Pause crop work (wages continue)"
+msgstr "Tạm dừng làm ruộng (vẫn trả lương)"
+
+msgid "Enable auto till and replant to use stored seeds."
+msgstr "Bật tự cuốc và gieo lại để dùng hạt trong kho."
+
+msgid "Crop work is manually paused. Wages still apply."
+msgstr "Đã tạm dừng làm ruộng. Hợp đồng vẫn tính lương."
+
+msgid "Supply storage: {seeds} crop seeds · {fertilizer} fertilizer"
+msgstr "Trong kho: {seeds} hạt trồng ruộng · {fertilizer} phân bón"
+
+msgid "Waiting for crop seeds in supply storage."
+msgstr "Chờ hạt cây trồng trong kho vật tư."
+
+msgid "No reachable empty plot is available."
+msgstr "Chưa có ô trống có thể tiếp cận."
+
+msgid "Crop seeds, feed and fertilizer only"
+msgstr "Chỉ nhận hạt trồng ruộng, thức ăn và phân bón"
+
+msgid "Invalid crop automation plot."
+msgstr "Ô đất tự động không hợp lệ."
+
+msgid "till"
+msgstr "Cuốc đất"
+
+msgid "plant"
+msgstr "Gieo hạt"
+
+msgid "fertilize"
+msgstr "Bón phân"
+msgid "Normal"
+msgstr "Thường"
+
+msgid "Silver"
+msgstr "Bạc"
+
+msgid "Gold"
+msgstr "Vàng"
+
+msgid "Quality"
+msgstr "Chất lượng"
+
+msgid "Root Tonic"
+msgstr "Dưỡng chất rễ cây"
+
+msgid "Apply once to a watered crop to harvest Gold quality. Does not change growth time."
+msgstr "Dùng một lần trên cây đã tưới để thu nông sản Vàng. Không thay đổi thời gian lớn."
+
+msgid "Water this crop before applying Root Tonic."
+msgstr "Hãy tưới cây trước khi dùng dưỡng chất rễ cây."
+
+msgid "Root Tonic was already applied to this crop."
+msgstr "Cây này đã được bón dưỡng chất rễ cây."
+
+msgid "Cooking time: {seconds} seconds"
+msgstr "Thời gian chế biến: {seconds} giây"

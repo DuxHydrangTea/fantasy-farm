@@ -84,13 +84,15 @@ func action_text() -> String:
 		Kind.PEN_BOARD: return tr("Manage pen")
 		Kind.ORDER_BOARD: return tr("View orders")
 		Kind.MERCHANT:
-			return tr("Sell produce") if (node as ShopMerchant).menu is ProduceSalesUI else tr("Trade")
+			return (node as ShopMerchant).interaction_action_text()
 		Kind.LAND:
 			return tr("Reclaim next column ({coins} coins)").format({"coins": GameText.grouped_integer((node as LandExpansionComponent).state.next_price())})
 		Kind.TROUGH:
 			var trough: AnimalTrough = node as AnimalTrough
 			var source: String = "Fill feed ({stock}/{capacity})" if trough.kind == AnimalTrough.Kind.FOOD else "Fill water ({stock}/{capacity})"
 			var result: String = tr(source).format({"stock": trough.stock, "capacity": trough.capacity})
+			if trough.kind == AnimalTrough.Kind.FOOD:
+				result += " · " + tr("Storage feed: {count}").format({"count": player.state.trough_interaction.feed_stock(trough)})
 			var reason: String = player.state.trough_interaction.auto_hint(trough)
 			return result if reason.is_empty() else result + "\n" + reason
 		Kind.ANIMAL:

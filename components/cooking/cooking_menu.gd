@@ -137,8 +137,8 @@ func _refresh() -> void:
 	lines.append(tr(selected.display_name))
 	for i: int in range(selected.ingredients.size()):
 		var item: ItemDefinition = selected.ingredients[i]
-		lines.append("%s: %d / %d" % [tr(item.display_name), customer.selection.inventory.count_item(item.item_id), selected.amounts[i] * amount])
-	lines.append(tr("4 real hours per dish · cooked in queue order"))
+		lines.append("%s: %d / %d" % [tr(item.display_name) + " (" + ItemQuality.label(selected.tier_at(i)) + ")", customer.selection.inventory.count_item(item.item_id, selected.tier_at(i)), selected.amounts[i] * amount])
+	lines.append(tr("Cooking time: {seconds} seconds").format({"seconds": int(selected.cook_seconds)}))
 	lines.append(tr("Ingredients are consumed when queued. Queued dishes cannot be cancelled."))
 	details.text = "\n".join(lines)
 	var summary_lines: PackedStringArray = [tr("Queued: %d · Ready: %d · Capacity: 20") % [model.queue.size(), model.ready.size()]]

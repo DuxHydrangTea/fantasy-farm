@@ -3,7 +3,7 @@ extends RefCounted
 ## Live animal trades belong to the same farm as the customer, outside the bag.
 signal purchased(offer: AnimalShopOffer, quantity: int, total: int)
 signal sold(animal_id: StringName, total: int)
-const ACTOR_SCENE: PackedScene = preload("res://scenes/animals/animal.tscn")
+const ACTOR_PATH: String = "res://scenes/animals/animal.tscn"
 var catalog: ShopCatalog
 var wallet: WalletComponent
 var farm: Node
@@ -105,11 +105,16 @@ func buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 	var checked: Dictionary = quote_buy(offer, quantity)
 	if not checked.ok:
 		return checked
+	# Load after global scripts have initialized. The world/shop/animal script
+	# graph can otherwise retain an empty PackedScene during a cyclic preload.
+	var actor_scene: PackedScene = load(ACTOR_PATH) as PackedScene
+	if actor_scene == null or not actor_scene.can_instantiate():
+		return {"ok": false, "error": "Animal trading is unavailable."}
 	_busy = true
 	var pen: AnimalPen = checked.pen
 	var actors: Array[AnimalActor] = []
 	for point: Vector2 in checked.positions:
-		var animal: AnimalActor = ACTOR_SCENE.instantiate() as AnimalActor
+		var animal: AnimalActor = actor_scene.instantiate() as AnimalActor
 		animal.definition = offer.animal
 		animal.pen = pen
 		animal.initial_age_seconds = 0.0

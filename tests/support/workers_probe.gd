@@ -106,7 +106,7 @@ func _run() -> void:
 	var start: Vector2 = worker.global_position
 	await _frames(360)
 	_check(worker.global_position.distance_to(start) > 2, "Worker physically walks toward task")
-	_check(worker.basket.count_item(&"apple") == 300, "Physical online worker harvests 300 fruit after travel and work")
+	_check(world.workers.output_inventory().count_item(&"apple") == 300 and worker.basket.count_item(&"apple") == 0, "Physical online worker sends 300 fruit to Warehouse after travel and work")
 	world.player.global_position = worker.global_position + Vector2(0, 220)
 	world.player.camera.position = Vector2(40, -200)
 	world.player.camera.zoom = Vector2(3, 3)
@@ -124,8 +124,9 @@ func _run() -> void:
 	_check(access.open_shop(world.player), "E/click delegate opens worker basket")
 	var basket_menu: WorkerMenu = access.menu as WorkerMenu
 	await _frames(5)
-	await _click(basket_menu.collect_button)
-	_check(world.player.selection.inventory.count_item(&"apple") == 300, "GUI receives products without duplication")
+	_check(basket_menu.collect_button.disabled, "Legacy recovery disabled when no old products remain")
+	_check(basket_menu.info.text.contains(tr("Harvested products go directly to the produce warehouse.")), "Worker panel identifies Warehouse destination")
+	_check(world.player.selection.inventory.count_item(&"apple") == 0, "New harvest never credits player bag")
 	_check(worker.basket.count_item(&"apple") == 0, "Worker basket debited")
 	get_tree().root.size = Vector2i(844, 390)
 	get_viewport().set_meta(&"touch_ui_override", true)
@@ -150,12 +151,28 @@ func _run() -> void:
 	var started: int = Time.get_ticks_usec()
 	world.workers.advance(target)
 	var elapsed_ms: float = float(Time.get_ticks_usec() - started) / 1000.0
-	var count: int = worker.basket.count_item(&"apple")
-	_check(count <= 1600 and count > 0, "48h catch-up respects finite basket")
+	var count: int = world.workers.output_inventory().count_item(&"apple")
+	_check(count > 1600 and worker.basket.count_item(&"apple") == 0, "48h catch-up uses Warehouse beyond old basket limit")
 	for i: int in range(worker.basket.slot_count):
 		_check(worker.basket.get_slot_count(i) <= 100, "Catch-up slot cap " + str(i))
-	var benchmark: Dictionary = {"offline_hours": 48, "elapsed_ms": elapsed_ms, "basket_apples": count, "wages_paid": before_coins - world.player.wallet.balance, "workers": 1, "fruit_trees": 10}
-	var report: Dictionary = {"benchmark": benchmark, "checks": _checks, "failures": _failures, "personal_save_used": false}
+	get_tree().root.size = Vector2i(1280, 720)
+	get_viewport().set_meta(&"touch_ui_override", false)
+	var warehouse_access: FarmStorageAccess = world.storage_accesses.produce_warehouse
+	world.player.global_position = warehouse_access.global_position + Vector2(0, 24)
+	await _frames(10)
+	_check(warehouse_access.open_shop(world.player), "Warehouse opens after worker output")
+	var warehouse_menu: FarmStorageMenu = warehouse_access.menu as FarmStorageMenu
+	await _frames(5)
+	await _capture("worker-output-warehouse")
+	var apple_button: Button = warehouse_menu.grids[1].get_child(0) as Button
+	await _click(apple_button)
+	warehouse_menu.quantity.value = 300
+	await _click(warehouse_menu.move_button)
+	_check(world.player.selection.inventory.count_item(&"apple") == 300, "Player withdraws worker output from actual Warehouse UI")
+	_check(world.workers.output_inventory().count_item(&"apple") == count - 300, "Warehouse debits exactly the withdrawn amount")
+	warehouse_menu.close(false)
+	var benchmark: Dictionary = {"offline_hours": 48, "elapsed_ms": elapsed_ms, "warehouse_apples": count, "wages_paid": before_coins - world.player.wallet.balance, "workers": 1, "fruit_trees": 10}
+	var report: Dictionary = {"benchmark": benchmark, "checks": _checks, "failures": _failures, "personal_save_used": false, "ok": _failures.is_empty()}
 	var file: FileAccess = FileAccess.open(_output + "/report.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(report, "\t"))
 	file.close()

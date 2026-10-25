@@ -15,6 +15,9 @@ var help_ui: HelpUI
 var tutorial_hints: TutorialHints
 var pen_boards: Array[PenBoard] = []
 var starter_content: StarterContent
+var seed_picker: FarmSeedPicker
+var storages: FarmStorageService
+var storage_accesses: Dictionary = {}
 var workers: WorkerService
 var cooking: ChefCooking = ChefCooking.new()
 var tool_upgrade_state: ToolUpgradeState = ToolUpgradeState.new()
@@ -73,6 +76,15 @@ func _ready() -> void:
 	player.tool_range_ui.world = self
 	player.tool_range_ui.name = "ToolRangeUI"
 	add_child(player.tool_range_ui)
+	storages = FarmStorageService.new()
+	storages.world = self
+	storages.name = "Storages"
+	add_child(storages)
+	player.selection.storage_service = storages
+	seed_picker = FarmSeedPicker.new()
+	seed_picker.world = self
+	seed_picker.name = "SeedPicker"
+	add_child(seed_picker)
 	workers = WorkerService.new()
 	workers.world = self
 	workers.name = "Workers"

@@ -80,7 +80,7 @@ func refresh() -> void:
 		hide()
 		return
 	if selected_action == &"fertilize":
-		actionable = farming.fertilizer_error(focused_cell, actor).is_empty()
+		actionable = (farming.root_error(focused_cell, actor) if item != null and item.booster_kind == ItemDefinition.BoosterKind.ROOT_TONIC else farming.fertilizer_error(focused_cell, actor)).is_empty()
 	elif selected_action == &"plant":
 		actionable = farming.can_plant(focused_cell, actor)
 	elif selected_action == &"harvest":

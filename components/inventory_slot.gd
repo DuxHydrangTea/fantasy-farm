@@ -79,6 +79,8 @@ func refresh() -> void:
 	_count.visible = count > 1
 	_place_count()
 	tooltip_text = tr(item.display_name) if item != null else tr("Empty slot")
+	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE:
+		tooltip_text += "\n" + ItemQuality.summary(inventory.slot(slot_index).tiers)
 	if item != null and not item.description.is_empty():
 		tooltip_text += "\n" + tr(item.description)
 

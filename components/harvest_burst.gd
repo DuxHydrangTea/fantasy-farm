@@ -4,6 +4,7 @@ extends Node2D
 ## A few representative icons keep high yields cheap and cannot be recollected.
 var item: ItemDefinition
 var amount: int = 1
+var tier: int = 0
 var drop_height: float = 0.0
 var target: WeakRef
 var age: float = 0.0
@@ -20,6 +21,7 @@ func _ready() -> void:
 	for index: int in range(count):
 		var icon: Sprite2D = Sprite2D.new()
 		icon.texture = item.icon
+		icon.modulate = ItemQuality.color(tier)
 		icon.scale = Vector2.ONE * 0.75
 		add_child(icon)
 		icons.append(icon)

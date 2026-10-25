@@ -1,5 +1,7 @@
 # Người làm thuê — bản v1
 
+> **Cập nhật 25/10/2026 — save v26:** Crop đã tự cuốc, lấy hạt bất kỳ từ kho vật tư, gieo lại và tùy chọn bón phân. Nông sản worker về Warehouse; Ranch lấy feed từ kho vật tư, giỏ worker chỉ còn phục vụ dữ liệu cũ. Xem [hướng dẫn hiện hành](crop_worker_automation.md). Phần v1 bên dưới là tài liệu lịch sử; giới hạn không cuốc/gieo/bón và yêu cầu chọn giống/vùng đã được thay thế bởi [kế hoạch v2](crop_worker_automation_plan.md).
+
 Hoàn thiện tiếp từ M0 của ZCode ngày 25/10/2026. Cả ba vai đã có thuê/quản lý, làm việc, lương, giỏ và save/offline. M5 có số đo kỹ thuật ban đầu; lương và stack cap vẫn giữ mức thử nghiệm trong tài liệu thiết kế.
 
 ## Chơi trong game

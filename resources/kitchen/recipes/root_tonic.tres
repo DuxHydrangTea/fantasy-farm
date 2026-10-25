@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Resource" path="res://items/boosters/root_tonic.tres" id="tonic"]
+
+[resource]
+script = ExtResource("script")
+recipe_id = &"root_tonic"
+display_name = "Root Tonic"
+ingredients = Array[ExtResource("item")]([ExtResource("root")])
+amounts = Array[int]([1])
+output = ExtResource("tonic")
+cook_seconds = 60.0

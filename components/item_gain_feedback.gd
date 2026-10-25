@@ -14,7 +14,8 @@ func _ready() -> void:
 	player.selection.inventory.capacity_blocked.connect(_on_capacity_blocked)
 	var farming: FarmingController = player.farming_actions.get_farming_controller()
 	if farming != null:
-		farming.harvest_yielded.connect(_on_harvest)
+		farming.quality_harvest_yielded.connect(_on_quality_harvest)
+		farming.harvest_yielded.connect(_on_legacy_harvest)
 	var world: FarmWorld = player.get_parent() as FarmWorld
 	if world != null and world.trees != null:
 		world.trees.harvest_yielded.connect(_on_harvest)
@@ -46,7 +47,7 @@ func _on_pickup(item: ItemDefinition, amount: int) -> void:
 	_recent[item.item_id] = weakref(popup)
 	_lane += 1
 
-func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0) -> void:
+func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0, tier: int = 0) -> void:
 	if inventory != player.selection.inventory or item == null or amount <= 0:
 		return
 	# Harvesting while picking up eggs must not stack two rewards on one line.
@@ -55,6 +56,7 @@ func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: Inve
 			previous.shift_up(maxf(0.0, previous.global_position.y - at.y + 28.0))
 	var host: Node = player.farming_actions.farming.get_parent()
 	var popup: ItemGainPopup = _spawn(item, amount, host, Vector2.ZERO)
+	popup.modulate = ItemQuality.color(tier)
 	popup.place_world(at)
 	# Let the produce leave the soil before drawing text over the same pixels.
 	popup.start_after(0.3)
@@ -66,6 +68,7 @@ func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: Inve
 	if _bursts.size() >= 8:
 		_bursts.pop_front().queue_free()
 	var burst: HarvestBurst = HarvestBurst.new()
+	burst.tier = tier
 	burst.item = item
 	burst.amount = amount
 	burst.drop_height = drop_height
@@ -103,3 +106,11 @@ func clear() -> void:
 	_popups.clear()
 	_recent.clear()
 	_last_capacity_notice = -1500
+
+func _on_quality_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, tier: int) -> void:
+	_on_harvest(item, amount, at, inventory, 0.0, tier)
+
+func _on_legacy_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent) -> void:
+	# Crops have their dedicated event; honey still uses the original event.
+	if item.resource_path.begins_with("res://items/honey/"):
+		_on_harvest(item, amount, at, inventory)

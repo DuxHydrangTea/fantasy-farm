@@ -17,7 +17,8 @@ func test_shipped_recipes_outputs_and_prices_are_allowlisted() -> void:
 	for recipe: CookingRecipe in ChefCooking.RECIPES:
 		assert_true(recipe.valid())
 		assert_eq(catalog.items[String(recipe.output.item_id)], recipe.output)
-		assert_not_null(prices.find(recipe.output.item_id))
+		if recipe.output.item_type == ItemDefinition.ItemType.PRODUCE:
+			assert_not_null(prices.find(recipe.output.item_id))
 
 func test_missing_ingredients_full_capacity_and_invalid_commands_never_spend() -> void:
 	assert_eq(model.start("fried_egg", 1, bag, 100.0), "Not enough ingredients.")
@@ -97,7 +98,7 @@ func test_all_five_recipes_can_be_cooked_collected_and_sold() -> void:
 	wallet.set_balance(0)
 	var seller: ProduceSaleService = ProduceSaleService.new(prices, wallet, bag)
 	var expected: Array[int] = [18, 62, 165, 121, 946]
-	for index: int in range(ChefCooking.RECIPES.size()):
+	for index: int in range(expected.size()):
 		var recipe: CookingRecipe = ChefCooking.RECIPES[index]
 		model = ChefCooking.new()
 		for i: int in range(recipe.ingredients.size()):

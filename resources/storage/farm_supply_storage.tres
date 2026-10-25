@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FarmStorageDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/farm_storage_definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+storage_id = &"farm_supply_storage"
+display_name = "Farm supply storage"
+kind = 1
+slot_count = 64
+stack_cap = 0

@@ -26,18 +26,15 @@ func before_each() -> void:
 		tree.refresh(now)
 	await wait_process_frames(2)
 
-func test_hire_harvest_three_stacks_and_receive_without_losing_fruit() -> void:
+func test_hire_harvest_goes_directly_to_warehouse_not_worker_or_player_bag() -> void:
 	assert_eq(service.hire("orchard"), "")
 	assert_eq(service.hire("orchard"), "This role is already hired.")
 	service.advance(now + 20.0)
-	var bag: InventoryComponent = service.bag_for("orchard")
-	assert_eq(bag.count_item(APPLE.item_id), 300)
-	assert_eq(bag.get_slot_count(0), 100)
-	assert_eq(bag.get_slot_count(1), 100)
-	assert_eq(bag.get_slot_count(2), 100)
-	assert_eq(service.transfer("orchard", world.player.selection.inventory, false, false), 300)
-	assert_eq(world.player.selection.inventory.count_item(APPLE.item_id), 300)
-	assert_eq(bag.count_item(APPLE.item_id), 0)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
+	assert_eq(service.output_inventory().get_slot_count(0), 300)
+	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 0)
+	assert_eq(world.player.selection.inventory.count_item(APPLE.item_id), 0)
+	assert_eq(service.transfer("orchard", world.player.selection.inventory, false, false), 0)
 
 func test_free_shift_only_once_and_unpaid_pause_at_dawn() -> void:
 	assert_eq(service.hire("orchard"), "")
@@ -55,13 +52,15 @@ func test_free_shift_only_once_and_unpaid_pause_at_dawn() -> void:
 	assert_true(service.record("orchard").active)
 	assert_eq(world.player.wallet.balance, 0)
 
-func test_bag_full_preserves_entire_tree_yield_and_task_budget() -> void:
+func test_warehouse_full_preserves_entire_tree_yield_and_task_budget() -> void:
 	service.hire("orchard")
-	var bag: InventoryComponent = service.bag_for("orchard")
-	bag.add(APPLE, 1400)
+	var warehouse: InventoryComponent = service.output_inventory()
+	warehouse.add(APPLE, warehouse.capacity_for(APPLE) - 200)
+	var initial: int = warehouse.count_item(APPLE.item_id)
 	service.advance(now + 20.0)
-	assert_eq(bag.count_item(APPLE.item_id), 1400)
+	assert_eq(warehouse.count_item(APPLE.item_id), initial)
 	assert_true((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit())
+	assert_true(bool(service.bridge.storage_waiting.get("orchard", false)))
 
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
@@ -70,16 +69,16 @@ func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	old.erase("workers")
 	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
 	assert_true(migrated.ok, str(migrated))
-	assert_eq(int(migrated.snapshot.version), 23)
+	assert_eq(int(migrated.snapshot.version), SaveSchema.VERSION)
 	assert_false(old.has("workers"))
 	service.hire("orchard")
 	var saved: Dictionary = adapter.capture("worker_test", 1, now)
 	assert_true(SaveSchema.validate(saved, adapter.catalog).ok)
 	assert_true(adapter.restore(saved, now + 20.0).ok)
-	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 300)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 	var second: Dictionary = adapter.capture("worker_test", 2, now + 20.0)
 	assert_true(adapter.restore(second, now + 20.0).ok)
-	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 300)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 	second.workers.rows[0].basket[0].count = 101
 	assert_false(adapter.restore(second, now + 20.0).ok)
 
@@ -117,11 +116,13 @@ func test_ranch_feed_and_water_use_apis_and_separate_transfer_commands() -> void
 	food.stock = 0
 	water.stock = 0
 	world.player.selection.inventory.add(food.feed_item, 10)
-	assert_gt(service.transfer("ranch", world.player.selection.inventory, true, true), 0)
+	assert_eq(service.transfer("ranch", world.player.selection.inventory, true, true), 0)
+	service.feed_inventory("ranch").add(food.feed_item, 10)
 	service.advance(now + 120.0)
 	assert_gt(food.stock, 0)
 	assert_gt(water.stock, 0)
-	assert_lt(bag.count_item(food.feed_item.item_id), 10)
+	assert_lt(service.feed_inventory("ranch").count_item(food.feed_item.item_id), 10)
+	assert_eq(bag.count_item(food.feed_item.item_id), 0)
 	assert_eq(service.transfer("ranch", world.player.selection.inventory, false, false), 0)
 
 func test_crop_waters_then_harvests_without_tilling_or_planting() -> void:
@@ -137,7 +138,7 @@ func test_crop_waters_then_harvests_without_tilling_or_planting() -> void:
 	assert_not_null(world.farming.get_crop(cell))
 	service.advance(now + 50.0)
 	assert_null(world.farming.get_crop(cell))
-	assert_eq(service.bag_for("crop").count_item(definition.harvest_item.item_id), definition.harvest_amount)
+	assert_eq(service.output_inventory().count_item(definition.harvest_item.item_id, 1), definition.harvest_amount)
 	assert_eq(world.farming.crop_cells().size(), 0)
 
 func test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task() -> void:
@@ -146,11 +147,13 @@ func test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task() -> v
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
 	service.advance(now + 172800.0)
 	var single: Dictionary = service.capture(now + 172800.0)
+	var warehouse: Dictionary = world.storages.capture()
 	var coins: int = world.player.wallet.balance
 	assert_true(adapter.restore(checkpoint, now).ok)
 	for hour: int in range(1, 49):
 		service.advance(now + hour * 3600.0)
 	var stepped: Dictionary = service.capture(now + 172800.0)
+	assert_eq(world.storages.capture(), warehouse)
 	assert_eq(stepped.rows[0].basket, single.rows[0].basket)
 	assert_eq(stepped.rows[0].paid_through_day, single.rows[0].paid_through_day)
 	assert_eq(world.player.wallet.balance, coins)
@@ -214,16 +217,18 @@ func test_ranch_two_hour_jump_matches_minute_steps() -> void:
 			node.stock = 0
 			if node.kind == AnimalTrough.Kind.FOOD:
 				food = node as AnimalTrough
-	service.bag_for("ranch").add(food.feed_item, 10)
+	service.feed_inventory("ranch").add(food.feed_item, 10)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
 	assert_true(SaveSchema.validate(checkpoint, adapter.catalog).ok)
 	service.advance(now + 7200.0)
 	var single: Dictionary = service.capture(now + 7200.0)
+	var warehouse: Dictionary = world.storages.capture()
 	var stock: float = food.available_units()
 	assert_true(adapter.restore(checkpoint, now).ok)
 	for minute: int in range(1, 121):
 		service.advance(now + minute * 60.0)
+	assert_eq(world.storages.capture(), warehouse)
 	assert_eq(service.capture(now + 7200.0).rows[0].basket, single.rows[0].basket)
 	assert_almost_eq(food.available_units(), stock, 0.01)
 
@@ -238,9 +243,11 @@ func test_crop_two_minute_jump_matches_second_steps() -> void:
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
 	service.advance(now + 120)
 	var single: Dictionary = service.capture(now + 120)
+	var warehouse: Dictionary = world.storages.capture()
 	assert_true(adapter.restore(checkpoint, now).ok)
 	for second: int in range(1, 121):
 		service.advance(now + second)
+	assert_eq(world.storages.capture(), warehouse)
 	assert_eq(service.capture(now + 120).rows[0].basket, single.rows[0].basket)
 	assert_eq(world.farming.crop_cells().size(), 0)
 
