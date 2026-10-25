@@ -10,6 +10,10 @@ var _cell: Vector2i
 var _action: StringName = &""
 var _seed: ItemDefinition
 var _slot_index: int = -1
+var upgrades: ToolUpgradeState
+var _targets: Array[Vector2i] = []
+var last_preview: Array[Dictionary] = []
+var last_result: Dictionary = {}
 
 func _ready() -> void:
 	assert(animation != null and state != null, "Farming actions require animation and state")
@@ -26,6 +30,7 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 		return
 	_cell = _cell_ahead()
 	_action = state.active_action if not state.active_action.is_empty() else current
+	_targets = target_cells(_action, false)
 	if _action == &"harvest":
 		var crop: Crop = farming.get_crop(_cell)
 		if crop != null:
@@ -48,6 +53,27 @@ func _cell_ahead() -> Vector2i:
 	var actor: Node2D = get_parent() as Node2D
 	return farming.world_to_cell(actor.global_position) + Vector2i(animation.facing_vector)
 
+func upgrade_kind(action: StringName = &"") -> StringName:
+	var chosen: StringName = action if not action.is_empty() else state.active_action if state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] else state.get_selected_tool_action()
+	var item: ItemDefinition = state.tool_selection.get_selected_item() if state.tool_selection != null else null
+	if chosen == &"tool" and item != null and item.tool_type == ItemDefinition.ToolType.AXE:
+		return &""
+	if chosen == &"plant" and (item == null or not item.crop is CropDefinition):
+		return &""
+	return FarmingAreaPolicy.tool_for(chosen)
+
+func target_cells(action: StringName = &"", frozen: bool = true) -> Array[Vector2i]:
+	if frozen and state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] and not _targets.is_empty():
+		return _targets.duplicate()
+	var kind: StringName = upgrade_kind(action)
+	var size: int = upgrades.selected_size(kind) if upgrades != null and not kind.is_empty() else 1
+	return FarmingAreaPolicy.cells(farming.world_to_cell((get_parent() as Node2D).global_position), Vector2i(animation.facing_vector), size)
+
+func preview() -> Array[Dictionary]:
+	var action: StringName = get_action() if state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] else state.get_selected_tool_action()
+	last_preview = FarmingAreaPolicy.evaluate(farming, action, target_cells(action), state.tool_selection.inventory, state.tool_selection.selected_index, get_parent() as PhysicsBody2D)
+	return last_preview
+
 # Thao tác chỉ commit ở frame chạm đất, không ở thời điểm người chơi vừa bấm nút.
 # Chép _action sang biến cục bộ và xóa nó TRƯỚC khi đổi inventory/terrain: các signal phát ra
 # có thể gọi frame handler lồng nhau. Nếu xóa sau, một động tác có thể tiêu hạt hoặc thu hoạch hai lần.
@@ -60,14 +86,14 @@ func _on_frame_changed() -> void:
 	if not is_instance_valid(farming):
 		return
 	if action == &"tool" and state.current_state == StateComponent.State.TOOL:
-		farming.till(_cell, get_parent() as PhysicsBody2D)
+		last_result = farming.apply_area(action, _targets, null, -1, null, get_parent() as PhysicsBody2D)
 	elif action == &"water" and state.current_state == StateComponent.State.WATER:
-		farming.water(_cell, get_parent() as PhysicsBody2D)
+		last_result = farming.apply_area(action, _targets, null, -1, null, get_parent() as PhysicsBody2D)
 	elif action == &"plant" and state.current_state == StateComponent.State.TOOL:
 		var inventory: InventoryComponent = state.tool_selection.inventory
 		# Selection changes cannot redirect the seed or spend a different stack mid-action.
-		if inventory.slot(_slot_index).item == _seed:
-			farming.plant(_cell, inventory, _slot_index, get_parent() as PhysicsBody2D)
+		if state.tool_selection.selected_index == _slot_index and inventory.slot(_slot_index).item == _seed:
+			last_result = farming.apply_area(action, _targets, inventory, _slot_index, _seed, get_parent() as PhysicsBody2D)
 	elif action == &"harvest" and state.current_state == StateComponent.State.TOOL:
 		farming.harvest(_cell, state.tool_selection.inventory)
 

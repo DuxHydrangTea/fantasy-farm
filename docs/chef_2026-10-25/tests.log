@@ -1,0 +1,80 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/fantasy-farm-web-preview] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_chef_cooking.gd
+* test_shipped_recipes_outputs_and_prices_are_allowlisted
+* test_missing_ingredients_full_capacity_and_invalid_commands_never_spend
+* test_serial_offline_boundary_and_repeated_advance_do_not_duplicate
+* test_full_bag_keeps_ready_dishes_and_partial_collection_keeps_remainder
+* test_multi_ingredient_batch_spends_atomically_and_blocks_reentrant_commands
+* test_roundtrip_and_strict_validation
+* test_all_five_recipes_can_be_cooked_collected_and_sold
+7/7 passed.
+
+
+res://tests/integration/test_chef.gd
+* test_authored_chef_uses_existing_interaction_and_modal_lifecycle
+* test_save_migration_offline_restore_and_collect_into_inventory
+* test_touch_panel_fits_landscape_and_uses_shared_quantity_controls
+* test_cooking_snapshot_roundtrips_through_disk
+4/4 passed.
+
+
+res://tests/unit/test_save_repository.gd
+* test_v3_coins_migrate_once_and_current_coin_values_are_validated
+* test_missing_profile_is_a_new_game
+* test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks
+* test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
+* test_roundtrip_and_previous_revision_backup
+* test_truncated_primary_recovers_backup_and_can_save_again
+* test_checksum_damage_is_detected
+* test_stale_revision_does_not_overwrite_file
+* test_future_version_is_not_downgraded_to_backup
+* test_schema_rejects_unknown_resource_and_path_injection
+* test_schema_rejects_invalid_numbers_types_and_duplicate_cells
+* test_catalog_contains_all_current_gameplay_definitions
+* test_version_one_file_migrates_to_current_and_remains_a_valid_backup
+* test_dense_garden_file_roundtrip_accepts_all_180_planted_pots
+* test_version_two_garden_migration_is_complete_and_does_not_mutate_input
+* test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
+* test_async_save_roundtrip_recovery_and_revision_guard
+* test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard
+* test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto
+* test_async_save_detects_external_change_between_validation_and_commit
+* test_async_save_rejects_future_version_and_resource_objects_without_overwriting
+21/21 passed.
+
+
+res://tests/integration/test_tool_upgrade_persistence.gd
+* test_world_composition_enables_feature_but_waits_for_profile_load
+* test_v20_and_v19_migrate_sequentially_without_mutating_input
+* test_levels_selected_ranges_and_coins_roundtrip_through_disk
+* test_invalid_current_state_is_rejected_before_world_mutation
+* test_restore_during_purchase_is_rejected_before_mutation
+* test_load_failure_and_pending_save_disable_purchases
+* test_six_by_six_roundtrip_preserves_selected_ranges
+7/7 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               4
+Tests                39
+Passing Tests        39
+Asserts             500
+Time              4.834s
+
+
+---- All tests passed! ----
+

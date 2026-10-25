@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/cooked/fried_egg.tres" id="out"]
+[ext_resource type="Resource" path="res://items/animal_produces/chicken_egg.tres" id="in_0"]
+[resource]
+script = ExtResource("1")
+recipe_id = &"fried_egg"
+display_name = "Fried Egg"
+ingredients = Array[ExtResource("item")]([ExtResource("in_0")])
+amounts = Array[int]([1])
+output = ExtResource("out")
+cook_seconds = 14400.0

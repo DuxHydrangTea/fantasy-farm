@@ -1,0 +1,45 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/fantasy-farm-web-preview] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_chef_cooking.gd
+* test_shipped_recipes_outputs_and_prices_are_allowlisted
+* test_missing_ingredients_full_capacity_and_invalid_commands_never_spend
+* test_serial_offline_boundary_and_repeated_advance_do_not_duplicate
+* test_full_bag_keeps_ready_dishes_and_partial_collection_keeps_remainder
+* test_multi_ingredient_batch_spends_atomically_and_blocks_reentrant_commands
+* test_roundtrip_and_strict_validation
+* test_all_five_recipes_can_be_cooked_collected_and_sold
+7/7 passed.
+
+
+res://tests/integration/test_chef.gd
+* test_authored_chef_uses_existing_interaction_and_modal_lifecycle
+* test_save_migration_offline_restore_and_collect_into_inventory
+* test_touch_panel_fits_landscape_and_uses_shared_quantity_controls
+* test_cooking_snapshot_roundtrips_through_disk
+* test_overhead_progress_and_ready_count_without_opening_menu
+5/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                12
+Passing Tests        12
+Asserts             126
+Time              1.763s
+
+
+---- All tests passed! ----
+

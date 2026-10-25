@@ -9,6 +9,8 @@ extends PhysicsBody2D
 @export var bubble_text: Label
 @export var prompt: Label
 @export var bubble_timer: Timer
+## Specialized merchant panels can reuse prompts without retaining an unused shop.
+var create_shop_ui: bool = true
 var _player: FarmPlayer
 
 func _enter_tree() -> void:
@@ -21,7 +23,11 @@ func _enter_tree() -> void:
 	presentation.name = "MerchantInteraction"
 	presentation.position = interaction_offset
 	shop_ui = presentation.get_node("ShopUI") as ShopUI
-	menu = shop_ui
+	if create_shop_ui:
+		menu = shop_ui
+	else:
+		shop_ui.free()
+		shop_ui = null
 	bubble = presentation.get_node("Bubble") as PanelContainer
 	bubble_text = bubble.get_node("Text") as Label
 	prompt = presentation.get_node("Prompt") as Label

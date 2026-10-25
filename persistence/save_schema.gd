@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 20
+const VERSION: int = 23
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,7 +65,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -198,11 +198,29 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if data.get("version") == 19:
 		data = data.duplicate(true)
 		data["land_starting_columns"] = 1
+		data.version = 20
+	if data.get("version") == 20:
+		data = data.duplicate(true)
+		data["tool_upgrades"] = ToolUpgradeState.fresh()
+		data.version = 21
+	if data.get("version") == 21:
+		data = data.duplicate(true)
+		data["cooking"] = ChefCooking.fresh()
+		data.version = 22
+	if data.get("version") == 22:
+		data = data.duplicate(true)
+		data["workers"] = WorkerSaveSchema.fresh()
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if not data.get("flower_garden_unlocked") is bool:
 		return failure("Invalid flower garden unlock state.")
+	if not WorkerSaveSchema.valid(data.get("workers"), catalog, float(data.saved_at)):
+		return failure("Invalid worker state.")
+	if not ChefCooking.valid(data.get("cooking"), float(data.saved_at)):
+		return failure("Invalid Chef cooking state.")
+	if not ToolUpgradeState.valid(data.get("tool_upgrades")):
+		return failure("Invalid tool upgrade state.")
 	if not data.get("pen_updated_at") is Dictionary or data.pen_updated_at.size() > 256:
 		return failure("Invalid pen simulation timestamps.")
 	for id: Variant in data.pen_updated_at:
@@ -287,6 +305,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Invalid crop time or cell.")
 		planted[crop_cell] = true
 	var ids: Dictionary = {}
+	for worker: Dictionary in data.workers.rows:
+		ids[worker.id] = true
 	var piles: Dictionary = {}
 	for row: Variant in data.pickups:
 		if not row is Dictionary or not _entity(row, ids) or not row.get("pen") is String or not catalog.items.has(row.get("item")) or not number(row.get("amount"), 1, 100000000, true):

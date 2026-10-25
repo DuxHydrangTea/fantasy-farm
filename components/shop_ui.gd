@@ -1,5 +1,8 @@
 class_name ShopUI
 extends TradeMenu
+const UPGRADES: int = 5
+var upgrade_view: ToolUpgradeShopView
+var _normal_hint: String
 ## Inventory-style view adapted from the skill inventory_ui template.
 @export var panel: PanelContainer
 @export var grid: GridContainer
@@ -28,11 +31,16 @@ var _animal_text: AnimalStatusText = AnimalStatusText.new()
 
 func _ready() -> void:
 	super._ready()
+	_normal_hint = hint.text
 	TouchQuantityComponent.attach(quantity, root)
 	balance_label.hide() # The player's balance belongs to the inventory only.
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
 	root.resized.connect(_fit_layout)
+	var upgrades_tab: Button = Button.new()
+	upgrades_tab.name = "ToolUpgrades"
+	upgrades_tab.toggle_mode = true
+	categories.add_child(upgrades_tab)
 	_fit_layout()
 	buy_button.pressed.connect(purchase)
 	quantity.value_changed.connect(_quantity_changed)
@@ -42,6 +50,8 @@ func _ready() -> void:
 
 func _start_visit() -> void:
 	service = ShopService.new(merchant.catalog, customer.wallet, customer.selection.inventory)
+	var world: FarmWorld = customer.get_parent() as FarmWorld
+	upgrade_view = ToolUpgradeShopView.new(self, world.tool_upgrades if world != null else null, world)
 	var farm: FarmingController = customer.farming_actions.get_farming_controller() as FarmingController
 	animal_service = AnimalTradeService.new(merchant.catalog, customer.wallet, customer.get_parent(), farm.time_manager if farm != null else TimeManager)
 	quantity.value = 1
@@ -74,7 +84,12 @@ func show_category(value: int) -> void:
 	selected_animal = null
 	selected_animal_offer = null
 	quantity.max_value = 1.0 if category == ShopOffer.Category.SELL_ANIMAL else 99.0
-	if category == ShopOffer.Category.ANIMAL:
+	quantity.visible = category != UPGRADES
+	quantity_label.visible = category != UPGRADES and not MobileLayout.is_touch(get_viewport())
+	hint.text = tr("Choose a tool to upgrade. Esc / E / Tab to close.") if category == UPGRADES else tr(_normal_hint)
+	if category == UPGRADES:
+		upgrade_view.build()
+	elif category == ShopOffer.Category.ANIMAL:
 		for offer: AnimalShopOffer in merchant.catalog.animal_offers:
 			_card(offer.icon(), tr(offer.animal.display_name), offer.price, offer, select_animal_offer.bind(offer))
 			if selected_animal_offer == null:
@@ -165,6 +180,9 @@ func _refresh() -> void:
 	if not is_open:
 		return
 	balance_label.text = tr("{coins} coins").format({"coins": customer.wallet.balance})
+	if category == UPGRADES:
+		upgrade_view.refresh()
+		return
 	for key: Variant in _buttons:
 		(_buttons[key] as Button).set_pressed_no_signal(key == selected or key == selected_animal or key == selected_animal_offer)
 	if category == ShopOffer.Category.ANIMAL:
@@ -228,6 +246,9 @@ func _refresh_animal_sale() -> void:
 func purchase() -> void:
 	if not is_open:
 		return
+	if category == UPGRADES:
+		upgrade_view.purchase()
+		return
 	if category == ShopOffer.Category.SELL_ANIMAL:
 		if not is_instance_valid(selected_animal):
 			selected_animal = null
@@ -275,12 +296,12 @@ func _fit_layout() -> void:
 	for button: Button in categories.get_children():
 		button.add_theme_font_size_override("font_size", 20 if compact else 24)
 	# Browse is a separate scroll area; changing columns never resets the checkout.
-	var short_titles: Array[String] = ["Seeds", "Supplies", "Flowers", "Animals", "Sell"]
-	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals"]
+	var short_titles: Array[String] = ["Seeds", "Supplies", "Flowers", "Animals", "Sell", "Upgrades"]
+	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals", "Tool upgrades"]
 	for index: int in range(categories.get_child_count()):
 		var tab: Button = categories.get_child(index) as Button
-		tab.text = short_titles[index] if compact else full_titles[index]
-		tab.tooltip_text = full_titles[index]
+		tab.text = tr(short_titles[index] if compact else full_titles[index])
+		tab.tooltip_text = tr(full_titles[index])
 	var width: float = maxf(100.0, (panel.custom_minimum_size.x - 72.0) * 0.5 - 16.0)
 	grid.columns = maxi(1, floori((width + 8.0) / 128.0))
 	if MobileLayout.is_touch(get_viewport()):
@@ -291,4 +312,4 @@ func _fit_layout() -> void:
 		for button: Button in categories.get_children():
 			button.add_theme_font_size_override("font_size", 18)
 	else:
-		quantity_label.show()
+		quantity_label.visible = category != UPGRADES

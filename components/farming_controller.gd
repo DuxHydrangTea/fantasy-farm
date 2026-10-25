@@ -29,6 +29,7 @@ var land: LandExpansionState
 var _crops: Dictionary[Vector2i, Crop] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
 var _harvesting: bool = false
+var _area_busy: bool = false
 
 func has_planted_crops() -> bool:
 	return not _crops.is_empty()
@@ -67,7 +68,7 @@ func get_crop(cell: Vector2i) -> Crop:
 	return crop if is_instance_valid(crop) else null
 
 func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor: PhysicsBody2D = null) -> bool:
-	if inventory == null or time_manager == null or not can_plant(cell, actor):
+	if _area_busy or inventory == null or time_manager == null or not can_plant(cell, actor):
 		return false
 	var stack: Dictionary = inventory.slot(slot_index)
 	var seed: ItemDefinition = stack.item as ItemDefinition
@@ -230,7 +231,7 @@ func set_cell_occupied(cell: Vector2i, occupied: bool) -> void:
 		_occupied.erase(cell)
 
 func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
-	if not _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) or not can_till(cell, actor):
+	if _area_busy or not _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) or not can_till(cell, actor):
 		return false
 	dry_soil.set_cells_terrain_connect([_layer_cell(dry_soil, cell)], dry_terrain_set, dry_terrain, false)
 	if get_soil_state(cell) != Soil.DRY:
@@ -240,6 +241,8 @@ func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return true
 
 func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
+	if _area_busy:
+		return false
 	var farm_world: FarmWorld = get_parent() as FarmWorld
 	if farm_world != null and farm_world.weather != null:
 		farm_world.weather.advance(time_manager.now())
@@ -260,6 +263,83 @@ func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 
 func _layer_cell(layer: TileMapLayer, cell: Vector2i) -> Vector2i:
 	return layer.local_to_map(layer.to_local(farmland.to_global(farmland.map_to_local(cell))))
+
+func is_area_busy() -> bool:
+	return _area_busy
+
+func apply_area(action: StringName, targets: Array[Vector2i], inventory: InventoryComponent = null, slot: int = -1, seed: ItemDefinition = null, actor: PhysicsBody2D = null) -> Dictionary:
+	var result: Dictionary = {"changed": 0, "seed_spent": 0}
+	if _area_busy or targets.is_empty() or targets.size() > ToolUpgradeState.MAX_LEVEL * ToolUpgradeState.MAX_LEVEL or FarmingAreaPolicy.tool_for(action).is_empty() or time_manager == null:
+		return result
+	if (action == &"tool" and not _valid_terrain(dry_soil, dry_terrain_set, dry_terrain)) or (action == &"water" and not _valid_terrain(wet_soil, wet_terrain_set, wet_terrain)):
+		return result
+	if action == &"plant" and (inventory == null or seed == null or inventory.slot(slot).item != seed):
+		return result
+	_area_busy = true
+	if action == &"water" and get_parent() is FarmWorld:
+		(get_parent() as FarmWorld).weather.advance(time_manager.now())
+	if action == &"plant" and apiary != null:
+		apiary.sync()
+	var selected: Array[Vector2i] = []
+	var unique: Array[Vector2i] = []
+	for cell: Vector2i in targets:
+		if not unique.has(cell):
+			unique.append(cell)
+	for row: Dictionary in FarmingAreaPolicy.evaluate(self, action, unique, inventory, slot, actor):
+		if row.ready and not selected.has(row.cell):
+			selected.append(row.cell)
+	if selected.is_empty():
+		_area_busy = false
+		return result
+	var committed: Array[Vector2i] = []
+	var crops: Array[Crop] = []
+	var watered_crops: int = 0
+	var timestamp: float = time_manager.now()
+	if action == &"plant":
+		# No observer sees spent seeds without the complete crop batch in the model.
+		for cell: Vector2i in selected:
+			var crop: Crop = CROP_SCENE.instantiate() as Crop
+			crop.time_manager = time_manager
+			get_parent().add_child(crop)
+			var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)
+			crop.global_transform = farmland.global_transform * Transform2D(0.0, center)
+			crop.configure(seed.crop as CropDefinition, timestamp)
+			_schedule_crop(crop)
+			_crops[cell] = crop
+			crop.play_sprout()
+			crops.append(crop)
+			committed.append(cell)
+		result.seed_spent = inventory.remove_from_slot(slot, committed.size(), false)
+	else:
+		var layer: TileMapLayer = dry_soil if action == &"tool" else wet_soil
+		var layer_cells: Array[Vector2i] = []
+		for cell: Vector2i in selected:
+			layer_cells.append(_layer_cell(layer, cell))
+		layer.set_cells_terrain_connect(layer_cells, dry_terrain_set if action == &"tool" else wet_terrain_set, dry_terrain if action == &"tool" else wet_terrain, false)
+		for cell: Vector2i in selected:
+			if get_soil_state(cell) != (Soil.DRY if action == &"tool" else Soil.WET):
+				continue
+			committed.append(cell)
+			if action == &"water":
+				_moisture[cell] = SOIL_MOISTURE_SECONDS
+				var crop: Crop = get_crop(cell)
+				if crop != null:
+					crop.react(4.0)
+					watered_crops += 1
+	result.changed = committed.size()
+	if action == &"plant":
+		inventory.changed.emit()
+		for i: int in range(committed.size()):
+			crop_planted.emit(committed[i], crops[i])
+	elif not committed.is_empty():
+		for cell: Vector2i in committed:
+			soil_changed.emit(cell, Soil.UNTILLED if action == &"tool" else Soil.DRY, Soil.DRY if action == &"tool" else Soil.WET)
+	if not committed.is_empty() and action != &"water":
+		action_committed.emit(&"till" if action == &"tool" else &"plant", committed.size())
+	if watered_crops > 0:
+		action_committed.emit(&"water_crop", watered_crops)
+	_area_busy = false
+	return result
 
 func _has_terrain(layer: TileMapLayer, cell: Vector2i, set_id: int, terrain_id: int) -> bool:
 	if farmland == null or farmland.tile_set == null or layer == null or layer.tile_set == null:

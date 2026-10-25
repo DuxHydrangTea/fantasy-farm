@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/workers/worker_board.gd" id="1_board"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Signs.png" id="2_signs"]
+
+[sub_resource type="AtlasTexture" id="SignTexture"]
+atlas = ExtResource("2_signs")
+region = Rect2(0, 192, 32, 48)
+
+[sub_resource type="RectangleShape2D" id="PostShape"]
+size = Vector2(6, 6)
+
+[node name="ManagementSign" type="StaticBody2D"]
+script = ExtResource("1_board")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -18)
+scale = Vector2(0.75, 0.75)
+texture = SubResource("SignTexture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 0)
+shape = SubResource("PostShape")

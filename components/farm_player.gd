@@ -16,6 +16,7 @@ var shop_interaction: ShopInteraction
 var item_feedback: ItemGainFeedback
 var tree_interaction: TreeInteraction
 var mobile_controls: MobileControls
+var tool_range_ui: ToolRangeUI
 
 func _enter_tree() -> void:
 	add_to_group(&"farm_players")

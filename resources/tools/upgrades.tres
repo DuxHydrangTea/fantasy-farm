@@ -1,0 +1,105 @@
+[gd_resource type="Resource" script_class="ToolUpgradeCatalog" format=3 uid="uid://cusfglyyg8k47"]
+
+[ext_resource type="Script" uid="uid://dy2hfmfj2ipye" path="res://scripts/tool_upgrade_catalog.gd" id="1"]
+[ext_resource type="Script" uid="uid://duippa2isms8y" path="res://scripts/tool_upgrade_offer.gd" id="2"]
+
+[sub_resource type="Resource" id="hoe_2"]
+script = ExtResource("2")
+tool = &"hoe"
+
+[sub_resource type="Resource" id="hoe_3"]
+script = ExtResource("2")
+tool = &"hoe"
+target_level = 3
+price = 90000
+required_purchased_columns = 3
+
+[sub_resource type="Resource" id="water_2"]
+script = ExtResource("2")
+tool = &"watering_can"
+
+[sub_resource type="Resource" id="water_3"]
+script = ExtResource("2")
+tool = &"watering_can"
+target_level = 3
+price = 90000
+required_purchased_columns = 3
+
+[sub_resource type="Resource" id="sowing_2"]
+script = ExtResource("2")
+tool = &"sowing"
+price = 40000
+
+[sub_resource type="Resource" id="sowing_3"]
+script = ExtResource("2")
+tool = &"sowing"
+target_level = 3
+price = 120000
+required_purchased_columns = 3
+
+[sub_resource type="Resource" id="hoe_4"]
+script = ExtResource("2")
+tool = &"hoe"
+target_level = 4
+price = 180000
+required_purchased_columns = 5
+
+[sub_resource type="Resource" id="hoe_5"]
+script = ExtResource("2")
+tool = &"hoe"
+target_level = 5
+price = 300000
+required_purchased_columns = 7
+
+[sub_resource type="Resource" id="hoe_6"]
+script = ExtResource("2")
+tool = &"hoe"
+target_level = 6
+price = 450000
+required_purchased_columns = 9
+
+[sub_resource type="Resource" id="water_4"]
+script = ExtResource("2")
+tool = &"watering_can"
+target_level = 4
+price = 180000
+required_purchased_columns = 5
+
+[sub_resource type="Resource" id="water_5"]
+script = ExtResource("2")
+tool = &"watering_can"
+target_level = 5
+price = 300000
+required_purchased_columns = 7
+
+[sub_resource type="Resource" id="water_6"]
+script = ExtResource("2")
+tool = &"watering_can"
+target_level = 6
+price = 450000
+required_purchased_columns = 9
+
+[sub_resource type="Resource" id="sowing_4"]
+script = ExtResource("2")
+tool = &"sowing"
+target_level = 4
+price = 240000
+required_purchased_columns = 5
+
+[sub_resource type="Resource" id="sowing_5"]
+script = ExtResource("2")
+tool = &"sowing"
+target_level = 5
+price = 400000
+required_purchased_columns = 7
+
+[sub_resource type="Resource" id="sowing_6"]
+script = ExtResource("2")
+tool = &"sowing"
+target_level = 6
+price = 600000
+required_purchased_columns = 9
+
+[resource]
+script = ExtResource("1")
+offers = Array[ExtResource("2")]([SubResource("hoe_2"), SubResource("hoe_3"), SubResource("water_2"), SubResource("water_3"), SubResource("sowing_2"), SubResource("sowing_3"), SubResource("hoe_4"), SubResource("hoe_5"), SubResource("hoe_6"), SubResource("water_4"), SubResource("water_5"), SubResource("water_6"), SubResource("sowing_4"), SubResource("sowing_5"), SubResource("sowing_6")])

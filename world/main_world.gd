@@ -15,8 +15,15 @@ var help_ui: HelpUI
 var tutorial_hints: TutorialHints
 var pen_boards: Array[PenBoard] = []
 var starter_content: StarterContent
+var workers: WorkerService
+var cooking: ChefCooking = ChefCooking.new()
+var tool_upgrade_state: ToolUpgradeState = ToolUpgradeState.new()
+var tool_upgrades: ToolUpgradeService
+@export var tool_upgrade_catalog: ToolUpgradeCatalog = preload("res://resources/tools/upgrades.tres")
 var grass: FarmGrassField
 @export var gpu_grass_enabled: bool = true
+@export var debug_worker_enabled: bool = false
+var debug_worker: WorkerActor
 @export var order_board_position: Vector2 = Vector2(1664, 248)
 ## Authored window/gate anchors in world-local pixels, independent of sprite names.
 @export var night_light_positions: Array[Vector2] = [Vector2(1350, 308), Vector2(1183, 622), Vector2(1740, 172), Vector2(1666, 622), Vector2(1010, 274), Vector2(1384, 274), Vector2(1480, 274)]
@@ -58,6 +65,18 @@ func _enter_tree() -> void:
 	add_child(objectives)
 
 func _ready() -> void:
+	# Player creates its wallet after the world's _enter_tree; bind once children are ready.
+	tool_upgrades = ToolUpgradeService.new(tool_upgrade_state, player.wallet, land.state, tool_upgrade_catalog)
+	tool_upgrades.purchasing_enabled = true
+	player.farming_actions.upgrades = tool_upgrade_state
+	player.tool_range_ui = ToolRangeUI.new()
+	player.tool_range_ui.world = self
+	player.tool_range_ui.name = "ToolRangeUI"
+	add_child(player.tool_range_ui)
+	workers = WorkerService.new()
+	workers.world = self
+	workers.name = "Workers"
+	add_child(workers)
 	starter_content.setup()
 	objectives.setup()
 	objective_ui = ObjectiveUI.new()
@@ -88,6 +107,31 @@ func _ready() -> void:
 	grass.name = "GPUGrass"
 	grass.world = self
 	add_child(grass)
+	if OS.is_debug_build() and debug_worker_enabled:
+		debug_worker = _spawn_debug_orchard_worker()
+
+## M0 patrol demo: one orchard hand walking the fruit region ring.
+## Waypoints hug the authored plantation border so the body, movement and
+## stuck-skip behaviour are verifiable on the real map before any role logic.
+func _spawn_debug_orchard_worker() -> WorkerActor:
+	var worker: WorkerActor = WorkerActor.new()
+	worker.name = "OrchardWorkerM0"
+	worker.definition = preload("res://resources/workers/orchard_hand.tres")
+	add_child(worker)
+	var region: Rect2i = TreePlantation.FRUIT_REGION
+	var ground: TileMapLayer = farming.ground
+	var corner_a: Vector2 = ground.map_to_local(region.position)
+	var corner_b: Vector2 = ground.map_to_local(region.position + region.size)
+	var ring: Rect2 = Rect2(corner_a, corner_b - corner_a).grow(-56.0)
+	var points: Array[Vector2] = [
+		ring.position + Vector2(20, 20),
+		Vector2(ring.end.x - 20.0, ring.position.y + 20.0),
+		ring.end - Vector2(20, 20),
+		Vector2(ring.position.x + 20.0, ring.end.y - 20.0),
+	]
+	worker.global_position = points[0]
+	worker.configure_patrol(points)
+	return worker
 
 func _wire_weather(node: Node) -> void:
 	if node is AnimalPen:

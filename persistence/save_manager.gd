@@ -38,6 +38,8 @@ func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: Strin
 	return await load_game()
 
 func _unbind_world() -> void:
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:
+		adapter.world.tool_upgrades.profile_ready = false
 	adapter = null
 	writes_enabled = false
 	get_tree().auto_accept_quit = true
@@ -55,9 +57,12 @@ func _process(delta: float) -> void:
 # Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
+	if adapter != null and adapter.world.workers != null and adapter.world.workers.busy:
+		return SaveSchema.failure("A worker transaction is in progress.", "busy")
 	if busy or adapter == null or not writes_enabled:
 		return SaveSchema.failure("This profile cannot be saved yet.", "busy" if busy else "disabled")
 	busy = true
+	_sync_upgrade_readiness()
 	var snapshot: Dictionary = adapter.capture(profile_id, revision + 1, _clock().now())
 	var result: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if result.ok:
@@ -69,6 +74,7 @@ func save_game() -> Dictionary:
 	elif result.get("code") in ["conflict", "corrupt", "future_version"]:
 		writes_enabled = false
 	busy = false
+	_sync_upgrade_readiness()
 	_report_status("Progress saved" if result.ok else "Save failed: {error}", result.ok, result)
 	operation_finished.emit()
 	return result
@@ -77,6 +83,7 @@ func load_game() -> Dictionary:
 	if busy or adapter == null:
 		return SaveSchema.failure("This profile cannot be loaded yet.", "busy")
 	busy = true
+	_sync_upgrade_readiness()
 	var scene: Node = adapter.world
 	var old_mode: Node.ProcessMode = scene.process_mode
 	scene.process_mode = Node.PROCESS_MODE_DISABLED
@@ -104,6 +111,7 @@ func load_game() -> Dictionary:
 		scene.process_mode = old_mode
 	writes_enabled = bool(result.ok)
 	busy = false
+	_sync_upgrade_readiness()
 	_elapsed = 0.0
 	var message: String = "Progress loaded" if revision > 0 else "F5: save · F9: load · Autosave every 30 seconds"
 	if result.get("recovered", false):
@@ -113,6 +121,10 @@ func load_game() -> Dictionary:
 	_report_status(message, result.ok, result)
 	operation_finished.emit()
 	return result
+
+func _sync_upgrade_readiness() -> void:
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:
+		adapter.world.tool_upgrades.profile_ready = writes_enabled and not busy
 
 func _clock() -> FarmClock:
 	return TimeManager

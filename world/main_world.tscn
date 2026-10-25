@@ -40,6 +40,8 @@
 [ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="43_632h0"]
 [ext_resource type="PackedScene" uid="uid://vgjyw7vjrd6w" path="res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn" id="43_toecx"]
 [ext_resource type="PackedScene" uid="uid://chbh767240ioq" path="res://scenes/buildings/houses/house_2.tscn" id="45_il0i8"]
+[ext_resource type="PackedScene" uid="uid://b71frx6xvr86y" path="res://scenes/buildings/houses/house_1.tscn" id="51_fhqb0"]
+[ext_resource type="SpriteFrames" uid="uid://d2boolbmmw2pl" path="res://sprite_frames/character/chef_chloe_frames.tres" id="52_slg8a"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/fisherman_house.tscn" id="57_myam0"]
 [ext_resource type="PackedScene" uid="uid://cp4akcetkdos2" path="res://scenes/buildings/houses/house_4.tscn" id="60_qqiv8"]
 [ext_resource type="PackedScene" uid="uid://c03235u8r5px3" path="res://scenes/buildings/unique_buildings/market_stalls.tscn" id="61_gtd7t"]
@@ -49,7 +51,9 @@
 [ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
 [ext_resource type="PackedScene" uid="uid://dt652hcc7i8t1" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
 [ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="79_x28ju"]
+[ext_resource type="Script" uid="uid://c07b3nhwkyscm" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
 [ext_resource type="PackedScene" path="res://scenes/animals/pen_board.tscn" id="pen_management_sign"]
+[ext_resource type="PackedScene" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -4781,6 +4785,9 @@ size = Vector2(10, 4)
 
 [sub_resource type="TileSet" id="TileSet_vgjnj"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ei2gk"]
+size = Vector2(9, 3)
+
 [node name="MainWorld" type="Node2D" unique_id=1598422927 node_paths=PackedStringArray("player", "farming")]
 y_sort_enabled = true
 script = ExtResource("1_hvhku")
@@ -4844,7 +4851,7 @@ tile_set = SubResource("TileSet_6x4i3")
 [node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1502539275]
 
 [node name="Player" parent="." unique_id=1882155096 instance=ExtResource("20_farmer_bob")]
-position = Vector2(1771, 988)
+position = Vector2(1731, 988)
 
 [node name="FarmingController" type="Node" parent="." unique_id=2051324060 node_paths=PackedStringArray("ground", "farmland", "dry_soil", "wet_soil")]
 script = ExtResource("13_2bho7")
@@ -4960,6 +4967,7 @@ position = Vector2(1424, 592)
 water_layer = NodePath("../FarmLand")
 accepted_species = Array[int]([1, 5])
 capacity = 20
+bounds = 30
 
 [node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
 position = Vector2(114, -12)
@@ -5033,5 +5041,33 @@ position = Vector2(537, 288)
 
 [node name="House2" parent="." unique_id=1545690736 instance=ExtResource("45_il0i8")]
 position = Vector2(1312, 139)
+
+[node name="House1" parent="." unique_id=2025994540 instance=ExtResource("51_fhqb0")]
+position = Vector2(1938, 307)
+
+[node name="Chef" type="CharacterBody2D" parent="." unique_id=352844601]
+position = Vector2(1938, 307)
+script = ExtResource("chef_script")
+interaction_offset = Vector2(11, 12)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chef" unique_id=46884912]
+position = Vector2(11, 7)
+sprite_frames = ExtResource("52_slg8a")
+animation = &"idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chef" unique_id=205711641]
+position = Vector2(10.5, 12.5)
+shape = SubResource("RectangleShape2D_ei2gk")
+
+[node name="OrchardWorkers" parent="." unique_id=1751593836 instance=ExtResource("worker_board")]
+position = Vector2(170, 940)
+
+[node name="RanchWorkers" parent="." unique_id=237183216 instance=ExtResource("worker_board")]
+position = Vector2(1320, 540)
+role = "ranch"
+
+[node name="CropWorkers" parent="." unique_id=1042322091 instance=ExtResource("worker_board")]
+position = Vector2(945, 253)
+role = "crop"
 
 [editable path="ProduceBuyer"]

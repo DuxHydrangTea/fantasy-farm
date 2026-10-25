@@ -2,11 +2,14 @@
 
 [ext_resource type="SpriteFrames" path="res://sprite_frames/character/chef_chloe_frames.tres" id="1_kpp7r"]
 
+[ext_resource type="Script" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_556rh"]
 size = Vector2(10, 4)
 
 [node name="ChefChloe" type="CharacterBody2D" unique_id=81119749]
 texture_filter = 1
+script = ExtResource("chef_script")
 metadata/object_kind = "chef_chloe"
 metadata/source_visual = "res://sprite_frames/character/chef_chloe_frames.tres"
 

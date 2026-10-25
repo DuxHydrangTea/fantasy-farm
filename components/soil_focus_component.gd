@@ -8,6 +8,7 @@ extends Node2D
 var focused_cell: Vector2i = Vector2i.ZERO
 var actionable: bool = false
 @export var marker: Sprite2D
+var area_preview: Array[Dictionary] = []
 
 func _ready() -> void:
 	hide()
@@ -16,6 +17,9 @@ func _physics_process(_delta: float) -> void:
 	refresh()
 
 func refresh() -> void:
+	area_preview.clear()
+	marker.show()
+	queue_redraw()
 	actionable = false
 	if actions == null:
 		hide()
@@ -40,6 +44,22 @@ func refresh() -> void:
 		return
 	var land: TileMapLayer = farming.farmland
 	focused_cell = actions.get_focused_cell()
+	if not actions.upgrade_kind().is_empty():
+		var targets: Array[Vector2i] = actions.target_cells()
+		var found: bool = false
+		for cell: Vector2i in targets:
+			found = found or _is_farming_cell(farming, cell)
+		if not found:
+			hide()
+			return
+		area_preview = actions.preview()
+		for row: Dictionary in area_preview:
+			actionable = actionable or row.ready
+		global_transform = land.global_transform
+		marker.hide()
+		show()
+		queue_redraw()
+		return
 	if not _is_farming_cell(farming, focused_cell):
 		hide()
 		return
@@ -75,6 +95,17 @@ func refresh() -> void:
 		return
 	marker.modulate = available_color if actionable else blocked_color
 	show()
+
+func _draw() -> void:
+	if area_preview.is_empty() or actions == null or actions.farming == null:
+		return
+	var land: TileMapLayer = actions.farming.farmland
+	var size: Vector2 = Vector2(land.tile_set.tile_size)
+	for row: Dictionary in area_preview:
+		var color: Color = Color(0.3, 1.0, 0.5, 0.85) if row.ready else Color(1.0, 0.75, 0.2, 0.85) if row.valid else blocked_color
+		var rect: Rect2 = Rect2(land.map_to_local(row.cell) - size * 0.5 + Vector2.ONE, size - Vector2.ONE * 2)
+		draw_rect(rect, Color(color, 0.12), true)
+		draw_rect(rect, color, false, 1.0)
 
 func _is_farming_cell(farming: FarmingController, cell: Vector2i) -> bool:
 	# Keep blocked/locked plots visible, but ordinary grass and paths have no target.

@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-25",
+  "phase": "U1",
+  "tests_passed": 43,
+  "assertions": 568,
+  "lint_ok": true,
+  "engine_validation_ok": true,
+  "web_export_ok": true,
+  "save_schema": 21,
+  "personal_save_probe": {
+    "coins_preserved": true,
+    "inventory_preserved": true,
+    "migrated_version": 21,
+    "ok": true,
+    "purchases_enabled": false,
+    "save_written": false,
+    "source_dto_unchanged": true,
+    "source_version": 20.0
+  },
+  "personal_save_file_unchanged": true,
+  "npc_purchases_enabled": false,
+  "next_phase": "U2",
+  "browser_runtime_tested": false,
+  "physical_phone_tested": false
+}

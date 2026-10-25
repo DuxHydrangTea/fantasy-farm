@@ -144,6 +144,9 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 
 func _press_hotbar(point: Vector2) -> bool:
+	if player.tool_range_ui != null and player.tool_range_ui.root.visible and _hits(player.tool_range_ui.button, point):
+		player.tool_range_ui.cycle()
+		return true
 	if _hotbar == null or not _hotbar.root.visible:
 		return false
 	for index: int in range(_hotbar.buttons.size()):

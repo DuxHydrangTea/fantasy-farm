@@ -1,0 +1,18 @@
+{
+  "tests": 75,
+  "assertions": 1264,
+  "native_checks_per_renderer": 29,
+  "renderers": [
+    "gl_compatibility",
+    "forward_plus"
+  ],
+  "schema": 23,
+  "lint_ok": true,
+  "engine_ok": true,
+  "worker_diagnostics": [],
+  "web_export_ok": true,
+  "personal_save_written": false,
+  "phone_hardware_tested": false,
+  "browser_runtime_tested": false,
+  "scope": "Worker v1 with selected farming, persistence, Chef and tool-upgrade regressions"
+}

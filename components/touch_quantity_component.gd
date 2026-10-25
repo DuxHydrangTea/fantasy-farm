@@ -27,6 +27,7 @@ func _ready() -> void:
 	row.move_child(increase, quantity.get_index() + 1)
 	layout_root.resized.connect(refresh)
 	quantity.value_changed.connect(_value_changed)
+	quantity.visibility_changed.connect(refresh)
 	refresh()
 
 func _button(caption: String, step: int) -> Button:
@@ -50,8 +51,8 @@ func _value_changed(_value: float) -> void:
 
 func refresh() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
-	decrease.visible = touch
-	increase.visible = touch
+	decrease.visible = touch and quantity.visible
+	increase.visible = touch and quantity.visible
 	decrease.disabled = not quantity.editable or quantity.value <= quantity.min_value
 	increase.disabled = not quantity.editable or quantity.value >= quantity.max_value
 	decrease.tooltip_text = tr("Decrease quantity")

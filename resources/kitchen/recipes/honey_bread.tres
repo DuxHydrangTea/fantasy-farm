@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/cooked/honey_bread.tres" id="out"]
+[ext_resource type="Resource" path="res://items/honey/floral_honey.tres" id="in_0"]
+[ext_resource type="Resource" path="res://items/harvest_produces/wheat_produces.tres" id="in_1"]
+[resource]
+script = ExtResource("1")
+recipe_id = &"honey_bread"
+display_name = "Honey Bread"
+ingredients = Array[ExtResource("item")]([ExtResource("in_0"), ExtResource("in_1")])
+amounts = Array[int]([1, 1])
+output = ExtResource("out")
+cook_seconds = 14400.0

@@ -12,6 +12,10 @@ const WATER: Resource = preload("res://items/tools/watering_can.tres")
 
 @export var slot_count: int = DEFAULT_SLOT_COUNT
 @export var starting_tools: bool = true
+@export_range(0, 32000) var stack_cap: int = 0
+
+func stack_limit_for(item: ItemDefinition) -> int:
+	return mini(item.get_stack_limit(), stack_cap) if stack_cap > 0 else item.get_stack_limit()
 var _slots: Array[Dictionary] = []
 
 func _ready() -> void:
@@ -52,7 +56,7 @@ func replace_slots(stacks: Array[Dictionary]) -> bool:
 	for stack: Dictionary in stacks:
 		var item: ItemDefinition = stack.get("item") as ItemDefinition
 		var amount: int = int(stack.get("count", 0))
-		if (item == null and amount != 0) or (item != null and (amount < 1 or amount > item.get_stack_limit())):
+		if (item == null and amount != 0) or (item != null and (amount < 1 or amount > stack_limit_for(item))):
 			return false
 		replacement.append({"item": item, "count": amount})
 	_slots = replacement
@@ -70,12 +74,12 @@ func add(item: ItemDefinition, amount: int = 1) -> int:
 	var left: int = amount
 	for stack: Dictionary in _slots:
 		if stack.item != null and item.matches(stack.item):
-			var moved: int = mini(left, item.get_stack_limit() - int(stack.count))
+			var moved: int = mini(left, stack_limit_for(item) - int(stack.count))
 			stack.count += moved
 			left -= moved
 	for stack: Dictionary in _slots:
 		if left > 0 and stack.item == null:
-			var moved: int = mini(left, item.get_stack_limit())
+			var moved: int = mini(left, stack_limit_for(item))
 			stack.item = item
 			stack.count = moved
 			left -= moved
@@ -99,7 +103,7 @@ func remove(item_id: StringName, amount: int = 1, notify: bool = true) -> int:
 		changed.emit()
 	return amount - left
 
-func remove_from_slot(index: int, amount: int = 1) -> int:
+func remove_from_slot(index: int, amount: int = 1, notify: bool = true) -> int:
 	_ensure_slots()
 	if index < 0 or index >= _slots.size() or amount <= 0:
 		return 0
@@ -109,7 +113,8 @@ func remove_from_slot(index: int, amount: int = 1) -> int:
 		stack.count -= removed
 		if stack.count == 0:
 			stack.item = null
-		changed.emit()
+		if notify:
+			changed.emit()
 	return removed
 
 # Sức chứa tính theo từng loại: tổng chỗ còn trong stack cùng item + sức chứa các ô rỗng.
@@ -123,9 +128,9 @@ func capacity_for(item: ItemDefinition) -> int:
 	var available: int = 0
 	for stack: Dictionary in _slots:
 		if stack.item == null:
-			available += item.get_stack_limit()
+			available += stack_limit_for(item)
 		elif item.matches(stack.item):
-			available += maxi(0, item.get_stack_limit() - int(stack.count))
+			available += maxi(0, stack_limit_for(item) - int(stack.count))
 	return available
 
 func report_capacity_blocked(item: ItemDefinition, requested: int) -> void:
@@ -153,7 +158,7 @@ func move_slot(source: int, target: int) -> bool:
 	if item == null:
 		return false
 	if to.item != null and item.matches(to.item):
-		var moved: int = mini(int(from.count), item.get_stack_limit() - int(to.count))
+		var moved: int = mini(int(from.count), stack_limit_for(item) - int(to.count))
 		if moved <= 0:
 			return false
 		to.count += moved

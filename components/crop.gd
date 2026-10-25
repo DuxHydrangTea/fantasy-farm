@@ -1,5 +1,7 @@
 class_name Crop
 extends Node2D
+## Shared stage textures have identical opaque bounds across crop instances.
+static var _visible_tops: Dictionary[Texture2D, float] = {}
 
 signal matured
 var definition: CropDefinition
@@ -86,9 +88,12 @@ func refresh(timestamp: float) -> void:
 	if sprite.texture != texture:
 		sprite.texture = texture
 		# Stage frames include transparent headroom; follow the visible leaves.
-		var image: Image = texture.get_image()
-		if image != null:
-			var visible_top: float = sprite.position.y - texture.get_height() * 0.5 + image.get_used_rect().position.y
+		if not _visible_tops.has(texture):
+			var image: Image = texture.get_image()
+			if image != null:
+				_visible_tops[texture] = float(image.get_used_rect().position.y)
+		if _visible_tops.has(texture):
+			var visible_top: float = sprite.position.y - texture.get_height() * 0.5 + _visible_tops[texture]
 			progress_frame.position.y = visible_top - progress_frame.size.y - 2.0
 	progress_bar.value = progress
 	progress_bar.modulate = Color(1.0, 0.85, 0.35) if is_mature() else Color.WHITE

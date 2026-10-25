@@ -1,5 +1,11 @@
 # Kế hoạch hoàn thiện Fantasy Farm
 
+Bổ sung 25/10/2026: [người làm thuê v1](workers_v1.md) đã có cả ba vai, biển quản lý, giỏ, lương và save/offline v23.
+
+Bổ sung 25/10/2026: [nấu ăn với Chef Chloe](kitchen.md) đã triển khai, gồm hàng chờ, thành phẩm và offline/save v22.
+
+Kế hoạch bổ sung theo yêu cầu: [nâng cấp cuốc, tưới và gieo hạt tại NPC hiện có](tool_upgrade_implementation_plan.md), U1–U6 đã hoàn thành bản v1; xem [hướng dẫn và kiểm chứng](tool_upgrades.md).
+
 Ngày lập: 23/10/2026. Trạng thái: đang triển khai; xem bảng tiến độ cuối tài liệu.
 
 ## 1. Đích đến và phạm vi

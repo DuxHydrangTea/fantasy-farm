@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/cooked/fruit_salad.tres" id="out"]
+[ext_resource type="Resource" path="res://items/trees/apple.tres" id="in_0"]
+[ext_resource type="Resource" path="res://items/trees/peach.tres" id="in_1"]
+[resource]
+script = ExtResource("1")
+recipe_id = &"fruit_salad"
+display_name = "Fruit Salad"
+ingredients = Array[ExtResource("item")]([ExtResource("in_0"), ExtResource("in_1")])
+amounts = Array[int]([1, 1])
+output = ExtResource("out")
+cook_seconds = 14400.0

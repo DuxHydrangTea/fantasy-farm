@@ -62,6 +62,7 @@ func _cell(pair: Array) -> Vector2i:
 	return Vector2i(int(pair[0]), int(pair[1]))
 
 func capture(profile: String, revision: int, now: float) -> Dictionary:
+	world.workers.settle(now)
 	world.starter_content.refresh()
 	var player: FarmPlayer = world.player
 	var selection: ToolSelectionComponent = player.selection
@@ -88,6 +89,9 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["objectives"] = world.objectives.progress.capture() if world.objectives != null and world.objectives.progress != null else ObjectiveSaveSchema.fresh(ObjectiveProgress.DEFAULT_CATALOG)
 	data["orders"] = world.orders.service.capture() if world.orders != null and world.orders.service != null else OrderSaveSchema.fresh()
 	data["tutorial"] = world.tutorial.capture()
+	data["tool_upgrades"] = world.tool_upgrade_state.capture()
+	data["cooking"] = world.cooking.capture(now)
+	data["workers"] = world.workers.capture(now)
 	data["land_starting_columns"] = farm.land.starting_columns
 	data["flower_garden_unlocked"] = world.starter_content.flower_garden_unlocked
 	data["pen_updated_at"] = {}
@@ -152,6 +156,21 @@ func preflight(data: Dictionary) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	if world.farming != null and world.farming.is_area_busy():
+		return SaveSchema.failure("A farming action is in progress.", "busy")
+	if world.workers == null or world.workers.busy:
+		return SaveSchema.failure("A worker transaction is in progress.", "busy")
+	for row: Dictionary in data.workers.rows:
+		if row.role == "ranch" and world.workers.bridge.pen_for(row.zone) == null:
+			return SaveSchema.failure("The worker pen was not found.")
+		if not world.workers.bridge.zone_contains(row, WorkerRole.point(row.position), int(data.land_columns)):
+			return SaveSchema.failure("Invalid worker position.")
+		if not row.task.is_empty() and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
+			return SaveSchema.failure("Invalid worker target.")
+	if world.cooking == null or world.cooking.busy:
+		return SaveSchema.failure("A cooking transaction is in progress.", "busy")
+	if world.tool_upgrade_state == null or world.tool_upgrade_state.is_busy():
+		return SaveSchema.failure("A tool upgrade transaction is in progress.", "busy")
 	if world.apiary == null or world.weather == null or world.objectives == null or world.objectives.progress == null or world.orders == null or world.orders.service == null:
 		return SaveSchema.failure("Restart the game before loading this save.")
 	var entities: Dictionary = _collect_world_entities()
@@ -217,6 +236,9 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	var clock: FarmClock = world.farming.time_manager
+	var previous_simulation: float = clock.simulation_timestamp
+	clock.simulation_timestamp = float(data.saved_at)
 	world.objectives.progress.suspended = true
 	world.starter_content.begin_restore(data.flower_garden_unlocked)
 	var entities: Dictionary = _collect_world_entities()
@@ -243,6 +265,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		world.land.reset_presentation()
 	if farm.land != null:
 		farm.land.restore_columns(int(data.land_columns), int(data.land_starting_columns))
+	world.tool_upgrade_state.restore(data.tool_upgrades, false)
+	world.cooking.restore(data.cooking, maxf(now, data.saved_at))
 	player.item_feedback.clear()
 	player.wallet.set_balance(int(data.coins))
 	player.state.reset_after_load()
@@ -274,13 +298,13 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		garden.starter_flowers_added = bool(row.get("starter_flowers_added", false))
 		garden.add_starter_flowers(maxf(now, data.saved_at))
 	farm.restore_soil(data.soil)
-	world.weather.advance(maxf(now, data.saved_at))
+	world.weather.advance(float(data.saved_at))
 	for row: Dictionary in data.crops:
 		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction))
-	world.apiary.restore(data.beehives,float(data.saved_at),maxf(now,data.saved_at))
+	world.apiary.restore(data.beehives,float(data.saved_at),float(data.saved_at))
 	if world.trees != null:
-		world.trees.restore(data.trees, maxf(now, data.saved_at))
-	farm._refresh_crops(maxf(now,data.saved_at))
+		world.trees.restore(data.trees, float(data.saved_at))
+	farm._refresh_crops(float(data.saved_at))
 	for garden: FlowerGarden in gardens.values():
 		garden.refresh(maxf(now,data.saved_at))
 	for row: Dictionary in data.troughs:
@@ -328,14 +352,19 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		# Build the entire herd at the same checkpoint before sharing any trough stock.
 		actor.restore_lifecycle(row, float(data.pen_updated_at[row.pen]), float(data.pen_updated_at[row.pen]), piles.get(row.pickup) as ItemPickup)
 	for pen: AnimalPen in pens.values():
-		pen.advance_offline(maxf(now, data.saved_at), true)
+		pen.advance_offline(float(data.saved_at), true)
 	if player.state.navigation != null:
 		player.state.navigation.invalidate_cache()
 	world.orders.service.restore(data.orders)
 	world.tutorial.restore(data.tutorial)
 	world.objectives.progress.restore(data.objectives)
 	world.objectives.progress.suspended = false
+	world.workers.restore(data.workers, catalog)
+	world.workers.advance(maxf(now, data.saved_at))
+	world.workers.bridge.sync(maxf(now, data.saved_at))
+	clock.simulation_timestamp = previous_simulation
 	world.starter_content.finish_restore()
+	world.tool_upgrade_state.notify_restored()
 	world.objectives.progress.restored.emit()
 	world.objectives.progress.changed.emit()
 	return {"ok": true}

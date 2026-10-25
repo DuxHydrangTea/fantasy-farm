@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WorkerDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/workers/worker_definition.gd" id="1_def"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/farmer_buba_frames.tres" id="2_frames"]
+
+[resource]
+script = ExtResource("1_def")
+worker_id = &"ranch_hand"
+display_name = "Ranch hand"
+frames = ExtResource("2_frames")
+move_speed = 120.0
+work_seconds = 2.0
+footprint = Vector2(14, 8)
+faces_left = true

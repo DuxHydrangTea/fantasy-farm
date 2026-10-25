@@ -1585,3 +1585,335 @@ msgstr "Mẻ cũ · Mẻ kế tiếp: {amount} hũ"
 
 msgid "Expand beyond your starting farmland. Previous land purchases count."
 msgstr "Mở thêm cột ngoài phần đất ban đầu. Các lần mua đất trước vẫn được tính."
+
+msgid "Upgrades"
+msgstr "Nâng cấp"
+
+msgid "Tool upgrades"
+msgstr "Nâng cấp nông cụ"
+
+msgid "Sowing"
+msgstr "Gieo hạt"
+
+msgid "Maximum level"
+msgstr "Đã tối đa"
+
+msgid "Level %d · %d×%d"
+msgstr "Cấp %d · %d×%d"
+
+msgid "Balance: {coins} coins"
+msgstr "Số dư: {coins} xu"
+
+msgid "Purchased land columns: {owned}/{required}"
+msgstr "Cột đất đã mua: {owned}/{required}"
+
+msgid "Upgrade - {coins} coins"
+msgstr "Nâng cấp - {coins} xu"
+
+msgid "Unlock a larger area. Each planted cell still uses one seed."
+msgstr "Mở rộng vùng tác động. Mỗi ô gieo vẫn cần một hạt."
+
+msgid "Upgraded {tool} to {size}×{size}!"
+msgstr "Đã nâng {tool} lên {size}×{size}!"
+
+msgid "Area: %d×%d · R"
+msgstr "Vùng: %d×%d · R"
+
+msgid "Change tool area. Green: ready. Yellow: missing seeds. Red: blocked."
+msgstr "Đổi vùng tác động. Xanh: hợp lệ. Vàng: thiếu hạt. Đỏ: bị chặn."
+
+msgid "Tool upgrades are unavailable."
+msgstr "Chưa thể nâng cấp nông cụ."
+
+msgid "Tool upgrades are not available yet."
+msgstr "Chưa thể nâng cấp lúc này."
+
+msgid "A tool upgrade is in progress."
+msgstr "Đang xử lý nâng cấp nông cụ."
+
+msgid "Unknown tool upgrade."
+msgstr "Loại nông cụ không hợp lệ."
+
+msgid "Invalid tool upgrade catalog."
+msgstr "Cấu hình nâng cấp không hợp lệ."
+
+msgid "This tool is already fully upgraded."
+msgstr "Nông cụ đã đạt cấp tối đa."
+
+msgid "Unlock more farmland before upgrading this tool."
+msgstr "Cần mua thêm cột đất để nâng cấp này."
+
+msgid "The tool upgrade offer changed. Please try again."
+msgstr "Thông tin nâng cấp đã thay đổi. Vui lòng thử lại."
+
+msgid "Unable to spend coins."
+msgstr "Không thể trừ xu."
+
+msgid "Choose a tool to upgrade. Esc / E / Tab to close."
+msgstr "Chọn nông cụ để nâng cấp · Esc / E / Tab để đóng"
+
+msgid "Applies to all crop seeds."
+msgstr "Áp dụng cho mọi hạt giống cây trồng."
+
+msgid "Land purchased: {owned} columns · Required: {required}"
+msgstr "Đã mua {owned} cột · Cần {required} cột"
+
+
+msgid "Chef Chloe · Cooking"
+msgstr "Đầu bếp Chloe · Nấu ăn"
+
+
+msgid "Dishes to queue"
+msgstr "Số món muốn nấu"
+
+
+msgid "Give ingredients & cook"
+msgstr "Giao nguyên liệu & nấu"
+
+
+msgid "Collect ready dishes"
+msgstr "Nhận món đã nấu"
+
+
+msgid "4 real hours per dish · cooked in queue order"
+msgstr "4 giờ thực mỗi món · nấu lần lượt theo hàng chờ"
+
+
+msgid "Ingredients are consumed when queued. Queued dishes cannot be cancelled."
+msgstr "Nguyên liệu được trừ khi giao nấu. Không thể hủy món đã xếp hàng."
+
+
+msgid "Queued: %d · Ready: %d · Capacity: 20"
+msgstr "Đang chờ: %d · Đã xong: %d · Sức chứa: 20"
+
+
+msgid "Cooking: %s · %02d:%02d:%02d"
+msgstr "Đang nấu: %s · %02d:%02d:%02d"
+
+
+msgid "Cooking is unavailable."
+msgstr "Chưa thể nấu ăn lúc này."
+
+
+msgid "Chef is full. Collect dishes first (20 maximum)."
+msgstr "Bếp đã đầy. Hãy nhận món trước (tối đa 20 món)."
+
+
+msgid "Not enough ingredients."
+msgstr "Không đủ nguyên liệu."
+
+
+msgid "Load your farm before cooking."
+msgstr "Hãy tải nông trại trước khi nấu ăn."
+
+
+msgid "Chef is cooking. Come back later!"
+msgstr "Chef đang nấu. Hãy quay lại sau nhé!"
+
+
+msgid "Dishes collected."
+msgstr "Đã nhận món ăn."
+
+
+msgid "Your bag is full. Make room and collect again."
+msgstr "Túi đã đầy. Hãy dọn chỗ rồi nhận tiếp."
+
+
+msgid "Fried Egg"
+msgstr "Trứng chiên"
+
+
+msgid "Steamed Goose Egg"
+msgstr "Trứng ngỗng hấp"
+
+
+msgid "Bread"
+msgstr "Bánh mì"
+
+
+msgid "Fruit Salad"
+msgstr "Salad trái cây"
+
+
+msgid "Honey Bread"
+msgstr "Bánh mì mật ong"
+
+
+msgid "Invalid Chef cooking state."
+msgstr "Dữ liệu nấu ăn của Chef không hợp lệ."
+
+
+msgid "A cooking transaction is in progress."
+msgstr "Đang thực hiện giao dịch nấu ăn."
+
+
+msgid "Ready: %d dishes"
+msgstr "Đã xong: %d món"
+
+
+msgid "Ready: %d"
+msgstr "Đã xong: %d"
+
+
+msgid "Workers"
+msgstr "Người làm thuê"
+
+
+msgid "Hired workers"
+msgstr "Người làm thuê"
+
+
+msgid "orchard"
+msgstr "Vườn cây"
+
+
+msgid "ranch"
+msgstr "Chăn nuôi"
+
+
+msgid "crop"
+msgstr "Trồng trọt"
+
+
+msgid "Daily wage: %d coins · paid at dawn"
+msgstr "Lương: %d xu/ngày · trả lúc bình minh"
+
+
+msgid "First shift is free once per role. Rehiring costs today's wage."
+msgstr "Ca đầu miễn phí một lần mỗi vai. Thuê lại trả lương ngày hiện tại."
+
+
+msgid "Hire worker"
+msgstr "Thuê người làm"
+
+
+msgid "Deposit feed"
+msgstr "Nạp thức ăn"
+
+
+msgid "Collect products"
+msgstr "Nhận sản phẩm"
+
+
+msgid "Withdraw feed"
+msgstr "Rút thức ăn"
+
+
+msgid "Dismiss worker"
+msgstr "Cho nghỉ việc"
+
+
+msgid "Confirm dismissal (basket is kept)"
+msgstr "Xác nhận cho nghỉ (giữ lại giỏ)"
+
+
+msgid "Working"
+msgstr "Đang làm việc"
+
+
+msgid "Resting"
+msgstr "Đang nghỉ"
+
+
+msgid "Basket %d/16"
+msgstr "Giỏ %d/16"
+
+
+msgid "Hire workers"
+msgstr "Thuê người làm"
+
+
+msgid "Worker hired."
+msgstr "Đã thuê người làm."
+
+
+msgid "Transferred: %d units. Anything that does not fit stays in the source basket."
+msgstr "Đã chuyển: %d đơn vị. Phần không chứa được giữ lại ở giỏ nguồn."
+
+
+msgid "Workers are unavailable."
+msgstr "Chưa thể quản lý người làm lúc này."
+
+
+msgid "Plant at least 10 fruit trees."
+msgstr "Cần trồng ít nhất 10 cây ăn quả."
+
+
+msgid "At least 2 animal pens are required."
+msgstr "Cần ít nhất 2 chuồng vật nuôi."
+
+
+msgid "Unlock at least 12 farmland columns."
+msgstr "Cần mở ít nhất 12 cột đất."
+
+
+msgid "This role is already hired."
+msgstr "Đã thuê người cho vai trò này."
+
+
+msgid "Choose an animal pen."
+msgstr "Hãy chọn một chuồng vật nuôi."
+
+
+msgid "Not enough coins for today's wage."
+msgstr "Không đủ xu trả lương ngày hôm nay."
+
+
+msgid "No worker hired."
+msgstr "Chưa thuê người làm."
+
+
+msgid "A worker transaction is in progress."
+msgstr "Đang xử lý người làm thuê."
+
+
+msgid "Invalid worker state."
+msgstr "Dữ liệu người làm thuê không hợp lệ."
+
+
+msgid "Invalid worker position."
+msgstr "Vị trí người làm thuê không hợp lệ."
+
+
+msgid "Invalid worker target."
+msgstr "Mục tiêu người làm thuê không hợp lệ."
+
+
+msgid "The worker pen was not found."
+msgstr "Không tìm thấy chuồng của người làm thuê."
+
+
+msgid "Water source"
+msgstr "Nguồn nước"
+
+
+msgid "fruit"
+msgstr "Thu trái"
+
+
+msgid "harvest"
+msgstr "Thu hoạch"
+
+
+msgid "water_crop"
+msgstr "Tưới cây"
+
+
+msgid "pickup"
+msgstr "Gom sản phẩm"
+
+
+msgid "fetch_water"
+msgstr "Lấy nước"
+
+
+msgid "water_trough"
+msgstr "Tiếp nước"
+
+
+msgid "feed"
+msgstr "Tiếp thức ăn"
+
+
+msgid "patrol"
+msgstr "Đi tuần"
