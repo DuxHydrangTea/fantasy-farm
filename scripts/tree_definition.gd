@@ -9,8 +9,9 @@ enum Kind { FRUIT, TIMBER }
 @export var fruit_cycle_seconds: float = 90.0
 @export var stump_seconds: float = 120.0
 @export var chop_hits: int = 4
-@export var dig_hits: int = 3
+@export var dig_hits: int = 1
 @export var harvest_amount: int = 3
+@export var star_harvest_item: ItemDefinition
 @export var harvest_item: ItemDefinition
 @export var root_item: ItemDefinition
 @export var stage_textures: Array[Texture2D] = []

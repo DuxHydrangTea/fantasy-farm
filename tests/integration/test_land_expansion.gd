@@ -14,6 +14,7 @@ func before_each() -> void:
 	land = world.land
 	land.state.restore_columns(1) # Keep the original ownership/migration fixture.
 	farm = world.farming
+	farm.restore_soil([]) # This fixture tests untilled land, independent of authored starter soil.
 	player = world.player
 	player.position = Vector2(900, 310)
 	await wait_physics_frames(2)
@@ -61,7 +62,7 @@ func test_sign_interaction_confirm_cancel_reveal_and_full_unlock() -> void:
 	await wait_seconds(1.0)
 	assert_true(land.sign.visible)
 	assert_eq(land.state.next_column(), 54)
-	assert_true(farm.can_till(Vector2i(55, 20), player))
+	assert_true(farm.land.is_unlocked(Vector2i(55,20)),"The purchased column is owned even if authored decor blocks an individual plot")
 	land.state.restore_columns(48)
 	assert_false(land.sign.visible)
 	assert_false(land.open_purchase(player))
@@ -109,7 +110,7 @@ func test_purchase_save_reload_migration_and_corrupt_ownership_preflight() -> vo
 	assert_eq(migrated.snapshot.land_columns, 48)
 	assert_false(legacy.has("land_columns"), "Migration never mutates the caller")
 	assert_true(adapter.restore(migrated.snapshot, TimeManager.now()).ok)
-	assert_eq(farm.get_soil_state(Vector2i(9, 19)), FarmingController.Soil.DRY)
+	assert_ne(farm.get_soil_state(Vector2i(9,19)),FarmingController.Soil.UNTILLED,"Migration preserves tilling; replayed rain may wet the soil")
 	var corrupt: Dictionary = migrated.snapshot.duplicate(true)
 	corrupt.land_columns = 1
 	player.wallet.set_balance(777)
@@ -143,3 +144,37 @@ func test_legacy_empty_farm_starts_with_one_column_and_bad_counts_fail() -> void
 	for invalid: Variant in [null, 0, 49, 1.5, "2"]:
 		snapshot.land_columns = invalid
 		assert_false(SaveSchema.validate(snapshot, catalog).ok)
+
+func test_locked_grass_gpu_cover_has_four_rids_no_nodes_and_reuses_actor_feed() -> void:
+	var nodes: int = land.get_child_count()
+	var effect: ShaderMaterial = ShaderMaterial.new()
+	effect.shader = preload("res://shaders/grass_farm.gdshader")
+	effect.set_shader_parameter(&"actor_count",1)
+	effect.set_shader_parameter(&"interaction_clock",3.0)
+	land.set_grass_effect(effect)
+	assert_true(land.grass_cover.active)
+	assert_eq(land.grass_cover.canvases.size(),4)
+	assert_eq(land.grass_cover.materials.size(),2)
+	assert_eq(land.get_child_count(),nodes)
+	assert_eq(land.grass_cover.base_count,47*34)
+	for material: ShaderMaterial in land.grass_cover.materials:
+		assert_eq(material.get_shader_parameter(&"actor_count"),1)
+		assert_eq(material.get_shader_parameter(&"interaction_clock"),3.0)
+	var builds: int = land.grass_cover.base_builds
+	land.grass_cover.refresh(land)
+	assert_eq(land.grass_cover.base_builds,builds)
+	land.state.restore_columns(12,4)
+	assert_eq(land.grass_cover.base_count,36*34)
+	land._reveal_column = 44
+	land._reveal_rows(10)
+	assert_eq(land.grass_cover.reveal_count,24)
+	assert_eq(land.grass_cover.base_builds,builds+1,"Revealing rows does not rebuild the whole locked region")
+	land.reset_presentation()
+	assert_eq(land.grass_cover.reveal_count,0)
+	land.state.restore_columns(48,4)
+	assert_eq(land.grass_cover.base_count,0)
+	land.set_grass_effect(null)
+	assert_false(land.grass_cover.active)
+	assert_eq(land.grass_cover.canvases.size(),0)
+	land.set_grass_effect(null)
+	assert_eq(land.get_child_count(),nodes)

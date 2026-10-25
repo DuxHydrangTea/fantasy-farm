@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/Icons/cooked/star_peach_parfait_batch.png" id="icon"]
+[resource]
+script = ExtResource("script")
+item_id = &"star_peach_parfait_batch"
+display_name = "Star Peach Banquet"
+icon = ExtResource("icon")
+item_type = 2
+max_stack = 32000

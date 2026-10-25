@@ -62,6 +62,7 @@ func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
 	var actor: FarmPlayer = player as FarmPlayer
 	assert_null(actor.get_node_or_null("WalletHUD"))
 	assert_false(ui.root.visible)
+	actor.wallet.set_balance(1000) # Fixed baseline for this formatting/update test.
 	actor.wallet.credit(98051604)
 	ui.open()
 	assert_eq(ui.wallet_label.text, "98,052,604 coins")

@@ -6,6 +6,7 @@ var catalog: ShopCatalog
 var wallet: WalletComponent
 var inventory: InventoryComponent
 var _busy: bool = false
+var world: FarmWorld
 
 func _init(stock: ShopCatalog, purse: WalletComponent, bag: InventoryComponent) -> void:
 	catalog = stock
@@ -15,6 +16,13 @@ func _init(stock: ShopCatalog, purse: WalletComponent, bag: InventoryComponent) 
 func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 	if offer == null or catalog == null or not catalog.offers.has(offer) or offer.item == null or offer.item.item_id.is_empty() or offer.price < 1 or offer.price > 1000000 or quantity < 1 or quantity > 99:
 		return {"ok": false, "error": "Invalid item or quantity."}
+	if world != null and (world.wood_market.busy or world.tool_upgrade_state.is_busy() or world.storages.busy or world.workers.busy):
+		return {"ok": false, "error": "A trade is in progress."}
+	if offer.item.item_id == WoodMarket.ITEM:
+		if world == null or not world.tool_upgrades.profile_ready:
+			return {"ok": false, "error": "Load your farm before buying wood."}
+		if offer.price != WoodMarket.BUY_PRICE or quantity > world.wood_market.remaining(world.farming.time_manager.now()):
+			return {"ok": false, "error": "Daily wood limit reached (30 per day)."}
 	var total: int = offer.price * quantity
 	if wallet == null or inventory == null:
 		return {"ok": false, "error": "Trading is unavailable."}
@@ -38,6 +46,7 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	var stacks: Array[Dictionary] = []
 	for index: int in range(inventory.slot_count):
 		stacks.append(inventory.slot(index))
+	var original: Array[Dictionary] = stacks.duplicate(true)
 	var left: int = quantity
 	for stack: Dictionary in stacks:
 		if stack.item != null and offer.item.matches(stack.item):
@@ -55,18 +64,32 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	if left != 0:
 		return {"ok": false, "error": "Your inventory has changed."}
 	_busy = true
+	var limited: bool = offer.item.item_id == WoodMarket.ITEM
+	if limited:
+		world.wood_market.busy = true
 	var previous: int = wallet.balance
 	# Đổi ví trước nhưng tạm chưa phát signal; replace_slots sau đó phát inventory.changed
 	# thì listener đã nhìn thấy cả ví mới lẫn túi mới. Nếu replace thất bại, trả ví về giá trị cũ.
 	# Sau cùng mới thông báo ví/giao dịch. Nếu phát signal ngay giữa hai bước, UI hoặc listener
 	# có thể quan sát trạng thái "đã có đồ nhưng chưa trừ xu" hoặc gọi mua lồng nhau.
 	wallet.set_balance(previous - int(checked.total), false)
-	if not inventory.replace_slots(stacks):
+	if not inventory.replace_slots(stacks, false):
 		wallet.set_balance(previous, false)
+		if limited:
+			world.wood_market.busy = false
 		_busy = false
 		return {"ok": false, "error": "Unable to update your inventory."}
+	if limited and not world.wood_market.spend(quantity, world.farming.time_manager.now()):
+		inventory.replace_slots(original, false)
+		wallet.set_balance(previous, false)
+		world.wood_market.busy = false
+		_busy = false
+		return {"ok": false, "error": "Daily wood limit reached (30 per day)."}
+	inventory.changed.emit()
 	# Inventory observers already see the debited wallet; no partial purchase.
 	wallet.changed.emit(wallet.balance)
 	purchased.emit(offer, quantity, int(checked.total))
+	if limited:
+		world.wood_market.busy = false
 	_busy = false
 	return {"ok": true, "total": checked.total, "quantity": quantity}

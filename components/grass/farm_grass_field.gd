@@ -86,6 +86,8 @@ func set_conversion(value: bool) -> bool:
 		_fallback("TileMap grass material unavailable")
 		return false
 	active = true
+	if is_instance_valid(world.land):
+		world.land.set_grass_effect(effect)
 	fallback_reason = ""
 	_sync_environment()
 	sync_tile_materials()
@@ -94,8 +96,12 @@ func set_conversion(value: bool) -> bool:
 func sync_tile_materials() -> void:
 	if active:
 		tile_materials.sync_from(effect)
+		if is_instance_valid(world.land):
+			world.land.grass_cover.sync_from(effect)
 
 func _fallback(reason: String) -> void:
+	if is_instance_valid(world.land):
+		world.land.set_grass_effect(null)
 	set_enabled(false)
 	renderer.clear()
 	_last_region = Rect2i(0, 0, -1, -1)
@@ -125,6 +131,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _exit_tree() -> void:
+	if is_instance_valid(world.land):
+		world.land.set_grass_effect(null)
 	if is_instance_valid(world.objectives) and world.objectives.progress.restored.is_connected(_after_restore):
 		world.objectives.progress.restored.disconnect(_after_restore)
 	tile_materials.restore()

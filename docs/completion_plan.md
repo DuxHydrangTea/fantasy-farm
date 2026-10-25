@@ -1,6 +1,8 @@
 # Kế hoạch hoàn thiện Fantasy Farm
 
-Planting Depth: **S0–S1 đã hoàn thành, save v28** — stack ba tầng giữ sức chứa, chuyển kho bảo toàn tầng, tưới cho Bạc và Root Tonic cho Vàng. Xem [hướng dẫn và kiểm chứng](planting_depth_s0_s1.md); các slice còn lại trong [kế hoạch](planting_depth_plan_2026-10-25.md) chưa triển khai.
+Đã hoàn thành vòng cân bằng mô phỏng B1: [đơn Hoàn Hảo bảo đảm giá, bếp mẻ lớn và số liệu](economy_balance_b1.md). Giá/thông số vẫn thử nghiệm; chưa thay thế phiên chơi thực dài hạn.
+
+Planting Depth: **S0, S1, S2, S3a, S4 và S5 đã hoàn thành, save v33** — [S0–S1: chất lượng rau](planting_depth_s0_s1.md), [S2: lâm nghiệp](planting_depth_s2.md), [S3a: UI ghép cành, quả Star và Chef](planting_depth_s3a.md). [S4: vườn ong, sửa tổ và sổ công thức](planting_depth_s4.md). [S5: đơn Hoàn Hảo và đất màu mỡ](planting_depth_s5.md) đã hoàn thành. S3b vẫn hoãn.
 
 Đã hoàn thành W0–W5, save v26: [Crop worker v2 — tự cuốc, gieo, trồng lại và bón phân](crop_worker_automation_plan.md). Đã đơn giản hóa theo yêu cầu: tự lấy hạt bất kỳ trong kho, làm trên đất đã mở, mỗi ô gieo thành công trừ một hạt; không chọn giống/vùng hoặc quota. Đã triển khai gameplay; xem [hướng dẫn và kiểm chứng](crop_worker_automation.md).
 
@@ -344,7 +346,7 @@ Web cần thử riêng cơ chế lưu qua lần tải lại/trình duyệt và k
 | 2 | Đã triển khai; chơi thử người mới/điện thoại thật còn chờ | Gợi ý theo mục tiêu, Help EN/VI, tùy chọn/lịch sử theo hồ sơ và cứu trợ một hạt; 165/165 test, 36/36 native checks; xem `onboarding_2.md` |
 | 3A | Chưa bắt đầu | Menu bắt đầu/vòng đời phiên |
 | 3B | Chưa bắt đầu | Esc/Settings |
-| 4 | Đang triển khai 4A — thông số thử nghiệm | Xem `economy_4a.md`: Resource/giá/thưởng/máng và tương thích save; gói hồ sơ mới và offline cấp chuồng đã triển khai (xem `starter_content.md`, `pen_offline.md`); mẻ mật mới đã triển khai (xem `honey_batches.md`); còn đo cân bằng theo phiên chơi |
+| 4 | Đã đo và cân bằng mô phỏng B1; cần phiên người thật | Xem `economy_4a.md`: Resource/giá/thưởng/máng và tương thích save; gói hồ sơ mới và offline cấp chuồng đã triển khai (xem `starter_content.md`, `pen_offline.md`); mẻ mật mới đã triển khai (xem `honey_batches.md`); còn đo cân bằng theo phiên chơi |
 | 5 | Cỏ/hoa/bụi/nấm GPU đã bật toàn map MainWorld | Xem `foliage_gpu.md`: 80 mẫu, gồm hoa nhiều tile; 815 cụm có hiệu ứng; 138 chunk + 677 shader tile; vẽ thêm tự nhận; native QA 224 checks/bên và 34 GUT; tiếp theo G5 benchmark/chốt cấu hình thiết bị |
 | M3 | Chưa bắt đầu | Hiệu năng, lưu và lifecycle điện thoại; rà lại UI mới |
 | 6 | Chưa bắt đầu | Kiểm thử và export |

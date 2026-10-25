@@ -176,7 +176,7 @@ func _inspect_slot(index: int) -> void:
 		selection.select_slot(index)
 	_refresh()
 	var item: ItemDefinition = selection.inventory.get_slot_item(index)
-	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and _moving_from < 0:
+	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit and _moving_from < 0:
 		var tiers: Array = selection.inventory.slot(index).tiers
 		for tier: int in range(3):
 			_quality_rows[tier].text = "%s: %d" % [ItemQuality.label(tier), tiers[tier]]
@@ -207,7 +207,9 @@ func _refresh() -> void:
 		details.text = tr("{item} ×{count}").format({"item": tr(item.display_name), "count": selection.inventory.get_slot_count(inspected_index)})
 	else:
 		details.text = tr("Empty slot") if touch else tr("Empty slot - drag an item here")
-	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE:
+	if item != null and item.star_fruit:
+		details.text += "\n" + tr("Star fruit: a separate Chef ingredient, not Gold quality.")
+	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
 		var tiers: Array = selection.inventory.slot(inspected_index).tiers
 		for tier: int in range(3):
 			details.text += "\n%s: %d" % [ItemQuality.label(tier), tiers[tier]]

@@ -53,9 +53,8 @@
 [ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="79_x28ju"]
 [ext_resource type="Script" uid="uid://c07b3nhwkyscm" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
 [ext_resource type="PackedScene" path="res://scenes/animals/pen_board.tscn" id="pen_management_sign"]
-[ext_resource type="PackedScene" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
-
 [ext_resource type="PackedScene" path="res://scenes/storage/storage_access.tscn" id="storage_access"]
+[ext_resource type="PackedScene" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -4972,7 +4971,7 @@ capacity = 20
 bounds = 30
 
 [node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
-position = Vector2(114, -12)
+position = Vector2(105, -5)
 
 [node name="FeedTrough2" parent="PondPen" unique_id=624608384 instance=ExtResource("32_feed_trough")]
 position = Vector2(48, 72)
@@ -5075,12 +5074,12 @@ role = "crop"
 [node name="Warehouse" parent="." unique_id=1790325500 instance=ExtResource("31_fdd8g")]
 position = Vector2(932, 199)
 
+[node name="StorageAccess" parent="Warehouse" unique_id=2046009266 instance=ExtResource("storage_access")]
+position = Vector2(0, 14)
+
 [node name="SeedInventory" parent="." unique_id=701774952 instance=ExtResource("31_fdd8g")]
 position = Vector2(1047, 199)
 variant = 5
-
-[node name="StorageAccess" parent="Warehouse" unique_id=2046009266 instance=ExtResource("storage_access")]
-position = Vector2(0, 14)
 
 [node name="StorageAccess" parent="SeedInventory" unique_id=1577681328 instance=ExtResource("storage_access")]
 position = Vector2(0, 14)

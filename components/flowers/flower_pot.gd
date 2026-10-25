@@ -5,6 +5,7 @@ var garden: FlowerGarden
 ## Timestamp-based growth in a permanent pot. Water starts the growth clock once.
 signal changed
 @export var empty_frames: SpriteFrames
+var reserved: bool = false
 var cell: Vector2i
 var definition: FlowerDefinition
 var planted_at: float = 0.0
@@ -27,7 +28,7 @@ func is_mature() -> bool:
 	return not is_locked() and definition != null and progress >= 1.0
 
 func is_locked() -> bool:
-	return garden != null and garden.starter_content_locked
+	return reserved or (garden != null and garden.starter_content_locked)
 
 func can_plant(seed: ItemDefinition) -> bool:
 	return not is_locked() and definition == null and seed != null and seed.item_type == ItemDefinition.ItemType.SEED and seed.crop is FlowerDefinition and seed.crop.is_valid()

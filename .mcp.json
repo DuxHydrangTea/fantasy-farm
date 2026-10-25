@@ -11,6 +11,13 @@
 			"env": {
 				"GODOT_MCP_CONFIG_VERSION": "1"
 			}
+		},
+		"pixellab": {
+			"url": "https://api.pixellab.ai/mcp",
+			"httpUrl": "https://api.pixellab.ai/mcp",
+			"headers": {
+				"Authorization": "Bearer 5d9a189d-bb17-4040-9c81-e547c10c5001"
+			}
 		}
 	}
 }

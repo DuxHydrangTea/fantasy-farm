@@ -174,64 +174,64 @@ msgid "First 6 slots are shared with the hotbar"
 msgstr "6 ô đầu dùng chung với hotbar"
 
 msgid "Flower 01"
-msgstr "Hoa 01"
+msgstr "Hoa Hồng"
 
 msgid "Flower 01 Seed"
-msgstr "Hạt hoa 01"
+msgstr "Hạt hoa hồng"
 
 msgid "Flower 02"
-msgstr "Hoa 02"
+msgstr "Hoa Cẩm Chướng"
 
 msgid "Flower 02 Seed"
-msgstr "Hạt hoa 02"
+msgstr "Hạt hoa cẩm chướng"
 
 msgid "Flower 03"
-msgstr "Hoa 03"
+msgstr "Hoa Phong Lan"
 
 msgid "Flower 03 Seed"
-msgstr "Hạt hoa 03"
+msgstr "Hạt hoa phong lan"
 
 msgid "Flower 04"
-msgstr "Hoa 04"
+msgstr "Hoa Oải Hương"
 
 msgid "Flower 04 Seed"
-msgstr "Hạt hoa 04"
+msgstr "Hạt hoa oải hương"
 
 msgid "Flower 05"
-msgstr "Hoa 05"
+msgstr "Hoa Chuông Xanh"
 
 msgid "Flower 05 Seed"
-msgstr "Hạt hoa 05"
+msgstr "Hạt hoa chuông xanh"
 
 msgid "Flower 06"
-msgstr "Hoa 06"
+msgstr "Hoa Cẩm Tú Cầu"
 
 msgid "Flower 06 Seed"
-msgstr "Hạt hoa 06"
+msgstr "Hạt hoa cẩm tú cầu"
 
 msgid "Flower 07"
-msgstr "Hoa 07"
+msgstr "Hoa Vạn Thọ"
 
 msgid "Flower 07 Seed"
-msgstr "Hạt hoa 07"
+msgstr "Hạt hoa vạn thọ"
 
 msgid "Flower 08"
-msgstr "Hoa 08"
+msgstr "Hoa Hướng Dương"
 
 msgid "Flower 08 Seed"
-msgstr "Hạt hoa 08"
+msgstr "Hạt hoa hướng dương"
 
 msgid "Flower 09"
-msgstr "Hoa 09"
+msgstr "Hoa Linh Lan"
 
 msgid "Flower 09 Seed"
-msgstr "Hạt hoa 09"
+msgstr "Hạt hoa linh lan"
 
 msgid "Flower 10"
-msgstr "Hoa 10"
+msgstr "Hoa Sen Xanh"
 
 msgid "Flower 10 Seed"
-msgstr "Hạt hoa 10"
+msgstr "Hạt hoa sen xanh"
 
 msgid "Flower seeds"
 msgstr "Hạt hoa"
@@ -2123,3 +2123,470 @@ msgstr "Cây này đã được bón dưỡng chất rễ cây."
 
 msgid "Cooking time: {seconds} seconds"
 msgstr "Thời gian chế biến: {seconds} giây"
+msgid "Wood bought today: {used}/{cap} · Resets at 06:00 (UTC+7)"
+msgstr "Gỗ đã mua hôm nay: {used}/{cap} · Đặt lại lúc 06:00 (UTC+7)"
+
+msgid "Load your farm before buying wood."
+msgstr "Hãy tải nông trại trước khi mua gỗ."
+
+msgid "Daily wood limit reached (30 per day)."
+msgstr "Vượt hạn mức mua gỗ còn lại (tối đa 30 mỗi ngày)."
+
+msgid "Not enough wood in your warehouse and bag."
+msgstr "Không đủ gỗ trong kho nông sản và túi."
+
+msgid "Wood: {count}"
+msgstr "Gỗ: {count}"
+
+msgid "Wood: {owned}/{required} · Warehouse first, then bag (Normal)"
+msgstr "Gỗ: {owned}/{required} · Lấy từ kho rồi đến túi (Thường)"
+
+msgid "Hoe: dig stump (1 hit)"
+msgstr "Cuốc: đập gốc (1 nhát)"
+
+msgid "Not specialized"
+msgstr "Chưa định hướng"
+
+msgid "Yield"
+msgstr "Sản lượng"
+
+msgid "Selection (Star fruit)"
+msgstr "Tuyển chọn (quả Star)"
+
+msgid "Manage fruit tree"
+msgstr "Quản lý cây ăn quả"
+
+msgid "Choose a graft direction"
+msgstr "Chọn hướng ghép cành"
+
+msgid "Grafting Wax"
+msgstr "Sáp Ghép Cành"
+
+msgid "Craft at Chef, then use in a mature fruit tree menu to change its next crop."
+msgstr "Chế ở Chef, rồi dùng trong bảng cây trưởng thành để đổi hướng cho vụ tiếp theo."
+
+msgid "Coin cost: {coins}"
+msgstr "Chi phí: {coins} xu"
+
+msgid "Fruit tree grafting"
+msgstr "Ghép cành cây ăn quả"
+
+msgid "Current direction: {direction}"
+msgstr "Hướng hiện tại: {direction}"
+
+msgid "Current crop: {item} × {count}"
+msgstr "Vụ hiện tại: {item} × {count}"
+
+msgid "Next crop: {direction}"
+msgstr "Hướng vụ sau: {direction}"
+
+msgid "Changes apply after the next harvest. The current crop stays unchanged."
+msgstr "Đổi hướng có hiệu lực sau lần thu kế tiếp. Vụ hiện tại giữ nguyên."
+
+msgid "Grafting Wax in bag: {count}"
+msgstr "Sáp Ghép Cành trong túi: {count}"
+
+msgid "First choice is free"
+msgstr "Lần chọn đầu miễn phí"
+
+msgid "Change direction: 1 Grafting Wax"
+msgstr "Đổi hướng: 1 Sáp Ghép Cành"
+
+msgid "Yield: double ordinary fruit"
+msgstr "Sản lượng: gấp đôi quả Thường"
+
+msgid "Requested by {count} current orders"
+msgstr "Có trong {count} đơn hàng hiện tại"
+
+msgid "Selection: original amount of Star fruit"
+msgstr "Tuyển chọn: giữ số lượng, nhận quả Star"
+
+msgid "Used in {count} Chef recipes"
+msgstr "Dùng cho {count} công thức Chef"
+
+msgid "Harvest current crop"
+msgstr "Thu hoạch vụ hiện tại"
+
+msgid "You can leave this tree unspecialized. It keeps producing ordinary fruit."
+msgstr "Chưa chọn hướng thì cây vẫn tiếp tục cho quả Thường."
+
+msgid "To change direction, craft Grafting Wax at Chef (5 wood, 1 Wild Honey, 1,000 coins)."
+msgstr "Muốn đổi hướng, chế Sáp Ghép Cành ở Chef (5 gỗ, 1 Mật Dại, 1.000 xu)."
+
+msgid "Graft scheduled for the next crop."
+msgstr "Đã chọn hướng cho vụ tiếp theo."
+
+msgid "Fruit harvested."
+msgstr "Đã thu hoạch quả."
+
+msgid "Your bag cannot hold the whole crop. Free space first."
+msgstr "Túi không đủ chỗ cho cả vụ. Hãy dọn chỗ trước."
+
+msgid "Grafting is unavailable."
+msgstr "Chưa thể ghép cành lúc này."
+
+msgid "This tree is unavailable."
+msgstr "Không thể tương tác với cây này."
+
+msgid "Move closer to this tree."
+msgstr "Hãy đến gần cây hơn."
+
+msgid "Wait until the tree is mature."
+msgstr "Hãy chờ cây trưởng thành."
+
+msgid "Invalid graft direction."
+msgstr "Hướng ghép cành không hợp lệ."
+
+msgid "This graft direction is already selected."
+msgstr "Hướng ghép này đã được chọn."
+
+msgid "Not enough Grafting Wax in your bag."
+msgstr "Không đủ Sáp Ghép Cành trong túi."
+
+msgid "The tree changed. Review its current crop and try again."
+msgstr "Trạng thái cây đã đổi. Hãy xem lại vụ hiện tại rồi thử lại."
+
+msgid "Fruit is not ready or your bag cannot hold the whole crop."
+msgstr "Quả chưa chín hoặc túi không chứa đủ cả vụ."
+
+msgid "Star fruit: a separate Chef ingredient, not Gold quality."
+msgstr "Quả Star là nguyên liệu Chef riêng, khác với chất lượng Vàng."
+
+msgid "Star Apple"
+msgstr "Táo Star"
+
+msgid "Star Peach"
+msgstr "Đào Star"
+
+msgid "Star Pear"
+msgstr "Lê Star"
+
+msgid "Star Cherry"
+msgstr "Anh đào Star"
+
+msgid "Star Apple Tart"
+msgstr "Bánh táo Star"
+
+msgid "Star Peach Parfait"
+msgstr "Kem đào Star"
+
+msgid "Star Pear Compote"
+msgstr "Lê Star hầm"
+
+msgid "Star Cherry Preserve"
+msgstr "Mứt anh đào Star"
+
+msgid "Fruit progress: {percent}%"
+msgstr "Tiến độ quả: {percent}%"
+
+msgid "Apple Tree"
+msgstr "Cây táo"
+
+msgid "Peach Tree"
+msgstr "Cây đào"
+
+msgid "Pear Tree"
+msgstr "Cây lê"
+
+msgid "Cherry Tree"
+msgstr "Cây anh đào"
+
+msgid "Bee journal"
+msgstr "Sổ nuôi ong"
+
+msgid "E: Bee journal"
+msgstr "E: Sổ nuôi ong"
+
+msgid "Repair: 15 wood + 500 coins"
+msgstr "Sửa tổ: 15 gỗ + 500 xu"
+
+msgid "Honey: {percent}%"
+msgstr "Mật ong: {percent}%"
+
+msgid "Eight neighboring pots per hive. Hybrids have priority over mono flowers."
+msgstr "Mỗi tổ đọc 8 chậu liền kề. Công thức lai được ưu tiên trước đơn hoa."
+
+msgid "A hybrid needs two matching flowers opposite each other for each species."
+msgstr "Mật lai cần mỗi loài có một cặp hoa cùng loại nằm đối xứng qua tổ."
+
+msgid "Recipe locks when a batch starts. Changing flowers affects the next batch."
+msgstr "Công thức khóa khi bắt đầu mẻ. Đổi hoa sẽ áp dụng từ mẻ sau."
+
+msgid "Garden wind: honey speed +25%. Field wind: radius +50%. Rain: base speed."
+msgstr "Gió: tốc độ mật vườn +25%; bán kính ong ruộng +50%. Mưa: tốc độ cơ bản."
+
+msgid "Field hives keep their flower-radius rules and crop growth bonus."
+msgstr "Tổ ngoài ruộng vẫn dùng bán kính hoa và tăng tốc cây trồng như trước."
+
+msgid "Next batch"
+msgstr "Mẻ tiếp theo"
+
+msgid "Cooked at Chef"
+msgstr "Đã nấu tại đầu bếp"
+
+msgid "Cook its custard at Chef to reveal the jar."
+msgstr "Nấu món kem trứng từ mật này tại đầu bếp để hiện hình hũ."
+
+msgid "Collect honey"
+msgstr "Thu mật ong"
+
+msgid "Hive repaired."
+msgstr "Đã sửa tổ ong."
+
+msgid "Honey collected."
+msgstr "Đã thu mật ong."
+
+msgid "Bee journal is unavailable."
+msgstr "Chưa thể mở sổ nuôi ong."
+
+msgid "Move closer to the hive."
+msgstr "Hãy tới gần tổ ong."
+
+msgid "This hive does not need repair."
+msgstr "Tổ ong này không cần sửa."
+
+msgid "Repair needs 15 ordinary wood and 500 coins."
+msgstr "Cần 15 gỗ Thường và 500 xu để sửa tổ."
+
+msgid "Honey is not ready or your bag cannot hold the whole batch."
+msgstr "Mật chưa xong hoặc túi không đủ chỗ cho cả mẻ."
+
+msgid "Use the three fixed garden hives."
+msgstr "Hãy dùng ba tổ ong cố định trong vườn."
+
+msgid "Garden conversion waiting: collect every existing garden honey batch first."
+msgstr "Đang chờ đổi bố cục: hãy thu hết các mẻ mật ở tổ cũ trong vườn."
+
+msgid "Garden conversion waiting: free a non-combo pot for each center flower."
+msgstr "Đang chờ đổi bố cục: cần chậu Tự Do trống để dời hoa ở tâm tổ."
+
+msgid "Garden conversion waiting: free bag space for surplus beehives."
+msgstr "Đang chờ đổi bố cục: hãy dọn túi để nhận lại các tổ ong dư."
+
+msgid "No combo: Mixed Honey"
+msgstr "Chưa đủ công thức: Mật Tạp"
+
+msgid "Two opposite Flower{a} + two opposite Flower{b}"
+msgstr "2 Hoa{a} đối xứng + 2 Hoa{b} đối xứng"
+
+msgid "At least four Flower{a} in the eight neighboring pots"
+msgstr "Ít nhất 4 Hoa{a} trong 8 chậu quanh tổ"
+
+msgid "Mixed Honey"
+msgstr "Mật Tạp"
+
+msgid "Flower01 + Flower06 Honey"
+msgstr "Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Flower01 + Flower06 Honey Custard"
+msgstr "Kem trứng Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Flower02 + Flower07 Honey"
+msgstr "Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Flower02 + Flower07 Honey Custard"
+msgstr "Kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Flower03 + Flower08 Honey"
+msgstr "Mật lai Phong Lan & Hướng Dương"
+
+msgid "Flower03 + Flower08 Honey Custard"
+msgstr "Kem trứng Mật lai Phong Lan & Hướng Dương"
+
+msgid "Flower06 Honey"
+msgstr "Mật hoa Cẩm Tú Cầu"
+
+msgid "Flower06 Honey Custard"
+msgstr "Kem trứng Mật hoa Cẩm Tú Cầu"
+
+msgid "Flower07 Honey"
+msgstr "Mật hoa Vạn Thọ"
+
+msgid "Flower07 Honey Custard"
+msgstr "Kem trứng Mật hoa Vạn Thọ"
+
+msgid "Normal delivery uses Normal items only. Perfect delivery uses Silver before Gold (+50%)."
+msgstr "Đơn thường chỉ dùng hàng Thường. Nộp Hoàn Hảo dùng Bạc trước Vàng (+50% xu)."
+
+msgid "Perfect delivery (+50%)"
+msgstr "Nộp Hoàn Hảo (+50%)"
+
+msgid "Exact item tiers to consume:"
+msgstr "Số lượng từng tầng sẽ sử dụng:"
+
+msgid "The ingredient tiers changed. Review the preview and confirm again."
+msgstr "Số lượng từng tầng đã đổi. Hãy hủy, xem lại và xác nhận lần nữa."
+
+msgid "Perfect delivery needs every requested item in Silver or Gold."
+msgstr "Nộp Hoàn Hảo cần toàn bộ nguyên liệu đạt Bạc hoặc Vàng."
+
+msgid "Fertile soil: {amount} produce"
+msgstr "Đất màu mỡ: {amount} nông sản"
+
+msgid "Axe: chop tree ({hits}/{total})"
+msgstr "Rìu: chặt cây ({hits}/{total})"
+
+msgid "Harvest fruit"
+msgstr "Thu hoạch quả"
+
+msgid "Uproot tree (return sapling)"
+msgstr "Nhổ cây (nhận lại cây giống)"
+
+msgid "Water sapling to start growth"
+msgstr "Tưới cây giống để bắt đầu lớn"
+
+msgid "{tree} · growing"
+msgstr "{tree} · đang lớn"
+
+msgid "Perfect reward: {coins} coins (+50%)"
+msgstr "Thưởng Hoàn Hảo: {coins} xu (+50%)"
+
+msgid "Normal uses Normal only. Perfect uses Silver before Gold: at least +50% order reward and 10% above direct sale."
+msgstr "Đơn thường chỉ dùng Thường. Hoàn Hảo dùng Bạc trước Vàng: tối thiểu +50% thưởng đơn và cao hơn bán thẳng ít nhất 10%."
+
+msgid "Perfect delivery (sale guarantee)"
+msgstr "Nộp Hoàn Hảo (bảo đảm giá)"
+
+msgid "Direct sale of these tiers: {coins} coins"
+msgstr "Bán thẳng đúng các tầng này: {coins} xu"
+
+msgid "This product has no sale price. Perfect delivery is unavailable."
+msgstr "Sản phẩm chưa có giá bán, chưa thể nộp Hoàn Hảo."
+
+msgid "Sale value: {sale} coins · Margin over ingredient sales: {margin} coins"
+msgstr "Giá bán món: {sale} xu · Chênh so với bán nguyên liệu: {margin} xu"
+
+msgid "Star Apple Banquet"
+msgstr "Đại tiệc Táo Star (300 quả)"
+
+msgid "Star Peach Banquet"
+msgstr "Đại tiệc Đào Star (300 quả)"
+
+msgid "Star Pear Banquet"
+msgstr "Đại tiệc Lê Star (300 quả)"
+
+msgid "Star Cherry Banquet"
+msgstr "Đại tiệc Anh đào Star (300 quả)"
+
+msgid "Flower01 + Flower06 Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Flower02 + Flower07 Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Flower03 + Flower08 Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Phong Lan & Hướng Dương"
+
+msgid "Flower06 Honey Custard Tray"
+msgstr "Khay kem trứng Mật hoa Cẩm Tú Cầu"
+
+msgid "Flower07 Honey Custard Tray"
+msgstr "Khay kem trứng Mật hoa Vạn Thọ"
+
+msgid "Perfect reward: {coins} coins"
+msgstr "Thưởng Hoàn Hảo: {coins} xu"
+
+msgid "Rose"
+msgstr "Hoa Hồng"
+
+msgid "Rose Seed"
+msgstr "Hạt hoa hồng"
+
+msgid "Carnation"
+msgstr "Hoa Cẩm Chướng"
+
+msgid "Carnation Seed"
+msgstr "Hạt hoa cẩm chướng"
+
+msgid "Orchid"
+msgstr "Hoa Phong Lan"
+
+msgid "Orchid Seed"
+msgstr "Hạt hoa phong lan"
+
+msgid "Lavender"
+msgstr "Hoa Oải Hương"
+
+msgid "Lavender Seed"
+msgstr "Hạt hoa oải hương"
+
+msgid "Bluebell"
+msgstr "Hoa Chuông Xanh"
+
+msgid "Bluebell Seed"
+msgstr "Hạt hoa chuông xanh"
+
+msgid "Hydrangea"
+msgstr "Hoa Cẩm Tú Cầu"
+
+msgid "Hydrangea Seed"
+msgstr "Hạt hoa cẩm tú cầu"
+
+msgid "Marigold"
+msgstr "Hoa Vạn Thọ"
+
+msgid "Marigold Seed"
+msgstr "Hạt hoa vạn thọ"
+
+msgid "Lily of the Valley"
+msgstr "Hoa Linh Lan"
+
+msgid "Lily of the Valley Seed"
+msgstr "Hạt hoa linh lan"
+
+msgid "Blue Lotus"
+msgstr "Hoa Sen Xanh"
+
+msgid "Blue Lotus Seed"
+msgstr "Hạt hoa sen xanh"
+
+msgid "Hydrangea Honey"
+msgstr "Mật hoa Cẩm Tú Cầu"
+
+msgid "Hydrangea Honey Custard"
+msgstr "Kem trứng Mật hoa Cẩm Tú Cầu"
+
+msgid "Hydrangea Honey Custard Tray"
+msgstr "Khay kem trứng Mật hoa Cẩm Tú Cầu"
+
+msgid "Marigold Honey"
+msgstr "Mật hoa Vạn Thọ"
+
+msgid "Marigold Honey Custard"
+msgstr "Kem trứng Mật hoa Vạn Thọ"
+
+msgid "Marigold Honey Custard Tray"
+msgstr "Khay kem trứng Mật hoa Vạn Thọ"
+
+msgid "Rose & Hydrangea Honey"
+msgstr "Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Rose & Hydrangea Honey Custard"
+msgstr "Kem trứng Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Rose & Hydrangea Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Hoa Hồng & Tú Cầu"
+
+msgid "Carnation & Marigold Honey"
+msgstr "Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Carnation & Marigold Honey Custard"
+msgstr "Kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Carnation & Marigold Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+
+msgid "Orchid & Sunflower Honey"
+msgstr "Mật lai Phong Lan & Hướng Dương"
+
+msgid "Orchid & Sunflower Honey Custard"
+msgstr "Kem trứng Mật lai Phong Lan & Hướng Dương"
+
+msgid "Orchid & Sunflower Honey Custard Tray"
+msgstr "Khay kem trứng Mật lai Phong Lan & Hướng Dương"
+
+msgid "Two opposite {a} + two opposite {b}"
+msgstr "2 chậu {a} đối xứng + 2 chậu {b} đối xứng"
+
+msgid "At least four {a} in the eight neighboring pots"
+msgstr "Ít nhất 4 chậu {a} trong 8 chậu lân cận"

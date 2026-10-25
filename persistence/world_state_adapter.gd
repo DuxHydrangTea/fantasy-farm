@@ -2,7 +2,6 @@ class_name WorldStateAdapter
 extends RefCounted
 ## Scene-specific bridge. Backend and schema never retain live scene objects.
 const ACTOR_SCENE: PackedScene = preload("res://scenes/animals/animal.tscn")
-const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn")
 var world: FarmWorld
 var catalog: SaveCatalog
 
@@ -91,6 +90,9 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["tutorial"] = world.tutorial.capture()
 	data["tool_upgrades"] = world.tool_upgrade_state.capture()
 	data["cooking"] = world.cooking.capture(now)
+	data["fertile_layout_version"] = farm.fertility.layout_version
+	data["honey_garden"] = world.honey_garden.capture()
+	data["wood_market"] = world.wood_market.capture(now)
 	data["workers"] = world.workers.capture(now)
 	data["storages"] = world.storages.capture()
 	data["storage_seed"] = String(selection.storage_seed_id)
@@ -158,6 +160,8 @@ func preflight(data: Dictionary) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	if world.trees != null and world.trees.is_busy():
+		return SaveSchema.failure("A forestry action is in progress.", "busy")
 	if world.farming != null and world.farming.is_area_busy():
 		return SaveSchema.failure("A farming action is in progress.", "busy")
 	if world.storages == null or world.storages.busy:
@@ -171,6 +175,8 @@ func preflight(data: Dictionary) -> Dictionary:
 			return SaveSchema.failure("Invalid worker position.")
 		if not row.task.is_empty() and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
 			return SaveSchema.failure("Invalid worker target.")
+	if world.wood_market == null or world.wood_market.busy:
+		return SaveSchema.failure("A wood purchase is in progress.", "busy")
 	if world.cooking == null or world.cooking.busy:
 		return SaveSchema.failure("A cooking transaction is in progress.", "busy")
 	if world.tool_upgrade_state == null or world.tool_upgrade_state.is_busy():
@@ -215,16 +221,30 @@ func preflight(data: Dictionary) -> Dictionary:
 	for row: Dictionary in data.pickups:
 		if row.pen != "" and not pens.has(row.pen):
 			return SaveSchema.failure("The item's pen was not found.")
+	if world.honey_garden == null or world.honey_garden.busy:
+		return SaveSchema.failure("A garden transaction is in progress.","busy")
+	var garden_slots: Dictionary = {}
 	var hive_cells: Dictionary = {}
 	for row: Dictionary in data.beehives:
 		var point: Vector2 = world.to_global(_point(row.position))
 		var cell: Vector2i = farm.world_to_cell(point)
-		if point.distance_to(world.apiary.snap_position(point)) > 0.01 or hive_cells.has(cell) or not world.apiary.placement_error(point,int(data.land_columns),true).is_empty():
+		var placement_ok: bool = true
+		if int(row.garden_slot) >= 0:
+			var slot: int = int(row.garden_slot)
+			placement_ok = world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id) and not garden_slots.has(slot) and point.distance_to(world.honey_garden.center_point(slot)) < 0.01
+			garden_slots[slot] = true
+		else:
+			placement_ok = world.apiary.placement_error(point,int(data.land_columns),true,not data.honey_garden.migrated).is_empty()
+			if data.honey_garden.migrated and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
+				placement_ok = false
+		if (int(row.garden_slot) < 0 and point.distance_to(world.apiary.snap_position(point)) > 0.01) or hive_cells.has(cell) or not placement_ok:
 			return SaveSchema.failure("Invalid beehive placement.")
 		for crop: Dictionary in data.crops:
 			if _cell(crop.cell) == cell:
 				return SaveSchema.failure("A hive overlaps a saved crop.")
 		hive_cells[cell] = true
+	if data.honey_garden.migrated and garden_slots.size() != 3:
+		return SaveSchema.failure("The garden needs exactly three fixed hives.")
 	for row: Dictionary in data.trees:
 		var cell: Vector2i = _cell(row.cell)
 		if world.trees == null or hive_cells.has(cell):
@@ -260,6 +280,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	# tiếp tục commit vào thế giới vừa tải. Xóa entity mặc định trước inventory.changed của restore,
 	# vì signal đó có thể làm sensor thử nhặt các đống cũ; làm ngược thứ tự có thể cấp đồ lại từ mặc định.
 	world.apiary.begin_restore()
+	world.honey_garden.restore(data.honey_garden)
 	if world.trees != null:
 		world.trees.reset()
 	world.weather.restore(data.weather, float(data.saved_at))
@@ -270,6 +291,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		world.land.reset_presentation()
 	if farm.land != null:
 		farm.land.restore_columns(int(data.land_columns), int(data.land_starting_columns))
+	world.wood_market.restore(data.wood_market)
 	world.tool_upgrade_state.restore(data.tool_upgrades, false)
 	world.cooking.restore(data.cooking, maxf(now, data.saved_at))
 	player.item_feedback.clear()
@@ -302,6 +324,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 			garden.pots[_cell(flower.cell)].restore_state(flower, catalog.flowers[flower.flower], float(data.saved_at))
 		garden.starter_flowers_added = bool(row.get("starter_flowers_added", false))
 		garden.add_starter_flowers(maxf(now, data.saved_at))
+	farm.fertility.layout_version = int(data.fertile_layout_version)
+	(world.get_node("FertileSoil") as FertileSoilOverlay).queue_redraw()
 	farm.restore_soil(data.soil)
 	world.weather.advance(float(data.saved_at))
 	for row: Dictionary in data.crops:
@@ -335,7 +359,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	selection.select_storage_seed(StringName(data.storage_seed))
 	var piles: Dictionary = {}
 	for row: Dictionary in data.pickups:
-		var pile: ItemPickup = PICKUP_SCENE.instantiate() as ItemPickup
+		var pile: ItemPickup = ItemPickup.create()
 		pile.persistent_id = StringName(row.id)
 		pile.item = catalog.items[row.item]
 		pile.amount = int(row.amount)

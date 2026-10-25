@@ -7,7 +7,6 @@ signal died
 @export var hydration_bar: ProgressBar
 @export var persistent_id: StringName
 
-const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn")
 @export var definition: AnimalDefinition
 @export var pen: AnimalPen
 @export var skin_frames: SpriteFrames
@@ -158,7 +157,7 @@ func _drop_stored_output() -> void:
 	# queue_free chưa xóa Node ngay, nên phải kiểm tra cả is_queued_for_deletion, không chỉ is_instance_valid.
 	# Nếu cộng vào đống đã xếp lịch xóa do vừa nhặt hết, lô mới có thể biến mất cuối frame.
 	if not is_instance_valid(_product_pickup) or _product_pickup.is_queued_for_deletion():
-		_product_pickup = PICKUP_SCENE.instantiate() as ItemPickup
+		_product_pickup = ItemPickup.create()
 		_product_pickup.item = production.definition.production_item
 		_product_pickup.amount = production.take_output(production.stored_amount)
 		var spawn_point: Vector2 = global_position + Vector2(0, 10)

@@ -5,11 +5,11 @@ extends Node
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float)
 const FRUIT_REGION: Rect2i = Rect2i(10, 58, 53, 30)
 const TIMBER_REGION: Rect2i = Rect2i(66, 58, 52, 30)
-const PICKUP: PackedScene = preload("res://scenes/objects/item_pickup.tscn")
 var world: FarmWorld
 var trees: Dictionary[Vector2i, PerennialTree] = {}
 var definitions: Dictionary[StringName, TreeDefinition] = {}
 var _placing: bool = false
+var tool_cells: Dictionary[Vector2i, TimberTree] = {}
 
 func _ready() -> void:
 	# Khu đất mới nằm dưới giới hạn camera cũ (1080), mở cả vùng đi lại/click.
@@ -112,17 +112,21 @@ func create_tree(cell: Vector2i, definition: TreeDefinition, now: float) -> Pere
 	tree.position = world.to_local(point_for(cell))
 	trees[cell] = tree
 	world.add_child(tree)
+	if tree is TimberTree:
+		tool_cells[world.farming.world_to_cell(tree.global_position)] = tree as TimberTree
 	world.farming.set_cell_occupied(cell, true)
 	world.player.state.navigation.invalidate_cache()
 	return tree
 
 func remove_tree(tree: PerennialTree) -> void:
+	if tree is TimberTree:
+		tool_cells.erase(world.farming.world_to_cell(tree.global_position))
 	trees.erase(tree.cell)
 	world.farming.set_cell_occupied(tree.cell, false)
 	world.player.state.navigation.invalidate_cache()
 
 func drop_item(item: ItemDefinition, count: int, point: Vector2) -> void:
-	var pile: ItemPickup = PICKUP.instantiate() as ItemPickup
+	var pile: ItemPickup = ItemPickup.create()
 	pile.item = item
 	pile.amount = count
 	pile.position = world.to_local(point)
@@ -156,6 +160,7 @@ func capture(now: float) -> Array:
 	return rows
 
 func reset() -> void:
+	tool_cells.clear()
 	for tree: PerennialTree in trees.values().duplicate():
 		world.farming.set_cell_occupied(tree.cell, false)
 		tree.free()
@@ -168,3 +173,21 @@ func restore(rows: Array, now: float) -> void:
 		var tree: PerennialTree = create_tree(cell, definitions[StringName(row.tree)], float(row.planted_at))
 		tree.restore_state(row)
 	advance(now)
+
+func tool_target(cell: Vector2i) -> TimberTree:
+	var tree: TimberTree = tool_cells.get(cell) as TimberTree
+	return tree if is_instance_valid(tree) and not tree.removed else null
+
+func can_dig(cell: Vector2i, bag: InventoryComponent) -> bool:
+	var tree: TimberTree = tool_target(cell)
+	if tree == null or tree._busy or bag == null:
+		return false
+	return tree.stump or (not tree.is_mature() and bag.capacity_for(tree.definition.planting_item()) > 0)
+
+func is_busy() -> bool:
+	if _placing:
+		return true
+	for tree: PerennialTree in trees.values():
+		if (tree is TimberTree or tree is FruitTree) and tree._busy:
+			return true
+	return false

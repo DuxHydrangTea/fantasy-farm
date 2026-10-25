@@ -1,5 +1,11 @@
 class_name ItemPickup
 extends Area2D
+
+static func create() -> ItemPickup:
+	# Resolve after script initialization; scene preloads can be incomplete in cycles.
+	var scene: PackedScene = load("res://scenes/objects/item_pickup.tscn") as PackedScene
+	return scene.instantiate() as ItemPickup
+
 @export var sprite: Sprite2D
 @export var quantity_label: Label
 @export var persistent_id: StringName

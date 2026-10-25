@@ -99,5 +99,10 @@ func test_planting_and_harvesting_an_offset_row_uses_the_same_target() -> void:
 	assert_true(target.reachable_from(world.player.global_position))
 	assert_true(world.player.interactions.resolver.hit(target, tree.sprite.global_position))
 	var before: int = bag.count_item(&"apple")
+	world.tool_upgrades.profile_ready = true
 	assert_true(world.player.interactions.execute(target))
+	assert_true(world.graft_menu.is_open)
+	assert_eq(bag.count_item(&"apple"), before, "E/click opens management before harvesting")
+	world.graft_menu._collect()
 	assert_eq(bag.count_item(&"apple"), before + tree.definition.harvest_amount)
+	world.graft_menu.close(false)

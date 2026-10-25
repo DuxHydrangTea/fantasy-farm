@@ -6,6 +6,8 @@ var panel: PanelContainer
 var heading: Label
 var rows: Array[Button] = []
 var details: Label
+var perfect_button: Button
+var _pending_plan: Dictionary = {}
 var deliver_button: Button
 var abandon_button: Button
 var refill_button: Button
@@ -95,6 +97,7 @@ func _build() -> void:
 	details = _label(scroll)
 	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	deliver_button = _button(right, _request.bind("deliver"))
+	perfect_button = _button(right,_request.bind("perfect"))
 	abandon_button = _button(right, _request.bind("abandon"))
 	status = _label(body, 14)
 	status.custom_minimum_size.y = 24
@@ -138,7 +141,8 @@ func _summary(entry: OrderDefinition) -> String:
 	for index: int in range(entry.items.size()):
 		var item: ItemDefinition = entry.items[index]
 		text += tr("{item}: {owned}/{needed}").format({"item": tr(item.display_name), "owned": board.service.inventory.count_item(item.item_id), "needed": entry.amounts[index]}) + "\n"
-	return text + "\n" + tr("Reward: %d coins") % entry.reward_coins
+		text += ItemQuality.summary([board.service.inventory.count_item(item.item_id,0),board.service.inventory.count_item(item.item_id,1),board.service.inventory.count_item(item.item_id,2)]) + "\n"
+	return text + "\n" + tr("Reward: %d coins") % entry.reward_coins + "\n" + tr("Normal uses Normal only. Perfect uses Silver before Gold: at least +50% order reward and 10% above direct sale.")
 
 func _refresh() -> void:
 	if not is_open:
@@ -154,6 +158,8 @@ func _refresh() -> void:
 		rows[index].set_pressed_no_signal(serial > 0 and serial == selected_serial)
 	var selected: OrderDefinition = board.service.definition(selected_serial)
 	details.text = _summary(selected) if selected != null else tr("No available order. Unlock seed supplies and growing areas, then choose Find orders.")
+	perfect_button.text = tr("Perfect delivery (sale guarantee)")
+	perfect_button.disabled = not board.service.quote(selected_serial,true).ok
 	deliver_button.text = tr("Deliver order")
 	deliver_button.disabled = not board.service.quote(selected_serial).ok
 	abandon_button.text = tr("Abandon order")
@@ -174,6 +180,7 @@ func _request(kind: String) -> void:
 		return
 	_pending_serial = selected_serial
 	_pending_kind = kind
+	_pending_plan = board.service.quote(selected_serial,kind == "perfect") if kind != "abandon" else {}
 	confirmation.show()
 	(confirmation.get_meta(&"body") as Control).hide()
 	_refresh_confirmation()
@@ -181,27 +188,46 @@ func _request(kind: String) -> void:
 
 func _refresh_confirmation() -> void:
 	var entry: OrderDefinition = board.service.definition(_pending_serial)
+	var delivery: bool = _pending_kind in ["deliver","perfect"]
+	var latest: Dictionary = board.service.quote(_pending_serial,_pending_kind == "perfect") if delivery else {}
+	var stale: bool = delivery and latest != _pending_plan
 	if entry == null:
 		confirmation_text.text = tr("This order has changed. Select it again.")
 	else:
-		var question: String = "Deliver all requested items for the reward?" if _pending_kind == "deliver" else "Abandon this order without a coin penalty?"
-		confirmation_text.text = tr(question) + "\n\n" + _summary(entry)
-	confirm_button.text = tr("Confirm delivery") if _pending_kind == "deliver" else tr("Confirm abandon")
-	confirm_button.disabled = entry == null or (_pending_kind == "deliver" and not board.service.quote(_pending_serial).ok)
+		confirmation_text.text = tr("Deliver all requested items for the reward?") if delivery else tr("Abandon this order without a coin penalty?")
+		confirmation_text.text += "\n\n" + _summary(entry)
+		if delivery and _pending_plan.get("ok",false):
+			confirmation_text.text += "\n\n" + tr("Exact item tiers to consume:")
+			for row: Dictionary in _pending_plan.rows:
+				var item: ItemDefinition = null
+				for candidate: ItemDefinition in entry.items:
+					if String(candidate.item_id) == row.item:
+						item = candidate
+				confirmation_text.text += "\n" + tr(item.display_name) + ": " + ItemQuality.summary(row.tiers)
+			var reward_text: String = tr("Perfect reward: {coins} coins").format({"coins":int(_pending_plan.coins)}) if _pending_kind == "perfect" else tr("Reward: %d coins") % int(_pending_plan.coins)
+			confirmation_text.text += "\n" + reward_text
+			if _pending_kind == "perfect":
+				confirmation_text.text += "\n" + tr("Direct sale of these tiers: {coins} coins").format({"coins":int(_pending_plan.sale_coins)})
+		if stale:
+			confirmation_text.text += "\n\n" + tr("The ingredient tiers changed. Review the preview and confirm again.")
+	confirm_button.text = tr("Confirm delivery") if delivery else tr("Confirm abandon")
+	confirm_button.disabled = entry == null or (delivery and (not latest.get("ok",false) or stale))
 	cancel_button.text = tr("Cancel")
 
 func _confirm() -> void:
 	if not is_open or not confirmation.visible or _pending_serial <= 0:
 		return
-	var result: Dictionary = board.service.deliver(_pending_serial) if _pending_kind == "deliver" else board.service.abandon(_pending_serial)
-	_message = ("Order delivered: +%d coins" if _pending_kind == "deliver" else "Order abandoned. No coins spent.") if result.ok else String(result.error)
-	_coins = int(result.get("coins", 0))
+	var delivery: bool = _pending_kind in ["deliver","perfect"]
+	var result: Dictionary = board.service.deliver(_pending_serial,_pending_kind == "perfect",_pending_plan) if delivery else board.service.abandon(_pending_serial)
+	_message = ("Order delivered: +%d coins" if delivery else "Order abandoned. No coins spent.") if result.ok else String(result.error)
+	_coins = int(result.get("coins",0))
 	_cancel()
 	_refresh()
 
 func _cancel() -> void:
 	_pending_serial = 0
 	_pending_kind = ""
+	_pending_plan = {}
 	confirmation.hide()
 	(confirmation.get_meta(&"body") as Control).show()
 

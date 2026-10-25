@@ -35,28 +35,34 @@ func chop(bag: InventoryComponent) -> bool:
 		regrow_at = last_at + definition.stump_seconds
 		_fall()
 		update_visual()
-		_reward(bag, definition.harvest_item, definition.harvest_amount)
-		_reward(bag, definition.planting_item(), 1)
+		var accepted: int = _reward(bag, definition.harvest_item, definition.harvest_amount)
+		accepted += _reward(bag, definition.planting_item(), 1)
+		if accepted > 0:
+			bag.changed.emit()
 	_busy = false
 	return true
 
 func dig(bag: InventoryComponent) -> bool:
-	if _busy or removed or not stump or bag == null:
+	if not stump:
+		return uproot(bag)
+	if _busy or removed or bag == null:
 		return false
 	_busy = true
 	root_hits += 1
 	react()
 	if root_hits >= definition.dig_hits:
 		retire()
-		_reward(bag, definition.root_item, 2)
+		if _reward(bag, definition.root_item, 2) > 0:
+			bag.changed.emit()
 	_busy = false
 	return true
 
-func _reward(bag: InventoryComponent, item: ItemDefinition, amount: int) -> void:
+func _reward(bag: InventoryComponent, item: ItemDefinition, amount: int) -> int:
 	# Đốn cây cho nhiều loại đồ; phần túi không chứa được phải nằm trên đất.
-	var accepted: int = bag.add(item, mini(amount, bag.capacity_for(item)))
+	var accepted: int = bag.add(item, mini(amount, bag.capacity_for(item)), 0, false)
 	if accepted < amount and plantation != null:
 		plantation.drop_item(item, amount - accepted, global_position + Vector2(12, 8))
+	return accepted
 
 func update_visual() -> void:
 	if sprite != null and definition != null:
@@ -93,7 +99,7 @@ func _fall() -> void:
 	tween.chain().tween_callback(canopy.queue_free)
 
 func action_text(_item: ItemDefinition) -> String:
-	return tr("Hoe: dig stump (3 hits)") if stump else tr("Axe: chop tree ({hits}/{total})").format({"hits": hits, "total": definition.chop_hits}) if is_mature() else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
+	return tr("Hoe: dig stump (1 hit)") if stump else tr("Axe: chop tree ({hits}/{total})").format({"hits": hits, "total": definition.chop_hits}) if is_mature() else tr("Uproot tree (return sapling)") if _item != null and _item.tool_type == ItemDefinition.ToolType.HOE else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
 
 func capture() -> Dictionary:
 	var row: Dictionary = super.capture()
@@ -106,3 +112,16 @@ func restore_state(row: Dictionary) -> void:
 	root_hits = int(row.root_hits)
 	regrow_at = float(row.regrow_at)
 	super.restore_state(row)
+
+func uproot(bag: InventoryComponent) -> bool:
+	if _busy or removed or stump or is_mature() or bag == null:
+		return false
+	var sapling: ItemDefinition = definition.planting_item()
+	if bag.capacity_for(sapling) < 1:
+		bag.report_capacity_blocked(sapling, 1)
+		return false
+	_busy = true
+	retire()
+	bag.add(sapling, 1)
+	_busy = false
+	return true

@@ -2,7 +2,7 @@ class_name FarmingAreaPolicy
 extends RefCounted
 ## Same deterministic footprint/eligibility for preview and impact-time commit.
 static func tool_for(action: StringName) -> StringName:
-	return &"hoe" if action == &"tool" else &"watering_can" if action == &"water" else &"sowing" if action == &"plant" else &""
+	return &"hoe" if action in [&"tool", &"tree_dig"] else &"watering_can" if action == &"water" else &"sowing" if action == &"plant" else &""
 
 static func cells(origin: Vector2i, facing: Vector2i, size: int) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
@@ -24,7 +24,7 @@ static func evaluate(farm: FarmingController, action: StringName, targets: Array
 		if item != null and item.item_type == ItemDefinition.ItemType.SEED and item.crop is CropDefinition and item.crop.is_valid():
 			seeds = inventory.count_item(item.item_id) if shared else int(stack.count)
 	for cell: Vector2i in targets:
-		var valid: bool = farm.can_till(cell, actor) if action == &"tool" else farm.can_water(cell, actor) if action == &"water" else farm.can_plant(cell, actor) if action == &"plant" else false
+		var valid: bool = farm.can_tool(cell, actor, inventory) if action in [&"tool", &"tree_dig"] else farm.can_water(cell, actor) if action == &"water" else farm.can_plant(cell, actor) if action == &"plant" else false
 		var ready: bool = valid and (action != &"plant" or seeds > 0)
 		if ready and action == &"plant":
 			seeds -= 1

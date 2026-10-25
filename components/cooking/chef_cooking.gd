@@ -2,8 +2,9 @@ class_name ChefCooking
 extends RefCounted
 ## One serial queue owned by the farm, independent of the Chef scene and UI.
 signal changed
+signal crafted(recipe_id: String)
 const CAPACITY: int = 20
-const RECIPES: Array[CookingRecipe] = [preload("res://resources/kitchen/recipes/fried_egg.tres"), preload("res://resources/kitchen/recipes/steamed_egg.tres"), preload("res://resources/kitchen/recipes/bread.tres"), preload("res://resources/kitchen/recipes/fruit_salad.tres"), preload("res://resources/kitchen/recipes/honey_bread.tres"), preload("res://resources/kitchen/recipes/root_tonic.tres")]
+const RECIPES: Array[CookingRecipe] = [preload("res://resources/kitchen/recipes/fried_egg.tres"), preload("res://resources/kitchen/recipes/steamed_egg.tres"), preload("res://resources/kitchen/recipes/bread.tres"), preload("res://resources/kitchen/recipes/fruit_salad.tres"), preload("res://resources/kitchen/recipes/honey_bread.tres"), preload("res://resources/kitchen/recipes/root_tonic.tres"), preload("res://resources/kitchen/recipes/grafting_wax.tres"), preload("res://resources/kitchen/recipes/star_apple_tart.tres"), preload("res://resources/kitchen/recipes/star_peach_parfait.tres"), preload("res://resources/kitchen/recipes/star_pear_compote.tres"), preload("res://resources/kitchen/recipes/star_cherry_preserve.tres"), preload("res://resources/kitchen/recipes/hybrid_01_06_custard.tres"), preload("res://resources/kitchen/recipes/hybrid_02_07_custard.tres"), preload("res://resources/kitchen/recipes/hybrid_03_08_custard.tres"), preload("res://resources/kitchen/recipes/mono_06_custard.tres"), preload("res://resources/kitchen/recipes/mono_07_custard.tres"), preload("res://resources/kitchen/recipes/star_apple_tart_batch.tres"), preload("res://resources/kitchen/recipes/star_peach_parfait_batch.tres"), preload("res://resources/kitchen/recipes/star_pear_compote_batch.tres"), preload("res://resources/kitchen/recipes/star_cherry_preserve_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_01_06_custard_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_02_07_custard_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_03_08_custard_batch.tres"), preload("res://resources/kitchen/recipes/mono_06_custard_batch.tres"), preload("res://resources/kitchen/recipes/mono_07_custard_batch.tres")]
 var queue: Array[Dictionary] = []
 var ready: Array[String] = []
 var updated_at: float = 0.0
@@ -56,26 +57,30 @@ func restore(data: Dictionary, now: float) -> void:
 	updated_at = float(data.updated_at)
 	advance(now, false)
 
-func quote(id: String, amount: int, inventory: InventoryComponent) -> String:
+func quote(id: String, amount: int, inventory: InventoryComponent, wallet: WalletComponent = null) -> String:
 	var recipe: CookingRecipe = find(id)
 	if busy or recipe == null or not recipe.valid() or inventory == null or amount < 1 or amount > CAPACITY:
 		return "Cooking is unavailable."
 	if queue.size() + ready.size() + amount > CAPACITY:
 		return "Chef is full. Collect dishes first (20 maximum)."
+	if recipe.coin_cost > 0 and (wallet == null or wallet.balance < recipe.coin_cost * amount):
+		return "Not enough coins."
 	for i: int in range(recipe.ingredients.size()):
 		if inventory.count_item(recipe.ingredients[i].item_id, recipe.tier_at(i)) < recipe.amounts[i] * amount:
 			return "Not enough ingredients."
 	return ""
 
-func start(id: String, amount: int, inventory: InventoryComponent, now: float) -> String:
+func start(id: String, amount: int, inventory: InventoryComponent, now: float, wallet: WalletComponent = null) -> String:
 	if busy:
 		return "Cooking is unavailable."
 	advance(now, false)
-	var error: String = quote(id, amount, inventory)
+	var error: String = quote(id, amount, inventory, wallet)
 	if not error.is_empty():
 		return error
 	busy = true
 	var recipe: CookingRecipe = find(id)
+	if recipe.coin_cost > 0:
+		wallet.set_balance(wallet.balance - recipe.coin_cost * amount, false)
 	for i: int in range(recipe.ingredients.size()):
 		inventory.consume(recipe.ingredients[i].item_id, recipe.amounts[i] * amount, ItemQuality.exact(recipe.tier_at(i)), false)
 	var finish: float = maxf(updated_at, float(queue.back().finish_at) if not queue.is_empty() else updated_at)
@@ -83,6 +88,8 @@ func start(id: String, amount: int, inventory: InventoryComponent, now: float) -
 		finish += recipe.cook_seconds
 		queue.append({"recipe": id, "finish_at": finish})
 	inventory.changed.emit()
+	if recipe.coin_cost > 0:
+		wallet.changed.emit(wallet.balance)
 	changed.emit()
 	busy = false
 	return ""
@@ -95,11 +102,13 @@ func collect(inventory: InventoryComponent, now: float) -> int:
 	var collected: int = 0
 	# Commit source removal before inventory notification; reentrant collection is locked.
 	for index: int in range(ready.size() - 1, -1, -1):
-		var item: ItemDefinition = find(ready[index]).output
+		var completed_id: String = ready[index]
+		var item: ItemDefinition = find(completed_id).output
 		if inventory.capacity_for(item) < 1:
 			continue
 		ready.remove_at(index)
 		collected += inventory.add(item, 1)
+		crafted.emit(completed_id)
 	if collected > 0:
 		changed.emit()
 	busy = false

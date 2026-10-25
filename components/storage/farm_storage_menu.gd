@@ -170,7 +170,7 @@ func _refresh() -> void:
 			button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 			button.disabled = not definition.accepts(item)
-			button.text += "\n" + ItemQuality.summary(totals[id].tiers) if item.item_type == ItemDefinition.ItemType.PRODUCE else ""
+			button.text += "\n" + ItemQuality.summary(totals[id].tiers) if item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit else ""
 			button.tooltip_text = tr(item.display_name) if not button.disabled else tr("This item does not belong in this storage.")
 			button.toggle_mode = true
 			button.button_pressed = id == selected_id and depositing == (side == 0)

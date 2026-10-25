@@ -7,7 +7,12 @@ var _cell: Vector2i
 var _item: ItemDefinition
 var _slot: int = -1
 var _action: StringName = &""
+var _dig_targets: Array[Vector2i] = []
+var _selection_revision: int = -1
 var marker: Sprite2D
+
+func dig_targets() -> Array[Vector2i]:
+	return _dig_targets.duplicate()
 
 func _ready() -> void:
 	player.state.state_changed.connect(_state_changed)
@@ -73,8 +78,13 @@ func prepare_target(tree: PerennialTree, requested: StringName = &"") -> StringN
 			_action = &"tree_harvest"
 	elif tree is TimberTree and tool:
 		var timber: TimberTree = tree as TimberTree
-		if timber.stump and _item.tool_type == ItemDefinition.ToolType.HOE:
+		if (timber.stump or not timber.is_mature()) and _item.tool_type == ItemDefinition.ToolType.HOE:
 			_action = &"tree_dig"
+			_selection_revision = player.selection.revision
+			_dig_targets = player.farming_actions.target_cells(&"tool", false)
+			var tree_cell: Vector2i = plantation().world.farming.world_to_cell(tree.global_position)
+			if not _dig_targets.has(tree_cell):
+				_dig_targets = [tree_cell]
 		elif not timber.stump and timber.is_mature() and _item.tool_type == ItemDefinition.ToolType.AXE:
 			_action = &"tree_chop"
 	return _action if not _action.is_empty() else &"blocked"
@@ -117,5 +127,7 @@ func _impact() -> void:
 		&"tree_water": (pending as FruitTree).water(now)
 		&"tree_uproot": (pending as FruitTree).uproot(bag)
 		&"tree_chop": (pending as TimberTree).chop(bag)
-		&"tree_dig": (pending as TimberTree).dig(bag)
+		&"tree_dig":
+			if player.selection.revision == _selection_revision:
+				system.world.farming.apply_area(&"tool", _dig_targets, bag, -1, null, player)
 	pending = null

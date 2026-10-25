@@ -99,7 +99,10 @@ func action_text() -> String:
 			var animal: AnimalActor = node as AnimalActor
 			return tr("Collect produce") if animal.production.definition != null and animal.production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION and animal.production.stored_amount > 0 else tr("Inspect animal")
 		Kind.BEEHIVE: return (node as Beehive).action_text()
-		Kind.CROP: return tr("Harvest crop")
+		Kind.CROP:
+			var farm: FarmingController = player.farming_actions.get_farming_controller()
+			var cell: Vector2i = farm.world_to_cell(point())
+			return tr("Harvest crop") + (" · " + tr("Fertile soil: {amount} produce").format({"amount":farm.harvest_amount(cell)}) if farm.fertility.is_fertile(cell) else "")
 		Kind.FLOWER: return tr("Harvest flowers")
 		Kind.TREE: return (node as PerennialTree).action_text(player.selection.get_selected_item())
 	return ""

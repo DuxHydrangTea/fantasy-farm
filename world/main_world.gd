@@ -19,6 +19,11 @@ var seed_picker: FarmSeedPicker
 var storages: FarmStorageService
 var storage_accesses: Dictionary = {}
 var workers: WorkerService
+var grafting: GraftService = GraftService.new()
+var honey_garden: HoneyGardenSystem
+var honey_menu: HoneyMenu
+var graft_menu: GraftMenu
+var wood_market: WoodMarket = WoodMarket.new()
 var cooking: ChefCooking = ChefCooking.new()
 var tool_upgrade_state: ToolUpgradeState = ToolUpgradeState.new()
 var tool_upgrades: ToolUpgradeService
@@ -70,6 +75,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	# Player creates its wallet after the world's _enter_tree; bind once children are ready.
 	tool_upgrades = ToolUpgradeService.new(tool_upgrade_state, player.wallet, land.state, tool_upgrade_catalog)
+	tool_upgrades.world = self
+	tool_upgrades.inventory = player.selection.inventory
 	tool_upgrades.purchasing_enabled = true
 	player.farming_actions.upgrades = tool_upgrade_state
 	player.tool_range_ui = ToolRangeUI.new()
@@ -101,6 +108,19 @@ func _ready() -> void:
 	orders.world = self
 	orders.position = order_board_position
 	add_child(orders)
+	grafting.world = self
+	graft_menu = GraftMenu.new()
+	graft_menu.name = "FruitGrafting"
+	graft_menu.world = self
+	add_child(graft_menu)
+	honey_garden = HoneyGardenSystem.new()
+	honey_garden.world = self
+	honey_garden.name = "HoneyGarden"
+	add_child(honey_garden)
+	honey_menu = HoneyMenu.new()
+	honey_menu.world = self
+	honey_menu.name = "BeeJournal"
+	add_child(honey_menu)
 	help_ui = HelpUI.new()
 	help_ui.name = "HelpUI"
 	help_ui.world = self
@@ -115,6 +135,10 @@ func _ready() -> void:
 			for node: Node in child.get_children():
 				if node is PenBoard:
 					pen_boards.append(node as PenBoard)
+	var fertile_overlay: FertileSoilOverlay = FertileSoilOverlay.new()
+	fertile_overlay.world = self
+	fertile_overlay.name = "FertileSoil"
+	add_child(fertile_overlay)
 	grass = FarmGrassField.new()
 	grass.name = "GPUGrass"
 	grass.world = self

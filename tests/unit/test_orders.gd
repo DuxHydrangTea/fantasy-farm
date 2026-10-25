@@ -141,3 +141,54 @@ func test_restore_notifies_once_and_blocks_reentrant_delivery() -> void:
 	assert_false(callbacks[0].ok)
 	assert_eq(orders.capture(), saved)
 	assert_eq(wallet.balance, 1000)
+
+func test_perfect_preview_consumes_silver_then_gold_and_preserves_normal() -> void:
+	var serial: int = _first()
+	var entry: OrderDefinition = orders.definition(serial)
+	var item: ItemDefinition = entry.items[0]
+	bag.add(item,20,0)
+	bag.add(item,7,1)
+	bag.add(item,10,2)
+	var quote: Dictionary = orders.quote(serial,true)
+	assert_true(quote.ok)
+	assert_eq(quote.rows[0].tiers,[0,7,5])
+	assert_eq(quote.sale_coins,1056)
+	assert_eq(quote.coins,1162)
+	var observed: Array[bool] = []
+	bag.changed.connect(func() -> void:
+		assert_eq(wallet.balance,2162)
+		observed.append(orders.deliver(serial,true).ok)
+	,CONNECT_ONE_SHOT)
+	assert_true(orders.deliver(serial,true,quote).ok)
+	assert_eq(bag.count_item(item.item_id,0),20)
+	assert_eq(bag.count_item(item.item_id,1),0)
+	assert_eq(bag.count_item(item.item_id,2),5)
+	assert_eq(observed,[false])
+
+func test_perfect_requires_every_ingredient_and_never_falls_back_to_normal() -> void:
+	var serial: int = _first()
+	var entry: OrderDefinition = orders.definition(serial)
+	bag.add(entry.items[0],100,0)
+	bag.add(entry.items[0],11,1)
+	assert_false(orders.quote(serial,true).ok)
+	assert_false(orders.deliver(serial,true).ok)
+	assert_eq(bag.count_item(entry.items[0].item_id,0),100)
+	assert_eq(bag.count_item(entry.items[0].item_id,1),11)
+	bag.add(entry.items[0],1,2)
+	wallet.set_balance(WalletComponent.MAX_COINS-100)
+	assert_false(orders.deliver(serial,true).ok)
+	assert_eq(bag.count_item(entry.items[0].item_id,2),1)
+
+func test_stale_perfect_preview_requires_review_and_ordinary_never_uses_quality() -> void:
+	var serial: int = _first()
+	var item: ItemDefinition = orders.definition(serial).items[0]
+	bag.add(item,12,1)
+	bag.add(item,12,2)
+	var quote: Dictionary = orders.quote(serial,true)
+	assert_false(orders.quote(serial).ok)
+	assert_true(orders.requested_in_bag(),"Silver/Gold requested by Perfect delivery also trigger sale warnings")
+	bag.consume(item.item_id,1,ItemQuality.exact(1))
+	assert_false(orders.deliver(serial,true,quote).ok)
+	assert_eq(wallet.balance,1000)
+	assert_eq(bag.count_item(item.item_id,1),11)
+	assert_true(orders.deliver(serial,true,orders.quote(serial,true)).ok)

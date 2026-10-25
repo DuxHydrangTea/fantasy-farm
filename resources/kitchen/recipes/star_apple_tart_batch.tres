@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/trees/apple_star.tres" id="in0"]
+[ext_resource type="Resource" path="res://items/honey/wild_honey.tres" id="in1"]
+[ext_resource type="Resource" path="res://items/cooked/star_apple_tart_batch.tres" id="out"]
+[resource]
+script = ExtResource("script")
+recipe_id = &"star_apple_tart_batch"
+display_name = "Star Apple Banquet"
+honey_recipe = ""
+ingredients = Array[ExtResource("item")]([ExtResource("in0"), ExtResource("in1")])
+amounts = Array[int]([300, 1])
+output = ExtResource("out")
+cook_seconds = 14400.0

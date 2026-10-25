@@ -6,6 +6,9 @@ var apiary: ApiarySystem
 var definition: BeehiveDefinition
 var production: BeehiveProductionComponent = BeehiveProductionComponent.new()
 var pollination: PollinationComponent = PollinationComponent.new()
+var garden_id: String = ""
+var garden_slot: int = -1
+var repaired: bool = true
 var sprite: Sprite2D
 var range_display: BeehiveRangeDisplay
 var bees: BeeVisualComponent
@@ -37,6 +40,7 @@ func _ready() -> void:
 
 func refresh_visual() -> void:
 	if sprite != null:
+		sprite.modulate = Color.WHITE if repaired else Color(0.42,0.32,0.25)
 		sprite.texture = definition.full_texture if production.ready_item != null else definition.idle_texture
 
 func collect(bag: InventoryComponent) -> bool:
@@ -49,6 +53,8 @@ func collect(bag: InventoryComponent) -> bool:
 	return item != null
 
 func action_text() -> String:
+	if garden_slot >= 0:
+		return tr("Bee journal") + "\n" + (tr("Repair: 15 wood + 500 coins") if not repaired else tr("Honey: {percent}%").format({"percent":floori(production.work / definition.cycle_seconds * 100)}))
 	var legacy_notice: String = "\n" + tr("Legacy batch · Next batch: {amount} jars").format({"amount": definition.batch_amount}) if production.legacy_batch else ""
 	if production.ready_item != null:
 		return tr("Collect {item} ×{amount}").format({"item":tr(production.ready_item.display_name), "amount": production.batch_amount()}) + legacy_notice
@@ -68,5 +74,8 @@ func capture() -> Dictionary:
 	var result: Dictionary = production.capture()
 	# New DTO keys must remain Strings for the async repository boundary.
 	result["id"] = String(persistent_id)
+	result["garden_id"] = garden_id
+	result["garden_slot"] = garden_slot
+	result["repaired"] = repaired
 	result["position"] = [position.x,position.y]
 	return result

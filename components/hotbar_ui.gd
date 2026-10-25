@@ -31,6 +31,8 @@ func _ready() -> void:
 		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
 		button.inventory = selection.inventory
+		button.hotbar_skin = true
+		button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		button.slot_index = index
 		button.show_shortcut = true
 		button.pressed.connect(_select_slot.bind(index))
@@ -114,20 +116,21 @@ func _fit_layout() -> void:
 		bottom.offset_top = -104
 		bottom.offset_bottom = -8
 	for button: InventorySlot in buttons:
-		button.custom_minimum_size = Vector2(48, 52) if touch else Vector2(64, 68)
+		button.custom_minimum_size = Vector2(48, 48) if touch else Vector2(64, 64)
 		button.refresh()
 	if inventory_button != null:
-		inventory_button.custom_minimum_size = Vector2(64, 52) if touch else Vector2(92, 68)
+		inventory_button.custom_minimum_size = Vector2(64, 48) if touch else Vector2(92, 64)
 		inventory_button.clip_text = touch
 		inventory_button.add_theme_font_size_override("font_size", 16 if touch else 18)
-		for state: StringName in [&"normal", &"hover", &"pressed"]:
-			if touch:
-				var style: StyleBox = root.theme.get_stylebox(state, &"Button").duplicate() as StyleBox
-				style.set_content_margin(SIDE_LEFT, 3)
-				style.set_content_margin(SIDE_RIGHT, 3)
-				inventory_button.add_theme_stylebox_override(state, style)
-			else:
-				inventory_button.remove_theme_stylebox_override(state)
+		for state: StringName in [&"normal", &"hover", &"pressed", &"disabled"]:
+			var style: StyleBoxTexture = StyleBoxTexture.new()
+			style.texture = InventorySlot.HOTBAR_NORMAL if state in [&"normal",&"disabled"] else InventorySlot.HOTBAR_SELECTED
+			for edge: int in [SIDE_LEFT,SIDE_TOP,SIDE_RIGHT,SIDE_BOTTOM]:
+				style.set_texture_margin(edge,4.0)
+				style.set_content_margin(edge,3.0 if touch else 6.0)
+			inventory_button.add_theme_stylebox_override(state,style)
+		for state: String in ["font_color","font_hover_color","font_pressed_color"]:
+			inventory_button.add_theme_color_override(state,Color(0.9,0.9,0.96))
 		_refresh_controls()
 
 func _process(_delta: float) -> void:

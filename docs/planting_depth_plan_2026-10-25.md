@@ -1,8 +1,10 @@
 # Kế hoạch chi tiết: Chiều sâu 4 hệ trồng trọt (Planting Depth) — v2.1
 
+Đã hoàn thành vòng cân bằng mô phỏng B1: [đơn Hoàn Hảo bảo đảm giá, bếp mẻ lớn và số liệu](economy_balance_b1.md). Giá/thông số vẫn thử nghiệm; chưa thay thế phiên chơi thực dài hạn.
+
 - **Ngày chốt:** 25/10/2026 (v2 sau review ngoài + GĐ3 tranh luận; v2.1 bổ sung 5 quy tắc theo review thứ hai — không cần vòng tranh luận mới theo kết luận của reviewer)
 - **Nguồn gốc:** [tranh biện 3 giai đoạn giữa hai designer](planting_depth_debate_2026-10-25.md) (GĐ1 chiến lược → GĐ2 chi tiết + nghiệm thu → GĐ3 xử lý review độc lập)
-- **Trạng thái:** **S0 và S1 đã triển khai, save v28**; xem [hướng dẫn và kiểm chứng](planting_depth_s0_s1.md). Các slice còn lại chưa triển khai. Các hệ số kinh tế (1.8x/3.5x, 2x, 30 gỗ/ngày…) là **giá thử nghiệm**, chốt chính thức ở phần 4 (cân bằng) của `completion_plan.md`.
+- **Trạng thái:** **S0, S1, S2, S3a, S4 và S5 đã triển khai, save v33**; xem [S0–S1](planting_depth_s0_s1.md), [S2](planting_depth_s2.md) và [S3a: UI ghép cành, quả Star và Chef](planting_depth_s3a.md). S3b vẫn hoãn; [S5 đã triển khai](planting_depth_s5.md). Xem [S4: vườn ong và sổ công thức](planting_depth_s4.md). Các hệ số kinh tế (1.8x/3.5x, 2x, 30 gỗ/ngày…) là **giá thử nghiệm**, chốt chính thức ở phần 4 (cân bằng) của `completion_plan.md`.
 - **LƯU Ý ĐỐI CHIẾU:** dự án đã có [kho nông sản/kho vật tư](farm_storage_s3_s5.md) (save v25) và [crop worker v2](crop_worker_automation.md) (save v26). Trước S0 phải rà: (1) tier chất lượng áp cho luồng produce qua **warehouse**; (2) worker v2 gieo hạt tuân theo fix pre-watering; (3) mọi version schema là **bump +1 từ schema hiện hành**, không phải số cứng.
 
 ## 1. Mục tiêu & phi mục tiêu
@@ -49,6 +51,8 @@
 
 ### S2 — Gỗ & Lâm nghiệp hoàn chỉnh (v2 — kinh tế khóa chặt)
 
+**Đã triển khai:** giá mua 63 xu (làm tròn từ 62,5); gỗ thêm cho mức 3×3/4×4/5×5/6×6 là 10/15/20/30, lấy Warehouse rồi túi (Thường). Chưa có hook mở rộng Bếp. Xem [báo cáo S2](planting_depth_s2.md).
+
 - Giá bán wood → 1 xu; **giá mua wood = 2.5 × GIÁ BÁN CŨ (pre-nerf)**, độc lập với giá bán mới. **Cap cứng 30 gỗ/ngày** (hiện `12/30` trên UI shop; reset theo mốc ngày chung).
 - Tool upgrade từ U3 thêm chi phí wood; mở rộng Bếp thêm wood nếu có hook. Định lượng wood các bậc nâng cấp phải đối chiếu cap 30/ngày + tốc độ tự trồng (không được biến van thoát thành cổng chờ — rà ở phần cân bằng).
 - **Chống root-printer:** root_item CHỈ rơi khi đập gốc của cây **đã trưởng thành** (2 root/gốc); cây non uproot hoàn trả sapling, không root (tái dùng pattern `fruit_tree.uproot`).
@@ -57,6 +61,8 @@
 - Test: không farm tiền bằng gỗ; mua vượt 30 bị chặn; đập gốc non không ra root; NxN dọn gốc; save cũ an toàn.
 
 ### S3a — Ghép cành (GIỮ chu kỳ quả hiện tại)
+
+**Đã triển khai:** UI E/click/touch trên cây trưởng thành, hướng hiện tại/hướng chờ, nút thu; Sáp Ghép (5 gỗ + 1 Mật Dại + 1.000 xu, 60 giây); 4 quả Star riêng và 4 món Chef dùng Star. Thông số thử nghiệm, hướng mới luôn bắt đầu sau lần thu kế tiếp. Xem [hướng dẫn và kiểm chứng S3a](planting_depth_s3a.md).
 
 - `TreeDefinition` + `graft: NONE|YIELD|QUALITY`; save thêm `graft`. **Trưởng thành lần đầu → prompt "Chờ Định Hình", chọn FREE, không deadline — cây chưa chọn vẫn ra quả thường ×1** (no FOMO). Đổi hướng = "Sáp Ghép" (Bếp: mật ong + wood + vàng).
 - **Cân bằng 2 nhánh (v2 — tách trục):** YIELD = `harvest_amount` ×2 quả Thường (làn tiền/Orders); QUALITY = số lượng giữ nguyên nhưng ra **quả Star — nguyên liệu BẾP RIÊNG** mở công thức thượng hạng, **giá bán thô = 1.0x quả thường** (không nhân 3.5x). Tradeoff thật: làn Orders hay làn Kitchen.
@@ -71,7 +77,7 @@
 
 ### S4 — Vườn hoa: 3 cụm, 8 chậu cố định, snapshot đầu mẻ (v2)
 
-- 9×5: 3 tổ **hàng 3, cột 2/5/8**; mỗi tổ đọc đúng **8 chậu quanh nó** (24 chậu combo); hàng 1 & 5 = 18 chậu Tự Do. **Không dùng bán kính trong vườn.**
+- **Bố cục đã được người dùng chọn:** giữ 180 vị trí của 4 khối 9×5. Khối trên trái có 3 tổ **hàng 3, cột 2/5/8** (thay 3 chậu tâm); mỗi tổ đọc đúng **8 chậu quanh nó** (24 chậu combo). 18 chậu còn lại của khối này và 135 chậu trong 3 khối khác trồng tự do: tổng **177 chậu trồng + 3 tổ**, 153 chậu Tự Do. **Không dùng bán kính cho tổ combo.**
 - **Gió tách bạch:** ong RUỘNG giữ +50% bán kính (hiện trạng, không đụng); cụm VƯỜN: ngày gió +25% tốc độ tạo mật.
 - **Công thức chốt lúc BẮT ĐẦU mẻ ủ (snapshot) — tách bạch "khóa công thức" và "duy trì sản xuất" (v2.1):** hệ thống quét vòng 8 chậu, xác định Recipe ID, lưu vào mẻ; giữa mẻ hái/nhổ/trồng không đổi LOẠI mật. **Tốc độ sản xuất vẫn phụ thuộc nguồn hoa HIỆN CÓ** (khớp kiến trúc sẵn: `honey_rate(pollination.source_id)`, hết hoa rơi về nhịp Mật Dại) — giữ hoa vài giây đầu mẻ không ăn được tốc độ; **tiến độ đã tích không bao giờ mất** khi thiếu hoa (no-punishment). Vòng invalid lúc snapshot → Mật Tạp; cấu hình mới áp dụng mẻ sau.
 - **Ưu tiên công thức:** xét lai trước, đơn sắc sau; 2 lai cùng đúng → theo thứ tự định nghĩa trong data.
@@ -83,7 +89,7 @@
 
 ### S5 — Kinh tế vĩ mô: Perfect Delivery + ô màu mỡ
 
-- Perfect Delivery: auto-fill **chỉ dùng Thường**; nút "Nộp Hoàn Hảo" tách riêng (cần 100% đơn từ Bạc+), +50% tiền (THỬ NGHIỆM); preview số lượng từng tầng sẽ dùng trước xác nhận.
+- Perfect Delivery: auto-fill **chỉ dùng Thường**; nút "Nộp Hoàn Hảo" tách riêng (cần 100% đơn từ Bạc+), thưởng = max(150% thưởng đơn, 110% giá bán đúng tầng) (B1, THỬ NGHIỆM); preview số lượng từng tầng sẽ dùng trước xác nhận.
 - **Ô màu mỡ = cơ chế kinh tế (không phải polish):** 15–20% ô farmland **rải theo Ô (không theo cột)**, layout = `stable_hash(cell_x, cell_y, LAYOUT_VERSION)`; **LAYOUT_VERSION lưu trong save** — thuật toán giữ ổn định giữa các bản game, hỗ trợ thuật toán cũ theo version đã lưu; đổi version phải qua migration chủ đích, cập nhật game không làm ô đổi chỗ. Hiệu quả `max(base + 1, int(round(base × 1.5)))` cho mọi loại rau; viền đỏ, sáng lên khi cầm hạt; không ảnh hưởng tầng chất lượng.
 - Test: base 1 → 2; base 4 → 6; cập nhật ALGO_VERSION không di chuyển ô nếu không migrate; preview tầng đúng.
 

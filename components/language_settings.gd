@@ -1,7 +1,7 @@
 class_name GameLanguage
 extends Node
-## Entry point for a future language selector. Current builds start in English.
-const DEFAULT_LANGUAGE: String = "en"
+## Entry point for a future language selector. Current builds start in Vietnamese.
+const DEFAULT_LANGUAGE: String = "vi"
 const SUPPORTED_LANGUAGES: PackedStringArray = ["en", "vi"]
 
 func _enter_tree() -> void:

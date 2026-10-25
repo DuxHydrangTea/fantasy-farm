@@ -57,7 +57,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 	if row.role == "orchard":
 		for tree: PerennialTree in world.trees.trees.values():
 			if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
-				if output_inventory.capacity_for(tree.definition.harvest_item) < tree.definition.harvest_amount:
+				if output_inventory.capacity_for((tree as FruitTree).harvest_item()) < (tree as FruitTree).harvest_amount():
 					storage_waiting[row.role] = true
 					continue
 				var task: Dictionary = _task("fruit", "%d_%d" % [tree.cell.x, tree.cell.y], tree.global_position + Vector2(0, 12), 0)
@@ -70,7 +70,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 				continue
 			var kind: String = ""
 			if crop.is_mature():
-				if output_inventory.capacity_for(crop.definition.harvest_item) >= crop.definition.harvest_amount:
+				if output_inventory.capacity_for(crop.definition.harvest_item) >= world.farming.harvest_amount(cell):
 					kind = "harvest"
 				else:
 					storage_waiting[row.role] = true
@@ -171,7 +171,7 @@ func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) 
 	var next: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
 	if row.role == "orchard":
 		for tree: PerennialTree in world.trees.trees.values():
-			if tree is FruitTree and tree.growth_started_at >= 0 and world.workers.output_inventory().capacity_for(tree.definition.harvest_item) >= tree.definition.harvest_amount:
+			if tree is FruitTree and tree.growth_started_at >= 0 and world.workers.output_inventory().capacity_for((tree as FruitTree).harvest_item()) >= (tree as FruitTree).harvest_amount():
 				var remaining: float = maxf(0, tree.matures_at - now) + maxf(0, tree.definition.fruit_cycle_seconds - (tree as FruitTree).fruit_work) * 0.75
 				if remaining > 0.01:
 					next = minf(next, now + remaining)

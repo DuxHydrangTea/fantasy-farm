@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 28
+const VERSION: int = 33
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,7 +65,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -239,9 +239,60 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 				return failure("Invalid legacy crop.")
 			crop["watered"] = true
 			crop["root_boost"] = false
+		data.version = 28
+	if data.get("version") == 28:
+		if not data.get("trees") is Array:
+			return failure("Invalid legacy trees.")
+		data = data.duplicate(true)
+		data["wood_market"] = WoodMarket.fresh()
+		for tree: Variant in data.trees:
+			if tree is Dictionary and tree.get("stump") == true:
+				if not number(tree.get("root_hits"), 0, 2, true):
+					return failure("Invalid legacy stump progress.")
+				tree.root_hits = 0
+		data.version = 29
+	if data.get("version") == 29:
+		if not data.get("trees") is Array:
+			return failure("Invalid legacy trees.")
+		data = data.duplicate(true)
+		for tree: Variant in data.trees:
+			if not tree is Dictionary:
+				return failure("Invalid legacy tree.")
+			var definition: TreeDefinition = catalog.trees.get(tree.get("tree")) as TreeDefinition
+			if definition != null and definition.kind == TreeDefinition.Kind.FRUIT:
+				tree["active_graft"] = 0
+				tree["pending_graft"] = 0
+				tree["graft_revision"] = 0
+		data.version = 30
+	if data.get("version") == 30:
+		if not data.get("beehives") is Array:
+			return failure("Invalid legacy beehives.")
+		data = data.duplicate(true)
+		data["honey_garden"] = HoneyGardenSystem.fresh()
+		for row: Variant in data.beehives:
+			if not row is Dictionary:
+				return failure("Invalid legacy hive.")
+			row["batch_recipe"] = ""
+			row["garden_id"] = ""
+			row["garden_slot"] = -1
+			row["repaired"] = true
+		data.version = 31
+	if data.get("version") == 31:
+		data = data.duplicate(true)
+		data["fertile_layout_version"] = 1
+		data.version = 32
+	# New bulk recipe/output IDs: prevent older clients from recovering an outdated backup.
+	if data.get("version") == 32:
+		data = data.duplicate(true)
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
+	if not FertileSoil.valid_version(data.get("fertile_layout_version")):
+		return failure("Invalid fertile soil layout version.")
+	if not HoneyGardenSystem.valid(data.get("honey_garden")):
+		return failure("Invalid bee journal state.")
+	if not WoodMarket.valid(data.get("wood_market"), float(data.saved_at)):
+		return failure("Invalid wood market state.")
 	var storage_seed: Variant = data.get("storage_seed")
 	if not storage_seed is String:
 		return failure("Invalid stored seed selection.")
@@ -395,6 +446,16 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		production.definition = honey_rules
 		if not row.get("legacy_batch") is bool:
 			return failure("Invalid honey batch version.")
+		if not row.get("garden_id") is String or not number(row.get("garden_slot"),-1,2,true) or not row.get("repaired") is bool or not row.get("batch_recipe") is String:
+			return failure("Invalid garden hive state.")
+		var garden_hive: bool = int(row.garden_slot) >= 0
+		if garden_hive:
+			if not data.honey_garden.migrated or not identifier(row.garden_id) or row.legacy_batch or not row.contributions.is_empty() or (row.work > 0.0 and not HoneyComboCatalog.ITEMS.has(row.batch_recipe)) or (row.work == 0.0 and row.batch_recipe != "") or (not row.repaired and row.work != 0):
+				return failure("Invalid garden honey batch.")
+		elif row.garden_id != "" or row.batch_recipe != "" or not row.repaired:
+			return failure("Invalid field hive state.")
+		production.garden_mode = garden_hive
+		production.batch_recipe = row.batch_recipe
 		production.legacy_batch = row.legacy_batch
 		for key: Variant in row.contributions:
 			if not key is String or (key != "sunflower" and not catalog.flowers.has(key)) or not number(row.contributions[key],0,row.work):
@@ -422,6 +483,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			var cell: Vector2i = Vector2i(int(flower.cell[0]), int(flower.cell[1]))
 			if cell.x < 0 or cell.x >= FlowerLayout.COLUMNS or cell.y < 0 or cell.y >= FlowerLayout.ROWS or cells.has(cell) or flower.planted_at > data.saved_at:
 				return failure("Invalid flower cell or planting time.")
+			if data.honey_garden.migrated and cell in HoneyGardenSystem.CENTERS:
+				return failure("A flower overlaps a fixed garden hive.")
 			cells[cell] = true
 			if flower.growth_started_at == -1:
 				if flower.matures_at != 0 or flower.progress != 0:

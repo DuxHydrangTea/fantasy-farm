@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_01.tres" id="stage1"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_02.tres" id="stage2"]
 [ext_resource type="Texture2D" path="res://crops/fruit_trees/shared/stage_03.tres" id="stage3"]
+[ext_resource type="Resource" path="res://items/trees/peach_star.tres" id="star"]
 
 [resource]
 script = ExtResource("script")
@@ -14,6 +15,7 @@ display_name = "Peach Tree"
 growth_seconds = 43200.0
 fruit_cycle_seconds = 18000.0
 harvest_amount = 300
+star_harvest_item = ExtResource("star")
 harvest_item = ExtResource("product")
 stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("stage3")])
 ready_texture = ExtResource("ready")

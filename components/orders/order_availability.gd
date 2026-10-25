@@ -17,7 +17,7 @@ func _has_source(id: StringName) -> bool:
 		if not world.is_ancestor_of(node) or not node is ShopMerchant:
 			continue
 		var merchant: ShopMerchant = node as ShopMerchant
-		if merchant.catalog == null or not merchant.is_visible_in_tree():
+		if not merchant.menu is ShopUI or merchant.catalog == null or not merchant.is_visible_in_tree():
 			continue
 		for offer: AnimalShopOffer in merchant.catalog.animal_offers:
 			if offer != null and offer.is_valid() and offer.animal.production != null and offer.animal.production.production_item != null and offer.animal.production.production_item.item_id == id:

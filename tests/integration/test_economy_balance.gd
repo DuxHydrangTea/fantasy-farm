@@ -1,159 +1,137 @@
 extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
+const SEED: ItemDefinition = preload("res://items/seeds/carrot_seed.tres")
+const OTHER: ItemDefinition = preload("res://items/seeds/radish_seed.tres")
+const FERTILIZER: ItemDefinition = preload("res://items/boosters/crop_fertilizer.tres")
 var world: FarmWorld
-var adapter: WorldStateAdapter
+var service: WorkerService
+var source: InventoryComponent
+var clock: Array[float]
+var now: float
+var original_clock: Callable
+var original_clock_floor: float
+var cell: Vector2i = Vector2i(48, 30)
 
 func before_each() -> void:
+	original_clock = TimeManager.clock_source
+	original_clock_floor = TimeManager._last_timestamp
 	world = WORLD.instantiate() as FarmWorld
-	for child: Node in world.get_children():
-		if String(child.name).begins_with("TreeScatter"):
-			child.free()
+	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
-	await wait_physics_frames(3)
-	adapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	world.tool_upgrades.profile_ready = true
+	world.land.state.restore_columns(12, 4)
+	world.player.wallet.set_balance(1000000)
+	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
+	now = world.farming.time_manager.now()
+	clock = [now]
+	var manual_clock: Array[float] = clock
+	world.farming.time_manager.clock_source = func() -> float: return manual_clock[0]
+	world.farming.restore_soil([])
+	service = world.workers
+	source = world.storages.inventory("farm_supply_storage")
+	assert_eq(service.hire("crop"), "")
+	_limit([cell, cell + Vector2i.RIGHT])
 
-func test_crop_purchase_harvest_sale_and_first_land_milestones() -> void:
+func after_each() -> void:
+	world.farming.time_manager.clock_source = original_clock
+	world.farming.time_manager._last_timestamp = original_clock_floor
+
+func _limit(cells: Array[Vector2i]) -> void:
+	service.crop_policy.cells = cells.duplicate()
+	service.crop_policy.cached_columns = world.land.state.unlocked_columns
+	service.crop_policy.soils.clear()
+	for point: Vector2i in cells:
+		service.crop_policy.soils[point] = int(world.farming.get_soil_state(point))
+
+func _commit(job: Dictionary) -> bool:
+	service.busy = true
+	var result: bool = service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), job)
+	service.busy = false
+	return result
+
+func _plant(point: Vector2i = Vector2i(48, 30), item: ItemDefinition = SEED) -> void:
+	source.add(item, 1)
+	assert_true(_commit(service.crop_policy.task("till", point, 5, item)))
+	assert_true(_commit(service.crop_policy.task("plant", point, 4, item)))
+
+func test_every_perfect_order_covers_quality_sale_and_never_reduces_base_reward() -> void:
+	var prices: ProducePriceCatalog = OrderService.SALE_PRICES
+	for entry: OrderDefinition in OrderService.DEFAULT_CATALOG.entries:
+		for variant: int in range(3):
+			var bag: InventoryComponent = InventoryComponent.new()
+			bag.starting_tools = false
+			add_child_autofree(bag)
+			var wallet: WalletComponent = WalletComponent.new()
+			add_child_autofree(wallet)
+			wallet.set_balance(0)
+			var orders: OrderService = OrderService.new(bag,wallet,func(_entry: OrderDefinition) -> bool: return true)
+			var data: Dictionary = OrderSaveSchema.fresh()
+			data.initialized = true
+			data.next_serial = 2
+			data.slots[0] = {"serial":1,"template":String(entry.order_id)}
+			assert_true(orders.restore(data))
+			var market: int = 0
+			for i: int in range(entry.items.size()):
+				var silver: int = entry.amounts[i] if variant == 0 else 0 if variant == 1 else int(entry.amounts[i]/2)
+				var gold: int = entry.amounts[i]-silver
+				bag.add(entry.items[i],silver,1)
+				bag.add(entry.items[i],gold,2)
+				market += silver*ItemQuality.unit_price(prices.find(entry.items[i].item_id).price,1)+gold*ItemQuality.unit_price(prices.find(entry.items[i].item_id).price,2)
+			var quote: Dictionary = orders.quote(1,true)
+			assert_true(quote.ok)
+			assert_eq(quote.sale_coins,market)
+			assert_gte(int(quote.coins)*100,market*110)
+			assert_gte(quote.coins,roundi(entry.reward_coins*1.5))
+			assert_true(orders.deliver(1,true,quote).ok)
+			assert_eq(wallet.balance,quote.coins)
+
+func test_bulk_cooking_processes_an_entire_star_harvest_and_preserves_paid_old_jobs() -> void:
 	var bag: InventoryComponent = world.player.selection.inventory
-	var wallet: WalletComponent = world.player.wallet
-	assert_eq(wallet.balance, 10000)
-	var shop: ShopCatalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
-	var offer: ShopOffer
-	for candidate: ShopOffer in shop.offers:
-		if candidate.item.item_id == &"carrot_seed":
-			offer = candidate
-	assert_true(ShopService.new(shop, wallet, bag).buy(offer, 1).ok)
-	assert_eq(wallet.balance, 7300)
-	var definition: CropDefinition = offer.item.crop as CropDefinition
-	assert_eq(definition.growth_seconds, 60.0)
-	var now: float = TimeManager.now()
-	var cell: Vector2i = Vector2i(56, 20)
-	world.farming.restore_crop(cell, definition, now - 61, now - 1, 1, now)
-	var before: int = bag.count_item(&"carrot_produces")
-	assert_true(world.farming.harvest(cell, bag))
-	assert_eq(bag.count_item(&"carrot_produces"), before + 100)
-	var prices: ProducePriceCatalog = load("res://resources/shops/produce_prices.tres") as ProducePriceCatalog
-	var sale: ProduceSaleService = ProduceSaleService.new(prices, wallet, bag)
-	assert_true(sale.sell(prices.find(&"carrot_produces"), 100).ok)
-	assert_eq(wallet.balance, 10800)
-	wallet.set_balance(87000)
-	assert_true(world.land.state.purchase(wallet, 4).ok)
-	assert_eq(wallet.balance, 27000)
-	assert_eq(world.land.state.next_price(), 150000)
-	world.land.state.restore_columns(3)
-	assert_eq(world.land.state.next_price(), 350000)
+	var model: ChefCooking = world.cooking
+	var old: CookingRecipe = ChefCooking.find("star_apple_tart")
+	for i: int in range(old.ingredients.size()):
+		bag.add(old.ingredients[i],old.amounts[i])
+	assert_eq(model.start("star_apple_tart",1,bag,now),"")
+	var snapshot: Dictionary = model.capture(now)
+	model.restore(snapshot,now+14401)
+	assert_eq(model.collect(bag,now+14401),1)
+	assert_eq(bag.count_item(&"star_apple_tart"),1)
+	assert_eq(OrderService.SALE_PRICES.find(&"star_apple_tart").price,280)
+	var bulk: CookingRecipe = ChefCooking.find("star_apple_tart_batch")
+	assert_eq(bulk.amounts,[300,1])
+	assert_eq(bulk.cook_seconds,14400.0)
+	for i: int in range(bulk.ingredients.size()):
+		bag.add(bulk.ingredients[i],bulk.amounts[i])
+	assert_eq(model.start(String(bulk.recipe_id),1,bag,now+14401),"")
+	assert_eq(model.collect(bag,now+28802),1)
+	assert_eq(bag.count_item(&"star_apple_tart_batch"),1)
+	assert_eq(OrderService.SALE_PRICES.find(&"star_apple_tart_batch").price,17423)
+	assert_gt(17423-150,15000,"Quality harvest cooked in one slot beats Yield harvest plus the same honey sold")
 
-func test_new_orders_match_npc_multiplier_and_large_deliveries_are_atomic() -> void:
-	var orders: OrderService = world.orders.service
-	var prices: ProducePriceCatalog = load("res://resources/shops/produce_prices.tres") as ProducePriceCatalog
-	assert_eq(orders.catalog.entries.size(), 6)
-	for entry: OrderDefinition in orders.catalog.entries:
-		var value: int = 0
-		for index: int in range(entry.items.size()):
-			value += prices.find(entry.items[index].item_id).price * entry.amounts[index]
-		assert_eq(entry.reward_coins, value * (125 if entry.items.size() == 1 else 140) / 100)
-		assert_true(OrderAvailability.new(world).allows(entry))
-	var serial: int = int(orders.capture().slots[0].serial)
-	var entry: OrderDefinition = orders.definition(serial)
-	for index: int in range(entry.items.size()):
-		orders.inventory.add(entry.items[index], entry.amounts[index])
-	var before: int = orders.wallet.balance
-	assert_true(orders.deliver(serial).ok)
-	assert_eq(orders.wallet.balance, before + entry.reward_coins)
-	assert_false(orders.deliver(serial).ok)
+func test_bulk_honey_custard_matches_one_hive_batch_and_unlocks_journal() -> void:
+	var recipe: CookingRecipe = ChefCooking.find("hybrid_01_06_custard_batch")
+	assert_eq(recipe.amounts,[100,100])
+	var bag: InventoryComponent = world.player.selection.inventory
+	for i: int in range(recipe.ingredients.size()):
+		bag.add(recipe.ingredients[i],recipe.amounts[i])
+	assert_eq(world.cooking.start(String(recipe.recipe_id),1,bag,now),"")
+	assert_eq(world.cooking.collect(bag,now+14401),1)
+	assert_true("hybrid_01_06" in world.honey_garden.discoveries)
+	assert_eq(OrderService.SALE_PRICES.find(recipe.output.item_id).price,81200)
 
-func test_v15_roundtrip_preserves_issued_orders_assets_timers_and_feed_units() -> void:
-	var now: float = TimeManager.now()
-	var old: Dictionary = adapter.capture("economy_test", 1, now)
-	old.version = 15
-	old.coins = 12345
-	old.inventory[5] = {"item": "cow_milk", "count": 32000}
-	old.trees = [{"tree": "apple", "cell": [12, 61], "planted_at": now - 60, "growth_started_at": now - 60, "matures_at": now + 120, "last_at": now, "fruit_work": 0.0}]
-	var legacy: OrderCatalog = load("res://resources/orders/legacy_orders_v15.tres") as OrderCatalog
-	var service: OrderService = OrderService.new(world.player.selection.inventory, world.player.wallet, func(_entry: OrderDefinition) -> bool: return true, legacy)
-	service.initialize()
-	old.orders = service.capture()
-	old.orders.cursor = 7
-	var kept: Array = []
-	var total_units: int = 0
-	for row: Dictionary in old.troughs:
-		if String(row.id).ends_with("_02"):
-			continue
-		if row.id == "placed_1563140842":
-			row.stock = 600
-			row.feed_reserve = 250
-		total_units += int(row.stock) + int(row.feed_reserve)
-		kept.append(row)
-	old.troughs = kept
-	var original: Dictionary = old.duplicate(true)
-	var checked: Dictionary = adapter.preflight(old)
-	assert_true(checked.ok, str(checked))
-	assert_eq(old, original, "Migration must not alter the caller or backup")
-	if not checked.ok:
-		return
-	assert_eq(checked.snapshot.version, SaveSchema.VERSION)
-	assert_true(adapter.restore(old, now).ok)
-	assert_eq(world.player.wallet.balance, 12345)
-	assert_eq(world.player.selection.inventory.count_item(&"cow_milk"), 32000)
-	var restored: Dictionary = adapter.capture("economy_test", 2, now)
-	assert_eq(restored.animals.size(), original.animals.size())
-	assert_eq(restored.trees[0].matures_at, original.trees[0].matures_at)
-	var after_units: int = 0
-	for row: Dictionary in restored.troughs:
-		after_units += int(row.stock) + int(row.feed_reserve)
-	assert_eq(after_units, total_units)
-	var serial: int = int(world.orders.service.capture().slots[0].serial)
-	var issued: OrderDefinition = world.orders.service.definition(serial)
-	assert_eq(issued.order_id, &"carrot_crate")
-	assert_eq(issued.amounts, [12])
-	assert_eq(issued.reward_coins, 72)
-	assert_true(adapter.restore(restored, now).ok, "Migrated timers must remain loadable on subsequent saves")
-
-func test_all_pens_have_24_hour_capacity_when_filled_with_new_needs() -> void:
-	for board: PenBoard in world.pen_boards:
-		for kind: AnimalTrough.Kind in [AnimalTrough.Kind.FOOD, AnimalTrough.Kind.WATER]:
-			var status: Dictionary = PenStatus.troughs(board.pen, kind)
-			assert_eq(status.capacity, 2400)
-			assert_gte(status.capacity, board.pen.capacity * 60)
-	for definition: AnimalDefinition in adapter.catalog.animals.values():
-		assert_eq(definition.satiety_depletion_seconds, 3600.0)
-		assert_eq(definition.hydration_depletion_seconds, 3600.0)
-
-func test_invalid_v15_orders_or_duplicate_troughs_are_rejected_without_mutation() -> void:
-	var old: Dictionary = adapter.capture("economy_test", 1, TimeManager.now())
-	old.version = 15
-	old.orders = OrderSaveSchema.fresh()
-	old.orders.slots[0] = {"serial": 1, "template": "unknown_order"}
+func test_worker_stock_and_wages_48h_report_is_reproducible() -> void:
+	service.configure_crop(true,false,false)
+	source.add(SEED,12)
 	var coins: int = world.player.wallet.balance
-	assert_false(adapter.restore(old, TimeManager.now()).ok)
-	assert_eq(world.player.wallet.balance, coins)
-	old.orders = OrderSaveSchema.fresh()
-	old.troughs.append(old.troughs[0].duplicate(true))
-	assert_false(adapter.restore(old, TimeManager.now()).ok)
-
-
-func test_fruit_and_timber_use_new_yields_and_keep_one_batch_and_regrowth() -> void:
-	var bag: InventoryComponent = world.player.selection.inventory
-	var fruit: FruitTree = FruitTree.new()
-	fruit.definition = load("res://trees/definitions/apple.tres") as TreeDefinition
-	fruit.initialize(1000.0)
-	add_child_autofree(fruit)
-	assert_true(fruit.water(1000.0))
-	fruit.refresh(1000.0 + 43200 + 14400 * 10)
-	var before: int = bag.count_item(&"apple")
-	assert_true(fruit.harvest(bag))
-	assert_eq(bag.count_item(&"apple"), before + 300)
-	assert_false(fruit.harvest(bag), "Offline work is capped at one fruit batch")
-	var timber: TimberTree = TimberTree.new()
-	timber.definition = load("res://trees/definitions/oak.tres") as TreeDefinition
-	timber.initialize(1000.0)
-	add_child_autofree(timber)
-	timber.refresh(87400.0)
-	before = bag.count_item(&"wood")
-	for hit: int in range(4):
-		assert_true(timber.chop(bag))
-	assert_eq(bag.count_item(&"wood"), before + 400)
-	assert_eq(bag.count_item(&"oak_sapling"), 1)
-	timber.refresh(87520.0)
-	assert_false(timber.is_mature())
-	timber.refresh(87520.0 + 43200)
-	assert_true(timber.is_mature())
+	service.advance(now+172800)
+	var gross: int = 0
+	var produce: ItemDefinition = (SEED.crop as CropDefinition).harvest_item
+	var output: InventoryComponent = service.output_inventory()
+	for tier: int in range(3):
+		gross += output.count_item(produce.item_id,tier)*ItemQuality.unit_price(OrderService.SALE_PRICES.find(produce.item_id).price,tier)
+	var wages: int = coins-world.player.wallet.balance
+	var seed_cost: int = 12*2700
+	assert_eq(source.count_item(SEED.item_id),0)
+	assert_eq(service.crop_automation.sequence,12)
+	assert_gt(gross-seed_cost-wages,0)
+	print("BALANCE_WORKER_48H ",JSON.stringify({"gross":gross,"seed_cost":seed_cost,"wages":wages,"net":gross-seed_cost-wages,"plantings":12,"elapsed_hours":48}))

@@ -105,7 +105,9 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 			return (target.node as OrderBoard).open_board(player)
 		InteractionTarget.Kind.TREE:
 			var tree: PerennialTree = target.node as PerennialTree
-			var tree_request: StringName = &"harvest" if tree is FruitTree and tree.is_mature() else &""
+			if tree is FruitTree and tree.is_mature():
+				return (player.get_parent() as FarmWorld).graft_menu.open_tree(tree as FruitTree)
+			var tree_request: StringName = &""
 			var action: StringName = player.tree_interaction.prepare_target(tree, tree_request)
 			if action == &"tree_harvest":
 				player.tree_interaction.harvest_now()
@@ -125,7 +127,10 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 			player.state.transition_to(StateComponent.State.WATER if action == &"refill_water" else StateComponent.State.TOOL)
 			return true
 		InteractionTarget.Kind.BEEHIVE:
-			(target.node as Beehive).collect(player.selection.inventory)
+			var hive: Beehive = target.node as Beehive
+			if hive.apiary.world.honey_garden.inside(hive):
+				return hive.apiary.world.honey_menu.open_hive(hive)
+			hive.collect(player.selection.inventory)
 			return true
 		InteractionTarget.Kind.ANIMAL:
 			var animal: AnimalActor = target.node as AnimalActor

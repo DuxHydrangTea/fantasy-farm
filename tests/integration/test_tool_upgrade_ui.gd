@@ -13,6 +13,7 @@ func before_each() -> void:
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	viewport.add_child(world)
+	world.storages.inventory("produce_warehouse").add(load("res://items/trees/wood.tres") as ItemDefinition, 1000)
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(10000000)
 	world.land.state.restore_columns(13, 4)

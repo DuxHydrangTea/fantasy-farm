@@ -22,6 +22,7 @@ enum Soil { UNTILLED, DRY, WET }
 @export var wet_terrain: int = 0
 @export_flags_2d_physics var obstacle_mask: int = 1
 @export var time_manager: FarmClock
+var fertility: FertileSoil = FertileSoil.new()
 var apiary: ApiarySystem
 var weather: WeatherSchedule
 const SOIL_MOISTURE_SECONDS: float = 21600.0
@@ -96,6 +97,10 @@ func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor
 	action_committed.emit(&"plant", 1)
 	return true
 
+func harvest_amount(cell: Vector2i) -> int:
+	var crop: Crop = get_crop(cell)
+	return fertility.amount(cell,crop.definition.harvest_amount) if crop != null else 0
+
 func can_harvest(cell: Vector2i) -> bool:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null or (land != null and not land.is_unlocked(cell)):
@@ -116,10 +121,10 @@ func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 		return false
 	var crop: Crop = get_crop(cell)
 	var produce: ItemDefinition = crop.definition.harvest_item as ItemDefinition
-	if inventory.capacity_for(produce) < crop.definition.harvest_amount:
-		inventory.report_capacity_blocked(produce, crop.definition.harvest_amount)
+	var requested: int = harvest_amount(cell)
+	if inventory.capacity_for(produce) < requested:
+		inventory.report_capacity_blocked(produce, requested)
 		return false
-	var requested: int = crop.definition.harvest_amount
 	var origin: Vector2 = farmland.to_global(farmland.map_to_local(cell))
 	_harvesting = true
 	var accepted: int = inventory.add(produce, requested, crop.harvest_tier())
@@ -295,6 +300,16 @@ func apply_area(action: StringName, targets: Array[Vector2i], inventory: Invento
 	if selected.is_empty():
 		_area_busy = false
 		return result
+	var tree_changes: int = 0
+	if action == &"tool" and actor is FarmPlayer and get_parent() is FarmWorld:
+		var system: TreePlantation = (get_parent() as FarmWorld).trees
+		for i: int in range(selected.size() - 1, -1, -1):
+			var cell: Vector2i = selected[i]
+			var tree: TimberTree = system.tool_target(cell)
+			if tree != null:
+				if system.can_dig(cell, inventory) and tree.dig(inventory):
+					tree_changes += 1
+				selected.remove_at(i)
 	var committed: Array[Vector2i] = []
 	var crops: Array[Crop] = []
 	var watered_crops: int = 0
@@ -332,7 +347,7 @@ func apply_area(action: StringName, targets: Array[Vector2i], inventory: Invento
 					crop.mark_watered()
 					crop.react(4.0)
 					watered_crops += 1
-	result.changed = committed.size()
+	result.changed = committed.size() + tree_changes
 	if action == &"plant":
 		inventory.changed.emit()
 		for i: int in range(committed.size()):
@@ -464,3 +479,11 @@ func root_error(cell: Vector2i, actor: PhysicsBody2D = null) -> String:
 
 func apply_root(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return root_error(cell, actor).is_empty() and get_crop(cell).apply_root()
+
+func can_tool(cell: Vector2i, actor: PhysicsBody2D = null, inventory: InventoryComponent = null) -> bool:
+	if can_till(cell, actor):
+		return true
+	if actor is FarmPlayer and get_parent() is FarmWorld:
+		var system: TreePlantation = (get_parent() as FarmWorld).trees
+		return system != null and system.can_dig(cell, inventory)
+	return false

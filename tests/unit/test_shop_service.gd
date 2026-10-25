@@ -67,7 +67,7 @@ func test_catalog_has_all_seeds_and_feed_once_with_valid_prices() -> void:
 		assert_false(ids.has(entry.item.item_id))
 		ids[entry.item.item_id] = true
 		counts[entry.category] += 1
-	assert_eq(counts, [22, 13, 10])
+	assert_eq(counts, [22, 14, 10])
 
 func test_wallet_rejects_invalid_bounds_and_credit_overflow() -> void:
 	assert_false(wallet.set_balance(-1))

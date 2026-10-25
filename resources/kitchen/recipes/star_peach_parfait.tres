@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/trees/peach_star.tres" id="fruit"]
+[ext_resource type="Resource" path="res://items/honey/wild_honey.tres" id="honey"]
+[ext_resource type="Resource" path="res://items/cooked/star_peach_parfait.tres" id="out"]
+[resource]
+script = ExtResource("script")
+recipe_id = &"star_peach_parfait"
+display_name = "Star Peach Parfait"
+ingredients = Array[ExtResource("item")]([ExtResource("fruit"), ExtResource("honey")])
+amounts = Array[int]([2, 1])
+output = ExtResource("out")
+cook_seconds = 14400.0

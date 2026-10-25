@@ -3,6 +3,8 @@ extends RefCounted
 ## Deterministic rotation and atomic full delivery. No timers or offline rerolls.
 signal changed
 const DEFAULT_CATALOG: OrderCatalog = preload("res://resources/orders/farm_orders.tres")
+const SALE_PRICES: ProducePriceCatalog = preload("res://resources/shops/produce_prices.tres")
+const PERFECT_SALE_PERCENT: int = 110
 var catalog: OrderCatalog
 var inventory: InventoryComponent
 var wallet: WalletComponent
@@ -80,29 +82,50 @@ func definition(serial: int) -> OrderDefinition:
 	var index: int = _index(serial)
 	return catalog.find(StringName(_data.slots[index].template)) if index >= 0 else null
 
-func quote(serial: int) -> Dictionary:
+func quote(serial: int, perfect: bool = false) -> Dictionary:
 	var entry: OrderDefinition = definition(serial)
 	if entry == null:
-		return {"ok": false, "error": "This order has changed. Select it again."}
+		return {"ok":false,"error":"This order has changed. Select it again."}
+	var rows: Array[Dictionary] = []
+	var sale_coins: int = 0
 	for index: int in range(entry.items.size()):
-		if inventory.count_item(entry.items[index].item_id) < entry.amounts[index]:
-			return {"ok": false, "error": "Not enough items for this order."}
-	if entry.reward_coins > WalletComponent.MAX_COINS - wallet.balance:
-		return {"ok": false, "error": "Your wallet has reached its coin limit."}
-	return {"ok": true, "coins": entry.reward_coins}
+		var id: StringName = entry.items[index].item_id
+		var needed: int = entry.amounts[index]
+		var tiers: Array[int] = [0,0,0]
+		if perfect:
+			tiers[1] = mini(needed,inventory.count_item(id,1))
+			tiers[2] = mini(needed-tiers[1],inventory.count_item(id,2))
+		else:
+			tiers[0] = mini(needed,inventory.count_item(id,0))
+		if tiers[0]+tiers[1]+tiers[2] != needed:
+			return {"ok":false,"error":"Perfect delivery needs every requested item in Silver or Gold." if perfect else "Not enough items for this order."}
+		if perfect:
+			var price: ProducePrice = SALE_PRICES.find(id)
+			if price == null:
+				return {"ok":false,"error":"This product has no sale price. Perfect delivery is unavailable."}
+			for tier: int in range(3):
+				sale_coins += ItemQuality.unit_price(price.price,tier)*tiers[tier]
+		rows.append({"item":String(id),"tiers":tiers})
+	var coins: int = roundi(entry.reward_coins*1.5) if perfect else entry.reward_coins
+	if perfect:
+		coins = maxi(coins,ceili(float(sale_coins)*PERFECT_SALE_PERCENT/100.0))
+	if coins > WalletComponent.MAX_COINS-wallet.balance:
+		return {"ok":false,"error":"Your wallet has reached its coin limit."}
+	return {"ok":true,"coins":coins,"perfect":perfect,"serial":serial,"rows":rows,"sale_coins":sale_coins}
 
-func deliver(serial: int) -> Dictionary:
+func deliver(serial: int, perfect: bool = false, expected: Dictionary = {}) -> Dictionary:
 	if _busy:
-		return {"ok": false, "error": "A trade is in progress."}
-	var plan: Dictionary = quote(serial)
+		return {"ok":false,"error":"A trade is in progress."}
+	var plan: Dictionary = quote(serial,perfect)
 	if not plan.ok:
 		return plan
+	if not expected.is_empty() and expected != plan:
+		return {"ok":false,"error":"The ingredient tiers changed. Review the preview and confirm again."}
 	_busy = true
 	var entry: OrderDefinition = definition(serial)
-	# All checks finish before any writes. No notifications until all three models commit.
 	for index: int in range(entry.items.size()):
-		inventory.remove(entry.items[index].item_id, entry.amounts[index], false)
-	wallet.set_balance(wallet.balance + entry.reward_coins, false)
+		inventory.consume(entry.items[index].item_id,entry.amounts[index],ItemQuality.tier_set([1,2]) if perfect else ItemQuality.exact(),false)
+	wallet.set_balance(wallet.balance+int(plan.coins),false)
 	var slot: int = _index(serial)
 	_data.slots[slot] = {}
 	_data.completed += 1
@@ -129,6 +152,6 @@ func requested_in_bag() -> bool:
 		if row.is_empty():
 			continue
 		for item: ItemDefinition in definition(int(row.serial)).items:
-			if inventory.count_item(item.item_id) > 0:
+			if inventory.count_item(item.item_id,-1) > 0:
 				return true
 	return false

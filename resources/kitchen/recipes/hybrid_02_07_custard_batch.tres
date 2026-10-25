@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/honey/hybrid_02_07_honey.tres" id="in0"]
+[ext_resource type="Resource" path="res://items/animal_produces/cow_milk.tres" id="in1"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_02_07_custard_batch.tres" id="out"]
+[resource]
+script = ExtResource("script")
+recipe_id = &"hybrid_02_07_custard_batch"
+display_name = "Carnation & Marigold Honey Custard Tray"
+honey_recipe = "hybrid_02_07"
+ingredients = Array[ExtResource("item")]([ExtResource("in0"), ExtResource("in1")])
+amounts = Array[int]([100, 100])
+output = ExtResource("out")
+cook_seconds = 14400.0

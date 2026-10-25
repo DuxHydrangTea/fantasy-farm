@@ -1,3 +1,5 @@
+> **Cập nhật B1, 25/10/2026 (save v33):** đơn Hoàn Hảo bảo đảm tối thiểu 110% giá bán đúng tầng đã tiêu và 150% thưởng đơn gốc; thêm công thức riêng theo mẻ 300 quả Star hoặc 100 mật. Không đổi thưởng đơn thường, món cũ hoặc hàng đang nấu. Chi tiết và số liệu: [economy_balance_b1.md](../economy_balance_b1.md). Các mô tả cũ chỉ +50% mà không có sàn giá được thay bởi quy tắc B1.
+
 # Bảng Thông Số Kinh Tế & Cấu Hình Nông Trại Chuẩn Online (Master Economy Specs)
 
 > [!NOTE]

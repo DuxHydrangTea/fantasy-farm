@@ -23,7 +23,7 @@ static func order(mode: Dictionary) -> Array[int]:
 	return result
 
 static func supported(item: ItemDefinition, tier: int) -> bool:
-	return tier >= 0 and tier < 3 and (tier == 0 or (item != null and item.item_type == ItemDefinition.ItemType.PRODUCE))
+	return tier >= 0 and tier < 3 and (tier == 0 or (item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit))
 
 static func valid_tiers(value: Variant, item: ItemDefinition, amount: int) -> bool:
 	if not value is Array or value.size() != 3:

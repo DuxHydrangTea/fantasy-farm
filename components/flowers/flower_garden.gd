@@ -4,7 +4,6 @@ extends Node2D
 @export var pot_container: Node2D
 ## Four 9x5 blocks at 16px spacing, preserving the cross aisle and garden rim.
 const Layout = preload("res://scripts/flower_garden_layout.gd")
-const PICKUP_SCENE: PackedScene = preload("res://scenes/objects/item_pickup.tscn")
 const POT_SCENE: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
 @export var persistent_id: StringName = &"flower_garden_01"
 @export var time_manager: FarmClock
@@ -116,7 +115,7 @@ func restore_initial_supplies() -> void:
 	if starter_content_locked:
 		return
 	for row: Dictionary in _initial_supplies:
-		var pickup: ItemPickup = PICKUP_SCENE.instantiate() as ItemPickup
+		var pickup: ItemPickup = ItemPickup.create()
 		pickup.persistent_id = row.id
 		pickup.position = row.position
 		pickup.item = row.item
@@ -127,6 +126,8 @@ func focused_pot(point: Vector2, facing: Vector2) -> FlowerPot:
 	var nearest: FlowerPot
 	var distance: float = 28.0
 	for pot: FlowerPot in pots.values():
+		if pot.reserved:
+			continue
 		var offset: Vector2 = pot.global_position - point
 		var length: float = offset.length()
 		if length <= distance and length > 2.0 and offset.normalized().dot(facing) > 0.4:

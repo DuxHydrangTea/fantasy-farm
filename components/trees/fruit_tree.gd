@@ -1,5 +1,9 @@
 class_name FruitTree
 extends PerennialTree
+enum Graft { NONE, YIELD, QUALITY }
+var active_graft: int = Graft.NONE
+var pending_graft: int = Graft.NONE
+var graft_revision: int = 0
 var fruit_work: float = 0.0
 var _busy: bool = false
 
@@ -25,20 +29,36 @@ func refresh(now: float, fruit_rate: float = 1.0) -> void:
 func has_fruit() -> bool:
 	return is_mature() and fruit_work >= definition.fruit_cycle_seconds
 
+func harvest_item() -> ItemDefinition:
+	return definition.star_harvest_item if active_graft == Graft.QUALITY else definition.harvest_item
+
+func harvest_amount() -> int:
+	return definition.harvest_amount * (2 if active_graft == Graft.YIELD else 1)
+
+static func graft_name(value: int) -> String:
+	return TranslationServer.translate(["Not specialized", "Yield", "Selection (Star fruit)"][clampi(value, 0, 2)])
+
 func harvest(bag: InventoryComponent) -> bool:
 	if _busy or bag == null or not has_fruit():
 		return false
-	if bag.capacity_for(definition.harvest_item) < definition.harvest_amount:
-		bag.report_capacity_blocked(definition.harvest_item, definition.harvest_amount)
+	var item: ItemDefinition = harvest_item()
+	var amount: int = harvest_amount()
+	if item == null or bag.capacity_for(item) < amount:
+		bag.report_capacity_blocked(item, amount)
 		return false
 	_busy = true
 	var height: float = float(sprite.texture.get_image().get_used_rect().size.y) * 0.6 if sprite != null else 24.0
 	fruit_work = 0.0
-	bag.add(definition.harvest_item, definition.harvest_amount)
+	if pending_graft != Graft.NONE:
+		active_graft = pending_graft
+		pending_graft = Graft.NONE
+		graft_revision += 1
+	# The old batch and next direction both commit before any inventory observer.
+	bag.add(item, amount)
 	update_visual()
 	react()
 	if plantation != null:
-		plantation.harvest_yielded.emit(definition.harvest_item, definition.harvest_amount, global_position - Vector2(0, height), bag, height)
+		plantation.harvest_yielded.emit(item, amount, global_position - Vector2(0, height), bag, height)
 	_busy = false
 	return true
 
@@ -60,10 +80,8 @@ func update_visual() -> void:
 		set_texture(definition.ready_texture if has_fruit() else definition.stage_textures[stage])
 
 func action_text(item: ItemDefinition) -> String:
-	if has_fruit():
-		return tr("Harvest fruit")
 	if is_mature():
-		return tr("{tree} · growing").format({"tree": tr(definition.display_name)})
+		return tr("Manage fruit tree") + (" · " + tr("Choose a graft direction") if active_graft == Graft.NONE and pending_graft == Graft.NONE else "")
 	if item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.HOE:
 		return tr("Uproot tree (return sapling)")
 	if can_water():
@@ -73,8 +91,14 @@ func action_text(item: ItemDefinition) -> String:
 func capture() -> Dictionary:
 	var row: Dictionary = super.capture()
 	row["fruit_work"] = fruit_work
+	row["active_graft"] = active_graft
+	row["pending_graft"] = pending_graft
+	row["graft_revision"] = graft_revision
 	return row
 
 func restore_state(row: Dictionary) -> void:
 	fruit_work = float(row.fruit_work)
+	active_graft = int(row.get("active_graft", Graft.NONE))
+	pending_graft = int(row.get("pending_graft", Graft.NONE))
+	graft_revision = int(row.get("graft_revision", 0))
 	super.restore_state(row)

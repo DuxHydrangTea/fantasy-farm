@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+[ext_resource type="Script" path="res://scripts/cooking_recipe.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="item"]
+[ext_resource type="Resource" path="res://items/honey/mono_06_honey.tres" id="honey"]
+[ext_resource type="Resource" path="res://items/animal_produces/cow_milk.tres" id="milk"]
+[ext_resource type="Resource" path="res://items/cooked/mono_06_custard.tres" id="out"]
+[resource]
+script = ExtResource("script")
+recipe_id = &"mono_06_custard"
+display_name = "Hydrangea Honey Custard"
+honey_recipe = "mono_06"
+ingredients = Array[ExtResource("item")]([ExtResource("honey"), ExtResource("milk")])
+amounts = Array[int]([1, 1])
+output = ExtResource("out")
+cook_seconds = 14400.0

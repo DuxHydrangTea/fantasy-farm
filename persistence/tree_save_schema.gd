@@ -29,6 +29,12 @@ static func valid(rows: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 			if not legacy_duration and not is_equal_approx(duration, definition.growth_seconds) and not (definition.kind == TreeDefinition.Kind.TIMBER and is_equal_approx(duration, definition.growth_seconds * 0.5)):
 				return false
 		if definition.kind == TreeDefinition.Kind.FRUIT:
+			if not SaveSchema.number(row.get("active_graft"), 0, 2, true) or not SaveSchema.number(row.get("pending_graft"), 0, 2, true) or not SaveSchema.number(row.get("graft_revision"), 0, 1000000000, true):
+				return false
+			if (row.active_graft != 0 or row.pending_graft != 0) and (row.last_at < row.matures_at or row.growth_started_at < 0 or row.graft_revision < 1):
+				return false
+			if (row.active_graft == 2 or row.pending_graft == 2) and definition.star_harvest_item == null:
+				return false
 			if not SaveSchema.number(row.get("fruit_work"), 0, definition.fruit_cycle_seconds) or ((row.growth_started_at < 0 or row.last_at < row.matures_at) and row.fruit_work != 0):
 				return false
 		else:

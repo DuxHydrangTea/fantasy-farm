@@ -57,6 +57,14 @@ func _process(delta: float) -> void:
 # Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
+	if adapter != null and adapter.world.honey_garden != null and adapter.world.honey_garden.busy:
+		return SaveSchema.failure("A garden transaction is in progress.", "busy")
+	if adapter != null and adapter.world.cooking != null and adapter.world.cooking.busy:
+		return SaveSchema.failure("A cooking transaction is in progress.", "busy")
+	if adapter != null and adapter.world.trees != null and adapter.world.trees.is_busy():
+		return SaveSchema.failure("A forestry action is in progress.", "busy")
+	if adapter != null and adapter.world.wood_market != null and adapter.world.wood_market.busy:
+		return SaveSchema.failure("A wood purchase is in progress.", "busy")
 	if adapter != null and adapter.world.storages != null and adapter.world.storages.busy:
 		return SaveSchema.failure("A storage transaction is in progress.", "busy")
 	if adapter != null and adapter.world.workers != null and adapter.world.workers.busy:

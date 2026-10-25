@@ -137,8 +137,25 @@ func _refresh() -> void:
 	lines.append(tr(selected.display_name))
 	for i: int in range(selected.ingredients.size()):
 		var item: ItemDefinition = selected.ingredients[i]
-		lines.append("%s: %d / %d" % [tr(item.display_name) + " (" + ItemQuality.label(selected.tier_at(i)) + ")", customer.selection.inventory.count_item(item.item_id, selected.tier_at(i)), selected.amounts[i] * amount])
+		var caption: String = tr(item.display_name)
+		if not item.star_fruit:
+			caption += " (" + ItemQuality.label(selected.tier_at(i)) + ")"
+		lines.append("%s: %d / %d" % [caption, customer.selection.inventory.count_item(item.item_id, selected.tier_at(i)), selected.amounts[i] * amount])
+	lines.append(tr("Coin cost: {coins}").format({"coins": selected.coin_cost * amount}))
 	lines.append(tr("Cooking time: {seconds} seconds").format({"seconds": int(selected.cook_seconds)}))
+	var price_catalog: ProducePriceCatalog = preload("res://resources/shops/produce_prices.tres")
+	var output_price: ProducePrice = price_catalog.find(selected.output.item_id)
+	var marketable: bool = output_price != null
+	var inputs_value: int = selected.coin_cost * amount
+	for i: int in range(selected.ingredients.size()):
+		var input_price: ProducePrice = price_catalog.find(selected.ingredients[i].item_id)
+		if input_price == null:
+			marketable = false
+		else:
+			inputs_value += ItemQuality.unit_price(input_price.price,selected.tier_at(i))*selected.amounts[i]*amount
+	if marketable:
+		var sale_value: int = output_price.price*amount
+		lines.append(tr("Sale value: {sale} coins · Margin over ingredient sales: {margin} coins").format({"sale":sale_value,"margin":sale_value-inputs_value}))
 	lines.append(tr("Ingredients are consumed when queued. Queued dishes cannot be cancelled."))
 	details.text = "\n".join(lines)
 	var summary_lines: PackedStringArray = [tr("Queued: %d · Ready: %d · Capacity: 20") % [model.queue.size(), model.ready.size()]]
@@ -151,7 +168,7 @@ func _refresh() -> void:
 	for id: String in ready_counts:
 		summary_lines.append("%s × %d" % [tr(ChefCooking.find(id).display_name), ready_counts[id]])
 	summary.text = "\n".join(summary_lines)
-	var error: String = model.quote(String(selected.recipe_id), amount, customer.selection.inventory) if _available() else "Load your farm before cooking."
+	var error: String = model.quote(String(selected.recipe_id), amount, customer.selection.inventory, customer.wallet) if _available() else "Load your farm before cooking."
 	cook_button.disabled = not error.is_empty()
 	collect_button.disabled = not _available() or model.ready.is_empty() or model.busy
 	status.text = tr(_message) if not _message.is_empty() else tr(error)
@@ -161,7 +178,7 @@ func _refresh() -> void:
 func _cook() -> void:
 	if not _available():
 		return
-	_message = world.cooking.start(String(selected.recipe_id), int(quantity.value), customer.selection.inventory, world.farming.time_manager.now())
+	_message = world.cooking.start(String(selected.recipe_id), int(quantity.value), customer.selection.inventory, world.farming.time_manager.now(), customer.wallet)
 	if _message.is_empty():
 		_message = "Chef is cooking. Come back later!"
 		bought_this_visit = true

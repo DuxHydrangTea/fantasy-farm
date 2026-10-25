@@ -1,0 +1,1039 @@
+{
+  "date": "2026-10-25",
+  "method": "Godot shipped Resource audit and deterministic 48h worker simulation",
+  "before": {
+    "crops": [
+      {
+        "id": "beetroot",
+        "net_by_tier": [
+          2500,
+          8900,
+          22500
+        ],
+        "seconds": 240.0,
+        "seed": 5500,
+        "yield": 100
+      },
+      {
+        "id": "bell_pepper",
+        "net_by_tier": [
+          50000,
+          106000,
+          225000
+        ],
+        "seconds": 36000.0,
+        "seed": 20000,
+        "yield": 200
+      },
+      {
+        "id": "broccoli",
+        "net_by_tier": [
+          16000,
+          38400,
+          86000
+        ],
+        "seconds": 5400.0,
+        "seed": 12000,
+        "yield": 100
+      },
+      {
+        "id": "cabbage",
+        "net_by_tier": [
+          3200,
+          11200,
+          28200
+        ],
+        "seconds": 300.0,
+        "seed": 6800,
+        "yield": 100
+      },
+      {
+        "id": "carrot",
+        "net_by_tier": [
+          800,
+          3600,
+          9600
+        ],
+        "seconds": 60.0,
+        "seed": 2700,
+        "yield": 100
+      },
+      {
+        "id": "chili_pepper",
+        "net_by_tier": [
+          25000,
+          57000,
+          125000
+        ],
+        "seconds": 14400.0,
+        "seed": 15000,
+        "yield": 200
+      },
+      {
+        "id": "corn",
+        "net_by_tier": [
+          10000,
+          22000,
+          47500
+        ],
+        "seconds": 7200.0,
+        "seed": 5000,
+        "yield": 300
+      },
+      {
+        "id": "cucumber",
+        "net_by_tier": [
+          8000,
+          24000,
+          58000
+        ],
+        "seconds": 1200.0,
+        "seed": 12000,
+        "yield": 200
+      },
+      {
+        "id": "eggplant",
+        "net_by_tier": [
+          18000,
+          42000,
+          93000
+        ],
+        "seconds": 10800.0,
+        "seed": 12000,
+        "yield": 200
+      },
+      {
+        "id": "garlic",
+        "net_by_tier": [
+          8500,
+          22500,
+          52500
+        ],
+        "seconds": 2700.0,
+        "seed": 9000,
+        "yield": 500
+      },
+      {
+        "id": "green_bell_pepper",
+        "net_by_tier": [
+          34000,
+          74000,
+          159000
+        ],
+        "seconds": 21600.0,
+        "seed": 16000,
+        "yield": 200
+      },
+      {
+        "id": "leek",
+        "net_by_tier": [
+          10000,
+          24400,
+          55000
+        ],
+        "seconds": 3600.0,
+        "seed": 8000,
+        "yield": 300
+      },
+      {
+        "id": "onion",
+        "net_by_tier": [
+          9000,
+          26600,
+          64000
+        ],
+        "seconds": 1500.0,
+        "seed": 13000,
+        "yield": 200
+      },
+      {
+        "id": "parsnip",
+        "net_by_tier": [
+          2000,
+          7200,
+          18300
+        ],
+        "seconds": 180.0,
+        "seed": 4500,
+        "yield": 100
+      },
+      {
+        "id": "potato",
+        "net_by_tier": [
+          5000,
+          15400,
+          37600
+        ],
+        "seconds": 600.0,
+        "seed": 8000,
+        "yield": 200
+      },
+      {
+        "id": "pumpkin",
+        "net_by_tier": [
+          240000,
+          472000,
+          965000
+        ],
+        "seconds": 86400.0,
+        "seed": 50000,
+        "yield": 100
+      },
+      {
+        "id": "radish",
+        "net_by_tier": [
+          1400,
+          5400,
+          13900
+        ],
+        "seconds": 120.0,
+        "seed": 3600,
+        "yield": 100
+      },
+      {
+        "id": "strawberry",
+        "net_by_tier": [
+          70000,
+          150000,
+          320000
+        ],
+        "seconds": 64800.0,
+        "seed": 30000,
+        "yield": 500
+      },
+      {
+        "id": "sunflower",
+        "net_by_tier": [
+          60000,
+          128000,
+          272500
+        ],
+        "seconds": 43200.0,
+        "seed": 25000,
+        "yield": 100
+      },
+      {
+        "id": "tomato",
+        "net_by_tier": [
+          6500,
+          19300,
+          46500
+        ],
+        "seconds": 900.0,
+        "seed": 9500,
+        "yield": 200
+      },
+      {
+        "id": "wheat",
+        "net_by_tier": [
+          6000,
+          15600,
+          36000
+        ],
+        "seconds": 1800.0,
+        "seed": 6000,
+        "yield": 400
+      },
+      {
+        "id": "yellow_bell_pepper",
+        "net_by_tier": [
+          42000,
+          90000,
+          192000
+        ],
+        "seconds": 28800.0,
+        "seed": 18000,
+        "yield": 200
+      }
+    ],
+    "orchard": [
+      {
+        "cycle_hours": 4.0,
+        "id": "apple",
+        "star_raw_income": 7500,
+        "yield_income": 15000
+      },
+      {
+        "cycle_hours": 8.0,
+        "id": "cherry",
+        "star_raw_income": 16500,
+        "yield_income": 33000
+      },
+      {
+        "cycle_hours": 5.0,
+        "id": "peach",
+        "star_raw_income": 9000,
+        "yield_income": 18000
+      },
+      {
+        "cycle_hours": 6.0,
+        "id": "pear",
+        "star_raw_income": 11400,
+        "yield_income": 22800
+      }
+    ],
+    "orders": [
+      {
+        "id": "tomato_crate_bulk",
+        "market": [
+          80000,
+          144000,
+          280000
+        ],
+        "old_perfect": 150000,
+        "ordinary": 100000
+      },
+      {
+        "id": "potato_military",
+        "market": [
+          130000,
+          234000,
+          456000
+        ],
+        "old_perfect": 243750,
+        "ordinary": 162500
+      },
+      {
+        "id": "grand_salad_basket",
+        "market": [
+          160000,
+          288000,
+          560000
+        ],
+        "old_perfect": 336000,
+        "ordinary": 224000
+      },
+      {
+        "id": "winter_soup_barrel",
+        "market": [
+          115000,
+          207000,
+          403000
+        ],
+        "old_perfect": 241500,
+        "ordinary": 161000
+      },
+      {
+        "id": "dairy_egg_express",
+        "market": [
+          40000,
+          71600,
+          140000
+        ],
+        "old_perfect": 84000,
+        "ordinary": 56000
+      },
+      {
+        "id": "royal_pumpkin_contract",
+        "market": [
+          2900000,
+          5220000,
+          10150000
+        ],
+        "old_perfect": 5437500,
+        "ordinary": 3625000
+      }
+    ],
+    "recipes": [
+      {
+        "hours": 4.0,
+        "id": "fried_egg",
+        "inputs_sale": 8,
+        "marketable_inputs": true,
+        "net": 10,
+        "output": 18
+      },
+      {
+        "hours": 4.0,
+        "id": "steamed_egg",
+        "inputs_sale": 28,
+        "marketable_inputs": true,
+        "net": 34,
+        "output": 62
+      },
+      {
+        "hours": 4.0,
+        "id": "bread",
+        "inputs_sale": 75,
+        "marketable_inputs": true,
+        "net": 90,
+        "output": 165
+      },
+      {
+        "hours": 4.0,
+        "id": "fruit_salad",
+        "inputs_sale": 55,
+        "marketable_inputs": true,
+        "net": 66,
+        "output": 121
+      },
+      {
+        "hours": 4.0,
+        "id": "honey_bread",
+        "inputs_sale": 430,
+        "marketable_inputs": true,
+        "net": 516,
+        "output": 946
+      },
+      {
+        "hours": 4.0,
+        "id": "star_apple_tart",
+        "inputs_sale": 200,
+        "marketable_inputs": true,
+        "net": 80,
+        "output": 280
+      },
+      {
+        "hours": 4.0,
+        "id": "star_peach_parfait",
+        "inputs_sale": 210,
+        "marketable_inputs": true,
+        "net": 84,
+        "output": 294
+      },
+      {
+        "hours": 4.0,
+        "id": "star_pear_compote",
+        "inputs_sale": 226,
+        "marketable_inputs": true,
+        "net": 90,
+        "output": 316
+      },
+      {
+        "hours": 4.0,
+        "id": "star_cherry_preserve",
+        "inputs_sale": 260,
+        "marketable_inputs": true,
+        "net": 104,
+        "output": 364
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_01_06_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_02_07_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_03_08_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_06_custard",
+        "inputs_sale": 480,
+        "marketable_inputs": true,
+        "net": 192,
+        "output": 672
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_07_custard",
+        "inputs_sale": 480,
+        "marketable_inputs": true,
+        "net": 192,
+        "output": 672
+      }
+    ]
+  },
+  "after": {
+    "crops": [
+      {
+        "id": "beetroot",
+        "net_by_tier": [
+          2500,
+          8900,
+          22500
+        ],
+        "seconds": 240.0,
+        "seed": 5500,
+        "yield": 100
+      },
+      {
+        "id": "bell_pepper",
+        "net_by_tier": [
+          50000,
+          106000,
+          225000
+        ],
+        "seconds": 36000.0,
+        "seed": 20000,
+        "yield": 200
+      },
+      {
+        "id": "broccoli",
+        "net_by_tier": [
+          16000,
+          38400,
+          86000
+        ],
+        "seconds": 5400.0,
+        "seed": 12000,
+        "yield": 100
+      },
+      {
+        "id": "cabbage",
+        "net_by_tier": [
+          3200,
+          11200,
+          28200
+        ],
+        "seconds": 300.0,
+        "seed": 6800,
+        "yield": 100
+      },
+      {
+        "id": "carrot",
+        "net_by_tier": [
+          800,
+          3600,
+          9600
+        ],
+        "seconds": 60.0,
+        "seed": 2700,
+        "yield": 100
+      },
+      {
+        "id": "chili_pepper",
+        "net_by_tier": [
+          25000,
+          57000,
+          125000
+        ],
+        "seconds": 14400.0,
+        "seed": 15000,
+        "yield": 200
+      },
+      {
+        "id": "corn",
+        "net_by_tier": [
+          10000,
+          22000,
+          47500
+        ],
+        "seconds": 7200.0,
+        "seed": 5000,
+        "yield": 300
+      },
+      {
+        "id": "cucumber",
+        "net_by_tier": [
+          8000,
+          24000,
+          58000
+        ],
+        "seconds": 1200.0,
+        "seed": 12000,
+        "yield": 200
+      },
+      {
+        "id": "eggplant",
+        "net_by_tier": [
+          18000,
+          42000,
+          93000
+        ],
+        "seconds": 10800.0,
+        "seed": 12000,
+        "yield": 200
+      },
+      {
+        "id": "garlic",
+        "net_by_tier": [
+          8500,
+          22500,
+          52500
+        ],
+        "seconds": 2700.0,
+        "seed": 9000,
+        "yield": 500
+      },
+      {
+        "id": "green_bell_pepper",
+        "net_by_tier": [
+          34000,
+          74000,
+          159000
+        ],
+        "seconds": 21600.0,
+        "seed": 16000,
+        "yield": 200
+      },
+      {
+        "id": "leek",
+        "net_by_tier": [
+          10000,
+          24400,
+          55000
+        ],
+        "seconds": 3600.0,
+        "seed": 8000,
+        "yield": 300
+      },
+      {
+        "id": "onion",
+        "net_by_tier": [
+          9000,
+          26600,
+          64000
+        ],
+        "seconds": 1500.0,
+        "seed": 13000,
+        "yield": 200
+      },
+      {
+        "id": "parsnip",
+        "net_by_tier": [
+          2000,
+          7200,
+          18300
+        ],
+        "seconds": 180.0,
+        "seed": 4500,
+        "yield": 100
+      },
+      {
+        "id": "potato",
+        "net_by_tier": [
+          5000,
+          15400,
+          37600
+        ],
+        "seconds": 600.0,
+        "seed": 8000,
+        "yield": 200
+      },
+      {
+        "id": "pumpkin",
+        "net_by_tier": [
+          240000,
+          472000,
+          965000
+        ],
+        "seconds": 86400.0,
+        "seed": 50000,
+        "yield": 100
+      },
+      {
+        "id": "radish",
+        "net_by_tier": [
+          1400,
+          5400,
+          13900
+        ],
+        "seconds": 120.0,
+        "seed": 3600,
+        "yield": 100
+      },
+      {
+        "id": "strawberry",
+        "net_by_tier": [
+          70000,
+          150000,
+          320000
+        ],
+        "seconds": 64800.0,
+        "seed": 30000,
+        "yield": 500
+      },
+      {
+        "id": "sunflower",
+        "net_by_tier": [
+          60000,
+          128000,
+          272500
+        ],
+        "seconds": 43200.0,
+        "seed": 25000,
+        "yield": 100
+      },
+      {
+        "id": "tomato",
+        "net_by_tier": [
+          6500,
+          19300,
+          46500
+        ],
+        "seconds": 900.0,
+        "seed": 9500,
+        "yield": 200
+      },
+      {
+        "id": "wheat",
+        "net_by_tier": [
+          6000,
+          15600,
+          36000
+        ],
+        "seconds": 1800.0,
+        "seed": 6000,
+        "yield": 400
+      },
+      {
+        "id": "yellow_bell_pepper",
+        "net_by_tier": [
+          42000,
+          90000,
+          192000
+        ],
+        "seconds": 28800.0,
+        "seed": 18000,
+        "yield": 200
+      }
+    ],
+    "honey": [
+      {
+        "capped_batch": 100,
+        "hours_full_bloom": 24.0,
+        "hours_windy": 19.2,
+        "id": "mixed",
+        "sale_per_batch": 15000
+      },
+      {
+        "capped_batch": 100,
+        "hours_full_bloom": 12.0,
+        "hours_windy": 9.6,
+        "id": "mono_06",
+        "sale_per_batch": 40000
+      },
+      {
+        "capped_batch": 100,
+        "hours_full_bloom": 12.0,
+        "hours_windy": 9.6,
+        "id": "hybrid_01_06",
+        "sale_per_batch": 50000
+      }
+    ],
+    "orchard": [
+      {
+        "cycle_hours": 4.0,
+        "id": "apple",
+        "star_raw_income": 7500,
+        "yield_income": 15000
+      },
+      {
+        "cycle_hours": 8.0,
+        "id": "cherry",
+        "star_raw_income": 16500,
+        "yield_income": 33000
+      },
+      {
+        "cycle_hours": 5.0,
+        "id": "peach",
+        "star_raw_income": 9000,
+        "yield_income": 18000
+      },
+      {
+        "cycle_hours": 6.0,
+        "id": "pear",
+        "star_raw_income": 11400,
+        "yield_income": 22800
+      }
+    ],
+    "orders": [
+      {
+        "id": "tomato_crate_bulk",
+        "market": [
+          80000,
+          144000,
+          280000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          158400,
+          308000,
+          233200
+        ],
+        "old_perfect": 150000,
+        "ordinary": 100000
+      },
+      {
+        "id": "potato_military",
+        "market": [
+          130000,
+          234000,
+          456000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          257400,
+          501600,
+          379500
+        ],
+        "old_perfect": 243750,
+        "ordinary": 162500
+      },
+      {
+        "id": "grand_salad_basket",
+        "market": [
+          160000,
+          288000,
+          560000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          336000,
+          616000,
+          466400
+        ],
+        "old_perfect": 336000,
+        "ordinary": 224000
+      },
+      {
+        "id": "winter_soup_barrel",
+        "market": [
+          115000,
+          207000,
+          403000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          241500,
+          443300,
+          335500
+        ],
+        "old_perfect": 241500,
+        "ordinary": 161000
+      },
+      {
+        "id": "dairy_egg_express",
+        "market": [
+          40000,
+          71600,
+          140000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          84000,
+          154000,
+          116380
+        ],
+        "old_perfect": 84000,
+        "ordinary": 56000
+      },
+      {
+        "id": "royal_pumpkin_contract",
+        "market": [
+          2900000,
+          5220000,
+          10150000
+        ],
+        "new_perfect_silver_gold_mixed": [
+          5742000,
+          11165000,
+          8453500
+        ],
+        "old_perfect": 5437500,
+        "ordinary": 3625000
+      }
+    ],
+    "recipes": [
+      {
+        "hours": 4.0,
+        "id": "fried_egg",
+        "inputs_sale": 8,
+        "marketable_inputs": true,
+        "net": 10,
+        "output": 18
+      },
+      {
+        "hours": 4.0,
+        "id": "steamed_egg",
+        "inputs_sale": 28,
+        "marketable_inputs": true,
+        "net": 34,
+        "output": 62
+      },
+      {
+        "hours": 4.0,
+        "id": "bread",
+        "inputs_sale": 75,
+        "marketable_inputs": true,
+        "net": 90,
+        "output": 165
+      },
+      {
+        "hours": 4.0,
+        "id": "fruit_salad",
+        "inputs_sale": 55,
+        "marketable_inputs": true,
+        "net": 66,
+        "output": 121
+      },
+      {
+        "hours": 4.0,
+        "id": "honey_bread",
+        "inputs_sale": 430,
+        "marketable_inputs": true,
+        "net": 516,
+        "output": 946
+      },
+      {
+        "hours": 4.0,
+        "id": "star_apple_tart",
+        "inputs_sale": 200,
+        "marketable_inputs": true,
+        "net": 80,
+        "output": 280
+      },
+      {
+        "hours": 4.0,
+        "id": "star_peach_parfait",
+        "inputs_sale": 210,
+        "marketable_inputs": true,
+        "net": 84,
+        "output": 294
+      },
+      {
+        "hours": 4.0,
+        "id": "star_pear_compote",
+        "inputs_sale": 226,
+        "marketable_inputs": true,
+        "net": 90,
+        "output": 316
+      },
+      {
+        "hours": 4.0,
+        "id": "star_cherry_preserve",
+        "inputs_sale": 260,
+        "marketable_inputs": true,
+        "net": 104,
+        "output": 364
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_01_06_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_02_07_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_03_08_custard",
+        "inputs_sale": 580,
+        "marketable_inputs": true,
+        "net": 232,
+        "output": 812
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_06_custard",
+        "inputs_sale": 480,
+        "marketable_inputs": true,
+        "net": 192,
+        "output": 672
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_07_custard",
+        "inputs_sale": 480,
+        "marketable_inputs": true,
+        "net": 192,
+        "output": 672
+      },
+      {
+        "hours": 4.0,
+        "id": "star_apple_tart_batch",
+        "inputs_sale": 7650,
+        "marketable_inputs": true,
+        "net": 9773,
+        "output": 17423
+      },
+      {
+        "hours": 4.0,
+        "id": "star_peach_parfait_batch",
+        "inputs_sale": 9150,
+        "marketable_inputs": true,
+        "net": 11723,
+        "output": 20873
+      },
+      {
+        "hours": 4.0,
+        "id": "star_pear_compote_batch",
+        "inputs_sale": 11550,
+        "marketable_inputs": true,
+        "net": 14843,
+        "output": 26393
+      },
+      {
+        "hours": 4.0,
+        "id": "star_cherry_preserve_batch",
+        "inputs_sale": 16650,
+        "marketable_inputs": true,
+        "net": 21473,
+        "output": 38123
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_01_06_custard_batch",
+        "inputs_sale": 58000,
+        "marketable_inputs": true,
+        "net": 23200,
+        "output": 81200
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_02_07_custard_batch",
+        "inputs_sale": 58000,
+        "marketable_inputs": true,
+        "net": 23200,
+        "output": 81200
+      },
+      {
+        "hours": 4.0,
+        "id": "hybrid_03_08_custard_batch",
+        "inputs_sale": 58000,
+        "marketable_inputs": true,
+        "net": 23200,
+        "output": 81200
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_06_custard_batch",
+        "inputs_sale": 48000,
+        "marketable_inputs": true,
+        "net": 19200,
+        "output": 67200
+      },
+      {
+        "hours": 4.0,
+        "id": "mono_07_custard_batch",
+        "inputs_sale": 48000,
+        "marketable_inputs": true,
+        "net": 19200,
+        "output": 67200
+      }
+    ]
+  },
+  "worker_48h": {
+    "plots": 2,
+    "fertile_plots": 1,
+    "plantings": 12,
+    "gross": 94500,
+    "seed_cost": 32400,
+    "wages": 5600,
+    "net": 56500
+  },
+  "limits": [
+    "No Android/iOS hardware session",
+    "Catalog bounds and accelerated simulation are not a human 2.5h playtest",
+    "Gold crop net_by_tier subtracts seeds only, not Root Tonic opportunity cost"
+  ]
+}

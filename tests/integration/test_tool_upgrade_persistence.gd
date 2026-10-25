@@ -30,6 +30,7 @@ func _snapshot() -> Dictionary:
 	return adapter.capture("tool_upgrade_test", 1, world.farming.time_manager.now())
 
 func _enable_harness() -> void:
+	world.storages.inventory("produce_warehouse").add(load("res://items/trees/wood.tres") as ItemDefinition, 1000)
 	world.tool_upgrades.profile_ready = true
 	world.tool_upgrades.purchasing_enabled = true
 	world.player.wallet.set_balance(500000)

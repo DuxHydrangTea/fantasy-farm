@@ -13,6 +13,11 @@ func before_each() -> void:
 	land = LandExpansionState.new()
 	land.restore_columns(7, 4)
 	service = ToolUpgradeService.new(state, wallet, land, CATALOG.duplicate(true) as ToolUpgradeCatalog)
+	var materials: InventoryComponent = InventoryComponent.new()
+	materials.starting_tools = false
+	add_child_autofree(materials)
+	materials.add(load("res://items/trees/wood.tres") as ItemDefinition, 1000)
+	service.inventory = materials
 	service.profile_ready = true
 	service.purchasing_enabled = true
 

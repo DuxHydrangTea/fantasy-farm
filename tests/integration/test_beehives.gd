@@ -61,8 +61,8 @@ func _jump(seconds: float) -> void:
 
 func test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable() -> void:
 	var pot: FlowerPot = _pot(Vector2i(0,0))
-	var b: Beehive = _hive(pot.global_position+Vector2(24,0),&"hive_b")
-	var a: Beehive = _hive(pot.global_position+Vector2(-24,0),&"hive_a")
+	var b: Beehive = _hive(pot.global_position+Vector2(24,-40),&"hive_b")
+	var a: Beehive = _hive(pot.global_position+Vector2(-24,-40),&"hive_a")
 	assert_true(a.pollination.active())
 	assert_false(b.pollination.active())
 	_jump(10)
@@ -71,7 +71,7 @@ func test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable() -> v
 
 func test_offline_bloom_boundary_does_not_apply_pollen_retroactively() -> void:
 	var pot: FlowerPot = _pot(Vector2i(0,0),50.0)
-	var hive: Beehive = _hive(pot.global_position+Vector2(-24,0))
+	var hive: Beehive = _hive(pot.global_position+Vector2(-24,-40))
 	_jump(60)
 	assert_almost_eq(hive.production.work,70.0,0.00001)
 	assert_almost_eq(hive.production.contributions.flower_06,20.0,0.00001)
@@ -81,7 +81,7 @@ func test_offline_bloom_boundary_does_not_apply_pollen_retroactively() -> void:
 
 func test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset() -> void:
 	var pot: FlowerPot = _pot(Vector2i(0,0))
-	var hive: Beehive = _hive(pot.global_position+Vector2(-24,0))
+	var hive: Beehive = _hive(pot.global_position+Vector2(-24,-40))
 	now += 20
 	assert_true(pot.harvest(bag))
 	_jump(20)

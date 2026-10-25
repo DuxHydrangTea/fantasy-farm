@@ -13,6 +13,7 @@ var sign: Sprite2D
 var prompt: Label
 var _reveal_column: int = -1
 var _revealed_rows: int = 0
+var grass_cover: LandGrassCover = LandGrassCover.new()
 var _clearing: Tween
 
 func _ready() -> void:
@@ -67,7 +68,10 @@ func purchase(expected_columns: int) -> Dictionary:
 	return result
 
 func _reveal_rows(count: int) -> void:
+	if count == _revealed_rows:
+		return
 	_revealed_rows = count
+	grass_cover.refresh(self)
 	queue_redraw()
 
 func _finish_reveal() -> void:
@@ -75,6 +79,7 @@ func _finish_reveal() -> void:
 	_state_changed()
 
 func _state_changed() -> void:
+	grass_cover.refresh(self)
 	if sign != null:
 		sign.visible = not state.is_complete() and _reveal_column < 0
 		sign.position = to_local(interaction_position()) - Vector2(0, 8)
@@ -92,6 +97,8 @@ func _process(_delta: float) -> void:
 		prompt.visible = player.interactions == null and can_interact(player) and not player.selection.is_menu_open()
 
 func _draw() -> void:
+	if grass_cover.active:
+		return
 	if farming == null or farming.farmland == null:
 		return
 	var region: Rect2i = LandExpansionState.REGION
@@ -110,3 +117,13 @@ func _draw_cover(cells: Rect2i) -> void:
 			var corner: Vector2 = farming.farmland.map_to_local(Vector2i(x, y)) - tile_size * 0.5
 			var variant: int = (x + y) % WEED_REGIONS.size()
 			draw_texture_rect_region(DECOR, Rect2(corner, tile_size), WEED_REGIONS[variant])
+
+func set_grass_effect(effect: ShaderMaterial) -> void:
+	if effect == null:
+		grass_cover.clear()
+	elif grass_cover.install(self):
+		grass_cover.sync_from(effect)
+	queue_redraw()
+
+func _exit_tree() -> void:
+	grass_cover.clear()

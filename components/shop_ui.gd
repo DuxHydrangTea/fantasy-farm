@@ -51,6 +51,7 @@ func _ready() -> void:
 func _start_visit() -> void:
 	service = ShopService.new(merchant.catalog, customer.wallet, customer.selection.inventory)
 	var world: FarmWorld = customer.get_parent() as FarmWorld
+	service.world = world
 	upgrade_view = ToolUpgradeShopView.new(self, world.tool_upgrades if world != null else null, world)
 	var farm: FarmingController = customer.farming_actions.get_farming_controller() as FarmingController
 	animal_service = AnimalTradeService.new(merchant.catalog, customer.wallet, customer.get_parent(), farm.time_manager if farm != null else TimeManager)
@@ -59,7 +60,7 @@ func _start_visit() -> void:
 	categories.get_child(0).grab_focus()
 
 func _process(delta: float) -> void:
-	if not is_open or category < ShopOffer.Category.ANIMAL:
+	if not is_open or (category < ShopOffer.Category.ANIMAL and (selected == null or selected.item.item_id != WoodMarket.ITEM)):
 		return
 	_elapsed += delta
 	if _elapsed < 0.5:
@@ -198,6 +199,8 @@ func _refresh() -> void:
 	var amount: int = int(quantity.value)
 	var checked: Dictionary = service.quote(selected, amount)
 	details.text = tr("{item} · {price} coins / item · In bag: {count}").format({"item": tr(selected.item.display_name), "price": selected.price, "count": customer.selection.inventory.count_item(selected.item.item_id)})
+	if selected.item.item_id == WoodMarket.ITEM and service.world != null:
+		details.text += "\n" + tr("Wood bought today: {used}/{cap} · Resets at 06:00 (UTC+7)").format({"used": service.world.wood_market.used(service.world.farming.time_manager.now()), "cap": WoodMarket.DAILY_CAP})
 	if not selected.item.description.is_empty():
 		details.text += "\n" + tr(selected.item.description)
 	buy_button.text = tr("Buy ×{count} - {coins} coins").format({"count": amount, "coins": selected.price * amount})
@@ -267,6 +270,8 @@ func purchase() -> void:
 	var result: Dictionary = animal_service.buy(selected_animal_offer, int(quantity.value)) if animal_purchase else service.buy(selected, int(quantity.value))
 	if result.ok:
 		bought_this_visit = true
+		if not animal_purchase and selected.item.item_id == WoodMarket.ITEM:
+			upgrade_view._save_progress.call_deferred()
 		_refresh()
 		status.text = tr("Bought {item} ×{count}!").format({"item": tr(selected_animal_offer.animal.display_name if animal_purchase else selected.item.display_name), "count": int(result.quantity)})
 	else:

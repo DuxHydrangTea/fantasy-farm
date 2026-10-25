@@ -1,19 +1,14 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://dbetjtr0xtlt2"]
 
 [ext_resource type="Resource" uid="uid://chuc4drata6b1" path="res://flowers/definitions/flower_02.tres" id="1_f3dh6"]
-[ext_resource type="Texture2D" uid="uid://dhjo8olc6uuyc" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_1_Anim.png" id="2_c1jh6"]
-[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_cbwfp"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o7yf3"]
-atlas = ExtResource("2_c1jh6")
-region = Rect2(0, 16, 16, 16)
-filter_clip = true
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flower_seed_packet.png" id="2_icon"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
 
 [resource]
-script = ExtResource("3_cbwfp")
+script = ExtResource("3_script")
 item_id = &"flower_02_seed"
 display_name = "Flower 02 Seed"
-icon = SubResource("AtlasTexture_o7yf3")
+icon = ExtResource("2_icon")
 item_type = 1
 crop = ExtResource("1_f3dh6")
 max_stack = 999

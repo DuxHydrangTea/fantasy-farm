@@ -34,6 +34,8 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 	_cell = _cell_ahead()
 	_action = state.active_action if not state.active_action.is_empty() else current
 	_targets = target_cells(_action, false)
+	if _action == &"tree_dig" and state.tree_interaction != null:
+		_targets = state.tree_interaction.dig_targets()
 	if _action == &"harvest":
 		var crop: Crop = farming.get_crop(_cell)
 		if crop != null:
@@ -93,9 +95,9 @@ func _on_frame_changed() -> void:
 	if not is_instance_valid(farming):
 		return
 	if action == &"tool" and state.current_state == StateComponent.State.TOOL:
-		last_result = farming.apply_area(action, _targets, null, -1, null, get_parent() as PhysicsBody2D)
+		last_result = farming.apply_area(action, _targets, state.tool_selection.inventory if action == &"tool" else null, -1, null, get_parent() as PhysicsBody2D)
 	elif action == &"water" and state.current_state == StateComponent.State.WATER:
-		last_result = farming.apply_area(action, _targets, null, -1, null, get_parent() as PhysicsBody2D)
+		last_result = farming.apply_area(action, _targets, state.tool_selection.inventory if action == &"tool" else null, -1, null, get_parent() as PhysicsBody2D)
 	elif action == &"plant" and state.current_state == StateComponent.State.TOOL:
 		var selection: ToolSelectionComponent = state.tool_selection
 		if selection.revision != _selection_revision or selection.is_menu_open():

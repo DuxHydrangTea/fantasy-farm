@@ -193,7 +193,7 @@ func test_touch_farming_loop_uses_existing_impact_frames_and_interaction_resolve
 	await wait_seconds(0.9)
 	assert_null(farm.get_crop(target))
 	assert_eq(player.state.current_state, StateComponent.State.IDLE)
-	assert_eq(player.selection.inventory.count_item(seed.crop.harvest_item.item_id), seed.crop.harvest_amount)
+	assert_eq(player.selection.inventory.count_item(seed.crop.harvest_item.item_id,-1), seed.crop.harvest_amount)
 
 func test_context_button_opens_shop_and_modal_blocks_actions() -> void:
 	var merchant: ShopMerchant = preload("res://scenes/characters/shop_merchant.tscn").instantiate() as ShopMerchant

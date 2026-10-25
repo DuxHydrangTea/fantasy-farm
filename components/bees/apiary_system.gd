@@ -36,7 +36,7 @@ func _flowers() -> Array[Dictionary]:
 			continue
 		for pot: FlowerPot in garden.pots.values():
 			if pot.definition != null and pot.growth_started_at >= 0:
-				result.append({"type":String(pot.definition.flower_id),"name":pot.definition.display_name,"point":pot.global_position,"ready_at":pot.matures_at})
+				result.append({"type":String(pot.definition.flower_id),"name":pot.definition.display_name,"point":pot.global_position,"ready_at":pot.matures_at,"garden":String(garden.persistent_id),"cell":pot.cell})
 	for cell: Vector2i in farming.crop_cells():
 		var crop: Crop = farming.get_crop(cell)
 		if crop != null and crop.definition.crop_id == &"sunflower":
@@ -61,6 +61,14 @@ func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 		var nearest: Beehive
 		var distance: float = INF
 		for hive: Beehive in hives:
+			if not hive.repaired:
+				continue
+			var fixed_slot: int = world.honey_garden.owner_slot(source.get("cell",Vector2i(-99,-99))) if world.honey_garden != null and world.honey_garden.migrated and source.get("garden", "") == String(world.honey_garden.garden().persistent_id) else -1
+			if fixed_slot >= 0 or hive.garden_slot >= 0:
+				if fixed_slot == hive.garden_slot and source.get("garden", "") == hive.garden_id:
+					nearest = hive
+					break
+				continue
 			var candidate: float = hive.global_position.distance_squared_to(source.point)
 			if candidate <= effective_radius(timestamp)*effective_radius(timestamp) and (candidate < distance or (is_equal_approx(candidate,distance) and (nearest == null or String(hive.persistent_id) < String(nearest.persistent_id)))):
 				nearest = hive
@@ -73,6 +81,8 @@ func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 func advance(timestamp: float) -> void:
 	if loading or _advancing:
 		return
+	if world != null and world.honey_garden != null:
+		world.honey_garden.prepare_waiting()
 	if world != null and world.trees != null:
 		world.trees.advance(timestamp)
 	_advancing = true
@@ -104,7 +114,11 @@ func advance(timestamp: float) -> void:
 		_update_boosted(accelerated,cursor)
 		var elapsed: float = maxf(0.0,boundary-cursor)
 		for hive: Beehive in hives:
-			hive.production.advance(elapsed, hive.pollination.source_id) # Rain keeps only the base wild-honey rate.
+			if hive.repaired:
+				var windy: bool = farming.weather != null and farming.weather.weather_at(cursor) == WeatherManager.Weather.WINDY
+				var speed: float = 1.25 if hive.garden_slot >= 0 and windy else 1.0
+				var recipe: String = world.honey_garden.recipe_for(hive,sources,cursor) if hive.garden_slot >= 0 else "mixed"
+				hive.production.advance(elapsed * speed, hive.pollination.source_id, recipe)
 			hive.refresh_visual()
 		for crop: Crop in accelerated:
 			crop.pollination_reduction += elapsed * definition.crop_bonus
@@ -118,9 +132,10 @@ func advance(timestamp: float) -> void:
 	last_at = timestamp
 	_assign(_flowers(),timestamp)
 	for hive: Beehive in hives:
+		hive.range_display.garden_grid = hive.garden_slot >= 0
 		hive.range_display.radius = effective_radius(timestamp)
 		hive.range_display.queue_redraw()
-		hive.bees.set_sheltered(raining(timestamp))
+		hive.bees.set_sheltered(raining(timestamp) or not hive.repaired)
 	_advancing = false
 
 func _update_boosted(next: Array[Crop], timestamp: float) -> void:
@@ -142,7 +157,9 @@ func crop_is_pollinated(point: Vector2) -> bool:
 func snap_position(point: Vector2) -> Vector2:
 	return farming.farmland.to_global(farming.farmland.map_to_local(farming.world_to_cell(point)))
 
-func placement_error(point: Vector2, columns: int = -1, restoring: bool = false) -> String:
+func placement_error(point: Vector2, columns: int = -1, restoring: bool = false, legacy_garden: bool = false) -> String:
+	if not restoring and world.honey_garden != null and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
+		return "Use the three fixed garden hives."
 	var cell: Vector2i = farming.world_to_cell(point)
 	var count: int = columns if columns >= 0 else farming.land.unlocked_columns if farming.land != null else 48
 	if not LandExpansionState.cell_is_open(cell,count):
@@ -167,6 +184,11 @@ func placement_error(point: Vector2, columns: int = -1, restoring: bool = false)
 		var excluded: Array[RID] = []
 		for hive: Beehive in hives:
 			excluded.append(hive.get_rid())
+		if legacy_garden and world.honey_garden != null and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
+			# Old garden flowers are relocated only after the complete layout plan passes.
+			# They must not make a pending legacy save impossible to load first.
+			for pot: FlowerPot in world.honey_garden.garden().pots.values():
+				excluded.append(pot.get_rid())
 		query.exclude = excluded
 	if not world.get_world_2d().direct_space_state.intersect_shape(query,1).is_empty():
 		return "This space is blocked."
@@ -218,6 +240,11 @@ func begin_restore() -> void:
 func restore(rows: Array, saved_at: float, now: float) -> void:
 	for row: Dictionary in rows:
 		var hive: Beehive = create_hive(world.to_global(Vector2(row.position[0],row.position[1])),StringName(row.id))
+		hive.garden_id = row.get("garden_id", "")
+		hive.garden_slot = int(row.get("garden_slot", -1))
+		hive.repaired = row.get("repaired", true)
+		hive.production.garden_mode = hive.garden_slot >= 0
+		hive.production.batch_recipe = row.get("batch_recipe", "")
 		hive.production.work = float(row.work)
 		hive.production.contributions = row.contributions.duplicate()
 		hive.production.legacy_batch = bool(row.legacy_batch)

@@ -296,6 +296,6 @@ func test_full_1632_plot_field_has_no_daily_quota_and_consumes_only_supplied_sto
 	assert_eq(service.crop_automation.plots.size(), 60, "Never-planted plots are not starved by near repeats")
 	assert_eq(source.count_item(SEED.item_id), 0)
 	assert_eq(source.count_item(OTHER.item_id), 0)
-	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 48 * (SEED.crop as CropDefinition).harvest_amount)
+	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 5350, "Layout v1: 48 carrot crops, including 11 fertile plots")
 	assert_eq(service.output_inventory().count_item((OTHER.crop as CropDefinition).harvest_item.item_id, -1), 12 * (OTHER.crop as CropDefinition).harvest_amount)
 	print("CROP_AUTOMATION_FIELD ", JSON.stringify({"elapsed_ms": elapsed, "indexed_cells": service.crop_policy.cells.size(), "plantings": service.crop_automation.sequence, "fertilizer_left": source.count_item(FERTILIZER.item_id)}))
