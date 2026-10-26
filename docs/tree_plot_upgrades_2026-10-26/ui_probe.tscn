@@ -1,0 +1,4 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://docs/tree_plot_upgrades_2026-10-26/ui_probe.gd" id="1"]
+[node name="TreePlotPreview" type="Node2D"]
+script = ExtResource("1")

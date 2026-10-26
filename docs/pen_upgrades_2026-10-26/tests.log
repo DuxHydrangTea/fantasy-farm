@@ -1,0 +1,247 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/tmp/codex-pen-validation/farm-tree-tests-0seq6r0f] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+WARNING: res://scenes/characters/player.tscn:14 - ext_resource, invalid UID: uid://jkkdybsqy13i - using text path instead: res://items/seeds/carrot_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/characters/player.tscn:18 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:6 - ext_resource, invalid UID: uid://dpv2o2obtmfss - using text path instead: res://items/seeds/flower_01_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:7 - ext_resource, invalid UID: uid://ba1txm51ur5nb - using text path instead: res://items/seeds/flower_02_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:8 - ext_resource, invalid UID: uid://s1jvgss0vdtk - using text path instead: res://items/seeds/flower_03_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:9 - ext_resource, invalid UID: uid://bbodcnt2lfywj - using text path instead: res://items/seeds/flower_04_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:10 - ext_resource, invalid UID: uid://dupjxnr2jocqs - using text path instead: res://items/seeds/flower_05_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:11 - ext_resource, invalid UID: uid://bfebrr6tir1fy - using text path instead: res://items/seeds/flower_06_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:12 - ext_resource, invalid UID: uid://c10ayurnwar76 - using text path instead: res://items/seeds/flower_07_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:13 - ext_resource, invalid UID: uid://l4u8rcsm0scp - using text path instead: res://items/seeds/flower_08_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:14 - ext_resource, invalid UID: uid://b5vtqliiybpln - using text path instead: res://items/seeds/flower_09_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:15 - ext_resource, invalid UID: uid://ccbng7ss6wer7 - using text path instead: res://items/seeds/flower_10_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+
+
+res://tests/integration/test_pen_upgrades.gd
+* test_prices_and_all_five_levels_are_independent
+* test_failed_stale_reentrant_and_rollback_purchases_do_not_double_spend
+* test_legacy_population_migration_and_invalid_progress
+* test_capture_reload_keeps_paid_capacity_even_after_animals_are_removed
+* test_buying_animals_obeys_paid_capacity_and_distinguishes_physical_space
+* test_all_seven_species_have_thirty_arrival_positions_on_the_current_map
+* test_full_legacy_schema_preserves_thirty_six_animals_without_charging
+* test_upgrade_requests_save_and_failed_io_can_be_retried_without_spending_again
+* test_current_profile_copy_migrates_without_losing_animals_or_perennial_trees
+9/9 passed.
+
+
+res://tests/integration/test_trough_save_compatibility.gd
+* test_authored_troughs_keep_persistent_ids_and_economy_capacity
+* test_previous_600_stock_save_restores_without_clamping_or_rewriting_input
+* test_real_capacity_mismatch_is_still_rejected_before_restore
+* test_missing_persistent_id_is_still_rejected
+* test_loading_legacy_stock_reenables_saving_and_roundtrips
+5/5 passed.
+
+
+res://tests/unit/test_save_repository.gd
+* test_v3_coins_migrate_once_and_current_coin_values_are_validated
+* test_missing_profile_is_a_new_game
+* test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks
+* test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
+* test_roundtrip_and_previous_revision_backup
+* test_truncated_primary_recovers_backup_and_can_save_again
+* test_checksum_damage_is_detected
+* test_stale_revision_does_not_overwrite_file
+* test_future_version_is_not_downgraded_to_backup
+* test_schema_rejects_unknown_resource_and_path_injection
+* test_schema_rejects_invalid_numbers_types_and_duplicate_cells
+* test_catalog_contains_all_current_gameplay_definitions
+* test_version_one_file_migrates_to_current_and_remains_a_valid_backup
+* test_dense_garden_file_roundtrip_accepts_all_180_planted_pots
+* test_version_two_garden_migration_is_complete_and_does_not_mutate_input
+* test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
+* test_async_save_roundtrip_recovery_and_revision_guard
+* test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard
+* test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto
+* test_async_save_detects_external_change_between_validation_and_commit
+* test_async_save_rejects_future_version_and_resource_objects_without_overwriting
+21/21 passed.
+
+
+res://tests/unit/test_animal_pen.gd
+* test_samples_and_clamps_respect_translated_scaled_rotated_pen
+* test_oversized_margin_collapses_to_center_without_invalid_targets
+2/2 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               4
+Tests                37
+Passing Tests        37
+Asserts            1244
+Time              3.632s
+
+
+---- All tests passed! ----
+

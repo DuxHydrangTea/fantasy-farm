@@ -32,6 +32,8 @@ func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: Strin
 	catalog = SaveCatalog.new()
 	repository = backend if backend != null else LocalSaveRepository.new(local_directory, catalog)
 	adapter = WorldStateAdapter.new(world, catalog)
+	world.pen_upgrades.save_requested.connect(_save_pen_upgrade)
+	world.tree_plot_upgrades.save_requested.connect(_save_pen_upgrade)
 	profile_id = profile
 	world.tree_exiting.connect(_unbind_world, CONNECT_ONE_SHOT)
 	get_tree().auto_accept_quit = false
@@ -40,6 +42,10 @@ func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: Strin
 func _unbind_world() -> void:
 	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:
 		adapter.world.tool_upgrades.profile_ready = false
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.pen_upgrades != null:
+		adapter.world.pen_upgrades.profile_ready = false
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tree_plot_upgrades != null:
+		adapter.world.tree_plot_upgrades.profile_ready = false
 	adapter = null
 	writes_enabled = false
 	get_tree().auto_accept_quit = true
@@ -57,6 +63,10 @@ func _process(delta: float) -> void:
 # Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
 func save_game() -> Dictionary:
+	if adapter != null and adapter.world.tree_plot_upgrades != null and adapter.world.tree_plot_upgrades.state.is_busy():
+		return SaveSchema.failure("A tree plot upgrade is in progress.", "busy")
+	if adapter != null and adapter.world.pen_upgrades != null and adapter.world.pen_upgrades.state.is_busy():
+		return SaveSchema.failure("A pen upgrade is in progress.", "busy")
 	if adapter != null and adapter.world.honey_garden != null and adapter.world.honey_garden.busy:
 		return SaveSchema.failure("A garden transaction is in progress.", "busy")
 	if adapter != null and adapter.world.cooking != null and adapter.world.cooking.busy:
@@ -135,6 +145,15 @@ func load_game() -> Dictionary:
 func _sync_upgrade_readiness() -> void:
 	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:
 		adapter.world.tool_upgrades.profile_ready = writes_enabled and not busy
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.pen_upgrades != null:
+		adapter.world.pen_upgrades.profile_ready = writes_enabled and not busy
+
+	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tree_plot_upgrades != null:
+		adapter.world.tree_plot_upgrades.profile_ready = writes_enabled and not busy
+
+func _save_pen_upgrade() -> void:
+	# Defer until all wallet/state observers have finished.
+	save_game.call_deferred()
 
 func _clock() -> FarmClock:
 	return TimeManager

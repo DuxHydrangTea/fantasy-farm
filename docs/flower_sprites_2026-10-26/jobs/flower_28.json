@@ -1,0 +1,16 @@
+{
+  "index": 28,
+  "flower": "Zinnia",
+  "source_rect": [
+    576,
+    642,
+    768,
+    840
+  ],
+  "input": "docs/flower_sprites_2026-10-26/inputs/flower_28.png",
+  "kind": "plant",
+  "job_id": "fd0ef1cf-a912-410f-935a-3fff782752de",
+  "submit": "id: fd0ef1cf-a912-410f-935a-3fff782752de\njob_id: fd0ef1cf-a912-410f-935a-3fff782752de\nasset_id: cbc28aed-1c7f-58c2-8c6f-1e1b915980a2\nasset_status: pending (saved when generation completes)\nsource: 256x256px\noutput: detected from the image's own pixel grid\nquantize: 64\ncost: 0.1 generations\nstatus: processing (~1s)\n\nhint: get_image(job_id=\"fd0ef1cf-a912-410f-935a-3fff782752de\")",
+  "result": "status: completed\nid: fd0ef1cf-a912-410f-935a-3fff782752de\njob_id: fd0ef1cf-a912-410f-935a-3fff782752de\nframes: 1\ntransparent: no — every pixel is opaque. If you asked for no_background, background removal did not find one; retry or describe the subject on a plain background.\nasset_id: cbc28aed-1c7f-58c2-8c6f-1e1b915980a2\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 0.1 generations\ndownload: https://api.pixellab.ai/mcp/images/fd0ef1cf-a912-410f-935a-3fff782752de/download",
+  "downloaded": "docs/flower_sprites_2026-10-26/unzoom/flower_28.png"
+}

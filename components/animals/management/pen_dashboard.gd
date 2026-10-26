@@ -7,6 +7,12 @@ var heading: Label
 var overview: Label
 var grid: GridContainer
 var scroll: ScrollContainer
+var upgrade_box: VBoxContainer
+var upgrade_info: Label
+var upgrade_button: Button
+var upgrade_feedback: Label
+var _upgrade_offer: Dictionary = {}
+var _upgrade_cooldown_until: int = 0
 var empty: Label
 var cards: Dictionary[int, AnimalCard] = {}
 
@@ -50,6 +56,15 @@ func _build() -> void:
 	close_button.add_theme_font_size_override("font_size", 16)
 	header.add_child(close_button)
 	overview = _label(body, 16)
+	upgrade_box = VBoxContainer.new()
+	body.add_child(upgrade_box)
+	upgrade_info = _label(upgrade_box, 16)
+	upgrade_button = Button.new()
+	upgrade_button.custom_minimum_size.y = 48
+	upgrade_button.add_theme_font_size_override("font_size", 16)
+	upgrade_button.pressed.connect(_purchase_upgrade)
+	upgrade_box.add_child(upgrade_button)
+	upgrade_feedback = _label(upgrade_box, 14)
 	empty = _label(body, 16)
 	scroll = ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -75,6 +90,7 @@ func _fit() -> void:
 	panel.position = (root.size - panel.size) * 0.5
 
 func _visit() -> void:
+	upgrade_feedback.text = ""
 	scroll.scroll_vertical = 0
 	refresh()
 	close_button.grab_focus()
@@ -89,6 +105,7 @@ func refresh() -> void:
 	if not is_instance_valid(board.pen) or not board.pen.is_inside_tree() or board.pen.is_queued_for_deletion():
 		close(false)
 		return
+	_refresh_upgrade()
 	var animals: Array[AnimalActor] = PenStatus.members(board.pen)
 	heading.text = PenStatus.title(board.pen)
 	close_button.text = tr("Close")
@@ -122,3 +139,34 @@ func refresh() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		refresh()
+
+func _refresh_upgrade() -> void:
+	var service: PenUpgradeService = board.world.pen_upgrades
+	upgrade_box.visible = service != null and service.managed(board.pen)
+	if not upgrade_box.visible:
+		return
+	_upgrade_offer = service.quote(board.pen)
+	var level: int = service.state.level(board.pen.persistent_id)
+	upgrade_info.text = tr("Pen level {level}/6 · Capacity {capacity}/30").format({"level":level, "capacity":board.pen.capacity})
+	upgrade_button.disabled = not bool(_upgrade_offer.ok) or Time.get_ticks_msec() < _upgrade_cooldown_until
+	if level == PenUpgradeState.MAX_LEVEL:
+		upgrade_button.text = tr("Maximum capacity reached: 30 animals.")
+	elif _upgrade_offer.has("price"):
+		upgrade_button.text = tr("Unlock 5 spaces · {price} coins").format({"price":_upgrade_offer.price})
+		upgrade_info.text += "\n" + tr("Next upgrade: {current} → {next} spaces").format({"current":board.pen.capacity, "next":_upgrade_offer.next_capacity})
+		if _upgrade_offer.get("code") == "insufficient_coins":
+			upgrade_info.text += " · " + tr("Need {missing} more coins").format({"missing":_upgrade_offer.missing})
+	elif not _upgrade_offer.ok:
+		upgrade_button.text = tr(str(_upgrade_offer.error))
+	if not _upgrade_offer.ok and _upgrade_offer.get("code") in ["busy", "unavailable"]:
+		upgrade_info.text += "\n" + tr(str(_upgrade_offer.error))
+	upgrade_feedback.visible = not upgrade_feedback.text.is_empty()
+
+func _purchase_upgrade() -> void:
+	if not is_open or Time.get_ticks_msec() < _upgrade_cooldown_until or not bool(_upgrade_offer.get("ok", false)):
+		return
+	var result: Dictionary = board.world.pen_upgrades.purchase(board.pen, int(_upgrade_offer.level), int(_upgrade_offer.price))
+	if result.ok:
+		_upgrade_cooldown_until = Time.get_ticks_msec() + 500
+	upgrade_feedback.text = tr("Pen expanded to {capacity} spaces.").format({"capacity":result.capacity}) if result.ok else tr(str(result.error))
+	refresh()

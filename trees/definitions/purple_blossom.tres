@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TreeDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://items/trees/wood.tres" id="wood"]
+[ext_resource type="Resource" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Texture2D" path="res://trees/textures/oak_stage1.tres" id="stage1"]
+[ext_resource type="Texture2D" path="res://trees/textures/oak_stage2.tres" id="stage2"]
+[ext_resource type="Texture2D" path="res://trees/textures/oak_stump.tres" id="stump"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Variants64x80/purple_blossom.png" id="mature"]
+
+[resource]
+script = ExtResource("script")
+tree_id = &"purple_blossom"
+display_name = "Purple Blossom"
+kind = 1
+growth_seconds = 86400.0
+harvest_amount = 400
+harvest_item = ExtResource("wood")
+root_item = ExtResource("root")
+stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"), ExtResource("mature")])
+ready_texture = ExtResource("mature")
+stump_texture = ExtResource("stump")
+canopy_texture = ExtResource("mature")

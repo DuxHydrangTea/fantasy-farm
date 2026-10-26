@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TreePlotUpgradeCatalog" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/tree_plot_upgrade_catalog.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+prices = {
+"fruit": [30000, 50000, 80000, 120000, 170000, 230000, 300000, 380000, 470000, 570000, 680000, 800000, 930000, 1070000, 1220000, 1380000],
+"timber": [40000, 65000, 100000, 145000, 200000, 265000, 340000, 425000, 520000, 625000, 740000, 865000, 1000000, 1145000, 1300000, 1465000]
+}

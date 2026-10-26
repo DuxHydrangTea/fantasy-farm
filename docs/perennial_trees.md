@@ -72,3 +72,27 @@ tạm. Preview tạo `.godot/tree-preview.png` với các stage và gốc trong 
 đất thật; không bind SaveManager hoặc thêm cây thử vào save của người chơi.
 Validator in riêng diagnostics của tính năng cây; `counts.warnings` vẫn bao
 gồm warning có sẵn từ các dependency được Godot nạp theo.
+
+## Biến thể cây Unzoom (26/10/2026)
+
+Thêm 14 `TreeDefinition` tại `trees/definitions` và 14 cây giống tương ứng
+ở `items/trees`. Danh sách/sprite chính xác nằm trong
+`docs/perennial_variants_2026-10-26/manifest.json`.
+Gồm 8 cây đã hoàn chỉnh của bộ đầu và 6 cây của bộ 2K mới;
+không đăng ký cây thân trắng `green_birch` bị lỗi. Willow của bộ đầu vẫn giữ.
+
+Cây mới dùng `kind = TIMBER` để tái sử dụng cơ chế trồng/chặt/mọc lại hiện có.
+Hai giai đoạn cây non tạm dùng Oak, cây trưởng thành dùng PNG riêng 64×80;
+`stump_texture` dùng chung gốc nâu `oak_stump.tres`. Hình đổ tạm dùng toàn bộ
+sprite trưởng thành; chưa có bộ tán rời và lá rụng riêng từng loại.
+Thông số tạm theo Oak hiện tại: 86400 giây trưởng thành, 400 Wood mỗi lần chặt;
+các cây cũ và thông số shop được giữ nguyên. Cây giống mới là resource để
+cấu hình shop sau, chưa tự thêm mặt hàng hoặc cây vào world/save của người chơi.
+`TreePlantation` tự nạp các định nghĩa trong thư mục khi world khởi tạo.
+
+Kiểm tra riêng các biến thể: `tests/run_tree_tests.py --suite
+ docs/perennial_variants_2026-10-26/test_variant_resources.gd` (Godot 4.7.2).
+2 test/309 assertion đều đạt, bao gồm nạp resource/cây giống, ba giai đoạn,
+đúng texture cây trưởng thành, chặt thành gốc nâu và mọc lại.
+Bộ test cây cũ có 20/25 test lỗi với cấu hình hiện tại; baseline bỏ toàn bộ
+resource mới vẫn có cùng 20 lỗi. Chi tiết trong thư mục báo cáo trên.

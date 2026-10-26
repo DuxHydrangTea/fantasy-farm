@@ -1,0 +1,118 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/tmp/codex-pen-validation/farm-tree-tests-ihmqcw19] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/unit/test_animal_trade_service.gd
+* test_catalog_has_seven_species_and_resale_never_exceeds_purchase
+* test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction
+    [Failed] 
+      at line 49
+    [Failed]:  [10000] expected to equal [680]:  
+      at line 50
+    [Failed]:  ARRAY([]) != ARRAY([2]).
+    [] != [2]  1 of 1 indexes do not match.  
+      at line 51
+    [Failed]:  ARRAY([]) != ARRAY([false]).
+    [] != [false]  1 of 1 indexes do not match.  
+      at line 52
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+          at: test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+          GDScript backtrace (most recent call first):
+              [0] test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+      at line -1
+* test_full_missing_or_blocked_pen_and_invalid_request_never_spend_coins
+* test_sell_once_credits_young_price_preserves_output_and_cannot_reenter
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+          GDScript backtrace (most recent call first):
+              [0] test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+          GDScript backtrace (most recent call first):
+              [0] test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+          GDScript backtrace (most recent call first):
+              [0] test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+2/6 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/unit/test_animal_trade_service.gd
+- test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction
+    [Failed]:  
+          at line 49
+    [Failed]:  [10000] expected to equal [680]:  
+          at line 50
+    [Failed]:  ARRAY([]) != ARRAY([2]).
+    [] != [2]  1 of 1 indexes do not match.  
+          at line 51
+    [Failed]:  ARRAY([]) != ARRAY([false]).
+    [] != [false]  1 of 1 indexes do not match.  
+          at line 52
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+          at line -1
+- test_sell_once_credits_young_price_preserves_output_and_cannot_reenter
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+
+Totals
+------
+Scripts               1
+Tests                 6
+Passing Tests         2
+Failing Tests         4
+Asserts           46/54
+Time              0.014s
+
+
+---- 4 failing tests ----
+

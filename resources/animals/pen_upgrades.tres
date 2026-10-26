@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PenUpgradeCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/pen_upgrade_catalog.gd" id="script"]
+
+[resource]
+script = ExtResource("script")
+pen_kinds = {
+"placed_d2d638f2f4f64f5ca773aba052d29f5a": "coop",
+"placed_bcb6d434c48b4f9fbac1620421e64390": "barn",
+"waterfowl_pen_01": "pond"
+}
+prices = {
+"coop": [20000, 40000, 80000, 140000, 220000],
+"pond": [30000, 60000, 120000, 210000, 330000],
+"barn": [60000, 120000, 240000, 420000, 660000]
+}

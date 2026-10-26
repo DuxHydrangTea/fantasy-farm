@@ -23,7 +23,7 @@ func _failure(code: String, error: String, offer: Dictionary = {}) -> Dictionary
 func quote(tool: StringName) -> Dictionary:
 	if state == null or not is_instance_valid(wallet) or land == null or catalog == null:
 		return _failure("unavailable", "Tool upgrades are unavailable.")
-	if state.is_busy() or (world != null and (world.storages.busy or world.wood_market.busy or world.workers.busy)):
+	if state.is_busy() or (world != null and ((world.tree_plot_upgrades != null and world.tree_plot_upgrades.state.is_busy()) or world.storages.busy or world.wood_market.busy or world.workers.busy or (world.pen_upgrades != null and world.pen_upgrades.state.is_busy()))):
 		return _failure("busy", "A tool upgrade is in progress.")
 	if not purchasing_enabled or not profile_ready:
 		return _failure("unavailable", "Tool upgrades are not available yet.")

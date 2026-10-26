@@ -89,6 +89,8 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["orders"] = world.orders.service.capture() if world.orders != null and world.orders.service != null else OrderSaveSchema.fresh()
 	data["tutorial"] = world.tutorial.capture()
 	data["tool_upgrades"] = world.tool_upgrade_state.capture()
+	data["pen_upgrades"] = world.pen_upgrades.state.capture()
+	data["tree_plot_upgrades"] = world.tree_plot_upgrades.state.capture()
 	data["cooking"] = world.cooking.capture(now)
 	data["fertile_layout_version"] = farm.fertility.layout_version
 	data["honey_garden"] = world.honey_garden.capture()
@@ -160,6 +162,10 @@ func preflight(data: Dictionary) -> Dictionary:
 	if not checked.ok:
 		return checked
 	data = checked.snapshot
+	if world.tree_plot_upgrades != null and world.tree_plot_upgrades.state.is_busy():
+		return SaveSchema.failure("A tree plot upgrade is in progress.", "busy")
+	if world.pen_upgrades != null and world.pen_upgrades.state.is_busy():
+		return SaveSchema.failure("A pen upgrade is in progress.", "busy")
 	if world.trees != null and world.trees.is_busy():
 		return SaveSchema.failure("A forestry action is in progress.", "busy")
 	if world.farming != null and world.farming.is_area_busy():
@@ -293,6 +299,8 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		farm.land.restore_columns(int(data.land_columns), int(data.land_starting_columns))
 	world.wood_market.restore(data.wood_market)
 	world.tool_upgrade_state.restore(data.tool_upgrades, false)
+	world.pen_upgrades.restore(data.pen_upgrades)
+	world.tree_plot_upgrades.restore(data.tree_plot_upgrades)
 	world.cooking.restore(data.cooking, maxf(now, data.saved_at))
 	player.item_feedback.clear()
 	player.wallet.set_balance(int(data.coins))

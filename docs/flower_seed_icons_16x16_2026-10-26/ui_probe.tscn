@@ -1,0 +1,4 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://docs/flower_seed_icons_16x16_2026-10-26/ui_probe.gd" id="1"]
+[node name="FlowerSeedPreview" type="Control"]
+script = ExtResource("1")

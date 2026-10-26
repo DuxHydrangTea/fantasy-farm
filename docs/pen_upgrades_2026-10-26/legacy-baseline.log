@@ -1,0 +1,304 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/tmp/codex-pen-validation/farm-tree-tests-4ledzzm7] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/unit/test_animal_trade_service.gd
+* test_catalog_has_seven_species_and_resale_never_exceeds_purchase
+* test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction
+    [Failed] 
+      at line 49
+    [Failed]:  [10000] expected to equal [680]:  
+      at line 50
+    [Failed]:  ARRAY([]) != ARRAY([2]).
+    [] != [2]  1 of 1 indexes do not match.  
+      at line 51
+    [Failed]:  ARRAY([]) != ARRAY([false]).
+    [] != [false]  1 of 1 indexes do not match.  
+      at line 52
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+      at line -1
+* test_full_missing_or_blocked_pen_and_invalid_request_never_spend_coins
+* test_sell_once_credits_young_price_preserves_output_and_cannot_reenter
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+2/6 passed.
+
+
+res://tests/integration/test_pen_dashboard.gd
+* test_signs_exist_before_world_enters_tree_for_editor_preview
+* test_each_pen_has_a_separate_reachable_nonblocking_board
+    [Failed]:  PondPen
+      at line 60
+* test_cards_are_per_pen_and_portraits_are_independent_idle_animations
+* test_trough_percent_is_capacity_weighted_and_excludes_other_pens
+* test_roster_removes_freed_animals_and_load_closes_dashboard_without_losing_ids
+* test_cards_and_overview_fit_en_vi_phone_safe_areas_at_one_and_three_density
+5/6 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/unit/test_animal_trade_service.gd
+- test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction
+    [Failed]:  
+          at line 49
+    [Failed]:  [10000] expected to equal [680]:  
+          at line 50
+    [Failed]:  ARRAY([]) != ARRAY([2]).
+    [] != [2]  1 of 1 indexes do not match.  
+          at line 51
+    [Failed]:  ARRAY([]) != ARRAY([false]).
+    [] != [false]  1 of 1 indexes do not match.  
+          at line 52
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+          at line -1
+- test_sell_once_credits_young_price_preserves_output_and_cannot_reenter
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+
+res://tests/integration/test_pen_dashboard.gd
+- test_each_pen_has_a_separate_reachable_nonblocking_board
+    [Failed]:  PondPen
+          at line 60
+
+Totals
+------
+Scripts               2
+Tests                12
+Passing Tests         7
+Failing Tests         5
+Asserts           177/186
+Time              1.784s
+
+
+---- 5 failing tests ----
+
+WARNING: res://scenes/characters/player.tscn:14 - ext_resource, invalid UID: uid://jkkdybsqy13i - using text path instead: res://items/seeds/carrot_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/characters/player.tscn:18 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:6 - ext_resource, invalid UID: uid://dpv2o2obtmfss - using text path instead: res://items/seeds/flower_01_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:7 - ext_resource, invalid UID: uid://ba1txm51ur5nb - using text path instead: res://items/seeds/flower_02_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:8 - ext_resource, invalid UID: uid://s1jvgss0vdtk - using text path instead: res://items/seeds/flower_03_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:9 - ext_resource, invalid UID: uid://bbodcnt2lfywj - using text path instead: res://items/seeds/flower_04_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:10 - ext_resource, invalid UID: uid://dupjxnr2jocqs - using text path instead: res://items/seeds/flower_05_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:11 - ext_resource, invalid UID: uid://bfebrr6tir1fy - using text path instead: res://items/seeds/flower_06_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:12 - ext_resource, invalid UID: uid://c10ayurnwar76 - using text path instead: res://items/seeds/flower_07_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:13 - ext_resource, invalid UID: uid://l4u8rcsm0scp - using text path instead: res://items/seeds/flower_08_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:14 - ext_resource, invalid UID: uid://b5vtqliiybpln - using text path instead: res://items/seeds/flower_09_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:15 - ext_resource, invalid UID: uid://ccbng7ss6wer7 - using text path instead: res://items/seeds/flower_10_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+          at: test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+          GDScript backtrace (most recent call first):
+              [0] test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+          GDScript backtrace (most recent call first):
+              [0] test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+          GDScript backtrace (most recent call first):
+              [0] test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+          GDScript backtrace (most recent call first):
+              [0] test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+              [3] _end_wait (res://addons/gut/awaiter.gd:126)
+              [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)

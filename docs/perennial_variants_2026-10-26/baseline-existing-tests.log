@@ -1,0 +1,588 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [/tmp/codex-tree-validation/farm-tree-tests-0can6rdn] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/unit/test_trees.gd
+* test_all_definitions_use_the_shipped_atlases_and_noncyclic_planting_items
+* test_fruit_needs_one_watering_and_ignores_repeated_water_and_clock_reversal
+    [Failed]:  [0] expected to equal [1]:  
+      at line 46
+    [Failed]:  [0] expected to equal [1]:  
+      at line 48
+    [Failed] 
+      at line 50
+* test_wind_pins_visible_root_at_every_stage_and_keeps_collider_unchanged
+    [Failed]:  [fruit_trees_shared_stage_01 (res://crops/fruit_trees/shared/stage_01.tres):<AtlasTexture#-9223371861281207026>] expected to equal [fruit_trees_apple_ready (res://crops/fruit_trees/apple/ready.tres):<AtlasTexture#-9223371860408791782>]:  
+      at line 69
+* test_stump_stops_wind_and_regrowth_reuses_shared_sapling_material
+    [Failed]:  Expected [():<ShaderMaterial#-9223371669484072585>] to be NULL:  
+      at line 75
+* test_repeated_harvest_keeps_same_tree_and_does_not_bank_offline_cycles
+    [Failed] 
+      at line 95
+    [Failed]:  [300] expected to equal [6]:  
+      at line 96
+* test_full_bag_preserves_fruit_and_uproot_then_returns_one_sapling
+    [Failed] 
+      at line 105
+* test_reentrant_inventory_signal_cannot_harvest_twice
+    [Failed] 
+      at line 117
+    [Failed]:  [0] expected to equal [3]:  
+      at line 118
+* test_pollination_shortens_only_fruit_cycle_by_25_percent
+    [Failed] 
+      at line 124
+    [Failed]:  [44200.0] expected to equal [1180.0]:  
+      at line 125
+* test_timestamp_roundtrip_resumes_remaining_fruit_without_duplicate_work
+    [Failed] 
+      at line 136
+    [Failed]:  [0.0] expected to equal [90.0]:  
+      at line 137
+* test_timber_rejects_immature_chop_then_keeps_solid_stump_after_four_hits
+    [Failed] 
+      at line 145
+    [Failed] 
+      at line 145
+    [Failed] 
+      at line 145
+    [Failed] 
+      at line 147
+    [Failed] 
+      at line 148
+    [Failed]:  [0] expected to equal [5]:  
+      at line 152
+    [Failed]:  [0] expected to equal [1]:  
+      at line 153
+    [Failed]:  [(res://trees/textures/oak_stage1.tres):<AtlasTexture#-9223371856365482699>] expected to equal [(res://trees/textures/oak_stump.tres):<AtlasTexture#-9223371854603874991>]:  
+      at line 154
+* test_stump_requires_three_digs_and_yields_roots_once
+    [Failed] 
+      at line 159
+    [Failed] 
+      at line 160
+    [Failed] 
+      at line 161
+    [Failed]:  [0] expected to equal [2]:  
+      at line 164
+* test_stump_regrows_automatically_in_half_the_original_growth_time
+    [Failed]:  [87400.0] expected to equal [1480.0]:  
+      at line 177
+    [Failed] 
+      at line 179
+    [Failed]:  [0] expected to equal [5]:  
+      at line 180
+* test_partial_chops_and_partial_digs_survive_restore_without_extra_rewards
+    [Failed]:  [0] expected to equal [5]:  
+      at line 191
+    [Failed]:  [0] expected to equal [2]:  
+      at line 196
+1/13 passed.
+
+
+res://tests/integration/test_tree_plantation.gd
+* test_planting_checks_zone_spacing_occupancy_and_spends_only_one_seed
+* test_uproot_frees_cell_for_replanting_and_full_timber_rewards_drop_safely
+    [Failed] 
+      at line 65
+    [Failed] 
+      at line 65
+    [Failed] 
+      at line 65
+    [Failed] 
+      at line 65
+    [Failed] 
+      at line 66
+    [Failed]:  [0] expected to equal [5]:  
+      at line 73
+    [Failed]:  [0] expected to equal [1]:  
+      at line 74
+* test_save_roundtrip_preserves_tree_and_stump_and_rejects_corrupt_state_first
+    [Failed] 
+      at line 95
+    [Failed] 
+      at line 97
+    [Failed]:  [0] expected to equal [5]:  
+      at line 98
+* test_selected_tool_routes_to_tree_with_one_impact_and_slot_change_cancels
+* test_c_harvest_keeps_mature_tree_even_when_holding_hoe
+    [Failed]:  [2] expected to equal [0]:  
+      at line 131
+    [Failed]:  [0] expected to equal [3]:  Fruit commits on input, without an animation impact
+      at line 132
+    [Failed]:  [0] expected to equal [3]:  
+      at line 135
+    [Failed]:  [0] expected to equal [1]:  
+      at line 136
+* test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward<parameterized>
+    - params[0](apple)
+    [Failed]:  params[0] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+      at line 155
+    [Failed]:  params[0] [2] expected to equal [0]:  
+      at line 158
+    [Failed]:  params[0] [0] expected to equal [3]:  
+      at line 161
+    [Failed]:  params[0] [0] expected to equal [1]:  
+      at line 162
+    [Failed]:  params[0] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+      at line 163
+    - params[1](peach)
+    [Failed]:  params[1] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+      at line 163
+    [Failed]:  params[1] [2] expected to equal [0]:  
+      at line 158
+    [Failed]:  params[1] [0] expected to equal [3]:  
+      at line 161
+    [Failed]:  params[1] [0] expected to equal [1]:  
+      at line 162
+    [Failed]:  params[1] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+      at line 163
+    - params[2](pear)
+    [Failed]:  params[2] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+      at line 163
+    [Failed]:  params[2] [2] expected to equal [0]:  
+      at line 158
+    [Failed]:  params[2] [0] expected to equal [3]:  
+      at line 161
+    [Failed]:  params[2] [0] expected to equal [1]:  
+      at line 162
+    [Failed]:  params[2] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+      at line 163
+    - params[3](cherry)
+    [Failed]:  params[3] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+      at line 163
+    [Failed]:  params[3] [2] expected to equal [0]:  
+      at line 158
+    [Failed]:  params[3] [0] expected to equal [3]:  
+      at line 161
+    [Failed]:  params[3] [0] expected to equal [1]:  
+      at line 162
+    [Failed]:  params[3] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+      at line 163
+* test_distant_click_walks_to_tree_and_harvests_only_on_arrival_without_tool_state
+    [Failed] 
+      at line 192
+    [Failed]:  [0] expected to equal [3]:  
+      at line 197
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'global_position' on a base object of type 'previously freed'.
+      at line 198
+* test_full_bag_click_preserves_fruit_and_does_not_show_reward_or_swing_hoe
+    [Failed] 
+      at line 215
+    [Failed]:  [2] expected to equal [0]:  
+      at line 219
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[ItemGainPopup]')
+      at line 220
+* test_bee_bonus_obeys_range_and_weather_boundaries_in_offline_catchup
+    [Failed]:  [0.00000000000000000000] expected to equal [73.3333333333333] +/- [0.0001]:  
+      at line 230
+    [Failed] 
+      at line 234
+* test_legacy_save_adds_empty_trees_and_current_save_rejects_invalid_tree_fields
+* test_shop_supplies_sell_all_tree_starters_and_axe_and_buyer_accepts_outputs
+* test_captured_world_with_fruit_tree_uses_string_keys_and_saves_asynchronously
+    [Failed]:  [0.0] expected to equal [90.0]:  
+      at line 286
+4/12 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/unit/test_trees.gd
+- test_fruit_needs_one_watering_and_ignores_repeated_water_and_clock_reversal
+    [Failed]:  [0] expected to equal [1]:  
+          at line 46
+    [Failed]:  [0] expected to equal [1]:  
+          at line 48
+    [Failed]:  
+          at line 50
+- test_wind_pins_visible_root_at_every_stage_and_keeps_collider_unchanged
+    [Failed]:  [fruit_trees_shared_stage_01 (res://crops/fruit_trees/shared/stage_01.tres):<AtlasTexture#-9223371861281207026>] expected to equal [fruit_trees_apple_ready (res://crops/fruit_trees/apple/ready.tres):<AtlasTexture#-9223371860408791782>]:  
+          at line 69
+- test_stump_stops_wind_and_regrowth_reuses_shared_sapling_material
+    [Failed]:  Expected [():<ShaderMaterial#-9223371669484072585>] to be NULL:  
+          at line 75
+- test_repeated_harvest_keeps_same_tree_and_does_not_bank_offline_cycles
+    [Failed]:  
+          at line 95
+    [Failed]:  [300] expected to equal [6]:  
+          at line 96
+- test_full_bag_preserves_fruit_and_uproot_then_returns_one_sapling
+    [Failed]:  
+          at line 105
+- test_reentrant_inventory_signal_cannot_harvest_twice
+    [Failed]:  
+          at line 117
+    [Failed]:  [0] expected to equal [3]:  
+          at line 118
+- test_pollination_shortens_only_fruit_cycle_by_25_percent
+    [Failed]:  
+          at line 124
+    [Failed]:  [44200.0] expected to equal [1180.0]:  
+          at line 125
+- test_timestamp_roundtrip_resumes_remaining_fruit_without_duplicate_work
+    [Failed]:  
+          at line 136
+    [Failed]:  [0.0] expected to equal [90.0]:  
+          at line 137
+- test_timber_rejects_immature_chop_then_keeps_solid_stump_after_four_hits
+    [Failed]:  
+          at line 145
+    [Failed]:  
+          at line 145
+    [Failed]:  
+          at line 145
+    [Failed]:  
+          at line 147
+    [Failed]:  
+          at line 148
+    [Failed]:  [0] expected to equal [5]:  
+          at line 152
+    [Failed]:  [0] expected to equal [1]:  
+          at line 153
+    [Failed]:  [(res://trees/textures/oak_stage1.tres):<AtlasTexture#-9223371856365482699>] expected to equal [(res://trees/textures/oak_stump.tres):<AtlasTexture#-9223371854603874991>]:  
+          at line 154
+- test_stump_requires_three_digs_and_yields_roots_once
+    [Failed]:  
+          at line 159
+    [Failed]:  
+          at line 160
+    [Failed]:  
+          at line 161
+    [Failed]:  [0] expected to equal [2]:  
+          at line 164
+- test_stump_regrows_automatically_in_half_the_original_growth_time
+    [Failed]:  [87400.0] expected to equal [1480.0]:  
+          at line 177
+    [Failed]:  
+          at line 179
+    [Failed]:  [0] expected to equal [5]:  
+          at line 180
+- test_partial_chops_and_partial_digs_survive_restore_without_extra_rewards
+    [Failed]:  [0] expected to equal [5]:  
+          at line 191
+    [Failed]:  [0] expected to equal [2]:  
+          at line 196
+
+res://tests/integration/test_tree_plantation.gd
+- test_uproot_frees_cell_for_replanting_and_full_timber_rewards_drop_safely
+    [Failed]:  
+          at line 65
+    [Failed]:  
+          at line 65
+    [Failed]:  
+          at line 65
+    [Failed]:  
+          at line 65
+    [Failed]:  
+          at line 66
+    [Failed]:  [0] expected to equal [5]:  
+          at line 73
+    [Failed]:  [0] expected to equal [1]:  
+          at line 74
+- test_save_roundtrip_preserves_tree_and_stump_and_rejects_corrupt_state_first
+    [Failed]:  
+          at line 95
+    [Failed]:  
+          at line 97
+    [Failed]:  [0] expected to equal [5]:  
+          at line 98
+- test_c_harvest_keeps_mature_tree_even_when_holding_hoe
+    [Failed]:  [2] expected to equal [0]:  
+          at line 131
+    [Failed]:  [0] expected to equal [3]:  Fruit commits on input, without an animation impact
+          at line 132
+    [Failed]:  [0] expected to equal [3]:  
+          at line 135
+    [Failed]:  [0] expected to equal [1]:  
+          at line 136
+- test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward
+    [Failed]:  params[0] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+          at line 155
+    [Failed]:  params[0] [2] expected to equal [0]:  
+          at line 158
+    [Failed]:  params[0] [0] expected to equal [3]:  
+          at line 161
+    [Failed]:  params[0] [0] expected to equal [1]:  
+          at line 162
+    [Failed]:  params[0] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at line 163
+    [Failed]:  params[1] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+          at line 163
+    [Failed]:  params[1] [2] expected to equal [0]:  
+          at line 158
+    [Failed]:  params[1] [0] expected to equal [3]:  
+          at line 161
+    [Failed]:  params[1] [0] expected to equal [1]:  
+          at line 162
+    [Failed]:  params[1] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at line 163
+    [Failed]:  params[2] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+          at line 163
+    [Failed]:  params[2] [2] expected to equal [0]:  
+          at line 158
+    [Failed]:  params[2] [0] expected to equal [3]:  
+          at line 161
+    [Failed]:  params[2] [0] expected to equal [1]:  
+          at line 162
+    [Failed]:  params[2] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at line 163
+    [Failed]:  params[3] ["Nhổ cây (nhận lại cây giống)"] expected to equal ["Thu hoạch quả"]:  
+          at line 163
+    [Failed]:  params[3] [2] expected to equal [0]:  
+          at line 158
+    [Failed]:  params[3] [0] expected to equal [3]:  
+          at line 161
+    [Failed]:  params[3] [0] expected to equal [1]:  
+          at line 162
+    [Failed]:  params[3] Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at line 163
+- test_distant_click_walks_to_tree_and_harvests_only_on_arrival_without_tool_state
+    [Failed]:  
+          at line 192
+    [Failed]:  [0] expected to equal [3]:  
+          at line 197
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'global_position' on a base object of type 'previously freed'.
+          at line 198
+- test_full_bag_click_preserves_fruit_and_does_not_show_reward_or_swing_hoe
+    [Failed]:  
+          at line 215
+    [Failed]:  [2] expected to equal [0]:  
+          at line 219
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[ItemGainPopup]')
+          at line 220
+- test_bee_bonus_obeys_range_and_weather_boundaries_in_offline_catchup
+    [Failed]:  [0.00000000000000000000] expected to equal [73.3333333333333] +/- [0.0001]:  
+          at line 230
+    [Failed]:  
+          at line 234
+- test_captured_world_with_fruit_tree_uses_string_keys_and_saves_asynchronously
+    [Failed]:  [0.0] expected to equal [90.0]:  
+          at line 286
+
+Totals
+------
+Scripts               2
+Tests                25
+Passing Tests         5
+Failing Tests        20
+Asserts           169/243
+Time              2.465s
+
+
+---- 20 failing tests ----
+
+WARNING: res://scenes/characters/player.tscn:14 - ext_resource, invalid UID: uid://jkkdybsqy13i - using text path instead: res://items/seeds/carrot_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/characters/player.tscn:18 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:6 - ext_resource, invalid UID: uid://dpv2o2obtmfss - using text path instead: res://items/seeds/flower_01_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:7 - ext_resource, invalid UID: uid://ba1txm51ur5nb - using text path instead: res://items/seeds/flower_02_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:8 - ext_resource, invalid UID: uid://s1jvgss0vdtk - using text path instead: res://items/seeds/flower_03_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:9 - ext_resource, invalid UID: uid://bbodcnt2lfywj - using text path instead: res://items/seeds/flower_04_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:10 - ext_resource, invalid UID: uid://dupjxnr2jocqs - using text path instead: res://items/seeds/flower_05_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:11 - ext_resource, invalid UID: uid://bfebrr6tir1fy - using text path instead: res://items/seeds/flower_06_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:12 - ext_resource, invalid UID: uid://c10ayurnwar76 - using text path instead: res://items/seeds/flower_07_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:13 - ext_resource, invalid UID: uid://l4u8rcsm0scp - using text path instead: res://items/seeds/flower_08_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:14 - ext_resource, invalid UID: uid://b5vtqliiybpln - using text path instead: res://items/seeds/flower_09_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: res://scenes/flowers/flower_garden.tscn:15 - ext_resource, invalid UID: uid://ccbng7ss6wer7 - using text path instead: res://items/seeds/flower_10_seed.tres
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+         [1] _parse_script (res://addons/gut/test_collector.gd:76)
+         [2] add_script (res://addons/gut/test_collector.gd:128)
+         [3] add_script (res://addons/gut/gut.gd:1070)
+         [4] _apply_options (res://addons/gut/gut_config.gd:139)
+         [5] apply_options (res://addons/gut/gut_config.gd:207)
+         [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+         [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+         [8] main (res://addons/gut/cli/gut_cli.gd:297)
+         [9] _init (res://addons/gut/gut_cmdln.gd:39)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at: test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+          GDScript backtrace (most recent call first):
+              [0] test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at: test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+          GDScript backtrace (most recent call first):
+              [0] test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at: test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+          GDScript backtrace (most recent call first):
+              [0] test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[HarvestBurst]')
+          at: test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+          GDScript backtrace (most recent call first):
+              [0] test_click_ripe_fruit_with_hoe_harvests_immediately_with_one_visual_reward (res://tests/integration/test_tree_plantation.gd:163)
+SCRIPT ERROR: Invalid access to property or key 'global_position' on a base object of type 'previously freed'.
+          at: test_distant_click_walks_to_tree_and_harvests_only_on_arrival_without_tool_state (res://tests/integration/test_tree_plantation.gd:198)
+          GDScript backtrace (most recent call first):
+              [0] test_distant_click_walks_to_tree_and_harvests_only_on_arrival_without_tool_state (res://tests/integration/test_tree_plantation.gd:198)
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[ItemGainPopup]')
+          at: test_full_bag_click_preserves_fruit_and_does_not_show_reward_or_swing_hoe (res://tests/integration/test_tree_plantation.gd:220)
+          GDScript backtrace (most recent call first):
+              [0] test_full_bag_click_preserves_fruit_and_does_not_show_reward_or_swing_hoe (res://tests/integration/test_tree_plantation.gd:220)

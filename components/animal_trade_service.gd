@@ -88,12 +88,24 @@ func quote_buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 	var total: int = offer.price * quantity
 	if wallet.balance < total:
 		return {"ok": false, "error": "Not enough coins."}
+	var full_managed_pen: bool = false
+	var free_capacity: bool = false
 	for pen: AnimalPen in _pens():
 		if not pen.accepted_species.has(offer.animal.species):
 			continue
+		var population: int = 0
+		for child: Node in pen.get_children():
+			if _alive(child as AnimalActor):
+				population += 1
+		if population + quantity <= pen.capacity:
+			free_capacity = true
+		elif farm is FarmWorld and (farm as FarmWorld).pen_upgrades != null and (farm as FarmWorld).pen_upgrades.managed(pen) and pen.capacity < 30:
+			full_managed_pen = true
 		var positions: Array[Vector2] = _spawn_positions(pen, offer.animal, quantity)
 		if positions.size() == quantity:
 			return {"ok": true, "total": total, "pen": pen, "positions": positions}
+	if full_managed_pen and not free_capacity:
+		return {"ok":false, "error":"This pen is full. Open its management board to unlock more spaces."}
 	return {"ok": false, "error": "A suitable pen is full or has no free space."}
 
 func buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:

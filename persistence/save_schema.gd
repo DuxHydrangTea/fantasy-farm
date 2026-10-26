@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 33
+const VERSION: int = 35
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,7 +65,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -284,6 +284,14 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# New bulk recipe/output IDs: prevent older clients from recovering an outdated backup.
 	if data.get("version") == 32:
 		data = data.duplicate(true)
+		data.version = 33
+	if data.get("version") == 33:
+		data = data.duplicate(true)
+		data["pen_upgrades"] = PenUpgradeState.migrate(data.get("animals"))
+		data.version = 34
+	if data.get("version") == 34:
+		data = data.duplicate(true)
+		data["tree_plot_upgrades"] = TreePlotUpgradeState.migrate(data.get("trees"), catalog)
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
@@ -308,6 +316,10 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		return failure("Invalid worker state.")
 	if not ChefCooking.valid(data.get("cooking"), float(data.saved_at)):
 		return failure("Invalid Chef cooking state.")
+	if not TreePlotUpgradeState.valid(data.get("tree_plot_upgrades")):
+		return failure("Invalid tree plot upgrade state.")
+	if not PenUpgradeState.valid(data.get("pen_upgrades")):
+		return failure("Invalid pen upgrade state.")
 	if not ToolUpgradeState.valid(data.get("tool_upgrades")):
 		return failure("Invalid tool upgrade state.")
 	if not data.get("pen_updated_at") is Dictionary or data.pen_updated_at.size() > 256:
@@ -323,6 +335,10 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		return failure("Invalid tutorial state.")
 	if not TreeSaveSchema.valid(data.get("trees"), catalog, float(data.saved_at)):
 		return failure("Invalid perennial tree state.")
+	for row: Dictionary in data.trees:
+		var definition: TreeDefinition = catalog.trees[row.tree]
+		if not TreePlotUpgradeState.allows(data.tree_plot_upgrades, Vector2i(int(row.cell[0]), int(row.cell[1])), definition.kind):
+			return failure("A tree occupies a locked plot.")
 	var weather: Variant = data.get("weather")
 	if not weather is Dictionary or not number(weather.get("seed"), 0, 2147483647, true) or not weather.get("changes") is Array or weather.changes.size() > 1024:
 		return failure("Invalid weather history.")

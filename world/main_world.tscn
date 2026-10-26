@@ -29,6 +29,8 @@
 [ext_resource type="PackedScene" path="res://scenes/animals/animal_pen.tscn" id="18_c45uy"]
 [ext_resource type="PackedScene" uid="uid://p617o0sl32sc" path="res://scenes/characters/player.tscn" id="20_farmer_bob"]
 [ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="23_7ubxh"]
+[ext_resource type="Texture2D" uid="uid://dbtgur5ntvtye" path="res://assets/Trees/Variants64x80/autumn_maple.png" id="25_myam0"]
+[ext_resource type="Texture2D" uid="uid://com5ff07tr8ox" path="res://assets/Trees/Variants64x80/magic_blue.png" id="26_6x4i3"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/barn.tscn" id="31_fdd8g"]
 [ext_resource type="PackedScene" uid="uid://cn2ms4ioidlvh" path="res://scenes/animals/feed_trough.tscn" id="32_feed_trough"]
 [ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="33_water_trough"]
@@ -4742,12 +4744,26 @@ texture = ExtResource("13_lu7uo")
 4:0/0 = 0
 4:0/0/y_sort_origin = 21
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hvhku"]
+texture = ExtResource("25_myam0")
+texture_region_size = Vector2i(4, 4)
+2:4/size_in_atlas = Vector2i(12, 15)
+2:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6ukf"]
+texture = ExtResource("26_6x4i3")
+texture_region_size = Vector2i(4, 4)
+2:4/size_in_atlas = Vector2i(12, 15)
+2:4/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_6x4i3"]
 tile_size = Vector2i(4, 4)
 sources/0 = SubResource("TileSetAtlasSource_4nnau")
 sources/1 = SubResource("TileSetAtlasSource_7ubxh")
 sources/2 = SubResource("TileSetAtlasSource_u1taw")
 sources/3 = SubResource("TileSetAtlasSource_ylm8y")
+sources/4 = SubResource("TileSetAtlasSource_hvhku")
+sources/6 = SubResource("TileSetAtlasSource_b6ukf")
 
 [sub_resource type="AtlasTexture" id="Full"]
 atlas = ExtResource("23_7ubxh")
@@ -4968,7 +4984,6 @@ position = Vector2(1424, 592)
 water_layer = NodePath("../FarmLand")
 accepted_species = Array[int]([1, 5])
 capacity = 20
-bounds = 30
 
 [node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
 position = Vector2(105, -5)

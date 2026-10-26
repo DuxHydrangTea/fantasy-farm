@@ -14,6 +14,8 @@ var tutorial: TutorialProgress = TutorialProgress.new()
 var help_ui: HelpUI
 var tutorial_hints: TutorialHints
 var pen_boards: Array[PenBoard] = []
+var tree_plot_upgrades: TreePlotUpgradeService
+var pen_upgrades: PenUpgradeService
 var starter_content: StarterContent
 var seed_picker: FarmSeedPicker
 var storages: FarmStorageService
@@ -78,6 +80,9 @@ func _ready() -> void:
 	tool_upgrades.world = self
 	tool_upgrades.inventory = player.selection.inventory
 	tool_upgrades.purchasing_enabled = true
+	pen_upgrades = PenUpgradeService.new(self)
+	tree_plot_upgrades = TreePlotUpgradeService.new(self)
+	trees.setup_plot_upgrades()
 	player.farming_actions.upgrades = tool_upgrade_state
 	player.tool_range_ui = ToolRangeUI.new()
 	player.tool_range_ui.world = self

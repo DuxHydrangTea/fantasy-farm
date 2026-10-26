@@ -48,6 +48,8 @@ func _snapshot(revision: int = 1) -> Dictionary:
 		"orders": OrderSaveSchema.fresh(),
 		"tutorial": TutorialSaveSchema.fresh(),
 		"tool_upgrades": ToolUpgradeState.fresh(),
+		"pen_upgrades": PenUpgradeState.fresh(),
+		"tree_plot_upgrades": TreePlotUpgradeState.fresh(),
 		"cooking": ChefCooking.fresh(),
 		"fertile_layout_version": 1,
 		"honey_garden": HoneyGardenSystem.fresh(),

@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://docs/pen_upgrades_2026-10-26/ui_probe.gd" id="script"]
+
+[node name="PenUpgradePreview" type="Node2D"]
+script = ExtResource("script")

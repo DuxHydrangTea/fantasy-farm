@@ -1,7 +1,7 @@
 class_name InteractionTarget
 extends RefCounted
 ## A typed, short-lived view of a scene target. IDs/node names never drive behavior.
-enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE, ORDER_BOARD, PEN_BOARD }
+enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE, ORDER_BOARD, PEN_BOARD, TREE_PLOT_BOARD }
 var node: Node2D
 var kind: Kind
 var player: FarmPlayer
@@ -31,7 +31,7 @@ func valid() -> bool:
 	return true
 
 func priority() -> int:
-	return 0 if kind in [Kind.MERCHANT, Kind.LAND, Kind.ORDER_BOARD, Kind.PEN_BOARD] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3
+	return 0 if kind in [Kind.MERCHANT, Kind.LAND, Kind.ORDER_BOARD, Kind.PEN_BOARD, Kind.TREE_PLOT_BOARD] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3
 
 func reach() -> float:
 	return 48.0 if kind == Kind.MERCHANT else 30.0 if kind == Kind.TROUGH else 20.0 if kind == Kind.CROP else 28.0 if kind == Kind.FLOWER else 32.0
@@ -59,6 +59,7 @@ func sprite() -> Node2D:
 		Kind.TREE: return (node as PerennialTree).sprite
 		Kind.ORDER_BOARD: return (node as OrderBoard).sprite
 		Kind.PEN_BOARD: return (node as PenBoard).sprite
+		Kind.TREE_PLOT_BOARD: return (node as TreePlotBoard).sprite
 	return null
 
 func reachable_from(position: Vector2, facing: bool = false) -> bool:
@@ -81,6 +82,7 @@ func reachable_from(position: Vector2, facing: bool = false) -> bool:
 
 func action_text() -> String:
 	match kind:
+		Kind.TREE_PLOT_BOARD: return tr("Manage tree plots")
 		Kind.PEN_BOARD: return tr("Manage pen")
 		Kind.ORDER_BOARD: return tr("View orders")
 		Kind.MERCHANT:

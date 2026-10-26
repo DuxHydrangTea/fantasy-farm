@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bl6hyjwm8qv1n" path="res://components/bees/beehive_definition.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bovc340cd2prq" path="res://assets/Animals/Bee/Bee_Nest.png" id="atlas"]
-[ext_resource type="Resource" uid="uid://dfmbrigvsrn55" path="res://items/honey/floral_honey.tres" id="floral"]
+[ext_resource type="Resource" uid="uid://bqa1tdrryywsl" path="res://items/honey/floral_honey.tres" id="floral"]
 [ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="item"]
-[ext_resource type="Resource" uid="uid://2lqfpeyxh5qf" path="res://items/honey/sunflower_honey.tres" id="sunflower"]
-[ext_resource type="Resource" uid="uid://b3qqo73l1t5wh" path="res://items/honey/wild_honey.tres" id="wild"]
+[ext_resource type="Resource" uid="uid://3w1qw3pdu5be" path="res://items/honey/sunflower_honey.tres" id="sunflower"]
+[ext_resource type="Resource" uid="uid://cshtk8qpvet1k" path="res://items/honey/wild_honey.tres" id="wild"]
 
 [sub_resource type="AtlasTexture" id="full"]
 atlas = ExtResource("atlas")

@@ -69,7 +69,7 @@ func in_region(point: Vector2) -> bool:
 	return FRUIT_REGION.has_point(cell) or TIMBER_REGION.has_point(cell)
 
 func can_place(cell: Vector2i, definition: TreeDefinition, check_physics: bool = true) -> bool:
-	if definition == null or not definition.is_valid() or not valid_cell(cell, definition.kind) or trees.has(cell):
+	if definition == null or not definition.is_valid() or not valid_cell(cell, definition.kind) or trees.has(cell) or world.tree_plot_upgrades == null or not TreePlotUpgradeState.allows(world.tree_plot_upgrades.state.capture(), cell, definition.kind):
 		return false
 	var point: Vector2 = point_for(cell)
 	var ground: TileMapLayer = world.farming.ground
@@ -191,3 +191,18 @@ func is_busy() -> bool:
 		if (tree is TimberTree or tree is FruitTree) and tree._busy:
 			return true
 	return false
+
+func setup_plot_upgrades() -> void:
+	var display: TreePlotDisplay = TreePlotDisplay.new()
+	display.plantation = self
+	display.name = "TreePlotMarkers"
+	world.add_child(display)
+	for kind: TreeDefinition.Kind in [TreeDefinition.Kind.FRUIT, TreeDefinition.Kind.TIMBER]:
+		var board: TreePlotBoard = TreePlotBoard.new()
+		board.world = world
+		board.kind = kind
+		board.name = "FruitPlotBoard" if kind == TreeDefinition.Kind.FRUIT else "TimberPlotBoard"
+		var region: Rect2i = region_for(kind)
+		var cell: Vector2i = Vector2i(region.position.x + 4, region.end.y + 1)
+		board.position = world.to_local(world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell)))
+		world.add_child(board)

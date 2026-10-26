@@ -99,6 +99,8 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 	if player.selection.is_menu_open() or player.state.current_state in [StateComponent.State.TOOL,StateComponent.State.WATER] or not target.reachable_from(player.global_position):
 		return false
 	match target.kind:
+		InteractionTarget.Kind.TREE_PLOT_BOARD:
+			return (target.node as TreePlotBoard).open_board(player)
 		InteractionTarget.Kind.PEN_BOARD:
 			return (target.node as PenBoard).open_board(player)
 		InteractionTarget.Kind.ORDER_BOARD:

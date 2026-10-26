@@ -1,0 +1,185 @@
+{
+  "provider": "PixelLab",
+  "model": "create_image_pixen",
+  "job_id": "d924024d-5219-4d9d-932f-eb421660490d",
+  "asset_id": "29c13f8c-d0fe-5982-99d3-c0f451a5299f",
+  "generations_charged": 1,
+  "original_size": [
+    160,
+    64
+  ],
+  "processing": "Lossless grid crop, no downscale, no redraw",
+  "items": [
+    {
+      "item": "flower_01_seed",
+      "flower": "Rose",
+      "resource": "items/seeds/flower_01_seed.tres",
+      "icon": "assets/Icons/seeds/flower_01_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "sha256": "80d82a75f2c00e2df32433af269a786d2aef07dc2be9b80de0e2a5e250d9d3ed"
+    },
+    {
+      "item": "flower_02_seed",
+      "flower": "Carnation",
+      "resource": "items/seeds/flower_02_seed.tres",
+      "icon": "assets/Icons/seeds/flower_02_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        32,
+        0,
+        64,
+        32
+      ],
+      "sha256": "c34ea099e7ef33daead5a00324ff2653308ee66b3b817b31ec7d8c50bc56fb37"
+    },
+    {
+      "item": "flower_03_seed",
+      "flower": "Orchid",
+      "resource": "items/seeds/flower_03_seed.tres",
+      "icon": "assets/Icons/seeds/flower_03_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        64,
+        0,
+        96,
+        32
+      ],
+      "sha256": "6e18ce449a58ced470768f5f1c0061fbc70ece283f5c075608f42e370f189b3e"
+    },
+    {
+      "item": "flower_04_seed",
+      "flower": "Lavender",
+      "resource": "items/seeds/flower_04_seed.tres",
+      "icon": "assets/Icons/seeds/flower_04_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        96,
+        0,
+        128,
+        32
+      ],
+      "sha256": "47c6f162abf029b3d6ceb0c436146ebd007760f7c26d9e5d3aba1f4f7cac26c7"
+    },
+    {
+      "item": "flower_05_seed",
+      "flower": "Bluebell",
+      "resource": "items/seeds/flower_05_seed.tres",
+      "icon": "assets/Icons/seeds/flower_05_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        128,
+        0,
+        160,
+        32
+      ],
+      "sha256": "78745a63404fc923a53fa460433928332ea493291e6ffd37f4221a6400bf2427"
+    },
+    {
+      "item": "flower_06_seed",
+      "flower": "Hydrangea",
+      "resource": "items/seeds/flower_06_seed.tres",
+      "icon": "assets/Icons/seeds/flower_06_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        0,
+        32,
+        32,
+        64
+      ],
+      "sha256": "b1bb35f0653c07f69d68216347ec29051cdf5d2ffe00f910de3c0a3b32aaed93"
+    },
+    {
+      "item": "flower_07_seed",
+      "flower": "Marigold",
+      "resource": "items/seeds/flower_07_seed.tres",
+      "icon": "assets/Icons/seeds/flower_07_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        32,
+        32,
+        64,
+        64
+      ],
+      "sha256": "748f0bec661bef833f6de1deff856ed9d7a53ca84847b05e27d20b235202198a"
+    },
+    {
+      "item": "flower_08_seed",
+      "flower": "Sunflower",
+      "resource": "items/seeds/flower_08_seed.tres",
+      "icon": "assets/Icons/seeds/flower_08_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        64,
+        32,
+        96,
+        64
+      ],
+      "sha256": "d5d53e56c875d0c12bb4fae4c85c3433cbd3aebd0f2f848d67d02bdcf5b667ab"
+    },
+    {
+      "item": "flower_09_seed",
+      "flower": "Lily of the Valley",
+      "resource": "items/seeds/flower_09_seed.tres",
+      "icon": "assets/Icons/seeds/flower_09_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        96,
+        32,
+        128,
+        64
+      ],
+      "sha256": "f73f5df008d9ad295205f75ba89597dec219be859c7fe6ccc895d3faf6e3f910"
+    },
+    {
+      "item": "flower_10_seed",
+      "flower": "Blue Lotus",
+      "resource": "items/seeds/flower_10_seed.tres",
+      "icon": "assets/Icons/seeds/flower_10_seed_packet.png",
+      "size": [
+        32,
+        32
+      ],
+      "sheet_rect": [
+        128,
+        32,
+        160,
+        64
+      ],
+      "sha256": "b6c4baaf10573c15ee5f55995e3d5baff90c1999b62f4efd9836fbecf2c0c8d7"
+    }
+  ],
+  "generations_remaining_after": 1
+}
