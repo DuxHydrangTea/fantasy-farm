@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c0n3qw4i60yq6"]
 
 [ext_resource type="Resource" uid="uid://cxynth2k0rmq8" path="res://flowers/definitions/flower_06.tres" id="1_3mafj"]
-[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers16/flower_06_hydrangea_seed.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_06_hydrangea_seed.png" id="2_3mafj"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
 
 [resource]
 script = ExtResource("3_script")
 item_id = &"flower_06_seed"
 display_name = "Flower 06 Seed"
-icon = ExtResource("2_icon")
+icon = ExtResource("2_3mafj")
 item_type = 1
 crop = ExtResource("1_3mafj")
 max_stack = 999

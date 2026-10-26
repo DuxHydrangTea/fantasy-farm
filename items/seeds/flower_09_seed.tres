@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://b0vbs0nau4ce5"]
 
 [ext_resource type="Resource" uid="uid://cx73yjsewq145" path="res://flowers/definitions/flower_09.tres" id="1_na6np"]
-[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers16/flower_09_lily_of_the_valley_seed.png" id="2_icon"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_09_lily_of_the_valley_seed.png" id="2_na6np"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
 
 [resource]
 script = ExtResource("3_script")
 item_id = &"flower_09_seed"
 display_name = "Flower 09 Seed"
-icon = ExtResource("2_icon")
+icon = ExtResource("2_na6np")
 item_type = 1
 crop = ExtResource("1_na6np")
 max_stack = 999

@@ -1,0 +1,126 @@
+{
+  "job_id": "job_beffe4c002b945af81bbf93680c27e1a",
+  "job_type": "workflow",
+  "status": "success",
+  "stage": "completed",
+  "timing": {
+    "created_at": "2026-10-26T13:37:26.583274Z",
+    "started_at": "2026-10-26T13:37:26.629109Z",
+    "finished_at": "2026-10-26T13:37:57.421243Z",
+    "observed_at": "2026-10-26T13:38:02.446693Z"
+  },
+  "next_poll_after_seconds": 0,
+  "animation_type": null,
+  "queue": {
+    "position": 0,
+    "estimated_wait_seconds": 0
+  },
+  "progress": {
+    "label": "\u5df2\u5b8c\u6210",
+    "percent": 100
+  },
+  "result": {
+    "job_name": "133726_asset_clone_REDESIGN_this_exact_5_columns_by_5_rows_grid_of_25_FLOWER_SEED_P",
+    "output_paths": [
+      "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_01.png",
+      "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_02.png",
+      "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_03.png"
+    ],
+    "metadata": {
+      "workflow_id": "asset_clone",
+      "template_id": "default",
+      "mode": "pixel",
+      "clone_count": 25,
+      "output_count": 3,
+      "image2_quality": "low",
+      "resolution": "1K",
+      "remove_bg_method": "standard",
+      "pixelation_method": "fine",
+      "multi_pixelation": true,
+      "actual_credit_cost": 5,
+      "reserved_credit_cost": 5
+    }
+  },
+  "generation_parameters": {
+    "version": 1,
+    "model": "gpt-image-2.5",
+    "details": [
+      {
+        "key": "mode",
+        "value": "pixel"
+      },
+      {
+        "key": "clone_count",
+        "value": 25
+      },
+      {
+        "key": "template",
+        "value": "default"
+      },
+      {
+        "key": "resolution",
+        "value": "1K"
+      },
+      {
+        "key": "aspect_ratio",
+        "value": "auto"
+      },
+      {
+        "key": "quality",
+        "value": "low"
+      },
+      {
+        "key": "remove_background",
+        "value": "standard"
+      },
+      {
+        "key": "reference_count",
+        "value": 1
+      }
+    ]
+  },
+  "user_prompt": "REDESIGN this exact 5 columns by 5 rows grid of 25 FLOWER SEED PACKETS, left to right then top to bottom. cell 1: Blue Lotus; cell 2: Tulip; cell 3: Daffodil; cell 4: Sakura; cell 5: Wisteria; cell 6: Peony; cell 7: Camellia; cell 8: Iris; cell 9: Hibiscus; cell 10: Poppy; cell 11: Lotus; cell 12: Chrysanthemum; cell 13: Morning Glory; cell 14: Plumeria; cell 15: Bougainvillea; cell 16: Daisy; cell 17: Forget-me-not; cell 18: Pansy; cell 19: Zinnia; cell 20: Cosmos; cell 21: Gardenia; cell 22: Anemone; cell 23: Lily; cell 24: Rose; cell 25: Carnation. Keep each cell species and its reference flower colour. Use cells 24 and 25 as the NEW style anchors for ALL cells: creamy golden kraft paper envelopes with thin brown pixel outlines, folded top and bottom seams, a restrained species-colour ribbon near the top, large readable botanical flower picture, stems and green leaves. Exactly one complete isolated packet per cell, equal scale and centered. Each final icon must have 48x48 NATIVE PIXEL detail: about 40x42 pixel packet and 28x30 pixel flower art. Do not keep the coarse 16x16 grid of the older references. More petal structure, clean limited palette, crisp clusters. Match a cozy farming RPG inventory. No letters, no text, no numbers, no cast shadows, no background, no extra loose flowers, no pot, no smooth gradients, no blur or antialiasing. Preserve strict 5x5 layout for slicing and transparent gutters. Redesign the entire sheet consistently, not just recolour old pixels.",
+  "outputs": [
+    {
+      "output_key": "output:0",
+      "url": "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_01.png",
+      "media_type": "image",
+      "mime_type": null,
+      "asset_id": null,
+      "thumb_url": null,
+      "width": null,
+      "height": null,
+      "byte_size": null
+    },
+    {
+      "output_key": "output:1",
+      "url": "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_02.png",
+      "media_type": "image",
+      "mime_type": null,
+      "asset_id": null,
+      "thumb_url": null,
+      "width": null,
+      "height": null,
+      "byte_size": null
+    },
+    {
+      "output_key": "output:2",
+      "url": "https://media.meowa.ai/public/asset-clone/output/2026-10-26/13%3A37%3A55-workflow-25cd282caa354a7296646b54/image_edit/output_03.png",
+      "media_type": "image",
+      "mime_type": null,
+      "asset_id": null,
+      "thumb_url": null,
+      "width": null,
+      "height": null,
+      "byte_size": null
+    }
+  ],
+  "error": null,
+  "error_code": null,
+  "error_id": null,
+  "credit_refund": {
+    "refunded": false,
+    "amount": 0,
+    "reference_id": "job_beffe4c002b945af81bbf93680c27e1a"
+  }
+}

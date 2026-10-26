@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1793024114886,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: ea4cc4fb-650c-4171-9fdb-ec36e1b52bf5\njob_id: ea4cc4fb-650c-4171-9fdb-ec36e1b52bf5\nmodel: pixen\nedit: Remove ALL fruit from this exact tree and replace only those fruit pixels with matching green foliage. This is the same tree immediately after harvest. Preserve the entire canopy silhouette, every trunk and branch, leaf colours, shading clusters, size and root position. Keep the 64x80 canvas and native pixel style. Transparent background, no ground shadow, no text, no blur. Do not redesign or shrink the tree.\nsource: 64x80px\nsize: 64x80px\ntransparent: True\nseed: 726101\nasset_id: 58398439-2388-5b87-88f4-72e2eb79545f\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"ea4cc4fb-650c-4171-9fdb-ec36e1b52bf5\")"
+      }
+    ],
+    "isError": false
+  }
+}

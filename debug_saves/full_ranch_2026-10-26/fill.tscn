@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://debug_saves/full_ranch_2026-10-26/fill.gd" id="1"]
+
+[node name="FullRanchSaveEdit" type="Node"]
+script = ExtResource("1")

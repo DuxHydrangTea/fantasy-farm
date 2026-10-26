@@ -1,0 +1,107 @@
+{
+  "job_id": "job_eb69b4e163284925b3973d941536f16f",
+  "job_type": "workflow",
+  "status": "success",
+  "stage": "completed",
+  "timing": {
+    "created_at": "2026-10-26T12:19:28.852236Z",
+    "started_at": "2026-10-26T12:19:28.918457Z",
+    "finished_at": "2026-10-26T12:20:02.366051Z",
+    "observed_at": "2026-10-26T12:20:11.861532Z"
+  },
+  "next_poll_after_seconds": 0,
+  "animation_type": null,
+  "queue": {
+    "position": 0,
+    "estimated_wait_seconds": 0
+  },
+  "progress": {
+    "label": "\u5df2\u5b8c\u6210",
+    "percent": 100
+  },
+  "result": {
+    "job_name": "Fantasy_Farm_magic_blue_sapling_icon",
+    "edited_path": "https://media.meowa.ai/public/image-edit/output/2026-10-26/12%3A20%3A00-workflow-6775cf9a261d4f8289e8fec3/edited.png",
+    "metadata": {
+      "workflow_id": "image_edit",
+      "template_id": "default",
+      "mode": "pixel",
+      "strict": true,
+      "remove_background": true,
+      "remove_bg_method": "standard",
+      "image2_quality": "medium",
+      "requested_resolution": "1K",
+      "resolution": "1K",
+      "aspect_ratio": "1:1",
+      "edited_size": [
+        128,
+        128
+      ],
+      "remove_bg_size": null,
+      "background_removed": true,
+      "actual_credit_cost": 9,
+      "reserved_credit_cost": 9
+    },
+    "url": "https://media.meowa.ai/public/image-edit/output/2026-10-26/12%3A20%3A00-workflow-6775cf9a261d4f8289e8fec3/edited.png"
+  },
+  "generation_parameters": {
+    "version": 1,
+    "model": "gpt-image-2.5",
+    "details": [
+      {
+        "key": "mode",
+        "value": "pixel"
+      },
+      {
+        "key": "template",
+        "value": "default"
+      },
+      {
+        "key": "resolution",
+        "value": "1K"
+      },
+      {
+        "key": "aspect_ratio",
+        "value": "auto"
+      },
+      {
+        "key": "quality",
+        "value": "medium"
+      },
+      {
+        "key": "temperature",
+        "value": 0.0
+      },
+      {
+        "key": "remove_background",
+        "value": "standard"
+      },
+      {
+        "key": "reference_count",
+        "value": 2
+      }
+    ]
+  },
+  "user_prompt": null,
+  "outputs": [
+    {
+      "output_key": "primary",
+      "url": "https://media.meowa.ai/public/image-edit/output/2026-10-26/12%3A20%3A00-workflow-6775cf9a261d4f8289e8fec3/edited.png",
+      "media_type": "image",
+      "mime_type": null,
+      "asset_id": null,
+      "thumb_url": null,
+      "width": null,
+      "height": null,
+      "byte_size": null
+    }
+  ],
+  "error": null,
+  "error_code": null,
+  "error_id": null,
+  "credit_refund": {
+    "refunded": false,
+    "amount": 0,
+    "reference_id": "job_eb69b4e163284925b3973d941536f16f"
+  }
+}

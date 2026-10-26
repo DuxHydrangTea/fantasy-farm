@@ -1,0 +1,120 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+WARNING: "await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+   at: GDScript::reload (res://persistence/save_repository.gd:13)
+WARNING: The variable "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/weather/weather_schedule.gd:8)
+WARNING: The local variable "count" is shadowing an already-declared function at line 158 in the current class.
+   at: GDScript::reload (res://components/inventory_component.gd:189)
+WARNING: The variable "name_a" is declared below in the parent block.
+   at: GDScript::reload (res://scripts/honey_combo_catalog.gd:47)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/animals/animal_status_text.gd:11)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/animals/animal_status_text.gd:11)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/animals/animal_status_text.gd:13)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/animals/animal_status_text.gd:13)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/animals/animal_status_text.gd:15)
+WARNING: The function parameter "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/flowers/flower_pot.gd:33)
+WARNING: The variable "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/flowers/flower_pot.gd:40)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/growth_schedule.gd:30)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/player_navigation_component.gd:293)
+WARNING: The signal "changed" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://components/trees/upgrades/tree_plot_upgrade_state.gd:3)
+WARNING: The signal "changed" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://components/animals/upgrades/pen_upgrade_state.gd:3)
+WARNING: The variable "sign" has the same name as a built-in function.
+   at: GDScript::reload (res://components/land/land_expansion_component.gd:12)
+WARNING: The variable "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/weather/weather_effects.gd:93)
+WARNING: The variable "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/weather/weather_effects.gd:98)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/weather/weather_hud.gd:116)
+WARNING: The variable "level" is declared below in the parent block.
+   at: GDScript::reload (res://components/tools/tool_upgrade_shop_view.gd:33)
+WARNING: The variable "next" is declared below in the parent block.
+   at: GDScript::reload (res://components/tools/tool_upgrade_shop_view.gd:34)
+WARNING: The local variable "body" is shadowing an already-declared variable at line 15 in the current class.
+   at: GDScript::reload (res://components/shop_ui.gd:127)
+WARNING: Integer division. Decimal part will be discarded.
+   at: GDScript::reload (res://components/shop_ui.gd:215)
+WARNING: The variable "best" is used before being assigned a value.
+   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:66)
+WARNING: The variable "best" is used before being assigned a value.
+   at: GDScript::reload (res://components/interaction/interaction_resolver.gd:75)
+WARNING: The local variable "ready" is shadowing an already-declared signal in the base class "Node".
+   at: GDScript::reload (res://components/tools/tool_range_ui.gd:58)
+WARNING: The local variable "clear" is shadowing an already-declared function at line 62 in the current class.
+   at: GDScript::reload (res://components/interaction/interaction_presenter.gd:152)
+WARNING: The variable "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/farming_controller.gd:76)
+WARNING: The function parameter "seed" has the same name as a built-in function.
+   at: GDScript::reload (res://components/farming_controller.gd:279)
+WARNING: The signal "item_acquired" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://components/item_collector.gd:3)
+WARNING: "await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+   at: GDScript::reload (res://persistence/save_manager.gd:110)
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+WARNING: res://scenes/characters/player.tscn:14 - ext_resource, invalid UID: uid://jkkdybsqy13i - using text path instead: res://items/seeds/carrot_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/characters/player.tscn:18 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:6 - ext_resource, invalid UID: uid://dpv2o2obtmfss - using text path instead: res://items/seeds/flower_01_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:7 - ext_resource, invalid UID: uid://ba1txm51ur5nb - using text path instead: res://items/seeds/flower_02_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:8 - ext_resource, invalid UID: uid://s1jvgss0vdtk - using text path instead: res://items/seeds/flower_03_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:9 - ext_resource, invalid UID: uid://bbodcnt2lfywj - using text path instead: res://items/seeds/flower_04_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:10 - ext_resource, invalid UID: uid://dupjxnr2jocqs - using text path instead: res://items/seeds/flower_05_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:11 - ext_resource, invalid UID: uid://bfebrr6tir1fy - using text path instead: res://items/seeds/flower_06_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:12 - ext_resource, invalid UID: uid://c10ayurnwar76 - using text path instead: res://items/seeds/flower_07_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:13 - ext_resource, invalid UID: uid://l4u8rcsm0scp - using text path instead: res://items/seeds/flower_08_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:14 - ext_resource, invalid UID: uid://b5vtqliiybpln - using text path instead: res://items/seeds/flower_09_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+WARNING: res://scenes/flowers/flower_garden.tscn:15 - ext_resource, invalid UID: uid://ccbng7ss6wer7 - using text path instead: res://items/seeds/flower_10_seed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://debug_saves/full_flowers_2026-10-26/validate.gd:15)
+FULL_FLOWERS_VALIDATED {"flowers":177,"ok":true,"revision":794,"types":{"flower_01":18,"flower_02":18,"flower_03":18,"flower_04":18,"flower_05":18,"flower_06":18,"flower_07":18,"flower_08":17,"flower_09":17,"flower_10":17},"world_restore_verified":true}

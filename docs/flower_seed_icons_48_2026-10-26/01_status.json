@@ -1,0 +1,107 @@
+{
+  "job_id": "job_6f16d324c3f744e58ff44df039b2fcd4",
+  "job_type": "workflow",
+  "status": "success",
+  "stage": "completed",
+  "timing": {
+    "created_at": "2026-10-26T13:31:18.736574Z",
+    "started_at": "2026-10-26T13:31:18.875554Z",
+    "finished_at": "2026-10-26T13:31:45.130014Z",
+    "observed_at": "2026-10-26T13:32:03.653650Z"
+  },
+  "next_poll_after_seconds": 0,
+  "animation_type": null,
+  "queue": {
+    "position": 0,
+    "estimated_wait_seconds": 0
+  },
+  "progress": {
+    "label": "\u5df2\u5b8c\u6210",
+    "percent": 100
+  },
+  "result": {
+    "job_name": "Fantasy_Farm_48px_Rose_seed_packet",
+    "edited_path": "https://media.meowa.ai/public/image-edit/output/2026-10-26/13%3A31%3A43-workflow-2f4a36f24e384477bd21550c/edited.png",
+    "metadata": {
+      "workflow_id": "image_edit",
+      "template_id": "default",
+      "mode": "pixel",
+      "strict": true,
+      "remove_background": true,
+      "remove_bg_method": "standard",
+      "image2_quality": "medium",
+      "requested_resolution": "1K",
+      "resolution": "1K",
+      "aspect_ratio": "1:1",
+      "edited_size": [
+        192,
+        192
+      ],
+      "remove_bg_size": null,
+      "background_removed": true,
+      "actual_credit_cost": 7,
+      "reserved_credit_cost": 7
+    },
+    "url": "https://media.meowa.ai/public/image-edit/output/2026-10-26/13%3A31%3A43-workflow-2f4a36f24e384477bd21550c/edited.png"
+  },
+  "generation_parameters": {
+    "version": 1,
+    "model": "gpt-image-2.5",
+    "details": [
+      {
+        "key": "mode",
+        "value": "pixel"
+      },
+      {
+        "key": "template",
+        "value": "default"
+      },
+      {
+        "key": "resolution",
+        "value": "1K"
+      },
+      {
+        "key": "aspect_ratio",
+        "value": "auto"
+      },
+      {
+        "key": "quality",
+        "value": "medium"
+      },
+      {
+        "key": "temperature",
+        "value": 0.0
+      },
+      {
+        "key": "remove_background",
+        "value": "standard"
+      },
+      {
+        "key": "reference_count",
+        "value": 1
+      }
+    ]
+  },
+  "user_prompt": null,
+  "outputs": [
+    {
+      "output_key": "primary",
+      "url": "https://media.meowa.ai/public/image-edit/output/2026-10-26/13%3A31%3A43-workflow-2f4a36f24e384477bd21550c/edited.png",
+      "media_type": "image",
+      "mime_type": null,
+      "asset_id": null,
+      "thumb_url": null,
+      "width": null,
+      "height": null,
+      "byte_size": null
+    }
+  ],
+  "error": null,
+  "error_code": null,
+  "error_id": null,
+  "credit_refund": {
+    "refunded": false,
+    "amount": 0,
+    "reference_id": "job_6f16d324c3f744e58ff44df039b2fcd4"
+  }
+}

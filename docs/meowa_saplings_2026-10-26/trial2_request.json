@@ -1,0 +1,11 @@
+{
+  "prompt": "Recolour and reshape ONLY the leaf crown of image 1 into an Autumn Maple sapling with orange, red and golden maple leaves, using image 2 for species colours. Preserve the original stem, roots, plant position, scale, pixel grid, hard opaque pixel clusters, shading style and sparse detail. Image 1 is a 32x32 pixel icon enlarged 4 times with nearest-neighbour; every pixel is a crisp 4x4 block. Keep that exact pixel density and the same total sapling height (about 80 pixels of the 128x128 canvas). Do not shrink or make the plant more distant. No mature tree, no blur, no gradients, no pot, no shadow, no text. Transparent background, only one small sapling.",
+  "mode": "pixel",
+  "strict": "true",
+  "pixelation_method": "whole",
+  "generation_provider": "image2_5",
+  "image2_quality": "medium",
+  "resolution": "1K",
+  "remove_bg_method": "standard",
+  "job_name": "Fantasy Farm Autumn Maple sapling enlarged reference trial"
+}

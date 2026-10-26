@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/Icons/tree_saplings/pink_blossom_sapling.png" id="2_13b50"]
 [ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Texture2D" path="res://trees/textures/oak_stage1.tres" id="icon"]
 [ext_resource type="Resource" path="res://trees/definitions/pink_blossom.tres" id="tree"]
 
 [resource]
@@ -9,7 +9,7 @@ script = ExtResource("script")
 item_id = &"pink_blossom_sapling"
 display_name = "Pink Blossom Sapling"
 description = "Plant in the right timber grove. Chop mature trees with an axe."
-icon = ExtResource("icon")
+icon = ExtResource("2_13b50")
 item_type = 1
 crop = ExtResource("tree")
 max_stack = 999

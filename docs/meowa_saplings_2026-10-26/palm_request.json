@@ -1,0 +1,11 @@
+{
+  "prompt": "Transform the tiny sapling in image 1 into ONE Palm: bright green arched palm fronds, tiny slender warm brown stem. Image 2 is only a species shape and colour reference, NOT the target maturity or detail level. Keep image 1 style: very sparse cozy farming inventory pixel art, warm shading, clean opaque pixel clusters, same light direction, native pixel density and modest saturation. Image 1 is a 32x32 icon enlarged 4 times with nearest-neighbour. Every original pixel is a crisp 4x4 block. Keep that grid. The entire young sapling should occupy about 50-65 pixels width and 80 pixels height on a 128x128 canvas, centered with the base at y=108. Keep the complete plant visible. Adapt its silhouette to the species, while keeping it young with few leaves/fronds/branches and readable at 32x32. Transparent background. No mature tree, no pot, no scene, no ground shadow, no text, no border, no blur, no smooth gradients, no antialiasing. Exactly one plant.",
+  "mode": "pixel",
+  "strict": "true",
+  "pixelation_method": "whole",
+  "generation_provider": "image2_5",
+  "image2_quality": "medium",
+  "resolution": "1K",
+  "remove_bg_method": "standard",
+  "job_name": "Fantasy Farm palm sapling icon"
+}

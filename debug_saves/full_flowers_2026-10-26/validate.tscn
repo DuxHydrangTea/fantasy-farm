@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://debug_saves/full_flowers_2026-10-26/validate.gd" id="1"]
+
+[node name="FlowerSaveValidation" type="Node"]
+script = ExtResource("1")

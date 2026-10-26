@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://docs/shop_tree_icons_2026-10-26/update_and_verify.gd" id="1"]
+
+[node name="ShopVerification" type="Node"]
+script = ExtResource("1")
