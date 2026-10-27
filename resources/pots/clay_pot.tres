@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PotDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/pot_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_32x24.png" id="texture"]
+
+[resource]
+script = ExtResource("script")
+pot_id = &"clay"
+texture = ExtResource("texture")
+pot_offset = Vector2(-16, -24)
+plant_socket = Vector2(0, -15)

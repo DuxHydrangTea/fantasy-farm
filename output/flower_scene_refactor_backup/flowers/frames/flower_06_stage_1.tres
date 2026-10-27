@@ -1,0 +1,36 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cxmx4rwj3653f"]
+
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_06_stage_1_potted.png" id="art"]
+
+[sub_resource type="AtlasTexture" id="frame_0"]
+atlas = ExtResource("art")
+region = Rect2(0, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="frame_1"]
+atlas = ExtResource("art")
+region = Rect2(32, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="frame_2"]
+atlas = ExtResource("art")
+region = Rect2(64, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="frame_3"]
+atlas = ExtResource("art")
+region = Rect2(96, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="frame_4"]
+atlas = ExtResource("art")
+region = Rect2(128, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="frame_5"]
+atlas = ExtResource("art")
+region = Rect2(160, 0, 32, 48)
+filter_clip = true
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"grow", "speed": 8.0}]

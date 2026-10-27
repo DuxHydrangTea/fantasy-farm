@@ -12,6 +12,10 @@ func before_each() -> void:
 	bag.slot_count = 2
 	add_child_autofree(bag)
 	seed = load("res://items/seeds/flower_01_seed.tres") as ItemDefinition
+	seed = seed.duplicate() as ItemDefinition
+	seed.crop = seed.crop.duplicate() as FlowerDefinition
+	seed.crop.growth_seconds = 120.0
+	seed.crop.harvest_amount = 1
 	bag.add(seed, 3)
 
 func test_all_ten_flowers_have_five_stages_and_six_frames_each() -> void:
@@ -62,7 +66,8 @@ func test_harvest_preserves_full_pot_when_bag_full_then_returns_empty_once() -> 
 	assert_false(pot.harvest(bag))
 	assert_eq(bag.count_item(&"flower_01"), 1)
 	assert_null(pot.definition)
-	assert_eq(pot.sprite.sprite_frames, pot.empty_frames)
+	assert_false(pot.sprite.visible)
+	assert_true(pot.visual.pot_sprite.visible)
 	assert_false(pot.can_water())
 
 func test_progress_never_moves_back_and_bar_only_shows_on_focus() -> void:

@@ -1,0 +1,6 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dhi4o25ny7qqa"]
+
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_07_potted.png" id="art"]
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}], "loop": true, "name": &"grow", "speed": 8.0}]

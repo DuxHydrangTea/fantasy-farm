@@ -135,6 +135,7 @@ func advance(timestamp: float) -> void:
 		hive.range_display.garden_grid = hive.garden_slot >= 0
 		if hive.garden_slot >= 0:
 			hive.range_display.garden_cell = HoneyGardenSystem.CENTERS[hive.garden_slot]
+			hive.range_display.garden = world.honey_garden.garden()
 		hive.range_display.radius = effective_radius(timestamp)
 		hive.range_display.queue_redraw()
 		hive.bees.set_sheltered(raining(timestamp) or not hive.repaired)

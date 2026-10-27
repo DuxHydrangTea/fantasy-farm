@@ -48,16 +48,17 @@ func test_all_thirty_can_plant_water_mature_and_harvest_new_art() -> void:
 			assert_eq(pot.stage, stage)
 			assert_eq(pot.sprite.sprite_frames.get_frame_count(&"grow"), 6)
 			var texture: Texture2D = pot.sprite.sprite_frames.get_frame_texture(&"grow", 0)
-			assert_almost_eq(pot.sprite.position.y + texture.get_height() * 0.5, 0.0, 0.001)
+			assert_eq(pot.sprite.position, Vector2(-16, -30))
 			if stage >= 3:
-				assert_eq(texture.get_size(), Vector2(32, 48))
-				assert_true(texture.resource_path.ends_with("flower_%02d_potted.png" % index))
+				assert_eq(texture.get_size(), Vector2(32, 32))
+				assert_eq(texture, flower.harvest_item.icon)
 		assert_true(pot.is_mature())
 		assert_true(pot.harvest(bag))
 		assert_eq(bag.count_item(flower.harvest_item.item_id), flower.harvest_amount)
 		assert_null(pot.definition)
 		assert_eq(pot.sprite.scale, Vector2.ONE)
-		assert_eq(pot.sprite.sprite_frames.get_frame_texture(&"grow", 0).get_size(), Vector2(32, 24))
+		assert_false(pot.sprite.visible)
+		assert_eq(pot.visual.pot_sprite.texture.get_size(), Vector2(32, 24))
 
 func test_thirty_species_survive_world_snapshot_restore() -> void:
 	var world: FarmWorld = WORLD.instantiate() as FarmWorld

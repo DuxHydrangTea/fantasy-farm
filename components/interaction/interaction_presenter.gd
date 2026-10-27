@@ -7,6 +7,8 @@ var root: Control
 var badge: PanelContainer
 var label: Label
 var outline: Sprite2D
+var _pot_outline: Sprite2D
+var _pot_material: ShaderMaterial
 var _range: BeehiveRangeDisplay
 var _material: ShaderMaterial
 var keycap: Label
@@ -66,6 +68,8 @@ func clear() -> void:
 		badge.hide()
 	if is_instance_valid(outline):
 		outline.hide()
+	if is_instance_valid(_pot_outline):
+		_pot_outline.hide()
 
 func show_target(target: InteractionTarget, walking: bool, feedback: String = "") -> void:
 	if target == null or not target.valid() or player.selection.is_menu_open():
@@ -73,6 +77,8 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		return
 	if is_instance_valid(_range):
 		_range.hide()
+	if is_instance_valid(_pot_outline):
+		_pot_outline.hide()
 	if target.kind == InteractionTarget.Kind.BEEHIVE:
 		_range = (target.node as Beehive).range_display
 		_range.modulate.a = 0.35
@@ -106,6 +112,34 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		uv_rect = Rect2(outline.region_rect.position / texture.get_size(),outline.region_rect.size / texture.get_size())
 	_material.set_shader_parameter("frame_uv",Vector4(uv_rect.position.x,uv_rect.position.y,uv_rect.end.x,uv_rect.end.y))
 	outline.show()
+	if target.kind == InteractionTarget.Kind.FLOWER:
+		var pot_sprite: Sprite2D = (target.node as FlowerPot).visual.pot_sprite
+		if pot_sprite != sprite:
+			if not is_instance_valid(_pot_outline):
+				_pot_outline = Sprite2D.new()
+				_pot_outline.name = "InteractionPotOutline"
+				_pot_material = _material.duplicate() as ShaderMaterial
+				_pot_outline.material = _pot_material
+				_pot_outline.z_index = 1
+				pot_sprite.add_child(_pot_outline)
+			elif _pot_outline.get_parent() != pot_sprite:
+				_pot_outline.reparent(pot_sprite, false)
+			_pot_outline.transform = Transform2D.IDENTITY
+			_pot_outline.texture = pot_sprite.texture
+			_pot_outline.centered = pot_sprite.centered
+			_pot_outline.offset = pot_sprite.offset
+			_pot_outline.flip_h = pot_sprite.flip_h
+			_pot_outline.flip_v = pot_sprite.flip_v
+			_pot_outline.region_enabled = pot_sprite.region_enabled
+			_pot_outline.region_rect = pot_sprite.region_rect
+			var pot_uv: Rect2 = Rect2(0, 0, 1, 1)
+			if pot_sprite.texture is AtlasTexture:
+				var atlas: AtlasTexture = pot_sprite.texture as AtlasTexture
+				pot_uv = Rect2(atlas.region.position / atlas.atlas.get_size(), atlas.region.size / atlas.atlas.get_size())
+			elif pot_sprite.region_enabled:
+				pot_uv = Rect2(pot_sprite.region_rect.position / pot_sprite.texture.get_size(), pot_sprite.region_rect.size / pot_sprite.texture.get_size())
+			_pot_material.set_shader_parameter("frame_uv", Vector4(pot_uv.position.x, pot_uv.position.y, pot_uv.end.x, pot_uv.end.y))
+			_pot_outline.show()
 	var action: String = target.action_text()
 	keycap.text = GameText.action_key(player.state.action_harvest)
 	keycap.visible = not walking and not MobileLayout.is_touch(get_viewport())
@@ -167,3 +201,5 @@ func _exit_tree() -> void:
 	clear()
 	if is_instance_valid(outline):
 		outline.free()
+	if is_instance_valid(_pot_outline):
+		_pot_outline.free()

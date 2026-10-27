@@ -3,7 +3,7 @@ extends Node
 ## Owns the fixed garden layout, atomic legacy conversion, repairs and journal.
 signal changed
 const Layout = preload("res://scripts/flower_garden_layout.gd")
-const CENTERS: Array[Vector2i] = [Vector2i(1,2), Vector2i(4,2), Vector2i(7,2)]
+const CENTERS: Array[Vector2i] = [Vector2i(1,2), Vector2i(1,6), Vector2i(8,2)]
 var world: FarmWorld
 var migrated: bool = false
 var discoveries: Array[String] = []
@@ -47,7 +47,7 @@ func inside(hive: Beehive) -> bool:
 	return area != null and Rect2(Vector2.ZERO, FlowerGarden.SIZE).has_point(area.to_local(hive.global_position))
 
 func center_point(slot: int) -> Vector2:
-	return garden().to_global(Layout.position_for(CENTERS[slot]))
+	return garden().pots[CENTERS[slot]].global_position
 
 func owner_slot(cell: Vector2i) -> int:
 	for slot: int in range(3):
@@ -116,7 +116,7 @@ func try_migrate() -> bool:
 		for candidate: FlowerPot in garden().pots.values():
 			if candidate.cell in CENTERS or owner_slot(candidate.cell) >= 0 or candidate.definition != null or claimed.has(candidate.cell):
 				continue
-			var distance: float = candidate.position.distance_squared_to(source.position)
+			var distance: float = candidate.global_position.distance_squared_to(source.global_position)
 			if distance < best:
 				best = distance
 				destination = candidate

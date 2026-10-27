@@ -1,36 +1,59 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://b31kt70cltyy8"]
 
-[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_03_stage_2_potted.png" id="art"]
+[ext_resource type="Texture2D" uid="uid://dd61xt41v2km1" path="res://assets/Flowers/Unzoom30/flower_03_stage_2_plant.png" id="art"]
 
 [sub_resource type="AtlasTexture" id="frame_0"]
 atlas = ExtResource("art")
-region = Rect2(0, 0, 32, 48)
+region = Rect2(0, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="AtlasTexture" id="frame_1"]
 atlas = ExtResource("art")
-region = Rect2(32, 0, 32, 48)
+region = Rect2(32, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="AtlasTexture" id="frame_2"]
 atlas = ExtResource("art")
-region = Rect2(64, 0, 32, 48)
+region = Rect2(64, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="AtlasTexture" id="frame_3"]
 atlas = ExtResource("art")
-region = Rect2(96, 0, 32, 48)
+region = Rect2(96, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="AtlasTexture" id="frame_4"]
 atlas = ExtResource("art")
-region = Rect2(128, 0, 32, 48)
+region = Rect2(128, 0, 32, 32)
 filter_clip = true
 
 [sub_resource type="AtlasTexture" id="frame_5"]
 atlas = ExtResource("art")
-region = Rect2(160, 0, 32, 48)
+region = Rect2(160, 0, 32, 32)
 filter_clip = true
 
 [resource]
-animations = [{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"grow", "speed": 8.0}]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("frame_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("frame_5")
+}],
+"loop": 1,
+"name": &"grow",
+"speed": 8.0
+}]

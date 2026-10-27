@@ -47,7 +47,10 @@ func _crop_candidates(point: Vector2, hover: bool) -> Array[InteractionTarget]:
 		if not _same_world(garden):
 			continue
 		for pot: FlowerPot in (garden as FlowerGarden).pots.values():
-			if pot.global_position.distance_to(point) > 36.0:
+			if hover:
+				if not pot.get_visual_rect().grow(2.0).has_point(pot.to_local(point)):
+					continue
+			elif pot.global_position.distance_to(point) > 36.0:
 				continue
 			pot.refresh(pot.garden.time_manager.now())
 			if pot.is_mature():
@@ -96,6 +99,10 @@ func texture(sprite: Node2D) -> Texture2D:
 
 func visual_rect(target: InteractionTarget) -> Rect2:
 	var visual: Node2D = target.sprite()
+	if target.kind == InteractionTarget.Kind.FLOWER and visual != null:
+		var pot: FlowerPot = target.node as FlowerPot
+		var relative: Transform2D = visual.global_transform.affine_inverse() * pot.global_transform
+		return relative * pot.get_visual_rect()
 	var frame: Texture2D = texture(visual)
 	if frame == null:
 		return Rect2()

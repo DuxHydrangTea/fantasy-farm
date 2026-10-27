@@ -56,6 +56,26 @@
 [ext_resource type="Resource" uid="uid://bt8po5u815tjm" path="res://items/cooked/honey_bread.tres" id="cooked_honey_bread"]
 [ext_resource type="Resource" uid="uid://bk3j70bx8dxdy" path="res://items/cooked/steamed_egg.tres" id="cooked_steamed_egg"]
 [ext_resource type="Resource" uid="uid://bqa1tdrryywsl" path="res://items/honey/floral_honey.tres" id="floral_honey"]
+[ext_resource type="Resource" path="res://items/flowers/flower_11.tres" id="flower_pack_11"]
+[ext_resource type="Resource" path="res://items/flowers/flower_12.tres" id="flower_pack_12"]
+[ext_resource type="Resource" path="res://items/flowers/flower_13.tres" id="flower_pack_13"]
+[ext_resource type="Resource" path="res://items/flowers/flower_14.tres" id="flower_pack_14"]
+[ext_resource type="Resource" path="res://items/flowers/flower_15.tres" id="flower_pack_15"]
+[ext_resource type="Resource" path="res://items/flowers/flower_16.tres" id="flower_pack_16"]
+[ext_resource type="Resource" path="res://items/flowers/flower_17.tres" id="flower_pack_17"]
+[ext_resource type="Resource" path="res://items/flowers/flower_18.tres" id="flower_pack_18"]
+[ext_resource type="Resource" path="res://items/flowers/flower_19.tres" id="flower_pack_19"]
+[ext_resource type="Resource" path="res://items/flowers/flower_20.tres" id="flower_pack_20"]
+[ext_resource type="Resource" path="res://items/flowers/flower_21.tres" id="flower_pack_21"]
+[ext_resource type="Resource" path="res://items/flowers/flower_22.tres" id="flower_pack_22"]
+[ext_resource type="Resource" path="res://items/flowers/flower_23.tres" id="flower_pack_23"]
+[ext_resource type="Resource" path="res://items/flowers/flower_24.tres" id="flower_pack_24"]
+[ext_resource type="Resource" path="res://items/flowers/flower_25.tres" id="flower_pack_25"]
+[ext_resource type="Resource" path="res://items/flowers/flower_26.tres" id="flower_pack_26"]
+[ext_resource type="Resource" path="res://items/flowers/flower_27.tres" id="flower_pack_27"]
+[ext_resource type="Resource" path="res://items/flowers/flower_28.tres" id="flower_pack_28"]
+[ext_resource type="Resource" path="res://items/flowers/flower_29.tres" id="flower_pack_29"]
+[ext_resource type="Resource" path="res://items/flowers/flower_30.tres" id="flower_pack_30"]
 [ext_resource type="Resource" path="res://items/trees/apple_star.tres" id="price_apple_star_item"]
 [ext_resource type="Resource" path="res://items/trees/cherry_star.tres" id="price_cherry_star_item"]
 [ext_resource type="Resource" path="res://items/trees/peach_star.tres" id="price_peach_star_item"]
@@ -83,27 +103,6 @@
 [ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="tree_price_item_4"]
 [ext_resource type="Resource" uid="uid://ds0v0j538alt6" path="res://items/trees/root_wood.tres" id="tree_price_item_5"]
 [ext_resource type="Resource" uid="uid://cshtk8qpvet1k" path="res://items/honey/wild_honey.tres" id="wild_honey"]
-
-[ext_resource type="Resource" path="res://items/flowers/flower_11.tres" id="flower_pack_11"]
-[ext_resource type="Resource" path="res://items/flowers/flower_12.tres" id="flower_pack_12"]
-[ext_resource type="Resource" path="res://items/flowers/flower_13.tres" id="flower_pack_13"]
-[ext_resource type="Resource" path="res://items/flowers/flower_14.tres" id="flower_pack_14"]
-[ext_resource type="Resource" path="res://items/flowers/flower_15.tres" id="flower_pack_15"]
-[ext_resource type="Resource" path="res://items/flowers/flower_16.tres" id="flower_pack_16"]
-[ext_resource type="Resource" path="res://items/flowers/flower_17.tres" id="flower_pack_17"]
-[ext_resource type="Resource" path="res://items/flowers/flower_18.tres" id="flower_pack_18"]
-[ext_resource type="Resource" path="res://items/flowers/flower_19.tres" id="flower_pack_19"]
-[ext_resource type="Resource" path="res://items/flowers/flower_20.tres" id="flower_pack_20"]
-[ext_resource type="Resource" path="res://items/flowers/flower_21.tres" id="flower_pack_21"]
-[ext_resource type="Resource" path="res://items/flowers/flower_22.tres" id="flower_pack_22"]
-[ext_resource type="Resource" path="res://items/flowers/flower_23.tres" id="flower_pack_23"]
-[ext_resource type="Resource" path="res://items/flowers/flower_24.tres" id="flower_pack_24"]
-[ext_resource type="Resource" path="res://items/flowers/flower_25.tres" id="flower_pack_25"]
-[ext_resource type="Resource" path="res://items/flowers/flower_26.tres" id="flower_pack_26"]
-[ext_resource type="Resource" path="res://items/flowers/flower_27.tres" id="flower_pack_27"]
-[ext_resource type="Resource" path="res://items/flowers/flower_28.tres" id="flower_pack_28"]
-[ext_resource type="Resource" path="res://items/flowers/flower_29.tres" id="flower_pack_29"]
-[ext_resource type="Resource" path="res://items/flowers/flower_30.tres" id="flower_pack_30"]
 
 [sub_resource type="Resource" id="Resource_0fndo"]
 script = ExtResource("1_k2k64")
@@ -608,7 +607,6 @@ price = 2500
 script = ExtResource("1_k2k64")
 item = ExtResource("flower_pack_30")
 price = 4500
-
 
 [resource]
 script = ExtResource("41_h3iu0")

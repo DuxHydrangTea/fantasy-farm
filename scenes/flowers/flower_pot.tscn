@@ -1,57 +1,78 @@
 [gd_scene format=3 uid="uid://ruv13fvk6mjw"]
 
-[ext_resource type="Script" uid="uid://bio17m8iegyro" path="res://components/flowers/flower_pot.gd" id="1_jv2wi"]
-[ext_resource type="SpriteFrames" uid="uid://bbxlh012t152i" path="res://flowers/empty_pot_frames.tres" id="2_fgjva"]
-[ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="3_12gb3"]
-[ext_resource type="Texture2D" uid="uid://j0sv7dsytcv" path="res://assets/Ui/progress_bar.png" id="4_hqowy"]
-[ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="5_2hk72"]
-[ext_resource type="StyleBox" path="res://flowers/progress_fill.tres" id="6_4nilf"]
-[ext_resource type="Shape2D" path="res://flowers/pot_collision.tres" id="7_fgjva"]
+[ext_resource type="Script" path="res://components/flowers/flower_pot.gd" id="1_hqowy"]
+[ext_resource type="Script" path="res://components/flowers/flower_pot_visual.gd" id="2_2hk72"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_32x24.png" id="3_4nilf"]
+[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_01_stage_1.tres" id="4_nyyt0"]
+[ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="5_8ou0k"]
+[ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_8kek3"]
+[ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="7_wxput"]
+[ext_resource type="StyleBox" path="res://flowers/progress_fill.tres" id="8_gvpyv"]
+[ext_resource type="Shape2D" path="res://flowers/pot_collision.tres" id="9_nn5jk"]
 
-[node name="FlowerPot" type="StaticBody2D" unique_id=1292078041 node_paths=PackedStringArray("sprite", "marker", "progress_frame", "bar")]
+[node name="FlowerPot" type="StaticBody2D" unique_id=971002361 node_paths=PackedStringArray("visual", "sprite", "marker", "progress_frame", "bar")]
 texture_filter = 1
 collision_mask = 0
-script = ExtResource("1_jv2wi")
-empty_frames = ExtResource("2_fgjva")
-sprite = NodePath("Flower")
+script = ExtResource("1_hqowy")
+visual = NodePath("VisualRoot")
+sprite = NodePath("VisualRoot/PlantSocket/PlantOffset/Flower")
 marker = NodePath("Focus")
 progress_frame = NodePath("Progress")
 bar = NodePath("Progress/Bar")
 
-[node name="Flower" type="AnimatedSprite2D" parent="." unique_id=1182751548]
-position = Vector2(0, -8)
-sprite_frames = ExtResource("2_fgjva")
-animation = &"grow"
+[node name="VisualRoot" type="Node2D" parent="." unique_id=1942942365 node_paths=PackedStringArray("pot_sprite", "plant_socket", "plant_offset", "flower")]
+script = ExtResource("2_2hk72")
+pot_sprite = NodePath("PotSprite")
+plant_socket = NodePath("PlantSocket")
+plant_offset = NodePath("PlantSocket/PlantOffset")
+flower = NodePath("PlantSocket/PlantOffset/Flower")
 
-[node name="Focus" type="Sprite2D" parent="." unique_id=1188082198]
+[node name="PotSprite" type="Sprite2D" parent="VisualRoot" unique_id=305184637]
+position = Vector2(-16, -24)
+texture = ExtResource("3_4nilf")
+centered = false
+
+[node name="PlantSocket" type="Node2D" parent="VisualRoot" unique_id=1308649893]
+position = Vector2(0, -15)
+
+[node name="PlantOffset" type="Node2D" parent="VisualRoot/PlantSocket" unique_id=1583751310]
+
+[node name="Flower" type="AnimatedSprite2D" parent="VisualRoot/PlantSocket/PlantOffset" unique_id=658614096]
+visible = false
+position = Vector2(-16, -30)
+sprite_frames = ExtResource("4_nyyt0")
+animation = &"grow"
+centered = false
+
+[node name="Focus" type="Sprite2D" parent="." unique_id=235238210]
 visible = false
 position = Vector2(0, -8)
-texture = ExtResource("3_12gb3")
+texture = ExtResource("5_8ou0k")
 
-[node name="Progress" type="TextureRect" parent="." unique_id=616589614]
+[node name="Progress" type="TextureRect" parent="." unique_id=27618560]
 visible = false
 z_index = 2
 z_as_relative = false
 offset_left = -7.5
-offset_top = -26.0
+offset_top = -58.0
 offset_right = 7.5
-offset_bottom = -19.0
+offset_bottom = -51.0
 mouse_filter = 2
-texture = ExtResource("4_hqowy")
+texture = ExtResource("6_8kek3")
 
-[node name="Bar" type="ProgressBar" parent="Progress" unique_id=1152474970]
+[node name="Bar" type="ProgressBar" parent="Progress" unique_id=1137182375]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
 offset_right = 13.0
 offset_bottom = 4.0
 mouse_filter = 2
-theme_override_styles/background = ExtResource("5_2hk72")
-theme_override_styles/fill = ExtResource("6_4nilf")
+theme_override_styles/background = ExtResource("7_wxput")
+theme_override_styles/fill = ExtResource("8_gvpyv")
 max_value = 1.0
 step = 0.0
 show_percentage = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1282025820]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=858565796]
 position = Vector2(0, -2)
-shape = ExtResource("7_fgjva")
+shape = ExtResource("9_nn5jk")

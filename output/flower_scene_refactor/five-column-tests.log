@@ -1,0 +1,89 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+       [1] _parse_script (res://addons/gut/test_collector.gd:76)
+       [2] add_script (res://addons/gut/test_collector.gd:128)
+       [3] add_script (res://addons/gut/gut.gd:1070)
+       [4] _apply_options (res://addons/gut/gut_config.gd:139)
+       [5] apply_options (res://addons/gut/gut_config.gd:207)
+       [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+       [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [8] main (res://addons/gut/cli/gut_cli.gd:297)
+       [9] _init (res://addons/gut/gut_cmdln.gd:39)
+[4m
+
+res://tests/integration/test_flower_garden.gd
+[0m* test_grid_is_80_unique_pots_in_four_even_blocks_with_cross_aisle
+* test_focus_only_reaches_pot_in_front_and_not_from_far_away
+* test_hotbar_plant_water_and_e_harvest_at_impact_once
+* test_move_seed_or_cancel_action_before_impact_does_not_spend_seed
+* test_inventory_open_blocks_actions_and_hides_focus
+* test_ten_seed_supplies_are_available_for_new_and_existing_players
+* test_eight_starting_flowers_cover_different_stages_and_do_not_respawn
+* test_four_blocks_share_identical_spacing_and_margins
+* test_actual_sprite_pixels_stay_inside_authored_block_footprint
+* test_dense_save_preserves_overflow_without_replanting_after_clear
+* test_e_harvest_with_legacy_overflow_leaves_empty_pot_and_grants_original_flower
+[1m11/11 passed.
+[0m[4m
+
+res://tests/integration/test_flower_scene_customization.gd
+[0m* test_all_80_pots_are_serialized_and_registration_is_idempotent
+* test_duplicate_missing_and_invalid_cell_configuration_is_reported
+* test_custom_node_and_block_transforms_survive_scene_pack_and_startup
+* test_fixed_hives_and_save_restore_use_authored_nodes_after_moving_blocks
+* test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot
+[1m5/5 passed.
+[0m[4m
+
+res://tests/integration/test_honey_garden.gd
+[0m* test_layout_keeps_80_positions_reserves_only_three_and_repairs_center_free
+* test_center_flower_relocation_preserves_identity_and_lifecycle
+* test_full_garden_defers_everything_then_retries_without_item_loss
+* test_uncollected_legacy_batch_drains_without_restarting_before_migration
+* test_saved_dense_grid_hives_move_to_new_positions_without_mutating_snapshot
+* test_empty_legacy_hive_pauses_but_field_hive_keeps_producing
+* test_surplus_hives_refund_whole_items_and_retained_hives_stay_repaired
+* test_refund_capacity_defers_all_movement
+* test_hybrid_requires_opposite_pairs_and_beats_mono_deterministically
+* test_fixed_neighbors_snapshot_and_live_rate_fallback
+* test_rain_keeps_recipe_and_wind_only_boosts_garden_speed
+* test_repair_consumes_warehouse_then_bag_and_cannot_charge_twice
+* test_save_roundtrip_carries_recipe_repair_discovery_and_is_idempotent
+* test_migration_from_v30_is_primitive_only_and_no_batch_is_reclassified
+* test_five_chef_recipes_reveal_jars_only_after_successful_collection
+* test_waiting_save_load_offline_marks_hives_before_any_catchup
+* test_invalid_garden_batch_or_position_rejects_before_changing_world
+* test_failed_repair_is_free_and_damaged_hives_produce_nothing
+* test_repair_blocks_reentrant_commands_and_snapshot_during_notifications
+* test_pending_legacy_hive_can_load_before_overlapping_pots_are_relocated
+[1m20/20 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               3
+Tests                36
+Passing Tests        36
+Asserts             651
+Time              7.769s
+
+
+[32m---- All tests passed! ----
+[0m

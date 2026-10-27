@@ -2,9 +2,8 @@
 class_name FlowerGarden
 extends Node2D
 @export var pot_container: Node2D
-## Four evenly fitted 7x4 blocks, preserving the cross aisle and garden rim.
+## Four authored 5x4 blocks, preserving historical cell IDs.
 const Layout = preload("res://scripts/flower_garden_layout.gd")
-const POT_SCENE: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
 @export var persistent_id: StringName = &"flower_garden_01"
 @export var time_manager: FarmClock
 var apiary: ApiarySystem
@@ -20,18 +19,13 @@ const SIZE: Vector2 = Vector2(384, 256)
 func _ready() -> void:
 	if pot_container == null:
 		return
-	for y: int in range(Layout.ROWS):
-		for x: int in range(Layout.COLUMNS):
-			var pot: FlowerPot = POT_SCENE.instantiate() as FlowerPot
-			pot.name = "Pot_%02d_%02d" % [x, y]
-			pot.cell = Vector2i(x, y)
-			pot.position = Layout.position_for(pot.cell)
-			pot.garden = self
-			pot_container.add_child(pot)
-			pot.changed.connect(_pot_changed.bind(pot))
-			pots[pot.cell] = pot
+	if not Engine.is_editor_hint():
+		var warnings: PackedStringArray = _get_configuration_warnings()
+		if not warnings.is_empty():
+			push_error("Invalid flower garden scene: " + "; ".join(warnings))
+			return
+	_register_pots(pot_container)
 	if Engine.is_editor_hint():
-		add_starter_flowers(1000.0)
 		return
 	for child: Node in get_children():
 		if child is ItemPickup:
@@ -44,6 +38,43 @@ func _ready() -> void:
 	time_manager.tick.connect(refresh)
 	add_starter_flowers(time_manager.now())
 	set_starter_content_locked(starter_content_locked)
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray = []
+	if pot_container == null:
+		return PackedStringArray(["Assign the Pots container."])
+	var cells: Dictionary = {}
+	var count: int = 0
+	for node: Node in pot_container.find_children("*", "StaticBody2D", true, false):
+		if not node is FlowerPot:
+			continue
+		var pot: FlowerPot = node as FlowerPot
+		count += 1
+		if cells.has(pot.cell):
+			warnings.append("Duplicate pot cell: " + str(pot.cell))
+		if not Layout.contains_cell(pot.cell):
+			warnings.append("Pot cell outside the authored layout: " + str(pot.cell))
+		cells[pot.cell] = true
+	if count != Layout.CAPACITY:
+		warnings.append("Expected %d authored pots, found %d." % [Layout.CAPACITY, count])
+	for cell: Vector2i in HoneyGardenSystem.CENTERS:
+		if not cells.has(cell):
+			warnings.append("Missing fixed hive cell: " + str(cell))
+	return warnings
+
+func _register_pots(parent: Node) -> void:
+	for child: Node in parent.get_children():
+		if child is FlowerPot:
+			var pot: FlowerPot = child as FlowerPot
+			if pots.has(pot.cell) and pots[pot.cell] != pot:
+				push_error("Duplicate flower pot cell: " + str(pot.cell))
+				continue
+			pot.garden = self
+			pots[pot.cell] = pot
+			if not pot.changed.is_connected(_pot_changed.bind(pot)):
+				pot.changed.connect(_pot_changed.bind(pot))
+		else:
+			_register_pots(child)
 
 func set_starter_content_locked(value: bool) -> void:
 	starter_content_locked = value
@@ -75,7 +106,7 @@ func add_starter_flowers(now: float) -> void:
 	if starter_flowers_added:
 		return
 	starter_flowers_added = true
-	var cells: Array[Vector2i] = [Vector2i(1, 0), Vector2i(4, 0), Vector2i(8, 0), Vector2i(12, 0), Vector2i(1, 7), Vector2i(4, 7), Vector2i(8, 7), Vector2i(12, 7)]
+	var cells: Array[Vector2i] = [Vector2i(1, 0), Vector2i(4, 0), Vector2i(8, 0), Vector2i(11, 0), Vector2i(1, 7), Vector2i(4, 7), Vector2i(8, 7), Vector2i(11, 7)]
 	var ids: Array[int] = [1, 3, 5, 7, 2, 4, 6, 10]
 	var progress: Array[float] = [0.0, 0.25, 0.5, 1.0, 0.0, 0.5, 0.75, 1.0]
 	for index: int in range(cells.size()):
@@ -103,8 +134,8 @@ func _schedule_pot(pot: FlowerPot) -> void:
 
 func _pot_changed(pot: FlowerPot) -> void:
 	_schedule_pot(pot)
-	if pot.definition == null and not _legacy_flowers.is_empty():
-		call_deferred("restore_legacy_flowers")
+	# Legacy migration runs during load/unlock only. Harvesting or clearing must
+	# leave this pot empty; pending legacy plants remain in capture().
 
 func restore_flower(data: Dictionary, flower: FlowerDefinition, now: float) -> void:
 	var cell: Vector2i = Vector2i(int(data.cell[0]), int(data.cell[1]))

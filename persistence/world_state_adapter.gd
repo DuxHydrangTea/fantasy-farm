@@ -233,19 +233,16 @@ func preflight(data: Dictionary) -> Dictionary:
 	var hive_cells: Dictionary = {}
 	for row: Dictionary in data.beehives:
 		var point: Vector2 = world.to_global(_point(row.position))
-		# Relocate saved fixed hives from the previous dense garden coordinates.
+		# Fixed hive slots belong to scene-authored pot nodes; saved positions are advisory.
 		if int(row.garden_slot) >= 0 and world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id):
-			var center: Vector2i = HoneyGardenSystem.CENTERS[int(row.garden_slot)]
-			var old_point: Vector2 = world.honey_garden.garden().to_global(Vector2(32 + center.x * 16, 32 + center.y * 16))
-			if point.distance_to(old_point) < 0.01:
-				point = world.honey_garden.center_point(int(row.garden_slot))
-				var local_point: Vector2 = world.to_local(point)
-				row.position = [local_point.x, local_point.y]
+			point = world.honey_garden.center_point(int(row.garden_slot))
+			var local_point: Vector2 = world.to_local(point)
+			row.position = [local_point.x, local_point.y]
 		var cell: Vector2i = farm.world_to_cell(point)
 		var placement_ok: bool = true
 		if int(row.garden_slot) >= 0:
 			var slot: int = int(row.garden_slot)
-			placement_ok = world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id) and not garden_slots.has(slot) and point.distance_to(world.honey_garden.center_point(slot)) < 0.01
+			placement_ok = world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id) and not garden_slots.has(slot) and world.apiary.placement_error(point, int(data.land_columns), true, true).is_empty()
 			garden_slots[slot] = true
 		else:
 			placement_ok = world.apiary.placement_error(point,int(data.land_columns),true,not data.honey_garden.migrated).is_empty()

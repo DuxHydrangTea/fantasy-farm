@@ -54,9 +54,9 @@ func _jump(seconds: float) -> void:
 	clock[0] += seconds
 	world.apiary.advance(clock[0])
 
-func test_layout_keeps_112_positions_reserves_only_three_and_repairs_center_free() -> void:
+func test_layout_keeps_80_positions_reserves_only_three_and_repairs_center_free() -> void:
 	assert_true(service.try_migrate())
-	assert_eq(garden.pots.size(),112)
+	assert_eq(garden.pots.size(),80)
 	assert_eq(world.apiary.hives.size(),3)
 	assert_true(_hive().repaired)
 	assert_false(_hive(0).repaired)
@@ -74,7 +74,7 @@ func test_layout_keeps_112_positions_reserves_only_three_and_repairs_center_free
 	assert_eq(world.apiary.hives.size(),3)
 
 func test_center_flower_relocation_preserves_identity_and_lifecycle() -> void:
-	var pot: FlowerPot = _flower(Vector2i(4,2),8,false)
+	var pot: FlowerPot = _flower(HoneyGardenSystem.CENTERS[1],8,false)
 	var original: Dictionary = pot.capture(now)
 	assert_true(service.try_migrate())
 	assert_null(pot.definition)
@@ -99,7 +99,7 @@ func test_full_garden_defers_everything_then_retries_without_item_loss() -> void
 	for cell: Vector2i in [Vector2i(0,0),Vector2i(1,0),Vector2i(2,0)]:
 		garden.pots[cell].clear()
 	assert_true(service.try_migrate())
-	assert_eq(garden.capture(now).flowers.size(),109)
+	assert_eq(garden.capture(now).flowers.size(),77)
 
 func test_uncollected_legacy_batch_drains_without_restarting_before_migration() -> void:
 	var hive: Beehive = world.apiary.create_hive(garden.global_position+Vector2(24,24),&"legacy_hive")
@@ -156,7 +156,7 @@ func test_refund_capacity_defers_all_movement() -> void:
 	bag.replace_slots(stacks)
 	assert_false(service.try_migrate())
 	assert_eq(world.apiary.hives.size(),4)
-	assert_false(garden.pots[Vector2i(4,2)].reserved)
+	assert_false(garden.pots[HoneyGardenSystem.CENTERS[1]].reserved)
 	bag.remove_from_slot(5,1)
 	assert_true(service.try_migrate())
 	assert_eq(bag.count_item(world.apiary.definition.hive_item.item_id),1)
@@ -177,7 +177,7 @@ func test_hybrid_requires_opposite_pairs_and_beats_mono_deterministically() -> v
 func test_fixed_neighbors_snapshot_and_live_rate_fallback() -> void:
 	assert_true(service.try_migrate())
 	for offset: Vector2i in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
-		_flower(Vector2i(4,2)+offset)
+		_flower(HoneyGardenSystem.CENTERS[1]+offset)
 	_flower(Vector2i(10,2),10)
 	_jump(10)
 	var hive: Beehive = _hive()
@@ -185,7 +185,7 @@ func test_fixed_neighbors_snapshot_and_live_rate_fallback() -> void:
 	assert_eq(hive.production.batch_recipe,"mono_06")
 	assert_almost_eq(hive.production.work,20.0,0.001)
 	for offset: Vector2i in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
-		garden.pots[Vector2i(4,2)+offset].clear()
+		garden.pots[HoneyGardenSystem.CENTERS[1]+offset].clear()
 	_jump(10)
 	assert_almost_eq(hive.production.work,30.0,0.001)
 	assert_eq(hive.production.batch_recipe,"mono_06")
@@ -198,7 +198,7 @@ func test_fixed_neighbors_snapshot_and_live_rate_fallback() -> void:
 func test_rain_keeps_recipe_and_wind_only_boosts_garden_speed() -> void:
 	assert_true(service.try_migrate())
 	for offset: Vector2i in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
-		_flower(Vector2i(4,2)+offset)
+		_flower(HoneyGardenSystem.CENTERS[1]+offset)
 	world.weather.set_weather(WeatherSchedule.Weather.RAIN)
 	_jump(10)
 	assert_eq(_hive().production.batch_recipe,"mono_06")
@@ -310,7 +310,7 @@ func test_invalid_garden_batch_or_position_rejects_before_changing_world() -> vo
 	assert_false(adapter.restore(bad,clock[0]).ok)
 	bad = data.duplicate(true)
 	bad.beehives[0].position[0] += 16
-	assert_false(adapter.restore(bad,clock[0]).ok)
+	assert_true(adapter.restore(bad,clock[0]).ok, "Fixed hive positions follow trusted scene slots")
 	bad = data.duplicate(true)
 	bad.beehives[0].garden_slot = 1
 	assert_false(adapter.restore(bad,clock[0]).ok)
@@ -347,8 +347,8 @@ func test_repair_blocks_reentrant_commands_and_snapshot_during_notifications() -
 	assert_eq(bag.count_item(&"wood"),15)
 
 func test_pending_legacy_hive_can_load_before_overlapping_pots_are_relocated() -> void:
-	_flower(Vector2i(4,2))
-	var point: Vector2 = world.apiary.snap_position(garden.pots[Vector2i(4,2)].global_position)
+	_flower(HoneyGardenSystem.CENTERS[1])
+	var point: Vector2 = world.apiary.snap_position(garden.pots[HoneyGardenSystem.CENTERS[1]].global_position)
 	var old: Beehive = world.apiary.create_hive(point,&"old_layout")
 	old.production.work = 10.0
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world,SaveCatalog.new())
@@ -358,5 +358,5 @@ func test_pending_legacy_hive_can_load_before_overlapping_pots_are_relocated() -
 	assert_true(result.ok,str(result.get("error")))
 	assert_false(service.migrated)
 	assert_eq(world.apiary.hives[0].production.work,10.0)
-	assert_not_null(garden.pots[Vector2i(4,2)].definition)
+	assert_not_null(garden.pots[HoneyGardenSystem.CENTERS[1]].definition)
 	assert_false(service.try_migrate())

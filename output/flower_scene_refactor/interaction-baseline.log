@@ -1,0 +1,102 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+       [1] _parse_script (res://addons/gut/test_collector.gd:76)
+       [2] add_script (res://addons/gut/test_collector.gd:128)
+       [3] add_script (res://addons/gut/gut.gd:1070)
+       [4] _apply_options (res://addons/gut/gut_config.gd:139)
+       [5] apply_options (res://addons/gut/gut_config.gd:207)
+       [6] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+       [7] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [8] main (res://addons/gut/cli/gut_cli.gd:297)
+       [9] _init (res://addons/gut/gut_cmdln.gd:39)
+[4m
+
+res://tests/integration/test_unified_interaction.gd
+[0m* test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and_one_outline
+* test_e_requires_facing_and_obstacle_clearance_and_never_falls_back_to_trough
+* test_badge_has_live_stock_and_auto_fill_without_selecting_feed
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[31m    [Failed]:  [0m[450] expected to equal [600]:  
+      at line 106
+[31m    [Failed]:  [0m[0] expected to equal [50]:  
+      at line 107
+[31m    [Failed]:  [0m[5] expected to equal [4]:  
+      at line 109
+[31m    [Failed]:  [0mExpected 'Fill feed (450/600) · Storage feed: 0
+    Supply storage requires Poultry Feed' to contain '600/600', match_case=true
+      at line 111
+* test_e_water_finds_can_anywhere_in_bag_and_full_trough_blocks_lower_targets
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_click_npc_navigates_around_collision_and_opens_only_at_arrival
+[33m    --- Awaiting 4.0 seconds  ---
+[0m* test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority
+[33m    --- Awaiting 3.0 seconds  ---
+[0m[31m    [Failed]:  [0m[595] expected to equal [600]:  
+      at line 157
+[31m    [Failed]:  [0m[0] expected to equal [195]:  
+      at line 158
+* test_repeated_clicks_on_same_npc_keep_approaching_without_pauses_or_duplicate_actions
+[33m    --- Awaiting 1.5 seconds  ---
+[0m* test_new_focus_keyboard_and_deleted_target_cancel_queued_interaction
+[33m    --- Awaiting 0.8 seconds  ---
+[0m* test_unreachable_click_does_not_open_or_harvest
+[33m    --- Awaiting 5.0 seconds  ---
+[0m* test_land_price_badge_translation_and_confirm_only_debits
+[31m    [Failed]:  [0m[4] expected to equal [1]:  
+      at line 230
+* test_click_mature_crop_walks_then_harvests_once_and_empty_ground_only_focuses
+[33m    --- Awaiting 3.0 seconds  ---
+[0m[33m    --- Awaiting 1.5 seconds  ---
+[0m* test_animal_is_only_targeted_for_available_direct_output_and_collection_does_not_freeze_it
+[1m9/12 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_unified_interaction.gd
+[0m- test_badge_has_live_stock_and_auto_fill_without_selecting_feed
+[31m    [Failed]:  [0m[450] expected to equal [600]:  
+          at line 106
+[31m    [Failed]:  [0m[0] expected to equal [50]:  
+          at line 107
+[31m    [Failed]:  [0m[5] expected to equal [4]:  
+          at line 109
+[31m    [Failed]:  [0mExpected 'Fill feed (450/600) · Storage feed: 0
+    Supply storage requires Poultry Feed' to contain '600/600', match_case=true
+          at line 111
+- test_click_trough_remains_explicit_even_when_a_nearby_npc_has_e_priority
+[31m    [Failed]:  [0m[595] expected to equal [600]:  
+          at line 157
+[31m    [Failed]:  [0m[0] expected to equal [195]:  
+          at line 158
+- test_land_price_badge_translation_and_confirm_only_debits
+[31m    [Failed]:  [0m[4] expected to equal [1]:  
+          at line 230
+
+Totals
+------
+Scripts               1
+Tests                12
+Passing Tests         9
+Failing Tests         3
+Asserts           116/123
+Time              24.413s
+
+
+[31m---- 3 failing tests ----
+[0m

@@ -15,10 +15,10 @@ func _capture() -> void:
 	# Fill every actual cell to review the four equally spaced 7x4 blocks.
 	var index: int = 0
 	for cell: Vector2i in garden.pots:
+		index = cell.y * garden.Layout.COLUMNS + cell.x
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % (index % 30 + 1)
 		var definition: Resource = load(path)
 		garden.pots[cell].restore_state({"planted_at": 900.0, "growth_started_at": 900.0, "matures_at": 1000.0, "progress": 1.0}, definition, 1000.0)
-		index += 1
 	var player: Node = world.get_node("Player")
 	player.get_node("Camera2D").enabled = false
 	var camera: Camera2D = Camera2D.new()

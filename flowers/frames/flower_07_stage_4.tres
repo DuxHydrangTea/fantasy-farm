@@ -1,6 +1,29 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dhi4o25ny7qqa"]
 
-[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_07_potted.png" id="art"]
+[ext_resource type="Texture2D" uid="uid://c7su7d8vsok5t" path="res://assets/Flowers/Unzoom30/flower_07_marigold.png" id="art"]
 
 [resource]
-animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}], "loop": true, "name": &"grow", "speed": 8.0}]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("art")
+}, {
+"duration": 1.0,
+"texture": ExtResource("art")
+}, {
+"duration": 1.0,
+"texture": ExtResource("art")
+}, {
+"duration": 1.0,
+"texture": ExtResource("art")
+}, {
+"duration": 1.0,
+"texture": ExtResource("art")
+}, {
+"duration": 1.0,
+"texture": ExtResource("art")
+}],
+"loop": 1,
+"name": &"grow",
+"speed": 8.0
+}]

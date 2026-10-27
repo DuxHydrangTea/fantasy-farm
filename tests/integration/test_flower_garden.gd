@@ -40,19 +40,22 @@ func _impact() -> void:
 	state.animation.animated_sprite.frame = 3
 	interaction._on_frame_changed()
 
-func test_grid_is_112_unique_pots_in_four_even_blocks_with_cross_aisle() -> void:
-	assert_eq(garden.pots.size(), 112)
+func _pot_position(cell: Vector2i) -> Vector2:
+	return garden.to_local(garden.pots[cell].global_position)
+
+func test_grid_is_80_unique_pots_in_four_even_blocks_with_cross_aisle() -> void:
+	assert_eq(garden.pots.size(), 80)
 	assert_eq(FlowerGarden.SIZE, Vector2(384, 256))
 	var used: Dictionary = {}
 	for cell: Vector2i in garden.pots:
-		var position: Vector2 = garden.pots[cell].position
+		var position: Vector2 = _pot_position(cell)
 		assert_false(used.has(position))
 		used[position] = true
 		assert_false(position.x > 176 and position.x < 208)
 		assert_false(position.y > 112 and position.y < 144)
-	assert_eq(garden.pots[Vector2i(13, 7)].position, Vector2(354, 234))
-	assert_eq(garden.pots[Vector2i(1, 0)].position - pot.position, Vector2(22, 0))
-	assert_eq(garden.pots[Vector2i(0, 1)].position - pot.position, Vector2(0, 14))
+	assert_eq(_pot_position(Vector2i(11, 7)), Vector2(352, 234))
+	assert_eq(_pot_position(Vector2i(1, 0)) - _pot_position(Vector2i.ZERO), Vector2(32, 0))
+	assert_eq(_pot_position(Vector2i(0, 1)) - _pot_position(Vector2i.ZERO), Vector2(0, 22))
 	assert_eq(garden.get_node("Floor").get_used_cells().size(), 384)
 
 func test_focus_only_reaches_pot_in_front_and_not_from_far_away() -> void:
@@ -131,7 +134,7 @@ func test_eight_starting_flowers_cover_different_stages_and_do_not_respawn() -> 
 			stages[current.stage] = true
 	assert_eq(count, 8)
 	assert_eq(stages.size(), 5)
-	var ready: FlowerPot = garden.pots[Vector2i(12, 0)]
+	var ready: FlowerPot = garden.pots[Vector2i(11, 0)]
 	assert_true(ready.is_mature())
 	assert_true(ready.harvest(selection.inventory))
 	garden.add_starter_flowers(timestamp)
@@ -139,34 +142,36 @@ func test_eight_starting_flowers_cover_different_stages_and_do_not_respawn() -> 
 
 func test_four_blocks_share_identical_spacing_and_margins() -> void:
 	for row: int in range(4):
-		for col: int in range(7):
-			var point: Vector2 = garden.pots[Vector2i(col, row)].position
-			assert_eq(garden.pots[Vector2i(col+7, row)].position - point, Vector2(192, 0))
-			assert_eq(garden.pots[Vector2i(col, row+4)].position - point, Vector2(0, 128))
-			assert_eq(garden.pots[Vector2i(col+7, row+4)].position - point, Vector2(192, 128))
-	assert_eq(garden.pots[Vector2i(0, 3)].position.y, 106.0)
-	assert_eq(garden.pots[Vector2i(0, 7)].position.y, 234.0)
+		for col: int in range(5):
+			var point: Vector2 = _pot_position(Vector2i(col, row))
+			assert_eq(_pot_position(Vector2i(col+7, row)) - point, Vector2(192, 0))
+			assert_eq(_pot_position(Vector2i(col, row+4)) - point, Vector2(0, 128))
+			assert_eq(_pot_position(Vector2i(col+7, row+4)) - point, Vector2(192, 128))
+	assert_eq(_pot_position(Vector2i(0, 3)).y, 106.0)
+	assert_eq(_pot_position(Vector2i(0, 7)).y, 234.0)
 
-func test_actual_sprite_pixels_stay_inside_each_soil_bed_with_margin() -> void:
+func test_actual_sprite_pixels_stay_inside_authored_block_footprint() -> void:
 	var visual_bounds: Rect2 = Rect2()
 	var initialized: bool = false
 	for index: int in range(1, 31):
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % index
 		var definition: FlowerDefinition = load(path)
+		pot.definition = definition
 		for frames: SpriteFrames in definition.stage_frames:
+			pot.visual.show_plant(frames)
 			for frame: int in range(frames.get_frame_count(&"grow")):
-				var texture: Texture2D = frames.get_frame_texture(&"grow", frame)
-				var bounds: Rect2 = Rect2(texture.get_image().get_used_rect())
-				bounds.position -= Vector2(texture.get_width() * 0.5, texture.get_height())
+				pot.sprite.frame = frame
+				var bounds: Rect2 = pot.get_visual_rect()
 				visual_bounds = visual_bounds.merge(bounds) if initialized else bounds
 				initialized = true
 	for cell: Vector2i in garden.pots:
 		var soil: Rect2 = garden.Layout.soil_bounds_for(cell)
-		var inner: Rect2 = Rect2(soil.position + Vector2(3, 7), soil.size - Vector2(6, 14))
-		var placed: Rect2 = Rect2(garden.pots[cell].position + visual_bounds.position, visual_bounds.size)
+		var inner: Rect2 = Rect2(soil.position + Vector2(3, -17), soil.size + Vector2(-6, 10))
+		var relative: Transform2D = garden.global_transform.affine_inverse() * garden.pots[cell].global_transform
+		var placed: Rect2 = relative * visual_bounds
 		assert_true(inner.encloses(placed), "Visible plant/pot pixels cross the bed margin at " + str(cell))
 
-func test_dense_save_retains_all_180_flowers_and_refills_freed_pots() -> void:
+func test_dense_save_preserves_overflow_without_replanting_after_clear() -> void:
 	garden.reset()
 	garden.starter_flowers_added = true
 	var flower: FlowerDefinition = load("res://flowers/definitions/flower_01.tres")
@@ -175,10 +180,36 @@ func test_dense_save_retains_all_180_flowers_and_refills_freed_pots() -> void:
 			var row: Dictionary = {"cell": [x, y], "flower": "flower_01", "planted_at": 900.0, "growth_started_at": 900.0, "matures_at": 950.0, "progress": 1.0}
 			garden.restore_flower(row, flower, timestamp)
 	garden.restore_legacy_flowers()
-	assert_eq(garden.pots.size(), 112)
+	assert_eq(garden.pots.size(), 80)
 	assert_eq(garden.capture(timestamp).flowers.size(), 180)
 	pot.clear()
 	await get_tree().process_frame
-	assert_not_null(pot.definition)
-	assert_true(pot.is_mature())
+	assert_null(pot.definition, "Clearing a pot must not plant a legacy flower")
+	assert_false(pot.visual.flower.visible)
+	assert_true(pot.visual.pot_sprite.visible)
 	assert_eq(garden.capture(timestamp).flowers.size(), 179)
+	assert_eq(garden._legacy_flowers.size(), 100, "Unplaced legacy plants remain saved")
+
+func test_e_harvest_with_legacy_overflow_leaves_empty_pot_and_grants_original_flower() -> void:
+	garden.reset()
+	garden.starter_flowers_added = true
+	var flower: FlowerDefinition = load("res://flowers/definitions/flower_01.tres")
+	var legacy: FlowerDefinition = load("res://flowers/definitions/flower_02.tres")
+	var row: Dictionary = {"cell": [0, 0], "flower": "flower_01", "planted_at": 900.0, "growth_started_at": 900.0, "matures_at": 950.0, "progress": 1.0}
+	garden.restore_flower(row, flower, timestamp)
+	var overflow: Dictionary = row.duplicate(true)
+	overflow.cell = [17, 9]
+	overflow.flower = "flower_02"
+	garden.restore_flower(overflow, legacy, timestamp)
+	var before: int = selection.inventory.count_item(flower.harvest_item.item_id)
+	assert_true(state.use_selected_tool(&"harvest"))
+	_impact()
+	await get_tree().process_frame
+	assert_null(pot.definition, "E must leave the harvested pot empty even with legacy overflow")
+	assert_false(pot.visual.flower.visible)
+	assert_true(pot.visual.pot_sprite.visible)
+	assert_eq(selection.inventory.count_item(flower.harvest_item.item_id), before + flower.harvest_amount)
+	assert_eq(garden._legacy_flowers.size(), 1)
+	var saved: Dictionary = garden.capture(timestamp)
+	assert_eq(saved.flowers.size(), 1)
+	assert_eq(saved.flowers[0].flower, "flower_02", "The pending flower is preserved without replacing the harvested one")

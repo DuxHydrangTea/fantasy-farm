@@ -26,6 +26,26 @@
 [ext_resource type="Resource" path="res://items/trees/purple_blossom_sapling.tres" id="65_4iiqh"]
 [ext_resource type="Resource" path="res://items/trees/red_maple_sapling.tres" id="66_a7f1n"]
 [ext_resource type="Resource" path="res://items/trees/willow_sapling.tres" id="67_msbjh"]
+[ext_resource type="Resource" path="res://items/seeds/flower_11_seed.tres" id="flower_pack_11"]
+[ext_resource type="Resource" path="res://items/seeds/flower_12_seed.tres" id="flower_pack_12"]
+[ext_resource type="Resource" path="res://items/seeds/flower_13_seed.tres" id="flower_pack_13"]
+[ext_resource type="Resource" path="res://items/seeds/flower_14_seed.tres" id="flower_pack_14"]
+[ext_resource type="Resource" path="res://items/seeds/flower_15_seed.tres" id="flower_pack_15"]
+[ext_resource type="Resource" path="res://items/seeds/flower_16_seed.tres" id="flower_pack_16"]
+[ext_resource type="Resource" path="res://items/seeds/flower_17_seed.tres" id="flower_pack_17"]
+[ext_resource type="Resource" path="res://items/seeds/flower_18_seed.tres" id="flower_pack_18"]
+[ext_resource type="Resource" path="res://items/seeds/flower_19_seed.tres" id="flower_pack_19"]
+[ext_resource type="Resource" path="res://items/seeds/flower_20_seed.tres" id="flower_pack_20"]
+[ext_resource type="Resource" path="res://items/seeds/flower_21_seed.tres" id="flower_pack_21"]
+[ext_resource type="Resource" path="res://items/seeds/flower_22_seed.tres" id="flower_pack_22"]
+[ext_resource type="Resource" path="res://items/seeds/flower_23_seed.tres" id="flower_pack_23"]
+[ext_resource type="Resource" path="res://items/seeds/flower_24_seed.tres" id="flower_pack_24"]
+[ext_resource type="Resource" path="res://items/seeds/flower_25_seed.tres" id="flower_pack_25"]
+[ext_resource type="Resource" path="res://items/seeds/flower_26_seed.tres" id="flower_pack_26"]
+[ext_resource type="Resource" path="res://items/seeds/flower_27_seed.tres" id="flower_pack_27"]
+[ext_resource type="Resource" path="res://items/seeds/flower_28_seed.tres" id="flower_pack_28"]
+[ext_resource type="Resource" path="res://items/seeds/flower_29_seed.tres" id="flower_pack_29"]
+[ext_resource type="Resource" path="res://items/seeds/flower_30_seed.tres" id="flower_pack_30"]
 [ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="hive_item"]
 [ext_resource type="Resource" uid="uid://d3u31scn2lmn7" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
 [ext_resource type="Resource" uid="uid://bnuneadnyl63o" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
@@ -70,27 +90,6 @@
 [ext_resource type="Resource" uid="uid://c70ygql7pch63" path="res://items/trees/spruce_sapling.tres" id="tree_offer_item_6"]
 [ext_resource type="Resource" uid="uid://t4ko7gyg4qmx" path="res://items/tools/axe.tres" id="tree_offer_item_7"]
 [ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="wood_item"]
-
-[ext_resource type="Resource" path="res://items/seeds/flower_11_seed.tres" id="flower_pack_11"]
-[ext_resource type="Resource" path="res://items/seeds/flower_12_seed.tres" id="flower_pack_12"]
-[ext_resource type="Resource" path="res://items/seeds/flower_13_seed.tres" id="flower_pack_13"]
-[ext_resource type="Resource" path="res://items/seeds/flower_14_seed.tres" id="flower_pack_14"]
-[ext_resource type="Resource" path="res://items/seeds/flower_15_seed.tres" id="flower_pack_15"]
-[ext_resource type="Resource" path="res://items/seeds/flower_16_seed.tres" id="flower_pack_16"]
-[ext_resource type="Resource" path="res://items/seeds/flower_17_seed.tres" id="flower_pack_17"]
-[ext_resource type="Resource" path="res://items/seeds/flower_18_seed.tres" id="flower_pack_18"]
-[ext_resource type="Resource" path="res://items/seeds/flower_19_seed.tres" id="flower_pack_19"]
-[ext_resource type="Resource" path="res://items/seeds/flower_20_seed.tres" id="flower_pack_20"]
-[ext_resource type="Resource" path="res://items/seeds/flower_21_seed.tres" id="flower_pack_21"]
-[ext_resource type="Resource" path="res://items/seeds/flower_22_seed.tres" id="flower_pack_22"]
-[ext_resource type="Resource" path="res://items/seeds/flower_23_seed.tres" id="flower_pack_23"]
-[ext_resource type="Resource" path="res://items/seeds/flower_24_seed.tres" id="flower_pack_24"]
-[ext_resource type="Resource" path="res://items/seeds/flower_25_seed.tres" id="flower_pack_25"]
-[ext_resource type="Resource" path="res://items/seeds/flower_26_seed.tres" id="flower_pack_26"]
-[ext_resource type="Resource" path="res://items/seeds/flower_27_seed.tres" id="flower_pack_27"]
-[ext_resource type="Resource" path="res://items/seeds/flower_28_seed.tres" id="flower_pack_28"]
-[ext_resource type="Resource" path="res://items/seeds/flower_29_seed.tres" id="flower_pack_29"]
-[ext_resource type="Resource" path="res://items/seeds/flower_30_seed.tres" id="flower_pack_30"]
 
 [sub_resource type="Resource" id="Offer_0"]
 script = ExtResource("2_offer")
@@ -549,7 +548,6 @@ script = ExtResource("2_offer")
 item = ExtResource("flower_pack_30")
 price = 100000
 category = 2
-
 
 [resource]
 script = ExtResource("1_catalog")

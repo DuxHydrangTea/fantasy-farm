@@ -55,7 +55,7 @@ func sprite() -> Node2D:
 		Kind.TROUGH: return (node as AnimalTrough).sprite
 		Kind.ANIMAL: return (node as AnimalActor).sprite
 		Kind.CROP: return (node as Crop).sprite
-		Kind.FLOWER: return (node as FlowerPot).sprite
+		Kind.FLOWER: return (node as FlowerPot).get_status_sprite()
 		Kind.TREE: return (node as PerennialTree).sprite
 		Kind.ORDER_BOARD: return (node as OrderBoard).sprite
 		Kind.PEN_BOARD: return (node as PenBoard).sprite

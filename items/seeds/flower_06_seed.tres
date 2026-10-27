@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://c0n3qw4i60yq6"]
 
-[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
-[ext_resource type="Resource" path="res://flowers/definitions/flower_06.tres" id="flower"]
-[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_06_hydrangea_seed.png" id="icon"]
+[ext_resource type="Resource" uid="uid://cxynth2k0rmq8" path="res://flowers/definitions/flower_06.tres" id="flower"]
+[ext_resource type="Texture2D" uid="uid://cu4l7vqesis3l" path="res://assets/Icons/seeds/flowers48/flower_06_hydrangea_seed.png" id="icon"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="script"]
 
 [resource]
 script = ExtResource("script")

@@ -475,7 +475,7 @@ func test_version_two_garden_migration_preserves_flowers_in_reduced_layout() -> 
 	assert_true(adapter.restore(saved, timestamp).ok)
 	assert_eq(JSON.stringify(saved), original, "Migration must not alter the source snapshot")
 	var garden: Node = world.get_node("FlowerGarden")
-	assert_eq(garden.pots.size(), 112)
+	assert_eq(garden.pots.size(), 80)
 	var restored: int = 0
 	for current: Node in garden.pots.values():
 		if current.definition == null:

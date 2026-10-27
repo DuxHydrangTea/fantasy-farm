@@ -1,0 +1,1397 @@
+[gd_scene format=4 uid="uid://bt6yijivg2evt"]
+
+[ext_resource type="Script" uid="uid://b3o2q0l58xmml" path="res://components/flowers/flower_garden.gd" id="1_jqxow"]
+[ext_resource type="TileSet" uid="uid://cwpxdpyx8pbmo" path="res://flowers/garden_floor.tres" id="2_xpb02"]
+[ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="3_2udwj"]
+[ext_resource type="PackedScene" uid="uid://ruv13fvk6mjw" path="res://scenes/flowers/flower_pot.tscn" id="3_ca7eo"]
+[ext_resource type="SpriteFrames" uid="uid://cnvlv83t2wvib" path="res://flowers/frames/flower_01_stage_5.tres" id="5_1m84l"]
+[ext_resource type="Resource" uid="uid://ckh0o4f64bkxn" path="res://flowers/definitions/flower_01.tres" id="5_2v43s"]
+[ext_resource type="Resource" uid="uid://b2rfstir7l7i2" path="res://items/seeds/flower_01_seed.tres" id="5_5tqj7"]
+[ext_resource type="Resource" uid="uid://chuc4drata6b1" path="res://flowers/definitions/flower_02.tres" id="6_jeka5"]
+[ext_resource type="Resource" uid="uid://dbetjtr0xtlt2" path="res://items/seeds/flower_02_seed.tres" id="6_tc156"]
+[ext_resource type="Resource" uid="uid://biwflle2a807t" path="res://items/seeds/flower_03_seed.tres" id="7_5skkv"]
+[ext_resource type="SpriteFrames" uid="uid://jy6akdq3ky27" path="res://flowers/frames/flower_02_stage_5.tres" id="7_7uch2"]
+[ext_resource type="Resource" uid="uid://dfr3tc3sbkg2m" path="res://flowers/definitions/flower_03.tres" id="7_nd4xp"]
+[ext_resource type="Resource" uid="uid://cf5jd6qs0k0pu" path="res://items/seeds/flower_04_seed.tres" id="8_0movj"]
+[ext_resource type="Resource" uid="uid://7w0collijikq" path="res://flowers/definitions/flower_04.tres" id="8_051dh"]
+[ext_resource type="SpriteFrames" uid="uid://cdqks26047oqy" path="res://flowers/frames/flower_03_stage_5.tres" id="9_1q5qu"]
+[ext_resource type="Resource" uid="uid://dw36nti33uy3t" path="res://flowers/definitions/flower_05.tres" id="9_63bhv"]
+[ext_resource type="Resource" uid="uid://8pwu1aep0l0y" path="res://items/seeds/flower_05_seed.tres" id="9_lam84"]
+[ext_resource type="Resource" uid="uid://c0n3qw4i60yq6" path="res://items/seeds/flower_06_seed.tres" id="10_i34y4"]
+[ext_resource type="Resource" uid="uid://cxynth2k0rmq8" path="res://flowers/definitions/flower_06.tres" id="10_uwe03"]
+[ext_resource type="Resource" uid="uid://xwlvnwgrdeog" path="res://items/seeds/flower_07_seed.tres" id="11_aiogh"]
+[ext_resource type="SpriteFrames" uid="uid://vkgo67h8h23h" path="res://flowers/frames/flower_04_stage_5.tres" id="11_llqjs"]
+[ext_resource type="Resource" uid="uid://c5avqslerq7eq" path="res://flowers/definitions/flower_07.tres" id="11_mwfep"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_15.tres" id="12_i3cce"]
+[ext_resource type="Resource" uid="uid://oc1m5iynubip" path="res://items/seeds/flower_08_seed.tres" id="12_toaos"]
+[ext_resource type="Resource" uid="uid://b0vbs0nau4ce5" path="res://items/seeds/flower_09_seed.tres" id="13_3by4u"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_16.tres" id="13_3xgen"]
+[ext_resource type="SpriteFrames" uid="uid://qd2rifcfyy45" path="res://flowers/frames/flower_05_stage_5.tres" id="13_qfk2a"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_17.tres" id="14_6bxox"]
+[ext_resource type="Resource" uid="uid://bl7ve8t12yjfo" path="res://items/seeds/flower_10_seed.tres" id="14_18ind"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_18.tres" id="15_n0rfp"]
+[ext_resource type="SpriteFrames" uid="uid://dyu10s8r6txr5" path="res://flowers/frames/flower_06_stage_5.tres" id="15_xlfu5"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_19.tres" id="16_s1kts"]
+[ext_resource type="SpriteFrames" uid="uid://je4rdgbcp7hf" path="res://flowers/frames/flower_07_stage_5.tres" id="17_tbhqj"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_20.tres" id="17_wqemt"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_21.tres" id="18_0c2pr"]
+[ext_resource type="SpriteFrames" uid="uid://j7frdwf4v8jw" path="res://flowers/frames/flower_15_stage_5.tres" id="19_f0ymq"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_29.tres" id="19_i3qyr"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_30.tres" id="20_vfukf"]
+[ext_resource type="SpriteFrames" uid="uid://8ej4o5yjnhyg" path="res://flowers/frames/flower_16_stage_5.tres" id="21_vl70m"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_13.tres" id="21_ympik"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_14.tres" id="22_x6nxv"]
+[ext_resource type="SpriteFrames" uid="uid://cdd4a626jrxtt" path="res://flowers/frames/flower_17_stage_5.tres" id="23_jj4mr"]
+[ext_resource type="Resource" uid="uid://btg1d7r8jbd4w" path="res://flowers/definitions/flower_08.tres" id="23_p2iwc"]
+[ext_resource type="Resource" uid="uid://cx73yjsewq145" path="res://flowers/definitions/flower_09.tres" id="24_i06t2"]
+[ext_resource type="Resource" uid="uid://cdgwqldi8cuux" path="res://flowers/definitions/flower_10.tres" id="25_woh4e"]
+[ext_resource type="SpriteFrames" uid="uid://c51x04s33tks0" path="res://flowers/frames/flower_18_stage_5.tres" id="25_wu3qe"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_11.tres" id="26_533rc"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_12.tres" id="27_75lo0"]
+[ext_resource type="SpriteFrames" uid="uid://bhmub30qf5esb" path="res://flowers/frames/flower_19_stage_5.tres" id="27_pn06t"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_22.tres" id="28_s5w3f"]
+[ext_resource type="SpriteFrames" uid="uid://iw3k560vxc7n" path="res://flowers/frames/flower_20_stage_5.tres" id="29_6pia0"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_23.tres" id="29_reu0t"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_24.tres" id="30_dwqlq"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_25.tres" id="31_1m84l"]
+[ext_resource type="SpriteFrames" uid="uid://5pfpeus0qty" path="res://flowers/frames/flower_21_stage_5.tres" id="31_a4agu"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_26.tres" id="32_7uch2"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_27.tres" id="33_1q5qu"]
+[ext_resource type="SpriteFrames" uid="uid://c2ni8hjp0b6ku" path="res://flowers/frames/flower_29_stage_5.tres" id="33_ot872"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_28.tres" id="34_llqjs"]
+[ext_resource type="SpriteFrames" uid="uid://dnfavgvsibi6i" path="res://flowers/frames/flower_30_stage_5.tres" id="35_g1hio"]
+[ext_resource type="SpriteFrames" uid="uid://bn0elw4tl53u2" path="res://flowers/frames/flower_13_stage_5.tres" id="37_xvoah"]
+[ext_resource type="SpriteFrames" uid="uid://c61465qnom1j0" path="res://flowers/frames/flower_14_stage_5.tres" id="39_htxlm"]
+[ext_resource type="SpriteFrames" uid="uid://da7wxrtqjpmvg" path="res://flowers/frames/flower_08_stage_5.tres" id="41_oo5ua"]
+[ext_resource type="SpriteFrames" uid="uid://bngajmd758nq2" path="res://flowers/frames/flower_09_stage_5.tres" id="43_twq6w"]
+[ext_resource type="SpriteFrames" uid="uid://dui4wpwgfi2oc" path="res://flowers/frames/flower_10_stage_5.tres" id="45_p6n37"]
+[ext_resource type="SpriteFrames" uid="uid://dvt80x8hqv4f7" path="res://flowers/frames/flower_11_stage_5.tres" id="47_vvsfp"]
+[ext_resource type="SpriteFrames" uid="uid://ddd1wpdbbpayo" path="res://flowers/frames/flower_12_stage_5.tres" id="49_26tba"]
+[ext_resource type="SpriteFrames" uid="uid://cj1h8eptiox28" path="res://flowers/frames/flower_22_stage_5.tres" id="51_e0l6p"]
+[ext_resource type="SpriteFrames" uid="uid://lq3g5fksrrtq" path="res://flowers/frames/flower_23_stage_5.tres" id="53_m5os5"]
+[ext_resource type="SpriteFrames" uid="uid://c4dnoc1qik3yu" path="res://flowers/frames/flower_24_stage_5.tres" id="55_tl5st"]
+[ext_resource type="SpriteFrames" uid="uid://bbneu1r0la1jj" path="res://flowers/frames/flower_25_stage_5.tres" id="57_ke8t1"]
+[ext_resource type="SpriteFrames" uid="uid://bgpr5s5qd28oj" path="res://flowers/frames/flower_26_stage_5.tres" id="59_lp1u8"]
+[ext_resource type="SpriteFrames" uid="uid://ctd107u1i8d3" path="res://flowers/frames/flower_27_stage_5.tres" id="61_0g6qa"]
+[ext_resource type="SpriteFrames" uid="uid://bn7hecen65t2r" path="res://flowers/frames/flower_28_stage_5.tres" id="63_bmnqh"]
+
+[node name="FlowerGarden" type="Node2D" unique_id=1957728385 node_paths=PackedStringArray("pot_container")]
+y_sort_enabled = true
+texture_filter = 1
+script = ExtResource("1_jqxow")
+pot_container = NodePath("Pots")
+
+[node name="Floor" type="TileMapLayer" parent="." unique_id=110476052]
+z_index = -2
+tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAABAAAAAAABAAEAAAACAAAAAAABAAEAAAADAAAAAAABAAEAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAJAAAAAAABAAEAAAAKAAAAAAABAAEAAAALAAAAAAABAAEAAAAMAAAAAAABAAEAAAANAAAAAAABAAEAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAATAAAAAAABAAEAAAAUAAAAAAABAAEAAAAVAAAAAAABAAEAAAAWAAAAAAABAAEAAAAXAAAAAAABAAEAAAAAAAEAAAABAAEAAAABAAEAAAABAAUAAAACAAEAAAABAAUAAAADAAEAAAABAAUAAAAEAAEAAAABAAUAAAAFAAEAAAABAAUAAAAGAAEAAAABAAUAAAAHAAEAAAABAAUAAAAIAAEAAAABAAUAAAAJAAEAAAABAAUAAAAKAAEAAAABAAUAAAALAAEAAAABAAEAAAAMAAEAAAABAAEAAAANAAEAAAABAAUAAAAOAAEAAAABAAUAAAAPAAEAAAABAAUAAAAQAAEAAAABAAUAAAARAAEAAAABAAUAAAASAAEAAAABAAUAAAATAAEAAAABAAUAAAAUAAEAAAABAAUAAAAVAAEAAAABAAUAAAAWAAEAAAABAAUAAAAXAAEAAAABAAEAAAAAAAIAAAABAAEAAAABAAIAAAABAAUAAAACAAIAAAABAAUAAAADAAIAAAABAAUAAAAEAAIAAAABAAUAAAAFAAIAAAABAAUAAAAGAAIAAAABAAUAAAAHAAIAAAABAAUAAAAIAAIAAAABAAUAAAAJAAIAAAABAAUAAAAKAAIAAAABAAUAAAALAAIAAAABAAEAAAAMAAIAAAABAAEAAAANAAIAAAABAAUAAAAOAAIAAAABAAUAAAAPAAIAAAABAAUAAAAQAAIAAAABAAUAAAARAAIAAAABAAUAAAASAAIAAAABAAUAAAATAAIAAAABAAUAAAAUAAIAAAABAAUAAAAVAAIAAAABAAUAAAAWAAIAAAABAAUAAAAXAAIAAAABAAEAAAAAAAMAAAABAAEAAAABAAMAAAABAAUAAAACAAMAAAABAAUAAAADAAMAAAABAAUAAAAEAAMAAAABAAUAAAAFAAMAAAABAAUAAAAGAAMAAAABAAUAAAAHAAMAAAABAAUAAAAIAAMAAAABAAUAAAAJAAMAAAABAAUAAAAKAAMAAAABAAUAAAALAAMAAAABAAEAAAAMAAMAAAABAAEAAAANAAMAAAABAAUAAAAOAAMAAAABAAUAAAAPAAMAAAABAAUAAAAQAAMAAAABAAUAAAARAAMAAAABAAUAAAASAAMAAAABAAUAAAATAAMAAAABAAUAAAAUAAMAAAABAAUAAAAVAAMAAAABAAUAAAAWAAMAAAABAAUAAAAXAAMAAAABAAEAAAAAAAQAAAABAAEAAAABAAQAAAABAAUAAAACAAQAAAABAAUAAAADAAQAAAABAAUAAAAEAAQAAAABAAUAAAAFAAQAAAABAAUAAAAGAAQAAAABAAUAAAAHAAQAAAABAAUAAAAIAAQAAAABAAUAAAAJAAQAAAABAAUAAAAKAAQAAAABAAUAAAALAAQAAAABAAEAAAAMAAQAAAABAAEAAAANAAQAAAABAAUAAAAOAAQAAAABAAUAAAAPAAQAAAABAAUAAAAQAAQAAAABAAUAAAARAAQAAAABAAUAAAASAAQAAAABAAUAAAATAAQAAAABAAUAAAAUAAQAAAABAAUAAAAVAAQAAAABAAUAAAAWAAQAAAABAAUAAAAXAAQAAAABAAEAAAAAAAUAAAABAAEAAAABAAUAAAABAAUAAAACAAUAAAABAAUAAAADAAUAAAABAAUAAAAEAAUAAAABAAUAAAAFAAUAAAABAAUAAAAGAAUAAAABAAUAAAAHAAUAAAABAAUAAAAIAAUAAAABAAUAAAAJAAUAAAABAAUAAAAKAAUAAAABAAUAAAALAAUAAAABAAEAAAAMAAUAAAABAAEAAAANAAUAAAABAAUAAAAOAAUAAAABAAUAAAAPAAUAAAABAAUAAAAQAAUAAAABAAUAAAARAAUAAAABAAUAAAASAAUAAAABAAUAAAATAAUAAAABAAUAAAAUAAUAAAABAAUAAAAVAAUAAAABAAUAAAAWAAUAAAABAAUAAAAXAAUAAAABAAEAAAAAAAYAAAABAAEAAAABAAYAAAABAAUAAAACAAYAAAABAAUAAAADAAYAAAABAAUAAAAEAAYAAAABAAUAAAAFAAYAAAABAAUAAAAGAAYAAAABAAUAAAAHAAYAAAABAAUAAAAIAAYAAAABAAUAAAAJAAYAAAABAAUAAAAKAAYAAAABAAUAAAALAAYAAAABAAEAAAAMAAYAAAABAAEAAAANAAYAAAABAAUAAAAOAAYAAAABAAUAAAAPAAYAAAABAAUAAAAQAAYAAAABAAUAAAARAAYAAAABAAUAAAASAAYAAAABAAUAAAATAAYAAAABAAUAAAAUAAYAAAABAAUAAAAVAAYAAAABAAUAAAAWAAYAAAABAAUAAAAXAAYAAAABAAEAAAAAAAcAAAABAAEAAAABAAcAAAABAAEAAAACAAcAAAABAAEAAAADAAcAAAABAAEAAAAEAAcAAAABAAEAAAAFAAcAAAABAAEAAAAGAAcAAAABAAEAAAAHAAcAAAABAAEAAAAIAAcAAAABAAEAAAAJAAcAAAABAAEAAAAKAAcAAAABAAEAAAALAAcAAAABAAEAAAAMAAcAAAABAAEAAAANAAcAAAABAAEAAAAOAAcAAAABAAEAAAAPAAcAAAABAAEAAAAQAAcAAAABAAEAAAARAAcAAAABAAEAAAASAAcAAAABAAEAAAATAAcAAAABAAEAAAAUAAcAAAABAAEAAAAVAAcAAAABAAEAAAAWAAcAAAABAAEAAAAXAAcAAAABAAEAAAAAAAgAAAABAAEAAAABAAgAAAABAAEAAAACAAgAAAABAAEAAAADAAgAAAABAAEAAAAEAAgAAAABAAEAAAAFAAgAAAABAAEAAAAGAAgAAAABAAEAAAAHAAgAAAABAAEAAAAIAAgAAAABAAEAAAAJAAgAAAABAAEAAAAKAAgAAAABAAEAAAALAAgAAAABAAEAAAAMAAgAAAABAAEAAAANAAgAAAABAAEAAAAOAAgAAAABAAEAAAAPAAgAAAABAAEAAAAQAAgAAAABAAEAAAARAAgAAAABAAEAAAASAAgAAAABAAEAAAATAAgAAAABAAEAAAAUAAgAAAABAAEAAAAVAAgAAAABAAEAAAAWAAgAAAABAAEAAAAXAAgAAAABAAEAAAAAAAkAAAABAAEAAAABAAkAAAABAAUAAAACAAkAAAABAAUAAAADAAkAAAABAAUAAAAEAAkAAAABAAUAAAAFAAkAAAABAAUAAAAGAAkAAAABAAUAAAAHAAkAAAABAAUAAAAIAAkAAAABAAUAAAAJAAkAAAABAAUAAAAKAAkAAAABAAUAAAALAAkAAAABAAEAAAAMAAkAAAABAAEAAAANAAkAAAABAAUAAAAOAAkAAAABAAUAAAAPAAkAAAABAAUAAAAQAAkAAAABAAUAAAARAAkAAAABAAUAAAASAAkAAAABAAUAAAATAAkAAAABAAUAAAAUAAkAAAABAAUAAAAVAAkAAAABAAUAAAAWAAkAAAABAAUAAAAXAAkAAAABAAEAAAAAAAoAAAABAAEAAAABAAoAAAABAAUAAAACAAoAAAABAAUAAAADAAoAAAABAAUAAAAEAAoAAAABAAUAAAAFAAoAAAABAAUAAAAGAAoAAAABAAUAAAAHAAoAAAABAAUAAAAIAAoAAAABAAUAAAAJAAoAAAABAAUAAAAKAAoAAAABAAUAAAALAAoAAAABAAEAAAAMAAoAAAABAAEAAAANAAoAAAABAAUAAAAOAAoAAAABAAUAAAAPAAoAAAABAAUAAAAQAAoAAAABAAUAAAARAAoAAAABAAUAAAASAAoAAAABAAUAAAATAAoAAAABAAUAAAAUAAoAAAABAAUAAAAVAAoAAAABAAUAAAAWAAoAAAABAAUAAAAXAAoAAAABAAEAAAAAAAsAAAABAAEAAAABAAsAAAABAAUAAAACAAsAAAABAAUAAAADAAsAAAABAAUAAAAEAAsAAAABAAUAAAAFAAsAAAABAAUAAAAGAAsAAAABAAUAAAAHAAsAAAABAAUAAAAIAAsAAAABAAUAAAAJAAsAAAABAAUAAAAKAAsAAAABAAUAAAALAAsAAAABAAEAAAAMAAsAAAABAAEAAAANAAsAAAABAAUAAAAOAAsAAAABAAUAAAAPAAsAAAABAAUAAAAQAAsAAAABAAUAAAARAAsAAAABAAUAAAASAAsAAAABAAUAAAATAAsAAAABAAUAAAAUAAsAAAABAAUAAAAVAAsAAAABAAUAAAAWAAsAAAABAAUAAAAXAAsAAAABAAEAAAAAAAwAAAABAAEAAAABAAwAAAABAAUAAAACAAwAAAABAAUAAAADAAwAAAABAAUAAAAEAAwAAAABAAUAAAAFAAwAAAABAAUAAAAGAAwAAAABAAUAAAAHAAwAAAABAAUAAAAIAAwAAAABAAUAAAAJAAwAAAABAAUAAAAKAAwAAAABAAUAAAALAAwAAAABAAEAAAAMAAwAAAABAAEAAAANAAwAAAABAAUAAAAOAAwAAAABAAUAAAAPAAwAAAABAAUAAAAQAAwAAAABAAUAAAARAAwAAAABAAUAAAASAAwAAAABAAUAAAATAAwAAAABAAUAAAAUAAwAAAABAAUAAAAVAAwAAAABAAUAAAAWAAwAAAABAAUAAAAXAAwAAAABAAEAAAAAAA0AAAABAAEAAAABAA0AAAABAAUAAAACAA0AAAABAAUAAAADAA0AAAABAAUAAAAEAA0AAAABAAUAAAAFAA0AAAABAAUAAAAGAA0AAAABAAUAAAAHAA0AAAABAAUAAAAIAA0AAAABAAUAAAAJAA0AAAABAAUAAAAKAA0AAAABAAUAAAALAA0AAAABAAEAAAAMAA0AAAABAAEAAAANAA0AAAABAAUAAAAOAA0AAAABAAUAAAAPAA0AAAABAAUAAAAQAA0AAAABAAUAAAARAA0AAAABAAUAAAASAA0AAAABAAUAAAATAA0AAAABAAUAAAAUAA0AAAABAAUAAAAVAA0AAAABAAUAAAAWAA0AAAABAAUAAAAXAA0AAAABAAEAAAAAAA4AAAABAAEAAAABAA4AAAABAAUAAAACAA4AAAABAAUAAAADAA4AAAABAAUAAAAEAA4AAAABAAUAAAAFAA4AAAABAAUAAAAGAA4AAAABAAUAAAAHAA4AAAABAAUAAAAIAA4AAAABAAUAAAAJAA4AAAABAAUAAAAKAA4AAAABAAUAAAALAA4AAAABAAEAAAAMAA4AAAABAAEAAAANAA4AAAABAAUAAAAOAA4AAAABAAUAAAAPAA4AAAABAAUAAAAQAA4AAAABAAUAAAARAA4AAAABAAUAAAASAA4AAAABAAUAAAATAA4AAAABAAUAAAAUAA4AAAABAAUAAAAVAA4AAAABAAUAAAAWAA4AAAABAAUAAAAXAA4AAAABAAEAAAAAAA8AAAABAAEAAAABAA8AAAABAAEAAAACAA8AAAABAAEAAAADAA8AAAABAAEAAAAEAA8AAAABAAEAAAAFAA8AAAABAAEAAAAGAA8AAAABAAEAAAAHAA8AAAABAAEAAAAIAA8AAAABAAEAAAAJAA8AAAABAAEAAAAKAA8AAAABAAEAAAALAA8AAAABAAEAAAAMAA8AAAABAAEAAAANAA8AAAABAAEAAAAOAA8AAAABAAEAAAAPAA8AAAABAAEAAAAQAA8AAAABAAEAAAARAA8AAAABAAEAAAASAA8AAAABAAEAAAATAA8AAAABAAEAAAAUAA8AAAABAAEAAAAVAA8AAAABAAEAAAAWAA8AAAABAAEAAAAXAA8AAAABAAEAAAA=")
+tile_set = ExtResource("2_xpb02")
+
+[node name="Pots" type="Node2D" parent="." unique_id=1351523064]
+y_sort_enabled = true
+
+[node name="BlockTopLeft" type="Node2D" parent="Pots" unique_id=1472434478]
+y_sort_enabled = true
+
+[node name="Pot_00_00" parent="Pots/BlockTopLeft" unique_id=971002361 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 40)
+preview_flower = ExtResource("5_2v43s")
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_00_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(971002361, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("5_1m84l")
+frame_progress = 0.2996814
+
+[node name="Pot_01_00" parent="Pots/BlockTopLeft" unique_id=1551781025 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 40)
+preview_flower = ExtResource("6_jeka5")
+cell = Vector2i(1, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_01_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1551781025, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("7_7uch2")
+frame_progress = 0.2996814
+
+[node name="Pot_02_00" parent="Pots/BlockTopLeft" unique_id=1697445278 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 40)
+preview_flower = ExtResource("7_nd4xp")
+cell = Vector2i(2, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_02_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1697445278, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("9_1q5qu")
+frame_progress = 0.2996814
+
+[node name="Pot_03_00" parent="Pots/BlockTopLeft" unique_id=1069108352 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 40)
+preview_flower = ExtResource("8_051dh")
+cell = Vector2i(3, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_03_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1069108352, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("11_llqjs")
+frame_progress = 0.2996814
+
+[node name="Pot_04_00" parent="Pots/BlockTopLeft" unique_id=976372087 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 40)
+preview_flower = ExtResource("9_63bhv")
+cell = Vector2i(4, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_04_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(976372087, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("13_qfk2a")
+frame_progress = 0.2996814
+
+[node name="Pot_05_00" parent="Pots/BlockTopLeft" unique_id=312209363 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 40)
+preview_flower = ExtResource("10_uwe03")
+cell = Vector2i(5, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_05_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(312209363, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("15_xlfu5")
+frame_progress = 0.2996814
+
+[node name="Pot_06_00" parent="Pots/BlockTopLeft" unique_id=1723824099 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 40)
+preview_flower = ExtResource("11_mwfep")
+cell = Vector2i(6, 0)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_06_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1723824099, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("17_tbhqj")
+frame_progress = 0.2996814
+
+[node name="Pot_00_01" parent="Pots/BlockTopLeft" unique_id=1849058656 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 62)
+preview_flower = ExtResource("12_i3cce")
+cell = Vector2i(0, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_00_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1849058656, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("19_f0ymq")
+frame_progress = 0.2996814
+
+[node name="Pot_01_01" parent="Pots/BlockTopLeft" unique_id=1373764378 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 62)
+preview_flower = ExtResource("13_3xgen")
+cell = Vector2i(1, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_01_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1373764378, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("21_vl70m")
+frame_progress = 0.2996814
+
+[node name="Pot_02_01" parent="Pots/BlockTopLeft" unique_id=223692426 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 62)
+preview_flower = ExtResource("14_6bxox")
+cell = Vector2i(2, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_02_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(223692426, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("23_jj4mr")
+frame_progress = 0.2996814
+
+[node name="Pot_03_01" parent="Pots/BlockTopLeft" unique_id=1567706473 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 62)
+preview_flower = ExtResource("15_n0rfp")
+cell = Vector2i(3, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_03_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1567706473, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("25_wu3qe")
+frame_progress = 0.2996814
+
+[node name="Pot_04_01" parent="Pots/BlockTopLeft" unique_id=1010078152 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 62)
+preview_flower = ExtResource("16_s1kts")
+cell = Vector2i(4, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_04_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1010078152, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("27_pn06t")
+frame_progress = 0.2996814
+
+[node name="Pot_05_01" parent="Pots/BlockTopLeft" unique_id=1717586544 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 62)
+preview_flower = ExtResource("17_wqemt")
+cell = Vector2i(5, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_05_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1717586544, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("29_6pia0")
+frame_progress = 0.2996814
+
+[node name="Pot_06_01" parent="Pots/BlockTopLeft" unique_id=2094526601 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 62)
+preview_flower = ExtResource("18_0c2pr")
+cell = Vector2i(6, 1)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_06_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2094526601, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("31_a4agu")
+frame_progress = 0.2996814
+
+[node name="Pot_00_02" parent="Pots/BlockTopLeft" unique_id=1316225997 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 83)
+preview_flower = ExtResource("19_i3qyr")
+cell = Vector2i(0, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_00_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1316225997, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("33_ot872")
+frame_progress = 0.2996814
+
+[node name="Pot_01_02" parent="Pots/BlockTopLeft" unique_id=1527623194 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 83)
+preview_flower = ExtResource("20_vfukf")
+cell = Vector2i(1, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_01_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1527623194, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("35_g1hio")
+frame_progress = 0.2996814
+
+[node name="Pot_02_02" parent="Pots/BlockTopLeft" unique_id=1252470394 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 83)
+preview_flower = ExtResource("5_2v43s")
+cell = Vector2i(2, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_02_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1252470394, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("5_1m84l")
+frame_progress = 0.2996814
+
+[node name="Pot_03_02" parent="Pots/BlockTopLeft" unique_id=179650090 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 83)
+preview_flower = ExtResource("6_jeka5")
+cell = Vector2i(3, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_03_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(179650090, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("7_7uch2")
+frame_progress = 0.2996814
+
+[node name="Pot_04_02" parent="Pots/BlockTopLeft" unique_id=61557736 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 83)
+preview_flower = ExtResource("7_nd4xp")
+cell = Vector2i(4, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_04_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(61557736, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("9_1q5qu")
+frame_progress = 0.2996814
+
+[node name="Pot_05_02" parent="Pots/BlockTopLeft" unique_id=387184123 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 83)
+preview_flower = ExtResource("8_051dh")
+cell = Vector2i(5, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_05_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(387184123, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("11_llqjs")
+frame_progress = 0.2996814
+
+[node name="Pot_06_02" parent="Pots/BlockTopLeft" unique_id=1919233285 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 83)
+preview_flower = ExtResource("9_63bhv")
+cell = Vector2i(6, 2)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_06_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1919233285, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("13_qfk2a")
+frame_progress = 0.2996814
+
+[node name="Pot_00_03" parent="Pots/BlockTopLeft" unique_id=801792252 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 106)
+preview_flower = ExtResource("21_ympik")
+cell = Vector2i(0, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_00_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(801792252, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("37_xvoah")
+frame_progress = 0.2996814
+
+[node name="Pot_01_03" parent="Pots/BlockTopLeft" unique_id=97969686 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 106)
+preview_flower = ExtResource("22_x6nxv")
+cell = Vector2i(1, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_01_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(97969686, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("39_htxlm")
+frame_progress = 0.2996814
+
+[node name="Pot_02_03" parent="Pots/BlockTopLeft" unique_id=192665491 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 106)
+preview_flower = ExtResource("12_i3cce")
+cell = Vector2i(2, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_02_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(192665491, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("19_f0ymq")
+frame_progress = 0.2996814
+
+[node name="Pot_03_03" parent="Pots/BlockTopLeft" unique_id=1028490416 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 106)
+preview_flower = ExtResource("13_3xgen")
+cell = Vector2i(3, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_03_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1028490416, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("21_vl70m")
+frame_progress = 0.2996814
+
+[node name="Pot_04_03" parent="Pots/BlockTopLeft" unique_id=719131705 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 106)
+preview_flower = ExtResource("14_6bxox")
+cell = Vector2i(4, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_04_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(719131705, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("23_jj4mr")
+frame_progress = 0.2996814
+
+[node name="Pot_05_03" parent="Pots/BlockTopLeft" unique_id=680188713 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 106)
+preview_flower = ExtResource("15_n0rfp")
+cell = Vector2i(5, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_05_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(680188713, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("25_wu3qe")
+frame_progress = 0.2996814
+
+[node name="Pot_06_03" parent="Pots/BlockTopLeft" unique_id=181890847 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 106)
+preview_flower = ExtResource("16_s1kts")
+cell = Vector2i(6, 3)
+
+[node name="Flower" parent="Pots/BlockTopLeft/Pot_06_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(181890847, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("27_pn06t")
+frame_progress = 0.2996814
+
+[node name="BlockTopRight" type="Node2D" parent="Pots" unique_id=1517646944]
+y_sort_enabled = true
+position = Vector2(192, 0)
+
+[node name="Pot_07_00" parent="Pots/BlockTopRight" unique_id=742173537 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 40)
+preview_flower = ExtResource("23_p2iwc")
+cell = Vector2i(7, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_07_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(742173537, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("41_oo5ua")
+frame_progress = 0.2996814
+
+[node name="Pot_08_00" parent="Pots/BlockTopRight" unique_id=93526971 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 40)
+preview_flower = ExtResource("24_i06t2")
+cell = Vector2i(8, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_08_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(93526971, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("43_twq6w")
+frame_progress = 0.2996814
+
+[node name="Pot_09_00" parent="Pots/BlockTopRight" unique_id=923327900 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 40)
+preview_flower = ExtResource("25_woh4e")
+cell = Vector2i(9, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_09_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(923327900, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("45_p6n37")
+frame_progress = 0.2996814
+
+[node name="Pot_10_00" parent="Pots/BlockTopRight" unique_id=1582419106 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 40)
+preview_flower = ExtResource("26_533rc")
+cell = Vector2i(10, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_10_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1582419106, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("47_vvsfp")
+frame_progress = 0.2996814
+
+[node name="Pot_11_00" parent="Pots/BlockTopRight" unique_id=1253601479 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 40)
+preview_flower = ExtResource("27_75lo0")
+cell = Vector2i(11, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_11_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1253601479, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("49_26tba")
+frame_progress = 0.2996814
+
+[node name="Pot_12_00" parent="Pots/BlockTopRight" unique_id=1908996425 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 40)
+preview_flower = ExtResource("21_ympik")
+cell = Vector2i(12, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_12_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1908996425, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("37_xvoah")
+frame_progress = 0.2996814
+
+[node name="Pot_13_00" parent="Pots/BlockTopRight" unique_id=912976391 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 40)
+preview_flower = ExtResource("22_x6nxv")
+cell = Vector2i(13, 0)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_13_00/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(912976391, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("39_htxlm")
+frame_progress = 0.2996814
+
+[node name="Pot_07_01" parent="Pots/BlockTopRight" unique_id=202580342 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 62)
+preview_flower = ExtResource("28_s5w3f")
+cell = Vector2i(7, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_07_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(202580342, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("51_e0l6p")
+frame_progress = 0.2996814
+
+[node name="Pot_08_01" parent="Pots/BlockTopRight" unique_id=1121605713 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 62)
+preview_flower = ExtResource("29_reu0t")
+cell = Vector2i(8, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_08_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1121605713, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("53_m5os5")
+frame_progress = 0.2996814
+
+[node name="Pot_09_01" parent="Pots/BlockTopRight" unique_id=1366295980 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 62)
+preview_flower = ExtResource("30_dwqlq")
+cell = Vector2i(9, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_09_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1366295980, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("55_tl5st")
+frame_progress = 0.2996814
+
+[node name="Pot_10_01" parent="Pots/BlockTopRight" unique_id=2002389642 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 62)
+preview_flower = ExtResource("31_1m84l")
+cell = Vector2i(10, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_10_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2002389642, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("57_ke8t1")
+frame_progress = 0.2996814
+
+[node name="Pot_11_01" parent="Pots/BlockTopRight" unique_id=295992877 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 62)
+preview_flower = ExtResource("32_7uch2")
+cell = Vector2i(11, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_11_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(295992877, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("59_lp1u8")
+frame_progress = 0.2996814
+
+[node name="Pot_12_01" parent="Pots/BlockTopRight" unique_id=303578351 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 62)
+preview_flower = ExtResource("33_1q5qu")
+cell = Vector2i(12, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_12_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(303578351, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("61_0g6qa")
+frame_progress = 0.2996814
+
+[node name="Pot_13_01" parent="Pots/BlockTopRight" unique_id=1479454206 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 62)
+preview_flower = ExtResource("34_llqjs")
+cell = Vector2i(13, 1)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_13_01/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1479454206, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("63_bmnqh")
+frame_progress = 0.2996814
+
+[node name="Pot_07_02" parent="Pots/BlockTopRight" unique_id=349463431 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 83)
+preview_flower = ExtResource("10_uwe03")
+cell = Vector2i(7, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_07_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(349463431, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("15_xlfu5")
+frame_progress = 0.2996814
+
+[node name="Pot_08_02" parent="Pots/BlockTopRight" unique_id=1421215162 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 83)
+preview_flower = ExtResource("11_mwfep")
+cell = Vector2i(8, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_08_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1421215162, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("17_tbhqj")
+frame_progress = 0.2996814
+
+[node name="Pot_09_02" parent="Pots/BlockTopRight" unique_id=1595764048 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 83)
+preview_flower = ExtResource("23_p2iwc")
+cell = Vector2i(9, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_09_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1595764048, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("41_oo5ua")
+frame_progress = 0.2996814
+
+[node name="Pot_10_02" parent="Pots/BlockTopRight" unique_id=125045975 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 83)
+preview_flower = ExtResource("24_i06t2")
+cell = Vector2i(10, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_10_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(125045975, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("43_twq6w")
+frame_progress = 0.2996814
+
+[node name="Pot_11_02" parent="Pots/BlockTopRight" unique_id=1054219279 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 83)
+preview_flower = ExtResource("25_woh4e")
+cell = Vector2i(11, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_11_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1054219279, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("45_p6n37")
+frame_progress = 0.2996814
+
+[node name="Pot_12_02" parent="Pots/BlockTopRight" unique_id=181312680 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 83)
+preview_flower = ExtResource("26_533rc")
+cell = Vector2i(12, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_12_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(181312680, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("47_vvsfp")
+frame_progress = 0.2996814
+
+[node name="Pot_13_02" parent="Pots/BlockTopRight" unique_id=281146130 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 83)
+preview_flower = ExtResource("27_75lo0")
+cell = Vector2i(13, 2)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_13_02/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(281146130, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("49_26tba")
+frame_progress = 0.2996814
+
+[node name="Pot_07_03" parent="Pots/BlockTopRight" unique_id=69586532 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 106)
+preview_flower = ExtResource("17_wqemt")
+cell = Vector2i(7, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_07_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(69586532, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("29_6pia0")
+frame_progress = 0.2996814
+
+[node name="Pot_08_03" parent="Pots/BlockTopRight" unique_id=685795812 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 106)
+preview_flower = ExtResource("18_0c2pr")
+cell = Vector2i(8, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_08_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(685795812, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("31_a4agu")
+frame_progress = 0.2996814
+
+[node name="Pot_09_03" parent="Pots/BlockTopRight" unique_id=1308177727 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 106)
+preview_flower = ExtResource("28_s5w3f")
+cell = Vector2i(9, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_09_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1308177727, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("51_e0l6p")
+frame_progress = 0.2996814
+
+[node name="Pot_10_03" parent="Pots/BlockTopRight" unique_id=1626339850 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 106)
+preview_flower = ExtResource("29_reu0t")
+cell = Vector2i(10, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_10_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1626339850, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("53_m5os5")
+frame_progress = 0.2996814
+
+[node name="Pot_11_03" parent="Pots/BlockTopRight" unique_id=880532545 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 106)
+preview_flower = ExtResource("30_dwqlq")
+cell = Vector2i(11, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_11_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(880532545, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("55_tl5st")
+frame_progress = 0.2996814
+
+[node name="Pot_12_03" parent="Pots/BlockTopRight" unique_id=1883033473 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 106)
+preview_flower = ExtResource("31_1m84l")
+cell = Vector2i(12, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_12_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1883033473, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("57_ke8t1")
+frame_progress = 0.2996814
+
+[node name="Pot_13_03" parent="Pots/BlockTopRight" unique_id=102325019 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 106)
+preview_flower = ExtResource("32_7uch2")
+cell = Vector2i(13, 3)
+
+[node name="Flower" parent="Pots/BlockTopRight/Pot_13_03/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(102325019, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("59_lp1u8")
+frame_progress = 0.2996814
+
+[node name="BlockBottomLeft" type="Node2D" parent="Pots" unique_id=1383210881]
+y_sort_enabled = true
+position = Vector2(0, 128)
+
+[node name="Pot_00_04" parent="Pots/BlockBottomLeft" unique_id=480995312 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 40)
+preview_flower = ExtResource("33_1q5qu")
+cell = Vector2i(0, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_00_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(480995312, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("61_0g6qa")
+frame_progress = 0.2996814
+
+[node name="Pot_01_04" parent="Pots/BlockBottomLeft" unique_id=87742564 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 40)
+preview_flower = ExtResource("34_llqjs")
+cell = Vector2i(1, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_01_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(87742564, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("63_bmnqh")
+frame_progress = 0.2996814
+
+[node name="Pot_02_04" parent="Pots/BlockBottomLeft" unique_id=1202297523 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 40)
+preview_flower = ExtResource("19_i3qyr")
+cell = Vector2i(2, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_02_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1202297523, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("33_ot872")
+frame_progress = 0.2996814
+
+[node name="Pot_03_04" parent="Pots/BlockBottomLeft" unique_id=1151361698 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 40)
+preview_flower = ExtResource("20_vfukf")
+cell = Vector2i(3, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_03_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1151361698, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("35_g1hio")
+frame_progress = 0.2996814
+
+[node name="Pot_04_04" parent="Pots/BlockBottomLeft" unique_id=272340456 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 40)
+preview_flower = ExtResource("5_2v43s")
+cell = Vector2i(4, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_04_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(272340456, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("5_1m84l")
+frame_progress = 0.2996814
+
+[node name="Pot_05_04" parent="Pots/BlockBottomLeft" unique_id=234085794 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 40)
+preview_flower = ExtResource("6_jeka5")
+cell = Vector2i(5, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_05_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(234085794, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("7_7uch2")
+frame_progress = 0.2996814
+
+[node name="Pot_06_04" parent="Pots/BlockBottomLeft" unique_id=1420635412 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 40)
+preview_flower = ExtResource("7_nd4xp")
+cell = Vector2i(6, 4)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_06_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1420635412, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("9_1q5qu")
+frame_progress = 0.2996814
+
+[node name="Pot_00_05" parent="Pots/BlockBottomLeft" unique_id=2090690296 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 62)
+preview_flower = ExtResource("26_533rc")
+cell = Vector2i(0, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_00_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2090690296, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("47_vvsfp")
+frame_progress = 0.2996814
+
+[node name="Pot_01_05" parent="Pots/BlockBottomLeft" unique_id=290251418 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 62)
+preview_flower = ExtResource("27_75lo0")
+cell = Vector2i(1, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_01_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(290251418, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("49_26tba")
+frame_progress = 0.2996814
+
+[node name="Pot_02_05" parent="Pots/BlockBottomLeft" unique_id=89559511 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 62)
+preview_flower = ExtResource("21_ympik")
+cell = Vector2i(2, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_02_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(89559511, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("37_xvoah")
+frame_progress = 0.2996814
+
+[node name="Pot_03_05" parent="Pots/BlockBottomLeft" unique_id=38771583 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 62)
+preview_flower = ExtResource("22_x6nxv")
+cell = Vector2i(3, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_03_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(38771583, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("39_htxlm")
+frame_progress = 0.2996814
+
+[node name="Pot_04_05" parent="Pots/BlockBottomLeft" unique_id=59360319 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 62)
+preview_flower = ExtResource("12_i3cce")
+cell = Vector2i(4, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_04_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(59360319, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("19_f0ymq")
+frame_progress = 0.2996814
+
+[node name="Pot_05_05" parent="Pots/BlockBottomLeft" unique_id=2008586948 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 62)
+preview_flower = ExtResource("13_3xgen")
+cell = Vector2i(5, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_05_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2008586948, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("21_vl70m")
+frame_progress = 0.2996814
+
+[node name="Pot_06_05" parent="Pots/BlockBottomLeft" unique_id=775433871 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 62)
+preview_flower = ExtResource("14_6bxox")
+cell = Vector2i(6, 5)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_06_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(775433871, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("23_jj4mr")
+frame_progress = 0.2996814
+
+[node name="Pot_00_06" parent="Pots/BlockBottomLeft" unique_id=691556754 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 83)
+preview_flower = ExtResource("31_1m84l")
+cell = Vector2i(0, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_00_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(691556754, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("57_ke8t1")
+frame_progress = 0.2996814
+
+[node name="Pot_01_06" parent="Pots/BlockBottomLeft" unique_id=490529006 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 83)
+preview_flower = ExtResource("32_7uch2")
+cell = Vector2i(1, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_01_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(490529006, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("59_lp1u8")
+frame_progress = 0.2996814
+
+[node name="Pot_02_06" parent="Pots/BlockBottomLeft" unique_id=153296348 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 83)
+preview_flower = ExtResource("33_1q5qu")
+cell = Vector2i(2, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_02_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(153296348, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("61_0g6qa")
+frame_progress = 0.2996814
+
+[node name="Pot_03_06" parent="Pots/BlockBottomLeft" unique_id=603945358 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 83)
+preview_flower = ExtResource("34_llqjs")
+cell = Vector2i(3, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_03_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(603945358, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("63_bmnqh")
+frame_progress = 0.2996814
+
+[node name="Pot_04_06" parent="Pots/BlockBottomLeft" unique_id=1356743989 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 83)
+preview_flower = ExtResource("19_i3qyr")
+cell = Vector2i(4, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_04_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1356743989, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("33_ot872")
+frame_progress = 0.2996814
+
+[node name="Pot_05_06" parent="Pots/BlockBottomLeft" unique_id=592739485 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 83)
+preview_flower = ExtResource("20_vfukf")
+cell = Vector2i(5, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_05_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(592739485, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("35_g1hio")
+frame_progress = 0.2996814
+
+[node name="Pot_06_06" parent="Pots/BlockBottomLeft" unique_id=83400368 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 83)
+preview_flower = ExtResource("5_2v43s")
+cell = Vector2i(6, 6)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_06_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(83400368, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("5_1m84l")
+frame_progress = 0.2996814
+
+[node name="Pot_00_07" parent="Pots/BlockBottomLeft" unique_id=2133674329 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 106)
+preview_flower = ExtResource("24_i06t2")
+cell = Vector2i(0, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_00_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2133674329, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("43_twq6w")
+frame_progress = 0.2996814
+
+[node name="Pot_01_07" parent="Pots/BlockBottomLeft" unique_id=182378123 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 106)
+preview_flower = ExtResource("25_woh4e")
+cell = Vector2i(1, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_01_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(182378123, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("45_p6n37")
+frame_progress = 0.2996814
+
+[node name="Pot_02_07" parent="Pots/BlockBottomLeft" unique_id=645235389 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 106)
+preview_flower = ExtResource("26_533rc")
+cell = Vector2i(2, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_02_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(645235389, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("47_vvsfp")
+frame_progress = 0.2996814
+
+[node name="Pot_03_07" parent="Pots/BlockBottomLeft" unique_id=2074510193 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 106)
+preview_flower = ExtResource("27_75lo0")
+cell = Vector2i(3, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_03_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2074510193, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("49_26tba")
+frame_progress = 0.2996814
+
+[node name="Pot_04_07" parent="Pots/BlockBottomLeft" unique_id=1792344860 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 106)
+preview_flower = ExtResource("21_ympik")
+cell = Vector2i(4, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_04_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1792344860, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("37_xvoah")
+frame_progress = 0.2996814
+
+[node name="Pot_05_07" parent="Pots/BlockBottomLeft" unique_id=359370166 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 106)
+preview_flower = ExtResource("22_x6nxv")
+cell = Vector2i(5, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_05_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(359370166, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("39_htxlm")
+frame_progress = 0.2996814
+
+[node name="Pot_06_07" parent="Pots/BlockBottomLeft" unique_id=1393268796 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 106)
+preview_flower = ExtResource("12_i3cce")
+cell = Vector2i(6, 7)
+
+[node name="Flower" parent="Pots/BlockBottomLeft/Pot_06_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1393268796, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("19_f0ymq")
+frame_progress = 0.2996814
+
+[node name="BlockBottomRight" type="Node2D" parent="Pots" unique_id=528745585]
+y_sort_enabled = true
+position = Vector2(192, 128)
+
+[node name="Pot_07_04" parent="Pots/BlockBottomRight" unique_id=630287667 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 40)
+preview_flower = ExtResource("8_051dh")
+cell = Vector2i(7, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_07_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(630287667, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("11_llqjs")
+frame_progress = 0.2996814
+
+[node name="Pot_08_04" parent="Pots/BlockBottomRight" unique_id=499939678 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 40)
+preview_flower = ExtResource("9_63bhv")
+cell = Vector2i(8, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_08_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(499939678, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("13_qfk2a")
+frame_progress = 0.2996814
+
+[node name="Pot_09_04" parent="Pots/BlockBottomRight" unique_id=1333566603 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 40)
+preview_flower = ExtResource("10_uwe03")
+cell = Vector2i(9, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_09_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1333566603, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("15_xlfu5")
+frame_progress = 0.2996814
+
+[node name="Pot_10_04" parent="Pots/BlockBottomRight" unique_id=194520899 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 40)
+preview_flower = ExtResource("11_mwfep")
+cell = Vector2i(10, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_10_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(194520899, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("17_tbhqj")
+frame_progress = 0.2996814
+
+[node name="Pot_11_04" parent="Pots/BlockBottomRight" unique_id=351468091 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 40)
+preview_flower = ExtResource("23_p2iwc")
+cell = Vector2i(11, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_11_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(351468091, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("41_oo5ua")
+frame_progress = 0.2996814
+
+[node name="Pot_12_04" parent="Pots/BlockBottomRight" unique_id=935348965 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 40)
+preview_flower = ExtResource("24_i06t2")
+cell = Vector2i(12, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_12_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(935348965, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("43_twq6w")
+frame_progress = 0.2996814
+
+[node name="Pot_13_04" parent="Pots/BlockBottomRight" unique_id=263501605 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 40)
+preview_flower = ExtResource("25_woh4e")
+cell = Vector2i(13, 4)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_13_04/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(263501605, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("45_p6n37")
+frame_progress = 0.2996814
+
+[node name="Pot_07_05" parent="Pots/BlockBottomRight" unique_id=1536208698 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 62)
+preview_flower = ExtResource("15_n0rfp")
+cell = Vector2i(7, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_07_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1536208698, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("25_wu3qe")
+frame_progress = 0.2996814
+
+[node name="Pot_08_05" parent="Pots/BlockBottomRight" unique_id=511730244 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 62)
+preview_flower = ExtResource("16_s1kts")
+cell = Vector2i(8, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_08_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(511730244, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("27_pn06t")
+frame_progress = 0.2996814
+
+[node name="Pot_09_05" parent="Pots/BlockBottomRight" unique_id=347608969 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 62)
+preview_flower = ExtResource("17_wqemt")
+cell = Vector2i(9, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_09_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(347608969, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("29_6pia0")
+frame_progress = 0.2996814
+
+[node name="Pot_10_05" parent="Pots/BlockBottomRight" unique_id=2058540298 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 62)
+preview_flower = ExtResource("18_0c2pr")
+cell = Vector2i(10, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_10_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(2058540298, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("31_a4agu")
+frame_progress = 0.2996814
+
+[node name="Pot_11_05" parent="Pots/BlockBottomRight" unique_id=1093352086 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 62)
+preview_flower = ExtResource("28_s5w3f")
+cell = Vector2i(11, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_11_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1093352086, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("51_e0l6p")
+frame_progress = 0.2996814
+
+[node name="Pot_12_05" parent="Pots/BlockBottomRight" unique_id=1424672988 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 62)
+preview_flower = ExtResource("29_reu0t")
+cell = Vector2i(12, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_12_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1424672988, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("53_m5os5")
+frame_progress = 0.2996814
+
+[node name="Pot_13_05" parent="Pots/BlockBottomRight" unique_id=1598733486 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 62)
+preview_flower = ExtResource("30_dwqlq")
+cell = Vector2i(13, 5)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_13_05/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1598733486, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("55_tl5st")
+frame_progress = 0.2996814
+
+[node name="Pot_07_06" parent="Pots/BlockBottomRight" unique_id=1502095613 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 83)
+preview_flower = ExtResource("6_jeka5")
+cell = Vector2i(7, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_07_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1502095613, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("7_7uch2")
+frame_progress = 0.2996814
+
+[node name="Pot_08_06" parent="Pots/BlockBottomRight" unique_id=25826457 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 83)
+preview_flower = ExtResource("7_nd4xp")
+cell = Vector2i(8, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_08_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(25826457, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("9_1q5qu")
+frame_progress = 0.2996814
+
+[node name="Pot_09_06" parent="Pots/BlockBottomRight" unique_id=44617925 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 83)
+preview_flower = ExtResource("8_051dh")
+cell = Vector2i(9, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_09_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(44617925, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("11_llqjs")
+frame_progress = 0.2996814
+
+[node name="Pot_10_06" parent="Pots/BlockBottomRight" unique_id=1059658514 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 83)
+preview_flower = ExtResource("9_63bhv")
+cell = Vector2i(10, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_10_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1059658514, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("13_qfk2a")
+frame_progress = 0.2996814
+
+[node name="Pot_11_06" parent="Pots/BlockBottomRight" unique_id=390080647 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 83)
+preview_flower = ExtResource("10_uwe03")
+cell = Vector2i(11, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_11_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(390080647, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("15_xlfu5")
+frame_progress = 0.2996814
+
+[node name="Pot_12_06" parent="Pots/BlockBottomRight" unique_id=285181294 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 83)
+preview_flower = ExtResource("11_mwfep")
+cell = Vector2i(12, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_12_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(285181294, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("17_tbhqj")
+frame_progress = 0.2996814
+
+[node name="Pot_13_06" parent="Pots/BlockBottomRight" unique_id=156070697 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 83)
+preview_flower = ExtResource("23_p2iwc")
+cell = Vector2i(13, 6)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_13_06/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(156070697, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("41_oo5ua")
+frame_progress = 0.2996814
+
+[node name="Pot_07_07" parent="Pots/BlockBottomRight" unique_id=315363763 instance=ExtResource("3_ca7eo")]
+position = Vector2(30, 106)
+preview_flower = ExtResource("13_3xgen")
+cell = Vector2i(7, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_07_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(315363763, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("21_vl70m")
+frame_progress = 0.2996814
+
+[node name="Pot_08_07" parent="Pots/BlockBottomRight" unique_id=265846920 instance=ExtResource("3_ca7eo")]
+position = Vector2(52, 106)
+preview_flower = ExtResource("14_6bxox")
+cell = Vector2i(8, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_08_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(265846920, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("23_jj4mr")
+frame_progress = 0.2996814
+
+[node name="Pot_09_07" parent="Pots/BlockBottomRight" unique_id=369221879 instance=ExtResource("3_ca7eo")]
+position = Vector2(74, 106)
+preview_flower = ExtResource("15_n0rfp")
+cell = Vector2i(9, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_09_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(369221879, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("25_wu3qe")
+frame_progress = 0.2996814
+
+[node name="Pot_10_07" parent="Pots/BlockBottomRight" unique_id=50591074 instance=ExtResource("3_ca7eo")]
+position = Vector2(96, 106)
+preview_flower = ExtResource("16_s1kts")
+cell = Vector2i(10, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_10_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(50591074, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("27_pn06t")
+frame_progress = 0.2996814
+
+[node name="Pot_11_07" parent="Pots/BlockBottomRight" unique_id=1583889256 instance=ExtResource("3_ca7eo")]
+position = Vector2(118, 106)
+preview_flower = ExtResource("17_wqemt")
+cell = Vector2i(11, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_11_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1583889256, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("29_6pia0")
+frame_progress = 0.2996814
+
+[node name="Pot_12_07" parent="Pots/BlockBottomRight" unique_id=404486142 instance=ExtResource("3_ca7eo")]
+position = Vector2(140, 106)
+preview_flower = ExtResource("18_0c2pr")
+cell = Vector2i(12, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_12_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(404486142, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("31_a4agu")
+frame_progress = 0.2996814
+
+[node name="Pot_13_07" parent="Pots/BlockBottomRight" unique_id=1165861799 instance=ExtResource("3_ca7eo")]
+position = Vector2(162, 106)
+preview_flower = ExtResource("28_s5w3f")
+cell = Vector2i(13, 7)
+
+[node name="Flower" parent="Pots/BlockBottomRight/Pot_13_07/VisualRoot/PlantSocket/PlantOffset" parent_id_path=PackedInt32Array(1165861799, 1583751310) index="0" unique_id=658614096]
+visible = true
+sprite_frames = ExtResource("51_e0l6p")
+frame_progress = 0.2996814
+
+[node name="FlowerSeedSupply_01" parent="." unique_id=2122676184 instance=ExtResource("3_2udwj")]
+position = Vector2(32, 8)
+persistent_id = &"flower_seed_supply_01"
+item = ExtResource("5_5tqj7")
+amount = 6
+
+[node name="FlowerSeedSupply_02" parent="." unique_id=1690197155 instance=ExtResource("3_2udwj")]
+position = Vector2(64, 8)
+persistent_id = &"flower_seed_supply_02"
+item = ExtResource("6_tc156")
+amount = 6
+
+[node name="FlowerSeedSupply_03" parent="." unique_id=371557168 instance=ExtResource("3_2udwj")]
+position = Vector2(96, 8)
+persistent_id = &"flower_seed_supply_03"
+item = ExtResource("7_5skkv")
+amount = 6
+
+[node name="FlowerSeedSupply_04" parent="." unique_id=1024418028 instance=ExtResource("3_2udwj")]
+position = Vector2(128, 8)
+persistent_id = &"flower_seed_supply_04"
+item = ExtResource("8_0movj")
+amount = 6
+
+[node name="FlowerSeedSupply_05" parent="." unique_id=280189726 instance=ExtResource("3_2udwj")]
+position = Vector2(160, 8)
+persistent_id = &"flower_seed_supply_05"
+item = ExtResource("9_lam84")
+amount = 6
+
+[node name="FlowerSeedSupply_06" parent="." unique_id=1142816227 instance=ExtResource("3_2udwj")]
+position = Vector2(224, 8)
+persistent_id = &"flower_seed_supply_06"
+item = ExtResource("10_i34y4")
+amount = 6
+
+[node name="FlowerSeedSupply_07" parent="." unique_id=548205922 instance=ExtResource("3_2udwj")]
+position = Vector2(256, 8)
+persistent_id = &"flower_seed_supply_07"
+item = ExtResource("11_aiogh")
+amount = 6
+
+[node name="FlowerSeedSupply_08" parent="." unique_id=1940187268 instance=ExtResource("3_2udwj")]
+position = Vector2(288, 8)
+persistent_id = &"flower_seed_supply_08"
+item = ExtResource("12_toaos")
+amount = 6
+
+[node name="FlowerSeedSupply_09" parent="." unique_id=871252139 instance=ExtResource("3_2udwj")]
+position = Vector2(320, 8)
+persistent_id = &"flower_seed_supply_09"
+item = ExtResource("13_3by4u")
+amount = 6
+
+[node name="FlowerSeedSupply_10" parent="." unique_id=2016849236 instance=ExtResource("3_2udwj")]
+position = Vector2(352, 8)
+persistent_id = &"flower_seed_supply_10"
+item = ExtResource("14_18ind")
+amount = 6
+
+[editable path="Pots/BlockTopLeft/Pot_00_00"]
+[editable path="Pots/BlockTopLeft/Pot_01_00"]
+[editable path="Pots/BlockTopLeft/Pot_02_00"]
+[editable path="Pots/BlockTopLeft/Pot_03_00"]
+[editable path="Pots/BlockTopLeft/Pot_04_00"]
+[editable path="Pots/BlockTopLeft/Pot_05_00"]
+[editable path="Pots/BlockTopLeft/Pot_06_00"]
+[editable path="Pots/BlockTopLeft/Pot_00_01"]
+[editable path="Pots/BlockTopLeft/Pot_01_01"]
+[editable path="Pots/BlockTopLeft/Pot_02_01"]
+[editable path="Pots/BlockTopLeft/Pot_03_01"]
+[editable path="Pots/BlockTopLeft/Pot_04_01"]
+[editable path="Pots/BlockTopLeft/Pot_05_01"]
+[editable path="Pots/BlockTopLeft/Pot_06_01"]
+[editable path="Pots/BlockTopLeft/Pot_00_02"]
+[editable path="Pots/BlockTopLeft/Pot_01_02"]
+[editable path="Pots/BlockTopLeft/Pot_02_02"]
+[editable path="Pots/BlockTopLeft/Pot_03_02"]
+[editable path="Pots/BlockTopLeft/Pot_04_02"]
+[editable path="Pots/BlockTopLeft/Pot_05_02"]
+[editable path="Pots/BlockTopLeft/Pot_06_02"]
+[editable path="Pots/BlockTopLeft/Pot_00_03"]
+[editable path="Pots/BlockTopLeft/Pot_01_03"]
+[editable path="Pots/BlockTopLeft/Pot_02_03"]
+[editable path="Pots/BlockTopLeft/Pot_03_03"]
+[editable path="Pots/BlockTopLeft/Pot_04_03"]
+[editable path="Pots/BlockTopLeft/Pot_05_03"]
+[editable path="Pots/BlockTopLeft/Pot_06_03"]
+[editable path="Pots/BlockTopRight/Pot_07_00"]
+[editable path="Pots/BlockTopRight/Pot_08_00"]
+[editable path="Pots/BlockTopRight/Pot_09_00"]
+[editable path="Pots/BlockTopRight/Pot_10_00"]
+[editable path="Pots/BlockTopRight/Pot_11_00"]
+[editable path="Pots/BlockTopRight/Pot_12_00"]
+[editable path="Pots/BlockTopRight/Pot_13_00"]
+[editable path="Pots/BlockTopRight/Pot_07_01"]
+[editable path="Pots/BlockTopRight/Pot_08_01"]
+[editable path="Pots/BlockTopRight/Pot_09_01"]
+[editable path="Pots/BlockTopRight/Pot_10_01"]
+[editable path="Pots/BlockTopRight/Pot_11_01"]
+[editable path="Pots/BlockTopRight/Pot_12_01"]
+[editable path="Pots/BlockTopRight/Pot_13_01"]
+[editable path="Pots/BlockTopRight/Pot_07_02"]
+[editable path="Pots/BlockTopRight/Pot_08_02"]
+[editable path="Pots/BlockTopRight/Pot_09_02"]
+[editable path="Pots/BlockTopRight/Pot_10_02"]
+[editable path="Pots/BlockTopRight/Pot_11_02"]
+[editable path="Pots/BlockTopRight/Pot_12_02"]
+[editable path="Pots/BlockTopRight/Pot_13_02"]
+[editable path="Pots/BlockTopRight/Pot_07_03"]
+[editable path="Pots/BlockTopRight/Pot_08_03"]
+[editable path="Pots/BlockTopRight/Pot_09_03"]
+[editable path="Pots/BlockTopRight/Pot_10_03"]
+[editable path="Pots/BlockTopRight/Pot_11_03"]
+[editable path="Pots/BlockTopRight/Pot_12_03"]
+[editable path="Pots/BlockTopRight/Pot_13_03"]
+[editable path="Pots/BlockBottomLeft/Pot_00_04"]
+[editable path="Pots/BlockBottomLeft/Pot_01_04"]
+[editable path="Pots/BlockBottomLeft/Pot_02_04"]
+[editable path="Pots/BlockBottomLeft/Pot_03_04"]
+[editable path="Pots/BlockBottomLeft/Pot_04_04"]
+[editable path="Pots/BlockBottomLeft/Pot_05_04"]
+[editable path="Pots/BlockBottomLeft/Pot_06_04"]
+[editable path="Pots/BlockBottomLeft/Pot_00_05"]
+[editable path="Pots/BlockBottomLeft/Pot_01_05"]
+[editable path="Pots/BlockBottomLeft/Pot_02_05"]
+[editable path="Pots/BlockBottomLeft/Pot_03_05"]
+[editable path="Pots/BlockBottomLeft/Pot_04_05"]
+[editable path="Pots/BlockBottomLeft/Pot_05_05"]
+[editable path="Pots/BlockBottomLeft/Pot_06_05"]
+[editable path="Pots/BlockBottomLeft/Pot_00_06"]
+[editable path="Pots/BlockBottomLeft/Pot_01_06"]
+[editable path="Pots/BlockBottomLeft/Pot_02_06"]
+[editable path="Pots/BlockBottomLeft/Pot_03_06"]
+[editable path="Pots/BlockBottomLeft/Pot_04_06"]
+[editable path="Pots/BlockBottomLeft/Pot_05_06"]
+[editable path="Pots/BlockBottomLeft/Pot_06_06"]
+[editable path="Pots/BlockBottomLeft/Pot_00_07"]
+[editable path="Pots/BlockBottomLeft/Pot_01_07"]
+[editable path="Pots/BlockBottomLeft/Pot_02_07"]
+[editable path="Pots/BlockBottomLeft/Pot_03_07"]
+[editable path="Pots/BlockBottomLeft/Pot_04_07"]
+[editable path="Pots/BlockBottomLeft/Pot_05_07"]
+[editable path="Pots/BlockBottomLeft/Pot_06_07"]
+[editable path="Pots/BlockBottomRight/Pot_07_04"]
+[editable path="Pots/BlockBottomRight/Pot_08_04"]
+[editable path="Pots/BlockBottomRight/Pot_09_04"]
+[editable path="Pots/BlockBottomRight/Pot_10_04"]
+[editable path="Pots/BlockBottomRight/Pot_11_04"]
+[editable path="Pots/BlockBottomRight/Pot_12_04"]
+[editable path="Pots/BlockBottomRight/Pot_13_04"]
+[editable path="Pots/BlockBottomRight/Pot_07_05"]
+[editable path="Pots/BlockBottomRight/Pot_08_05"]
+[editable path="Pots/BlockBottomRight/Pot_09_05"]
+[editable path="Pots/BlockBottomRight/Pot_10_05"]
+[editable path="Pots/BlockBottomRight/Pot_11_05"]
+[editable path="Pots/BlockBottomRight/Pot_12_05"]
+[editable path="Pots/BlockBottomRight/Pot_13_05"]
+[editable path="Pots/BlockBottomRight/Pot_07_06"]
+[editable path="Pots/BlockBottomRight/Pot_08_06"]
+[editable path="Pots/BlockBottomRight/Pot_09_06"]
+[editable path="Pots/BlockBottomRight/Pot_10_06"]
+[editable path="Pots/BlockBottomRight/Pot_11_06"]
+[editable path="Pots/BlockBottomRight/Pot_12_06"]
+[editable path="Pots/BlockBottomRight/Pot_13_06"]
+[editable path="Pots/BlockBottomRight/Pot_07_07"]
+[editable path="Pots/BlockBottomRight/Pot_08_07"]
+[editable path="Pots/BlockBottomRight/Pot_09_07"]
+[editable path="Pots/BlockBottomRight/Pot_10_07"]
+[editable path="Pots/BlockBottomRight/Pot_11_07"]
+[editable path="Pots/BlockBottomRight/Pot_12_07"]
+[editable path="Pots/BlockBottomRight/Pot_13_07"]

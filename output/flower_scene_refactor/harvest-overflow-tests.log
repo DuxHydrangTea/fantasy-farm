@@ -1,0 +1,709 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+       [1] _parse_script (res://addons/gut/test_collector.gd:76)
+       [2] add_script (res://addons/gut/test_collector.gd:128)
+       [3] add_script (res://addons/gut/gut.gd:1070)
+       [4] add_directory (res://addons/gut/gut.gd:1093)
+       [5] _apply_options (res://addons/gut/gut_config.gd:136)
+       [6] apply_options (res://addons/gut/gut_config.gd:207)
+       [7] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+       [8] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [9] main (res://addons/gut/cli/gut_cli.gd:297)
+       [10] _init (res://addons/gut/gut_cmdln.gd:39)
+[4m
+
+res://tests/unit/test_animal_growth.gd
+[0m* test_age_progress_and_one_maturity_signal
+* test_initial_age_and_instant_maturity
+* test_negative_elapsed_and_initial_values_never_reverse_age
+* test_animals_do_not_share_age_state
+* test_lifetime_boundary_caps_age_and_emits_once_even_after_large_offline_jump
+* test_all_species_use_one_real_day_to_mature_and_fourteen_days_total_lifetime
+[31m    [Failed]:  [0m[3600.0] expected to equal [86400.0]:  chicken
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[31m    [Failed]:  [0m[28800.0] expected to equal [86400.0]:  cow
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[31m    [Failed]:  [0m[21600.0] expected to equal [86400.0]:  sheep
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[31m    [Failed]:  [0m[7200.0] expected to equal [86400.0]:  duck
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[31m    [Failed]:  [0m[14400.0] expected to equal [86400.0]:  goose
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[31m    [Failed]:  [0m[43200.0] expected to equal [86400.0]:  pig
+      at line 64
+[31m    [Failed] [0m
+      at line 68
+[1m5/6 passed.
+[0m[4m
+
+res://tests/unit/test_animal_needs.gd
+[0m* test_food_and_water_deplete_independently_from_timestamps
+* test_large_jump_clamps_to_zero_and_does_not_emit_again
+* test_feed_drink_cap_and_return_actual_restored_amount
+* test_repeated_or_backward_timestamp_does_not_double_charge
+* test_needs_of_two_animals_do_not_share_state
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_animal_pen.gd
+[0m* test_samples_and_clamps_respect_translated_scaled_rotated_pen
+* test_oversized_margin_collapses_to_center_without_invalid_targets
+[1m2/2 passed.
+[0m[4m
+
+res://tests/unit/test_animal_production.gd
+[0m* test_partial_progress_survives_pauses_and_preserves_remainder
+* test_large_interval_batches_output_without_looping_per_item
+* test_missing_or_invalid_definition_produces_nothing
+* test_take_output_never_overdraws_or_adds_negative_stock
+* test_direct_collection_preserves_output_when_inventory_is_full
+* test_reentrant_inventory_notifications_cannot_duplicate_output
+* test_components_sharing_one_definition_have_independent_state
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_animal_trade_service.gd
+[0m* test_catalog_has_seven_species_and_resale_never_exceeds_purchase
+* test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction
+[31m    [Failed] [0m
+      at line 49
+[31m    [Failed]:  [0m[10000] expected to equal [680]:  
+      at line 50
+[31m    [Failed]:  [0mARRAY([]) != ARRAY([2]).
+    [] != [2]  1 of 1 indexes do not match.  
+      at line 51
+[31m    [Failed]:  [0mARRAY([]) != ARRAY([false]).
+    [] != [false]  1 of 1 indexes do not match.  
+      at line 52
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+   at: test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+   GDScript backtrace (most recent call first):
+       [0] test_batch_purchase_places_distinct_newborns_and_publishes_complete_transaction (res://tests/unit/test_animal_trade_service.gd:54)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+       [3] _end_wait (res://addons/gut/awaiter.gd:126)
+       [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Out of bounds get index '0' (on base: 'Array[AnimalActor]')
+      at line -1
+* test_full_missing_or_blocked_pen_and_invalid_request_never_spend_coins
+* test_sell_once_credits_young_price_preserves_output_and_cannot_reenter
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+   at: test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+   GDScript backtrace (most recent call first):
+       [0] test_sell_once_credits_young_price_preserves_output_and_cannot_reenter (res://tests/unit/test_animal_trade_service.gd:93)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+       [3] _end_wait (res://addons/gut/awaiter.gd:126)
+       [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+   at: test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+   GDScript backtrace (most recent call first):
+       [0] test_adult_price_foreign_actor_and_wallet_overflow_are_revalidated (res://tests/unit/test_animal_trade_service.gd:113)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+       [3] _end_wait (res://addons/gut/awaiter.gd:126)
+       [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+   at: test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+   GDScript backtrace (most recent call first):
+       [0] test_clock_sync_at_checkout_prevents_selling_after_lifetime_expires (res://tests/unit/test_animal_trade_service.gd:126)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] before_each (res://tests/unit/test_animal_trade_service.gd:29)
+       [3] _end_wait (res://addons/gut/awaiter.gd:126)
+       [4] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+[1m2/6 passed.
+[0m[4m
+
+res://tests/unit/test_animal_trough.gd
+[0m* test_refill_clamps_to_capacity_and_never_removes_stock
+* test_reservations_are_exclusive_and_release_when_animal_leaves
+* test_only_reserved_nearby_animal_can_consume_and_only_matching_need_changes
+* test_water_caps_at_full_and_does_not_spend_stock_for_full_animals
+* test_species_and_portion_rules_prevent_partial_or_overdrawn_meals
+* test_priority_uses_lower_need_and_water_wins_ties
+* test_scenes_switch_to_empty_art_and_back_on_refill
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_beehive_production.gd
+[0m* test_wild_cycle_caps_at_one_batch_and_only_restarts_on_collection
+* test_sunflower_speed_and_monofloral_threshold_use_earned_work
+* test_last_minute_flower_cannot_upgrade_a_wild_batch
+* test_exactly_half_qualifies_and_later_changes_cannot_relabel_ready_honey
+* test_different_flower_species_are_not_pooled_into_one_specialty
+* test_full_bag_preserves_ready_honey_and_collect_is_atomic_against_reentry
+* test_dominant_species_tie_breaks_by_nearest_then_id
+* test_real_cycles_are_24_18_and_12_hours_and_cap_at_100_jars
+* test_only_flowers_six_to_ten_can_accelerate_and_make_floral_honey
+* test_ninety_nine_free_spaces_cannot_partially_collect_a_hundred_jar_batch
+* test_legacy_batch_keeps_one_jar_and_old_rate_then_switches_to_new_rules
+* test_qualified_sources_take_priority_over_common_flowers_with_stable_ties
+[1m12/12 passed.
+[0m[4m
+
+res://tests/unit/test_boosters.gd
+[0m* test_fertilizer_uses_original_duration_once_and_resets_for_new_lifecycle
+* test_exact_half_and_later_progress_reject_without_shortening_deadline
+* test_juvenile_tonic_halves_maturity_without_changing_age_or_lifetime
+* test_late_juvenile_dose_matures_now_and_never_resurrects_dead_or_treats_adult
+* test_adult_bonus_is_exactly_one_roll_for_one_cycle_then_reusable
+* test_failed_bonus_still_delivers_base_and_clears_before_observers
+* test_restored_per_crop_duration_is_the_original_total_not_current_resource_default
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_butterfly_roaming.gd
+[0m* test_swarm_starts_with_48_animated_butterflies_across_map
+* test_garden_visit_deadline_is_not_refreshed_and_forces_exit
+* test_passing_garden_during_five_minute_cooldown_cannot_retrigger
+* test_roaming_moves_beyond_old_home_radius_and_stays_within_map
+[1m4/4 passed.
+[0m[4m
+
+res://tests/unit/test_character_components.gd
+[0m* test_diagonal_movement_does_not_exceed_speed
+* test_friction_stops_the_character
+* test_stop_clears_velocity_immediately
+* test_left_mirrors_right_and_right_clears_flip
+* test_idle_keeps_last_facing_direction
+* test_state_transition_emits_once_and_stops_movement
+* test_unrelated_animation_completion_does_not_end_action
+* test_player_has_no_faint_state
+[1m8/8 passed.
+[0m[4m
+
+res://tests/unit/test_chef_cooking.gd
+[0m* test_shipped_recipes_outputs_and_prices_are_allowlisted
+* test_missing_ingredients_full_capacity_and_invalid_commands_never_spend
+* test_serial_offline_boundary_and_repeated_advance_do_not_duplicate
+* test_full_bag_keeps_ready_dishes_and_partial_collection_keeps_remainder
+* test_multi_ingredient_batch_spends_atomically_and_blocks_reentrant_commands
+* test_roundtrip_and_strict_validation
+* test_all_five_recipes_can_be_cooked_collected_and_sold
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_crop_growth.gd
+[0m* test_four_stages_at_exact_timestamp_boundaries
+* test_timestamp_jump_catches_up_without_processing_frames
+* test_backward_clock_cannot_reverse_growth
+* test_progress_above_sprite_does_not_capture_mouse
+* test_existing_crop_catalog_has_four_valid_stages_and_harvest
+* test_clock_refresh_broadcasts_current_timestamp
+[1m6/6 passed.
+[0m[4m
+
+res://tests/unit/test_farm_storage.gd
+[0m* test_filters_and_transfers_across_both_storages
+* test_full_destination_moves_only_what_fits_and_preserves_remainder
+* test_observers_see_atomic_state_and_cannot_reenter
+* test_dto_roundtrip_capacity_and_reject_bad_items_counts_or_missing_storage
+* test_selected_quality_moves_only_that_tier_and_clamps_to_available
+* test_quality_transfer_with_full_target_preserves_other_tiers
+[1m6/6 passed.
+[0m[4m
+
+res://tests/unit/test_farming_rules.gd
+[0m* test_only_marked_farmland_is_tillable
+* test_permission_flags_are_independent
+* test_water_and_farmland_borders_do_not_grant_farming_permissions
+* test_soil_lifecycle_is_idempotent_and_preserves_permission_layer
+* test_occupation_blocks_all_farming_and_can_be_released
+* test_custom_data_on_overlay_blocks_all_actions
+* test_missing_permission_data_defaults_to_denied
+* test_unconfigured_soil_terrain_does_not_change_state
+* test_empty_layers_without_tilesets_do_not_break_farming
+* test_soil_state_queries_ignore_layers_with_missing_tilesets
+[1m10/10 passed.
+[0m[4m
+
+res://tests/unit/test_fence_terrain.gd
+[0m* test_fence_layer_uses_four_named_terrains_without_white_fence
+* test_all_sixteen_neighbour_patterns_autoconnect<parameterized>
+    - params[0](0)
+    - params[1](1)
+    - params[2](2)
+    - params[3](3)
+* test_incremental_paint_joins_and_erasing_reconnects<parameterized>
+    - params[0](0)
+    - params[1](1)
+    - params[2](2)
+    - params[3](3)
+* test_fence_physics_layer_and_collision_polygons
+[1m4/4 passed.
+[0m[4m
+
+res://tests/unit/test_flower_pot_visual.gd
+[0m* test_empty_and_planted_pots_share_live_texture_without_baking
+* test_skin_change_is_isolated_and_does_not_reset_custom_transforms_or_state
+* test_editor_preview_is_presentation_only
+* test_hit_bounds_include_pot_and_flower_and_follow_custom_offset
+* test_default_pot_points_directly_to_the_editable_texture
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_flower_pots.gd
+[0m* test_all_ten_flowers_have_five_stages_and_six_frames_each
+* test_plant_spends_one_seed_once_and_rejects_other_crops
+* test_waiting_for_water_does_not_grow_even_offline
+* test_water_starts_clock_once_and_five_stages_follow_timestamp
+* test_harvest_preserves_full_pot_when_bag_full_then_returns_empty_once
+* test_progress_never_moves_back_and_bar_only_shows_on_focus
+* test_animation_frames_do_not_advance_growth_stage
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_grass_chunks.gd
+[0m* test_negative_cells_exact_fractional_rows_z_and_low_grass_grouping
+* test_parent_transform_is_baked_into_sort_space_and_bounds
+* test_static_view_does_not_rebuild_or_query_whole_map
+* test_lru_cache_is_bounded_and_live_rids_accounted_for
+* test_budget_overflow_is_explicit_and_never_silently_truncates
+* test_hide_disable_reenter_and_transform_rebuild
+* test_fractional_rows_cannot_exceed_the_gpu_batch_budget
+* test_dense_single_chunk_respects_instance_budget
+* test_extreme_zoom_rejects_before_enumerating_millions_of_empty_cells
+* test_query_expands_for_oversized_transformed_grass_and_wind
+[1m10/10 passed.
+[0m[4m
+
+res://tests/unit/test_grass_farm.gd
+[0m* test_palette_contains_all_single_tile_foliage_and_excludes_objects
+* test_authored_atlas_keeps_all_original_pixels_and_opaque_roots
+* test_only_safe_grass_cells_in_barn_are_transferred_and_restored
+* test_default_scans_the_entire_map_and_newly_painted_grass
+* test_source_change_aborts_transaction_before_erasing_any_other_cell
+* test_mixed_row_materials_are_local_and_fallback_restores_original_tileset
+* test_restore_does_not_overwrite_external_edit
+* test_arbitrary_region_and_non_grass_tile_are_not_accepted
+* test_authored_sort_origin_is_separate_from_opaque_ground
+* test_headless_world_keeps_original_grass_without_runtime_gpu_buffers
+* test_hidden_or_disabled_authoring_layer_is_not_replaced
+[1m11/11 passed.
+[0m[4m
+
+res://tests/unit/test_grass_gpu.gd
+[0m* test_baked_atlas_keeps_every_pixel_of_all_original_strips
+* test_manifest_root_is_constant_for_every_original_animation_frame
+* test_owning_node_has_no_per_tuft_children_or_process_loops
+* test_bounds_include_flips_nonuniform_scale_and_transparent_pixels_below_root
+[1m4/4 passed.
+[0m[4m
+
+res://tests/unit/test_grass_interactions.gd
+[0m* test_all_87_and_96_slots_are_preserved_and_overflow_is_explicit
+* test_fast_sweep_stationary_contact_and_teleport_reset
+* test_swept_contact_is_eligible_even_when_both_ends_are_outside_view
+* test_upload_rates_have_bounded_latency_and_no_catchup_loop
+* test_scope_spawn_removal_and_hidden_actor_do_not_leave_stale_slots
+* test_uniform_clock_rebase_preserves_motion_age
+* test_registration_uses_global_feet_and_scaled_radius
+* test_hidden_actor_reappears_without_a_phantom_sweep
+* test_resume_reset_discards_old_movement_for_every_actor
+[1m9/9 passed.
+[0m[4m
+
+res://tests/unit/test_improvements.gd
+[0m* test_farm_updates_at_stage_deadlines_and_focused_progress_stays_current
+* test_one_frame_tool_animation_applies_farming_once
+* test_inventory_queries_are_safe_and_keep_slot_snapshots_isolated
+* test_growth_deadlines_order_cancel_reschedule_and_free_are_safe
+* test_growth_heap_handles_large_unsorted_batch_once
+* test_impact_frame_clamps_to_last_frame_in_short_animations
+[1m6/6 passed.
+[0m[4m
+
+res://tests/unit/test_inventory.gd
+[0m* test_add_fills_existing_stack_before_free_slots
+* test_full_bag_reports_accepted_amount_without_losing_items
+* test_remove_across_stacks_and_clear_empty_slot
+* test_tools_never_stack
+* test_move_merge_partial_stack_preserves_remainder
+* test_swap_different_items_and_move_to_empty_slot
+* test_invalid_operations_do_not_mutate_or_emit
+* test_slot_snapshot_does_not_expose_mutable_storage
+* test_existing_seed_resources_load_with_crop_metadata
+* test_remove_from_slot_spends_only_the_target_stack
+* test_capacity_counts_partial_stacks_and_free_slots_without_mutation
+[1m11/11 passed.
+[0m[4m
+
+res://tests/unit/test_item_quality.gd
+[0m* test_tiers_share_stack_capacity_and_spill_without_loss
+* test_default_consumption_never_spends_silver_or_gold
+* test_explicit_set_orders_tiers_globally_across_slots
+* test_move_and_partial_transfer_preserve_every_tier
+* test_snapshots_are_deep_and_corrupt_tiers_rejected_atomically
+* test_sale_only_spends_selected_tier_and_uses_quality_price
+* test_chef_does_not_substitute_quality_and_can_craft_root_tonic
+[1m7/7 passed.
+[0m[4m
+
+res://tests/unit/test_land_expansion.gd
+[0m* test_initial_right_column_and_every_grid_cell
+* test_insufficient_funds_and_stale_confirmation_do_not_mutate
+* test_purchase_is_atomic_and_reentrant_signals_cannot_double_charge
+* test_all_47_purchases_cover_exact_rectangle_and_price_curve
+* test_restore_rejects_invalid_column_counts
+* test_fresh_four_columns_keep_first_three_purchase_prices
+[1m6/6 passed.
+[0m[4m
+
+res://tests/unit/test_objectives.gd
+[0m* test_preferences_round_trip_and_follow_next_goal_after_claim
+* test_definitions_have_vietnamese_titles_and_descriptions
+* test_counts_only_active_matching_events_and_caps_progress_until_claim
+* test_all_steps_state_activation_and_exact_total_reward
+* test_reentrant_claim_observers_see_wallet_and_claimed_flags_together
+* test_full_wallet_retains_pending_reward_then_can_retry
+* test_roundtrip_pending_and_claimed_does_not_grant_or_replay_rewards
+* test_validation_rejects_unknown_ids_future_progress_noninteger_and_skipped_claims
+* test_suspend_blocks_record_claim_and_state_observation
+* test_partial_progress_roundtrips_without_unlocking_next_step
+[1m10/10 passed.
+[0m[4m
+
+res://tests/unit/test_orders.gd
+[0m* test_catalog_is_authored_and_rewards_reference_normal_sales
+* test_atomic_delivery_across_split_stacks_and_reentry
+* test_missing_items_and_full_wallet_leave_all_state_unchanged
+* test_roundtrip_keeps_instances_and_cursor_and_abandon_has_no_reward
+* test_rotation_skips_unavailable_and_active_templates_and_handles_empty
+* test_corrupt_saves_rejected_before_mutation
+* test_multiple_requirements_are_all_checked_before_any_removal
+* test_repeatable_rotation_keeps_three_unique_instances_and_bounded_state
+* test_restore_notifies_once_and_blocks_reentrant_delivery
+* test_perfect_preview_consumes_silver_then_gold_and_preserves_normal
+* test_perfect_requires_every_ingredient_and_never_falls_back_to_normal
+* test_stale_perfect_preview_requires_review_and_ordinary_never_uses_quality
+[1m12/12 passed.
+[0m[4m
+
+res://tests/unit/test_pen_offline.gd
+[0m* test_full_barn_uses_2160_units_per_kind_in_24_hours
+* test_empty_troughs_use_body_reserves_and_preserve_half_hour_of_water
+* test_stock_exhaustion_is_fair_and_independent_of_actor_order
+* test_short_and_long_catchup_match_including_fractional_units
+* test_death_stops_consumption_and_late_arrivals_do_not_eat_in_the_past
+* test_cloudy_weather_reduces_water_and_restricted_troughs_cannot_feed_other_species
+* test_repeating_timestamp_or_backwards_clock_does_not_consume_anything
+* test_empty_pen_and_long_gap_after_death_do_not_consume_stock
+[1m8/8 passed.
+[0m[4m
+
+res://tests/unit/test_plant_motion.gd
+[0m* test_reaction_rotates_about_stem_and_returns_to_rest_without_changing_growth
+[31m    [Failed]:  [0m[0.00294290226884] expected to be > than [0.01]:  
+      at line 18
+[33m    --- Awaiting 0.5 seconds  ---
+[0m* test_repeated_focus_does_not_restart_reaction_or_permanently_distort_crop
+[33m    --- Awaiting 0.5 seconds  ---
+[0m* test_shared_wind_material_and_retiring_crop_has_no_progress_bar
+* test_crop_gameplay_still_works_if_optional_motion_component_is_removed
+[31m    [Failed] [0m
+      at line 63
+* test_high_yield_burst_caps_visuals_and_handles_target_removal
+[33m    --- Awaiting 0.8 seconds  ---
+[0m* test_tree_fruit_burst_falls_from_canopy_before_flying_to_player
+[1m4/6 passed.
+[0m[4m
+
+res://tests/unit/test_produce_sale_service.gd
+[0m* test_quantity_sale_spans_stacks_and_keeps_other_inventory_items
+* test_sell_all_sells_all_accepted_types_and_keeps_seeds_feed_tools_and_unknown_produce
+* test_invalid_quantities_insufficient_stock_and_foreign_offer_never_mutate_models
+* test_rechecks_stock_at_checkout_and_repeated_sell_all_cannot_credit_again
+* test_overflow_rejects_whole_batch_without_partial_sale
+* test_atomic_observers_and_reentrant_commands
+* test_sell_all_rejects_non_produce_even_with_a_matching_id
+* test_duplicate_prices_bad_catalog_and_empty_bag_reject_safely
+* test_authored_catalog_prices_every_current_produce_and_only_produce
+[1m9/9 passed.
+[0m[4m
+
+res://tests/unit/test_save_repository.gd
+[0m* test_v3_coins_migrate_once_and_current_coin_values_are_validated
+* test_missing_profile_is_a_new_game
+* test_v4_bag_expands_without_mutation_and_preserves_money_hotbar_and_stacks
+* test_v4_bag_migration_does_not_hide_invalid_items_or_resize_custom_fixtures
+* test_roundtrip_and_previous_revision_backup
+* test_truncated_primary_recovers_backup_and_can_save_again
+* test_checksum_damage_is_detected
+* test_stale_revision_does_not_overwrite_file
+* test_future_version_is_not_downgraded_to_backup
+* test_schema_rejects_unknown_resource_and_path_injection
+* test_schema_rejects_invalid_numbers_types_and_duplicate_cells
+* test_catalog_contains_all_current_gameplay_definitions
+* test_version_one_file_migrates_to_current_and_remains_a_valid_backup
+* test_dense_garden_file_roundtrip_accepts_all_180_planted_pots
+* test_version_two_garden_migration_is_complete_and_does_not_mutate_input
+* test_version_two_invalid_garden_coordinate_cannot_become_a_valid_dense_slot
+* test_async_save_roundtrip_recovery_and_revision_guard
+* test_single_thread_save_yields_freezes_snapshot_and_preserves_backup_and_revision_guard
+* test_async_save_keeps_main_frames_running_rejects_overlap_and_freezes_dto
+* test_async_save_detects_external_change_between_validation_and_commit
+* test_async_save_rejects_future_version_and_resource_objects_without_overwriting
+[1m21/21 passed.
+[0m[4m
+
+res://tests/unit/test_shop_service.gd
+[0m* test_purchase_commits_both_models_before_notifying_and_blocks_reentry
+* test_insufficient_coins_never_adds_items
+* test_full_bag_never_spends_or_partially_adds
+* test_invalid_quantities_or_foreign_offers_cannot_purchase
+* test_catalog_has_all_seeds_and_feed_once_with_valid_prices
+[31m    [Failed]:  [0mARRAY([22, 28, 30]) != ARRAY([22, 14, 10]).
+    [22, 28, 30] != [22, 14, 10]  2 of 3 indexes do not match.  
+      at line 70
+* test_wallet_rejects_invalid_bounds_and_credit_overflow
+[1m5/6 passed.
+[0m[4m
+
+res://tests/unit/test_tool_selection.gd
+[0m* test_default_tool_is_hoe
+* test_selection_changes_tool_and_emits_once
+* test_invalid_slot_does_not_change_selection
+* test_empty_slot_has_no_action
+* test_cycle_selection_wraps_indices
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_tool_upgrades.gd
+[0m* test_defaults_and_captured_data_are_independent
+* test_all_tools_upgrade_one_level_autoselect_and_stop_at_maximum
+* test_tools_remain_separate_and_selection_cannot_exceed_level
+* test_land_gates_use_each_profiles_initial_column_count
+* test_insufficient_coins_and_stale_quotes_never_spend
+* test_unready_profile_disabled_feature_and_invalid_catalog_are_rejected
+* test_atomic_notifications_and_reentrant_second_vendor
+* test_strict_schema_and_json_number_normalization
+[1m8/8 passed.
+[0m[4m
+
+res://tests/unit/test_touch_gestures.gd
+[0m* test_joystick_keeps_its_finger_outside_zone_and_second_finger_acts_once
+* test_only_short_stationary_world_release_is_a_tap
+* test_pinch_suppresses_both_taps_and_rebases_when_finger_pair_changes
+* test_ui_and_action_fingers_cannot_turn_into_world_pinch_or_tap
+* test_cancel_forgets_all_touches_and_late_releases_do_nothing
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_trees.gd
+[0m* test_all_definitions_use_the_shipped_atlases_and_noncyclic_planting_items
+* test_fruit_needs_one_watering_and_ignores_repeated_water_and_clock_reversal
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 46
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 48
+[31m    [Failed] [0m
+      at line 50
+* test_wind_pins_visible_root_at_every_stage_and_keeps_collider_unchanged
+[31m    [Failed]:  [0m[fruit_trees_shared_stage_01 (res://crops/fruit_trees/shared/stage_01.tres):<AtlasTexture#-9223371830998332044>] expected to equal [fruit_trees_apple_ready (res://crops/fruit_trees/apple/ready.tres):<AtlasTexture#-9223371830125916800>]:  
+      at line 69
+* test_stump_stops_wind_and_regrowth_reuses_shared_sapling_material
+[31m    [Failed]:  [0mExpected [():<ShaderMaterial#-9223369607010571039>] to be NULL:  
+      at line 75
+* test_repeated_harvest_keeps_same_tree_and_does_not_bank_offline_cycles
+[31m    [Failed] [0m
+      at line 95
+[31m    [Failed]:  [0m[300] expected to equal [6]:  
+      at line 96
+* test_full_bag_preserves_fruit_and_uproot_then_returns_one_sapling
+[31m    [Failed] [0m
+      at line 105
+* test_reentrant_inventory_signal_cannot_harvest_twice
+[31m    [Failed] [0m
+      at line 117
+[31m    [Failed]:  [0m[0] expected to equal [3]:  
+      at line 118
+* test_pollination_shortens_only_fruit_cycle_by_25_percent
+[31m    [Failed] [0m
+      at line 124
+[31m    [Failed]:  [0m[44200.0] expected to equal [1180.0]:  
+      at line 125
+* test_timestamp_roundtrip_resumes_remaining_fruit_without_duplicate_work
+[31m    [Failed] [0m
+      at line 136
+[31m    [Failed]:  [0m[0.0] expected to equal [90.0]:  
+      at line 137
+* test_timber_rejects_immature_chop_then_keeps_solid_stump_after_four_hits
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 147
+[31m    [Failed] [0m
+      at line 148
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 152
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 153
+[31m    [Failed]:  [0m[(res://trees/textures/oak_stage1.tres):<AtlasTexture#-9223371890674890026>] expected to equal [(res://trees/textures/oak_stump.tres):<AtlasTexture#-9223371890003801378>]:  
+      at line 154
+* test_stump_requires_three_digs_and_yields_roots_once
+[31m    [Failed] [0m
+      at line 159
+[31m    [Failed] [0m
+      at line 160
+[31m    [Failed] [0m
+      at line 161
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+      at line 164
+* test_stump_regrows_automatically_in_half_the_original_growth_time
+[31m    [Failed]:  [0m[87400.0] expected to equal [1480.0]:  
+      at line 177
+[31m    [Failed] [0m
+      at line 179
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 180
+* test_partial_chops_and_partial_digs_survive_restore_without_extra_rewards
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 191
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+      at line 196
+[1m1/13 passed.
+[0m[4m
+
+res://tests/unit/test_trough_refilling.gd
+[0m* test_food_transfers_whole_packages_and_only_spends_accepted_quantity
+[31m    [Failed]:  [0m[2] expected to equal [3]:  
+      at line 18
+[31m    [Failed]:  [0m[2] expected to equal [3]:  
+      at line 20
+* test_feed_never_discards_a_partial_package
+[31m    [Failed]:  [0m[200] expected to equal [0]:  
+      at line 25
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 26
+[31m    [Failed]:  [0m[0] expected to equal [300]:  
+      at line 28
+* test_missing_or_wrong_feed_or_invalid_configuration_spends_nothing
+* test_custom_species_feed_is_selected_by_resource_not_hardcoded_id
+* test_reentrant_inventory_notification_cannot_spend_twice
+[31m    [Failed]:  [0m[1] expected to equal [2]:  
+      at line 58
+* test_inventory_limit_and_water_overflow_are_respected
+[31m    [Failed]:  [0m[200] expected to equal [300]:  
+      at line 62
+* test_auto_fill_keeps_partial_package_and_reuses_it_without_spending_another
+[31m    [Failed]:  [0m[190] expected to equal [290]:  
+      at line 73
+[31m    [Failed]:  [0m[140] expected to equal [240]:  
+      at line 77
+[31m    [Failed]:  [0m[140] expected to equal [240]:  
+      at line 80
+* test_auto_fill_is_atomic_for_inventory_and_stock_observers
+[31m    [Failed]:  [0m[190] expected to equal [290]:  
+      at line 98
+[31m    [Failed]:  [0m[190] expected to equal [290]:  
+      at line 98
+[1m2/8 passed.
+[0m[4m
+
+res://tests/unit/test_tutorial.gd
+[0m* test_seen_skip_toggle_restore_are_preferences_without_objective_counts
+* test_schema_rejects_unknown_duplicate_and_wrong_types_without_mutation
+* test_single_seed_support_is_atomic_reentrant_and_persisted
+* test_all_objectives_have_short_and_full_instructions
+[1m4/4 passed.
+[0m[4m
+
+res://tests/unit/test_visual_motion_component.gd
+[0m* test_custom_pivot_stays_fixed_with_transformed_visual_and_parent
+* test_animated_animal_visual_keeps_animation_flip_body_and_collision
+[33m    --- Awaiting 0.5 seconds  ---
+[0m* test_removing_component_resets_pose_and_restores_opt_in_material
+* test_disappearance_reports_completion_without_deleting_target_and_reset_reuses_it
+[1m4/4 passed.
+[0m[4m
+
+res://tests/unit/test_weather_schedule.gd
+[0m* test_dawn_is_six_local_and_midnight_does_not_reroll
+* test_daily_weather_is_stable_weighted_and_does_not_use_global_rng
+* test_override_starts_at_its_timestamp_and_expires_at_next_dawn
+* test_palette_matches_art_direction_and_has_no_black_overlay
+* test_cloudy_needs_split_at_weather_change_and_never_award_supplied_time_after_thirst
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_worker_roles.gd
+[0m* test_priority_distance_and_stable_ties
+* test_worker_stack_cap_is_runtime_and_player_inventory_is_unchanged
+* test_fresh_schema_and_invalid_fields
+[1m3/3 passed.
+[0m[4m
+
+res://tests/integration/test_animal_behaviour.gd
+[0m* test_sleep_completes_all_actual_transition_animations_in_order
+* test_sitting_holds_last_frame_and_wakes_before_walking
+* test_peck_is_stationary_and_does_not_refill_food
+* test_automatic_scheduler_chooses_configured_behaviour<parameterized>
+    - params[0](forage)
+    - params[1](rest)
+    - params[2](sleep)
+* test_late_animation_completion_cannot_skip_or_repeat_states
+* test_sleep_stays_inside_pen_and_missing_pen_cancels_safely
+* test_missing_or_looping_optional_transitions_are_not_selected
+* test_other_species_resolve_their_own_forage_and_lying_animations<parameterized>
+    - params[0](cow)
+    - params[1](sheep)
+    - params[2](pig)
+* test_all_chicken_and_rooster_assets_support_the_transition_chain
+* test_legacy_focus_never_cancels_walk_or_wakes_sleeping_animal
+[1m10/10 passed.
+[0m[4m
+
+res://tests/integration/test_animal_feeding.gd
+[0m* test_hungry_chicken_walks_to_food_and_eats_without_refilling_water
+* test_focus_preserves_resource_trip_and_meal<parameterized>
+    - params[0](8)
+    - params[1](9)
+    - params[2](10)
+* test_late_meal_sync_that_reaches_death_releases_slot_without_spending_stock
+* test_more_urgent_water_then_food_are_both_satisfied
+* test_empty_other_pen_and_outside_stations_are_ignored
+* test_nearest_compatible_station_is_chosen
+* test_unavailable_urgent_water_does_not_prevent_eating
+* test_no_supply_falls_back_and_refilling_empty_supply_is_discovered
+[33m    --- Awaiting 70 physics frames  ---
+[0m* test_deleted_target_cancels_without_restoring_food_or_leaking_reservation
+* test_moved_target_releases_old_slot_without_remote_feeding
+* test_last_portion_cannot_be_consumed_twice_by_competing_animals
+[33m    --- Awaiting 200 physics frames  ---

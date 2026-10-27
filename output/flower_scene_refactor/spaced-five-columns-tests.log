@@ -1,0 +1,43 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_flower_garden.gd
+[0m* test_grid_is_80_unique_pots_in_four_even_blocks_with_cross_aisle
+* test_focus_only_reaches_pot_in_front_and_not_from_far_away
+* test_hotbar_plant_water_and_e_harvest_at_impact_once
+* test_move_seed_or_cancel_action_before_impact_does_not_spend_seed
+* test_inventory_open_blocks_actions_and_hides_focus
+* test_ten_seed_supplies_are_available_for_new_and_existing_players
+* test_eight_starting_flowers_cover_different_stages_and_do_not_respawn
+* test_four_blocks_share_identical_spacing_and_margins
+* test_actual_sprite_pixels_stay_inside_authored_block_footprint
+* test_dense_save_preserves_overflow_without_replanting_after_clear
+* test_e_harvest_with_legacy_overflow_leaves_empty_pot_and_grants_original_flower
+[1m11/11 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               1
+Tests                11
+Passing Tests        11
+Asserts             454
+Time              1.308s
+
+
+[32m---- All tests passed! ----
+[0m
