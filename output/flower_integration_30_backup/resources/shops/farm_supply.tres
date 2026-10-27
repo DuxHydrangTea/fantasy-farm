@@ -1,0 +1,415 @@
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://dcpf35xdsqen2"]
+
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="1_f1el3"]
+[ext_resource type="Resource" uid="uid://jms8lvhuyipw" path="res://resources/shops/animals/chicken.tres" id="2_k85ps"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="2_offer"]
+[ext_resource type="Resource" uid="uid://creg2yit3ood4" path="res://resources/shops/animals/duck.tres" id="3_eqy7j"]
+[ext_resource type="Resource" uid="uid://oy4or8tj7464" path="res://resources/shops/animals/goose.tres" id="4_r8s11"]
+[ext_resource type="Resource" uid="uid://cjbl4yb3hp8d5" path="res://resources/shops/animals/pig.tres" id="5_youwl"]
+[ext_resource type="Resource" uid="uid://gflfbkk7r8qo" path="res://resources/shops/animals/sheep.tres" id="6_jxoa0"]
+[ext_resource type="Resource" uid="uid://cvlq6nc5ustwu" path="res://resources/shops/animals/cow.tres" id="7_iuhxw"]
+[ext_resource type="Resource" uid="uid://dl5aht8o7lg2c" path="res://resources/shops/animals/horse.tres" id="8_f8sdp"]
+[ext_resource type="Resource" uid="uid://bkch5xnn0kjun" path="res://items/boosters/crop_fertilizer.tres" id="44_eqy7j"]
+[ext_resource type="Resource" uid="uid://btwdtqq0ewgad" path="res://items/boosters/animal_tonic.tres" id="45_r8s11"]
+[ext_resource type="Resource" path="res://items/trees/autumn_maple_sapling.tres" id="54_1rqq4"]
+[ext_resource type="Resource" path="res://items/trees/blue_conifer_sapling.tres" id="55_5aqoa"]
+[ext_resource type="Resource" path="res://items/trees/brown_palm_sapling.tres" id="56_bljew"]
+[ext_resource type="Resource" path="res://items/trees/evergreen_spruce_sapling.tres" id="57_jvars"]
+[ext_resource type="Resource" path="res://items/trees/flowering_cactus_sapling.tres" id="58_eairs"]
+[ext_resource type="Resource" path="res://items/trees/golden_aspen_sapling.tres" id="59_ao8oe"]
+[ext_resource type="Resource" path="res://items/trees/golden_birch_sapling.tres" id="60_surt3"]
+[ext_resource type="Resource" path="res://items/trees/magic_blue_sapling.tres" id="61_l6giw"]
+[ext_resource type="Resource" path="res://items/trees/orange_oak_sapling.tres" id="62_cwdjc"]
+[ext_resource type="Resource" path="res://items/trees/palm_sapling.tres" id="63_8oiru"]
+[ext_resource type="Resource" path="res://items/trees/pink_blossom_sapling.tres" id="64_wsn35"]
+[ext_resource type="Resource" path="res://items/trees/purple_blossom_sapling.tres" id="65_4iiqh"]
+[ext_resource type="Resource" path="res://items/trees/red_maple_sapling.tres" id="66_a7f1n"]
+[ext_resource type="Resource" path="res://items/trees/willow_sapling.tres" id="67_msbjh"]
+[ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="hive_item"]
+[ext_resource type="Resource" uid="uid://d3u31scn2lmn7" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://bnuneadnyl63o" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://hfi6tumxf1gf" path="res://items/seeds/broccoli_seed.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://brm6xbaqufev1" path="res://items/seeds/cabbage_seed.tres" id="item_3"]
+[ext_resource type="Resource" uid="uid://bbckhpm2lr067" path="res://items/seeds/carrot_seed.tres" id="item_4"]
+[ext_resource type="Resource" uid="uid://cgvr23idhq4gx" path="res://items/seeds/chili_pepper_seed.tres" id="item_5"]
+[ext_resource type="Resource" uid="uid://di11lnq3n268k" path="res://items/seeds/corn_seed.tres" id="item_6"]
+[ext_resource type="Resource" uid="uid://dyi5coaxrbw14" path="res://items/seeds/cucumber_seed.tres" id="item_7"]
+[ext_resource type="Resource" uid="uid://c514js3vx1kij" path="res://items/seeds/eggplant_seed.tres" id="item_8"]
+[ext_resource type="Resource" uid="uid://b2rfstir7l7i2" path="res://items/seeds/flower_01_seed.tres" id="item_9"]
+[ext_resource type="Resource" uid="uid://dbetjtr0xtlt2" path="res://items/seeds/flower_02_seed.tres" id="item_10"]
+[ext_resource type="Resource" uid="uid://biwflle2a807t" path="res://items/seeds/flower_03_seed.tres" id="item_11"]
+[ext_resource type="Resource" uid="uid://cf5jd6qs0k0pu" path="res://items/seeds/flower_04_seed.tres" id="item_12"]
+[ext_resource type="Resource" uid="uid://8pwu1aep0l0y" path="res://items/seeds/flower_05_seed.tres" id="item_13"]
+[ext_resource type="Resource" uid="uid://c0n3qw4i60yq6" path="res://items/seeds/flower_06_seed.tres" id="item_14"]
+[ext_resource type="Resource" uid="uid://xwlvnwgrdeog" path="res://items/seeds/flower_07_seed.tres" id="item_15"]
+[ext_resource type="Resource" uid="uid://oc1m5iynubip" path="res://items/seeds/flower_08_seed.tres" id="item_16"]
+[ext_resource type="Resource" uid="uid://b0vbs0nau4ce5" path="res://items/seeds/flower_09_seed.tres" id="item_17"]
+[ext_resource type="Resource" uid="uid://bl7ve8t12yjfo" path="res://items/seeds/flower_10_seed.tres" id="item_18"]
+[ext_resource type="Resource" uid="uid://cdfosp824ruxh" path="res://items/seeds/garlic_seed.tres" id="item_19"]
+[ext_resource type="Resource" uid="uid://k2lq2ho3vp6k" path="res://items/seeds/green_bell_pepper_seed.tres" id="item_20"]
+[ext_resource type="Resource" uid="uid://cqxt4cqf0q1sd" path="res://items/seeds/leek_seed.tres" id="item_21"]
+[ext_resource type="Resource" uid="uid://cblfl65bahv58" path="res://items/seeds/onion_seed.tres" id="item_22"]
+[ext_resource type="Resource" uid="uid://cmjs3s1jf8c3h" path="res://items/seeds/parsnip_seed.tres" id="item_23"]
+[ext_resource type="Resource" uid="uid://u0txknb11dj" path="res://items/seeds/potato_seed.tres" id="item_24"]
+[ext_resource type="Resource" uid="uid://dnpvb1khrupek" path="res://items/seeds/pumpkin_seed.tres" id="item_25"]
+[ext_resource type="Resource" uid="uid://cqyciu8fdl8bb" path="res://items/seeds/radish_seed.tres" id="item_26"]
+[ext_resource type="Resource" uid="uid://canjm4gmiyong" path="res://items/seeds/strawberry_seed.tres" id="item_27"]
+[ext_resource type="Resource" uid="uid://cd0ro570dliao" path="res://items/seeds/sunflower_seed.tres" id="item_28"]
+[ext_resource type="Resource" uid="uid://p5dbpgkbmhdh" path="res://items/seeds/tomato_seed.tres" id="item_29"]
+[ext_resource type="Resource" uid="uid://bja6prlt8d6o7" path="res://items/seeds/wheat_seed.tres" id="item_30"]
+[ext_resource type="Resource" uid="uid://c5g7yqsv8xebb" path="res://items/seeds/yellow_bell_pepper_seed.tres" id="item_31"]
+[ext_resource type="Resource" uid="uid://c2ii5df2nr7md" path="res://items/feeds/livestock_feed.tres" id="item_32"]
+[ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="item_33"]
+[ext_resource type="Resource" uid="uid://gi8573nwgyvm" path="res://items/trees/apple_sapling.tres" id="tree_offer_item_0"]
+[ext_resource type="Resource" uid="uid://c7ylms4br4tvn" path="res://items/trees/peach_sapling.tres" id="tree_offer_item_1"]
+[ext_resource type="Resource" uid="uid://suq3ph47mrdl" path="res://items/trees/pear_sapling.tres" id="tree_offer_item_2"]
+[ext_resource type="Resource" uid="uid://h45dmonqtqb3" path="res://items/trees/cherry_sapling.tres" id="tree_offer_item_3"]
+[ext_resource type="Resource" uid="uid://cyv1fu028ly8l" path="res://items/trees/oak_sapling.tres" id="tree_offer_item_4"]
+[ext_resource type="Resource" uid="uid://d4jdch55rpo55" path="res://items/trees/birch_sapling.tres" id="tree_offer_item_5"]
+[ext_resource type="Resource" uid="uid://c70ygql7pch63" path="res://items/trees/spruce_sapling.tres" id="tree_offer_item_6"]
+[ext_resource type="Resource" uid="uid://t4ko7gyg4qmx" path="res://items/tools/axe.tres" id="tree_offer_item_7"]
+[ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="wood_item"]
+
+[sub_resource type="Resource" id="Offer_0"]
+script = ExtResource("2_offer")
+item = ExtResource("item_0")
+price = 5500
+
+[sub_resource type="Resource" id="Offer_1"]
+script = ExtResource("2_offer")
+item = ExtResource("item_1")
+price = 20000
+
+[sub_resource type="Resource" id="Offer_2"]
+script = ExtResource("2_offer")
+item = ExtResource("item_2")
+price = 12000
+
+[sub_resource type="Resource" id="Offer_3"]
+script = ExtResource("2_offer")
+item = ExtResource("item_3")
+price = 6800
+
+[sub_resource type="Resource" id="Offer_4"]
+script = ExtResource("2_offer")
+item = ExtResource("item_4")
+price = 2700
+
+[sub_resource type="Resource" id="Offer_5"]
+script = ExtResource("2_offer")
+item = ExtResource("item_5")
+price = 15000
+
+[sub_resource type="Resource" id="Offer_6"]
+script = ExtResource("2_offer")
+item = ExtResource("item_6")
+price = 5000
+
+[sub_resource type="Resource" id="Offer_7"]
+script = ExtResource("2_offer")
+item = ExtResource("item_7")
+price = 12000
+
+[sub_resource type="Resource" id="Offer_8"]
+script = ExtResource("2_offer")
+item = ExtResource("item_8")
+price = 12000
+
+[sub_resource type="Resource" id="Offer_9"]
+script = ExtResource("2_offer")
+item = ExtResource("item_9")
+price = 10000
+category = 2
+
+[sub_resource type="Resource" id="Offer_10"]
+script = ExtResource("2_offer")
+item = ExtResource("item_10")
+price = 15000
+category = 2
+
+[sub_resource type="Resource" id="Offer_11"]
+script = ExtResource("2_offer")
+item = ExtResource("item_11")
+price = 20000
+category = 2
+
+[sub_resource type="Resource" id="Offer_12"]
+script = ExtResource("2_offer")
+item = ExtResource("item_12")
+price = 25000
+category = 2
+
+[sub_resource type="Resource" id="Offer_13"]
+script = ExtResource("2_offer")
+item = ExtResource("item_13")
+price = 30000
+category = 2
+
+[sub_resource type="Resource" id="Offer_14"]
+script = ExtResource("2_offer")
+item = ExtResource("item_14")
+price = 40000
+category = 2
+
+[sub_resource type="Resource" id="Offer_15"]
+script = ExtResource("2_offer")
+item = ExtResource("item_15")
+price = 50000
+category = 2
+
+[sub_resource type="Resource" id="Offer_16"]
+script = ExtResource("2_offer")
+item = ExtResource("item_16")
+price = 60000
+category = 2
+
+[sub_resource type="Resource" id="Offer_17"]
+script = ExtResource("2_offer")
+item = ExtResource("item_17")
+price = 75000
+category = 2
+
+[sub_resource type="Resource" id="Offer_18"]
+script = ExtResource("2_offer")
+item = ExtResource("item_18")
+price = 100000
+category = 2
+
+[sub_resource type="Resource" id="Offer_19"]
+script = ExtResource("2_offer")
+item = ExtResource("item_19")
+price = 9000
+
+[sub_resource type="Resource" id="Offer_20"]
+script = ExtResource("2_offer")
+item = ExtResource("item_20")
+price = 16000
+
+[sub_resource type="Resource" id="Offer_21"]
+script = ExtResource("2_offer")
+item = ExtResource("item_21")
+price = 8000
+
+[sub_resource type="Resource" id="Offer_22"]
+script = ExtResource("2_offer")
+item = ExtResource("item_22")
+price = 13000
+
+[sub_resource type="Resource" id="Offer_23"]
+script = ExtResource("2_offer")
+item = ExtResource("item_23")
+price = 4500
+
+[sub_resource type="Resource" id="Offer_24"]
+script = ExtResource("2_offer")
+item = ExtResource("item_24")
+price = 8000
+
+[sub_resource type="Resource" id="Offer_25"]
+script = ExtResource("2_offer")
+item = ExtResource("item_25")
+price = 50000
+
+[sub_resource type="Resource" id="Offer_26"]
+script = ExtResource("2_offer")
+item = ExtResource("item_26")
+price = 3600
+
+[sub_resource type="Resource" id="Offer_27"]
+script = ExtResource("2_offer")
+item = ExtResource("item_27")
+price = 30000
+
+[sub_resource type="Resource" id="Offer_28"]
+script = ExtResource("2_offer")
+item = ExtResource("item_28")
+price = 25000
+
+[sub_resource type="Resource" id="Offer_29"]
+script = ExtResource("2_offer")
+item = ExtResource("item_29")
+price = 9500
+
+[sub_resource type="Resource" id="Offer_30"]
+script = ExtResource("2_offer")
+item = ExtResource("item_30")
+price = 6000
+
+[sub_resource type="Resource" id="Offer_31"]
+script = ExtResource("2_offer")
+item = ExtResource("item_31")
+price = 18000
+
+[sub_resource type="Resource" id="Offer_32"]
+script = ExtResource("2_offer")
+item = ExtResource("item_32")
+price = 2000
+category = 1
+
+[sub_resource type="Resource" id="Offer_33"]
+script = ExtResource("2_offer")
+item = ExtResource("item_33")
+price = 2000
+category = 1
+
+[sub_resource type="Resource" id="Resource_f8sdp"]
+script = ExtResource("2_offer")
+item = ExtResource("44_eqy7j")
+price = 5
+category = 1
+
+[sub_resource type="Resource" id="Resource_in2rt"]
+script = ExtResource("2_offer")
+item = ExtResource("45_r8s11")
+price = 3
+category = 1
+
+[sub_resource type="Resource" id="hive_offer"]
+script = ExtResource("2_offer")
+item = ExtResource("hive_item")
+price = 150000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_0"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_0")
+price = 20000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_1"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_1")
+price = 20000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_2"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_2")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_3"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_3")
+price = 30000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_4"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_4")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_5"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_5")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_6"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_6")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_he8nl"]
+script = ExtResource("2_offer")
+item = ExtResource("54_1rqq4")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_c5g3a"]
+script = ExtResource("2_offer")
+item = ExtResource("55_5aqoa")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_voaxk"]
+script = ExtResource("2_offer")
+item = ExtResource("56_bljew")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_hhkoe"]
+script = ExtResource("2_offer")
+item = ExtResource("57_jvars")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_e34nh"]
+script = ExtResource("2_offer")
+item = ExtResource("58_eairs")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_r6aqy"]
+script = ExtResource("2_offer")
+item = ExtResource("59_ao8oe")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_wn27d"]
+script = ExtResource("2_offer")
+item = ExtResource("60_surt3")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_8b25y"]
+script = ExtResource("2_offer")
+item = ExtResource("61_l6giw")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_p83c4"]
+script = ExtResource("2_offer")
+item = ExtResource("62_cwdjc")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_di7jn"]
+script = ExtResource("2_offer")
+item = ExtResource("63_8oiru")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_87obf"]
+script = ExtResource("2_offer")
+item = ExtResource("64_wsn35")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_57t45"]
+script = ExtResource("2_offer")
+item = ExtResource("65_4iiqh")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_h0di5"]
+script = ExtResource("2_offer")
+item = ExtResource("66_a7f1n")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_q2nov"]
+script = ExtResource("2_offer")
+item = ExtResource("67_msbjh")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="tree_offer_7"]
+script = ExtResource("2_offer")
+item = ExtResource("tree_offer_item_7")
+price = 250
+category = 1
+
+[sub_resource type="Resource" id="wood_offer"]
+script = ExtResource("2_offer")
+item = ExtResource("wood_item")
+price = 63
+category = 1
+
+[resource]
+script = ExtResource("1_catalog")
+offers = Array[ExtResource("2_offer")]([SubResource("Offer_0"), SubResource("Offer_1"), SubResource("Offer_2"), SubResource("Offer_3"), SubResource("Offer_4"), SubResource("Offer_5"), SubResource("Offer_6"), SubResource("Offer_7"), SubResource("Offer_8"), SubResource("Offer_9"), SubResource("Offer_10"), SubResource("Offer_11"), SubResource("Offer_12"), SubResource("Offer_13"), SubResource("Offer_14"), SubResource("Offer_15"), SubResource("Offer_16"), SubResource("Offer_17"), SubResource("Offer_18"), SubResource("Offer_19"), SubResource("Offer_20"), SubResource("Offer_21"), SubResource("Offer_22"), SubResource("Offer_23"), SubResource("Offer_24"), SubResource("Offer_25"), SubResource("Offer_26"), SubResource("Offer_27"), SubResource("Offer_28"), SubResource("Offer_29"), SubResource("Offer_30"), SubResource("Offer_31"), SubResource("Offer_32"), SubResource("Offer_33"), SubResource("Resource_f8sdp"), SubResource("Resource_in2rt"), SubResource("hive_offer"), SubResource("tree_offer_0"), SubResource("tree_offer_1"), SubResource("tree_offer_2"), SubResource("tree_offer_3"), SubResource("tree_offer_4"), SubResource("tree_offer_5"), SubResource("tree_offer_6"), SubResource("Resource_he8nl"), SubResource("Resource_c5g3a"), SubResource("Resource_voaxk"), SubResource("Resource_hhkoe"), SubResource("Resource_e34nh"), SubResource("Resource_r6aqy"), SubResource("Resource_wn27d"), SubResource("Resource_8b25y"), SubResource("Resource_p83c4"), SubResource("Resource_di7jn"), SubResource("Resource_87obf"), SubResource("Resource_57t45"), SubResource("Resource_h0di5"), SubResource("Resource_q2nov"), SubResource("tree_offer_7"), SubResource("wood_offer")])
+animal_offers = Array[ExtResource("1_f1el3")]([ExtResource("2_k85ps"), ExtResource("3_eqy7j"), ExtResource("4_r8s11"), ExtResource("5_youwl"), ExtResource("6_jxoa0"), ExtResource("7_iuhxw"), ExtResource("8_f8sdp")])

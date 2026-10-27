@@ -1,0 +1,493 @@
+[gd_resource type="Resource" script_class="ProducePriceCatalog" format=3 uid="uid://dpuu147gshx4d"]
+
+[ext_resource type="Script" uid="uid://bq5db6pqrmpy1" path="res://scripts/produce_price.gd" id="1_k2k64"]
+[ext_resource type="Resource" uid="uid://ccsewv7urhwlm" path="res://items/harvest_produces/beetroot_produces.tres" id="2_he8r5"]
+[ext_resource type="Resource" uid="uid://hvdnb4d8hf08" path="res://items/harvest_produces/bell_pepper_produces.tres" id="3_gq0g2"]
+[ext_resource type="Resource" uid="uid://b22eabf0e4pms" path="res://items/harvest_produces/broccoli_produces.tres" id="4_k2alr"]
+[ext_resource type="Resource" uid="uid://dhr1e4rllnp7m" path="res://items/harvest_produces/cabbage_produces.tres" id="5_4eq7q"]
+[ext_resource type="Resource" uid="uid://dhfbyhkt2hey3" path="res://items/harvest_produces/carrot_produces.tres" id="6_3bq1q"]
+[ext_resource type="Resource" uid="uid://dtm6yfjrrqjli" path="res://items/harvest_produces/chili_pepper_produces.tres" id="7_ekhty"]
+[ext_resource type="Resource" uid="uid://bmg4rg65ai1nk" path="res://items/harvest_produces/corn_produces.tres" id="8_svw8t"]
+[ext_resource type="Resource" uid="uid://bbhpm28q6wwrf" path="res://items/harvest_produces/cucumber_produces.tres" id="9_xxx63"]
+[ext_resource type="Resource" uid="uid://8ler1use8ujr" path="res://items/harvest_produces/eggplant_produces.tres" id="10_3unb8"]
+[ext_resource type="Resource" uid="uid://db2t4jmc7wr2f" path="res://items/harvest_produces/garlic_produces.tres" id="11_eht2d"]
+[ext_resource type="Resource" uid="uid://dw3bduo6c5lk1" path="res://items/harvest_produces/green_bell_pepper_produces.tres" id="12_7bf32"]
+[ext_resource type="Resource" uid="uid://b1iak8ny6qxwt" path="res://items/harvest_produces/leek_produces.tres" id="13_eqorv"]
+[ext_resource type="Resource" uid="uid://0yoj34v2jlfi" path="res://items/harvest_produces/onion_produces.tres" id="14_q36xs"]
+[ext_resource type="Resource" uid="uid://d0npe2kfs524c" path="res://items/harvest_produces/parsnip_produces.tres" id="15_8gcl7"]
+[ext_resource type="Resource" uid="uid://drigommwbpugf" path="res://items/harvest_produces/potato_produces.tres" id="16_lwpeh"]
+[ext_resource type="Resource" uid="uid://csacaahblfygu" path="res://items/harvest_produces/pumpkin_produces.tres" id="17_ekxb1"]
+[ext_resource type="Resource" uid="uid://nb6ljpb4g4ti" path="res://items/harvest_produces/radish_produces.tres" id="18_dgglx"]
+[ext_resource type="Resource" uid="uid://caaybya6quwfv" path="res://items/harvest_produces/strawberry_produces.tres" id="19_5oqgp"]
+[ext_resource type="Resource" uid="uid://b0gkbuoi66r3h" path="res://items/harvest_produces/sunflower_produces.tres" id="20_d7u3i"]
+[ext_resource type="Resource" uid="uid://uoen08knamnu" path="res://items/harvest_produces/tomato_produces.tres" id="21_m6bqg"]
+[ext_resource type="Resource" uid="uid://b8blcg5flfwn" path="res://items/harvest_produces/wheat_produces.tres" id="22_28bpy"]
+[ext_resource type="Resource" uid="uid://deeafikeg5vpd" path="res://items/harvest_produces/yellow_bell_pepper_produces.tres" id="23_48l1g"]
+[ext_resource type="Resource" uid="uid://4qdtgflo1gay" path="res://items/animal_produces/chicken_egg.tres" id="24_uu72g"]
+[ext_resource type="Resource" uid="uid://bsvaphmvtkvsd" path="res://items/animal_produces/duck_egg.tres" id="25_r6fd3"]
+[ext_resource type="Resource" uid="uid://dn15gm58w0reo" path="res://items/animal_produces/goose_egg.tres" id="26_jy2ds"]
+[ext_resource type="Resource" uid="uid://c0b5ad7m218x6" path="res://items/animal_produces/cow_milk.tres" id="27_bql8k"]
+[ext_resource type="Resource" uid="uid://cnrrbglgak6pd" path="res://items/animal_produces/sheep_wool.tres" id="28_lwmjh"]
+[ext_resource type="Resource" uid="uid://d35osrbwka1k4" path="res://items/animal_produces/pig_truffle.tres" id="29_8h51j"]
+[ext_resource type="Resource" uid="uid://31iwcxw1jyrh" path="res://items/animal_produces/horse_compost.tres" id="30_1xbns"]
+[ext_resource type="Resource" uid="uid://dsyskgnd4g2q2" path="res://items/flowers/flower_01.tres" id="31_ikd0m"]
+[ext_resource type="Resource" uid="uid://dxyde4mrx1wsn" path="res://items/flowers/flower_02.tres" id="32_34o3d"]
+[ext_resource type="Resource" uid="uid://qp0yqheqlh8w" path="res://items/flowers/flower_03.tres" id="33_c1ecv"]
+[ext_resource type="Resource" uid="uid://dw1giqor2knx" path="res://items/flowers/flower_04.tres" id="34_sii65"]
+[ext_resource type="Resource" uid="uid://du2dprhnxm8yj" path="res://items/flowers/flower_05.tres" id="35_whcus"]
+[ext_resource type="Resource" uid="uid://c0oso8fnhia5f" path="res://items/flowers/flower_06.tres" id="36_01sma"]
+[ext_resource type="Resource" uid="uid://k7ami1grdrqs" path="res://items/flowers/flower_07.tres" id="37_rahvt"]
+[ext_resource type="Resource" uid="uid://bjg3cygq4cke2" path="res://items/flowers/flower_08.tres" id="38_1qv7f"]
+[ext_resource type="Resource" uid="uid://cb77jqqmysnpl" path="res://items/flowers/flower_09.tres" id="39_j8181"]
+[ext_resource type="Resource" uid="uid://2hnx2n7fpl6p" path="res://items/flowers/flower_10.tres" id="40_a1wqk"]
+[ext_resource type="Script" uid="uid://htvxymbqf8cu" path="res://scripts/produce_price_catalog.gd" id="41_h3iu0"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_01_06_custard_batch.tres" id="balance_hybrid_01_06_custard_batch"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_02_07_custard_batch.tres" id="balance_hybrid_02_07_custard_batch"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_03_08_custard_batch.tres" id="balance_hybrid_03_08_custard_batch"]
+[ext_resource type="Resource" path="res://items/cooked/mono_06_custard_batch.tres" id="balance_mono_06_custard_batch"]
+[ext_resource type="Resource" path="res://items/cooked/mono_07_custard_batch.tres" id="balance_mono_07_custard_batch"]
+[ext_resource type="Resource" path="res://items/cooked/star_apple_tart_batch.tres" id="balance_star_apple_tart_batch"]
+[ext_resource type="Resource" path="res://items/cooked/star_cherry_preserve_batch.tres" id="balance_star_cherry_preserve_batch"]
+[ext_resource type="Resource" path="res://items/cooked/star_peach_parfait_batch.tres" id="balance_star_peach_parfait_batch"]
+[ext_resource type="Resource" path="res://items/cooked/star_pear_compote_batch.tres" id="balance_star_pear_compote_batch"]
+[ext_resource type="Resource" uid="uid://b1napn3evwsta" path="res://items/cooked/bread.tres" id="cooked_bread"]
+[ext_resource type="Resource" uid="uid://ck57g5t8bpv8s" path="res://items/cooked/fried_egg.tres" id="cooked_fried_egg"]
+[ext_resource type="Resource" uid="uid://bx0t58j8dor03" path="res://items/cooked/fruit_salad.tres" id="cooked_fruit_salad"]
+[ext_resource type="Resource" uid="uid://bt8po5u815tjm" path="res://items/cooked/honey_bread.tres" id="cooked_honey_bread"]
+[ext_resource type="Resource" uid="uid://bk3j70bx8dxdy" path="res://items/cooked/steamed_egg.tres" id="cooked_steamed_egg"]
+[ext_resource type="Resource" uid="uid://bqa1tdrryywsl" path="res://items/honey/floral_honey.tres" id="floral_honey"]
+[ext_resource type="Resource" path="res://items/trees/apple_star.tres" id="price_apple_star_item"]
+[ext_resource type="Resource" path="res://items/trees/cherry_star.tres" id="price_cherry_star_item"]
+[ext_resource type="Resource" path="res://items/trees/peach_star.tres" id="price_peach_star_item"]
+[ext_resource type="Resource" path="res://items/trees/pear_star.tres" id="price_pear_star_item"]
+[ext_resource type="Resource" path="res://items/cooked/star_apple_tart.tres" id="price_star_apple_tart_item"]
+[ext_resource type="Resource" path="res://items/cooked/star_cherry_preserve.tres" id="price_star_cherry_preserve_item"]
+[ext_resource type="Resource" path="res://items/cooked/star_peach_parfait.tres" id="price_star_peach_parfait_item"]
+[ext_resource type="Resource" path="res://items/cooked/star_pear_compote.tres" id="price_star_pear_compote_item"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_01_06_custard.tres" id="s4_hybrid_01_06_custard"]
+[ext_resource type="Resource" path="res://items/honey/hybrid_01_06_honey.tres" id="s4_hybrid_01_06_honey"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_02_07_custard.tres" id="s4_hybrid_02_07_custard"]
+[ext_resource type="Resource" path="res://items/honey/hybrid_02_07_honey.tres" id="s4_hybrid_02_07_honey"]
+[ext_resource type="Resource" path="res://items/cooked/hybrid_03_08_custard.tres" id="s4_hybrid_03_08_custard"]
+[ext_resource type="Resource" path="res://items/honey/hybrid_03_08_honey.tres" id="s4_hybrid_03_08_honey"]
+[ext_resource type="Resource" path="res://items/honey/mixed_honey.tres" id="s4_mixed_honey"]
+[ext_resource type="Resource" path="res://items/cooked/mono_06_custard.tres" id="s4_mono_06_custard"]
+[ext_resource type="Resource" path="res://items/honey/mono_06_honey.tres" id="s4_mono_06_honey"]
+[ext_resource type="Resource" path="res://items/cooked/mono_07_custard.tres" id="s4_mono_07_custard"]
+[ext_resource type="Resource" path="res://items/honey/mono_07_honey.tres" id="s4_mono_07_honey"]
+[ext_resource type="Resource" uid="uid://3w1qw3pdu5be" path="res://items/honey/sunflower_honey.tres" id="sunflower_honey"]
+[ext_resource type="Resource" uid="uid://bbl8hjd8ejmns" path="res://items/trees/apple.tres" id="tree_price_item_0"]
+[ext_resource type="Resource" uid="uid://6m5aib3uy7ky" path="res://items/trees/peach.tres" id="tree_price_item_1"]
+[ext_resource type="Resource" uid="uid://bpjlvlvuxpli0" path="res://items/trees/pear.tres" id="tree_price_item_2"]
+[ext_resource type="Resource" uid="uid://cie0uhpb7hs1j" path="res://items/trees/cherry.tres" id="tree_price_item_3"]
+[ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="tree_price_item_4"]
+[ext_resource type="Resource" uid="uid://ds0v0j538alt6" path="res://items/trees/root_wood.tres" id="tree_price_item_5"]
+[ext_resource type="Resource" uid="uid://cshtk8qpvet1k" path="res://items/honey/wild_honey.tres" id="wild_honey"]
+
+[sub_resource type="Resource" id="Resource_0fndo"]
+script = ExtResource("1_k2k64")
+item = ExtResource("2_he8r5")
+price = 80
+
+[sub_resource type="Resource" id="Resource_x43wm"]
+script = ExtResource("1_k2k64")
+item = ExtResource("3_gq0g2")
+price = 350
+
+[sub_resource type="Resource" id="Resource_xcals"]
+script = ExtResource("1_k2k64")
+item = ExtResource("4_k2alr")
+price = 280
+
+[sub_resource type="Resource" id="Resource_rs8fh"]
+script = ExtResource("1_k2k64")
+item = ExtResource("5_4eq7q")
+price = 100
+
+[sub_resource type="Resource" id="Resource_rhuqv"]
+script = ExtResource("1_k2k64")
+item = ExtResource("6_3bq1q")
+price = 35
+
+[sub_resource type="Resource" id="Resource_0i1yd"]
+script = ExtResource("1_k2k64")
+item = ExtResource("7_ekhty")
+price = 200
+
+[sub_resource type="Resource" id="Resource_r4udf"]
+script = ExtResource("1_k2k64")
+item = ExtResource("8_svw8t")
+price = 50
+
+[sub_resource type="Resource" id="Resource_w2v6e"]
+script = ExtResource("1_k2k64")
+item = ExtResource("9_xxx63")
+price = 100
+
+[sub_resource type="Resource" id="Resource_tebb4"]
+script = ExtResource("1_k2k64")
+item = ExtResource("10_3unb8")
+price = 150
+
+[sub_resource type="Resource" id="Resource_b16g0"]
+script = ExtResource("1_k2k64")
+item = ExtResource("11_eht2d")
+price = 35
+
+[sub_resource type="Resource" id="Resource_lrpvc"]
+script = ExtResource("1_k2k64")
+item = ExtResource("12_7bf32")
+price = 250
+
+[sub_resource type="Resource" id="Resource_ipnsn"]
+script = ExtResource("1_k2k64")
+item = ExtResource("13_eqorv")
+price = 60
+
+[sub_resource type="Resource" id="Resource_8d1v1"]
+script = ExtResource("1_k2k64")
+item = ExtResource("14_q36xs")
+price = 110
+
+[sub_resource type="Resource" id="Resource_dulss"]
+script = ExtResource("1_k2k64")
+item = ExtResource("15_8gcl7")
+price = 65
+
+[sub_resource type="Resource" id="Resource_hooul"]
+script = ExtResource("1_k2k64")
+item = ExtResource("16_lwpeh")
+price = 65
+
+[sub_resource type="Resource" id="Resource_rni36"]
+script = ExtResource("1_k2k64")
+item = ExtResource("17_ekxb1")
+price = 2900
+
+[sub_resource type="Resource" id="Resource_t0u1j"]
+script = ExtResource("1_k2k64")
+item = ExtResource("18_dgglx")
+price = 50
+
+[sub_resource type="Resource" id="Resource_782nf"]
+script = ExtResource("1_k2k64")
+item = ExtResource("19_5oqgp")
+price = 200
+
+[sub_resource type="Resource" id="Resource_l7ag6"]
+script = ExtResource("1_k2k64")
+item = ExtResource("20_d7u3i")
+price = 850
+
+[sub_resource type="Resource" id="Resource_0306e"]
+script = ExtResource("1_k2k64")
+item = ExtResource("21_m6bqg")
+price = 80
+
+[sub_resource type="Resource" id="Resource_yx11b"]
+script = ExtResource("1_k2k64")
+item = ExtResource("22_28bpy")
+price = 30
+
+[sub_resource type="Resource" id="Resource_av65g"]
+script = ExtResource("1_k2k64")
+item = ExtResource("23_48l1g")
+price = 300
+
+[sub_resource type="Resource" id="Resource_8fv8d"]
+script = ExtResource("1_k2k64")
+item = ExtResource("24_uu72g")
+price = 8
+
+[sub_resource type="Resource" id="Resource_wlb54"]
+script = ExtResource("1_k2k64")
+item = ExtResource("25_r6fd3")
+price = 15
+
+[sub_resource type="Resource" id="Resource_014y7"]
+script = ExtResource("1_k2k64")
+item = ExtResource("26_jy2ds")
+price = 28
+
+[sub_resource type="Resource" id="Resource_fdaq5"]
+script = ExtResource("1_k2k64")
+item = ExtResource("27_bql8k")
+price = 80
+
+[sub_resource type="Resource" id="Resource_0rwu8"]
+script = ExtResource("1_k2k64")
+item = ExtResource("28_lwmjh")
+price = 65
+
+[sub_resource type="Resource" id="Resource_jfof3"]
+script = ExtResource("1_k2k64")
+item = ExtResource("29_8h51j")
+price = 180
+
+[sub_resource type="Resource" id="Resource_eoonp"]
+script = ExtResource("1_k2k64")
+item = ExtResource("30_1xbns")
+price = 250
+
+[sub_resource type="Resource" id="Resource_1150w"]
+script = ExtResource("1_k2k64")
+item = ExtResource("31_ikd0m")
+price = 180
+
+[sub_resource type="Resource" id="Resource_rbqce"]
+script = ExtResource("1_k2k64")
+item = ExtResource("32_34o3d")
+price = 280
+
+[sub_resource type="Resource" id="Resource_wca75"]
+script = ExtResource("1_k2k64")
+item = ExtResource("33_c1ecv")
+price = 380
+
+[sub_resource type="Resource" id="Resource_hxvgg"]
+script = ExtResource("1_k2k64")
+item = ExtResource("34_sii65")
+price = 500
+
+[sub_resource type="Resource" id="Resource_iqyux"]
+script = ExtResource("1_k2k64")
+item = ExtResource("35_whcus")
+price = 650
+
+[sub_resource type="Resource" id="Resource_xabf5"]
+script = ExtResource("1_k2k64")
+item = ExtResource("36_01sma")
+price = 900
+
+[sub_resource type="Resource" id="Resource_1croc"]
+script = ExtResource("1_k2k64")
+item = ExtResource("37_rahvt")
+price = 1300
+
+[sub_resource type="Resource" id="Resource_jnyvx"]
+script = ExtResource("1_k2k64")
+item = ExtResource("38_1qv7f")
+price = 1800
+
+[sub_resource type="Resource" id="Resource_wtlhn"]
+script = ExtResource("1_k2k64")
+item = ExtResource("39_j8181")
+price = 2500
+
+[sub_resource type="Resource" id="Resource_7syqy"]
+script = ExtResource("1_k2k64")
+item = ExtResource("40_a1wqk")
+price = 4500
+
+[sub_resource type="Resource" id="price_wild_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("wild_honey")
+price = 150
+
+[sub_resource type="Resource" id="price_sunflower_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("sunflower_honey")
+price = 250
+
+[sub_resource type="Resource" id="price_floral_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("floral_honey")
+price = 400
+
+[sub_resource type="Resource" id="tree_price_0"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_0")
+price = 25
+
+[sub_resource type="Resource" id="tree_price_1"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_1")
+price = 30
+
+[sub_resource type="Resource" id="tree_price_2"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_2")
+price = 38
+
+[sub_resource type="Resource" id="tree_price_3"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_3")
+price = 55
+
+[sub_resource type="Resource" id="tree_price_4"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_4")
+
+[sub_resource type="Resource" id="tree_price_5"]
+script = ExtResource("1_k2k64")
+item = ExtResource("tree_price_item_5")
+price = 20
+
+[sub_resource type="Resource" id="cooked_price_fried_egg"]
+script = ExtResource("1_k2k64")
+item = ExtResource("cooked_fried_egg")
+price = 18
+
+[sub_resource type="Resource" id="cooked_price_steamed_egg"]
+script = ExtResource("1_k2k64")
+item = ExtResource("cooked_steamed_egg")
+price = 62
+
+[sub_resource type="Resource" id="cooked_price_bread"]
+script = ExtResource("1_k2k64")
+item = ExtResource("cooked_bread")
+price = 165
+
+[sub_resource type="Resource" id="cooked_price_fruit_salad"]
+script = ExtResource("1_k2k64")
+item = ExtResource("cooked_fruit_salad")
+price = 121
+
+[sub_resource type="Resource" id="cooked_price_honey_bread"]
+script = ExtResource("1_k2k64")
+item = ExtResource("cooked_honey_bread")
+price = 946
+
+[sub_resource type="Resource" id="price_apple_star"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_apple_star_item")
+price = 25
+
+[sub_resource type="Resource" id="price_star_apple_tart"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_star_apple_tart_item")
+price = 280
+
+[sub_resource type="Resource" id="price_peach_star"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_peach_star_item")
+price = 30
+
+[sub_resource type="Resource" id="price_star_peach_parfait"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_star_peach_parfait_item")
+price = 294
+
+[sub_resource type="Resource" id="price_pear_star"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_pear_star_item")
+price = 38
+
+[sub_resource type="Resource" id="price_star_pear_compote"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_star_pear_compote_item")
+price = 316
+
+[sub_resource type="Resource" id="price_cherry_star"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_cherry_star_item")
+price = 55
+
+[sub_resource type="Resource" id="price_star_cherry_preserve"]
+script = ExtResource("1_k2k64")
+item = ExtResource("price_star_cherry_preserve_item")
+price = 364
+
+[sub_resource type="Resource" id="s4_price_mixed_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_mixed_honey")
+price = 150
+
+[sub_resource type="Resource" id="s4_price_hybrid_01_06_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_01_06_honey")
+price = 500
+
+[sub_resource type="Resource" id="s4_price_hybrid_01_06_custard"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_01_06_custard")
+price = 812
+
+[sub_resource type="Resource" id="s4_price_hybrid_02_07_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_02_07_honey")
+price = 500
+
+[sub_resource type="Resource" id="s4_price_hybrid_02_07_custard"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_02_07_custard")
+price = 812
+
+[sub_resource type="Resource" id="s4_price_hybrid_03_08_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_03_08_honey")
+price = 500
+
+[sub_resource type="Resource" id="s4_price_hybrid_03_08_custard"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_hybrid_03_08_custard")
+price = 812
+
+[sub_resource type="Resource" id="s4_price_mono_06_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_mono_06_honey")
+price = 400
+
+[sub_resource type="Resource" id="s4_price_mono_06_custard"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_mono_06_custard")
+price = 672
+
+[sub_resource type="Resource" id="s4_price_mono_07_honey"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_mono_07_honey")
+price = 400
+
+[sub_resource type="Resource" id="s4_price_mono_07_custard"]
+script = ExtResource("1_k2k64")
+item = ExtResource("s4_mono_07_custard")
+price = 672
+
+[sub_resource type="Resource" id="balance_price_star_apple_tart_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_star_apple_tart_batch")
+price = 17423
+
+[sub_resource type="Resource" id="balance_price_star_peach_parfait_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_star_peach_parfait_batch")
+price = 20873
+
+[sub_resource type="Resource" id="balance_price_star_pear_compote_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_star_pear_compote_batch")
+price = 26393
+
+[sub_resource type="Resource" id="balance_price_star_cherry_preserve_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_star_cherry_preserve_batch")
+price = 38123
+
+[sub_resource type="Resource" id="balance_price_hybrid_01_06_custard_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_hybrid_01_06_custard_batch")
+price = 81200
+
+[sub_resource type="Resource" id="balance_price_hybrid_02_07_custard_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_hybrid_02_07_custard_batch")
+price = 81200
+
+[sub_resource type="Resource" id="balance_price_hybrid_03_08_custard_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_hybrid_03_08_custard_batch")
+price = 81200
+
+[sub_resource type="Resource" id="balance_price_mono_06_custard_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_mono_06_custard_batch")
+price = 67200
+
+[sub_resource type="Resource" id="balance_price_mono_07_custard_batch"]
+script = ExtResource("1_k2k64")
+item = ExtResource("balance_mono_07_custard_batch")
+price = 67200
+
+[resource]
+script = ExtResource("41_h3iu0")
+entries = Array[ExtResource("1_k2k64")]([SubResource("Resource_0fndo"), SubResource("Resource_x43wm"), SubResource("Resource_xcals"), SubResource("Resource_rs8fh"), SubResource("Resource_rhuqv"), SubResource("Resource_0i1yd"), SubResource("Resource_r4udf"), SubResource("Resource_w2v6e"), SubResource("Resource_tebb4"), SubResource("Resource_b16g0"), SubResource("Resource_lrpvc"), SubResource("Resource_ipnsn"), SubResource("Resource_8d1v1"), SubResource("Resource_dulss"), SubResource("Resource_hooul"), SubResource("Resource_rni36"), SubResource("Resource_t0u1j"), SubResource("Resource_782nf"), SubResource("Resource_l7ag6"), SubResource("Resource_0306e"), SubResource("Resource_yx11b"), SubResource("Resource_av65g"), SubResource("Resource_8fv8d"), SubResource("Resource_wlb54"), SubResource("Resource_014y7"), SubResource("Resource_fdaq5"), SubResource("Resource_0rwu8"), SubResource("Resource_jfof3"), SubResource("Resource_eoonp"), SubResource("Resource_1150w"), SubResource("Resource_rbqce"), SubResource("Resource_wca75"), SubResource("Resource_hxvgg"), SubResource("Resource_iqyux"), SubResource("Resource_xabf5"), SubResource("Resource_1croc"), SubResource("Resource_jnyvx"), SubResource("Resource_wtlhn"), SubResource("Resource_7syqy"), SubResource("price_wild_honey"), SubResource("price_sunflower_honey"), SubResource("price_floral_honey"), SubResource("tree_price_0"), SubResource("tree_price_1"), SubResource("tree_price_2"), SubResource("tree_price_3"), SubResource("tree_price_4"), SubResource("tree_price_5"), SubResource("cooked_price_fried_egg"), SubResource("cooked_price_steamed_egg"), SubResource("cooked_price_bread"), SubResource("cooked_price_fruit_salad"), SubResource("cooked_price_honey_bread"), SubResource("price_apple_star"), SubResource("price_star_apple_tart"), SubResource("price_peach_star"), SubResource("price_star_peach_parfait"), SubResource("price_pear_star"), SubResource("price_star_pear_compote"), SubResource("price_cherry_star"), SubResource("price_star_cherry_preserve"), SubResource("s4_price_mixed_honey"), SubResource("s4_price_hybrid_01_06_honey"), SubResource("s4_price_hybrid_01_06_custard"), SubResource("s4_price_hybrid_02_07_honey"), SubResource("s4_price_hybrid_02_07_custard"), SubResource("s4_price_hybrid_03_08_honey"), SubResource("s4_price_hybrid_03_08_custard"), SubResource("s4_price_mono_06_honey"), SubResource("s4_price_mono_06_custard"), SubResource("s4_price_mono_07_honey"), SubResource("s4_price_mono_07_custard"), SubResource("balance_price_star_apple_tart_batch"), SubResource("balance_price_star_peach_parfait_batch"), SubResource("balance_price_star_pear_compote_batch"), SubResource("balance_price_star_cherry_preserve_batch"), SubResource("balance_price_hybrid_01_06_custard_batch"), SubResource("balance_price_hybrid_02_07_custard_batch"), SubResource("balance_price_hybrid_03_08_custard_batch"), SubResource("balance_price_mono_06_custard_batch"), SubResource("balance_price_mono_07_custard_batch")])

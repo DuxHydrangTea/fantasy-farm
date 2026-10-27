@@ -83,7 +83,7 @@ func _run() -> void:
 	world.farming.time_manager.clock_source = func() -> float: return clock[0]
 	_check(world.honey_garden.try_migrate(),"Garden converted")
 	var garden: FlowerGarden = world.apiary.gardens[0]
-	_check(garden.pots.size() == 180,"All 180 positions retained")
+	_check(garden.pots.size() == 112,"Four equal 7x4 blocks contain 112 positions")
 	for pot: FlowerPot in garden.pots.values():
 		pot.clear()
 	for offset: Vector2i in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:

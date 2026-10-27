@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://biwflle2a807t"]
 
-[ext_resource type="Resource" uid="uid://dfr3tc3sbkg2m" path="res://flowers/definitions/flower_03.tres" id="1_f3pni"]
-[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_03_orchid_seed.png" id="2_f3pni"]
-[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_03.tres" id="flower"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_03_orchid_seed.png" id="icon"]
 
 [resource]
-script = ExtResource("3_script")
+script = ExtResource("script")
 item_id = &"flower_03_seed"
-display_name = "Flower 03 Seed"
-icon = ExtResource("2_f3pni")
+display_name = "Orchid Seed"
+icon = ExtResource("icon")
 item_type = 1
-crop = ExtResource("1_f3pni")
+crop = ExtResource("flower")
 max_stack = 999

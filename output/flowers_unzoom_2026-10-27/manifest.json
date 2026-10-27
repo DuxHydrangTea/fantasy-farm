@@ -1,0 +1,906 @@
+{
+  "method": "Each source crop processed by PixelLab unzoom_image (quantize 48). Local border-connected white background removal protects enclosed white petals. Neutral ground shadows removed only in bottom 30%. Native content kept at original pixel size when possible, nearest-neighbor fit only if necessary; padded to transparent 32x32.",
+  "game_integration": false,
+  "items": [
+    {
+      "index": 1,
+      "name": "Rose",
+      "file": "flower_01_rose.png",
+      "pixellab_job_id": "72e10e68-9ec7-47cd-90ab-82616b091cd5",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        7,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 2,
+      "name": "Carnation",
+      "file": "flower_02_carnation.png",
+      "pixellab_job_id": "9d53a048-b1e5-438f-be15-8e7670afcea4",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        8,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        23
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        8
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 3,
+      "name": "Orchid",
+      "file": "flower_03_orchid.png",
+      "pixellab_job_id": "1c62742e-b9e7-4b7f-a221-51d17310a374",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        2,
+        4,
+        23,
+        31
+      ],
+      "native_content_size": [
+        21,
+        27
+      ],
+      "scale": 1,
+      "placement": [
+        5,
+        4
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 4,
+      "name": "Lavender",
+      "file": "flower_04_lavender.png",
+      "pixellab_job_id": "150942c5-e1ad-4ffd-aaec-f2dbac24c933",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        4,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        27
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        4
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 5,
+      "name": "Bluebell",
+      "file": "flower_05_bluebell.png",
+      "pixellab_job_id": "f1e769b1-7132-4feb-af06-4ad23d433857",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        2,
+        6,
+        22,
+        31
+      ],
+      "native_content_size": [
+        20,
+        25
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        6
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 6,
+      "name": "Hydrangea",
+      "file": "flower_06_hydrangea.png",
+      "pixellab_job_id": "a2ac83c4-d45f-4d8f-9e75-0eededadd224",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        2,
+        4,
+        22,
+        28
+      ],
+      "native_content_size": [
+        20,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 7,
+      "name": "Marigold",
+      "file": "flower_07_marigold.png",
+      "pixellab_job_id": "8e46c5d3-b689-43bf-a93a-164f4b8c260a",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        6,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        22
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        9
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 8,
+      "name": "Sunflower",
+      "file": "flower_08_sunflower.png",
+      "pixellab_job_id": "11ca5676-cbc7-4a96-a90c-f045615a7db3",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        2,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 9,
+      "name": "Lily of the valley",
+      "file": "flower_09_lily_of_the_valley.png",
+      "pixellab_job_id": "5ee90d39-100b-4c59-bdd6-09fec58a7e1d",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        5,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        23
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        8
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 10,
+      "name": "Blue Lotus",
+      "file": "flower_10_blue_lotus.png",
+      "pixellab_job_id": "b50ee6ed-2e14-4abd-8aef-6230e58c5305",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        11,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        17
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        14
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 29
+    },
+    {
+      "index": 11,
+      "name": "Tulip",
+      "file": "flower_11_tulip.png",
+      "pixellab_job_id": "c7dd6d61-6afa-4ed8-9458-43f8e6859b5f",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        7,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 12,
+      "name": "Daffodil",
+      "file": "flower_12_daffodil.png",
+      "pixellab_job_id": "df50e5c9-713d-438f-a6a5-5eb074a1353c",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        4,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        27
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        4
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 13,
+      "name": "Sakura",
+      "file": "flower_13_sakura.png",
+      "pixellab_job_id": "84aaa34d-8205-4d2d-bd5c-2e8644abfa32",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        5,
+        23,
+        31
+      ],
+      "native_content_size": [
+        20,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 14,
+      "name": "Wisteria",
+      "file": "flower_14_wisteria.png",
+      "pixellab_job_id": "7940e60b-e1fb-4c1f-b7e7-239013f26e79",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        2,
+        4,
+        23,
+        31
+      ],
+      "native_content_size": [
+        21,
+        27
+      ],
+      "scale": 1,
+      "placement": [
+        5,
+        4
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 15,
+      "name": "Peony",
+      "file": "flower_15_peony.png",
+      "pixellab_job_id": "1e99af4e-9bb2-43db-ad89-b90ae270559d",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        5,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 16,
+      "name": "Camellia",
+      "file": "flower_16_camellia.png",
+      "pixellab_job_id": "28d3f699-f66f-487b-b8e2-4c5ea94d8838",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        2,
+        4,
+        22,
+        28
+      ],
+      "native_content_size": [
+        20,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 17,
+      "name": "Iris",
+      "file": "flower_17_iris.png",
+      "pixellab_job_id": "50dfd58e-697c-4da3-b3d6-75b296e69708",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        2,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 18,
+      "name": "Hibiscus",
+      "file": "flower_18_hibiscus.png",
+      "pixellab_job_id": "28c8a3da-2d90-4807-a9ac-2aecf63547f4",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        2,
+        22,
+        28
+      ],
+      "native_content_size": [
+        19,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 19,
+      "name": "Poppy",
+      "file": "flower_19_poppy.png",
+      "pixellab_job_id": "22a42d84-3f58-469f-8cc1-ee785ac67eab",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        4,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 20,
+      "name": "Lotus",
+      "file": "flower_20_lotus.png",
+      "pixellab_job_id": "0e13980b-8e10-49de-94a5-ee679e812df9",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        11,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        17
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        14
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 0
+    },
+    {
+      "index": 21,
+      "name": "Chrysanthemum",
+      "file": "flower_21_chrysanthemum.png",
+      "pixellab_job_id": "75164e1c-4eea-4003-ac96-f5772b92f87d",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        5,
+        22,
+        31
+      ],
+      "native_content_size": [
+        19,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 22,
+      "name": "Morning glory",
+      "file": "flower_22_morning_glory.png",
+      "pixellab_job_id": "6ae174d0-0374-4c05-a967-778cb5855934",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        5,
+        22,
+        31
+      ],
+      "native_content_size": [
+        19,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 23,
+      "name": "Plumeria",
+      "file": "flower_23_plumeria.png",
+      "pixellab_job_id": "bcc38472-4a60-4269-9a8e-b060998c3b58",
+      "unzoom_size": [
+        23,
+        34
+      ],
+      "crop": [
+        2,
+        5,
+        21,
+        31
+      ],
+      "native_content_size": [
+        19,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 40
+    },
+    {
+      "index": 24,
+      "name": "Bougainvillea",
+      "file": "flower_24_bougainvillea.png",
+      "pixellab_job_id": "2b598e3f-fa58-4771-a6b3-903e65f324a1",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        2,
+        5,
+        23,
+        31
+      ],
+      "native_content_size": [
+        21,
+        26
+      ],
+      "scale": 1,
+      "placement": [
+        5,
+        5
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 25,
+      "name": "Daisy",
+      "file": "flower_25_daisy.png",
+      "pixellab_job_id": "852e3a1c-ff0e-4b9b-9b56-2caeff4120de",
+      "unzoom_size": [
+        24,
+        34
+      ],
+      "crop": [
+        3,
+        4,
+        21,
+        31
+      ],
+      "native_content_size": [
+        18,
+        27
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        4
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 42
+    },
+    {
+      "index": 26,
+      "name": "Forget me not",
+      "file": "flower_26_forget_me_not.png",
+      "pixellab_job_id": "f18e9e4d-9c77-4f5e-855c-2f83b4b7d778",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        3,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        25
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        6
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 27,
+      "name": "Pansy",
+      "file": "flower_27_pansy.png",
+      "pixellab_job_id": "0649c8a4-1504-4b08-81c4-f2fc3f5c351b",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        2,
+        4,
+        22,
+        28
+      ],
+      "native_content_size": [
+        20,
+        24
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        7
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 28,
+      "name": "Zinnia",
+      "file": "flower_28_zinnia.png",
+      "pixellab_job_id": "9a866298-3217-4039-a894-540fb1f2e37e",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        3,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        25
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        6
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 29,
+      "name": "Cosmos",
+      "file": "flower_29_cosmos.png",
+      "pixellab_job_id": "341c77d4-7d51-4d7e-b591-ee6c34f8710b",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        3,
+        3,
+        21,
+        28
+      ],
+      "native_content_size": [
+        18,
+        25
+      ],
+      "scale": 1,
+      "placement": [
+        7,
+        6
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    },
+    {
+      "index": 30,
+      "name": "Gardenia",
+      "file": "flower_30_gardenia.png",
+      "pixellab_job_id": "52e41ced-0a1a-4f8d-be8b-1fa05f9ec687",
+      "unzoom_size": [
+        24,
+        33
+      ],
+      "crop": [
+        2,
+        3,
+        21,
+        28
+      ],
+      "native_content_size": [
+        19,
+        25
+      ],
+      "scale": 1,
+      "placement": [
+        6,
+        6
+      ],
+      "size": [
+        32,
+        32
+      ],
+      "removed_shadow_pixels": 43
+    }
+  ]
+}

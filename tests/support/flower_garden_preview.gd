@@ -38,7 +38,7 @@ func _capture() -> void:
 		query.exclude = [pot.get_rid()]
 		query.collision_mask = 1
 		assert(pot.get_world_2d().direct_space_state.intersect_shape(query,1).is_empty(),"Flower pot overlaps world obstacle: "+str(pot.cell))
-	print("FLOWER_PREVIEW: 180 pots; no obstacle overlap; 10 visual variants; 5 stages")
+	print("FLOWER_PREVIEW: %d pots; no obstacle overlap; 10 visual variants; 5 stages" % garden.pots.size())
 	await create_timer(0.2).timeout
 	await RenderingServer.frame_post_draw
 	assert(root.get_texture().get_image().save_png("res://.godot/flower-garden-preview.png") == OK)

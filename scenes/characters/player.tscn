@@ -6,16 +6,16 @@
 [ext_resource type="Script" uid="uid://cb0l66kr4jf76" path="res://components/farming_action_component.gd" id="2_yewv4"]
 [ext_resource type="Script" uid="uid://dwue4wwmpti5y" path="res://components/animation_component.gd" id="3_a2luo"]
 [ext_resource type="Script" uid="uid://w37qhagijxt1" path="res://components/soil_focus_component.gd" id="3_dyp2m"]
-[ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
+[ext_resource type="Texture2D" uid="uid://bml615ys250ax" path="res://resources/ui/soil_focus.tres" id="4_atpat"]
 [ext_resource type="Script" uid="uid://romagl4yruop" path="res://components/state_component.gd" id="4_eir2k"]
 [ext_resource type="Script" uid="uid://cnttid04f6mx7" path="res://components/tool_selection_component.gd" id="5_tools"]
 [ext_resource type="PackedScene" uid="uid://ohxda0nyw7wu" path="res://scenes/ui/hotbar.tscn" id="6_hotbar"]
 [ext_resource type="PackedScene" uid="uid://8ftvdhs2ex1r" path="res://scenes/ui/inventory.tscn" id="7_inventory"]
-[ext_resource type="Resource" uid="uid://jkkdybsqy13i" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
+[ext_resource type="Resource" uid="uid://bbckhpm2lr067" path="res://items/seeds/carrot_seed.tres" id="8_seed"]
 [ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="9_item"]
 [ext_resource type="Script" uid="uid://1rh2a2xtxj0w" path="res://components/item_collector.gd" id="10_collector"]
 [ext_resource type="Script" uid="uid://8s4o5x32ce3g" path="res://components/animals/trough_interaction_component.gd" id="11_refill"]
-[ext_resource type="Resource" uid="uid://1447j7kch4l0" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
+[ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="12_feed"]
 [ext_resource type="Script" uid="uid://cjgnwd4071uqx" path="res://components/context_bars_component.gd" id="18_d6tgn"]
 [ext_resource type="Texture2D" uid="uid://d0yebn4gwb0bi" path="res://assets/effects/dust_particle.png" id="18_dm10o"]
 [ext_resource type="Script" uid="uid://birn2jpdp32qn" path="res://components/camera_zoom_component.gd" id="19_3wg1y"]
@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://dgs0b3ufl14w2" path="res://components/player_navigation_component.gd" id="20_kmyvj"]
 
 [sub_resource type="RectangleShape2D" id="FeetShape"]
-size = Vector2(10, 4)
+size = Vector2(10, 2)
 
 [sub_resource type="CircleShape2D" id="PickupRadius"]
 radius = 14.0
@@ -69,13 +69,13 @@ farming_actions = NodePath("FarmingActionComponent")
 context_bars = NodePath("ContextBars")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=362085865]
-position = Vector2(0, -9)
+position = Vector2(0, -7)
 sprite_frames = ExtResource("1_3wg1y")
 animation = &"idle_down"
 autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1488582401]
-position = Vector2(0, -2)
+position = Vector2(0, -1)
 shape = SubResource("FeetShape")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=204499654]

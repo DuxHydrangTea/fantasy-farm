@@ -1,0 +1,48 @@
+{
+  "source": "C:/Users/faker/Downloads/Empty_clay_pot_2K_20261027210708.jpg",
+  "source_crop": [
+    680,
+    160,
+    2070,
+    1390
+  ],
+  "pixellab_job_id": "2e8128ef-7b10-484f-b685-28bffa025b5a",
+  "unzoom_size": [
+    30,
+    26
+  ],
+  "native_content_size": [
+    26,
+    25
+  ],
+  "native_crop": [
+    2,
+    1,
+    28,
+    26
+  ],
+  "native_canvas": [
+    32,
+    32
+  ],
+  "recommended_canvas": [
+    32,
+    24
+  ],
+  "recommended_content_size": [
+    22,
+    21
+  ],
+  "recommended_placement": [
+    5,
+    2
+  ],
+  "suggested_root_anchor": [
+    16,
+    6
+  ],
+  "example_composition": "32x48 canvas; pot at (0,24), existing 32x32 flower at (0,0)",
+  "background_removal": "Border-connected neutral checker gray only; dark colored pot interior preserved. Binary alpha.",
+  "resizing": "Native 32x32 retains every unzoomed art pixel. Recommended 32x24 uses proportional nearest-neighbor reduction.",
+  "integrated_into_game": false
+}

@@ -1,59 +1,36 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://tp30nmxul31f"]
 
-[ext_resource type="Texture2D" uid="uid://dguha1ynxs4ro" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Potted/Flowers_2_Potted_Anim.png" id="1_0if2b"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_06_stage_2_potted.png" id="art"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_31b5p"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(0, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_0"]
+atlas = ExtResource("art")
+region = Rect2(0, 0, 32, 48)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ueuv1"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(16, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_1"]
+atlas = ExtResource("art")
+region = Rect2(32, 0, 32, 48)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3m7rg"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(32, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_2"]
+atlas = ExtResource("art")
+region = Rect2(64, 0, 32, 48)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8bxrk"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(48, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_3"]
+atlas = ExtResource("art")
+region = Rect2(96, 0, 32, 48)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c88bl"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(64, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_4"]
+atlas = ExtResource("art")
+region = Rect2(128, 0, 32, 48)
 filter_clip = true
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_thgrp"]
-atlas = ExtResource("1_0if2b")
-region = Rect2(80, 80, 16, 16)
+[sub_resource type="AtlasTexture" id="frame_5"]
+atlas = ExtResource("art")
+region = Rect2(160, 0, 32, 48)
 filter_clip = true
 
 [resource]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_31b5p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ueuv1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3m7rg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8bxrk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c88bl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_thgrp")
-}],
-"loop": 1,
-"name": &"grow",
-"speed": 8.0
-}]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("frame_0")}, {"duration": 1.0, "texture": SubResource("frame_1")}, {"duration": 1.0, "texture": SubResource("frame_2")}, {"duration": 1.0, "texture": SubResource("frame_3")}, {"duration": 1.0, "texture": SubResource("frame_4")}, {"duration": 1.0, "texture": SubResource("frame_5")}], "loop": true, "name": &"grow", "speed": 8.0}]

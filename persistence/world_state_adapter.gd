@@ -161,7 +161,7 @@ func preflight(data: Dictionary) -> Dictionary:
 	var checked: Dictionary = SaveSchema.validate(data, catalog)
 	if not checked.ok:
 		return checked
-	data = checked.snapshot
+	data = checked.snapshot.duplicate(true)
 	if world.tree_plot_upgrades != null and world.tree_plot_upgrades.state.is_busy():
 		return SaveSchema.failure("A tree plot upgrade is in progress.", "busy")
 	if world.pen_upgrades != null and world.pen_upgrades.state.is_busy():
@@ -233,6 +233,14 @@ func preflight(data: Dictionary) -> Dictionary:
 	var hive_cells: Dictionary = {}
 	for row: Dictionary in data.beehives:
 		var point: Vector2 = world.to_global(_point(row.position))
+		# Relocate saved fixed hives from the previous dense garden coordinates.
+		if int(row.garden_slot) >= 0 and world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id):
+			var center: Vector2i = HoneyGardenSystem.CENTERS[int(row.garden_slot)]
+			var old_point: Vector2 = world.honey_garden.garden().to_global(Vector2(32 + center.x * 16, 32 + center.y * 16))
+			if point.distance_to(old_point) < 0.01:
+				point = world.honey_garden.center_point(int(row.garden_slot))
+				var local_point: Vector2 = world.to_local(point)
+				row.position = [local_point.x, local_point.y]
 		var cell: Vector2i = farm.world_to_cell(point)
 		var placement_ok: bool = true
 		if int(row.garden_slot) >= 0:
@@ -329,7 +337,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	for row: Dictionary in data.flower_gardens:
 		var garden: FlowerGarden = gardens[row.id]
 		for flower: Dictionary in row.flowers:
-			garden.pots[_cell(flower.cell)].restore_state(flower, catalog.flowers[flower.flower], float(data.saved_at))
+			garden.restore_flower(flower, catalog.flowers[flower.flower], float(data.saved_at))
 		garden.starter_flowers_added = bool(row.get("starter_flowers_added", false))
 		garden.add_starter_flowers(maxf(now, data.saved_at))
 	farm.fertility.layout_version = int(data.fertile_layout_version)
@@ -343,6 +351,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		world.trees.restore(data.trees, float(data.saved_at))
 	farm._refresh_crops(float(data.saved_at))
 	for garden: FlowerGarden in gardens.values():
+		garden.restore_legacy_flowers()
 		garden.refresh(maxf(now,data.saved_at))
 	for row: Dictionary in data.troughs:
 		var trough: AnimalTrough = troughs[row.id]

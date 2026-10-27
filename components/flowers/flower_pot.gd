@@ -146,13 +146,16 @@ func _update_visual() -> void:
 	if not is_node_ready() or sprite == null or progress_frame == null or bar == null:
 		return
 	var frames: SpriteFrames = definition.stage_frames[stage] if definition != null else empty_frames
-	# House-decor empty pots are twice the size of the pots baked into flower art.
-	# Half scale keeps integer pixel steps and the same ground-level anchor.
-	sprite.scale = Vector2(0.5, 0.5) if definition == null else Vector2.ONE
-	sprite.position.y = -4.0 if definition == null else -8.0
+	# Empty pots and planted composites use the same native-size clay pot.
+	sprite.scale = Vector2.ONE
 	if sprite.sprite_frames != frames:
 		sprite.sprite_frames = frames
 		sprite.play(&"grow")
+	# Keep empty pots and the lowered plant composites on the same ground baseline.
+	var texture: Texture2D = frames.get_frame_texture(&"grow", 0)
+	var height: float = texture.get_height() * sprite.scale.y if texture != null else 16.0
+	sprite.position.y = -height * 0.5
+	progress_frame.position.y = -maxf(26.0, height + 10.0)
 	_update_status_visibility()
 	bar.value = progress
 	bar.modulate = Color(1, 0.85, 0.35) if is_mature() else (Color(0.6, 0.8, 1) if can_water() else Color.WHITE)

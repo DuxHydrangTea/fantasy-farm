@@ -461,10 +461,10 @@ func test_invalid_flower_cell_rejects_whole_load_before_mutation() -> void:
 	assert_false(adapter.restore(saved, timestamp).ok)
 	assert_eq(world.get_node("Player").position, position)
 
-func test_version_two_garden_migration_preserves_flowers_at_original_world_positions() -> void:
+func test_version_two_garden_migration_preserves_flowers_in_reduced_layout() -> void:
 	var saved: Dictionary = _snapshot()
 	saved.version = 2
-	var template: Dictionary = saved.flower_gardens[0].flowers[0].duplicate(true)
+	var template: Dictionary = {"cell": [0, 0], "flower": "flower_01", "planted_at": timestamp - 100.0, "growth_started_at": timestamp - 100.0, "matures_at": timestamp + 100.0, "progress": 0.5}
 	saved.flower_gardens[0].flowers = []
 	var legacy_cells: Array[Vector2i] = [Vector2i(0, 0), Vector2i(4, 2), Vector2i(5, 3), Vector2i(9, 5)]
 	for cell: Vector2i in legacy_cells:
@@ -475,14 +475,16 @@ func test_version_two_garden_migration_preserves_flowers_at_original_world_posit
 	assert_true(adapter.restore(saved, timestamp).ok)
 	assert_eq(JSON.stringify(saved), original, "Migration must not alter the source snapshot")
 	var garden: Node = world.get_node("FlowerGarden")
-	assert_eq(garden.pots.size(), 180)
-	for old: Vector2i in legacy_cells:
-		var mapped: Vector2i = garden.Layout.from_legacy(old)
-		var current: Node = garden.pots[mapped]
-		assert_eq(current.position, Vector2(32 + old.x * 32 + (32 if old.x >= 5 else 0), 32 + old.y * 32 + (32 if old.y >= 3 else 0)))
+	assert_eq(garden.pots.size(), 112)
+	var restored: int = 0
+	for current: Node in garden.pots.values():
+		if current.definition == null:
+			continue
+		restored += 1
 		assert_eq(String(current.definition.flower_id), template.flower)
 		assert_eq(current.capture(timestamp).growth_started_at, template.growth_started_at)
 		assert_eq(current.capture(timestamp).progress, template.progress)
+	assert_eq(restored, 4)
 	assert_eq(_snapshot().flower_gardens[0].flowers.size(), 4)
 	assert_true(adapter.restore(_snapshot(), timestamp).ok, "Version 3 load cannot remap a second time")
 
@@ -504,7 +506,7 @@ func test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawni
 	assert_true(adapter.restore(saved, timestamp).ok)
 	assert_eq(_snapshot().flower_gardens[0].flowers.size(), 8)
 	var garden: Node = world.get_node("FlowerGarden")
-	var ready: Node = garden.pots[Vector2i(15, 0)]
+	var ready: Node = garden.pots[Vector2i(12, 0)]
 	assert_true(ready.harvest(selection.inventory))
 	var after: Dictionary = _snapshot()
 	assert_true(after.flower_gardens[0].starter_flowers_added)

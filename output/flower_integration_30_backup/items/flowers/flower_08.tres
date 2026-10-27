@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://bjg3cygq4cke2"]
+
+[ext_resource type="Texture2D" uid="uid://ycn2asim76xy" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_5_Anim.png" id="1_vddcg"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_64dju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5k6hf"]
+atlas = ExtResource("1_vddcg")
+region = Rect2(0, 112, 16, 16)
+filter_clip = true
+
+[resource]
+script = ExtResource("2_64dju")
+item_id = &"flower_08"
+display_name = "Sunflower"
+icon = SubResource("AtlasTexture_5k6hf")
+item_type = 2
+max_stack = 32000

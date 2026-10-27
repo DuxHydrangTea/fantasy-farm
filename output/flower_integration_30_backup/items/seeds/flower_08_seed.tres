@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://oc1m5iynubip"]
+
+[ext_resource type="Resource" uid="uid://btg1d7r8jbd4w" path="res://flowers/definitions/flower_08.tres" id="1_x4176"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_08_sunflower_seed.png" id="2_x4176"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
+
+[resource]
+script = ExtResource("3_script")
+item_id = &"flower_08_seed"
+display_name = "Flower 08 Seed"
+icon = ExtResource("2_x4176")
+item_type = 1
+crop = ExtResource("1_x4176")
+max_stack = 999

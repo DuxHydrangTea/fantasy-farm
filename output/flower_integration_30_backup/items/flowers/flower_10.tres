@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://2hnx2n7fpl6p"]
+
+[ext_resource type="Texture2D" uid="uid://ycn2asim76xy" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Not_Potted/Flowers_5_Anim.png" id="1_aouyh"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="2_6fend"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ecra"]
+atlas = ExtResource("1_aouyh")
+region = Rect2(0, 144, 16, 16)
+filter_clip = true
+
+[resource]
+script = ExtResource("2_6fend")
+item_id = &"flower_10"
+display_name = "Blue Lotus"
+icon = SubResource("AtlasTexture_3ecra")
+item_type = 2
+max_stack = 32000

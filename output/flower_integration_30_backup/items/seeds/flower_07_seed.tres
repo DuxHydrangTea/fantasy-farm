@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3 uid="uid://xwlvnwgrdeog"]
+
+[ext_resource type="Resource" uid="uid://c5avqslerq7eq" path="res://flowers/definitions/flower_07.tres" id="1_etyen"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_07_marigold_seed.png" id="2_etyen"]
+[ext_resource type="Script" uid="uid://bg2be8miqe4ud" path="res://scripts/item_definition.gd" id="3_script"]
+
+[resource]
+script = ExtResource("3_script")
+item_id = &"flower_07_seed"
+display_name = "Flower 07 Seed"
+icon = ExtResource("2_etyen")
+item_type = 1
+crop = ExtResource("1_etyen")
+max_stack = 999

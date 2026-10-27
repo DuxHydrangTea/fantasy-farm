@@ -54,9 +54,9 @@ func _jump(seconds: float) -> void:
 	clock[0] += seconds
 	world.apiary.advance(clock[0])
 
-func test_layout_keeps_180_positions_reserves_only_three_and_repairs_center_free() -> void:
+func test_layout_keeps_112_positions_reserves_only_three_and_repairs_center_free() -> void:
 	assert_true(service.try_migrate())
-	assert_eq(garden.pots.size(),180)
+	assert_eq(garden.pots.size(),112)
 	assert_eq(world.apiary.hives.size(),3)
 	assert_true(_hive().repaired)
 	assert_false(_hive(0).repaired)
@@ -99,7 +99,7 @@ func test_full_garden_defers_everything_then_retries_without_item_loss() -> void
 	for cell: Vector2i in [Vector2i(0,0),Vector2i(1,0),Vector2i(2,0)]:
 		garden.pots[cell].clear()
 	assert_true(service.try_migrate())
-	assert_eq(garden.capture(now).flowers.size(),177)
+	assert_eq(garden.capture(now).flowers.size(),109)
 
 func test_uncollected_legacy_batch_drains_without_restarting_before_migration() -> void:
 	var hive: Beehive = world.apiary.create_hive(garden.global_position+Vector2(24,24),&"legacy_hive")
@@ -112,6 +112,21 @@ func test_uncollected_legacy_batch_drains_without_restarting_before_migration() 
 	assert_eq(hive.production.work,0.0)
 	assert_true(service.try_migrate())
 	assert_true(hive.repaired)
+
+func test_saved_dense_grid_hives_move_to_new_positions_without_mutating_snapshot() -> void:
+	assert_true(service.try_migrate())
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var data: Dictionary = adapter.capture("test", 1, clock[0])
+	for row: Dictionary in data.beehives:
+		var cell: Vector2i = HoneyGardenSystem.CENTERS[int(row.garden_slot)]
+		var point: Vector2 = world.to_local(garden.to_global(Vector2(32 + cell.x * 16, 32 + cell.y * 16)))
+		row.position = [point.x, point.y]
+	var before: String = JSON.stringify(data)
+	var result: Dictionary = adapter.restore(data, clock[0])
+	assert_true(result.ok, str(result.get("error")))
+	assert_eq(JSON.stringify(data), before)
+	for hive: Beehive in world.apiary.hives:
+		assert_eq(hive.global_position, service.center_point(hive.garden_slot))
 
 func test_empty_legacy_hive_pauses_but_field_hive_keeps_producing() -> void:
 	var old: Beehive = world.apiary.create_hive(garden.global_position+Vector2(24,24),&"old")

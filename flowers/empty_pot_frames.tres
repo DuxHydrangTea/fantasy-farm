@@ -1,10 +1,10 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://bbxlh012t152i"]
 
-[ext_resource type="Texture2D" uid="uid://c80myn3pbh3kv" path="res://assets/Buildings/House_Decor/House_Plants.png" id="1_gxq13"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_32x24.png" id="1_gxq13"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o5v8"]
 atlas = ExtResource("1_gxq13")
-region = Rect2(176, 16, 16, 16)
+region = Rect2(0, 0, 32, 24)
 filter_clip = true
 
 [resource]

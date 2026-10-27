@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_15_peony.png" id="art"]
+
+[resource]
+script = ExtResource("script")
+item_id = &"flower_15"
+display_name = "Peony"
+icon = ExtResource("art")
+item_type = 2
+max_stack = 32000

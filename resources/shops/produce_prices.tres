@@ -84,6 +84,27 @@
 [ext_resource type="Resource" uid="uid://ds0v0j538alt6" path="res://items/trees/root_wood.tres" id="tree_price_item_5"]
 [ext_resource type="Resource" uid="uid://cshtk8qpvet1k" path="res://items/honey/wild_honey.tres" id="wild_honey"]
 
+[ext_resource type="Resource" path="res://items/flowers/flower_11.tres" id="flower_pack_11"]
+[ext_resource type="Resource" path="res://items/flowers/flower_12.tres" id="flower_pack_12"]
+[ext_resource type="Resource" path="res://items/flowers/flower_13.tres" id="flower_pack_13"]
+[ext_resource type="Resource" path="res://items/flowers/flower_14.tres" id="flower_pack_14"]
+[ext_resource type="Resource" path="res://items/flowers/flower_15.tres" id="flower_pack_15"]
+[ext_resource type="Resource" path="res://items/flowers/flower_16.tres" id="flower_pack_16"]
+[ext_resource type="Resource" path="res://items/flowers/flower_17.tres" id="flower_pack_17"]
+[ext_resource type="Resource" path="res://items/flowers/flower_18.tres" id="flower_pack_18"]
+[ext_resource type="Resource" path="res://items/flowers/flower_19.tres" id="flower_pack_19"]
+[ext_resource type="Resource" path="res://items/flowers/flower_20.tres" id="flower_pack_20"]
+[ext_resource type="Resource" path="res://items/flowers/flower_21.tres" id="flower_pack_21"]
+[ext_resource type="Resource" path="res://items/flowers/flower_22.tres" id="flower_pack_22"]
+[ext_resource type="Resource" path="res://items/flowers/flower_23.tres" id="flower_pack_23"]
+[ext_resource type="Resource" path="res://items/flowers/flower_24.tres" id="flower_pack_24"]
+[ext_resource type="Resource" path="res://items/flowers/flower_25.tres" id="flower_pack_25"]
+[ext_resource type="Resource" path="res://items/flowers/flower_26.tres" id="flower_pack_26"]
+[ext_resource type="Resource" path="res://items/flowers/flower_27.tres" id="flower_pack_27"]
+[ext_resource type="Resource" path="res://items/flowers/flower_28.tres" id="flower_pack_28"]
+[ext_resource type="Resource" path="res://items/flowers/flower_29.tres" id="flower_pack_29"]
+[ext_resource type="Resource" path="res://items/flowers/flower_30.tres" id="flower_pack_30"]
+
 [sub_resource type="Resource" id="Resource_0fndo"]
 script = ExtResource("1_k2k64")
 item = ExtResource("2_he8r5")
@@ -488,6 +509,107 @@ script = ExtResource("1_k2k64")
 item = ExtResource("balance_mono_07_custard_batch")
 price = 67200
 
+[sub_resource type="Resource" id="flower_pack_price_11"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_11")
+price = 180
+
+[sub_resource type="Resource" id="flower_pack_price_12"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_12")
+price = 280
+
+[sub_resource type="Resource" id="flower_pack_price_13"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_13")
+price = 380
+
+[sub_resource type="Resource" id="flower_pack_price_14"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_14")
+price = 500
+
+[sub_resource type="Resource" id="flower_pack_price_15"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_15")
+price = 650
+
+[sub_resource type="Resource" id="flower_pack_price_16"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_16")
+price = 900
+
+[sub_resource type="Resource" id="flower_pack_price_17"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_17")
+price = 1300
+
+[sub_resource type="Resource" id="flower_pack_price_18"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_18")
+price = 1800
+
+[sub_resource type="Resource" id="flower_pack_price_19"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_19")
+price = 2500
+
+[sub_resource type="Resource" id="flower_pack_price_20"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_20")
+price = 4500
+
+[sub_resource type="Resource" id="flower_pack_price_21"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_21")
+price = 180
+
+[sub_resource type="Resource" id="flower_pack_price_22"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_22")
+price = 280
+
+[sub_resource type="Resource" id="flower_pack_price_23"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_23")
+price = 380
+
+[sub_resource type="Resource" id="flower_pack_price_24"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_24")
+price = 500
+
+[sub_resource type="Resource" id="flower_pack_price_25"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_25")
+price = 650
+
+[sub_resource type="Resource" id="flower_pack_price_26"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_26")
+price = 900
+
+[sub_resource type="Resource" id="flower_pack_price_27"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_27")
+price = 1300
+
+[sub_resource type="Resource" id="flower_pack_price_28"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_28")
+price = 1800
+
+[sub_resource type="Resource" id="flower_pack_price_29"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_29")
+price = 2500
+
+[sub_resource type="Resource" id="flower_pack_price_30"]
+script = ExtResource("1_k2k64")
+item = ExtResource("flower_pack_30")
+price = 4500
+
+
 [resource]
 script = ExtResource("41_h3iu0")
-entries = Array[ExtResource("1_k2k64")]([SubResource("Resource_0fndo"), SubResource("Resource_x43wm"), SubResource("Resource_xcals"), SubResource("Resource_rs8fh"), SubResource("Resource_rhuqv"), SubResource("Resource_0i1yd"), SubResource("Resource_r4udf"), SubResource("Resource_w2v6e"), SubResource("Resource_tebb4"), SubResource("Resource_b16g0"), SubResource("Resource_lrpvc"), SubResource("Resource_ipnsn"), SubResource("Resource_8d1v1"), SubResource("Resource_dulss"), SubResource("Resource_hooul"), SubResource("Resource_rni36"), SubResource("Resource_t0u1j"), SubResource("Resource_782nf"), SubResource("Resource_l7ag6"), SubResource("Resource_0306e"), SubResource("Resource_yx11b"), SubResource("Resource_av65g"), SubResource("Resource_8fv8d"), SubResource("Resource_wlb54"), SubResource("Resource_014y7"), SubResource("Resource_fdaq5"), SubResource("Resource_0rwu8"), SubResource("Resource_jfof3"), SubResource("Resource_eoonp"), SubResource("Resource_1150w"), SubResource("Resource_rbqce"), SubResource("Resource_wca75"), SubResource("Resource_hxvgg"), SubResource("Resource_iqyux"), SubResource("Resource_xabf5"), SubResource("Resource_1croc"), SubResource("Resource_jnyvx"), SubResource("Resource_wtlhn"), SubResource("Resource_7syqy"), SubResource("price_wild_honey"), SubResource("price_sunflower_honey"), SubResource("price_floral_honey"), SubResource("tree_price_0"), SubResource("tree_price_1"), SubResource("tree_price_2"), SubResource("tree_price_3"), SubResource("tree_price_4"), SubResource("tree_price_5"), SubResource("cooked_price_fried_egg"), SubResource("cooked_price_steamed_egg"), SubResource("cooked_price_bread"), SubResource("cooked_price_fruit_salad"), SubResource("cooked_price_honey_bread"), SubResource("price_apple_star"), SubResource("price_star_apple_tart"), SubResource("price_peach_star"), SubResource("price_star_peach_parfait"), SubResource("price_pear_star"), SubResource("price_star_pear_compote"), SubResource("price_cherry_star"), SubResource("price_star_cherry_preserve"), SubResource("s4_price_mixed_honey"), SubResource("s4_price_hybrid_01_06_honey"), SubResource("s4_price_hybrid_01_06_custard"), SubResource("s4_price_hybrid_02_07_honey"), SubResource("s4_price_hybrid_02_07_custard"), SubResource("s4_price_hybrid_03_08_honey"), SubResource("s4_price_hybrid_03_08_custard"), SubResource("s4_price_mono_06_honey"), SubResource("s4_price_mono_06_custard"), SubResource("s4_price_mono_07_honey"), SubResource("s4_price_mono_07_custard"), SubResource("balance_price_star_apple_tart_batch"), SubResource("balance_price_star_peach_parfait_batch"), SubResource("balance_price_star_pear_compote_batch"), SubResource("balance_price_star_cherry_preserve_batch"), SubResource("balance_price_hybrid_01_06_custard_batch"), SubResource("balance_price_hybrid_02_07_custard_batch"), SubResource("balance_price_hybrid_03_08_custard_batch"), SubResource("balance_price_mono_06_custard_batch"), SubResource("balance_price_mono_07_custard_batch")])
+entries = Array[ExtResource("1_k2k64")]([SubResource("Resource_0fndo"), SubResource("Resource_x43wm"), SubResource("Resource_xcals"), SubResource("Resource_rs8fh"), SubResource("Resource_rhuqv"), SubResource("Resource_0i1yd"), SubResource("Resource_r4udf"), SubResource("Resource_w2v6e"), SubResource("Resource_tebb4"), SubResource("Resource_b16g0"), SubResource("Resource_lrpvc"), SubResource("Resource_ipnsn"), SubResource("Resource_8d1v1"), SubResource("Resource_dulss"), SubResource("Resource_hooul"), SubResource("Resource_rni36"), SubResource("Resource_t0u1j"), SubResource("Resource_782nf"), SubResource("Resource_l7ag6"), SubResource("Resource_0306e"), SubResource("Resource_yx11b"), SubResource("Resource_av65g"), SubResource("Resource_8fv8d"), SubResource("Resource_wlb54"), SubResource("Resource_014y7"), SubResource("Resource_fdaq5"), SubResource("Resource_0rwu8"), SubResource("Resource_jfof3"), SubResource("Resource_eoonp"), SubResource("Resource_1150w"), SubResource("Resource_rbqce"), SubResource("Resource_wca75"), SubResource("Resource_hxvgg"), SubResource("Resource_iqyux"), SubResource("Resource_xabf5"), SubResource("Resource_1croc"), SubResource("Resource_jnyvx"), SubResource("Resource_wtlhn"), SubResource("Resource_7syqy"), SubResource("price_wild_honey"), SubResource("price_sunflower_honey"), SubResource("price_floral_honey"), SubResource("tree_price_0"), SubResource("tree_price_1"), SubResource("tree_price_2"), SubResource("tree_price_3"), SubResource("tree_price_4"), SubResource("tree_price_5"), SubResource("cooked_price_fried_egg"), SubResource("cooked_price_steamed_egg"), SubResource("cooked_price_bread"), SubResource("cooked_price_fruit_salad"), SubResource("cooked_price_honey_bread"), SubResource("price_apple_star"), SubResource("price_star_apple_tart"), SubResource("price_peach_star"), SubResource("price_star_peach_parfait"), SubResource("price_pear_star"), SubResource("price_star_pear_compote"), SubResource("price_cherry_star"), SubResource("price_star_cherry_preserve"), SubResource("s4_price_mixed_honey"), SubResource("s4_price_hybrid_01_06_honey"), SubResource("s4_price_hybrid_01_06_custard"), SubResource("s4_price_hybrid_02_07_honey"), SubResource("s4_price_hybrid_02_07_custard"), SubResource("s4_price_hybrid_03_08_honey"), SubResource("s4_price_hybrid_03_08_custard"), SubResource("s4_price_mono_06_honey"), SubResource("s4_price_mono_06_custard"), SubResource("s4_price_mono_07_honey"), SubResource("s4_price_mono_07_custard"), SubResource("balance_price_star_apple_tart_batch"), SubResource("balance_price_star_peach_parfait_batch"), SubResource("balance_price_star_pear_compote_batch"), SubResource("balance_price_star_cherry_preserve_batch"), SubResource("balance_price_hybrid_01_06_custard_batch"), SubResource("balance_price_hybrid_02_07_custard_batch"), SubResource("balance_price_hybrid_03_08_custard_batch"), SubResource("balance_price_mono_06_custard_batch"), SubResource("balance_price_mono_07_custard_batch"), SubResource("flower_pack_price_11"), SubResource("flower_pack_price_12"), SubResource("flower_pack_price_13"), SubResource("flower_pack_price_14"), SubResource("flower_pack_price_15"), SubResource("flower_pack_price_16"), SubResource("flower_pack_price_17"), SubResource("flower_pack_price_18"), SubResource("flower_pack_price_19"), SubResource("flower_pack_price_20"), SubResource("flower_pack_price_21"), SubResource("flower_pack_price_22"), SubResource("flower_pack_price_23"), SubResource("flower_pack_price_24"), SubResource("flower_pack_price_25"), SubResource("flower_pack_price_26"), SubResource("flower_pack_price_27"), SubResource("flower_pack_price_28"), SubResource("flower_pack_price_29"), SubResource("flower_pack_price_30")])

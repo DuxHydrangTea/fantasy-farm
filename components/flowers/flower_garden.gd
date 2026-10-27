@@ -2,7 +2,7 @@
 class_name FlowerGarden
 extends Node2D
 @export var pot_container: Node2D
-## Four 9x5 blocks at 16px spacing, preserving the cross aisle and garden rim.
+## Four evenly fitted 7x4 blocks, preserving the cross aisle and garden rim.
 const Layout = preload("res://scripts/flower_garden_layout.gd")
 const POT_SCENE: PackedScene = preload("res://scenes/flowers/flower_pot.tscn")
 @export var persistent_id: StringName = &"flower_garden_01"
@@ -14,6 +14,7 @@ var starter_flowers_added: bool = false
 var starter_content_locked: bool = false
 var _lock_notice: Label
 var _initial_supplies: Array[Dictionary] = []
+var _legacy_flowers: Array[Dictionary] = []
 const SIZE: Vector2 = Vector2(384, 256)
 
 func _ready() -> void:
@@ -27,7 +28,7 @@ func _ready() -> void:
 			pot.position = Layout.position_for(pot.cell)
 			pot.garden = self
 			pot_container.add_child(pot)
-			pot.changed.connect(_schedule_pot.bind(pot))
+			pot.changed.connect(_pot_changed.bind(pot))
 			pots[pot.cell] = pot
 	if Engine.is_editor_hint():
 		add_starter_flowers(1000.0)
@@ -62,6 +63,8 @@ func set_starter_content_locked(value: bool) -> void:
 		add_child(_lock_notice)
 		_lock_notice.size = Vector2(320, 24)
 	_lock_notice.visible = value
+	if not value:
+		restore_legacy_flowers()
 
 ## One-time starting plants, also applied to old saves without this content flag.
 ## Occupied pots are preserved; harvested starting plants never respawn on load.
@@ -72,11 +75,11 @@ func add_starter_flowers(now: float) -> void:
 	if starter_flowers_added:
 		return
 	starter_flowers_added = true
-	var cells: Array[Vector2i] = [Vector2i(1, 0), Vector2i(3, 0), Vector2i(6, 0), Vector2i(8, 0), Vector2i(1, 4), Vector2i(3, 4), Vector2i(6, 4), Vector2i(8, 4)]
+	var cells: Array[Vector2i] = [Vector2i(1, 0), Vector2i(4, 0), Vector2i(8, 0), Vector2i(12, 0), Vector2i(1, 7), Vector2i(4, 7), Vector2i(8, 7), Vector2i(12, 7)]
 	var ids: Array[int] = [1, 3, 5, 7, 2, 4, 6, 10]
 	var progress: Array[float] = [0.0, 0.25, 0.5, 1.0, 0.0, 0.5, 0.75, 1.0]
 	for index: int in range(cells.size()):
-		var pot: FlowerPot = pots[Layout.from_legacy(cells[index])]
+		var pot: FlowerPot = pots[cells[index]]
 		if pot.definition != null:
 			continue
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % ids[index]
@@ -98,15 +101,42 @@ func _schedule_pot(pot: FlowerPot) -> void:
 	if pot.definition != null and pot.growth_started_at >= 0.0 and not pot.is_mature():
 		_growth.schedule(pot, pot.growth_started_at + float(pot.stage + 1) / 4.0 * (pot.matures_at - pot.growth_started_at))
 
+func _pot_changed(pot: FlowerPot) -> void:
+	_schedule_pot(pot)
+	if pot.definition == null and not _legacy_flowers.is_empty():
+		call_deferred("restore_legacy_flowers")
+
+func restore_flower(data: Dictionary, flower: FlowerDefinition, now: float) -> void:
+	var cell: Vector2i = Vector2i(int(data.cell[0]), int(data.cell[1]))
+	if pots.has(cell):
+		pots[cell].restore_state(data, flower, now)
+	else:
+		_legacy_flowers.append(data.duplicate(true))
+
+func restore_legacy_flowers() -> void:
+	if _legacy_flowers.is_empty() or starter_content_locked:
+		return
+	for pot: FlowerPot in pots.values():
+		if _legacy_flowers.is_empty():
+			break
+		if pot.definition != null or pot.reserved or pot.cell in HoneyGardenSystem.CENTERS:
+			continue
+		var data: Dictionary = _legacy_flowers.pop_front()
+		var path: String = "res://flowers/definitions/%s.tres" % String(data.flower)
+		var flower: FlowerDefinition = load(path)
+		pot.restore_state(data, flower, time_manager.now())
+
 func capture(now: float) -> Dictionary:
 	var flowers: Array[Dictionary] = []
 	for pot: FlowerPot in pots.values():
 		if pot.definition != null:
 			flowers.append(pot.capture(now))
+	flowers.append_array(_legacy_flowers.duplicate(true))
 	return {"id": String(persistent_id), "flowers": flowers, "starter_flowers_added": starter_flowers_added}
 
 func reset() -> void:
 	_growth.clear()
+	_legacy_flowers.clear()
 	starter_flowers_added = false
 	for pot: FlowerPot in pots.values():
 		pot.clear()

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemDefinition" format=3]
+
+[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]
+[ext_resource type="Resource" path="res://flowers/definitions/flower_21.tres" id="flower"]
+[ext_resource type="Texture2D" path="res://assets/Icons/seeds/flowers48/flower_21_chrysanthemum_seed.png" id="icon"]
+
+[resource]
+script = ExtResource("script")
+item_id = &"flower_21_seed"
+display_name = "Chrysanthemum Seed"
+icon = ExtResource("icon")
+item_type = 1
+crop = ExtResource("flower")
+max_stack = 999

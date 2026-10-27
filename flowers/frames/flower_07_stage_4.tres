@@ -1,59 +1,6 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dhi4o25ny7qqa"]
 
-[ext_resource type="Texture2D" uid="uid://dq006quuklhqr" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Flower_Animations/Potted/Flowers_4_Potted_Anim.png" id="1_t6hyy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_afam2"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(0, 96, 16, 16)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3mvm5"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(16, 96, 16, 16)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1kuha"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(32, 96, 16, 16)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nnh7d"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(48, 96, 16, 16)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4p38e"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(64, 96, 16, 16)
-filter_clip = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r7je8"]
-atlas = ExtResource("1_t6hyy")
-region = Rect2(80, 96, 16, 16)
-filter_clip = true
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_07_potted.png" id="art"]
 
 [resource]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_afam2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3mvm5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1kuha")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nnh7d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4p38e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r7je8")
-}],
-"loop": 1,
-"name": &"grow",
-"speed": 8.0
-}]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}, {"duration": 1.0, "texture": ExtResource("art")}], "loop": true, "name": &"grow", "speed": 8.0}]

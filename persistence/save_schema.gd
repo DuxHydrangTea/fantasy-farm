@@ -487,7 +487,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Invalid stored honey.")
 	var gardens: Dictionary = {}
 	for garden: Variant in data.flower_gardens:
-		if not garden is Dictionary or not identifier(garden.get("id")) or gardens.has(garden.id) or not garden.get("flowers") is Array or garden.flowers.size() > FlowerLayout.CAPACITY:
+		if not garden is Dictionary or not identifier(garden.get("id")) or gardens.has(garden.id) or not garden.get("flowers") is Array or garden.flowers.size() > FlowerLayout.SAVE_CAPACITY:
 			return failure("Invalid or duplicate flower garden.")
 		gardens[garden.id] = true
 		if garden.has("starter_flowers_added") and not garden.starter_flowers_added is bool:
@@ -497,7 +497,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			if not flower is Dictionary or not vector(flower.get("cell"), true) or not catalog.flowers.has(flower.get("flower")) or not number(flower.get("planted_at")) or not number(flower.get("growth_started_at"), -1) or not number(flower.get("matures_at")) or not number(flower.get("progress"), 0, 1):
 				return failure("Invalid potted flower.")
 			var cell: Vector2i = Vector2i(int(flower.cell[0]), int(flower.cell[1]))
-			if cell.x < 0 or cell.x >= FlowerLayout.COLUMNS or cell.y < 0 or cell.y >= FlowerLayout.ROWS or cells.has(cell) or flower.planted_at > data.saved_at:
+			if cell.x < 0 or cell.x >= FlowerLayout.SAVE_COLUMNS or cell.y < 0 or cell.y >= FlowerLayout.SAVE_ROWS or cells.has(cell) or flower.planted_at > data.saved_at:
 				return failure("Invalid flower cell or planting time.")
 			if data.honey_garden.migrated and cell in HoneyGardenSystem.CENTERS:
 				return failure("A flower overlaps a fixed garden hive.")
