@@ -23,7 +23,7 @@ func _ready() -> void:
 	rectangle.size = Vector2(24, 6)
 	shape.shape = rectangle
 	add_child(shape)
-	menu = TreePlotMenu.new()
+	menu = preload("res://scenes/trees/tree_plot_menu.tscn").instantiate() as TreePlotMenu
 	menu.board = self
 	add_child(menu)
 

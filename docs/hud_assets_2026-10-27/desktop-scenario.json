@@ -1,0 +1,77 @@
+{
+  "scene_path": "scenes/ui/previews/cozy_hud_preview.tscn",
+  "viewport_size": {
+    "width": 960,
+    "height": 540
+  },
+  "settle_frames": 6,
+  "steps": [
+    {
+      "type": "ui_report",
+      "label": "desktop",
+      "path": "/home/dungnguyen/Projects/test-js/docs/hud_assets_2026-10-27/desktop-layout.json",
+      "fail_on": [
+        "any"
+      ]
+    },
+    {
+      "type": "mouse_motion",
+      "position": {
+        "x": 384,
+        "y": 484
+      }
+    },
+    {
+      "type": "mouse_button",
+      "button_index": 1,
+      "position": {
+        "x": 384,
+        "y": 484
+      },
+      "pressed": true
+    },
+    {
+      "type": "mouse_button",
+      "button_index": 1,
+      "position": {
+        "x": 384,
+        "y": 484
+      },
+      "pressed": false
+    },
+    {
+      "type": "wait_frames",
+      "frames": 2
+    },
+    {
+      "type": "assert",
+      "assertion": "property",
+      "node_path": "Margin/Column/CenterHotbar/Tray/Slots/Slot2",
+      "property": "button_pressed",
+      "expected": true
+    },
+    {
+      "type": "assert",
+      "assertion": "property",
+      "node_path": "Margin/Column/CenterHotbar/Tray/Slots/Slot1",
+      "property": "button_pressed",
+      "expected": false
+    },
+    {
+      "type": "screenshot",
+      "path": "/home/dungnguyen/Projects/test-js/docs/hud_assets_2026-10-27/desktop.png",
+      "expect": {
+        "not_blank": true
+      }
+    },
+    {
+      "type": "dump_tree",
+      "max_depth": 8,
+      "properties": [
+        "size",
+        "position",
+        "button_pressed"
+      ]
+    }
+  ]
+}

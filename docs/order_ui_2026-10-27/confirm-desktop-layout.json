@@ -1,0 +1,177 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/OrderBoard/OrderUI/Root",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Dim",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel",
+      "rect": [
+        80,
+        50,
+        1120,
+        620
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell",
+      "rect": [
+        96,
+        62,
+        1088,
+        596
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header",
+      "rect": [
+        96,
+        62,
+        1088,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Heading",
+      "rect": [
+        96,
+        68,
+        957,
+        34.13
+      ],
+      "text": "Order board"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Balance",
+      "rect": [
+        1057,
+        74,
+        75,
+        23.63
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Close",
+      "rect": [
+        1136,
+        62,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation",
+      "rect": [
+        96,
+        122,
+        1088,
+        536
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation/ConfirmHeading",
+      "rect": [
+        96,
+        122,
+        1088,
+        31.5
+      ],
+      "text": "Confirm order action"
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation/ConfirmScroll",
+      "rect": [
+        96,
+        166,
+        1088,
+        372
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation/ConfirmScroll/ConfirmationText",
+      "rect": [
+        96,
+        166,
+        1088,
+        361
+      ],
+      "text": "Giao đủ vật phẩm yêu cầu để nhận thưởng?  Giao cà chua số..."
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation/Confirm",
+      "rect": [
+        96,
+        550,
+        1088,
+        48
+      ],
+      "text": "Xác nhận giao"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Confirmation/Cancel",
+      "rect": [
+        96,
+        610,
+        1088,
+        48
+      ],
+      "text": "Hủy"
+    }
+  ],
+  "counts": {
+    "controls": 15,
+    "findings": 0,
+    "hidden": 61,
+    "visible": 15
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/order_ui_2026-10-27/confirm-desktop-layout.json",
+  "findings": [],
+  "label": "confirm-desktop",
+  "node_path": "Farm/OrderBoard/OrderUI/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

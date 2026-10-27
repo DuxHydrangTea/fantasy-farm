@@ -1,0 +1,81 @@
+{
+  "desktop": {
+    "ok": true,
+    "engine_diagnostics": {
+      "total": 0,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 0,
+      "info": 0
+    },
+    "layout": {
+      "controls": 32,
+      "findings": 0,
+      "hidden": 0,
+      "visible": 32
+    },
+    "assertions": [
+      {
+        "actual": true,
+        "label": "steps[5]",
+        "message": "Margin/Column/CenterHotbar/Tray/Slots/Slot2.button_pressed equals expected value",
+        "passed": true
+      },
+      {
+        "actual": false,
+        "label": "steps[6]",
+        "message": "Margin/Column/CenterHotbar/Tray/Slots/Slot1.button_pressed equals expected value",
+        "passed": true
+      }
+    ],
+    "screenshot": true
+  },
+  "mobile": {
+    "ok": true,
+    "engine_diagnostics": {
+      "total": 0,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 0,
+      "info": 0
+    },
+    "layout": {
+      "controls": 32,
+      "findings": 0,
+      "hidden": 0,
+      "visible": 32
+    },
+    "assertions": [
+      {
+        "actual": true,
+        "label": "steps[5]",
+        "message": "Margin/Column/CenterHotbar/Tray/Slots/Slot2.button_pressed equals expected value",
+        "passed": true
+      },
+      {
+        "actual": false,
+        "label": "steps[6]",
+        "message": "Margin/Column/CenterHotbar/Tray/Slots/Slot1.button_pressed equals expected value",
+        "passed": true
+      }
+    ],
+    "screenshot": true
+  },
+  "resource_validation": {
+    "ok": true,
+    "counts": {
+      "total": 0,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 0,
+      "info": 0
+    },
+    "config_warning_count": 0,
+    "config_hints": "6 textless-button hints: intentional item-icon and empty slots"
+  },
+  "repository_lint": {
+    "errors": 0,
+    "existing_warnings_before": 11,
+    "warnings_after": 11
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "scene_path": "scenes/characters/player.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 6,
+  "steps": [
+    {
+      "type": "set_property",
+      "node_path": "InventoryUI",
+      "property": "visible",
+      "value": true
+    },
+    {
+      "type": "set_property",
+      "node_path": "InventoryUI/Root",
+      "property": "visible",
+      "value": true
+    },
+    {
+      "type": "ui_report",
+      "node_path": "InventoryUI/Root",
+      "label": "desktop",
+      "fail_on": [
+        "zero_size",
+        "offscreen"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/inventory_redesign_2026-10-27/desktop-layout.json"
+    }
+  ]
+}

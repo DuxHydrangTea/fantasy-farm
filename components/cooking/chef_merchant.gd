@@ -11,7 +11,7 @@ func _enter_tree() -> void:
 	super._enter_tree()
 	if menu is CookingMenu:
 		return
-	menu = CookingMenu.new()
+	menu = preload("res://scenes/ui/cooking.tscn").instantiate() as CookingMenu
 	menu.name = "CookingMenu"
 	add_child(menu)
 

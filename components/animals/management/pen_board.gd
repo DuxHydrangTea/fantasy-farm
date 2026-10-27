@@ -9,7 +9,7 @@ func _ready() -> void:
 	add_to_group(&"pen_boards")
 	pen = get_parent() as AnimalPen
 	world = pen.get_parent() as FarmWorld
-	menu = PenDashboard.new()
+	menu = preload("res://scenes/animals/pen_dashboard.tscn").instantiate() as PenDashboard
 	menu.board = self
 	add_child(menu)
 

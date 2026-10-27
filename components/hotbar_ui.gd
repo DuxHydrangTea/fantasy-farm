@@ -14,6 +14,7 @@ var placement: BeehivePlacementComponent
 var buttons: Array[InventorySlot] = []
 var _feedback_deadline: int = 0
 var inventory_button: Button
+var wallet_hud: WalletHUD
 
 func _ready() -> void:
 	var player: FarmPlayer = get_parent() as FarmPlayer
@@ -27,6 +28,11 @@ func _ready() -> void:
 	root.resized.connect(_fit_layout)
 	_fit_layout()
 	assert(selection != null, "Hotbar requires ToolSelection")
+	if player != null:
+		wallet_hud = WalletHUD.new()
+		wallet_hud.name = "WalletHUD"
+		wallet_hud.wallet = player.wallet
+		add_child(wallet_hud)
 	for index: int in range(selection.HOTBAR_SIZE):
 		var button: InventorySlot = InventorySlot.new()
 		button.name = "Slot" + str(index)
@@ -64,6 +70,8 @@ func _open_inventory() -> void:
 
 func _menu_changed(_open: bool) -> void:
 	root.visible = not selection.is_menu_open()
+	if wallet_hud != null:
+		wallet_hud.panel.visible = root.visible
 
 func _on_selection_changed(index: int, _tool: StringName) -> void:
 	for i: int in range(buttons.size()):
@@ -104,16 +112,15 @@ func _notification(what: int) -> void:
 
 func _fit_layout() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
-	hint.visible = not touch and root.size.x >= 800.0 and root.size.y >= 500.0
-	selected_name.add_theme_font_size_override("font_size", 20)
-	hint.add_theme_font_size_override("font_size", 18)
-	var bottom: MarginContainer = slots.get_parent().get_parent() as MarginContainer
-	bottom.offset_top = -144
+	hint.hide()
+	selected_name.hide()
+	var bottom: MarginContainer = root.get_node("Bottom") as MarginContainer
+	bottom.offset_top = -104
 	bottom.offset_bottom = -16
 	bottom.offset_left = 88 if touch else 0
 	bottom.offset_right = -88 if touch else 0
 	if touch:
-		bottom.offset_top = -104
+		bottom.offset_top = -80
 		bottom.offset_bottom = -8
 	for button: InventorySlot in buttons:
 		button.custom_minimum_size = Vector2(48, 48) if touch else Vector2(64, 64)
@@ -122,15 +129,6 @@ func _fit_layout() -> void:
 		inventory_button.custom_minimum_size = Vector2(64, 48) if touch else Vector2(92, 64)
 		inventory_button.clip_text = touch
 		inventory_button.add_theme_font_size_override("font_size", 16 if touch else 18)
-		for state: StringName in [&"normal", &"hover", &"pressed", &"disabled"]:
-			var style: StyleBoxTexture = StyleBoxTexture.new()
-			style.texture = InventorySlot.HOTBAR_NORMAL if state in [&"normal",&"disabled"] else InventorySlot.HOTBAR_SELECTED
-			for edge: int in [SIDE_LEFT,SIDE_TOP,SIDE_RIGHT,SIDE_BOTTOM]:
-				style.set_texture_margin(edge,4.0)
-				style.set_content_margin(edge,3.0 if touch else 6.0)
-			inventory_button.add_theme_stylebox_override(state,style)
-		for state: String in ["font_color","font_hover_color","font_pressed_color"]:
-			inventory_button.add_theme_color_override(state,Color(0.9,0.9,0.96))
 		_refresh_controls()
 
 func _process(_delta: float) -> void:

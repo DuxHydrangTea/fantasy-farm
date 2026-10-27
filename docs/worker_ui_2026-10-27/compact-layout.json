@@ -1,0 +1,720 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/CropWorkers/WorkerMenu/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel",
+      "rect": [
+        12,
+        8,
+        642,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell",
+      "rect": [
+        28,
+        20,
+        610,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header",
+      "rect": [
+        28,
+        20,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Heading",
+      "rect": [
+        28,
+        30,
+        496,
+        26.25
+      ],
+      "text": "Nhân công trồng trọt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Balance",
+      "rect": [
+        528,
+        34,
+        58,
+        18.38
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Close",
+      "rect": [
+        590,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page",
+      "rect": [
+        28,
+        72,
+        610,
+        282
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main",
+      "rect": [
+        28,
+        72,
+        610,
+        230
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel",
+      "rect": [
+        28,
+        72,
+        227,
+        230
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll",
+      "rect": [
+        38,
+        82,
+        207,
+        210
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent",
+      "rect": [
+        38,
+        82,
+        207,
+        205
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Portrait",
+      "rect": [
+        38,
+        82,
+        207,
+        64
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/WorkerName",
+      "rect": [
+        38,
+        150,
+        207,
+        21
+      ],
+      "text": "Nhân công trồng trọt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Employment",
+      "rect": [
+        38,
+        175,
+        207,
+        23.63
+      ],
+      "text": "Đang làm việc"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/OverviewRule",
+      "rect": [
+        38,
+        203,
+        207,
+        2
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/WageHeading",
+      "rect": [
+        38,
+        209,
+        207,
+        23.63
+      ],
+      "text": "Daily wage"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Wage",
+      "rect": [
+        38,
+        237,
+        207,
+        26.25
+      ],
+      "text": "2.800 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/DawnNote",
+      "rect": [
+        38,
+        268,
+        207,
+        18.38
+      ],
+      "text": "Wages are paid at dawn."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel",
+      "rect": [
+        263,
+        72,
+        375,
+        230
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll",
+      "rect": [
+        273,
+        82,
+        355,
+        210
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent",
+      "rect": [
+        273,
+        82,
+        341,
+        696
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/WorkHeading",
+      "rect": [
+        273,
+        82,
+        341,
+        26.25
+      ],
+      "text": "Work settings"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions",
+      "rect": [
+        273,
+        121,
+        341,
+        148
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard",
+      "rect": [
+        273,
+        121,
+        341,
+        68
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow",
+      "rect": [
+        283,
+        131,
+        321,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText",
+      "rect": [
+        283,
+        131,
+        253,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText/PlantTitle",
+      "rect": [
+        283,
+        131,
+        253,
+        23.63
+      ],
+      "text": "Auto till and replant"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText/PlantHint",
+      "rect": [
+        283,
+        159,
+        253,
+        18.38
+      ],
+      "text": "Uses seeds from farm supply storage."
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/AutoPlant",
+      "rect": [
+        540,
+        131,
+        64,
+        48
+      ],
+      "text": "Bật"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard",
+      "rect": [
+        273,
+        201,
+        341,
+        68
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow",
+      "rect": [
+        283,
+        211,
+        321,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText",
+      "rect": [
+        283,
+        211,
+        253,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText/FertilizeTitle",
+      "rect": [
+        283,
+        211,
+        253,
+        23.63
+      ],
+      "text": "Automatically fertilize crops"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText/FertilizeHint",
+      "rect": [
+        283,
+        239,
+        253,
+        18.38
+      ],
+      "text": "Applies only to worker-planted crops."
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/AutoFertilize",
+      "rect": [
+        540,
+        211,
+        64,
+        48
+      ],
+      "text": "Bật"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/RoleDescription",
+      "rect": [
+        273,
+        281,
+        341,
+        49
+      ],
+      "text": "Tưới nước, thu hoạch và chăm sóc cây trồng."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard",
+      "rect": [
+        273,
+        342,
+        341,
+        72
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox",
+      "rect": [
+        283,
+        352,
+        321,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox/TaskHeading",
+      "rect": [
+        283,
+        352,
+        321,
+        23.63
+      ],
+      "text": "Worker status"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox/Task",
+      "rect": [
+        283,
+        380,
+        321,
+        23.63
+      ],
+      "text": "Đang chờ công việc trồng trọt."
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/PauseNote",
+      "rect": [
+        273,
+        426,
+        341,
+        18.38
+      ],
+      "text": "Tạm dừng vẫn tính lương."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel",
+      "rect": [
+        273,
+        457,
+        341,
+        321
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent",
+      "rect": [
+        283,
+        467,
+        321,
+        301
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/SupplyHeading",
+      "rect": [
+        283,
+        467,
+        321,
+        26.25
+      ],
+      "text": "Kho vật tư"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows",
+      "rect": [
+        283,
+        506,
+        321,
+        112
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/SeedSupplyCard",
+      "rect": [
+        283,
+        506,
+        321,
+        52
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow",
+      "rect": [
+        293,
+        516,
+        301,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedIcon",
+      "rect": [
+        293,
+        516,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedSupplyName",
+      "rect": [
+        329,
+        520,
+        232,
+        23.63
+      ],
+      "text": "Crop seeds"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedCount",
+      "rect": [
+        565,
+        520,
+        29,
+        23.63
+      ],
+      "text": "120"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/FertilizerSupplyCard",
+      "rect": [
+        283,
+        566,
+        321,
+        52
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow",
+      "rect": [
+        293,
+        576,
+        301,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerIcon",
+      "rect": [
+        293,
+        576,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerSupplyName",
+      "rect": [
+        329,
+        580,
+        242,
+        23.63
+      ],
+      "text": "Fertilizer"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerCount",
+      "rect": [
+        575,
+        580,
+        19,
+        23.63
+      ],
+      "text": "24"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/SupplyHint",
+      "rect": [
+        283,
+        630,
+        321,
+        39
+      ],
+      "text": "Tự lấy hạt cây trồng bất kỳ trong kho. Mỗi ô gieo thành c..."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/DestinationCard",
+      "rect": [
+        283,
+        681,
+        321,
+        87
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/DestinationCard/DestinationBox",
+      "rect": [
+        293,
+        691,
+        301,
+        67
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/DestinationCard/DestinationBox/DestinationHeading",
+      "rect": [
+        293,
+        691,
+        301,
+        23.63
+      ],
+      "text": "Produce warehouse"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/SupplyPanel/SupplyContent/DestinationCard/DestinationBox/Destination",
+      "rect": [
+        293,
+        719,
+        301,
+        39
+      ],
+      "text": "Nông sản thu hoạch được đưa thẳng vào kho nông sản."
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Actions",
+      "rect": [
+        28,
+        306,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Actions/Hire",
+      "rect": [
+        28,
+        306,
+        198,
+        48
+      ],
+      "text": "Đã thuê"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Actions/PauseCrop",
+      "rect": [
+        234,
+        306,
+        198,
+        48
+      ],
+      "text": "Tạm dừng làm ruộng (vẫn trả lương)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Page/Actions/Dismiss",
+      "rect": [
+        440,
+        306,
+        198,
+        48
+      ],
+      "text": "Dismiss worker"
+    }
+  ],
+  "counts": {
+    "controls": 67,
+    "findings": 0,
+    "hidden": 22,
+    "visible": 67
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/worker_ui_2026-10-27/compact-layout.json",
+  "findings": [],
+  "label": "compact",
+  "node_path": "Farm/CropWorkers/WorkerMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

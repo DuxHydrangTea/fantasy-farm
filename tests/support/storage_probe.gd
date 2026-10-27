@@ -156,7 +156,7 @@ func _run() -> void:
 
 func _item_button(menu: FarmStorageMenu, item_name: String, side: int) -> Button:
 	for node: Node in menu.grids[side].get_children():
-		if node is Button and (node as Button).text.begins_with(tr(item_name) + " ×"):
+		if node is Button and String(node.get_meta("storage_name", "")) == item_name:
 			return node as Button
 	return null
 

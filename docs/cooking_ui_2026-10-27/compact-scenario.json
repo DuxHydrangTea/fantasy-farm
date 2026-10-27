@@ -1,0 +1,47 @@
+{
+  "scene_path": "tests/support/cooking_layout_fixture.tscn",
+  "viewport_size": {
+    "width": 667,
+    "height": 375
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Chef/CookingMenu/Root",
+      "label": "cooking-compact",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/cooking_ui_2026-10-27/compact-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Header",
+      "label": "compact-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/cooking_ui_2026-10-27/compact-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/CookButton",
+      "label": "compact-cook",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/cooking_ui_2026-10-27/compact-cook-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/CollectButton",
+      "label": "compact-collect",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/cooking_ui_2026-10-27/compact-collect-layout.json"
+    }
+  ]
+}

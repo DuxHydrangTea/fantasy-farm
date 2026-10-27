@@ -1,0 +1,279 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/storage/farm_storage_menu.gd" id="script"]
+
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[node name="FarmStorageMenu" type="CanvasLayer"]
+layer = 25
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+visible = false
+texture_filter = 1
+theme = ExtResource("theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(1040, 620)
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+text = "×"
+tooltip_text = "Close (Esc / E)"
+
+[node name="TopRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+
+
+[node name="Panes" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Bag" type="VBoxContainer" parent="Root/Center/Panel/Body/Panes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Heading" type="HBoxContainer" parent="Root/Center/Panel/Body/Panes/Bag"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BagTitle" type="Label" parent="Root/Center/Panel/Body/Panes/Bag/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Your bag"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="BagUsage" type="Label" parent="Root/Center/Panel/Body/Panes/Bag/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 / 64"
+
+[node name="DepositAll" type="Button" parent="Root/Center/Panel/Body/Panes/Bag/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Deposit matching items"
+
+[node name="BagScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Panes/Bag"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="BagGrid" type="GridContainer" parent="Root/Center/Panel/Body/Panes/Bag/BagScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Divider" type="VSeparator" parent="Root/Center/Panel/Body/Panes"]
+layout_mode = 2
+
+
+[node name="Store" type="VBoxContainer" parent="Root/Center/Panel/Body/Panes"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Heading" type="HBoxContainer" parent="Root/Center/Panel/Body/Panes/Store"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StoreTitle" type="Label" parent="Root/Center/Panel/Body/Panes/Store/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Storage"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="StoreUsage" type="Label" parent="Root/Center/Panel/Body/Panes/Store/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 / 64"
+
+[node name="WithdrawAll" type="Button" parent="Root/Center/Panel/Body/Panes/Store/Heading"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "Withdraw all"
+
+[node name="StoreScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Panes/Store"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="StoreGrid" type="GridContainer" parent="Root/Center/Panel/Body/Panes/Store/StoreScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="LowerRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+
+
+[node name="Selection" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Product" type="HBoxContainer" parent="Root/Center/Panel/Body/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="IconFrame" type="PanelContainer" parent="Root/Center/Panel/Body/Selection/Product"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="ItemIcon" type="TextureRect" parent="Root/Center/Panel/Body/Selection/Product/IconFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Names" type="VBoxContainer" parent="Root/Center/Panel/Body/Selection/Product"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemName" type="Label" parent="Root/Center/Panel/Body/Selection/Product/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+text = "Select an item"
+theme_override_font_sizes/font_size = 22
+
+[node name="Source" type="Label" parent="Root/Center/Panel/Body/Selection/Product/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="Quality" type="HBoxContainer" parent="Root/Center/Panel/Body/Selection"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Normal" type="Button" parent="Root/Center/Panel/Body/Selection/Quality"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 48)
+toggle_mode = true
+text = "Normal"
+
+[node name="Silver" type="Button" parent="Root/Center/Panel/Body/Selection/Quality"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 48)
+toggle_mode = true
+text = "Silver"
+
+[node name="Gold" type="Button" parent="Root/Center/Panel/Body/Selection/Quality"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 48)
+toggle_mode = true
+text = "Gold"
+
+[node name="Command" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="QuantityTitle" type="Label" parent="Root/Center/Panel/Body/Command"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quantity"
+
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Command"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(64, 48)
+min_value = 1.0
+max_value = 1.0
+value = 1.0
+rounded = true
+alignment = 1
+
+[node name="Maximum" type="Button" parent="Root/Center/Panel/Body/Command"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(64, 48)
+text = "Max"
+
+[node name="Deposit" type="Button" parent="Root/Center/Panel/Body/Command"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 48)
+size_flags_horizontal = 3
+autowrap_mode = 3
+text = "Deposit"
+
+[node name="Withdraw" type="Button" parent="Root/Center/Panel/Body/Command"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(120, 48)
+size_flags_horizontal = 3
+autowrap_mode = 3
+text = "Withdraw"
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+text = "Select an item, then choose a quantity."
+theme_override_font_sizes/font_size = 16

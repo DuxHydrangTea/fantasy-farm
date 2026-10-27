@@ -50,7 +50,7 @@ func _process(_delta: float) -> void:
 	var size: int = world.tool_upgrade_state.selected_size(kind)
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	button.size = Vector2(84, 56) if touch else Vector2(220, 44)
-	button.position = Vector2(root.size.x - 92, root.size.y - 174) if touch else Vector2(root.size.x - 232, 12)
+	button.position = Vector2(root.size.x - 92, root.size.y - 174) if touch else Vector2(root.size.x - 232, 76)
 	button.disabled = not can_cycle() or world.tool_upgrade_state.level(kind) <= 1
 	button.text = ("%d×%d" if touch else tr("Area: %d×%d · R")) % [size, size]
 	if kind == &"sowing":

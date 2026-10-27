@@ -40,11 +40,13 @@ func _space(pressed: bool, echo: bool = false) -> void:
 	event.echo = echo
 	viewport.push_input(event, true)
 
-func test_hotbar_uses_ui_atlas_and_real_tool_icons() -> void:
+func test_hotbar_uses_nine_patch_skin_and_real_tool_icons() -> void:
 	assert_eq(hotbar.buttons.size(), 6)
-	assert_eq((hotbar.buttons[0].texture_normal as AtlasTexture).atlas.resource_path, "res://assets/Ui/hotbar.png")
-	assert_eq((hotbar.buttons[0].texture_normal as AtlasTexture).region,Rect2(6,6,52,52))
-	assert_eq((hotbar.buttons[0].texture_pressed as AtlasTexture).region,Rect2(70,6,52,52))
+	var frame: NinePatchRect = hotbar.buttons[0].get_node("HotbarFrame") as NinePatchRect
+	assert_eq(frame.texture.resource_path, "res://assets/Ui/CozyHUD/slot_selected.png")
+	assert_eq(frame.patch_margin_left, 8, "Corners retain their native pixel size")
+	assert_null(hotbar.buttons[0].texture_normal, "No stretched background underneath the nine-patch")
+	assert_eq((hotbar.root.get_node("Bottom/Tray") as PanelContainer).theme_type_variation, &"HotbarPanel")
 	assert_false(hotbar.buttons[0]._selection_frame.visible)
 	assert_not_null(hotbar.buttons[0].get_node("Icon").texture)
 	assert_eq(hotbar.buttons[0].get_node("Icon").texture.region, Rect2(80, 0, 16, 16), "Use the actual hoe sprite, not the old mislabeled axe icon")
@@ -61,6 +63,7 @@ func test_click_selects_tool_without_movement_or_using_it() -> void:
 	assert_eq(hotbar.selected_name.text, tr("Watering Can"))
 	assert_true(hotbar.buttons[1].button_pressed)
 	assert_false(hotbar.buttons[0].button_pressed)
+	assert_eq(hotbar.buttons[1].get_node("HotbarFrame").texture, InventorySlot.HOTBAR_SELECTED)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_eq(player.position, before)
 	assert_false(state.movement.has_target)

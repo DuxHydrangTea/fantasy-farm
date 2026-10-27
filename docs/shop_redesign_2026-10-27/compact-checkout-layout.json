@@ -1,0 +1,302 @@
+{
+  "controls": [
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar",
+      "rect": [
+        418,
+        78,
+        216,
+        270
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info",
+      "rect": [
+        418,
+        78,
+        216,
+        56
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description",
+      "rect": [
+        418,
+        78,
+        202,
+        142
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product",
+      "rect": [
+        418,
+        78,
+        202,
+        52
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/IconFrame",
+      "rect": [
+        418,
+        78,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/IconFrame/ProductIcon",
+      "rect": [
+        428,
+        88,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names",
+      "rect": [
+        482,
+        78,
+        138,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names/ProductName",
+      "rect": [
+        482,
+        78,
+        138,
+        23.63
+      ],
+      "text": "Hạt củ dền"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names/ProductType",
+      "rect": [
+        482,
+        106,
+        138,
+        21
+      ],
+      "text": "Hạt cây trồng"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Details",
+      "rect": [
+        418,
+        142,
+        202,
+        21
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Info/Description/Status",
+      "rect": [
+        418,
+        175,
+        202,
+        45
+      ],
+      "text": "Chọn vật phẩm và số lượng muốn mua."
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout",
+      "rect": [
+        418,
+        138,
+        216,
+        210
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow",
+      "rect": [
+        418,
+        138,
+        216,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow/PriceTitle",
+      "rect": [
+        418,
+        138,
+        147,
+        23.63
+      ],
+      "text": "Price"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow/UnitPrice",
+      "rect": [
+        569,
+        138,
+        65,
+        23.63
+      ],
+      "text": "5.500 xu"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow",
+      "rect": [
+        418,
+        170,
+        216,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow/OwnedTitle",
+      "rect": [
+        418,
+        170,
+        202,
+        23.63
+      ],
+      "text": "In bag"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow/OwnedCount",
+      "rect": [
+        624,
+        170,
+        10,
+        23.63
+      ],
+      "text": "0"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Rule",
+      "rect": [
+        418,
+        202,
+        216,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper",
+      "rect": [
+        418,
+        212,
+        216,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/@Button@229",
+      "rect": [
+        418,
+        212,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/Quantity",
+      "rect": [
+        470,
+        212,
+        78,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/@Button@230",
+      "rect": [
+        552,
+        212,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow",
+      "rect": [
+        418,
+        268,
+        216,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow/TotalTitle",
+      "rect": [
+        418,
+        268,
+        147,
+        23.63
+      ],
+      "text": "Total"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow/TotalPrice",
+      "rect": [
+        569,
+        268,
+        65,
+        23.63
+      ],
+      "text": "5.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar/Checkout/Buy",
+      "rect": [
+        418,
+        300,
+        216,
+        48
+      ],
+      "text": "Mua ×1"
+    }
+  ],
+  "counts": {
+    "controls": 27,
+    "findings": 0,
+    "hidden": 1,
+    "visible": 27
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/compact-checkout-layout.json",
+  "findings": [],
+  "label": "compact-checkout",
+  "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

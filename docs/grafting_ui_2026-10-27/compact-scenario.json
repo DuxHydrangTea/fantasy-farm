@@ -1,0 +1,47 @@
+{
+  "scene_path": "tests/support/graft_layout_fixture.tscn",
+  "viewport_size": {
+    "width": 667,
+    "height": 375
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/FruitGrafting/Root",
+      "label": "compact-full",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/compact-full-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header",
+      "label": "compact-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/compact-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/Harvest",
+      "label": "compact-harvest",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/compact-harvest-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Confirm",
+      "label": "compact-confirm",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/compact-confirm-layout.json"
+    }
+  ]
+}

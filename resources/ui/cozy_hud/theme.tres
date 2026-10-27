@@ -1,0 +1,27 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontVariation" path="res://resources/ui/game_font.tres" id="font"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/slot_normal.tres" id="normal"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/slot_selected.tres" id="selected"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/hotbar.tres" id="hotbar"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/wallet.tres" id="wallet"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/weather.tres" id="weather"]
+
+[resource]
+default_font = ExtResource("font")
+default_font_size = 18
+Button/colors/font_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_hover_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_pressed_color = Color(0.25, 0.11, 0.06, 1)
+Button/styles/normal = ExtResource("normal")
+Button/styles/hover = ExtResource("selected")
+Button/styles/pressed = ExtResource("selected")
+Button/styles/focus = ExtResource("selected")
+Label/colors/font_color = Color(0.25, 0.11, 0.06, 1)
+PanelContainer/styles/panel = ExtResource("wallet")
+HotbarPanel/base_type = &"PanelContainer"
+HotbarPanel/styles/panel = ExtResource("hotbar")
+WalletPanel/base_type = &"PanelContainer"
+WalletPanel/styles/panel = ExtResource("wallet")
+WeatherPanel/base_type = &"PanelContainer"
+WeatherPanel/styles/panel = ExtResource("weather")

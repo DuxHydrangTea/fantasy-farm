@@ -7,8 +7,9 @@
     "Lily",
     "Soil pot"
   ],
-  "last_attempt": "Individual retries with backoff; then one combined unzoom job",
+  "last_attempt": "Repeated individual submission with10/20/30 second backoff; still Trial queue unavailable.",
   "individual_log": "pixellab.log",
   "combined_log": "pending-batch.log",
-  "status": "waiting_for_pixellab_trial_queue"
+  "status": "waiting_for_pixellab_trial_queue",
+  "generations_remaining_verified": 28.7
 }

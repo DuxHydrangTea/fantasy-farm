@@ -145,3 +145,44 @@ Error: flower_29: error: We're seeing long queues right now and free generations
     at async file:///home/dungnguyen/Projects/test-js/scripts/unzoom_flower_pack.mjs:42:1
 
 Node.js v24.16.0
+kept flower_01
+kept flower_02
+kept flower_03
+kept flower_04
+kept flower_05
+kept flower_06
+kept flower_07
+kept flower_08
+kept flower_09
+kept flower_10
+kept flower_11
+kept flower_12
+kept flower_13
+kept flower_14
+kept flower_15
+kept flower_16
+kept flower_17
+kept flower_18
+kept flower_19
+kept flower_20
+kept flower_21
+kept flower_22
+kept flower_23
+kept flower_24
+kept flower_25
+kept flower_26
+kept flower_27
+kept flower_28
+Waiting for free queue: flower_29, retry 1
+Waiting for free queue: flower_29, retry 2
+Waiting for free queue: flower_29, retry 3
+file:///home/dungnguyen/Projects/test-js/scripts/unzoom_flower_pack.mjs:21
+    if(!/temporarily unavailable|rate limit|long queues/i.test(text)||retry===3)throw new Error(`${stem}: ${text}`);
+                                                                                      ^
+
+Error: flower_29: error: We're seeing long queues right now and free generations are temporarily unavailable. A subscription or credits work immediately. Questions? Tell us on Discord.
+    at worker (file:///home/dungnguyen/Projects/test-js/scripts/unzoom_flower_pack.mjs:21:87)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///home/dungnguyen/Projects/test-js/scripts/unzoom_flower_pack.mjs:42:1
+
+Node.js v24.16.0

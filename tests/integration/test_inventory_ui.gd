@@ -13,6 +13,7 @@ class ShortcutProbe extends Node:
 			received = true
 
 func before_each() -> void:
+	Language.set_language("en")
 	viewport = SubViewport.new()
 	viewport.size = Vector2i(1920, 1080)
 	viewport.world_2d = World2D.new()
@@ -60,11 +61,13 @@ func test_inventory_opens_with_tab_or_i_and_closes_with_escape() -> void:
 
 func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
 	var actor: FarmPlayer = player as FarmPlayer
-	assert_null(actor.get_node_or_null("WalletHUD"))
+	var hud: WalletHUD = actor.get_node("Hotbar/WalletHUD") as WalletHUD
+	assert_not_null(hud)
 	assert_false(ui.root.visible)
 	actor.wallet.set_balance(1000) # Fixed baseline for this formatting/update test.
 	actor.wallet.credit(98051604)
 	ui.open()
+	assert_false(hud.panel.visible, "The inventory balance replaces the HUD balance while open")
 	assert_eq(ui.wallet_label.text, "98,052,604 coins")
 	actor.wallet.credit(1)
 	assert_eq(ui.wallet_label.text, "98,052,605 coins")
@@ -155,6 +158,53 @@ func test_quantity_labels_refresh_in_bag_and_hotbar() -> void:
 	assert_eq(player.get_node("Hotbar").buttons[2].get_node("Count").text, "12")
 	bag.remove(seed.item_id, 11)
 	assert_eq(ui.buttons[2].get_node("Count").text, "")
+
+func test_assign_from_bag_to_hotbar_swaps_without_losing_items() -> void:
+	var source_item: ItemDefinition = bag.get_slot_item(0)
+	var target_item: ItemDefinition = bag.get_slot_item(1)
+	assert_true(bag.move_slot(0, 8))
+	ui.open()
+	ui._inspect_slot(8)
+	ui.assign_button.pressed.emit()
+	assert_true(ui._assigning_hotbar)
+	ui._inspect_slot(9)
+	assert_eq(bag.get_slot_item(8), source_item, "Only a hotbar cell can complete assignment")
+	_key(KEY_2)
+	assert_eq(bag.get_slot_item(1), source_item)
+	assert_eq(bag.get_slot_item(8), target_item, "Occupied target is swapped back into the bag")
+	assert_eq(state.tool_selection.selected_index, 1)
+	assert_false(ui._assigning_hotbar)
+	assert_eq(bag.count_item(source_item.item_id), 1)
+	assert_eq(bag.count_item(target_item.item_id), 1)
+
+func test_close_cancels_hotbar_assignment_and_reenables_bag_slots() -> void:
+	assert_true(bag.move_slot(0, 8))
+	ui.open()
+	ui._inspect_slot(8)
+	ui.assign_button.pressed.emit()
+	assert_true(ui.buttons[8].disabled)
+	ui.close()
+	ui.open()
+	assert_false(ui._assigning_hotbar)
+	assert_false(ui.buttons[8].disabled)
+	assert_null(bag.get_slot_item(0))
+	assert_not_null(bag.get_slot_item(8))
+
+func test_quality_is_inline_and_inspection_does_not_move_or_consume_produce() -> void:
+	var produce: ItemDefinition = load("res://items/harvest_produces/carrot_produces.tres") as ItemDefinition
+	bag.add(produce, 80, 0)
+	bag.add(produce, 40, 1)
+	ui.open()
+	for index: int in range(bag.slot_count):
+		if bag.get_slot_item(index) == produce:
+			ui._inspect_slot(index)
+			break
+	assert_true(ui.quality_panel.visible)
+	assert_eq(ui._quality_rows[0].text, "80")
+	assert_eq(ui._quality_rows[1].text, "40")
+	assert_eq(ui._quality_rows[2].text, "0")
+	assert_eq(bag.count_item(produce.item_id, -1), 120)
+	assert_eq(ui.item_icon.texture, produce.icon)
 
 func test_invalid_drag_payload_cannot_move_or_duplicate_items() -> void:
 	var target: Control = ui.buttons[6]

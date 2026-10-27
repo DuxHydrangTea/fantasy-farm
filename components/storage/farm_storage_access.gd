@@ -8,7 +8,7 @@ func _enter_tree() -> void:
 	create_shop_ui = false
 	super._enter_tree()
 	if menu == null:
-		var view: FarmStorageMenu = FarmStorageMenu.new()
+		var view: FarmStorageMenu = preload("res://scenes/storage/storage_menu.tscn").instantiate() as FarmStorageMenu
 		view.storage_id = storage_id
 		menu = view
 		add_child(menu)

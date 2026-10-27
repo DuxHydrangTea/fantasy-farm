@@ -1,0 +1,573 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://components/workers/worker_menu.gd" id="script"]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/cooking_selected.tres" id="selected"]
+[sub_resource type="SpriteFrames" id="EmptyFrames"]
+[node name="WorkerMenu" type="CanvasLayer"]
+layer = 25
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("theme")
+texture_filter = 1
+visible = false
+
+[node name="Dim" type="ColorRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1,0.09,0.07,0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Shell" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hired workers"
+autowrap_mode = 0
+clip_text = true
+text_overrun_behavior = 3
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 0
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "×"
+custom_minimum_size = Vector2(48,48)
+tooltip_text = "Close (Esc / E)"
+
+[node name="Page" type="VBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="OverviewPanel" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.85
+theme_type_variation = &"DetailCard"
+
+[node name="OverviewScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="OverviewContent" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Portrait" type="Control" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,180)
+mouse_filter = 2
+
+[node name="Preview" type="AnimatedSprite2D" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Portrait"]
+unique_name_in_owner = true
+layout_mode = 2
+sprite_frames = SubResource("EmptyFrames")
+
+[node name="WorkerName" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Employment" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="OverviewRule" type="HSeparator" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WageHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Daily wage"
+autowrap_mode = 3
+
+[node name="Wage" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 26
+autowrap_mode = 3
+
+[node name="DawnNote" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Wages are paid at dawn."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="HireCost" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="WorkPanel" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+theme_type_variation = &"DetailCard"
+
+[node name="WorkScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="WorkContent" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="WorkHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Work settings"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="CropOptions" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PlantCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="PlantRow" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlantText" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlantTitle" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Auto till and replant"
+autowrap_mode = 3
+
+[node name="PlantHint" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Uses seeds from farm supply storage."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="AutoPlant" type="Button" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On"
+toggle_mode = true
+custom_minimum_size = Vector2(64,48)
+theme_override_styles/pressed = ExtResource("selected")
+
+[node name="FertilizeCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="FertilizeRow" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FertilizeText" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FertilizeTitle" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Automatically fertilize crops"
+autowrap_mode = 3
+
+[node name="FertilizeHint" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Applies only to worker-planted crops."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="AutoFertilize" type="Button" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On"
+toggle_mode = true
+custom_minimum_size = Vector2(64,48)
+theme_override_styles/pressed = ExtResource("selected")
+
+[node name="ZoneBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+
+[node name="ZoneHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/ZoneBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Assigned animal pen"
+autowrap_mode = 3
+
+[node name="Zones" type="OptionButton" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/ZoneBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,48)
+clip_text = true
+
+[node name="RoleDescription" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="TaskCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="TaskBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TaskHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Worker status"
+autowrap_mode = 3
+
+[node name="Task" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Unlock" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.62,0.29,0.09,1)
+autowrap_mode = 3
+
+[node name="PauseNote" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Crop work is manually paused. Wages still apply."
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.62,0.29,0.09,1)
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Info" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+autowrap_mode = 3
+
+[node name="SupplyPanel" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_type_variation = &"DetailCard"
+
+[node name="SupplyScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="SupplyContent" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="SupplyHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Supply storage"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Supplies" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="CropSupplyRows" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SeedSupplyCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="SeedSupplyRow" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SeedIcon" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(32,32)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="SeedSupplyName" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Crop seeds"
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="SeedCount" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+autowrap_mode = 0
+
+[node name="FertilizerSupplyCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="FertilizerSupplyRow" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FertilizerIcon" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(32,32)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="FertilizerSupplyName" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fertilizer"
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="FertilizerCount" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+autowrap_mode = 0
+
+[node name="SupplyHint" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="DestinationCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="DestinationBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DestinationHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard/DestinationBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Produce warehouse"
+autowrap_mode = 3
+
+[node name="Destination" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard/DestinationBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Harvested products go directly to the produce warehouse."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="LegacyBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+
+[node name="LegacyHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Old basket recovery"
+autowrap_mode = 3
+
+[node name="LegacyContents" type="Label" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Collect" type="Button" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover old basket products"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Withdraw" type="Button" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Recover old basket feed"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Deposit" type="Button" parent="Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Deposit feed"
+visible = false
+custom_minimum_size = Vector2(0,48)
+
+[node name="Actions" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Hire" type="Button" parent="Root/Center/Panel/Shell/Page/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hire worker"
+size_flags_horizontal = 3
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="PauseCrop" type="Button" parent="Root/Center/Panel/Shell/Page/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Pause crop work (wages continue)"
+size_flags_horizontal = 3
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Dismiss" type="Button" parent="Root/Center/Panel/Shell/Page/Actions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dismiss worker"
+size_flags_horizontal = 3
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="TrialNote" type="Label" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "First shift is free once per role. Rehiring costs today's wage."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Confirmation" type="VBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="ConfirmHeading" type="Label" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dismiss worker"
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+
+[node name="ConfirmScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ConfirmationText" type="Label" parent="Root/Center/Panel/Shell/Confirmation/ConfirmScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="ConfirmDismiss" type="Button" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm dismissal (basket is kept)"
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="CancelDismiss" type="Button" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel"
+custom_minimum_size = Vector2(0,48)

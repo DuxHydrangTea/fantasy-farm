@@ -25,7 +25,7 @@ func test_authored_chef_uses_existing_interaction_and_modal_lifecycle() -> void:
 	assert_true(world.player.shop_interaction.try_interact())
 	assert_true(menu.is_open)
 	assert_true(world.player.selection.is_menu_open())
-	assert_eq(menu.recipe_buttons.size(), 5)
+	assert_eq(menu.recipe_buttons.size(), ChefCooking.RECIPES.size())
 	assert_true(menu.cook_button.disabled)
 	world.player.selection.inventory.add(EGG, 2)
 	assert_false(menu.cook_button.disabled)

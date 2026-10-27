@@ -161,7 +161,7 @@ func _process(_delta: float) -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	hud.visible = not world.player.selection.is_menu_open() and not (touch and hud.size.y > hud.size.x)
 	launcher.size = Vector2(144, 48) if touch else Vector2(220, 48)
-	launcher.position = Vector2(hud.size.x - 152, hud.size.y - 228) if touch else Vector2(hud.size.x - 232, 64)
+	launcher.position = Vector2(hud.size.x - 152, hud.size.y - 228) if touch else Vector2(hud.size.x - 232, 128)
 	launcher.disabled = not world.storages.available() or world.storages.busy
 	var selection: ToolSelectionComponent = world.player.selection
 	var chosen_seed: ItemDefinition = selection.get_selected_item() if selection.uses_storage_seeds() else null

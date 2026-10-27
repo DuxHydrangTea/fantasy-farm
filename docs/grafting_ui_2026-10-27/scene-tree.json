@@ -1,0 +1,1340 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/trees/graft_menu.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres",
+    "res://resources/ui/cozy_hud/cooking_selected.tres"
+  ],
+  "node_count": 67,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "GraftMenu",
+      "owner_path": "",
+      "path": ".",
+      "properties": {
+        "layer": 25,
+        "script": {
+          "__resource": "res://components/trees/graft_menu.gd",
+          "resource_type": "GDScript"
+        }
+      },
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "texture_filter": 1,
+        "theme": {
+          "__resource": "res://resources/ui/cozy_hud/shop_theme.tres",
+          "resource_type": "Theme"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "color": {
+          "__type": "Color",
+          "a": 0.649999976158142,
+          "b": 0.0700000002980232,
+          "g": 0.0900000035762787,
+          "r": 0.100000001490116
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Title",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Title",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Fruit tree grafting",
+        "text_overrun_behavior": 3,
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Balance",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Close",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "×",
+        "tooltip_text": "Close (Esc / E)",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "CurrentPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 0.85,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "CurrentBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "CurrentScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "CurrentContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "TreeName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/TreeName",
+      "properties": {
+        "autowrap_mode": 3,
+        "horizontal_alignment": 1,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 22,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "Active",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/Active",
+      "properties": {
+        "autowrap_mode": 3,
+        "horizontal_alignment": 1,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "TreeIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/TreeIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 160.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "CurrentHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/CurrentHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Current crop",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "CurrentIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/CurrentIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 40.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "CurrentCrop",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/CurrentCrop",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "ProgressText",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/ProgressText",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "Progress",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/Progress",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 12.0
+        },
+        "layout_mode": 2,
+        "show_percentage": false,
+        "theme_override_styles/background": {
+          "__resource_type": "StyleBoxFlat",
+          "properties": {
+            "anti_aliasing": true,
+            "anti_aliasing_size": 1.0,
+            "bg_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.579999983310699,
+              "g": 0.759999990463257,
+              "r": 0.879999995231628
+            },
+            "border_blend": false,
+            "border_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.800000011920929,
+              "g": 0.800000011920929,
+              "r": 0.800000011920929
+            },
+            "border_width_bottom": 0,
+            "border_width_left": 0,
+            "border_width_right": 0,
+            "border_width_top": 0,
+            "content_margin_bottom": -1.0,
+            "content_margin_left": -1.0,
+            "content_margin_right": -1.0,
+            "content_margin_top": -1.0,
+            "corner_detail": 8,
+            "corner_radius_bottom_left": 0,
+            "corner_radius_bottom_right": 0,
+            "corner_radius_top_left": 0,
+            "corner_radius_top_right": 0,
+            "draw_center": true,
+            "expand_margin_bottom": 0.0,
+            "expand_margin_left": 0.0,
+            "expand_margin_right": 0.0,
+            "expand_margin_top": 0.0,
+            "resource_local_to_scene": false,
+            "resource_name": "",
+            "script": null,
+            "shadow_color": {
+              "__type": "Color",
+              "a": 0.600000023841858,
+              "b": 0.0,
+              "g": 0.0,
+              "r": 0.0
+            },
+            "shadow_offset": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "shadow_size": 0,
+            "skew": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "resource_name": ""
+        },
+        "theme_override_styles/fill": {
+          "__resource_type": "StyleBoxFlat",
+          "properties": {
+            "anti_aliasing": true,
+            "anti_aliasing_size": 1.0,
+            "bg_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.389999985694885,
+              "g": 0.660000026226044,
+              "r": 0.529999971389771
+            },
+            "border_blend": false,
+            "border_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.800000011920929,
+              "g": 0.800000011920929,
+              "r": 0.800000011920929
+            },
+            "border_width_bottom": 0,
+            "border_width_left": 0,
+            "border_width_right": 0,
+            "border_width_top": 0,
+            "content_margin_bottom": -1.0,
+            "content_margin_left": -1.0,
+            "content_margin_right": -1.0,
+            "content_margin_top": -1.0,
+            "corner_detail": 8,
+            "corner_radius_bottom_left": 0,
+            "corner_radius_bottom_right": 0,
+            "corner_radius_top_left": 0,
+            "corner_radius_top_right": 0,
+            "draw_center": true,
+            "expand_margin_bottom": 0.0,
+            "expand_margin_left": 0.0,
+            "expand_margin_right": 0.0,
+            "expand_margin_top": 0.0,
+            "resource_local_to_scene": false,
+            "resource_name": "",
+            "script": null,
+            "shadow_color": {
+              "__type": "Color",
+              "a": 0.600000023841858,
+              "b": 0.0,
+              "g": 0.0,
+              "r": 0.0
+            },
+            "shadow_offset": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "shadow_size": 0,
+            "skew": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "resource_name": ""
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ProgressBar"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "Pending",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/Pending",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "Harvest",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/Harvest",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Harvest current crop",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "ChoicesPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.4,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "ChoiceBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "Browse",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "Content",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "ChoicesHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ChoicesHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Choose a graft direction",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "YieldCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "YieldBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "YieldRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "YieldIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 32.0,
+          "y": 32.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "YieldHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Yield",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "YieldOutput",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldOutput",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 22,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "YieldDescription",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDescription",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Double the ordinary fruit amount.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "YieldDemand",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDemand",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "YieldButton",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldButton",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Review this direction",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "QualityCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "QualityBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "QualityRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "QualityIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 32.0,
+          "y": 32.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "QualityHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Star fruit",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "QualityOutput",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityOutput",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 22,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "QualityDescription",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityDescription",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Keep the base amount, produce Star fruit.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "QualityDemand",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityDemand",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "QualityButton",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityButton",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Review this direction",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 48,
+      "instance_placeholder": "",
+      "name": "ReviewPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.0,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 49,
+      "instance_placeholder": "",
+      "name": "ReviewBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 50,
+      "instance_placeholder": "",
+      "name": "ReviewScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 51,
+      "instance_placeholder": "",
+      "name": "ReviewContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 52,
+      "instance_placeholder": "",
+      "name": "ReviewHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/ReviewHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Graft preview",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 53,
+      "instance_placeholder": "",
+      "name": "SelectedDirection",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/SelectedDirection",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Choose a graft direction to review.",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 54,
+      "instance_placeholder": "",
+      "name": "FutureIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/FutureIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 55,
+      "instance_placeholder": "",
+      "name": "FutureCrop",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/FutureCrop",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 22,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 56,
+      "instance_placeholder": "",
+      "name": "CostCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 57,
+      "instance_placeholder": "",
+      "name": "CostBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 58,
+      "instance_placeholder": "",
+      "name": "WaxRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 59,
+      "instance_placeholder": "",
+      "name": "WaxIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow/WaxIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 32.0,
+          "y": 32.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 60,
+      "instance_placeholder": "",
+      "name": "Cost",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow/Cost",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 61,
+      "instance_placeholder": "",
+      "name": "WaxCount",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxCount",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 62,
+      "instance_placeholder": "",
+      "name": "Timing",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/Timing",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Changes apply after the next harvest. The current crop stays unchanged.",
+        "theme_override_colors/font_color": {
+          "__type": "Color",
+          "a": 1.0,
+          "b": 0.0900000035762787,
+          "g": 0.28999999165535,
+          "r": 0.620000004768372
+        },
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 63,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/Status",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 64,
+      "instance_placeholder": "",
+      "name": "Summary",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/Summary",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 65,
+      "instance_placeholder": "",
+      "name": "Confirm",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/Confirm",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Confirm graft direction",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 66,
+      "instance_placeholder": "",
+      "name": "Hint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Hint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "You can leave this tree unspecialized. It keeps producing ordinary fruit.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/ui/grafting.tscn",
+  "uid": ""
+}

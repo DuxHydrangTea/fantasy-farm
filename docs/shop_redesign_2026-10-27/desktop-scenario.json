@@ -1,0 +1,47 @@
+{
+  "scene_path": "tests/support/shop_layout_fixture.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root",
+      "label": "desktop",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header",
+      "label": "desktop-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Sidebar",
+      "label": "desktop-checkout",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-checkout-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll",
+      "label": "desktop-tabs",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-tabs-layout.json"
+    }
+  ]
+}

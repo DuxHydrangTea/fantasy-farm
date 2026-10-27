@@ -1,0 +1,762 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel",
+      "rect": [
+        12,
+        8,
+        642,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body",
+      "rect": [
+        28,
+        20,
+        610,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Header",
+      "rect": [
+        28,
+        20,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Header/Heading",
+      "rect": [
+        28,
+        30,
+        496,
+        26.25
+      ],
+      "text": "Sell produce"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        528,
+        34,
+        58,
+        18.38
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        590,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/QualityTabs",
+      "rect": [
+        28,
+        72,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/QualityTabs/Normal",
+      "rect": [
+        28,
+        72,
+        198,
+        48
+      ],
+      "text": "Normal"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/QualityTabs/Silver",
+      "rect": [
+        234,
+        72,
+        198,
+        48
+      ],
+      "text": "Silver"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/QualityTabs/Gold",
+      "rect": [
+        440,
+        72,
+        198,
+        48
+      ],
+      "text": "Gold"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main",
+      "rect": [
+        28,
+        124,
+        610,
+        230
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel",
+      "rect": [
+        28,
+        124,
+        348,
+        230
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody",
+      "rect": [
+        38,
+        134,
+        328,
+        210
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings",
+      "rect": [
+        38,
+        134,
+        328,
+        33
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/ItemHeading",
+      "rect": [
+        38,
+        142,
+        216,
+        15.75
+      ],
+      "text": "Product"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/OwnedHeading",
+      "rect": [
+        258,
+        134,
+        40,
+        33
+      ],
+      "text": "Owned"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/PriceHeading",
+      "rect": [
+        302,
+        142,
+        64,
+        15.75
+      ],
+      "text": "Unit price"
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse",
+      "rect": [
+        38,
+        175,
+        328,
+        169
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items",
+      "rect": [
+        38,
+        175,
+        314,
+        216
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow",
+      "rect": [
+        38,
+        175,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin",
+      "rect": [
+        38,
+        175,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin/Row",
+      "rect": [
+        46,
+        183,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin/Row/Icon",
+      "rect": [
+        46,
+        183,
+        24,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin/Row/Name",
+      "rect": [
+        78,
+        189,
+        146,
+        18.38
+      ],
+      "text": "Cà rốt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin/Row/Owned",
+      "rect": [
+        232,
+        189,
+        40,
+        18.38
+      ],
+      "text": "24"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/ProduceSaleRow/Margin/Row/Price",
+      "rect": [
+        280,
+        189,
+        64,
+        18.38
+      ],
+      "text": "35 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603",
+      "rect": [
+        38,
+        231,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin",
+      "rect": [
+        38,
+        231,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin/Row",
+      "rect": [
+        46,
+        239,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin/Row/Icon",
+      "rect": [
+        46,
+        239,
+        24,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin/Row/Name",
+      "rect": [
+        78,
+        245,
+        146,
+        18.38
+      ],
+      "text": "Trứng gà"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin/Row/Owned",
+      "rect": [
+        232,
+        245,
+        40,
+        18.38
+      ],
+      "text": "12"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@603/Margin/Row/Price",
+      "rect": [
+        280,
+        245,
+        64,
+        18.38
+      ],
+      "text": "8 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604",
+      "rect": [
+        38,
+        287,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin",
+      "rect": [
+        38,
+        287,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin/Row",
+      "rect": [
+        46,
+        295,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin/Row/Icon",
+      "rect": [
+        46,
+        295,
+        24,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin/Row/Name",
+      "rect": [
+        78,
+        301,
+        146,
+        18.38
+      ],
+      "text": "Sữa bò"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin/Row/Owned",
+      "rect": [
+        232,
+        301,
+        40,
+        18.38
+      ],
+      "text": "8"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@604/Margin/Row/Price",
+      "rect": [
+        280,
+        301,
+        64,
+        18.38
+      ],
+      "text": "80 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605",
+      "rect": [
+        38,
+        343,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin",
+      "rect": [
+        38,
+        343,
+        314,
+        48
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin/Row",
+      "rect": [
+        46,
+        351,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin/Row/Icon",
+      "rect": [
+        46,
+        351,
+        24,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin/Row/Name",
+      "rect": [
+        78,
+        357,
+        146,
+        18.38
+      ],
+      "text": "Trứng chiên"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin/Row/Owned",
+      "rect": [
+        232,
+        357,
+        40,
+        18.38
+      ],
+      "text": "3"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items/@Button@605/Margin/Row/Price",
+      "rect": [
+        280,
+        357,
+        64,
+        18.38
+      ],
+      "text": "18 xu"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar",
+      "rect": [
+        384,
+        124,
+        254,
+        230
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll",
+      "rect": [
+        384,
+        124,
+        254,
+        74
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent",
+      "rect": [
+        384,
+        124,
+        240,
+        254
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero",
+      "rect": [
+        384,
+        124,
+        240,
+        47
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductIcon",
+      "rect": [
+        384,
+        124,
+        36,
+        47
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels",
+      "rect": [
+        424,
+        124,
+        200,
+        47
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels/ProductName",
+      "rect": [
+        424,
+        124,
+        200,
+        23.63
+      ],
+      "text": "Cà rốt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels/Quality",
+      "rect": [
+        424,
+        152,
+        200,
+        18.38
+      ],
+      "text": "Chất lượng: Thường"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Details",
+      "rect": [
+        384,
+        183,
+        240,
+        45
+      ],
+      "text": "Trong túi: 24 Đơn giá: 35 xu"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard",
+      "rect": [
+        384,
+        240,
+        240,
+        77
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox",
+      "rect": [
+        394,
+        250,
+        220,
+        57
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox/TotalHeading",
+      "rect": [
+        394,
+        250,
+        220,
+        23.63
+      ],
+      "text": "Total received"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox/Total",
+      "rect": [
+        394,
+        278,
+        220,
+        28.88
+      ],
+      "text": "350 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/BulkSummary",
+      "rect": [
+        384,
+        329,
+        240,
+        49
+      ],
+      "text": "Toàn bộ hàng Thường: 47 sản phẩm · 1.630 xu"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow",
+      "rect": [
+        384,
+        202,
+        254,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/@Button@209",
+      "rect": [
+        384,
+        202,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Quantity",
+      "rect": [
+        436,
+        202,
+        78,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/@Button@210",
+      "rect": [
+        518,
+        202,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Maximum",
+      "rect": [
+        570,
+        202,
+        68,
+        48
+      ],
+      "text": "Max"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/SellQuantity",
+      "rect": [
+        384,
+        254,
+        254,
+        48
+      ],
+      "text": "Bán ×10 — 350 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/SellAll",
+      "rect": [
+        384,
+        306,
+        254,
+        48
+      ],
+      "text": "Bán tất cả · Thường · 1.630 xu"
+    }
+  ],
+  "counts": {
+    "controls": 71,
+    "findings": 0,
+    "hidden": 6,
+    "visible": 71
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/compact-full-layout.json",
+  "findings": [],
+  "label": "compact-full",
+  "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

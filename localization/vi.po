@@ -1780,7 +1780,7 @@ msgstr "Lương: %d xu/ngày · trả lúc bình minh"
 
 
 msgid "First shift is free once per role. Rehiring costs today's wage."
-msgstr "Ca đầu miễn phí một lần mỗi vai. Thuê lại trả lương ngày hiện tại."
+msgstr "Ca đầu miễn phí một lần cho mỗi nhóm. Thuê lại tính lương hôm nay."
 
 
 msgid "Hire worker"
@@ -2151,7 +2151,7 @@ msgid "Yield"
 msgstr "Sản lượng"
 
 msgid "Selection (Star fruit)"
-msgstr "Tuyển chọn (quả Star)"
+msgstr "Tuyển chọn (quả Sao)"
 
 msgid "Manage fruit tree"
 msgstr "Quản lý cây ăn quả"
@@ -2253,16 +2253,16 @@ msgid "Star fruit: a separate Chef ingredient, not Gold quality."
 msgstr "Quả Star là nguyên liệu Chef riêng, khác với chất lượng Vàng."
 
 msgid "Star Apple"
-msgstr "Táo Star"
+msgstr "Táo Sao"
 
 msgid "Star Peach"
-msgstr "Đào Star"
+msgstr "Đào Sao"
 
 msgid "Star Pear"
-msgstr "Lê Star"
+msgstr "Lê Sao"
 
 msgid "Star Cherry"
-msgstr "Anh đào Star"
+msgstr "Anh đào Sao"
 
 msgid "Star Apple Tart"
 msgstr "Bánh táo Star"
@@ -2659,3 +2659,402 @@ msgstr "Giá mở rộng đất trồng cây đã thay đổi. Vui lòng thử l
 
 msgid "Expanded to {capacity} tree plots."
 msgstr "Đã mở rộng lên {capacity} ô trồng cây."
+
+msgid "Assign to hotbar"
+msgstr "Gán hotbar"
+
+msgid "Choose a hotbar slot (1–6)."
+msgstr "Chọn ô hotbar (1–6)."
+
+msgid "Select an item to see its details."
+msgstr "Chọn vật phẩm để xem chi tiết."
+
+msgid "{count} in bag"
+msgstr "{count} trong túi"
+
+msgid "Tool"
+msgstr "Công cụ"
+
+msgid "Seed"
+msgstr "Hạt giống"
+
+msgid "Produce"
+msgstr "Nông sản"
+
+msgid "Booster"
+msgstr "Dưỡng chất"
+
+msgid "Placeable"
+msgstr "Vật dụng"
+
+msgid "Material"
+msgstr "Nguyên liệu"
+
+msgid "Move"
+msgstr "Chuyển đồ"
+
+msgid "Hotbar"
+msgstr "Hotbar"
+
+msgid "Price"
+msgstr "Giá"
+
+msgid "In bag"
+msgstr "Trong túi"
+
+msgid "Total"
+msgstr "Tổng cộng"
+
+msgid "Buy ×{count}"
+msgstr "Mua ×{count}"
+
+msgid "Choose an item to see its details. Esc / E / Tab to close."
+msgstr "Chọn vật phẩm để xem chi tiết. Esc / E / Tab để đóng."
+
+msgid "Store all"
+msgstr "Cất hết"
+
+msgid "Take all"
+msgstr "Lấy hết"
+
+msgid "Selected from bag"
+msgstr "Đang chọn từ túi đồ"
+
+msgid "Selected from storage"
+msgstr "Đang chọn từ kho"
+
+msgid "Select an item"
+msgstr "Chọn vật phẩm"
+
+msgid "Destination is full."
+msgstr "Nơi nhận đã đầy."
+
+msgid "Invalid quality."
+msgstr "Chất lượng không hợp lệ."
+
+msgid "Max"
+msgstr "Tối đa"
+
+msgid "Apple"
+msgstr "Táo"
+
+msgid "Food troughs"
+msgstr "Máng thức ăn"
+
+msgid "Water troughs"
+msgstr "Máng nước"
+
+msgid "Expand pen"
+msgstr "Mở rộng chuồng"
+
+msgid "Unlock 5 spaces"
+msgstr "Mở thêm 5 chỗ"
+
+msgid "Unlock 5 additional animal spaces."
+msgstr "Mở thêm 5 chỗ nuôi."
+
+msgid "Cost"
+msgstr "Chi phí"
+
+msgid "Hover over an animal card for age and lifespan."
+msgstr "Di chuột lên thẻ để xem tuổi và vòng đời."
+
+msgid "Unlocked plots"
+msgstr "Đã mở"
+
+msgid "Planted"
+msgstr "Đã trồng"
+
+msgid "Free plots"
+msgstr "Còn trống"
+
+msgid "Expand planting area"
+msgstr "Mở rộng đất trồng"
+
+msgid "Unlock columns from left to right."
+msgstr "Mở theo cột, từ trái sang phải."
+
+msgid "Unlocked plots stay open after trees are removed."
+msgstr "Ô đã mở vẫn giữ nguyên khi chặt hoặc thay cây."
+
+msgid "Unlock one column of 9 plots."
+msgstr "Mở thêm 1 cột · 9 ô đất."
+
+msgid "Unlock 9 plots"
+msgstr "Mở thêm 9 ô"
+
+msgid "Farm kitchen"
+msgstr "Bếp nông trại"
+
+msgid "All recipes"
+msgstr "Tất cả"
+
+msgid "Can cook"
+msgstr "Có thể nấu"
+
+msgid "No recipes available."
+msgstr "Chưa có công thức phù hợp."
+
+msgid "Ingredients"
+msgstr "Nguyên liệu"
+
+msgid "Output"
+msgstr "Thành phẩm"
+
+msgid "Cooking"
+msgstr "Chế biến"
+
+msgid "Kitchen queue"
+msgstr "Hàng đợi"
+
+msgid "Batch time: {time}"
+msgstr "Thời gian cả lượt: {time}"
+
+msgid "Kitchen capacity: {used}/{capacity}"
+msgstr "Sức chứa: {used}/{capacity}"
+
+msgid "Queued: {queued} · Ready: {ready}"
+msgstr "Đang chờ: {queued} · Xong: {ready}"
+
+msgid "Cooking: {recipe}"
+msgstr "Đang nấu: {recipe}"
+
+msgid "Remaining: {time}"
+msgstr "Còn lại: {time}"
+
+msgid "Kitchen is idle."
+msgstr "Bếp đang trống."
+
+msgid "Choose a recipe to view its ingredients."
+msgstr "Chọn công thức để xem nguyên liệu cần dùng."
+
+msgid "Produce in bag"
+msgstr "Nông sản trong túi"
+
+msgid "Product"
+msgstr "Sản phẩm"
+
+msgid "Owned"
+msgstr "Đang có"
+
+msgid "Unit price"
+msgstr "Đơn giá"
+
+msgid "Quantity to sell"
+msgstr "Số lượng bán"
+
+msgid "Total received"
+msgstr "Tổng nhận"
+
+msgid "Sell selected produce"
+msgstr "Bán sản phẩm đã chọn"
+
+msgid "Sell all · {quality}"
+msgstr "Bán tất cả · {quality}"
+
+msgid "All {quality} produce: {count} items · {coins}"
+msgstr "Toàn bộ hàng {quality}: {count} sản phẩm · {coins}"
+
+msgid "Sells every accepted item of the selected quality in your bag."
+msgstr "Bán mọi mặt hàng được thu mua thuộc phẩm chất đã chọn trong túi."
+
+msgid "In bag: {count}\nUnit price: {price}"
+msgstr "Trong túi: {count}\nĐơn giá: {price}"
+
+msgid "Sell all · {quality} · {coins}"
+msgstr "Bán tất cả · {quality} · {coins}"
+
+msgid "Current orders"
+msgstr "Đơn hiện có"
+
+msgid "Items to deliver"
+msgstr "Vật phẩm cần giao"
+
+msgid "Normal delivery"
+msgstr "Giao thường"
+
+msgid "Perfect delivery"
+msgstr "Giao hoàn hảo"
+
+msgid "Normal uses Normal quality only."
+msgstr "Chỉ dùng phẩm chất Thường."
+
+msgid "Uses Silver before Gold."
+msgstr "Ưu tiên Bạc, sau đó Vàng."
+
+msgid "Review the item tiers before confirming delivery."
+msgstr "Xem lại phẩm chất vật phẩm trước khi xác nhận giao."
+
+msgid "Needed: {count}"
+msgstr "Cần: {count}"
+
+msgid "Ready to deliver"
+msgstr "Đủ hàng để giao"
+
+msgid "Delivery unavailable"
+msgstr "Chưa thể giao"
+
+msgid "Crop worker"
+msgstr "Nhân công trồng trọt"
+
+msgid "Orchard worker"
+msgstr "Nhân công chăm cây"
+
+msgid "Ranch worker"
+msgstr "Nhân công chăn nuôi"
+
+msgid "Daily wage"
+msgstr "Lương mỗi ngày"
+
+msgid "Wages are paid at dawn."
+msgstr "Trả lương lúc bình minh."
+
+msgid "Work settings"
+msgstr "Thiết lập công việc"
+
+msgid "Uses seeds from farm supply storage."
+msgstr "Dùng hạt giống trong kho vật tư."
+
+msgid "Applies only to worker-planted crops."
+msgstr "Chỉ áp dụng cho cây do nhân công trồng."
+
+msgid "Assigned animal pen"
+msgstr "Chuồng được phân công"
+
+msgid "Supply storage"
+msgstr "Kho vật tư"
+
+msgid "Old basket recovery"
+msgstr "Thu hồi giỏ cũ"
+
+msgid "Not hired"
+msgstr "Chưa thuê"
+
+msgid "Paused"
+msgstr "Tạm dừng"
+
+msgid "Already hired"
+msgstr "Đã thuê"
+
+msgid "Today's hiring cost: {coins}"
+msgstr "Chi phí thuê hôm nay: {coins}"
+
+msgid "Load your farm before hiring workers."
+msgstr "Tải nông trại trước khi thuê nhân công."
+
+msgid "Hire a worker to begin."
+msgstr "Thuê nhân công để bắt đầu."
+
+msgid "Awaiting wage payment at dawn."
+msgstr "Đang chờ trả lương vào bình minh."
+
+msgid "Harvest destination"
+msgstr "Nơi nhận sản phẩm"
+
+msgid "Crop seeds: {count}"
+msgstr "Hạt giống: {count}"
+
+msgid "Fertilizer: {count}"
+msgstr "Phân bón: {count}"
+
+msgid "Dismiss {worker}? The old basket is kept. Rehiring costs today's wage."
+msgstr "Cho {worker} nghỉ việc? Giỏ cũ được giữ lại. Thuê lại sẽ tính lương hôm nay."
+
+msgid "Tilling soil"
+msgstr "Đang xới đất"
+
+msgid "Planting crops"
+msgstr "Đang gieo hạt"
+
+msgid "Fertilizing crops"
+msgstr "Đang bón phân"
+
+msgid "Watering"
+msgstr "Đang tưới nước"
+
+msgid "Refilling feed"
+msgstr "Đang bổ sung thức ăn"
+
+msgid "Harvesting"
+msgstr "Đang thu hoạch"
+
+msgid "Collecting produce"
+msgstr "Đang gom sản phẩm"
+
+msgid "Patrolling the work area"
+msgstr "Đang tuần tra khu làm việc"
+
+msgid "Pausing work does not stop wages."
+msgstr "Tạm dừng vẫn tính lương."
+
+msgid "Automatically fertilize crops"
+msgstr "Tự bón phân"
+
+msgid "Worker status"
+msgstr "Trạng thái"
+
+msgid "Waiting for crop work."
+msgstr "Đang chờ công việc trồng trọt."
+
+msgid "Waters, harvests and tends crops."
+msgstr "Tưới nước, thu hoạch và chăm sóc cây trồng."
+
+msgid "Waters and harvests fruit trees."
+msgstr "Tưới nước và thu hoạch cây ăn quả."
+
+msgid "Feeds and waters animals; collected products go to the warehouse."
+msgstr "Bổ sung thức ăn, nước uống và gom sản phẩm về kho."
+
+msgid "Fertilizer"
+msgstr "Phân bón"
+
+msgid "Pause work"
+msgstr "Tạm dừng công việc"
+
+msgid "Resume work"
+msgstr "Tiếp tục công việc"
+
+msgid "Current crop"
+msgstr "Lứa hiện tại"
+
+msgid "Double the ordinary fruit amount."
+msgstr "Gấp đôi sản lượng quả thường."
+
+msgid "Keep the base amount, produce Star fruit."
+msgstr "Giữ sản lượng gốc, chuyển sang quả Sao."
+
+msgid "Review this direction"
+msgstr "Xem trước hướng này"
+
+msgid "Graft preview"
+msgstr "Xem trước ghép cây"
+
+msgid "Choose a graft direction to review."
+msgstr "Chọn một hướng ghép để xem trước."
+
+msgid "Confirm graft direction"
+msgstr "Xác nhận hướng ghép"
+
+msgid "Ready to harvest"
+msgstr "Sẵn sàng thu hoạch"
+
+msgid "The tree changed. Select a direction again to review its new cost."
+msgstr "Cây đã thay đổi. Chọn lại hướng ghép để xem chi phí mới."
+
+msgid "Selected for the next crop"
+msgstr "Đã chọn cho lứa sau"
+
+msgid "Current direction"
+msgstr "Hướng hiện tại"
+
+msgid "Reviewing this direction"
+msgstr "Đang xem trước"
+
+msgid "Next crop output: {output}"
+msgstr "Lứa sau: {output}"
+
+msgid "Unavailable"
+msgstr "Chưa khả dụng"
+
+msgid "Star fruit"
+msgstr "Quả Sao"

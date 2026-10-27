@@ -1,0 +1,629 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/cooking/cooking_menu.gd" id="script"]
+
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/cooking_selected.tres" id="selected"]
+
+[sub_resource type="StyleBoxFlat" id="Track"]
+bg_color = Color(0.88, 0.76, 0.58, 1)
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+[sub_resource type="StyleBoxFlat" id="Fill"]
+bg_color = Color(0.82, 0.55, 0.20, 1)
+
+
+[node name="CookingMenu" type="CanvasLayer"]
+
+layer = 25
+
+script = ExtResource("script")
+
+
+
+[node name="Root" type="Control" parent="."]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+anchor_right = 1.0
+
+anchor_bottom = 1.0
+
+grow_horizontal = 2
+
+grow_vertical = 2
+
+theme = ExtResource("theme")
+
+texture_filter = 1
+
+visible = false
+
+
+
+[node name="Dim" type="ColorRect" parent="Root"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+anchor_right = 1.0
+
+anchor_bottom = 1.0
+
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+
+
+[node name="Center" type="CenterContainer" parent="Root"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+anchor_right = 1.0
+
+anchor_bottom = 1.0
+
+mouse_filter = 2
+
+
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+theme_override_constants/separation = 12
+
+
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Body/Header"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Farm kitchen"
+
+autowrap_mode = 3
+
+size_flags_horizontal = 3
+
+theme_override_font_sizes/font_size = 26
+
+
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "0 coins"
+
+autowrap_mode = 0
+
+
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "×"
+
+custom_minimum_size = Vector2(48, 48)
+
+tooltip_text = "Close (Esc / E)"
+
+
+
+[node name="Rule" type="HSeparator" parent="Root/Center/Panel/Body"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_vertical = 3
+
+theme_override_constants/separation = 12
+
+
+
+[node name="BrowsePanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+size_flags_stretch_ratio = 0.9
+
+theme_type_variation = &"DetailCard"
+
+
+
+[node name="BrowseBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="Filters" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="AllRecipes" type="Button" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "All recipes"
+
+size_flags_horizontal = 3
+
+toggle_mode = true
+
+theme_override_styles/pressed = ExtResource("selected")
+
+button_pressed = true
+
+custom_minimum_size = Vector2(0, 48)
+
+
+
+[node name="CookableRecipes" type="Button" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Can cook"
+
+size_flags_horizontal = 3
+
+toggle_mode = true
+
+theme_override_styles/pressed = ExtResource("selected")
+
+custom_minimum_size = Vector2(0, 48)
+
+
+
+[node name="Browse" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_vertical = 3
+
+horizontal_scroll_mode = 0
+
+follow_focus = true
+
+
+
+[node name="RecipeList" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+theme_override_constants/separation = 8
+
+
+
+[node name="EmptyRecipes" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "No recipes available."
+
+autowrap_mode = 3
+
+visible = false
+
+
+
+[node name="DetailPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+size_flags_stretch_ratio = 1.2
+
+theme_type_variation = &"DetailCard"
+
+
+
+[node name="DetailScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/DetailPanel"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+horizontal_scroll_mode = 0
+
+follow_focus = true
+
+
+
+[node name="DetailContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+theme_override_constants/separation = 12
+
+
+
+[node name="ProductIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+custom_minimum_size = Vector2(0, 112)
+
+expand_mode = 1
+
+stretch_mode = 5
+
+mouse_filter = 2
+
+
+
+[node name="ProductName" type="Label" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+horizontal_alignment = 1
+
+theme_override_font_sizes/font_size = 24
+
+
+
+[node name="DetailRule" type="HSeparator" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="IngredientsHeading" type="Label" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Ingredients"
+
+autowrap_mode = 3
+
+
+
+[node name="Ingredients" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+theme_override_constants/separation = 8
+
+
+
+[node name="OutputPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+theme_type_variation = &"DetailCard"
+
+
+
+[node name="OutputBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="OutputHeading" type="Label" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Output"
+
+autowrap_mode = 3
+
+
+
+[node name="Output" type="Label" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+theme_override_font_sizes/font_size = 14
+
+
+
+[node name="ActionColumn" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+size_flags_stretch_ratio = 1.0
+
+
+
+[node name="ActionScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/ActionColumn"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_vertical = 3
+
+horizontal_scroll_mode = 0
+
+follow_focus = true
+
+
+
+[node name="ActionContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+size_flags_horizontal = 3
+
+theme_override_constants/separation = 10
+
+
+
+[node name="ActionHeading" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Cooking"
+
+autowrap_mode = 3
+
+theme_override_font_sizes/font_size = 22
+
+
+
+[node name="QuantityHeading" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Dishes to queue"
+
+autowrap_mode = 3
+
+
+
+[node name="QuantityRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+min_value = 1.0
+
+max_value = 20.0
+
+value = 1.0
+
+rounded = true
+
+custom_minimum_size = Vector2(48, 48)
+
+size_flags_horizontal = 3
+
+
+
+[node name="Maximum" type="Button" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Max"
+
+custom_minimum_size = Vector2(0, 48)
+
+
+
+[node name="Cost" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+
+
+[node name="Duration" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+
+
+[node name="QueuePanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+theme_type_variation = &"DetailCard"
+
+
+
+[node name="QueueBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+
+
+[node name="QueueHeading" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Kitchen queue"
+
+autowrap_mode = 3
+
+
+
+[node name="Summary" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+
+
+[node name="CookingProgress" type="ProgressBar" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+custom_minimum_size = Vector2(0, 12)
+
+show_percentage = false
+
+theme_override_styles/background = SubResource("Track")
+
+theme_override_styles/fill = SubResource("Fill")
+
+
+
+[node name="ReadyDishes" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/ActionColumn"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = ""
+
+autowrap_mode = 3
+
+theme_override_font_sizes/font_size = 14
+
+
+
+[node name="CookButton" type="Button" parent="Root/Center/Panel/Body/Main/ActionColumn"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Give ingredients & cook"
+
+theme_type_variation = &"PrimaryAction"
+
+autowrap_mode = 3
+
+custom_minimum_size = Vector2(0, 48)
+
+
+
+[node name="CollectButton" type="Button" parent="Root/Center/Panel/Body/Main/ActionColumn"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Collect ready dishes"
+
+autowrap_mode = 3
+
+custom_minimum_size = Vector2(0, 48)
+
+
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
+
+unique_name_in_owner = true
+layout_mode = 2
+
+text = "Choose a recipe to view its ingredients."
+
+autowrap_mode = 3
+
+theme_override_font_sizes/font_size = 14
+
+

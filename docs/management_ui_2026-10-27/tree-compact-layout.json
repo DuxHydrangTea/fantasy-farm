@@ -1,0 +1,424 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel",
+      "rect": [
+        16,
+        8,
+        634,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body",
+      "rect": [
+        32,
+        20,
+        602,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header",
+      "rect": [
+        32,
+        20,
+        602,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Heading",
+      "rect": [
+        32,
+        30,
+        455,
+        26.25
+      ],
+      "text": "Đất trồng cây ăn quả"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        499,
+        33,
+        75,
+        21
+      ],
+      "text": "100.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        586,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/HeaderRule",
+      "rect": [
+        32,
+        72,
+        602,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary",
+      "rect": [
+        32,
+        78,
+        602,
+        41
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel",
+      "rect": [
+        32,
+        78,
+        195,
+        41
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox",
+      "rect": [
+        42,
+        88,
+        175,
+        21
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow",
+      "rect": [
+        42,
+        88,
+        175,
+        21
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow/UnlockedTitle",
+      "rect": [
+        42,
+        90,
+        109,
+        15.75
+      ],
+      "text": "Unlocked plots"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow/UnlockedValue",
+      "rect": [
+        159,
+        88,
+        58,
+        21
+      ],
+      "text": "27 / 153"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel",
+      "rect": [
+        235,
+        78,
+        195,
+        41
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox",
+      "rect": [
+        245,
+        88,
+        175,
+        21
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow",
+      "rect": [
+        245,
+        88,
+        175,
+        21
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow/PlantedTitle",
+      "rect": [
+        245,
+        90,
+        150,
+        15.75
+      ],
+      "text": "Planted"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow/PlantedValue",
+      "rect": [
+        403,
+        88,
+        17,
+        21
+      ],
+      "text": "18"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel",
+      "rect": [
+        438,
+        78,
+        196,
+        41
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox",
+      "rect": [
+        448,
+        88,
+        176,
+        21
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow",
+      "rect": [
+        448,
+        88,
+        176,
+        21
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow/FreeTitle",
+      "rect": [
+        448,
+        90,
+        159,
+        15.75
+      ],
+      "text": "Free plots"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow/FreeValue",
+      "rect": [
+        615,
+        88,
+        9,
+        21
+      ],
+      "text": "9"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main",
+      "rect": [
+        32,
+        123,
+        602,
+        231
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/MapColumn",
+      "rect": [
+        32,
+        123,
+        368,
+        231
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/MapColumn/PlotPreview",
+      "rect": [
+        32,
+        123,
+        368,
+        231
+      ]
+    },
+    {
+      "class": "VSeparator",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/Divider",
+      "rect": [
+        408,
+        123,
+        2,
+        231
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox",
+      "rect": [
+        418,
+        123,
+        216,
+        231
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll",
+      "rect": [
+        418,
+        123,
+        216,
+        175
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent",
+      "rect": [
+        418,
+        123,
+        216,
+        96
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/NextCapacity",
+      "rect": [
+        418,
+        123,
+        216,
+        28.88
+      ],
+      "text": "27 → 36"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/Information",
+      "rect": [
+        418,
+        164,
+        216,
+        18.38
+      ],
+      "text": "Mở thêm 1 cột · 9 ô đất."
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow",
+      "rect": [
+        418,
+        195,
+        216,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow/CostTitle",
+      "rect": [
+        418,
+        195,
+        137,
+        23.63
+      ],
+      "text": "Cost"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow/Cost",
+      "rect": [
+        559,
+        195,
+        75,
+        23.63
+      ],
+      "text": "80.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeButton",
+      "rect": [
+        418,
+        306,
+        216,
+        48
+      ],
+      "text": "Mở thêm 9 ô"
+    }
+  ],
+  "counts": {
+    "controls": 39,
+    "findings": 0,
+    "hidden": 5,
+    "visible": 39
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/management_ui_2026-10-27/tree-compact-layout.json",
+  "findings": [],
+  "label": "tree-compact",
+  "node_path": "Farm/FruitPlotBoard/TreeMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

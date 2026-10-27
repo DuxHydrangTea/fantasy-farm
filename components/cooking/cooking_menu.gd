@@ -1,181 +1,247 @@
 class_name CookingMenu
 extends TradeMenu
-## Container-based Chef view using the shared modal and UI scale lifecycle.
+## Scene-authored kitchen; commands continue to use the farm's serial queue.
 var world: FarmWorld
-var panel: PanelContainer
-var summary: Label
-var details: Label
-var status: Label
-var cook_button: Button
-var collect_button: Button
-var quantity: SpinBox
-var browse: ScrollContainer
+@onready var panel: PanelContainer = %Panel
+@onready var summary: Label = %Summary
+@onready var details: Label = %Details
+@onready var status: Label = %Status
+@onready var cook_button: Button = %CookButton
+@onready var collect_button: Button = %CollectButton
+@onready var quantity: SpinBox = %Quantity
+@onready var browse: ScrollContainer = %Browse
+@onready var ingredient_list: VBoxContainer = %Ingredients
+@onready var product_icon: TextureRect = %ProductIcon
+@onready var product_name: Label = %ProductName
+@onready var progress: ProgressBar = %CookingProgress
 var recipe_buttons: Array[Button] = []
 var selected: CookingRecipe = ChefCooking.RECIPES[0]
+var _ingredient_counts: Array[Label] = []
 var _elapsed: float = 0.0
 var _message: String = ""
+var _cookable_only: bool = false
+var _compact: bool = false
+var _refreshing: bool = false
+const PRICE_CATALOG: ProducePriceCatalog = preload("res://resources/shops/produce_prices.tres")
 
 func _ready() -> void:
-	layer = 25
-	_build()
+	root = %Root
+	close_button = %Close
 	super._ready()
+	_build_recipes()
+	_build_ingredients()
+	TouchQuantityComponent.attach(quantity, root, true)
 	visit_started.connect(_visit)
 	models_changed.connect(_refresh)
-	root.resized.connect(_queue_fit)
-	panel.minimum_size_changed.connect(_queue_fit)
+	root.resized.connect(_fit)
+	quantity.value_changed.connect(_quantity_changed)
+	cook_button.pressed.connect(_cook)
+	collect_button.pressed.connect(_collect)
+	(%Maximum as Button).pressed.connect(_set_maximum)
+	(%AllRecipes as Button).pressed.connect(_filter.bind(false))
+	(%CookableRecipes as Button).pressed.connect(_filter.bind(true))
 	_fit()
 
-func _label(parent: Node) -> Label:
-	var label: Label = Label.new()
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	label.add_theme_font_size_override("font_size", 16)
-	parent.add_child(label)
-	return label
-
-func _button(parent: Node, text: String, callback: Callable) -> Button:
-	var button: Button = Button.new()
-	button.text = text
-	button.custom_minimum_size.y = 44
-	button.add_theme_font_size_override("font_size", 16)
-	button.pressed.connect(callback)
-	parent.add_child(button)
-	return button
-
-func _build() -> void:
-	root = Control.new()
-	root.theme = preload("res://resources/ui/game_theme.tres")
-	add_child(root)
-	var shade: ColorRect = ColorRect.new()
-	shade.color = Color(0.03, 0.04, 0.06, 0.75)
-	root.add_child(shade)
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	panel = PanelContainer.new()
-	var style: StyleBox = root.theme.get_stylebox(&"panel", &"PanelContainer").duplicate() as StyleBox
-	for edge: int in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
-		style.set_content_margin(edge, 12)
-	panel.add_theme_stylebox_override("panel", style)
-	root.add_child(panel)
-	var body: VBoxContainer = VBoxContainer.new()
-	body.add_theme_constant_override("separation", 8)
-	panel.add_child(body)
-	var header: HBoxContainer = HBoxContainer.new()
-	body.add_child(header)
-	var title: Label = _label(header)
-	title.text = tr("Chef Chloe · Cooking")
-	close_button = _button(header, "×", func() -> void: pass)
-	var scroll: ScrollContainer = ScrollContainer.new()
-	browse = scroll
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.follow_focus = true
-	body.add_child(scroll)
-	var content: VBoxContainer = VBoxContainer.new()
-	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation", 8)
-	scroll.add_child(content)
-	summary = _label(content)
-	var list: GridContainer = GridContainer.new()
-	list.columns = 2
-	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_child(list)
+func _build_recipes() -> void:
 	for recipe: CookingRecipe in ChefCooking.RECIPES:
-		var button: Button = _button(list, tr(recipe.display_name), _select.bind(recipe))
-		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var button: Button = Button.new()
+		button.text = tr(recipe.display_name)
+		button.tooltip_text = tr(recipe.display_name)
 		button.icon = recipe.output.icon
 		button.expand_icon = true
-		button.add_theme_constant_override("icon_max_width", 24)
+		button.add_theme_constant_override("icon_max_width", 36)
+		button.custom_minimum_size.y = 64
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.clip_text = true
+		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		button.toggle_mode = true
+		button.add_theme_stylebox_override("pressed", preload("res://resources/ui/cozy_hud/cooking_selected.tres"))
+		button.pressed.connect(_select.bind(recipe))
+		(%RecipeList as VBoxContainer).add_child(button)
 		recipe_buttons.append(button)
-	details = _label(content)
-	var row: HBoxContainer = HBoxContainer.new()
-	content.add_child(row)
-	var amount_label: Label = _label(row)
-	amount_label.text = tr("Dishes to queue")
-	quantity = SpinBox.new()
-	quantity.min_value = 1
-	quantity.max_value = ChefCooking.CAPACITY
-	quantity.custom_minimum_size = Vector2(120, 44)
-	row.add_child(quantity)
-	quantity.value_changed.connect(func(_value: float) -> void: _refresh())
-	TouchQuantityComponent.attach(quantity, root)
-	status = _label(content)
-	cook_button = _button(body, tr("Give ingredients & cook"), _cook)
-	collect_button = _button(body, tr("Collect ready dishes"), _collect)
+
+func _build_ingredients() -> void:
+	for child: Node in ingredient_list.get_children():
+		child.free()
+	_ingredient_counts.clear()
+	for i: int in range(selected.ingredients.size()):
+		var item: ItemDefinition = selected.ingredients[i]
+		var row: HBoxContainer = HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		ingredient_list.add_child(row)
+		var icon: TextureRect = TextureRect.new()
+		icon.texture = item.icon
+		icon.custom_minimum_size = Vector2(32, 32)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		row.add_child(icon)
+		var caption: Label = Label.new()
+		caption.text = tr(item.display_name)
+		if not item.star_fruit:
+			caption.text += " · " + ItemQuality.label(selected.tier_at(i))
+		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		caption.add_theme_font_size_override("font_size", 16)
+		row.add_child(caption)
+		var count: Label = Label.new()
+		count.add_theme_font_size_override("font_size", 16)
+		row.add_child(count)
+		_ingredient_counts.append(count)
 
 func _fit() -> void:
-	panel.size = Vector2(minf(760, root.size.x - 24), minf(580, root.size.y - 24))
-	panel.position = (root.size - panel.size) * 0.5
-
-func _queue_fit() -> void:
-	# Wrapping labels update container minimums after a viewport resize.
-	_fit.call_deferred()
+	var compact: bool = root.size.x < 900 or root.size.y < 500 or MobileLayout.is_touch(get_viewport())
+	if compact != _compact:
+		_compact = compact
+		var content: VBoxContainer = %DetailContent
+		content.reparent(%ActionContent if _compact else %DetailScroll)
+		if _compact:
+			content.get_parent().move_child(content, 0)
+	(%DetailPanel as PanelContainer).visible = not _compact
+	panel.custom_minimum_size = Vector2(minf(1140, maxf(0, root.size.x - 24)), minf(620, maxf(0, root.size.y - 16)))
+	(%BrowsePanel as PanelContainer).custom_minimum_size.x = 180 if _compact else 240
+	(%ActionColumn as VBoxContainer).custom_minimum_size.x = 0 if _compact else 280
+	(%Body as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 12)
+	(%Main as HBoxContainer).add_theme_constant_override("separation", 8 if _compact else 12)
+	(%Heading as Label).add_theme_font_size_override("font_size", 20 if _compact else 26)
+	(%Balance as Label).add_theme_font_size_override("font_size", 14 if _compact else 18)
+	(%Hint as Label).visible = not _compact
+	(%ProductIcon as TextureRect).custom_minimum_size.y = 48 if _compact else 112
+	(%ProductName as Label).add_theme_font_size_override("font_size", 18 if _compact else 24)
+	(%ActionHeading as Label).visible = not _compact
+	for button: Button in recipe_buttons:
+		button.custom_minimum_size.y = 48 if _compact else 64
+		button.add_theme_font_size_override("font_size", 14 if _compact else 18)
+	for button: Button in [%AllRecipes, %CookableRecipes, cook_button, collect_button]:
+		button.add_theme_font_size_override("font_size", 14 if _compact else 18)
 
 func _visit() -> void:
 	world = customer.get_parent() as FarmWorld
 	_message = ""
 	quantity.value = 1
-	_refresh()
-	_queue_fit()
+	browse.scroll_vertical = 0
+	(%ActionScroll as ScrollContainer).scroll_vertical = 0
+	_filter(false)
+	close_button.grab_focus()
 
 func _select(recipe: CookingRecipe) -> void:
 	selected = recipe
 	_message = ""
+	quantity.set_value_no_signal(1)
+	quantity.get_line_edit().text = "1"
+	TouchQuantityComponent.refresh_for(quantity)
+	_build_ingredients()
+	_refresh()
+
+func _filter(cookable: bool) -> void:
+	_cookable_only = cookable
+	(%AllRecipes as Button).set_pressed_no_signal(not cookable)
+	(%CookableRecipes as Button).set_pressed_no_signal(cookable)
+	if cookable and _maximum_for(selected) == 0:
+		for recipe: CookingRecipe in ChefCooking.RECIPES:
+			if _maximum_for(recipe) > 0:
+				_select(recipe)
+				break
 	_refresh()
 
 func _available() -> bool:
 	return world != null and world.cooking != null and world.tool_upgrades != null and world.tool_upgrades.profile_ready
 
+func _maximum_for(recipe: CookingRecipe) -> int:
+	if not _available():
+		return 0
+	for amount: int in range(ChefCooking.CAPACITY, 0, -1):
+		if world.cooking.quote(String(recipe.recipe_id), amount, customer.selection.inventory, customer.wallet).is_empty():
+			return amount
+	return 0
+
+func _set_maximum() -> void:
+	quantity.value = maxi(1, _maximum_for(selected))
+
+func _quantity_changed(_value: float) -> void:
+	quantity.get_line_edit().text = str(int(quantity.value))
+	_message = ""
+	_refresh()
+
+func _duration(seconds: float) -> String:
+	var value: int = maxi(0, int(ceil(seconds)))
+	return "%02d:%02d:%02d" % [int(value / 3600.0), int((value % 3600) / 60.0), value % 60]
+
 func _refresh() -> void:
-	if not is_open or world == null:
+	if not is_open or world == null or _refreshing:
 		return
+	_refreshing = true
 	world.cooking.advance(world.farming.time_manager.now(), false)
-	var model: ChefCooking = world.cooking
 	var amount: int = int(quantity.value)
-	var lines: PackedStringArray = []
-	lines.append(tr(selected.display_name))
-	for i: int in range(selected.ingredients.size()):
-		var item: ItemDefinition = selected.ingredients[i]
-		var caption: String = tr(item.display_name)
-		if not item.star_fruit:
-			caption += " (" + ItemQuality.label(selected.tier_at(i)) + ")"
-		lines.append("%s: %d / %d" % [caption, customer.selection.inventory.count_item(item.item_id, selected.tier_at(i)), selected.amounts[i] * amount])
-	lines.append(tr("Coin cost: {coins}").format({"coins": selected.coin_cost * amount}))
-	lines.append(tr("Cooking time: {seconds} seconds").format({"seconds": int(selected.cook_seconds)}))
-	var price_catalog: ProducePriceCatalog = preload("res://resources/shops/produce_prices.tres")
-	var output_price: ProducePrice = price_catalog.find(selected.output.item_id)
-	var marketable: bool = output_price != null
+	product_icon.texture = selected.output.icon
+	product_name.text = tr(selected.display_name)
+	(%Balance as Label).text = tr("{coins} coins").format({"coins": GameText.grouped_integer(customer.wallet.balance)})
+	for i: int in range(_ingredient_counts.size()):
+		var owned: int = customer.selection.inventory.count_item(selected.ingredients[i].item_id, selected.tier_at(i))
+		var needed: int = selected.amounts[i] * amount
+		_ingredient_counts[i].text = "%d / %d" % [owned, needed]
+		_ingredient_counts[i].add_theme_color_override("font_color", Color("46643b") if owned >= needed else Color("a34029"))
+	(%Output as Label).text = "%s × %d" % [tr(selected.output.display_name), amount]
+	(%Cost as Label).text = tr("Coin cost: {coins}").format({"coins": GameText.grouped_integer(selected.coin_cost * amount)})
+	(%Duration as Label).text = tr("Batch time: {time}").format({"time": _duration(selected.cook_seconds * amount)})
+	details.text = _economy_text(amount)
+	_refresh_queue()
+	var error: String = world.cooking.quote(String(selected.recipe_id), amount, customer.selection.inventory, customer.wallet) if _available() else "Load your farm before cooking."
+	cook_button.disabled = not error.is_empty()
+	collect_button.disabled = not _available() or world.cooking.ready.is_empty() or world.cooking.busy
+	collect_button.text = tr("Collect ready dishes") + " (%d)" % world.cooking.ready.size()
+	(%Maximum as Button).disabled = _maximum_for(selected) == 0
+	status.text = tr(_message) if not _message.is_empty() else tr(error)
+	status.visible = not status.text.is_empty()
+	var visible_count: int = 0
+	for i: int in range(recipe_buttons.size()):
+		var recipe: CookingRecipe = ChefCooking.RECIPES[i]
+		var button: Button = recipe_buttons[i]
+		button.visible = not _cookable_only or _maximum_for(recipe) > 0
+		button.set_pressed_no_signal(recipe == selected)
+		visible_count += int(button.visible)
+	(%EmptyRecipes as Label).visible = visible_count == 0
+	_refreshing = false
+
+func _economy_text(amount: int) -> String:
+	var output_price: ProducePrice = PRICE_CATALOG.find(selected.output.item_id)
 	var inputs_value: int = selected.coin_cost * amount
+	var marketable: bool = output_price != null
 	for i: int in range(selected.ingredients.size()):
-		var input_price: ProducePrice = price_catalog.find(selected.ingredients[i].item_id)
-		if input_price == null:
+		var price: ProducePrice = PRICE_CATALOG.find(selected.ingredients[i].item_id)
+		if price == null:
 			marketable = false
 		else:
-			inputs_value += ItemQuality.unit_price(input_price.price,selected.tier_at(i))*selected.amounts[i]*amount
+			inputs_value += ItemQuality.unit_price(price.price, selected.tier_at(i)) * selected.amounts[i] * amount
+	var text: String = tr("Ingredients are consumed when queued. Queued dishes cannot be cancelled.")
 	if marketable:
-		var sale_value: int = output_price.price*amount
-		lines.append(tr("Sale value: {sale} coins · Margin over ingredient sales: {margin} coins").format({"sale":sale_value,"margin":sale_value-inputs_value}))
-	lines.append(tr("Ingredients are consumed when queued. Queued dishes cannot be cancelled."))
-	details.text = "\n".join(lines)
-	var summary_lines: PackedStringArray = [tr("Queued: %d · Ready: %d · Capacity: 20") % [model.queue.size(), model.ready.size()]]
-	if not model.queue.is_empty():
-		var left: int = maxi(0, int(ceil(float(model.queue[0].finish_at) - model.updated_at)))
-		summary_lines.append(tr("Cooking: %s · %02d:%02d:%02d") % [tr(ChefCooking.find(model.queue[0].recipe).display_name), int(left / 3600.0), int((left % 3600) / 60.0), left % 60])
-	var ready_counts: Dictionary = {}
-	for id: String in model.ready:
-		ready_counts[id] = int(ready_counts.get(id, 0)) + 1
-	for id: String in ready_counts:
-		summary_lines.append("%s × %d" % [tr(ChefCooking.find(id).display_name), ready_counts[id]])
-	summary.text = "\n".join(summary_lines)
-	var error: String = model.quote(String(selected.recipe_id), amount, customer.selection.inventory, customer.wallet) if _available() else "Load your farm before cooking."
-	cook_button.disabled = not error.is_empty()
-	collect_button.disabled = not _available() or model.ready.is_empty() or model.busy
-	status.text = tr(_message) if not _message.is_empty() else tr(error)
-	for i: int in range(recipe_buttons.size()):
-		recipe_buttons[i].set_pressed_no_signal(ChefCooking.RECIPES[i] == selected)
+		text = tr("Sale value: {sale} coins · Margin over ingredient sales: {margin} coins").format({"sale": output_price.price * amount, "margin": output_price.price * amount - inputs_value}) + "\n" + text
+	return text
 
+func _refresh_queue() -> void:
+	var model: ChefCooking = world.cooking
+	var lines: PackedStringArray = [tr("Kitchen capacity: {used}/{capacity}").format({"used": model.queue.size() + model.ready.size(), "capacity": ChefCooking.CAPACITY})]
+	lines.append(tr("Queued: {queued} · Ready: {ready}").format({"queued": model.queue.size(), "ready": model.ready.size()}))
+	progress.visible = not model.queue.is_empty()
+	if not model.queue.is_empty():
+		var recipe: CookingRecipe = ChefCooking.find(model.queue[0].recipe)
+		var left: float = maxf(0, float(model.queue[0].finish_at) - model.updated_at)
+		lines.append(tr("Cooking: {recipe}").format({"recipe": tr(recipe.display_name)}))
+		lines.append(tr("Remaining: {time}").format({"time": _duration(left)}))
+		progress.value = clampf(1.0 - left / recipe.cook_seconds, 0.0, 1.0) * 100.0
+	else:
+		lines.append(tr("Kitchen is idle."))
+	summary.text = "\n".join(lines)
+	var counts: Dictionary = {}
+	for id: String in model.ready:
+		counts[id] = int(counts.get(id, 0)) + 1
+	var ready_lines: PackedStringArray = []
+	for id: String in counts:
+		ready_lines.append("%s × %d" % [tr(ChefCooking.find(id).display_name), counts[id]])
+	(%ReadyDishes as Label).text = "\n".join(ready_lines)
+	(%ReadyDishes as Label).visible = not ready_lines.is_empty()
 func _cook() -> void:
+	quantity.apply()
 	if not _available():
 		return
 	_message = world.cooking.start(String(selected.recipe_id), int(quantity.value), customer.selection.inventory, world.farming.time_manager.now(), customer.wallet)
@@ -205,4 +271,12 @@ func _process(delta: float) -> void:
 	_elapsed += delta
 	if _elapsed >= 0.5:
 		_elapsed = 0.0
+		_refresh()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		for i: int in range(recipe_buttons.size()):
+			recipe_buttons[i].text = tr(ChefCooking.RECIPES[i].display_name)
+			recipe_buttons[i].tooltip_text = recipe_buttons[i].text
+		_build_ingredients()
 		_refresh()

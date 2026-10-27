@@ -109,6 +109,7 @@ func _run() -> void:
 	_check(menu.summary.text.contains("300"), "Current crop preview shows ordinary amount")
 	await _capture("grafting-desktop-free")
 	await _click(menu.yield_button)
+	await _click(menu.confirm_button)
 	_check(tree.pending_graft == FruitTree.Graft.YIELD and tree.active_graft == FruitTree.Graft.NONE, "Free choice schedules Yield without changing ripe fruit")
 	await _click(menu.harvest_button)
 	var bag: InventoryComponent = world.player.selection.inventory
@@ -121,7 +122,7 @@ func _run() -> void:
 		bag.add(recipe.ingredients[i], recipe.amounts[i])
 	var cooking: CookingMenu = await _open_chef("grafting_wax")
 	var before: int = world.player.wallet.balance
-	_check(cooking.details.text.contains("1000"), "Wax coin cost preview shown")
+	_check((cooking.get_node("%Cost") as Label).text.contains(GameText.grouped_integer(1000)), "Wax coin cost preview shown")
 	await _click(cooking.cook_button)
 	_check(world.player.wallet.balance == before - 1000, "Wax crafting debits coins once")
 	clock[0] += 61
@@ -143,11 +144,14 @@ func _run() -> void:
 	Language.set_language("vi")
 	await _frames(35)
 	_check(Rect2(Vector2.ZERO, menu.root.size).encloses(menu.panel.get_rect()), "Graft modal fits phone landscape")
+	menu.browse.ensure_control_visible(menu.quality_button)
+	await _frames(5)
 	await _touch_click(menu.quality_button)
+	await _touch_click(menu.confirm_button)
 	_check(tree.active_graft == FruitTree.Graft.YIELD and tree.pending_graft == FruitTree.Graft.QUALITY, "Touch schedules Selection for following crop")
 	_check(tree.harvest_amount() == 600 and tree.harvest_item() == definition.harvest_item, "Growing Yield crop stays ordinary 600")
 	_check(bag.count_item(GraftService.WAX) == 0, "Changing direction spends one wax")
-	await _touch_click(menu.quality_button)
+	await _touch_click(menu.confirm_button)
 	_check(bag.count_item(GraftService.WAX) == 0 and tree.pending_graft == FruitTree.Graft.QUALITY, "Duplicate tap cannot spend again")
 	await _capture("grafting-touch-pending")
 	menu.close(false)

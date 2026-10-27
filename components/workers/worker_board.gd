@@ -8,7 +8,7 @@ func _enter_tree() -> void:
 	super._enter_tree()
 	if menu is WorkerMenu:
 		return
-	menu = WorkerMenu.new()
+	menu = preload("res://scenes/ui/workers.tscn").instantiate() as WorkerMenu
 	(menu as WorkerMenu).role = role
 	add_child(menu)
 

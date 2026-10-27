@@ -1,0 +1,157 @@
+{
+  "native": {
+    "checks": 57,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "new_ui_tests": {
+    "tests": 4,
+    "passed": 4
+  },
+  "regression": {
+    "tests": 31,
+    "passed": 28,
+    "failed": 1,
+    "pending": 2,
+    "assertions_passed": 2616,
+    "assertions_total": 2617,
+    "baseline_failure": "test_each_pen_has_a_separate_reachable_nonblocking_board: PondPen collision query (same before changes)",
+    "pending_reason": "Optional profile fixtures are not present in the isolated QA staging project."
+  },
+  "targeted_compatibility": {
+    "mobile_pen": {
+      "tests": 1,
+      "passed": 1,
+      "assertions": 4
+    },
+    "animal_status_card": {
+      "tests": 1,
+      "passed": 1,
+      "assertions": 7
+    }
+  },
+  "layout": {
+    "pen-desktop": {
+      "controls": 102,
+      "findings": 0,
+      "hidden": 3,
+      "visible": 102
+    },
+    "pen-compact": {
+      "controls": 99,
+      "findings": 0,
+      "hidden": 6,
+      "visible": 99
+    },
+    "tree-desktop": {
+      "controls": 42,
+      "findings": 0,
+      "hidden": 2,
+      "visible": 42
+    },
+    "tree-compact": {
+      "controls": 39,
+      "findings": 0,
+      "hidden": 5,
+      "visible": 39
+    }
+  },
+  "validation": {
+    "animals": {
+      "ok": true,
+      "counts": {
+        "total": 36,
+        "errors": 0,
+        "parse_errors": 0,
+        "warnings": 36,
+        "info": 0
+      },
+      "checked": 15,
+      "config_warnings": 7
+    },
+    "trees": {
+      "ok": true,
+      "counts": {
+        "total": 28,
+        "errors": 0,
+        "parse_errors": 0,
+        "warnings": 28,
+        "info": 0
+      },
+      "checked": 13,
+      "config_warnings": 0
+    }
+  },
+  "lint_before": {
+    "total": 11,
+    "errors": 0,
+    "warnings": 11,
+    "parse_errors": 0
+  },
+  "lint_after": {
+    "total": 11,
+    "errors": 0,
+    "warnings": 11,
+    "parse_errors": 0
+  },
+  "screenshots": {
+    "tree-runtime-desktop-en.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "tree-runtime-phone.png": {
+      "size": [
+        844,
+        390
+      ],
+      "not_blank": true
+    },
+    "pen-runtime-desktop-vi.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "pen-runtime-desktop-en.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "tree-runtime-desktop-vi.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "pen-runtime-phone.png": {
+      "size": [
+        844,
+        390
+      ],
+      "not_blank": true
+    },
+    "tree-runtime-small-phone.png": {
+      "size": [
+        667,
+        375
+      ],
+      "not_blank": true
+    },
+    "pen-runtime-small-phone.png": {
+      "size": [
+        667,
+        375
+      ],
+      "not_blank": true
+    }
+  },
+  "physical_phone_tested": false
+}

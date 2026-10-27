@@ -1,0 +1,56 @@
+{
+  "scene_path": "tests/support/produce_sales_fixture.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root",
+      "label": "desktop-full",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/desktop-full-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Header",
+      "label": "desktop-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/desktop-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow",
+      "label": "desktop-quantity",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/desktop-quantity-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/SellQuantity",
+      "label": "desktop-sell",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/desktop-sell-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/SellAll",
+      "label": "desktop-bulk",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/desktop-bulk-layout.json"
+    }
+  ]
+}

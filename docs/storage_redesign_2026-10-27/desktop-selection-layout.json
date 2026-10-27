@@ -1,0 +1,135 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection",
+      "rect": [
+        106,
+        525,
+        1068,
+        68
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product",
+      "rect": [
+        106,
+        525,
+        708,
+        68
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product/IconFrame",
+      "rect": [
+        106,
+        525,
+        68,
+        68
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product/IconFrame/ItemIcon",
+      "rect": [
+        116,
+        535,
+        48,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product/Names",
+      "rect": [
+        186,
+        525,
+        628,
+        68
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product/Names/ItemName",
+      "rect": [
+        186,
+        525,
+        628,
+        28.88
+      ],
+      "text": "Cà rốt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Product/Names/Source",
+      "rect": [
+        186,
+        558,
+        628,
+        21
+      ],
+      "text": "Đang chọn từ túi đồ"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Quality",
+      "rect": [
+        830,
+        525,
+        344,
+        68
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Quality/Normal",
+      "rect": [
+        830,
+        525,
+        112,
+        68
+      ],
+      "text": "Thường 80"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Quality/Silver",
+      "rect": [
+        946,
+        525,
+        112,
+        68
+      ],
+      "text": "Bạc 40"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection/Quality/Gold",
+      "rect": [
+        1062,
+        525,
+        112,
+        68
+      ],
+      "text": "Vàng 0"
+    }
+  ],
+  "counts": {
+    "controls": 11,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 11
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-selection-layout.json",
+  "findings": [],
+  "label": "desktop-selection",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

@@ -1,0 +1,1303 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/orders/order_ui.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres",
+    "res://resources/ui/cozy_hud/cooking_selected.tres"
+  ],
+  "node_count": 71,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "OrderUI",
+      "owner_path": "",
+      "path": ".",
+      "properties": {
+        "layer": 25,
+        "script": {
+          "__resource": "res://components/orders/order_ui.gd",
+          "resource_type": "GDScript"
+        }
+      },
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "texture_filter": 1,
+        "theme": {
+          "__resource": "res://resources/ui/cozy_hud/shop_theme.tres",
+          "resource_type": "Theme"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "color": {
+          "__type": "Color",
+          "a": 0.649999976158142,
+          "b": 0.0700000002980232,
+          "g": 0.0900000035762787,
+          "r": 0.100000001490116
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Shell",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Heading",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Order board",
+        "text_overrun_behavior": 3,
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Balance",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Close",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "×",
+        "tooltip_text": "Close (Esc / E)",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Page",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 16,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "OrderColumn",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 0.8,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "OrdersHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/OrdersHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Current orders",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "Order0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 128.0
+        },
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "Margin0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "theme_override_constants/margin_bottom": 8,
+        "theme_override_constants/margin_left": 12,
+        "theme_override_constants/margin_right": 12,
+        "theme_override_constants/margin_top": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "MarginContainer"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "OrderRow0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "OrderIcon0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderIcon0",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "OrderText0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_vertical": 4,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "OrderTitle0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderTitle0",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "text_overrun_behavior": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "OrderState0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderState0",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "OrderReward0",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderReward0",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "Order1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 128.0
+        },
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "Margin1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "theme_override_constants/margin_bottom": 8,
+        "theme_override_constants/margin_left": 12,
+        "theme_override_constants/margin_right": 12,
+        "theme_override_constants/margin_top": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "MarginContainer"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "OrderRow1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "OrderIcon1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderIcon1",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "OrderText1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_vertical": 4,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "OrderTitle1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderTitle1",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "text_overrun_behavior": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "OrderState1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderState1",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "OrderReward1",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderReward1",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "Order2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 128.0
+        },
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "Margin2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "theme_override_constants/margin_bottom": 8,
+        "theme_override_constants/margin_left": 12,
+        "theme_override_constants/margin_right": 12,
+        "theme_override_constants/margin_top": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "MarginContainer"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "OrderRow2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "OrderIcon2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderIcon2",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "OrderText2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2",
+      "properties": {
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_vertical": 4,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "OrderTitle2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderTitle2",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "text_overrun_behavior": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "OrderState2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderState2",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "OrderReward2",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderReward2",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "Refill",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OrderColumn/Refill",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Find orders",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "DetailColumn",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.5,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "DetailScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "DetailContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "OrderTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/OrderTitle",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 24,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "RequirementsHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/RequirementsHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Items to deliver",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "Requirements",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "Rewards",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "NormalCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "NormalBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 48,
+      "instance_placeholder": "",
+      "name": "NormalHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Normal delivery",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 49,
+      "instance_placeholder": "",
+      "name": "NormalReward",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalReward",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 50,
+      "instance_placeholder": "",
+      "name": "NormalRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalRule",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Normal uses Normal quality only.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 51,
+      "instance_placeholder": "",
+      "name": "NormalState",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalState",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 52,
+      "instance_placeholder": "",
+      "name": "PerfectCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 53,
+      "instance_placeholder": "",
+      "name": "PerfectBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 54,
+      "instance_placeholder": "",
+      "name": "PerfectHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Perfect delivery",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 55,
+      "instance_placeholder": "",
+      "name": "PerfectReward",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectReward",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 56,
+      "instance_placeholder": "",
+      "name": "PerfectRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectRule",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Uses Silver before Gold.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 57,
+      "instance_placeholder": "",
+      "name": "PerfectState",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectState",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 58,
+      "instance_placeholder": "",
+      "name": "Details",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Details",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 59,
+      "instance_placeholder": "",
+      "name": "DeliveryActions",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 60,
+      "instance_placeholder": "",
+      "name": "Deliver",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions/Deliver",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Normal delivery",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 61,
+      "instance_placeholder": "",
+      "name": "Perfect",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions/Perfect",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Perfect delivery",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 62,
+      "instance_placeholder": "",
+      "name": "Abandon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/DetailColumn/Abandon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Abandon order",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 63,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Status",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 64,
+      "instance_placeholder": "",
+      "name": "Hint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Hint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Review the item tiers before confirming delivery.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 65,
+      "instance_placeholder": "",
+      "name": "Confirmation",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 66,
+      "instance_placeholder": "",
+      "name": "ConfirmHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Confirm order action",
+        "theme_override_font_sizes/font_size": 24,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 67,
+      "instance_placeholder": "",
+      "name": "ConfirmScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 68,
+      "instance_placeholder": "",
+      "name": "ConfirmationText",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmScroll/ConfirmationText",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 69,
+      "instance_placeholder": "",
+      "name": "Confirm",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/Confirm",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Confirm delivery",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 70,
+      "instance_placeholder": "",
+      "name": "Cancel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/Cancel",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Cancel",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    }
+  ],
+  "scene_path": "res://scenes/ui/orders.tscn",
+  "uid": ""
+}

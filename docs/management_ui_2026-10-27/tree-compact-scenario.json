@@ -1,0 +1,19 @@
+{
+  "scene_path": "tests/support/management_tree_fixture.tscn",
+  "viewport_size": {
+    "width": 667,
+    "height": 375
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/FruitPlotBoard/TreeMenu/Root",
+      "label": "tree-compact",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/management_ui_2026-10-27/tree-compact-layout.json"
+    }
+  ]
+}

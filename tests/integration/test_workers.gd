@@ -97,7 +97,7 @@ func test_authored_board_and_worker_support_e_and_modal_lifecycle() -> void:
 	var access: WorkerBoard = actor.get_node("ManagementSign") as WorkerBoard
 	world.player.global_position = actor.global_position + Vector2(0, 20)
 	assert_true(access.open_shop(world.player))
-	assert_true((access.menu as WorkerMenu).collect_button.visible)
+	assert_false((access.menu as WorkerMenu).collect_button.visible, "No recovery action is shown for an empty old basket")
 
 func test_ranch_feed_and_water_use_apis_and_separate_transfer_commands() -> void:
 	var pen: AnimalPen = service.bridge.pens()[0]

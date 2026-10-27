@@ -1,0 +1,24 @@
+{
+  "tests": {
+    "passed": 34,
+    "assertions": 408,
+    "real_time": true,
+    "all_passed": true
+  },
+  "lint": {
+    "total": 11,
+    "errors": 0,
+    "warnings": 11,
+    "parse_errors": 0
+  },
+  "native": {
+    "checks": 60,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "native_engine_errors": 0,
+  "native_warnings": "existing UID fallback warnings from flower resources",
+  "rendering_method": "gl_compatibility",
+  "personal_save_used": false
+}

@@ -1,0 +1,496 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://components/orders/order_ui.gd" id="script"]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/cooking_selected.tres" id="selected"]
+[node name="OrderUI" type="CanvasLayer"]
+layer = 25
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("theme")
+texture_filter = 1
+visible = false
+
+[node name="Dim" type="ColorRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1,0.09,0.07,0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Shell" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Order board"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+autowrap_mode = 0
+theme_override_font_sizes/font_size = 26
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 0
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Shell/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "×"
+custom_minimum_size = Vector2(48,48)
+tooltip_text = "Close (Esc / E)"
+
+[node name="Page" type="VBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="OrderColumn" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+theme_override_constants/separation = 8
+
+[node name="OrdersHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current orders"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="Order0" type="Button" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+toggle_mode = true
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,128)
+
+[node name="Margin0" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="OrderRow0" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="OrderIcon0" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48,48)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="OrderText0" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="OrderTitle0" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+clip_text = true
+text_overrun_behavior = 3
+autowrap_mode = 0
+mouse_filter = 2
+
+[node name="OrderState0" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="OrderReward0" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Order1" type="Button" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+toggle_mode = true
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,128)
+
+[node name="Margin1" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="OrderRow1" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="OrderIcon1" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48,48)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="OrderText1" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="OrderTitle1" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+clip_text = true
+text_overrun_behavior = 3
+autowrap_mode = 0
+mouse_filter = 2
+
+[node name="OrderState1" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="OrderReward1" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Order2" type="Button" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+toggle_mode = true
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,128)
+
+[node name="Margin2" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="OrderRow2" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="OrderIcon2" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48,48)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="OrderText2" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="OrderTitle2" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+clip_text = true
+text_overrun_behavior = 3
+autowrap_mode = 0
+mouse_filter = 2
+
+[node name="OrderState2" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="OrderReward2" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Refill" type="Button" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Find orders"
+custom_minimum_size = Vector2(0,48)
+
+[node name="DetailColumn" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 8
+
+[node name="DetailScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="DetailContent" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="OrderTitle" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+
+[node name="RequirementsHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Items to deliver"
+autowrap_mode = 3
+
+[node name="Requirements" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Rewards" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NormalCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="NormalBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NormalHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Normal delivery"
+autowrap_mode = 3
+
+[node name="NormalReward" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 26
+autowrap_mode = 3
+
+[node name="NormalRule" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Normal uses Normal quality only."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="NormalState" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="PerfectCard" type="PanelContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="PerfectBox" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PerfectHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Perfect delivery"
+autowrap_mode = 3
+
+[node name="PerfectReward" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 26
+autowrap_mode = 3
+
+[node name="PerfectRule" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Uses Silver before Gold."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="PerfectState" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+autowrap_mode = 3
+
+[node name="DeliveryActions" type="HBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Deliver" type="Button" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Normal delivery"
+size_flags_horizontal = 3
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Perfect" type="Button" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Perfect delivery"
+size_flags_horizontal = 3
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Abandon" type="Button" parent="Root/Center/Panel/Shell/Page/Main/DetailColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Abandon order"
+custom_minimum_size = Vector2(0,48)
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Shell/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Review the item tiers before confirming delivery."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Confirmation" type="VBoxContainer" parent="Root/Center/Panel/Shell"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="ConfirmHeading" type="Label" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm order action"
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+
+[node name="ConfirmScroll" type="ScrollContainer" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="ConfirmationText" type="Label" parent="Root/Center/Panel/Shell/Confirmation/ConfirmScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="Confirm" type="Button" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm delivery"
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Cancel" type="Button" parent="Root/Center/Panel/Shell/Confirmation"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cancel"
+custom_minimum_size = Vector2(0,48)

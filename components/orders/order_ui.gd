@@ -1,176 +1,184 @@
 class_name OrderUI
 extends TradeMenu
-## Container-based view adapted from the skill inventory_ui template.
+## Scene-authored order board; quotes and confirmations retain the exact tier plan.
 var board: OrderBoard
-var panel: PanelContainer
-var heading: Label
+@onready var panel: PanelContainer = %Panel
+@onready var heading: Label = %Heading
+@onready var details: Label = %Details
+@onready var perfect_button: Button = %Perfect
+@onready var deliver_button: Button = %Deliver
+@onready var abandon_button: Button = %Abandon
+@onready var refill_button: Button = %Refill
+@onready var status: Label = %Status
+@onready var confirmation: VBoxContainer = %Confirmation
+@onready var confirmation_text: Label = %ConfirmationText
+@onready var confirm_button: Button = %Confirm
+@onready var cancel_button: Button = %Cancel
 var rows: Array[Button] = []
-var details: Label
-var perfect_button: Button
+var _card_icons: Array[TextureRect] = []
+var _card_titles: Array[Label] = []
+var _card_states: Array[Label] = []
+var _card_rewards: Array[Label] = []
 var _pending_plan: Dictionary = {}
-var deliver_button: Button
-var abandon_button: Button
-var refill_button: Button
-var status: Label
-var confirmation: VBoxContainer
-var confirmation_text: Label
-var confirm_button: Button
-var cancel_button: Button
 var selected_serial: int = 0
 var _selected_index: int = 0
 var _pending_serial: int = 0
 var _pending_kind: String = ""
 var _message: String = ""
 var _coins: int = 0
+var _display_serial: int = -1
+var _display_entry: OrderDefinition
+var _counts: Array[Label] = []
+var _compact: bool = false
 
 func _ready() -> void:
-	layer = 25
-	_build()
+	root = %Root
+	close_button = %Close
+	confirmation.set_meta(&"body", %Page)
+	rows.assign([%Order0, %Order1, %Order2])
+	_card_icons.assign([%OrderIcon0, %OrderIcon1, %OrderIcon2])
+	_card_titles.assign([%OrderTitle0, %OrderTitle1, %OrderTitle2])
+	_card_states.assign([%OrderState0, %OrderState1, %OrderState2])
+	_card_rewards.assign([%OrderReward0, %OrderReward1, %OrderReward2])
 	super._ready()
 	visit_started.connect(_visit)
 	models_changed.connect(_refresh)
 	board.service.changed.connect(_refresh)
 	root.resized.connect(_fit)
-	panel.minimum_size_changed.connect(_fit.call_deferred)
+	for index: int in range(rows.size()):
+		rows[index].pressed.connect(_select.bind(index))
+	refill_button.pressed.connect(_refill)
+	deliver_button.pressed.connect(_request.bind("deliver"))
+	perfect_button.pressed.connect(_request.bind("perfect"))
+	abandon_button.pressed.connect(_request.bind("abandon"))
+	confirm_button.pressed.connect(_confirm)
+	cancel_button.pressed.connect(_cancel)
 	_fit()
 
-func _button(parent: Node, callback: Callable) -> Button:
-	var button: Button = Button.new()
-	button.custom_minimum_size.y = 48
-	button.add_theme_font_size_override("font_size", 16)
-	button.pressed.connect(callback)
-	parent.add_child(button)
-	return button
-
-func _label(parent: Node, font_size: int = 16) -> Label:
-	var label: Label = Label.new()
-	label.add_theme_font_size_override("font_size", font_size)
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	parent.add_child(label)
-	return label
-
-func _build() -> void:
-	root = Control.new()
-	root.theme = preload("res://resources/ui/game_theme.tres")
-	add_child(root)
-	var shade: ColorRect = ColorRect.new()
-	shade.color = Color(0.03, 0.04, 0.06, 0.8)
-	root.add_child(shade)
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	panel = PanelContainer.new()
-	var style: StyleBox = root.theme.get_stylebox(&"panel", &"PanelContainer").duplicate() as StyleBox
-	for edge: int in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
-		style.set_content_margin(edge, 8)
-	panel.add_theme_stylebox_override("panel", style)
-	root.add_child(panel)
-	var margin: MarginContainer = MarginContainer.new()
-	for side: String in ["left", "right", "top", "bottom"]:
-		margin.add_theme_constant_override("margin_" + side, 12)
-	panel.add_child(margin)
-	var body: VBoxContainer = VBoxContainer.new()
-	margin.add_child(body)
-	var header: HBoxContainer = HBoxContainer.new()
-	body.add_child(header)
-	heading = _label(header, 20)
-	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	close_button = _button(header, func() -> void: pass)
-	var content: HBoxContainer = HBoxContainer.new()
-	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation", 12)
-	body.add_child(content)
-	var left: VBoxContainer = VBoxContainer.new()
-	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_child(left)
-	for index: int in range(3):
-		var button: Button = _button(left, _select.bind(index))
-		button.clip_text = true
-		button.toggle_mode = true
-		rows.append(button)
-	refill_button = _button(left, _refill)
-	var right: VBoxContainer = VBoxContainer.new()
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_child(right)
-	var scroll: ScrollContainer = ScrollContainer.new()
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	right.add_child(scroll)
-	details = _label(scroll)
-	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	deliver_button = _button(right, _request.bind("deliver"))
-	perfect_button = _button(right,_request.bind("perfect"))
-	abandon_button = _button(right, _request.bind("abandon"))
-	status = _label(body, 14)
-	status.custom_minimum_size.y = 24
-	# Confirmation replaces the page body, preserving short-screen touch targets.
-	confirmation = VBoxContainer.new()
-	confirmation.set_meta(&"body", body)
-	margin.add_child(confirmation)
-	var confirm_header: HBoxContainer = HBoxContainer.new()
-	confirmation.add_child(confirm_header)
-	var confirm_heading: Label = _label(confirm_header, 20)
-	confirm_heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	confirm_heading.text = tr("Confirm order action")
-	var confirm_scroll: ScrollContainer = ScrollContainer.new()
-	confirm_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	confirm_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	confirmation.add_child(confirm_scroll)
-	confirmation_text = _label(confirm_scroll)
-	confirmation_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	confirm_button = _button(confirmation, _confirm)
-	cancel_button = _button(confirmation, _cancel)
-	confirmation.hide()
-
 func _fit() -> void:
-	panel.size = Vector2(minf(960, root.size.x - 16), minf(640, root.size.y - 16))
-	panel.position = (root.size - panel.size) * 0.5
+	_compact = root.size.x < 900 or root.size.y < 500 or MobileLayout.is_touch(get_viewport())
+	panel.custom_minimum_size = Vector2(minf(1120, maxf(0, root.size.x - 24)), minf(620, maxf(0, root.size.y - 16)))
+	(%Shell as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 12)
+	(%Main as HBoxContainer).add_theme_constant_override("separation", 8 if _compact else 16)
+	(%OrderColumn as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 8)
+	(%DetailColumn as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 8)
+	(%OrderColumn as VBoxContainer).custom_minimum_size.x = 176 if _compact else 320
+	(%OrdersHeading as Label).visible = not _compact
+	(%Hint as Label).visible = not _compact
+	heading.add_theme_font_size_override("font_size", 20 if _compact else 26)
+	(%Balance as Label).add_theme_font_size_override("font_size", 14 if _compact else 18)
+	(%OrderTitle as Label).add_theme_font_size_override("font_size", 18 if _compact else 24)
+	for button: Button in [deliver_button, perfect_button, abandon_button, refill_button, confirm_button, cancel_button]:
+		button.add_theme_font_size_override("font_size", 14 if _compact else 18)
+	for index: int in range(rows.size()):
+		rows[index].custom_minimum_size.y = 64 if _compact else 128
+		_card_icons[index].custom_minimum_size = Vector2(24, 24) if _compact else Vector2(48, 48)
+		_card_titles[index].add_theme_font_size_override("font_size", 14 if _compact else 18)
+		_card_states[index].visible = not _compact
+		_card_rewards[index].add_theme_font_size_override("font_size", 12 if _compact else 18)
 
 func _visit() -> void:
 	_message = ""
 	_cancel()
 	_select(0)
-	rows[0].grab_focus()
+	close_button.grab_focus()
 
 func _select(index: int) -> void:
+	if index < 0 or index >= rows.size():
+		return
 	_selected_index = index
-	selected_serial = int(board.service.capture().slots[index].get("serial", 0))
 	_message = ""
 	_refresh()
+	(%DetailScroll as ScrollContainer).scroll_vertical = 0
+
+func _money(value: int) -> String:
+	return tr("{coins} coins").format({"coins": GameText.grouped_integer(value)})
+
+func _build_requirements(entry: OrderDefinition) -> void:
+	for child: Node in (%Requirements as VBoxContainer).get_children():
+		child.free()
+	_counts.clear()
+	if entry == null:
+		return
+	for index: int in range(entry.items.size()):
+		var item: ItemDefinition = entry.items[index]
+		var card: PanelContainer = PanelContainer.new()
+		card.theme_type_variation = &"DetailCard"
+		(%Requirements as VBoxContainer).add_child(card)
+		var row: HBoxContainer = HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		card.add_child(row)
+		var icon: TextureRect = TextureRect.new()
+		icon.texture = item.icon
+		icon.custom_minimum_size = Vector2(36, 36)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		row.add_child(icon)
+		var content: VBoxContainer = VBoxContainer.new()
+		content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(content)
+		var caption: Label = Label.new()
+		caption.text = tr(item.display_name) + " · " + tr("Needed: {count}").format({"count": entry.amounts[index]})
+		caption.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(caption)
+		var counts: Label = Label.new()
+		counts.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		counts.add_theme_font_size_override("font_size", 14)
+		content.add_child(counts)
+		_counts.append(counts)
 
 func _summary(entry: OrderDefinition) -> String:
 	var text: String = tr(entry.title) + "\n\n"
 	for index: int in range(entry.items.size()):
 		var item: ItemDefinition = entry.items[index]
 		text += tr("{item}: {owned}/{needed}").format({"item": tr(item.display_name), "owned": board.service.inventory.count_item(item.item_id), "needed": entry.amounts[index]}) + "\n"
-		text += ItemQuality.summary([board.service.inventory.count_item(item.item_id,0),board.service.inventory.count_item(item.item_id,1),board.service.inventory.count_item(item.item_id,2)]) + "\n"
+		text += ItemQuality.summary([board.service.inventory.count_item(item.item_id, 0), board.service.inventory.count_item(item.item_id, 1), board.service.inventory.count_item(item.item_id, 2)]) + "\n"
 	return text + "\n" + tr("Reward: %d coins") % entry.reward_coins + "\n" + tr("Normal uses Normal only. Perfect uses Silver before Gold: at least +50% order reward and 10% above direct sale.")
 
 func _refresh() -> void:
 	if not is_open:
 		return
-	heading.text = tr("Order board")
-	close_button.text = tr("Close")
-	var data: Dictionary = board.service.capture()
+	var service: OrderService = board.service
+	var data: Dictionary = service.capture()
 	selected_serial = int(data.slots[_selected_index].get("serial", 0))
-	for index: int in range(3):
+	(%Balance as Label).text = _money(customer.wallet.balance)
+	for index: int in range(rows.size()):
 		var serial: int = int(data.slots[index].get("serial", 0))
-		var entry: OrderDefinition = board.service.definition(serial)
-		rows[index].text = tr(entry.title) if entry != null else tr("No available order")
+		var entry: OrderDefinition = service.definition(serial)
+		var can_deliver: bool = service.quote(serial).ok or service.quote(serial, true).ok
+		_card_titles[index].text = tr(entry.title) if entry != null else tr("No available order")
+		_card_states[index].text = tr("Ready to deliver") if can_deliver else tr("Delivery unavailable")
+		_card_rewards[index].text = _money(entry.reward_coins) if entry != null else "—"
+		_card_icons[index].texture = entry.items[0].icon if entry != null else null
+		rows[index].tooltip_text = _card_titles[index].text
 		rows[index].set_pressed_no_signal(serial > 0 and serial == selected_serial)
-	var selected: OrderDefinition = board.service.definition(selected_serial)
-	details.text = _summary(selected) if selected != null else tr("No available order. Unlock seed supplies and growing areas, then choose Find orders.")
-	perfect_button.text = tr("Perfect delivery (sale guarantee)")
-	perfect_button.disabled = not board.service.quote(selected_serial,true).ok
-	deliver_button.text = tr("Deliver order")
-	deliver_button.disabled = not board.service.quote(selected_serial).ok
-	abandon_button.text = tr("Abandon order")
+	var selected: OrderDefinition = service.definition(selected_serial)
+	if _display_serial != selected_serial or _display_entry != selected:
+		_display_serial = selected_serial
+		_display_entry = selected
+		_build_requirements(selected)
+	(%OrderTitle as Label).text = tr(selected.title) if selected != null else tr("No available order")
+	(%RequirementsHeading as Label).text = tr("Items to deliver") if selected != null else tr("No available order. Unlock seed supplies and growing areas, then choose Find orders.")
+	if selected != null:
+		for index: int in range(_counts.size()):
+			var item: ItemDefinition = selected.items[index]
+			_counts[index].text = ItemQuality.summary([service.inventory.count_item(item.item_id, 0), service.inventory.count_item(item.item_id, 1), service.inventory.count_item(item.item_id, 2)])
+	var normal: Dictionary = service.quote(selected_serial)
+	var perfect: Dictionary = service.quote(selected_serial, true)
+	(%NormalReward as Label).text = _money(selected.reward_coins) if selected != null else "—"
+	(%PerfectReward as Label).text = _money(int(perfect.coins)) if perfect.ok else ("≥ " + _money(roundi(selected.reward_coins * 1.5)) if selected != null else "—")
+	(%NormalState as Label).text = tr("Ready to deliver") if normal.ok else tr(str(normal.error))
+	(%PerfectState as Label).text = tr("Ready to deliver") if perfect.ok else tr(str(perfect.error))
+	(%PerfectState as Label).tooltip_text = tr("Normal uses Normal only. Perfect uses Silver before Gold: at least +50% order reward and 10% above direct sale.")
+	details.text = _summary(selected) if selected != null else ""
+	deliver_button.disabled = not normal.ok
+	perfect_button.disabled = not perfect.ok
 	abandon_button.disabled = selected == null
-	refill_button.text = tr("Find orders")
 	refill_button.disabled = not data.slots.has({})
 	status.text = tr(_message) % _coins if _message == "Order delivered: +%d coins" else tr(_message)
+	status.visible = not status.text.is_empty()
 	if confirmation.visible:
 		_refresh_confirmation()
-	_fit()
-
 func _refill() -> void:
 	board.service.fill_empty()
 	_select(0)
@@ -237,4 +245,5 @@ func close(show_thanks: bool = true) -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_display_serial = -1
 		_refresh()

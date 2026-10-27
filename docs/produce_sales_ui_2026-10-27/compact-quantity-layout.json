@@ -1,0 +1,73 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow",
+      "rect": [
+        384,
+        202,
+        254,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/@Button@209",
+      "rect": [
+        384,
+        202,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Quantity",
+      "rect": [
+        436,
+        202,
+        78,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/@Button@210",
+      "rect": [
+        518,
+        202,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Maximum",
+      "rect": [
+        570,
+        202,
+        68,
+        48
+      ],
+      "text": "Max"
+    }
+  ],
+  "counts": {
+    "controls": 5,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 5
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/produce_sales_ui_2026-10-27/compact-quantity-layout.json",
+  "findings": [],
+  "label": "compact-quantity",
+  "node_path": "Farm/ProduceBuyer/ProduceSalesUI/Root/Center/Panel/Body/Main/Sidebar/QuantityRow",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

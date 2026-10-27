@@ -1,0 +1,96 @@
+{
+  "tests": {
+    "test_orders": {
+      "passed": 10,
+      "total": 10,
+      "assertions": 286
+    },
+    "perfect_tier_preview_compatibility": {
+      "passed": 1,
+      "total": 1,
+      "assertions": 5
+    }
+  },
+  "runtime": {
+    "checks": 74,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "layout": {
+    "desktop": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "desktop",
+          "counts": {
+            "controls": 68,
+            "findings": 0,
+            "hidden": 8,
+            "visible": 68
+          }
+        }
+      ]
+    },
+    "compact": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "compact",
+          "counts": {
+            "controls": 63,
+            "findings": 0,
+            "hidden": 13,
+            "visible": 63
+          }
+        }
+      ]
+    },
+    "confirm-desktop": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "confirm-desktop",
+          "counts": {
+            "controls": 15,
+            "findings": 0,
+            "hidden": 61,
+            "visible": 15
+          }
+        }
+      ]
+    },
+    "confirm-compact": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "confirm-compact",
+          "counts": {
+            "controls": 15,
+            "findings": 0,
+            "hidden": 61,
+            "visible": 15
+          }
+        }
+      ]
+    }
+  },
+  "validation": {
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "changed_order_ui_diagnostics": [],
+    "note": "Existing dependency warnings remain; no project-wide warning-free claim."
+  },
+  "scene_node_count": 71,
+  "service_modified": false,
+  "personal_save_used": false
+}

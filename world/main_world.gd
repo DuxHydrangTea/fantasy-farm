@@ -114,7 +114,7 @@ func _ready() -> void:
 	orders.position = order_board_position
 	add_child(orders)
 	grafting.world = self
-	graft_menu = GraftMenu.new()
+	graft_menu = preload("res://scenes/ui/grafting.tscn").instantiate() as GraftMenu
 	graft_menu.name = "FruitGrafting"
 	graft_menu.world = self
 	add_child(graft_menu)

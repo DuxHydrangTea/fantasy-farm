@@ -1,0 +1,457 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel",
+      "rect": [
+        140,
+        80,
+        1000,
+        560
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body",
+      "rect": [
+        156,
+        92,
+        968,
+        536
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header",
+      "rect": [
+        156,
+        92,
+        968,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Heading",
+      "rect": [
+        156,
+        98,
+        812,
+        34.13
+      ],
+      "text": "Đất trồng cây ăn quả"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        980,
+        104,
+        84,
+        23.63
+      ],
+      "text": "100.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        1076,
+        92,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/HeaderRule",
+      "rect": [
+        156,
+        152,
+        968,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary",
+      "rect": [
+        156,
+        166,
+        968,
+        52
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel",
+      "rect": [
+        156,
+        166,
+        317,
+        52
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox",
+      "rect": [
+        166,
+        176,
+        297,
+        32
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow",
+      "rect": [
+        166,
+        176,
+        297,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow/UnlockedTitle",
+      "rect": [
+        166,
+        180,
+        202,
+        23.63
+      ],
+      "text": "Unlocked plots"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow/UnlockedValue",
+      "rect": [
+        376,
+        176,
+        87,
+        31.5
+      ],
+      "text": "27 / 153"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel",
+      "rect": [
+        481,
+        166,
+        317,
+        52
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox",
+      "rect": [
+        491,
+        176,
+        297,
+        32
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow",
+      "rect": [
+        491,
+        176,
+        297,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow/PlantedTitle",
+      "rect": [
+        491,
+        180,
+        263,
+        23.63
+      ],
+      "text": "Planted"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow/PlantedValue",
+      "rect": [
+        762,
+        176,
+        26,
+        31.5
+      ],
+      "text": "18"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel",
+      "rect": [
+        806,
+        166,
+        318,
+        52
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox",
+      "rect": [
+        816,
+        176,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow",
+      "rect": [
+        816,
+        176,
+        298,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow/FreeTitle",
+      "rect": [
+        816,
+        180,
+        277,
+        23.63
+      ],
+      "text": "Free plots"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow/FreeValue",
+      "rect": [
+        1101,
+        176,
+        13,
+        31.5
+      ],
+      "text": "9"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main",
+      "rect": [
+        156,
+        230,
+        968,
+        367
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/MapColumn",
+      "rect": [
+        156,
+        230,
+        634,
+        367
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/MapColumn/PlotPreview",
+      "rect": [
+        156,
+        230,
+        634,
+        335
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/MapColumn/MapCaption",
+      "rect": [
+        156,
+        573,
+        634,
+        23.63
+      ],
+      "text": "Unlock columns from left to right."
+    },
+    {
+      "class": "VSeparator",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/Divider",
+      "rect": [
+        806,
+        230,
+        2,
+        367
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox",
+      "rect": [
+        824,
+        230,
+        300,
+        367
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll",
+      "rect": [
+        824,
+        230,
+        300,
+        311
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent",
+      "rect": [
+        824,
+        230,
+        300,
+        153
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/ExpansionTitle",
+      "rect": [
+        824,
+        230,
+        300,
+        28.88
+      ],
+      "text": "Expand planting area"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/NextCapacity",
+      "rect": [
+        824,
+        271,
+        300,
+        39.38
+      ],
+      "text": "27 → 36"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/Information",
+      "rect": [
+        824,
+        323,
+        300,
+        23.63
+      ],
+      "text": "Mở thêm 1 cột · 9 ô đất."
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow",
+      "rect": [
+        824,
+        359,
+        300,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow/CostTitle",
+      "rect": [
+        824,
+        359,
+        221,
+        23.63
+      ],
+      "text": "Cost"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow/Cost",
+      "rect": [
+        1049,
+        359,
+        75,
+        23.63
+      ],
+      "text": "80.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeButton",
+      "rect": [
+        824,
+        549,
+        300,
+        48
+      ],
+      "text": "Mở thêm 9 ô"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitPlotBoard/TreeMenu/Root/Center/Panel/Body/Hint",
+      "rect": [
+        156,
+        609,
+        968,
+        18.38
+      ],
+      "text": "Unlocked plots stay open after trees are removed."
+    }
+  ],
+  "counts": {
+    "controls": 42,
+    "findings": 0,
+    "hidden": 2,
+    "visible": 42
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/management_ui_2026-10-27/tree-desktop-layout.json",
+  "findings": [],
+  "label": "tree-desktop",
+  "node_path": "Farm/FruitPlotBoard/TreeMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

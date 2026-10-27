@@ -1,0 +1,280 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/trees/upgrades/tree_plot_menu.gd" id="script"]
+
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[ext_resource type="Script" path="res://components/trees/upgrades/tree_plot_preview.gd" id="preview"]
+
+[node name="TreePlotMenu" type="CanvasLayer"]
+layer = 27
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_filter = 1
+visible = false
+theme = ExtResource("theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 coins"
+
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+text = "×"
+tooltip_text = "Close (Esc / E)"
+
+[node name="HeaderRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="Overview" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+
+[node name="Summary" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UnlockedPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="UnlockedBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/UnlockedPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="UnlockedRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UnlockedTitle" type="Label" parent="Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unlocked plots"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="UnlockedValue" type="Label" parent="Root/Center/Panel/Body/Summary/UnlockedPanel/UnlockedBox/UnlockedRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="PlantedPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="PlantedBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/PlantedPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PlantedRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PlantedTitle" type="Label" parent="Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Planted"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="PlantedValue" type="Label" parent="Root/Center/Panel/Body/Summary/PlantedPanel/PlantedBox/PlantedRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="FreePanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="FreeBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/FreePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FreeRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/FreePanel/FreeBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FreeTitle" type="Label" parent="Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Free plots"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="FreeValue" type="Label" parent="Root/Center/Panel/Body/Summary/FreePanel/FreeBox/FreeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="MapColumn" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="PlotPreview" type="Control" parent="Root/Center/Panel/Body/Main/MapColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 100)
+mouse_filter = 2
+script = ExtResource("preview")
+
+[node name="MapCaption" type="Label" parent="Root/Center/Panel/Body/Main/MapColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unlock columns from left to right."
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="Divider" type="VSeparator" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="UpgradeBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(280, 0)
+theme_override_constants/separation = 8
+
+[node name="InfoScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InfoContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ExpansionTitle" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Expand planting area"
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 22
+
+[node name="NextCapacity" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 30
+
+[node name="Information" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="PriceRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="CostTitle" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cost"
+size_flags_horizontal = 3
+
+[node name="Cost" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent/PriceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="Feedback" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="UpgradeButton" type="Button" parent="Root/Center/Panel/Body/Main/UpgradeBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+autowrap_mode = 3
+theme_type_variation = &"PrimaryAction"
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unlocked plots stay open after trees are removed."
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14

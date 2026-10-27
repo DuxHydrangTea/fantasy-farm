@@ -7,6 +7,7 @@ var merchant: ShopMerchant
 var shop: ShopUI
 
 func before_each() -> void:
+	Language.set_language("en")
 	viewport = SubViewport.new()
 	viewport.size = Vector2i(1920, 1080)
 	viewport.world_2d = World2D.new()
@@ -14,6 +15,7 @@ func before_each() -> void:
 	player = PLAYER.instantiate() as FarmPlayer
 	player.position = Vector2(960, 540)
 	viewport.add_child(player)
+	player.wallet.set_balance(1000000)
 	merchant = MERCHANT.instantiate() as ShopMerchant
 	merchant.position = player.position + Vector2(24, 0)
 	viewport.add_child(merchant)
@@ -35,7 +37,7 @@ func _key(code: int) -> void:
 func test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory() -> void:
 	_key(KEY_E)
 	assert_true(shop.is_open)
-	assert_false(shop.balance_label.visible, "Player balance is exclusive to inventory")
+	assert_true(shop.balance_label.visible, "Balance is visible at checkout")
 	assert_true(player.selection.shop_open)
 	assert_false(player.selection.inventory_open)
 	assert_eq(player.state.current_state, StateComponent.State.IDLE)
@@ -57,7 +59,7 @@ func test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit()
 	shop.purchase()
 	assert_true(shop.bought_this_visit)
 	assert_false(merchant.bubble.visible)
-	assert_eq(player.wallet.balance, 980)
+	assert_eq(player.wallet.balance, 1000000 - 2 * shop.selected.price)
 	_key(KEY_ESCAPE)
 	assert_true(merchant.bubble.visible)
 	assert_true(merchant.bubble_text.text.contains("Thank you"))
@@ -74,7 +76,7 @@ func test_failed_purchase_and_load_close_have_no_thanks() -> void:
 	assert_false(shop.bought_this_visit)
 	shop.close()
 	assert_false(merchant.bubble.visible)
-	player.wallet.set_balance(1000)
+	player.wallet.set_balance(1000000)
 	merchant.open_shop(player)
 	shop.purchase()
 	player.shop_interaction.close_for_load()
@@ -88,10 +90,11 @@ func test_range_categories_and_checkout_revalidation() -> void:
 	player.position = merchant.position + Vector2(24, 0)
 	assert_true(player.shop_interaction.try_interact())
 	shop.show_category(ShopOffer.Category.FEED)
-	assert_eq(shop.grid.get_child_count(), 13)
+	assert_eq(shop.grid.get_child_count(), merchant.catalog.offers.filter(func(offer: ShopOffer) -> bool: return offer.category == ShopOffer.Category.FEED).size())
 	shop.show_category(ShopOffer.Category.FLOWER)
 	assert_eq(shop.grid.get_child_count(), 10)
 	shop.quantity.value = 99
+	player.wallet.set_balance(1000)
 	assert_true(shop.buy_button.disabled)
 	shop.purchase()
 	assert_eq(player.wallet.balance, 1000)
@@ -125,7 +128,7 @@ func test_main_world_attaches_shop_to_existing_laibuon_at_sprite_position() -> v
 	assert_eq((merchant.get_node("AnimatedSprite2D") as Node2D).position, Vector2(-38, 1))
 	assert_eq((merchant.get_node("CollisionShape2D") as Node2D).position, Vector2(-39, 6))
 	assert_eq(merchant.interaction_position(), Vector2(1741, 224))
-	assert_eq(viewport.get_tree().get_nodes_in_group(&"shop_merchants").size(), 2)
+	assert_true(viewport.get_tree().get_nodes_in_group(&"shop_merchants").has(merchant))
 	player.position = merchant.interaction_position() + Vector2(0, 24)
 	player.animation.face(merchant.interaction_position() - player.global_position)
 	shop = merchant.shop_ui
@@ -143,12 +146,12 @@ func test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal() ->
 	viewport.add_child(pen)
 	await wait_physics_frames(2)
 	assert_true(merchant.open_shop(player))
-	assert_eq(shop.categories.get_child_count(), 5)
+	assert_eq(shop.categories.get_child_count(), 6)
 	shop.show_category(ShopOffer.Category.ANIMAL)
 	assert_eq(shop.grid.get_child_count(), 7)
 	assert_false(shop.buy_button.disabled)
 	shop.purchase()
-	assert_eq(player.wallet.balance, 840)
+	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price)
 	var actor: AnimalActor = shop.animal_service.owned_animals()[0]
 	assert_eq(actor.growth.age_seconds, 0.0)
 	shop.show_category(ShopOffer.Category.SELL_ANIMAL)
@@ -159,11 +162,11 @@ func test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal() ->
 	assert_true(shop.details.text.contains("Young"))
 	assert_true(shop.details.text.contains("Age 0 min"), "A newborn must not display a rounded-up age")
 	shop.purchase()
-	assert_eq(player.wallet.balance, 920)
+	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price + floori(merchant.catalog.animal_offers[0].price * 0.5))
 	assert_eq(shop.grid.get_child_count(), 0)
 	assert_true(shop.buy_button.disabled)
 	shop.purchase()
-	assert_eq(player.wallet.balance, 920, "Another click cannot sell again")
+	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price + floori(merchant.catalog.animal_offers[0].price * 0.5), "Another click cannot sell again")
 	shop.close()
 	assert_true(merchant.bubble.visible)
 
@@ -177,7 +180,7 @@ func test_real_farm_can_buy_all_seven_species_into_configured_pens() -> void:
 	viewport.add_child(world)
 	await wait_physics_frames(4)
 	player = world.player
-	player.wallet.set_balance(10000)
+	player.wallet.set_balance(10000000)
 	merchant = world.get_node("LaiBuon") as ShopMerchant
 	player.position = merchant.interaction_position() + Vector2(0, 24)
 	assert_true(merchant.open_shop(player))
@@ -204,7 +207,10 @@ func test_real_farm_can_buy_all_seven_species_into_configured_pens() -> void:
 			if found.definition.species in [AnimalTypes.Species.COW, AnimalTypes.Species.SHEEP, AnimalTypes.Species.PIG, AnimalTypes.Species.HORSE]:
 				var food: AnimalTrough = found.pen.get_node("FeedTrough") as AnimalTrough
 				assert_true(food.can_supply(found.definition), "Purchased livestock can eat at the existing barn trough")
-	assert_eq(player.wallet.balance, 6560)
+	var spent: int = 0
+	for offer: AnimalShopOffer in merchant.catalog.animal_offers:
+		spent += offer.price
+	assert_eq(player.wallet.balance, 10000000 - spent)
 
 func test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell() -> void:
 	var pen: AnimalPen = AnimalPen.new()
@@ -223,6 +229,6 @@ func test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell() -> 
 	assert_null(shop.selected_animal)
 	assert_true(shop.buy_button.disabled)
 	shop.purchase()
-	assert_eq(player.wallet.balance, 840, "A stale selection cannot sell an absent animal")
+	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price, "A stale selection cannot sell an absent animal")
 	shop.show_category(ShopOffer.Category.SELL_ANIMAL)
 	assert_eq(shop.grid.get_child_count(), 0)

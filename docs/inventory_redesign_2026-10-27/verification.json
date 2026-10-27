@@ -1,0 +1,48 @@
+{
+  "godot": "4.7.2",
+  "integration": {
+    "tests": 37,
+    "passed": 37,
+    "assertions": 429
+  },
+  "localization": {
+    "tests": 5,
+    "passed": 4,
+    "failed": [
+      "test_animal_sale_selection_survives_language_change: empty Array[AnimalActor]"
+    ]
+  },
+  "native": {
+    "checks": 40,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 11
+  },
+  "physical_phone_tested": false,
+  "layout": {
+    "desktop": {
+      "counts": {
+        "controls": 234,
+        "findings": 8,
+        "hidden": 328,
+        "visible": 234
+      },
+      "reviewed_findings": "8 intended icon/shortcut and icon/count overlays; no zero_size/offscreen",
+      "scenario_ok": true
+    },
+    "compact": {
+      "counts": {
+        "controls": 233,
+        "findings": 8,
+        "hidden": 329,
+        "visible": 233
+      },
+      "reviewed_findings": "8 intended icon/shortcut and icon/count overlays; no zero_size/offscreen",
+      "scenario_ok": true
+    }
+  }
+}

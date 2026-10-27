@@ -1,0 +1,464 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/storage/farm_storage_menu.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres"
+  ],
+  "node_count": 45,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "FarmStorageMenu",
+      "owner_path": "",
+      "path": ".",
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Title",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Title",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Close",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "TopRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/TopRule",
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Panes",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Bag",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/Heading",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "BagTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/Heading/BagTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "BagUsage",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/Heading/BagUsage",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "DepositAll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/Heading/DepositAll",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "BagScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/BagScroll",
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "BagGrid",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Bag/BagScroll/BagGrid",
+      "sibling_index": -1,
+      "type": "GridContainer"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "Divider",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Divider",
+      "sibling_index": -1,
+      "type": "VSeparator"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "Store",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/Heading",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "StoreTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/Heading/StoreTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "StoreUsage",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/Heading/StoreUsage",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "WithdrawAll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/Heading/WithdrawAll",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "StoreScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/StoreScroll",
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "StoreGrid",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Panes/Store/StoreScroll/StoreGrid",
+      "sibling_index": -1,
+      "type": "GridContainer"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "LowerRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/LowerRule",
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "Selection",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "Product",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "IconFrame",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product/IconFrame",
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "ItemIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product/IconFrame/ItemIcon",
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "Names",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product/Names",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "ItemName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product/Names/ItemName",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "Source",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Product/Names/Source",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "Quality",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Quality",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "Normal",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Quality/Normal",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "Silver",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Quality/Silver",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "Gold",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Selection/Quality/Gold",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "Command",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "QuantityTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command/QuantityTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "Quantity",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command/Quantity",
+      "sibling_index": -1,
+      "type": "SpinBox"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "Maximum",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command/Maximum",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "Deposit",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command/Deposit",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "Withdraw",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Command/Withdraw",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Status",
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/storage/storage_menu.tscn",
+  "uid": ""
+}

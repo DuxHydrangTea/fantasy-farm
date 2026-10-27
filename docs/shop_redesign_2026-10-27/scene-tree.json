@@ -1,0 +1,524 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/shop_ui.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres"
+  ],
+  "node_count": 51,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "ShopUI",
+      "owner_path": "",
+      "path": ".",
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Title",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Title",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Balance",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Close",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Rule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Rule",
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "Left",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "CategoryScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll",
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "Categories",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "Crops",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Crops",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "Feed",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Feed",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "Flowers",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Flowers",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "Animals",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Animals",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "SellAnimals",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/SellAnimals",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "Scroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/Scroll",
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "Grid",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Left/Scroll/Grid",
+      "sibling_index": -1,
+      "type": "GridContainer"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "Divider",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Divider",
+      "sibling_index": -1,
+      "type": "VSeparator"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "Sidebar",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "Info",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info",
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "Description",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "Product",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "IconFrame",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/IconFrame",
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "ProductIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/IconFrame/ProductIcon",
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "Names",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "ProductName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names/ProductName",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "ProductType",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names/ProductType",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "Details",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Details",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Info/Description/Status",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "Checkout",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "PriceRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "PriceTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow/PriceTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "UnitPrice",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow/UnitPrice",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "OwnedRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "OwnedTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow/OwnedTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "OwnedCount",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow/OwnedCount",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "Rule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/Rule",
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "Stepper",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "Label",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/Label",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "Quantity",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/Quantity",
+      "sibling_index": -1,
+      "type": "SpinBox"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "TotalRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "TotalTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow/TotalTitle",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "TotalPrice",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow/TotalPrice",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 48,
+      "instance_placeholder": "",
+      "name": "Buy",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/Checkout/Buy",
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 49,
+      "instance_placeholder": "",
+      "name": "BottomRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/BottomRule",
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 50,
+      "instance_placeholder": "",
+      "name": "Hint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Hint",
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/ui/shop.tscn",
+  "uid": ""
+}

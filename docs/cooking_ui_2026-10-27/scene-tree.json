@@ -1,0 +1,1069 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/cooking/cooking_menu.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres",
+    "res://resources/ui/cozy_hud/cooking_selected.tres"
+  ],
+  "node_count": 53,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "CookingMenu",
+      "owner_path": "",
+      "path": ".",
+      "properties": {
+        "layer": 25,
+        "script": {
+          "__resource": "res://components/cooking/cooking_menu.gd",
+          "resource_type": "GDScript"
+        }
+      },
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "grow_horizontal": 2,
+        "grow_vertical": 2,
+        "layout_mode": 2,
+        "texture_filter": 1,
+        "theme": {
+          "__resource": "res://resources/ui/cozy_hud/shop_theme.tres",
+          "resource_type": "Theme"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "color": {
+          "__type": "Color",
+          "a": 0.649999976158142,
+          "b": 0.0700000002980232,
+          "g": 0.0900000035762787,
+          "r": 0.100000001490116
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Heading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Farm kitchen",
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Balance",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "0 coins",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Close",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "×",
+        "tooltip_text": "Close (Esc / E)",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Rule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Rule",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "BrowsePanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 0.9,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "BrowseBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "Filters",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "AllRecipes",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters/AllRecipes",
+      "properties": {
+        "button_pressed": true,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "All recipes",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "CookableRecipes",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters/CookableRecipes",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Can cook",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "Browse",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "RecipeList",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "EmptyRecipes",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/EmptyRecipes",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "No recipes available.",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "DetailPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "DetailScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "DetailContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "ProductIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/ProductIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 112.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "ProductName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/ProductName",
+      "properties": {
+        "autowrap_mode": 3,
+        "horizontal_alignment": 1,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 24,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "DetailRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/DetailRule",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "IngredientsHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/IngredientsHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Ingredients",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "Ingredients",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "OutputPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "OutputBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "OutputHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox/OutputHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Output",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "Output",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox/Output",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "Details",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Details",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "ActionColumn",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.0,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "ActionScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "ActionContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 10,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "ActionHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/ActionHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Cooking",
+        "theme_override_font_sizes/font_size": 22,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "QuantityHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Dishes to queue",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "QuantityRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "Quantity",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/Quantity",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "max_value": 20.0,
+        "min_value": 1.0,
+        "rounded": true,
+        "size_flags_horizontal": 3,
+        "unique_name_in_owner": true,
+        "value": 1.0
+      },
+      "sibling_index": -1,
+      "type": "SpinBox"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "Maximum",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/Maximum",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Max",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "Cost",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/Cost",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "Duration",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/Duration",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "QueuePanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "QueueBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "QueueHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/QueueHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Kitchen queue",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "Summary",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/Summary",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "CookingProgress",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/CookingProgress",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 12.0
+        },
+        "layout_mode": 2,
+        "show_percentage": false,
+        "theme_override_styles/background": {
+          "__resource_type": "StyleBoxFlat",
+          "properties": {
+            "anti_aliasing": true,
+            "anti_aliasing_size": 1.0,
+            "bg_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.579999983310699,
+              "g": 0.759999990463257,
+              "r": 0.879999995231628
+            },
+            "border_blend": false,
+            "border_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.800000011920929,
+              "g": 0.800000011920929,
+              "r": 0.800000011920929
+            },
+            "border_width_bottom": 0,
+            "border_width_left": 0,
+            "border_width_right": 0,
+            "border_width_top": 0,
+            "content_margin_bottom": 6.0,
+            "content_margin_left": -1.0,
+            "content_margin_right": -1.0,
+            "content_margin_top": 6.0,
+            "corner_detail": 8,
+            "corner_radius_bottom_left": 0,
+            "corner_radius_bottom_right": 0,
+            "corner_radius_top_left": 0,
+            "corner_radius_top_right": 0,
+            "draw_center": true,
+            "expand_margin_bottom": 0.0,
+            "expand_margin_left": 0.0,
+            "expand_margin_right": 0.0,
+            "expand_margin_top": 0.0,
+            "resource_local_to_scene": false,
+            "resource_name": "",
+            "script": null,
+            "shadow_color": {
+              "__type": "Color",
+              "a": 0.600000023841858,
+              "b": 0.0,
+              "g": 0.0,
+              "r": 0.0
+            },
+            "shadow_offset": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "shadow_size": 0,
+            "skew": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "resource_name": ""
+        },
+        "theme_override_styles/fill": {
+          "__resource_type": "StyleBoxFlat",
+          "properties": {
+            "anti_aliasing": true,
+            "anti_aliasing_size": 1.0,
+            "bg_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.200000002980232,
+              "g": 0.550000011920929,
+              "r": 0.819999992847443
+            },
+            "border_blend": false,
+            "border_color": {
+              "__type": "Color",
+              "a": 1.0,
+              "b": 0.800000011920929,
+              "g": 0.800000011920929,
+              "r": 0.800000011920929
+            },
+            "border_width_bottom": 0,
+            "border_width_left": 0,
+            "border_width_right": 0,
+            "border_width_top": 0,
+            "content_margin_bottom": -1.0,
+            "content_margin_left": -1.0,
+            "content_margin_right": -1.0,
+            "content_margin_top": -1.0,
+            "corner_detail": 8,
+            "corner_radius_bottom_left": 0,
+            "corner_radius_bottom_right": 0,
+            "corner_radius_top_left": 0,
+            "corner_radius_top_right": 0,
+            "draw_center": true,
+            "expand_margin_bottom": 0.0,
+            "expand_margin_left": 0.0,
+            "expand_margin_right": 0.0,
+            "expand_margin_top": 0.0,
+            "resource_local_to_scene": false,
+            "resource_name": "",
+            "script": null,
+            "shadow_color": {
+              "__type": "Color",
+              "a": 0.600000023841858,
+              "b": 0.0,
+              "g": 0.0,
+              "r": 0.0
+            },
+            "shadow_offset": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            },
+            "shadow_size": 0,
+            "skew": {
+              "__type": "Vector2",
+              "x": 0.0,
+              "y": 0.0
+            }
+          },
+          "resource_name": ""
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ProgressBar"
+    },
+    {
+      "groups": [],
+      "index": 48,
+      "instance_placeholder": "",
+      "name": "ReadyDishes",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/ReadyDishes",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 49,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/Status",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 50,
+      "instance_placeholder": "",
+      "name": "CookButton",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/CookButton",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Give ingredients & cook",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 51,
+      "instance_placeholder": "",
+      "name": "CollectButton",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/ActionColumn/CollectButton",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Collect ready dishes",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 52,
+      "instance_placeholder": "",
+      "name": "Hint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Hint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Choose a recipe to view its ingredients.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/ui/cooking.tscn",
+  "uid": ""
+}

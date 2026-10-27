@@ -1,0 +1,63 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading",
+      "rect": [
+        106,
+        108,
+        517,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading/BagTitle",
+      "rect": [
+        106,
+        120,
+        378,
+        23.63
+      ],
+      "text": "Túi của bạn"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading/BagUsage",
+      "rect": [
+        492,
+        120,
+        46,
+        23.63
+      ],
+      "text": "5 / 64"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading/DepositAll",
+      "rect": [
+        546,
+        108,
+        77,
+        48
+      ],
+      "text": "Cất hết"
+    }
+  ],
+  "counts": {
+    "controls": 4,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 4
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-bag-header-layout.json",
+  "findings": [],
+  "label": "desktop-bag-header",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

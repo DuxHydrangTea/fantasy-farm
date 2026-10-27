@@ -1,0 +1,901 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/FruitGrafting/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/FruitGrafting/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/FruitGrafting/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel",
+      "rect": [
+        12,
+        8,
+        642,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body",
+      "rect": [
+        28,
+        20,
+        610,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header",
+      "rect": [
+        28,
+        20,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Title",
+      "rect": [
+        28,
+        30,
+        496,
+        26.25
+      ],
+      "text": "Ghép cành cây ăn quả"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        528,
+        34,
+        58,
+        18.38
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        590,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main",
+      "rect": [
+        28,
+        72,
+        610,
+        282
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel",
+      "rect": [
+        28,
+        72,
+        227,
+        282
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody",
+      "rect": [
+        38,
+        82,
+        207,
+        262
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll",
+      "rect": [
+        38,
+        82,
+        207,
+        206
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent",
+      "rect": [
+        38,
+        82,
+        207,
+        183
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/TreeName",
+      "rect": [
+        38,
+        82,
+        207,
+        21
+      ],
+      "text": "Cây táo"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/Active",
+      "rect": [
+        38,
+        107,
+        207,
+        18.38
+      ],
+      "text": "Chưa định hướng"
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/TreeIcon",
+      "rect": [
+        38,
+        130,
+        207,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/CurrentHeading",
+      "rect": [
+        38,
+        182,
+        207,
+        18.38
+      ],
+      "text": "Current crop"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/CurrentCrop",
+      "rect": [
+        38,
+        205,
+        207,
+        21
+      ],
+      "text": "Táo × 300"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/ProgressText",
+      "rect": [
+        38,
+        230,
+        207,
+        18.38
+      ],
+      "text": "Sẵn sàng thu hoạch"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent/Progress",
+      "rect": [
+        38,
+        253,
+        207,
+        12
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/Harvest",
+      "rect": [
+        38,
+        296,
+        207,
+        48
+      ],
+      "text": "Harvest current crop"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel",
+      "rect": [
+        263,
+        72,
+        375,
+        282
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody",
+      "rect": [
+        273,
+        82,
+        355,
+        262
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse",
+      "rect": [
+        273,
+        82,
+        355,
+        206
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content",
+      "rect": [
+        273,
+        -331,
+        341,
+        619
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ChoicesHeading",
+      "rect": [
+        273,
+        -331,
+        341,
+        26.25
+      ],
+      "text": "Choose a graft direction"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard",
+      "rect": [
+        273,
+        -292,
+        341,
+        191
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody",
+      "rect": [
+        283,
+        -282,
+        321,
+        171
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow",
+      "rect": [
+        283,
+        -282,
+        321,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldIcon",
+      "rect": [
+        283,
+        -282,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldHeading",
+      "rect": [
+        319,
+        -277,
+        285,
+        21
+      ],
+      "text": "Yield"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldOutput",
+      "rect": [
+        283,
+        -242,
+        321,
+        21
+      ],
+      "text": "Táo × 600"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDescription",
+      "rect": [
+        283,
+        -213,
+        321,
+        18.38
+      ],
+      "text": "Double the ordinary fruit amount."
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDemand",
+      "rect": [
+        283,
+        -186,
+        321,
+        18.38
+      ],
+      "text": "Có trong 0 đơn hàng hiện tại"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldButton",
+      "rect": [
+        283,
+        -159,
+        321,
+        48
+      ],
+      "text": "Đang xem trước"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard",
+      "rect": [
+        273,
+        -89,
+        341,
+        191
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody",
+      "rect": [
+        283,
+        -79,
+        321,
+        171
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow",
+      "rect": [
+        283,
+        -79,
+        321,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityIcon",
+      "rect": [
+        283,
+        -79,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityHeading",
+      "rect": [
+        319,
+        -74,
+        285,
+        21
+      ],
+      "text": "Star fruit"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityOutput",
+      "rect": [
+        283,
+        -39,
+        321,
+        21
+      ],
+      "text": "Táo Sao × 300"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityDescription",
+      "rect": [
+        283,
+        -10,
+        321,
+        18.38
+      ],
+      "text": "Keep the base amount, produce Star fruit."
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityDemand",
+      "rect": [
+        283,
+        17,
+        321,
+        18.38
+      ],
+      "text": "Dùng cho 2 công thức Chef"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityButton",
+      "rect": [
+        283,
+        44,
+        321,
+        48
+      ],
+      "text": "Xem trước hướng này"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent",
+      "rect": [
+        273,
+        114,
+        341,
+        174
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/SelectedDirection",
+      "rect": [
+        273,
+        114,
+        341,
+        21
+      ],
+      "text": "Sản lượng"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/FutureCrop",
+      "rect": [
+        273,
+        141,
+        341,
+        21
+      ],
+      "text": "Lứa sau: Táo × 600"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard",
+      "rect": [
+        273,
+        168,
+        341,
+        75
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard/CostBody",
+      "rect": [
+        283,
+        178,
+        321,
+        55
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard/CostBody/WaxRow",
+      "rect": [
+        283,
+        178,
+        321,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard/CostBody/WaxRow/WaxIcon",
+      "rect": [
+        283,
+        178,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard/CostBody/WaxRow/Cost",
+      "rect": [
+        319,
+        184,
+        285,
+        18.38
+      ],
+      "text": "Lần chọn đầu miễn phí"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/CostCard/CostBody/WaxCount",
+      "rect": [
+        283,
+        214,
+        321,
+        18.38
+      ],
+      "text": "Sáp Ghép Cành trong túi: 2"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ReviewContent/Timing",
+      "rect": [
+        273,
+        249,
+        341,
+        39
+      ],
+      "text": "Changes apply after the next harvest. The current crop st..."
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Confirm",
+      "rect": [
+        273,
+        296,
+        355,
+        48
+      ],
+      "text": "Confirm graft direction"
+    }
+  ],
+  "counts": {
+    "controls": 56,
+    "findings": 14,
+    "hidden": 10,
+    "visible": 56
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/compact-full-layout.json",
+  "findings": [
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ChoicesHeading (Label) rect [273, -331, 341, 26.25] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/ChoicesHeading"
+      ],
+      "rects": [
+        [
+          273,
+          -331,
+          341,
+          26.25
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard (PanelContainer) rect [273, -292, 341, 191] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard"
+      ],
+      "rects": [
+        [
+          273,
+          -292,
+          341,
+          191
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody (VBoxContainer) rect [283, -282, 321, 171] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"
+      ],
+      "rects": [
+        [
+          283,
+          -282,
+          321,
+          171
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow (HBoxContainer) rect [283, -282, 321, 32] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow"
+      ],
+      "rects": [
+        [
+          283,
+          -282,
+          321,
+          32
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldIcon (TextureRect) rect [283, -282, 32, 32] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldIcon"
+      ],
+      "rects": [
+        [
+          283,
+          -282,
+          32,
+          32
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldHeading (Label) rect [319, -277, 285, 21] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow/YieldHeading"
+      ],
+      "rects": [
+        [
+          319,
+          -277,
+          285,
+          21
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldOutput (Label) rect [283, -242, 321, 21] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldOutput"
+      ],
+      "rects": [
+        [
+          283,
+          -242,
+          321,
+          21
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDescription (Label) rect [283, -213, 321, 18.38] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDescription"
+      ],
+      "rects": [
+        [
+          283,
+          -213,
+          321,
+          18.38
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDemand (Label) rect [283, -186, 321, 18.38] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldDemand"
+      ],
+      "rects": [
+        [
+          283,
+          -186,
+          321,
+          18.38
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldButton (Button) rect [283, -159, 321, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldButton"
+      ],
+      "rects": [
+        [
+          283,
+          -159,
+          321,
+          48
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow (HBoxContainer) rect [283, -79, 321, 32] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow"
+      ],
+      "rects": [
+        [
+          283,
+          -79,
+          321,
+          32
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityIcon (TextureRect) rect [283, -79, 32, 32] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityIcon"
+      ],
+      "rects": [
+        [
+          283,
+          -79,
+          32,
+          32
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityHeading (Label) rect [319, -74, 285, 21] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow/QualityHeading"
+      ],
+      "rects": [
+        [
+          319,
+          -74,
+          285,
+          21
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityOutput (Label) rect [283, -39, 321, 21] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/FruitGrafting/Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityOutput"
+      ],
+      "rects": [
+        [
+          283,
+          -39,
+          321,
+          21
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    }
+  ],
+  "label": "compact-full",
+  "node_path": "Farm/FruitGrafting/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header",
+      "rect": [
+        96,
+        52,
+        1088,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Title",
+      "rect": [
+        96,
+        58,
+        957,
+        34.13
+      ],
+      "text": "Ghép cành cây ăn quả"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        1057,
+        64,
+        75,
+        23.63
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        1136,
+        52,
+        48,
+        48
+      ],
+      "text": "×"
+    }
+  ],
+  "counts": {
+    "controls": 4,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 4
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/grafting_ui_2026-10-27/desktop-header-layout.json",
+  "findings": [],
+  "label": "desktop-header",
+  "node_path": "Farm/FruitGrafting/Root/Center/Panel/Body/Header",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

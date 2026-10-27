@@ -133,14 +133,10 @@ func _run() -> void:
 	await _frames(10)
 	_check(Rect2(Vector2.ZERO, basket_menu.root.size).encloses(basket_menu.panel.get_rect()), "Worker menu fits touch landscape")
 	await _capture("touch-worker-basket")
-	var scroll: ScrollContainer = basket_menu.dismiss_button.get_parent().get_parent() as ScrollContainer
-	scroll.scroll_vertical = 10000
-	await _frames(5)
-	await _tap(basket_menu.dismiss_button)
+		await _tap(basket_menu.dismiss_button)
 	_check(world.workers.record("orchard").employed, "First touch asks dismissal confirmation")
-	await _tap(basket_menu.dismiss_button)
+	await _tap(basket_menu.confirm_button)
 	_check(not world.workers.record("orchard").employed, "Second touch dismisses while keeping basket")
-	scroll.scroll_vertical = 0
 	await _frames(5)
 	await _tap(basket_menu.hire_button)
 	_check(world.workers.record("orchard").employed, "Touch rehires the same role")

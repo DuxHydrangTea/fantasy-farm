@@ -1,0 +1,114 @@
+{
+  "new_ui_tests": {
+    "passed": 6,
+    "total": 6,
+    "assertions": 57
+  },
+  "existing_suites": {
+    "passed": 32,
+    "total": 39,
+    "assertions_passed": 267,
+    "assertions_total": 282,
+    "baseline_failures": [
+      "test_v22_migration_and_worker_basket_roundtrip_offline",
+      "test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task",
+      "test_crop_worker_load_validates_against_saved_land_not_current_land",
+      "test_ranch_two_hour_jump_matches_minute_steps",
+      "test_crop_two_minute_jump_matches_second_steps",
+      "test_legacy_save_import_is_partial_idempotent_and_keeps_feed_after_dismissal",
+      "test_legacy_remainder_drains_after_capacity_is_freed"
+    ],
+    "after_failures": [
+      "test_v22_migration_and_worker_basket_roundtrip_offline",
+      "test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task",
+      "test_crop_worker_load_validates_against_saved_land_not_current_land",
+      "test_ranch_two_hour_jump_matches_minute_steps",
+      "test_crop_two_minute_jump_matches_second_steps",
+      "test_legacy_save_import_is_partial_idempotent_and_keeps_feed_after_dismissal",
+      "test_legacy_remainder_drains_after_capacity_is_freed"
+    ],
+    "unchanged_failure_set": true
+  },
+  "runtime": {
+    "checks": 78,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "layout": {
+    "desktop": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "desktop",
+          "counts": {
+            "controls": 69,
+            "findings": 0,
+            "hidden": 20,
+            "visible": 69
+          }
+        }
+      ]
+    },
+    "compact": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "compact",
+          "counts": {
+            "controls": 67,
+            "findings": 0,
+            "hidden": 22,
+            "visible": 67
+          }
+        }
+      ]
+    },
+    "confirm-desktop": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "confirm-desktop",
+          "counts": {
+            "controls": 15,
+            "findings": 0,
+            "hidden": 74,
+            "visible": 15
+          }
+        }
+      ]
+    },
+    "confirm-compact": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "confirm-compact",
+          "counts": {
+            "controls": 15,
+            "findings": 0,
+            "hidden": 74,
+            "visible": 15
+          }
+        }
+      ]
+    }
+  },
+  "validation": {
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "changed_worker_ui_diagnostics": [],
+    "note": "Existing dependency warnings remain. No whole-project warning-free claim."
+  },
+  "scene_node_count": 91,
+  "service_modified": false,
+  "personal_save_used": false
+}

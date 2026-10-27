@@ -27,19 +27,31 @@ var _elapsed: float = 0.0
 var selected: ShopOffer
 var category: int = ShopOffer.Category.CROP
 var _buttons: Dictionary = {}
+@onready var product_icon: TextureRect = %ProductIcon
+@onready var product_name: Label = %ProductName
+@onready var product_type: Label = %ProductType
+@onready var unit_price: Label = %UnitPrice
+@onready var owned_count: Label = %OwnedCount
+@onready var total_price: Label = %TotalPrice
+@onready var sidebar: VBoxContainer = %Sidebar
+@onready var price_row: HBoxContainer = %PriceRow
+@onready var owned_row: HBoxContainer = %OwnedRow
+@onready var total_row: HBoxContainer = %TotalRow
+var _compact: bool = false
 var _animal_text: AnimalStatusText = AnimalStatusText.new()
 
 func _ready() -> void:
 	super._ready()
 	_normal_hint = hint.text
-	TouchQuantityComponent.attach(quantity, root)
-	balance_label.hide() # The player's balance belongs to the inventory only.
+	TouchQuantityComponent.attach(quantity, root, true)
+	balance_label.show()
 	visit_started.connect(_start_visit)
 	models_changed.connect(_refresh)
 	root.resized.connect(_fit_layout)
 	var upgrades_tab: Button = Button.new()
 	upgrades_tab.name = "ToolUpgrades"
 	upgrades_tab.toggle_mode = true
+	upgrades_tab.custom_minimum_size.y = 48
 	categories.add_child(upgrades_tab)
 	_fit_layout()
 	buy_button.pressed.connect(purchase)
@@ -86,7 +98,11 @@ func show_category(value: int) -> void:
 	selected_animal_offer = null
 	quantity.max_value = 1.0 if category == ShopOffer.Category.SELL_ANIMAL else 99.0
 	quantity.visible = category != UPGRADES
-	quantity_label.visible = category != UPGRADES and not MobileLayout.is_touch(get_viewport())
+	quantity_label.visible = category != UPGRADES and not _compact
+	price_row.visible = category < ShopOffer.Category.SELL_ANIMAL
+	owned_row.visible = category < ShopOffer.Category.ANIMAL
+	total_row.visible = category < ShopOffer.Category.SELL_ANIMAL
+	TouchQuantityComponent.refresh_for(quantity)
 	hint.text = tr("Choose a tool to upgrade. Esc / E / Tab to close.") if category == UPGRADES else tr(_normal_hint)
 	if category == UPGRADES:
 		upgrade_view.build()
@@ -121,39 +137,40 @@ func show_category(value: int) -> void:
 
 func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback: Callable) -> void:
 	var button: Button = Button.new()
-	button.custom_minimum_size = Vector2(120, 116)
+	button.custom_minimum_size = Vector2(104, 108) if _compact else Vector2(148, 148)
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.toggle_mode = true
 	button.tooltip_text = title
-	var body: VBoxContainer = VBoxContainer.new()
-	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(body)
-	body.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	body.offset_left = 8
-	body.offset_top = 8
-	body.offset_right = -8
-	body.offset_bottom = -10
+	var card_body: VBoxContainer = VBoxContainer.new()
+	card_body.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	button.add_child(card_body)
+	card_body.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	card_body.offset_left = 8
+	card_body.offset_top = 8
+	card_body.offset_right = -8
+	card_body.offset_bottom = -10
 	var icon: TextureRect = TextureRect.new()
-	icon.custom_minimum_size = Vector2(48, 48)
+	icon.custom_minimum_size = Vector2(32, 32) if _compact else Vector2(56, 56)
 	icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon.texture = texture
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	body.add_child(icon)
+	card_body.add_child(icon)
 	var name_label: Label = Label.new()
 	name_label.text = title
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 20)
+	name_label.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	name_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	body.add_child(name_label)
+	card_body.add_child(name_label)
 	var price: Label = Label.new()
 	price.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	price.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	price.add_theme_font_size_override("font_size", 18)
-	price.text = tr("{coins} coins").format({"coins": cost})
-	body.add_child(price)
+	price.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	price.text = _coins(cost)
+	card_body.add_child(price)
 	button.pressed.connect(callback)
 	grid.add_child(button)
 	_buttons[key] = button
@@ -180,7 +197,7 @@ func _quantity_changed(_value: float) -> void:
 func _refresh() -> void:
 	if not is_open:
 		return
-	balance_label.text = tr("{coins} coins").format({"coins": customer.wallet.balance})
+	balance_label.text = _coins(customer.wallet.balance)
 	if category == UPGRADES:
 		upgrade_view.refresh()
 		return
@@ -193,19 +210,28 @@ func _refresh() -> void:
 		_refresh_animal_sale()
 		return
 	if selected == null:
+		present_product(null, tr("No items available."), "")
+		unit_price.text = "—"
+		owned_count.text = "—"
+		total_price.text = "—"
 		details.text = tr("No items available.")
 		buy_button.disabled = true
 		return
 	var amount: int = int(quantity.value)
 	var checked: Dictionary = service.quote(selected, amount)
-	details.text = tr("{item} · {price} coins / item · In bag: {count}").format({"item": tr(selected.item.display_name), "price": selected.price, "count": customer.selection.inventory.count_item(selected.item.item_id)})
+	present_product(selected.item.icon, tr(selected.item.display_name), tr("Flower seeds") if category == ShopOffer.Category.FLOWER else (tr("Crop seeds") if category == ShopOffer.Category.CROP else tr("Farm supplies")))
+	unit_price.text = _coins(selected.price)
+	owned_count.text = str(customer.selection.inventory.count_item(selected.item.item_id))
+	total_price.text = _coins(selected.price * amount)
+	details.text = ""
 	if selected.item.item_id == WoodMarket.ITEM and service.world != null:
 		details.text += "\n" + tr("Wood bought today: {used}/{cap} · Resets at 06:00 (UTC+7)").format({"used": service.world.wood_market.used(service.world.farming.time_manager.now()), "cap": WoodMarket.DAILY_CAP})
 	if not selected.item.description.is_empty():
 		details.text += "\n" + tr(selected.item.description)
-	buy_button.text = tr("Buy ×{count} - {coins} coins").format({"count": amount, "coins": selected.price * amount})
+	buy_button.text = tr("Buy ×{count}").format({"count": amount})
 	buy_button.disabled = not checked.ok
 	status.text = tr("Choose an item and quantity.") if checked.ok else GameText.error(checked)
+	_show_purchase_error(checked)
 
 func _duration(seconds: float, remaining: bool = true) -> String:
 	var minutes: int = ceili(maxf(0.0, seconds) / 60.0) if remaining else floori(maxf(0.0, seconds) / 60.0)
@@ -216,16 +242,28 @@ func _duration(seconds: float, remaining: bool = true) -> String:
 
 func _refresh_animal_purchase() -> void:
 	if selected_animal_offer == null:
+		present_product(null, tr("No animals available to buy."), "")
+		unit_price.text = "—"
+		total_price.text = "—"
 		details.text = tr("No animals available to buy.")
 		buy_button.disabled = true
 		return
 	var offer: AnimalShopOffer = selected_animal_offer
 	var amount: int = int(quantity.value)
 	var checked: Dictionary = animal_service.quote_buy(offer, amount)
+	present_product(offer.icon(), tr(offer.animal.display_name), tr("Animals"))
+	unit_price.text = _coins(offer.price)
+	total_price.text = _coins(offer.price * amount)
 	details.text = tr("{animal} · {price} coins / animal · Young, placed in a pen\nMatures in {maturity} · Lifespan {lifespan}").format({"animal": tr(offer.animal.display_name), "price": offer.price, "maturity": _duration(offer.animal.maturity_seconds), "lifespan": _duration(offer.animal.lifespan_seconds)})
-	buy_button.text = tr("Buy ×{count} - {coins} coins").format({"count": amount, "coins": offer.price * amount})
+	buy_button.text = tr("Buy ×{count}").format({"count": amount})
 	buy_button.disabled = not checked.ok
 	status.text = tr("New animals start at age 0. Resale: 50% when young, 75% when adult.") if checked.ok else GameText.error(checked)
+	_show_purchase_error(checked)
+
+func _show_purchase_error(checked: Dictionary) -> void:
+	buy_button.tooltip_text = "" if checked.ok else GameText.error(checked)
+	if _compact and not checked.ok:
+		buy_button.text = GameText.error(checked)
 
 func _refresh_animal_sale() -> void:
 	if not is_instance_valid(selected_animal):
@@ -238,10 +276,12 @@ func _refresh_animal_sale() -> void:
 	buy_button.disabled = not checked.ok
 	buy_button.text = tr("Sell animal") if not checked.ok else tr("Sell - {coins} coins").format({"coins": int(checked.total)})
 	if not checked.ok:
+		present_product(null, tr("Sell animals"), "")
 		details.text = tr("Select the individual animal you want to sell.") if not _animal_rows.is_empty() else tr("No animals on your farm to sell.")
 		status.text = tr("Sell one animal at a time. Finished produce stays on the farm.")
 		return
 	var animal: AnimalActor = selected_animal
+	present_product(animal.sprite.sprite_frames.get_frame_texture(&"idle_down", 0), tr(animal.definition.display_name), tr("Sell animals"))
 	details.text = tr("{animal} · #{id} · {stage} · Age {age}").format({"animal": tr(animal.definition.display_name), "id": String(animal.persistent_id).right(8), "stage": tr("Adult") if animal.growth.is_adult() else tr("Young"), "age": _duration(animal.growth.age_seconds, false)})
 	details.text += "\n" + _animal_text.summary(animal)
 	status.text = tr("Sell the selected animal for coins. Its produce stays on the farm.")
@@ -283,38 +323,60 @@ func _notification(what: int) -> void:
 		_refresh_language.call_deferred()
 
 func _refresh_language() -> void:
+	_fit_layout()
 	if is_open:
 		# Rebuild outside the notification traversal, retaining the selected item/animal.
 		show_category(category)
 
+func _coins(amount: int) -> String:
+	return tr("{coins} coins").format({"coins": GameText.grouped_integer(amount)})
+
+func present_product(texture: Texture2D, title: String, subtitle: String) -> void:
+	product_icon.texture = texture
+	product_icon.get_parent().visible = texture != null
+	product_name.text = title
+	product_type.text = subtitle
+	product_type.visible = not subtitle.is_empty()
+
 func _fit_layout() -> void:
 	var view: Vector2 = root.size
-	var compact: bool = view.x < 1000.0 or view.y < 700.0
-	panel.custom_minimum_size = Vector2(minf(960.0, maxf(0.0, view.x - 24.0)), minf(660.0, maxf(0.0, view.y - 24.0)))
-	body.add_theme_constant_override("separation", 8 if compact else 12)
-	heading.add_theme_font_size_override("font_size", 26 if compact else 30)
-	balance_label.add_theme_font_size_override("font_size", 20 if compact else 24)
-	quantity_label.text = "Qty" if compact else "Quantity"
-	quantity_label.add_theme_font_size_override("font_size", 20 if compact else 24)
-	quantity.custom_minimum_size = Vector2(96, 40) if compact else Vector2(108, 48)
-	hint.visible = not compact
-	for button: Button in categories.get_children():
-		button.add_theme_font_size_override("font_size", 20 if compact else 24)
-	# Browse is a separate scroll area; changing columns never resets the checkout.
+	_compact = view.x < 800.0 or view.y < 500.0 or MobileLayout.is_touch(get_viewport())
+	panel.custom_minimum_size = Vector2(minf(1100.0, maxf(0.0, view.x - 32.0)), minf(620.0, maxf(0.0, view.y - (16.0 if _compact else 24.0))))
+	body.add_theme_constant_override("separation", 4 if _compact else 12)
+	sidebar.custom_minimum_size.x = 216 if _compact else 300
+	sidebar.add_theme_constant_override("separation", 4 if _compact else 8)
+	heading.add_theme_font_size_override("font_size", 20 if _compact else 26)
+	balance_label.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	quantity_label.visible = not _compact and category != UPGRADES
+	quantity_label.text = "Quantity"
+	quantity.custom_minimum_size = Vector2(60, 48)
+	product_icon.custom_minimum_size = Vector2(32, 32) if _compact else Vector2(64, 64)
+	product_name.add_theme_font_size_override("font_size", 18 if _compact else 22)
+	product_type.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	details.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	status.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	buy_button.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	hint.visible = not _compact
 	var short_titles: Array[String] = ["Seeds", "Supplies", "Flowers", "Animals", "Sell", "Upgrades"]
 	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals", "Tool upgrades"]
 	for index: int in range(categories.get_child_count()):
 		var tab: Button = categories.get_child(index) as Button
-		tab.text = tr(short_titles[index] if compact else full_titles[index])
+		tab.text = tr(short_titles[index] if _compact else full_titles[index])
 		tab.tooltip_text = tr(full_titles[index])
-	var width: float = maxf(100.0, (panel.custom_minimum_size.x - 72.0) * 0.5 - 16.0)
-	grid.columns = maxi(1, floori((width + 8.0) / 128.0))
+		tab.add_theme_font_size_override("font_size", 16 if _compact else 18)
+	var width: float = panel.custom_minimum_size.x - 32.0 - sidebar.custom_minimum_size.x - 26.0 - 16.0
+	var card_width: float = 104.0 if _compact else 148.0
+	grid.columns = clampi(floori((width + 8.0) / (card_width + 8.0)), 1, 4)
+	for card: Button in _buttons.values():
+		card.custom_minimum_size = Vector2(card_width, 108 if _compact else 148)
+		var content: VBoxContainer = card.get_child(0) as VBoxContainer
+		(content.get_child(0) as TextureRect).custom_minimum_size = Vector2(32, 32) if _compact else Vector2(56, 56)
+		(content.get_child(1) as Label).add_theme_font_size_override("font_size", 16 if _compact else 18)
+		(content.get_child(2) as Label).add_theme_font_size_override("font_size", 16 if _compact else 18)
+		if category == UPGRADES:
+			card.custom_minimum_size.y = 176
+	TouchQuantityComponent.refresh_for(quantity)
 	if MobileLayout.is_touch(get_viewport()):
-		panel.custom_minimum_size = Vector2(minf(960.0, view.x - 16.0), minf(660.0, view.y - 16.0))
-		quantity.custom_minimum_size = Vector2(72, 48)
-		quantity_label.hide()
 		MobileLayout.prepare_buttons(root)
-		for button: Button in categories.get_children():
-			button.add_theme_font_size_override("font_size", 18)
-	else:
-		quantity_label.visible = category != UPGRADES
+	if is_open:
+		_refresh()

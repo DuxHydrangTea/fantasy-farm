@@ -1,0 +1,69 @@
+{
+  "palette": [
+    "#401c10",
+    "#542f1d",
+    "#88593d",
+    "#976446",
+    "#ab7251",
+    "#c19672",
+    "#d0a984",
+    "#e6c4a0",
+    "#fcefda",
+    "#6f8555",
+    "#c2ce9b",
+    "#e29a44",
+    "#fde76e",
+    "#89a76c"
+  ],
+  "texture_margin": 8,
+  "assets": {
+    "slot_normal": {
+      "size": [
+        32,
+        32
+      ],
+      "colors": 10,
+      "alpha": "binary"
+    },
+    "slot_selected": {
+      "size": [
+        32,
+        32
+      ],
+      "colors": 11,
+      "alpha": "binary"
+    },
+    "hotbar": {
+      "size": [
+        240,
+        48
+      ],
+      "colors": 10,
+      "alpha": "binary"
+    },
+    "wallet": {
+      "size": [
+        96,
+        32
+      ],
+      "colors": 10,
+      "alpha": "binary"
+    },
+    "weather": {
+      "size": [
+        112,
+        32
+      ],
+      "colors": 10,
+      "alpha": "binary"
+    },
+    "button_primary": {
+      "size": [
+        32,
+        32
+      ],
+      "colors": 11,
+      "alpha": "binary"
+    }
+  }
+}

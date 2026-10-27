@@ -1,0 +1,95 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+      "rect": [
+        32,
+        281,
+        602,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/@Button@417",
+      "rect": [
+        32,
+        281,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Quantity",
+      "rect": [
+        88,
+        281,
+        78,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/@Button@418",
+      "rect": [
+        174,
+        281,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Maximum",
+      "rect": [
+        230,
+        281,
+        64,
+        48
+      ],
+      "text": "Max"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Deposit",
+      "rect": [
+        302,
+        281,
+        162,
+        48
+      ],
+      "text": "Gửi vào kho →"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Withdraw",
+      "rect": [
+        472,
+        281,
+        162,
+        48
+      ],
+      "text": "← Rút về túi"
+    }
+  ],
+  "counts": {
+    "controls": 7,
+    "findings": 0,
+    "hidden": 1,
+    "visible": 7
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-command-layout.json",
+  "findings": [],
+  "label": "compact-command",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

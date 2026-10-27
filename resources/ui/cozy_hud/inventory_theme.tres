@@ -1,0 +1,95 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontVariation" path="res://resources/ui/game_font.tres" id="font"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/slot_normal.tres" id="normal"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/slot_selected.tres" id="selected"]
+[ext_resource type="Texture2D" path="res://assets/Ui/CozyHUD/button_primary.png" id="primary"]
+[ext_resource type="Texture2D" path="res://assets/Ui/CozyHUD/hotbar.png" id="panel"]
+
+[sub_resource type="StyleBoxTexture" id="Panel"]
+texture = ExtResource("panel")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="Primary"]
+texture = ExtResource("primary")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="Card"]
+bg_color = Color(0.95, 0.87, 0.74, 1)
+border_color = Color(0.76, 0.59, 0.45, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxLine" id="Horizontal"]
+color = Color(0.76, 0.59, 0.45, 1)
+thickness = 1
+
+[sub_resource type="StyleBoxLine" id="Vertical"]
+color = Color(0.76, 0.59, 0.45, 1)
+thickness = 1
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="Scroll"]
+bg_color = Color(0.91, 0.80, 0.64, 1)
+content_margin_left = 7.0
+content_margin_right = 7.0
+
+[sub_resource type="StyleBoxFlat" id="Grabber"]
+bg_color = Color(0.63, 0.44, 0.29, 1)
+border_color = Color(0.33, 0.18, 0.11, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+content_margin_left = 7.0
+content_margin_right = 7.0
+
+[resource]
+default_font = ExtResource("font")
+default_font_size = 18
+Label/colors/font_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_hover_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_pressed_color = Color(0.25, 0.11, 0.06, 1)
+Button/colors/font_disabled_color = Color(0.58, 0.47, 0.36, 1)
+Button/styles/normal = ExtResource("normal")
+Button/styles/hover = ExtResource("selected")
+Button/styles/pressed = ExtResource("selected")
+Button/styles/focus = ExtResource("selected")
+Button/styles/disabled = ExtResource("normal")
+PanelContainer/styles/panel = SubResource("Panel")
+DetailCard/base_type = &"PanelContainer"
+DetailCard/styles/panel = SubResource("Card")
+PrimaryAction/base_type = &"Button"
+PrimaryAction/styles/normal = SubResource("Primary")
+PrimaryAction/styles/hover = ExtResource("selected")
+PrimaryAction/styles/pressed = ExtResource("selected")
+PrimaryAction/styles/focus = ExtResource("selected")
+HSeparator/constants/separation = 2
+HSeparator/styles/separator = SubResource("Horizontal")
+VSeparator/constants/separation = 2
+VSeparator/styles/separator = SubResource("Vertical")
+VScrollBar/styles/scroll = SubResource("Scroll")
+VScrollBar/styles/grabber = SubResource("Grabber")
+VScrollBar/styles/grabber_highlight = SubResource("Grabber")
+VScrollBar/styles/grabber_pressed = SubResource("Grabber")

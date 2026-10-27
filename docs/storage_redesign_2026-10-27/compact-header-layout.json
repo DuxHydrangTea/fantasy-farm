@@ -1,0 +1,52 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header",
+      "rect": [
+        32,
+        20,
+        602,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header/Title",
+      "rect": [
+        32,
+        30,
+        542,
+        26.25
+      ],
+      "text": "Kho nông sản"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        586,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    }
+  ],
+  "counts": {
+    "controls": 3,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 3
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-header-layout.json",
+  "findings": [],
+  "label": "compact-header",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

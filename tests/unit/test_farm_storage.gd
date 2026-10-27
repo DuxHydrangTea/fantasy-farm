@@ -74,3 +74,32 @@ func test_dto_roundtrip_capacity_and_reject_bad_items_counts_or_missing_storage(
 	service.restore(bad, catalog)
 	assert_eq(service.inventory(PRODUCE).slot_count, 1)
 	assert_eq(service.inventory(PRODUCE).count_item(APPLE.item_id), 6)
+
+func test_selected_quality_moves_only_that_tier_and_clamps_to_available() -> void:
+	bag.add(APPLE, 8, 0)
+	bag.add(APPLE, 5, 1)
+	bag.add(APPLE, 3, 2)
+	assert_eq(service.transfer(PRODUCE, bag, APPLE.item_id, 99, true, 1).moved, 5)
+	assert_eq(bag.count_item(APPLE.item_id, 0), 8)
+	assert_eq(bag.count_item(APPLE.item_id, 1), 0)
+	assert_eq(bag.count_item(APPLE.item_id, 2), 3)
+	assert_eq(service.inventory(PRODUCE).count_item(APPLE.item_id, 1), 5)
+	assert_eq(service.transfer(PRODUCE, bag, APPLE.item_id, 2, false, 1).moved, 2)
+	assert_eq(bag.count_item(APPLE.item_id, 1), 2)
+	assert_eq(service.inventory(PRODUCE).count_item(APPLE.item_id, 1), 3)
+	assert_false(service.transfer(PRODUCE, bag, APPLE.item_id, 1, true, 4).ok)
+	assert_false(service.transfer(PRODUCE, bag, APPLE.item_id, 1, true, -2).ok)
+	assert_eq(bag.count_item(APPLE.item_id, -1), 13)
+
+func test_quality_transfer_with_full_target_preserves_other_tiers() -> void:
+	var target: InventoryComponent = service.inventory(PRODUCE)
+	target.slot_count = 1
+	target.add(APPLE, APPLE.get_stack_limit() - 2)
+	bag.add(APPLE, 4, 0)
+	bag.add(APPLE, 7, 2)
+	assert_eq(service.transfer(PRODUCE, bag, APPLE.item_id, 7, true, 2).moved, 2)
+	assert_eq(target.count_item(APPLE.item_id, 2), 2)
+	assert_eq(bag.count_item(APPLE.item_id, 0), 4)
+	assert_eq(bag.count_item(APPLE.item_id, 2), 5)
+	assert_false(service.transfer(PRODUCE, bag, APPLE.item_id, 1, true, 2).ok)
+	assert_eq(bag.count_item(APPLE.item_id, 2), 5)

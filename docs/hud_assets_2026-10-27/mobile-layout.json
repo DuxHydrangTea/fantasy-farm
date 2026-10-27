@@ -1,0 +1,348 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": ".",
+      "rect": [
+        0,
+        0,
+        844,
+        390
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Background",
+      "rect": [
+        0,
+        0,
+        844,
+        390
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Margin",
+      "rect": [
+        0,
+        0,
+        844,
+        390
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Margin/Column",
+      "rect": [
+        24,
+        16,
+        796,
+        358
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Margin/Column/Top",
+      "rect": [
+        24,
+        16,
+        796,
+        45
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Margin/Column/Top/Weather",
+      "rect": [
+        24,
+        16,
+        160,
+        45
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/Top/Weather/Text",
+      "rect": [
+        36,
+        26,
+        136,
+        25
+      ],
+      "text": "08:30 · Trời nắng"
+    },
+    {
+      "class": "Control",
+      "path": "Margin/Column/Top/Spacer",
+      "rect": [
+        200,
+        16,
+        482,
+        45
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Margin/Column/Top/Wallet",
+      "rect": [
+        698,
+        16,
+        122,
+        45
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/Top/Wallet/Text",
+      "rect": [
+        710,
+        26,
+        98,
+        25
+      ],
+      "text": "1.234.567 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/Title",
+      "rect": [
+        24,
+        73,
+        796,
+        32
+      ],
+      "text": "HUD · Bộ khung chuẩn hóa"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Margin/Column/Samples",
+      "rect": [
+        24,
+        117,
+        796,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/Samples/Normal",
+      "rect": [
+        24,
+        117,
+        120,
+        48
+      ],
+      "text": "Thường"
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/Samples/Selected",
+      "rect": [
+        160,
+        117,
+        120,
+        48
+      ],
+      "text": "Đang chọn"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Margin/Column/Samples/Stretch",
+      "rect": [
+        296,
+        117,
+        524,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/Samples/Stretch/Text",
+      "rect": [
+        308,
+        128,
+        500,
+        25
+      ],
+      "text": "Góc cố định · cạnh co giãn"
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/Hint",
+      "rect": [
+        24,
+        177,
+        796,
+        25
+      ],
+      "text": "Chọn ô bằng chuột, chạm hoặc phím Tab."
+    },
+    {
+      "class": "Control",
+      "path": "Margin/Column/Space",
+      "rect": [
+        24,
+        214,
+        796,
+        68
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Margin/Column/CenterHotbar",
+      "rect": [
+        24,
+        294,
+        796,
+        80
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Margin/Column/CenterHotbar/Tray",
+      "rect": [
+        222,
+        294,
+        400,
+        80
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots",
+      "rect": [
+        234,
+        306,
+        376,
+        56
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot1",
+      "rect": [
+        234,
+        306,
+        56,
+        56
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot1/Icon",
+      "rect": [
+        246,
+        318,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot2",
+      "rect": [
+        298,
+        306,
+        56,
+        56
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot2/Icon",
+      "rect": [
+        310,
+        318,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot3",
+      "rect": [
+        362,
+        306,
+        56,
+        56
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot3/Icon",
+      "rect": [
+        374,
+        314,
+        32,
+        28
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot3/Count",
+      "rect": [
+        370,
+        344,
+        40,
+        17
+      ],
+      "text": "999"
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot4",
+      "rect": [
+        426,
+        306,
+        56,
+        56
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot4/Icon",
+      "rect": [
+        438,
+        318,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot5",
+      "rect": [
+        490,
+        306,
+        56,
+        56
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Margin/Column/CenterHotbar/Tray/Slots/Slot6",
+      "rect": [
+        554,
+        306,
+        56,
+        56
+      ]
+    }
+  ],
+  "counts": {
+    "controls": 32,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 32
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/hud_assets_2026-10-27/mobile-layout.json",
+  "findings": [],
+  "label": "mobile",
+  "node_path": ".",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 390,
+    "width": 844
+  }
+}

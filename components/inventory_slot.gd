@@ -4,9 +4,11 @@ var _selection_frame: TextureRect
 const NORMAL: Texture2D = preload("res://resources/ui/hotbar_slot.tres")
 const SELECTED: Texture2D = preload("res://resources/ui/hotbar_selected.tres")
 const FOCUS: Texture2D = preload("res://resources/ui/soil_focus.tres")
-const HOTBAR_NORMAL: Texture2D = preload("res://resources/ui/hotbar_frame_normal.tres")
-const HOTBAR_SELECTED: Texture2D = preload("res://resources/ui/hotbar_frame_selected.tres")
+const HOTBAR_NORMAL: Texture2D = preload("res://assets/Ui/CozyHUD/slot_normal.png")
+const HOTBAR_SELECTED: Texture2D = preload("res://assets/Ui/CozyHUD/slot_selected.png")
+var _hotbar_frame: NinePatchRect
 var hotbar_skin: bool = false
+var cozy_skin: bool = false
 var inventory: InventoryComponent
 var slot_index: int = 0
 var compact: bool = false
@@ -23,11 +25,28 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(52, 56) if compact else Vector2(64, 68)
 	ignore_texture_size = true
 	stretch_mode = TextureButton.STRETCH_SCALE
-	texture_normal = HOTBAR_NORMAL if hotbar_skin else NORMAL
-	texture_pressed = HOTBAR_SELECTED if hotbar_skin else SELECTED
-	texture_hover = HOTBAR_SELECTED if hotbar_skin else SELECTED
+	# Nine-patch slots keep their corner pixels fixed; legacy skins use textures.
+	var framed: bool = hotbar_skin or cozy_skin
+	texture_normal = null if framed else NORMAL
+	texture_pressed = null if framed else SELECTED
+	texture_hover = null if framed else SELECTED
 	toggle_mode = true
 	focus_mode = Control.FOCUS_NONE
+	if framed:
+		_hotbar_frame = NinePatchRect.new()
+		_hotbar_frame.name = "HotbarFrame"
+		_hotbar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_hotbar_frame.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_hotbar_frame.patch_margin_left = 8
+		_hotbar_frame.patch_margin_top = 8
+		_hotbar_frame.patch_margin_right = 8
+		_hotbar_frame.patch_margin_bottom = 8
+		add_child(_hotbar_frame)
+		_hotbar_frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		mouse_entered.connect(_refresh_hotbar_frame)
+		mouse_exited.connect(_refresh_hotbar_frame)
+		toggled.connect(_refresh_hotbar_frame.unbind(1))
+		_refresh_hotbar_frame()
 	_icon = TextureRect.new()
 	_icon.name = "Icon"
 	_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -55,7 +74,7 @@ func _ready() -> void:
 	_shortcut.position = Vector2(6, 1)
 	_shortcut.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_shortcut.add_theme_font_size_override("font_size", 14 if compact else 16)
-	_shortcut.add_theme_color_override("font_color", Color(0.9, 0.9, 0.96) if hotbar_skin else Color(0.28, 0.18, 0.12))
+	_shortcut.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12))
 	add_child(_shortcut)
 	_star = Label.new()
 	_star.text = "*"
@@ -71,12 +90,12 @@ func _ready() -> void:
 	_count.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_count.add_theme_font_size_override("font_size", 16 if compact else 20)
-	_count.add_theme_color_override("font_color", Color(1, 0.95, 0.80))
-	_count.add_theme_color_override("font_shadow_color", Color(0.12,0.10,0.16) if hotbar_skin else Color(0.28,0.18,0.12))
-	_count.add_theme_constant_override("shadow_offset_x", 1)
-	_count.add_theme_constant_override("shadow_offset_y", 1)
+	_count.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12) if framed else Color(1, 0.95, 0.80))
+	_count.add_theme_color_override("font_shadow_color", Color(0.28,0.18,0.12))
+	_count.add_theme_constant_override("shadow_offset_x", 0 if framed else 1)
+	_count.add_theme_constant_override("shadow_offset_y", 0 if framed else 1)
 	var count_style: StyleBoxFlat = StyleBoxFlat.new()
-	count_style.bg_color = Color.TRANSPARENT if hotbar_skin else Color(0.20, 0.16, 0.10, 0.92)
+	count_style.bg_color = Color.TRANSPARENT if framed else Color(0.20, 0.16, 0.10, 0.92)
 	count_style.content_margin_left = 3
 	count_style.content_margin_right = 3
 	_count.add_theme_stylebox_override("normal", count_style)
@@ -163,8 +182,13 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 func set_selected(value: bool) -> void:
 	set_pressed_no_signal(value)
-	_selection_frame.visible = value and not hotbar_skin
-	self_modulate = Color.WHITE if value or hotbar_skin else Color(0.87, 0.84, 0.77)
+	_refresh_hotbar_frame()
+	_selection_frame.visible = value and not (hotbar_skin or cozy_skin)
+	self_modulate = Color.WHITE if value or hotbar_skin or cozy_skin else Color(0.87, 0.84, 0.77)
+
+func _refresh_hotbar_frame() -> void:
+	if _hotbar_frame != null:
+		_hotbar_frame.texture = HOTBAR_SELECTED if button_pressed or is_hovered() else HOTBAR_NORMAL
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

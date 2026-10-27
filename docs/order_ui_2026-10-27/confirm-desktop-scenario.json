@@ -1,0 +1,20 @@
+{
+  "scene_path": "tests/support/order_confirmation_fixture.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/OrderBoard/OrderUI/Root",
+      "label": "confirm-desktop",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/order_ui_2026-10-27/confirm-desktop-layout.json"
+    }
+  ]
+}

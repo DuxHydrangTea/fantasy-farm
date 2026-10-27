@@ -1,0 +1,306 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/animals/management/pen_dashboard.gd" id="script"]
+
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[node name="PenDashboard" type="CanvasLayer"]
+layer = 27
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_filter = 1
+visible = false
+theme = ExtResource("theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.09, 0.07, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 coins"
+
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(48, 48)
+text = "×"
+tooltip_text = "Close (Esc / E)"
+
+[node name="HeaderRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="Overview" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+
+[node name="Summary" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PopulationPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="PopulationBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/PopulationPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PopulationRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PopulationTitle" type="Label" parent="Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox/PopulationRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Animals"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="PopulationValue" type="Label" parent="Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox/PopulationRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="FoodPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="FoodBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/FoodPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="FoodRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/FoodPanel/FoodBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FoodTitle" type="Label" parent="Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Food troughs"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="FoodValue" type="Label" parent="Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="FoodMeter" type="ProgressBar" parent="Root/Center/Panel/Body/Summary/FoodPanel/FoodBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+show_percentage = false
+
+[node name="WaterPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Summary"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DetailCard"
+
+[node name="WaterBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Summary/WaterPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="WaterRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Summary/WaterPanel/WaterBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WaterTitle" type="Label" parent="Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Water troughs"
+size_flags_horizontal = 3
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="WaterValue" type="Label" parent="Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+
+[node name="WaterMeter" type="ProgressBar" parent="Root/Center/Panel/Body/Summary/WaterPanel/WaterBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+show_percentage = false
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Roster" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Empty" type="Label" parent="Root/Center/Panel/Body/Main/Roster"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="AnimalScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/Roster"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="AnimalGrid" type="GridContainer" parent="Root/Center/Panel/Body/Main/Roster/AnimalScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="Divider" type="VSeparator" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="UpgradeBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(300, 0)
+theme_override_constants/separation = 8
+
+[node name="UpgradeScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="UpgradeContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="UpgradeTitle" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Expand pen"
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 22
+
+[node name="BuildingIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 144)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="UpgradeInfo" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="CapacityNext" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 28
+
+[node name="UpgradeDescription" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unlock 5 additional animal spaces."
+autowrap_mode = 3
+
+[node name="PriceRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="PriceTitle" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/PriceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cost"
+size_flags_horizontal = 3
+
+[node name="UpgradeCost" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/PriceRow"]
+unique_name_in_owner = true
+layout_mode = 2
+
+
+[node name="UpgradeFeedback" type="Label" parent="Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="UpgradeButton" type="Button" parent="Root/Center/Panel/Body/Main/UpgradeBox"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+autowrap_mode = 3
+theme_type_variation = &"PrimaryAction"
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hover over an animal card for age and lifespan."
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14

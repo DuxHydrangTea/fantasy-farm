@@ -109,11 +109,11 @@ func test_body_reserves_pause_and_dashboard_explains_missing_food_and_water() ->
 	assert_almost_eq(actor.production.progress_seconds, 1800.0, 0.00001)
 	assert_eq(actor.needs.satiety, 0.0)
 	assert_eq(actor.needs.hydration, 0.0)
-	var card: AnimalCard = AnimalCard.new()
+	var card: AnimalCard = preload("res://scenes/animals/animal_card.tscn").instantiate() as AnimalCard
 	card.animal = actor
 	add_child_autofree(card)
-	assert_string_contains(card.produce.text, "Needs food")
-	assert_string_contains(card.produce.text, "Needs water")
+	assert_string_contains(card.produce.text, tr("Needs food"))
+	assert_string_contains(card.produce.text, tr("Needs water"))
 	assert_eq(card.food.value, 0.0)
 	assert_eq(card.water.value, 0.0)
 

@@ -4986,7 +4986,7 @@ accepted_species = Array[int]([1, 5])
 capacity = 20
 
 [node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
-position = Vector2(105, -5)
+position = Vector2(89, -5)
 
 [node name="FeedTrough2" parent="PondPen" unique_id=624608384 instance=ExtResource("32_feed_trough")]
 position = Vector2(48, 72)

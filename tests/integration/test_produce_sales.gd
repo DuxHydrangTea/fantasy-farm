@@ -1,4 +1,5 @@
 extends GutTest
+const WORLD: PackedScene = preload("res://world/main_world.tscn")
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
 const BUYER: PackedScene = preload("res://scenes/characters/produce_buyer.tscn")
 var viewport: SubViewport
@@ -17,6 +18,7 @@ func before_each() -> void:
 	add_child_autofree(viewport)
 	player = PLAYER.instantiate() as FarmPlayer
 	viewport.add_child(player)
+	player.wallet.set_balance(1000)
 	buyer = BUYER.instantiate() as ShopMerchant
 	buyer.position = Vector2(24, 0)
 	viewport.add_child(buyer)
@@ -47,17 +49,17 @@ func _pixels(control: Control) -> Rect2:
 
 func test_entered_quantity_commits_text_and_sell_all_sells_other_types() -> void:
 	assert_true(buyer.open_shop(player))
-	assert_false(menu.balance_label.visible, "Sales show quotes, not the player balance")
+	assert_true(menu.balance_label.visible, "New header shows the current wallet balance")
 	assert_eq(player.shop_interaction.active_shop, menu)
 	assert_true(player.selection.shop_open)
-	assert_eq(menu.items.item_count, 2)
+	assert_eq(menu.row_buttons.size(), 2)
 	menu.quantity.get_line_edit().text = "105"
 	menu.sell_quantity()
 	assert_eq(player.selection.inventory.count_item(carrot.item_id), 15)
-	assert_eq(player.wallet.balance, 1525)
+	assert_eq(player.wallet.balance, 1000 + menu.catalog.find(carrot.item_id).price * 105)
 	assert_string_contains(menu.status.text, "105")
 	menu.sell_all()
-	assert_eq(player.wallet.balance, 1648)
+	assert_eq(player.wallet.balance, 1000 + menu.catalog.find(carrot.item_id).price * 120 + menu.catalog.find(milk.item_id).price * 2)
 	assert_eq(player.selection.inventory.count_item(carrot.item_id), 0)
 	assert_eq(player.selection.inventory.count_item(milk.item_id), 0)
 	assert_eq(player.selection.inventory.count_item(&"hoe"), 1)
@@ -66,7 +68,7 @@ func test_entered_quantity_commits_text_and_sell_all_sells_other_types() -> void
 	assert_true(menu.sell_all_button.disabled)
 	assert_true(menu.sell_quantity_button.disabled)
 	menu.sell_all()
-	assert_eq(player.wallet.balance, 1648)
+	assert_eq(player.wallet.balance, 1000 + menu.catalog.find(carrot.item_id).price * 120 + menu.catalog.find(milk.item_id).price * 2)
 	menu.close()
 	assert_false(player.selection.shop_open)
 	assert_true(buyer.bubble.visible)
@@ -96,7 +98,7 @@ func test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quanti
 	await wait_process_frames(4)
 	assert_eq(menu.selected, chosen)
 	assert_eq(menu.quantity.value, 2.0)
-	assert_string_contains(menu.details.text, "Sữa bò")
+	assert_string_contains((menu.get_node("%ProductName") as Label).text, "Sữa bò")
 	Language.set_language("en")
 	viewport.size = Vector2i(500, 281)
 	await wait_process_frames(4)
@@ -105,7 +107,7 @@ func test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quanti
 	for control: Control in [menu.panel, menu.close_button, menu.sell_quantity_button, menu.sell_all_button]:
 		assert_true(bounds.encloses(_pixels(control)), str(_pixels(control)))
 	_click(menu.sell_quantity_button)
-	assert_eq(player.wallet.balance, 1048)
+	assert_eq(player.wallet.balance, 1000 + menu.catalog.find(milk.item_id).price * 2)
 	assert_eq(player.selection.inventory.count_item(carrot.item_id), 120)
 	_click(menu.close_button)
 	assert_false(menu.is_open)
@@ -113,7 +115,7 @@ func test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quanti
 func test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_menu() -> void:
 	buyer.free()
 	player.free()
-	var world: FarmWorld = (load("res://world/main_world.tscn") as PackedScene).instantiate() as FarmWorld
+	var world: FarmWorld = WORLD.instantiate() as FarmWorld
 	for child: Node in world.get_children():
 		if String(child.name).begins_with("TreeScatter"):
 			child.free()
@@ -133,3 +135,57 @@ func test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_men
 	assert_true(player.shop_interaction.try_interact())
 	assert_true(merchant.menu is ShopUI)
 	assert_true(merchant.menu.is_open)
+
+func test_quality_tabs_maximum_and_bulk_sale_keep_other_qualities() -> void:
+	player.selection.inventory.add(carrot, 7, 1)
+	player.selection.inventory.add(milk, 3, 1)
+	buyer.open_shop(player)
+	menu._choose_tier(1)
+	assert_true(menu.quality_tabs[1].button_pressed)
+	assert_eq(menu.row_buttons.size(), 2)
+	assert_eq(menu.service.quantity(menu.selected), 7)
+	menu._set_maximum()
+	assert_eq(int(menu.quantity.value), 7)
+	var before: int = player.wallet.balance
+	var expected: int = ItemQuality.unit_price(menu.catalog.find(carrot.item_id).price, 1) * 7
+	menu.sell_quantity()
+	assert_eq(player.wallet.balance, before + expected)
+	assert_eq(player.selection.inventory.count_item(carrot.item_id, 0), 120)
+	assert_eq(player.selection.inventory.count_item(carrot.item_id, 1), 0)
+	menu.sell_all()
+	assert_eq(player.selection.inventory.count_item(milk.item_id, 1), 0)
+	assert_eq(player.selection.inventory.count_item(milk.item_id, 0), 2)
+	assert_true((menu.get_node("%Empty") as Label).visible)
+	assert_true(menu.sell_quantity_button.disabled)
+	assert_true(menu.sell_all_button.disabled)
+	menu._choose_tier(0)
+	assert_eq(menu.row_buttons.size(), 2)
+	assert_false(menu.sell_all_button.disabled)
+
+func test_maximum_respects_wallet_room_and_bulk_overflow_does_not_sell() -> void:
+	buyer.open_shop(player)
+	var unit: int = menu.selected.price
+	player.wallet.set_balance(WalletComponent.MAX_COINS - unit * 3)
+	menu._set_maximum()
+	assert_eq(int(menu.quantity.value), 3)
+	assert_true(menu.sell_all_button.disabled)
+	menu.sell_all()
+	assert_eq(player.selection.inventory.count_item(carrot.item_id), 120)
+	menu.sell_quantity()
+	assert_eq(player.wallet.balance, WalletComponent.MAX_COINS)
+	assert_eq(player.selection.inventory.count_item(carrot.item_id), 117)
+	assert_true((menu.get_node("%Maximum") as Button).disabled)
+	assert_true(menu.sell_quantity_button.disabled)
+
+func test_empty_quality_and_live_inventory_updates_restore_rows() -> void:
+	buyer.open_shop(player)
+	menu._choose_tier(2)
+	assert_eq(menu.row_buttons.size(), 0)
+	assert_true((menu.get_node("%Empty") as Label).visible)
+	assert_false(menu.quantity.editable)
+	player.selection.inventory.add(carrot, 2, 2)
+	assert_eq(menu.row_buttons.size(), 1)
+	assert_false((menu.get_node("%Empty") as Label).visible)
+	assert_true(menu.quantity.editable)
+	menu._set_maximum()
+	assert_eq(int(menu.quantity.value), 2)

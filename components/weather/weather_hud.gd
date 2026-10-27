@@ -12,6 +12,7 @@ func _ready() -> void:
 	layer = 11
 	var root: Control = Control.new()
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(root)
 	UIScaleComponent.attach(self, root)
 	var margin: MarginContainer = MarginContainer.new()
@@ -25,13 +26,8 @@ func _ready() -> void:
 	var panel: PanelContainer = PanelContainer.new()
 	panel.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.theme = preload("res://resources/ui/game_theme.tres")
-	var style: StyleBoxTexture = panel.theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBoxTexture
-	style.content_margin_left = 14
-	style.content_margin_right = 14
-	style.content_margin_top = 10
-	style.content_margin_bottom = 12
-	panel.add_theme_stylebox_override("panel", style)
+	panel.theme = preload("res://resources/ui/cozy_hud/theme.tres")
+	panel.theme_type_variation = &"WeatherPanel"
 	column.add_child(panel)
 	label = Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -98,6 +94,7 @@ func _debug_button(row: HBoxContainer) -> Button:
 func _refresh_debug_bar() -> void:
 	if debug_bar == null:
 		return
+	debug_bar.visible = not MobileLayout.is_touch(get_viewport())
 	_debug_title.text = "DEBUG"
 	var times: Array[String] = [tr("Day"), tr("Night"), tr("Live time")]
 	var hours: Array[int] = [12, 23, -1]

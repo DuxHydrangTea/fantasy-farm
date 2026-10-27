@@ -1,0 +1,151 @@
+{
+  "tests": {
+    "feature_suites": {
+      "passed": 16,
+      "total": 16,
+      "assertions": 288
+    },
+    "order_warning_compatibility": {
+      "passed": 1,
+      "assertions": 5
+    },
+    "mobile_safe_area_compatibility": {
+      "passed": 1,
+      "assertions": 9
+    }
+  },
+  "runtime": {
+    "checks": 30,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "layout": {
+    "desktop": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "desktop-full",
+          "counts": {
+            "controls": 73,
+            "findings": 0,
+            "hidden": 4,
+            "visible": 73
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "desktop-header",
+          "counts": {
+            "controls": 4,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 4
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "desktop-quantity",
+          "counts": {
+            "controls": 5,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 5
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "desktop-sell",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "desktop-bulk",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "finding_count": 0
+        }
+      ]
+    },
+    "compact": {
+      "ok": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "compact-full",
+          "counts": {
+            "controls": 71,
+            "findings": 0,
+            "hidden": 6,
+            "visible": 71
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "compact-header",
+          "counts": {
+            "controls": 4,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 4
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "compact-quantity",
+          "counts": {
+            "controls": 5,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 5
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "compact-sell",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "finding_count": 0
+        },
+        {
+          "label": "compact-bulk",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "finding_count": 0
+        }
+      ]
+    }
+  },
+  "validation": {
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "changed_sales_file_diagnostics": [],
+    "note": "Existing dependency warnings remain; zero errors. Not claiming the entire project is warning-free."
+  },
+  "scene_node_count": 48,
+  "service_modified": false,
+  "personal_save_used": false
+}

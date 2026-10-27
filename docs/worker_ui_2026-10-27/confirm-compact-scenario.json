@@ -1,0 +1,20 @@
+{
+  "scene_path": "tests/support/worker_confirmation_fixture.tscn",
+  "viewport_size": {
+    "width": 667,
+    "height": 375
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/CropWorkers/WorkerMenu/Root",
+      "label": "confirm-compact",
+      "fail_on": [
+        "zero_size",
+        "overlap"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/worker_ui_2026-10-27/confirm-compact-layout.json"
+    }
+  ]
+}

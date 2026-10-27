@@ -30,7 +30,7 @@ func _ready() -> void:
 	rectangle.size = Vector2(24, 6)
 	shape.shape = rectangle
 	add_child(shape)
-	menu = OrderUI.new()
+	menu = preload("res://scenes/ui/orders.tscn").instantiate() as OrderUI
 	menu.board = self
 	add_child(menu)
 

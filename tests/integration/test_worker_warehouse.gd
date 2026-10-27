@@ -216,6 +216,5 @@ func test_warehouse_notifications_hold_transaction_lock_and_refresh_open_panel()
 	assert_eq(observed, [true])
 	var menu: FarmStorageMenu = access.menu as FarmStorageMenu
 	assert_false(menu.grids[1].get_children().is_empty())
-	assert_true((menu.grids[1].get_child(0) as Button).text.contains("300"))
+	assert_eq((menu.grids[1].get_child(0) as FarmStorageSlot).amount, 300)
 	menu.close(false)
-

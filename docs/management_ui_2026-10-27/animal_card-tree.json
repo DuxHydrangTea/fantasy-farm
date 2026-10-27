@@ -1,0 +1,164 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/animals/management/animal_card.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres"
+  ],
+  "node_count": 15,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "AnimalCard",
+      "owner_path": "",
+      "path": ".",
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Body",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "CardHeader",
+      "owner_path": ".",
+      "path": "./Body/CardHeader",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Portrait",
+      "owner_path": ".",
+      "path": "./Body/CardHeader/Portrait",
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Preview",
+      "owner_path": ".",
+      "path": "./Body/CardHeader/Portrait/Preview",
+      "sibling_index": -1,
+      "type": "AnimatedSprite2D"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Names",
+      "owner_path": ".",
+      "path": "./Body/CardHeader/Names",
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Caption",
+      "owner_path": ".",
+      "path": "./Body/CardHeader/Names/Caption",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Stage",
+      "owner_path": ".",
+      "path": "./Body/CardHeader/Names/Stage",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "FoodRow",
+      "owner_path": ".",
+      "path": "./Body/FoodRow",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "FoodText",
+      "owner_path": ".",
+      "path": "./Body/FoodRow/FoodText",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "FoodBar",
+      "owner_path": ".",
+      "path": "./Body/FoodRow/FoodBar",
+      "sibling_index": -1,
+      "type": "ProgressBar"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "WaterRow",
+      "owner_path": ".",
+      "path": "./Body/WaterRow",
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "WaterText",
+      "owner_path": ".",
+      "path": "./Body/WaterRow/WaterText",
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "WaterBar",
+      "owner_path": ".",
+      "path": "./Body/WaterRow/WaterBar",
+      "sibling_index": -1,
+      "type": "ProgressBar"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "Produce",
+      "owner_path": ".",
+      "path": "./Body/Produce",
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/animals/animal_card.tscn",
+  "uid": ""
+}

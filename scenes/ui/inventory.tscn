@@ -1,38 +1,41 @@
 [gd_scene format=3 uid="uid://8ftvdhs2ex1r"]
 
-[ext_resource type="Script" uid="uid://dgb6lslvg74ii" path="res://components/inventory_ui.gd" id="1_ui"]
-[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://components/inventory_ui.gd" id="1_ui"]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/inventory_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/Icons/quality/badge_silver.png" id="silver"]
+[ext_resource type="Texture2D" path="res://assets/Icons/quality/badge_gold.png" id="gold"]
 
-[node name="InventoryUI" type="CanvasLayer" unique_id=1598767233 node_paths=PackedStringArray("close_button", "root", "panel", "grid", "details", "capacity")]
+
+[node name="InventoryUI" type="CanvasLayer" node_paths=PackedStringArray("close_button", "root", "panel", "grid", "details", "capacity")]
 layer = 20
 script = ExtResource("1_ui")
 close_button = NodePath("Root/Center/Panel/Body/Header/Close")
 root = NodePath("Root")
 panel = NodePath("Root/Center/Panel")
-grid = NodePath("Root/Center/Panel/Body/Scroll/Center/Grid")
-details = NodePath("Root/Center/Panel/Body/Details")
+grid = NodePath("Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid")
+details = NodePath("Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/Details")
 capacity = NodePath("Root/Center/Panel/Body/Footer/Capacity")
 
-[node name="Root" type="Control" parent="." unique_id=1269671540]
-texture_filter = 1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_theme")
-
-[node name="Dim" type="ColorRect" parent="Root" unique_id=1326428285]
+[node name="Root" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1, 0.09, 0.07, 0.65)
+texture_filter = 1
+theme = ExtResource("2_theme")
 
-[node name="Center" type="CenterContainer" parent="Root" unique_id=765675278]
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.04, 0.62)
+
+[node name="Center" type="CenterContainer" parent="Root"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,68 +44,254 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=1424098951]
-custom_minimum_size = Vector2(520, 540)
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
 layout_mode = 2
+custom_minimum_size = Vector2(1040, 600)
 
-[node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=1800325310]
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
-[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1017386628]
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=1494367326]
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 30
 text = "INVENTORY"
 
-[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=1951490743]
-custom_minimum_size = Vector2(44, 40)
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
 layout_mode = 2
+unique_name_in_owner = true
+vertical_alignment = 1
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(48,48)
+text = "×"
 tooltip_text = "Close (Esc)"
 focus_mode = 0
-text = "×"
 
-[node name="Subtitle" type="Label" parent="Root/Center/Panel/Body" unique_id=1082757921]
+[node name="TopRule" type="HSeparator" parent="Root/Center/Panel/Body"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "First 6 slots are shared with the hotbar"
+
+[node name="Content" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Left" type="VBoxContainer" parent="Root/Center/Panel/Body/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="ItemScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Content/Left"]
+layout_mode = 2
+unique_name_in_owner = true
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+custom_minimum_size = Vector2(0, 80)
+
+[node name="Center" type="CenterContainer" parent="Root/Center/Panel/Body/Content/Left/ItemScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Content/Left/ItemScroll/Center"]
+layout_mode = 2
+columns = 8
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="InventoryHint" type="Label" parent="Root/Center/Panel/Body/Content/Left"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 14
+text = "Drag to swap or stack"
 autowrap_mode = 3
 
-[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body" unique_id=2135767848]
+[node name="Divider" type="VSeparator" parent="Root/Center/Panel/Body/Content"]
+layout_mode = 2
+
+[node name="Sidebar" type="VBoxContainer" parent="Root/Center/Panel/Body/Content"]
+layout_mode = 2
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280,0)
+theme_override_constants/separation = 8
+
+[node name="InfoScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Content/Sidebar"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Center" type="CenterContainer" parent="Root/Center/Panel/Body/Scroll" unique_id=80968017]
+[node name="ItemInfo" type="VBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll"]
+layout_mode = 2
+unique_name_in_owner = true
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ItemHeader" type="HBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="IconFrame" type="PanelContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader"]
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="ItemIcon" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/IconFrame"]
+layout_mode = 2
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72,72)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Captions" type="VBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader"]
 layout_mode = 2
 size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 4
 
-[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Scroll/Center" unique_id=601836878]
+[node name="ItemName" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/Captions"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
-columns = 6
-
-[node name="Details" type="Label" parent="Root/Center/Panel/Body" unique_id=1318824912]
-custom_minimum_size = Vector2(0, 28)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="Footer" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1222223094]
+[node name="ItemType" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/Captions"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.48,0.34,0.23,1)
+
+[node name="QualityPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo"]
+layout_mode = 2
+unique_name_in_owner = true
+theme_type_variation = &"DetailCard"
+
+[node name="Rows" type="VBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Normal" type="HBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Normal"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Normal"
+
+[node name="NormalCount" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Normal"]
+layout_mode = 2
+unique_name_in_owner = true
+text = "0"
+horizontal_alignment = 2
+
+[node name="Rule0" type="HSeparator" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows"]
 layout_mode = 2
 
-[node name="Hint" type="Label" parent="Root/Center/Panel/Body/Footer" unique_id=1552169593]
+[node name="Silver" type="HBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Silver"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Silver"
+
+[node name="Badge" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Silver"]
+layout_mode = 2
+custom_minimum_size = Vector2(16,16)
+texture = ExtResource("silver")
+expand_mode = 1
+stretch_mode = 5
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="SilverCount" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Silver"]
+layout_mode = 2
+unique_name_in_owner = true
+text = "0"
+horizontal_alignment = 2
+
+[node name="Rule1" type="HSeparator" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows"]
+layout_mode = 2
+
+[node name="Gold" type="HBoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Gold"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Gold"
+
+[node name="Badge" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Gold"]
+layout_mode = 2
+custom_minimum_size = Vector2(16,16)
+texture = ExtResource("gold")
+expand_mode = 1
+stretch_mode = 5
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="GoldCount" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Gold"]
+layout_mode = 2
+unique_name_in_owner = true
+text = "0"
+horizontal_alignment = 2
+
+[node name="DescriptionRule" type="HSeparator" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo"]
+layout_mode = 2
+
+[node name="Details" type="Label" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo"]
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="InventoryActions" type="BoxContainer" parent="Root/Center/Panel/Body/Content/Sidebar"]
+layout_mode = 2
+unique_name_in_owner = true
+vertical = true
+theme_override_constants/separation = 8
+
+[node name="MoveButton" type="Button" parent="Root/Center/Panel/Body/Content/Sidebar/InventoryActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0,48)
+theme_type_variation = &"PrimaryAction"
+focus_mode = 0
+text = "Move item"
+
+[node name="AssignButton" type="Button" parent="Root/Center/Panel/Body/Content/Sidebar/InventoryActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0,48)
+focus_mode = 0
+text = "Assign to hotbar"
+
+[node name="BottomRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Capacity" type="Label" parent="Root/Center/Panel/Body/Footer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
-text = "Drag to swap or stack"
-autowrap_mode = 3
+vertical_alignment = 1
 
-[node name="Capacity" type="Label" parent="Root/Center/Panel/Body/Footer" unique_id=498918105]
+[node name="TouchMode" type="Button" parent="Root/Center/Panel/Body/Footer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0,48)
+theme_override_font_sizes/font_size = 14
+focus_mode = 0

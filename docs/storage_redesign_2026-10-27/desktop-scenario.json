@@ -1,0 +1,64 @@
+{
+  "scene_path": "tests/support/storage_layout_fixture.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header",
+      "label": "desktop-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection",
+      "label": "desktop-selection",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-selection-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+      "label": "desktop-command",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-command-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Status",
+      "label": "desktop-status",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-status-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading",
+      "label": "desktop-bag-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-bag-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading",
+      "label": "desktop-store-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-store-header-layout.json"
+    }
+  ]
+}

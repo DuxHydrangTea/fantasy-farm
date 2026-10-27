@@ -1,0 +1,63 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header",
+      "rect": [
+        106,
+        62,
+        1068,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header/Title",
+      "rect": [
+        106,
+        68,
+        913,
+        34.13
+      ],
+      "text": "LAI BUON'S SHOP"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        1035,
+        74,
+        75,
+        23.63
+      ],
+      "text": "10.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        1126,
+        62,
+        48,
+        48
+      ],
+      "text": "×"
+    }
+  ],
+  "counts": {
+    "controls": 4,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 4
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-header-layout.json",
+  "findings": [],
+  "label": "desktop-header",
+  "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Header",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

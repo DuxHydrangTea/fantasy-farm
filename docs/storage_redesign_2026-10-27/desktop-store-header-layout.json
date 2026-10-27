@@ -1,0 +1,63 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading",
+      "rect": [
+        657,
+        108,
+        517,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading/StoreTitle",
+      "rect": [
+        657,
+        120,
+        368,
+        23.63
+      ],
+      "text": "Trong kho"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading/StoreUsage",
+      "rect": [
+        1033,
+        120,
+        56,
+        23.63
+      ],
+      "text": "0 / 128"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading/WithdrawAll",
+      "rect": [
+        1097,
+        108,
+        77,
+        48
+      ],
+      "text": "Lấy hết"
+    }
+  ],
+  "counts": {
+    "controls": 4,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 4
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-store-header-layout.json",
+  "findings": [],
+  "label": "desktop-store-header",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

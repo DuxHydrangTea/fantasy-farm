@@ -125,6 +125,7 @@ func test_touch_bag_moves_to_last_slot_without_drag_or_spending_items() -> void:
 	assert_eq(player.selection.inventory.get_slot_item(63), item, "Closing the bag cancels destination mode")
 
 func test_sales_checkout_and_land_confirmation_fit_safe_landscape_height() -> void:
+	player.wallet.set_balance(1000)
 	var sales: ProduceSalesUI = SALES.instantiate() as ProduceSalesUI
 	viewport.add_child(sales)
 	var produce: ProducePrice = sales.catalog.entries[0]
@@ -135,7 +136,7 @@ func test_sales_checkout_and_land_confirmation_fit_safe_landscape_height() -> vo
 	assert_true(safe.grow(1).encloses(_pixels(sales.panel)), str(_pixels(sales.panel)))
 	assert_gte(_pixels(sales.sell_all_button).size.y, 47.9)
 	assert_gte(_pixels(sales.sell_quantity_button).size.y, 47.9)
-	assert_gte(sales.items.get_item_rect(0).size.y, 48.0)
+	assert_gte(sales.row_buttons[0].size.y, 48.0)
 	var controls: TouchQuantityComponent = sales.quantity.get_child(sales.quantity.get_child_count() - 1) as TouchQuantityComponent
 	_click(controls.increase)
 	assert_eq(sales.quantity.value, 2.0)
@@ -158,7 +159,7 @@ func test_pen_dashboard_fits_short_vietnamese_screen() -> void:
 	viewport.add_child(pen)
 	var board: PenBoard = autofree(PenBoard.new()) as PenBoard
 	board.pen = pen
-	var menu: PenDashboard = PenDashboard.new()
+	var menu: PenDashboard = preload("res://scenes/animals/pen_dashboard.tscn").instantiate() as PenDashboard
 	menu.board = board
 	viewport.add_child(menu)
 	assert_true(menu.open(null, player))

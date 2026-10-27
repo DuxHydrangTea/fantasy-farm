@@ -149,7 +149,7 @@ func _run() -> void:
 			produce_slot = i
 	_check(produce_slot >= 0, "Produce has a bag slot")
 	await _touch_click(bag_ui.buttons[produce_slot])
-	_check(bag_ui.quality_popup.visible, "Touch opens three-tier breakdown")
+	_check(bag_ui.quality_panel.is_visible_in_tree(), "Touch shows inline three-tier breakdown")
 	_check(bag_ui._quality_rows[2].text.contains(str(amount)), "Gold count shown in breakdown")
 	await _capture("quality-bag-touch")
 	bag_ui.close()
@@ -158,8 +158,7 @@ func _run() -> void:
 	await _frames(5)
 	_check(buyer.open_shop(world.player), "Sales opens on touch")
 	var sales: ProduceSalesUI = buyer.menu as ProduceSalesUI
-	sales.tier_choice.select(1)
-	sales.tier_choice.item_selected.emit(1)
+	sales._choose_tier(1)
 	await _frames(5)
 	_check(sales.sell_all_button.text.contains(ItemQuality.label(1)), "Sale preview names Silver tier")
 	await _capture("quality-sales-touch")

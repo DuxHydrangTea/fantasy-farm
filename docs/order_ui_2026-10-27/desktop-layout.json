@@ -1,0 +1,730 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/OrderBoard/OrderUI/Root",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Dim",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel",
+      "rect": [
+        80,
+        50,
+        1120,
+        620
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell",
+      "rect": [
+        96,
+        62,
+        1088,
+        596
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header",
+      "rect": [
+        96,
+        62,
+        1088,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Heading",
+      "rect": [
+        96,
+        68,
+        957,
+        34.13
+      ],
+      "text": "Order board"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Balance",
+      "rect": [
+        1057,
+        74,
+        75,
+        23.63
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Header/Close",
+      "rect": [
+        1136,
+        62,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page",
+      "rect": [
+        96,
+        122,
+        1088,
+        536
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main",
+      "rect": [
+        96,
+        122,
+        1088,
+        509
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn",
+      "rect": [
+        96,
+        122,
+        372,
+        509
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/OrdersHeading",
+      "rect": [
+        96,
+        122,
+        372,
+        26.25
+      ],
+      "text": "Current orders"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0",
+      "rect": [
+        96,
+        157,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0",
+      "rect": [
+        96,
+        157,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0",
+      "rect": [
+        108,
+        165,
+        348,
+        112
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderIcon0",
+      "rect": [
+        108,
+        165,
+        48,
+        112
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0",
+      "rect": [
+        160,
+        183,
+        296,
+        75
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderTitle0",
+      "rect": [
+        160,
+        183,
+        296,
+        23.63
+      ],
+      "text": "Giao cà chua số lượng lớn"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderState0",
+      "rect": [
+        160,
+        211,
+        296,
+        18.38
+      ],
+      "text": "Đủ hàng để giao"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0/OrderText0/OrderReward0",
+      "rect": [
+        160,
+        234,
+        296,
+        23.63
+      ],
+      "text": "100.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1",
+      "rect": [
+        96,
+        293,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1",
+      "rect": [
+        96,
+        293,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1",
+      "rect": [
+        108,
+        301,
+        348,
+        112
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderIcon1",
+      "rect": [
+        108,
+        301,
+        48,
+        112
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1",
+      "rect": [
+        160,
+        319,
+        296,
+        75
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderTitle1",
+      "rect": [
+        160,
+        319,
+        296,
+        23.63
+      ],
+      "text": "Khoai tây cho quân đội"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderState1",
+      "rect": [
+        160,
+        347,
+        296,
+        18.38
+      ],
+      "text": "Chưa thể giao"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1/OrderText1/OrderReward1",
+      "rect": [
+        160,
+        370,
+        296,
+        23.63
+      ],
+      "text": "162.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2",
+      "rect": [
+        96,
+        429,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "MarginContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2",
+      "rect": [
+        96,
+        429,
+        372,
+        128
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2",
+      "rect": [
+        108,
+        437,
+        348,
+        112
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderIcon2",
+      "rect": [
+        108,
+        437,
+        48,
+        112
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2",
+      "rect": [
+        160,
+        455,
+        296,
+        75
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderTitle2",
+      "rect": [
+        160,
+        455,
+        296,
+        23.63
+      ],
+      "text": "Giỏ salad đại tiệc"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderState2",
+      "rect": [
+        160,
+        483,
+        296,
+        18.38
+      ],
+      "text": "Chưa thể giao"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2/OrderText2/OrderReward2",
+      "rect": [
+        160,
+        506,
+        296,
+        23.63
+      ],
+      "text": "224.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/OrderColumn/Refill",
+      "rect": [
+        96,
+        565,
+        372,
+        48
+      ],
+      "text": "Find orders"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn",
+      "rect": [
+        484,
+        122,
+        700,
+        509
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll",
+      "rect": [
+        484,
+        122,
+        700,
+        397
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent",
+      "rect": [
+        484,
+        122,
+        700,
+        288
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/OrderTitle",
+      "rect": [
+        484,
+        122,
+        700,
+        31.5
+      ],
+      "text": "Giao cà chua số lượng lớn"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/RequirementsHeading",
+      "rect": [
+        484,
+        166,
+        700,
+        23.63
+      ],
+      "text": "Vật phẩm cần giao"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements",
+      "rect": [
+        484,
+        202,
+        700,
+        67
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574",
+      "rect": [
+        484,
+        202,
+        700,
+        67
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574/@HBoxContainer@575",
+      "rect": [
+        494,
+        212,
+        680,
+        47
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574/@HBoxContainer@575/@TextureRect@576",
+      "rect": [
+        494,
+        212,
+        36,
+        47
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574/@HBoxContainer@575/@VBoxContainer@577",
+      "rect": [
+        538,
+        212,
+        636,
+        47
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574/@HBoxContainer@575/@VBoxContainer@577/@Label@578",
+      "rect": [
+        538,
+        212,
+        636,
+        23.63
+      ],
+      "text": "Cà chua · Cần: 1000"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Requirements/@PanelContainer@574/@HBoxContainer@575/@VBoxContainer@577/@Label@579",
+      "rect": [
+        538,
+        240,
+        636,
+        18.38
+      ],
+      "text": "Thường: 1008 · Bạc: 1002 · Vàng: 0"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards",
+      "rect": [
+        484,
+        281,
+        700,
+        129
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard",
+      "rect": [
+        484,
+        281,
+        346,
+        129
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox",
+      "rect": [
+        494,
+        291,
+        326,
+        109
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalHeading",
+      "rect": [
+        494,
+        291,
+        326,
+        23.63
+      ],
+      "text": "Normal delivery"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalReward",
+      "rect": [
+        494,
+        319,
+        326,
+        34.13
+      ],
+      "text": "100.000 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalRule",
+      "rect": [
+        494,
+        358,
+        326,
+        18.38
+      ],
+      "text": "Normal uses Normal quality only."
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/NormalCard/NormalBox/NormalState",
+      "rect": [
+        494,
+        381,
+        326,
+        18.38
+      ],
+      "text": "Đủ hàng để giao"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard",
+      "rect": [
+        838,
+        281,
+        346,
+        129
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox",
+      "rect": [
+        848,
+        291,
+        326,
+        109
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectHeading",
+      "rect": [
+        848,
+        291,
+        326,
+        23.63
+      ],
+      "text": "Perfect delivery"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectReward",
+      "rect": [
+        848,
+        319,
+        326,
+        34.13
+      ],
+      "text": "158.400 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectRule",
+      "rect": [
+        848,
+        358,
+        326,
+        18.38
+      ],
+      "text": "Uses Silver before Gold."
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DetailScroll/DetailContent/Rewards/PerfectCard/PerfectBox/PerfectState",
+      "rect": [
+        848,
+        381,
+        326,
+        18.38
+      ],
+      "text": "Đủ hàng để giao"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions",
+      "rect": [
+        484,
+        527,
+        700,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions/Deliver",
+      "rect": [
+        484,
+        527,
+        346,
+        48
+      ],
+      "text": "Deliver order"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/DeliveryActions/Perfect",
+      "rect": [
+        838,
+        527,
+        346,
+        48
+      ],
+      "text": "Perfect delivery"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Main/DetailColumn/Abandon",
+      "rect": [
+        484,
+        583,
+        700,
+        48
+      ],
+      "text": "Abandon order"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/OrderBoard/OrderUI/Root/Center/Panel/Shell/Page/Hint",
+      "rect": [
+        96,
+        639,
+        1088,
+        18.38
+      ],
+      "text": "Review the item tiers before confirming delivery."
+    }
+  ],
+  "counts": {
+    "controls": 68,
+    "findings": 0,
+    "hidden": 8,
+    "visible": 68
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/order_ui_2026-10-27/desktop-layout.json",
+  "findings": [],
+  "label": "desktop",
+  "node_path": "Farm/OrderBoard/OrderUI/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

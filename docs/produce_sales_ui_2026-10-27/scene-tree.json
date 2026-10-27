@@ -1,0 +1,898 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/produce_sales_ui.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres",
+    "res://resources/shops/produce_prices.tres",
+    "res://resources/ui/cozy_hud/cooking_selected.tres"
+  ],
+  "node_count": 48,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "ProduceSalesUI",
+      "owner_path": "",
+      "path": ".",
+      "properties": {
+        "catalog": {
+          "__resource": "res://resources/shops/produce_prices.tres",
+          "resource_type": "Resource"
+        },
+        "layer": 25,
+        "script": {
+          "__resource": "res://components/produce_sales_ui.gd",
+          "resource_type": "GDScript"
+        }
+      },
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "texture_filter": 1,
+        "theme": {
+          "__resource": "res://resources/ui/cozy_hud/shop_theme.tres",
+          "resource_type": "Theme"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "color": {
+          "__type": "Color",
+          "a": 0.649999976158142,
+          "b": 0.0700000002980232,
+          "g": 0.0900000035762787,
+          "r": 0.100000001490116
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Body",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Heading",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Sell produce",
+        "text_overrun_behavior": 3,
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Balance",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "0 coins",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Header/Close",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "×",
+        "tooltip_text": "Close (Esc / E)",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "QualityTabs",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/QualityTabs",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Normal",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/QualityTabs/Normal",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Normal",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "Silver",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/QualityTabs/Silver",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Silver",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "Gold",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/QualityTabs/Gold",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Gold",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 16,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "BrowsePanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.6,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "BrowseBody",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "BrowseHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/BrowseHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Produce in bag",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "ColumnHeadings",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "ItemHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/ItemHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Product",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "OwnedHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/OwnedHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 72.0,
+          "y": 0.0
+        },
+        "horizontal_alignment": 2,
+        "layout_mode": 2,
+        "text": "Owned",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "PriceHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings/PriceHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 96.0,
+          "y": 0.0
+        },
+        "horizontal_alignment": 2,
+        "layout_mode": 2,
+        "text": "Unit price",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "Browse",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "Items",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/Items",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "Empty",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Empty",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "No produce to sell.",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "Sidebar",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.0,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "InfoScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "InfoContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "Hero",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "ProductIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 64.0,
+          "y": 64.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "ProductLabels",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "ProductName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels/ProductName",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 24,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "Quality",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels/Quality",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "Details",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Details",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 16,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "QuantityHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/QuantityHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Quantity to sell",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "QuantityRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/QuantityRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "Quantity",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Quantity",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "max_value": 2048000.0,
+        "min_value": 1.0,
+        "rounded": true,
+        "size_flags_horizontal": 3,
+        "unique_name_in_owner": true,
+        "value": 1.0
+      },
+      "sibling_index": -1,
+      "type": "SpinBox"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "Maximum",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/QuantityRow/Maximum",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Max",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "TotalCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "TotalBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "TotalHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox/TotalHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Total received",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "Total",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox/Total",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "0 coins",
+        "theme_override_font_sizes/font_size": 28,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "BulkSummary",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/BulkSummary",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Status",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "SellQuantity",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/SellQuantity",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Sell selected produce",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "SellAll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/Main/Sidebar/SellAll",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Sell all produce",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "WarningPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/WarningPanel",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "Warning",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Body/WarningPanel/Warning",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_colors/font_color": {
+          "__type": "Color",
+          "a": 1.0,
+          "b": 0.0900000035762787,
+          "g": 0.28999999165535,
+          "r": 0.620000004768372
+        },
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    }
+  ],
+  "scene_path": "res://scenes/ui/produce_sales.tscn",
+  "uid": ""
+}

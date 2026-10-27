@@ -120,12 +120,14 @@ func _capacity(slots: Array[Dictionary], item: ItemDefinition, bag: InventoryCom
 			result += maxi(0, bag.stack_limit_for(item) - int(slot.count))
 	return result
 
-func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: ItemDefinition, amount: int, bag: InventoryComponent) -> void:
+func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: ItemDefinition, amount: int, bag: InventoryComponent, quality: int = -1) -> void:
 	var left: int = amount
 	for stack: Dictionary in source:
 		if stack.item == null or not item.matches(stack.item):
 			continue
 		for tier: int in range(3):
+			if quality >= 0 and tier != quality:
+				continue
 			var moved: int = mini(left, int(stack.tiers[tier]))
 			if moved > 0:
 				stack.tiers[tier] -= moved
@@ -151,8 +153,8 @@ func _add(slots: Array[Dictionary], item: ItemDefinition, amount: int, bag: Inve
 			stack.tiers[tier] += moved
 			left -= moved
 
-func transfer(id: String, bag: InventoryComponent, item_id: StringName, amount: int, deposit: bool) -> Dictionary:
-	return _transfer(id, bag, item_id, amount, deposit, false)
+func transfer(id: String, bag: InventoryComponent, item_id: StringName, amount: int, deposit: bool, quality: int = -1) -> Dictionary:
+	return _transfer(id, bag, item_id, amount, deposit, false, quality)
 
 func transfer_all(id: String, bag: InventoryComponent, deposit: bool) -> Dictionary:
 	return _transfer(id, bag, &"", 0, deposit, true)
@@ -160,7 +162,9 @@ func transfer_all(id: String, bag: InventoryComponent, deposit: bool) -> Diction
 func _failure(message: String) -> Dictionary:
 	return {"ok": false, "moved": 0, "error": message}
 
-func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount: int, deposit: bool, all_items: bool) -> Dictionary:
+func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount: int, deposit: bool, all_items: bool, quality: int = -1) -> Dictionary:
+	if quality < -1 or quality > 2:
+		return _failure("Invalid quality.")
 	if busy or not available() or inventory(id) == null or bag == null or bag == inventory(id):
 		return _failure("Storage is unavailable.")
 	if world != null:
@@ -187,7 +191,7 @@ func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount:
 	for slot: Dictionary in source_slots:
 		if slot.item != null:
 			var key: String = String(slot.item.item_id)
-			totals[key] = int(totals.get(key, 0)) + int(slot.count)
+			totals[key] = int(totals.get(key, 0)) + (int(slot.tiers[quality]) if quality >= 0 else int(slot.count))
 	var moved: int = 0
 	for key: String in totals:
 		if not all_items and key != String(item_id):
@@ -198,7 +202,7 @@ func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount:
 		var requested: int = int(totals[key]) if all_items else mini(amount, int(totals[key]))
 		var accepted: int = mini(requested, _capacity(target_slots, candidate, target))
 		if accepted > 0:
-			_move_tiers(source_slots, target_slots, candidate, accepted, target)
+			_move_tiers(source_slots, target_slots, candidate, accepted, target, quality)
 			moved += accepted
 	if moved == 0:
 		busy = false

@@ -1,0 +1,447 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://components/trees/graft_menu.gd" id="script"]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/cooking_selected.tres" id="selected"]
+[sub_resource type="StyleBoxFlat" id="Track"]
+bg_color = Color(0.88,0.76,0.58,1)
+[sub_resource type="StyleBoxFlat" id="Fill"]
+bg_color = Color(0.53,0.66,0.39,1)
+[node name="GraftMenu" type="CanvasLayer"]
+layer = 25
+script = ExtResource("script")
+
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("theme")
+texture_filter = 1
+visible = false
+
+[node name="Dim" type="ColorRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1,0.09,0.07,0.65)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fruit tree grafting"
+autowrap_mode = 0
+clip_text = true
+text_overrun_behavior = 3
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 0
+
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "×"
+custom_minimum_size = Vector2(48,48)
+tooltip_text = "Close (Esc / E)"
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="CurrentPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.85
+theme_type_variation = &"DetailCard"
+
+[node name="CurrentBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/CurrentPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CurrentScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="CurrentContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TreeName" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
+[node name="Active" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TreeIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,160)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="CurrentHeading" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current crop"
+autowrap_mode = 3
+
+[node name="CurrentIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,40)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="CurrentCrop" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="ProgressText" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Progress" type="ProgressBar" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,12)
+show_percentage = false
+theme_override_styles/background = SubResource("Track")
+theme_override_styles/fill = SubResource("Fill")
+
+[node name="Pending" type="Label" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Harvest" type="Button" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Harvest current crop"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="ChoicesPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+theme_type_variation = &"DetailCard"
+
+[node name="ChoiceBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Browse" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="Content" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ChoicesHeading" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Choose a graft direction"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="YieldCard" type="PanelContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="YieldBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="YieldRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="YieldIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(32,32)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="YieldHeading" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Yield"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="YieldOutput" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
+[node name="YieldDescription" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Double the ordinary fruit amount."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="YieldDemand" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="YieldButton" type="Button" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Review this direction"
+toggle_mode = true
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,48)
+
+[node name="QualityCard" type="PanelContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="QualityBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="QualityRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="QualityIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(32,32)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="QualityHeading" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Star fruit"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="QualityOutput" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
+[node name="QualityDescription" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Keep the base amount, produce Star fruit."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="QualityDemand" type="Label" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="QualityButton" type="Button" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Review this direction"
+toggle_mode = true
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,48)
+
+[node name="ReviewPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_type_variation = &"DetailCard"
+
+[node name="ReviewBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ReviewScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="ReviewContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ReviewHeading" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Graft preview"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="SelectedDirection" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Choose a graft direction to review."
+autowrap_mode = 3
+
+[node name="FutureIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0,48)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="FutureCrop" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+
+[node name="CostCard" type="PanelContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="CostBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WaxRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WaxIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(32,32)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="Cost" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="WaxCount" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Timing" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Changes apply after the next harvest. The current crop stays unchanged."
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.62,0.29,0.09,1)
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Summary" type="Label" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+autowrap_mode = 3
+
+[node name="Confirm" type="Button" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm graft direction"
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "You can leave this tree unspecialized. It keeps producing ordinary fruit."
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3

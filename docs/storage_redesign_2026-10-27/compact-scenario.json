@@ -1,0 +1,64 @@
+{
+  "scene_path": "tests/support/storage_layout_fixture.tscn",
+  "viewport_size": {
+    "width": 667,
+    "height": 375
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Header",
+      "label": "compact-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Selection",
+      "label": "compact-selection",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-selection-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+      "label": "compact-command",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-command-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Status",
+      "label": "compact-status",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-status-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Bag/Heading",
+      "label": "compact-bag-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-bag-header-layout.json"
+    },
+    {
+      "type": "ui_report",
+      "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Panes/Store/Heading",
+      "label": "compact-store-header",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/compact-store-header-layout.json"
+    }
+  ]
+}

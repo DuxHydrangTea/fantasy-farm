@@ -1,0 +1,1045 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel",
+      "rect": [
+        16,
+        8,
+        634,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body",
+      "rect": [
+        32,
+        20,
+        602,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Header",
+      "rect": [
+        32,
+        20,
+        602,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Header/Heading",
+      "rect": [
+        32,
+        30,
+        455,
+        26.25
+      ],
+      "text": "Quản lý chuồng gà"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        499,
+        33,
+        75,
+        21
+      ],
+      "text": "100.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        586,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/HeaderRule",
+      "rect": [
+        32,
+        72,
+        602,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary",
+      "rect": [
+        32,
+        78,
+        602,
+        53
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/PopulationPanel",
+      "rect": [
+        32,
+        78,
+        195,
+        53
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox",
+      "rect": [
+        42,
+        88,
+        175,
+        33
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox/PopulationRow",
+      "rect": [
+        42,
+        88,
+        175,
+        19
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox/PopulationRow/PopulationTitle",
+      "rect": [
+        42,
+        89,
+        131,
+        15.75
+      ],
+      "text": "Vật nuôi"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/PopulationPanel/PopulationBox/PopulationRow/PopulationValue",
+      "rect": [
+        181,
+        88,
+        36,
+        18.38
+      ],
+      "text": "4 / 10"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel",
+      "rect": [
+        235,
+        78,
+        195,
+        53
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel/FoodBox",
+      "rect": [
+        245,
+        88,
+        175,
+        33
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodRow",
+      "rect": [
+        245,
+        88,
+        175,
+        19
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodRow/FoodTitle",
+      "rect": [
+        245,
+        89,
+        143,
+        15.75
+      ],
+      "text": "Máng thức ăn"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodRow/FoodValue",
+      "rect": [
+        396,
+        88,
+        24,
+        18.38
+      ],
+      "text": "10%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/FoodPanel/FoodBox/FoodMeter",
+      "rect": [
+        245,
+        111,
+        175,
+        10
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel",
+      "rect": [
+        438,
+        78,
+        196,
+        53
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel/WaterBox",
+      "rect": [
+        448,
+        88,
+        176,
+        33
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterRow",
+      "rect": [
+        448,
+        88,
+        176,
+        19
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterRow/WaterTitle",
+      "rect": [
+        448,
+        89,
+        144,
+        15.75
+      ],
+      "text": "Máng nước"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterRow/WaterValue",
+      "rect": [
+        600,
+        88,
+        24,
+        18.38
+      ],
+      "text": "10%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Summary/WaterPanel/WaterBox/WaterMeter",
+      "rect": [
+        448,
+        111,
+        176,
+        10
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main",
+      "rect": [
+        32,
+        135,
+        602,
+        219
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster",
+      "rect": [
+        32,
+        135,
+        396,
+        219
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll",
+      "rect": [
+        32,
+        135,
+        396,
+        219
+      ]
+    },
+    {
+      "class": "GridContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid",
+      "rect": [
+        32,
+        135,
+        382,
+        370
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard",
+      "rect": [
+        32,
+        135,
+        187,
+        181
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body",
+      "rect": [
+        42,
+        145,
+        167,
+        161
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/CardHeader",
+      "rect": [
+        42,
+        145,
+        167,
+        48
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/CardHeader/Portrait",
+      "rect": [
+        42,
+        145,
+        32,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/CardHeader/Names",
+      "rect": [
+        82,
+        145,
+        127,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/CardHeader/Names/Caption",
+      "rect": [
+        82,
+        145,
+        127,
+        18.38
+      ],
+      "text": "Gà · #205622"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/CardHeader/Names/Stage",
+      "rect": [
+        82,
+        168,
+        127,
+        15.75
+      ],
+      "text": "Trưởng thành"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/FoodRow",
+      "rect": [
+        42,
+        197,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/FoodRow/FoodText",
+      "rect": [
+        42,
+        197,
+        64,
+        15.75
+      ],
+      "text": "Độ no: 95%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/FoodRow/FoodBar",
+      "rect": [
+        114,
+        199,
+        95,
+        12
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/WaterRow",
+      "rect": [
+        42,
+        217,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/WaterRow/WaterText",
+      "rect": [
+        42,
+        217,
+        69,
+        15.75
+      ],
+      "text": "Đủ nước: 85%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/WaterRow/WaterBar",
+      "rect": [
+        119,
+        219,
+        90,
+        12
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/AnimalCard/Body/Produce",
+      "rect": [
+        42,
+        237,
+        167,
+        69
+      ],
+      "text": "Trứng gà: 0% Đang sản xuất Trưởng thành Tuổi thọ còn: 13n..."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680",
+      "rect": [
+        227,
+        135,
+        187,
+        181
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body",
+      "rect": [
+        237,
+        145,
+        167,
+        161
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/CardHeader",
+      "rect": [
+        237,
+        145,
+        167,
+        48
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/CardHeader/Portrait",
+      "rect": [
+        237,
+        145,
+        32,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/CardHeader/Names",
+      "rect": [
+        277,
+        145,
+        127,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/CardHeader/Names/Caption",
+      "rect": [
+        277,
+        145,
+        127,
+        18.38
+      ],
+      "text": "Gà · #205623"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/CardHeader/Names/Stage",
+      "rect": [
+        277,
+        168,
+        127,
+        15.75
+      ],
+      "text": "Trưởng thành"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/FoodRow",
+      "rect": [
+        237,
+        197,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/FoodRow/FoodText",
+      "rect": [
+        237,
+        197,
+        64,
+        15.75
+      ],
+      "text": "Độ no: 80%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/FoodRow/FoodBar",
+      "rect": [
+        309,
+        199,
+        95,
+        12
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/WaterRow",
+      "rect": [
+        237,
+        217,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/WaterRow/WaterText",
+      "rect": [
+        237,
+        217,
+        69,
+        15.75
+      ],
+      "text": "Đủ nước: 60%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/WaterRow/WaterBar",
+      "rect": [
+        314,
+        219,
+        90,
+        12
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@680/Body/Produce",
+      "rect": [
+        237,
+        237,
+        167,
+        69
+      ],
+      "text": "Trứng gà: 0% Đang sản xuất Trưởng thành Tuổi thọ còn: 13n..."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681",
+      "rect": [
+        32,
+        324,
+        187,
+        181
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body",
+      "rect": [
+        42,
+        334,
+        167,
+        161
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/CardHeader",
+      "rect": [
+        42,
+        334,
+        167,
+        48
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/CardHeader/Portrait",
+      "rect": [
+        42,
+        334,
+        32,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/CardHeader/Names",
+      "rect": [
+        82,
+        334,
+        127,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/CardHeader/Names/Caption",
+      "rect": [
+        82,
+        334,
+        127,
+        18.38
+      ],
+      "text": "Gà · #205624"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/CardHeader/Names/Stage",
+      "rect": [
+        82,
+        357,
+        127,
+        15.75
+      ],
+      "text": "Con non"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/FoodRow",
+      "rect": [
+        42,
+        386,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/FoodRow/FoodText",
+      "rect": [
+        42,
+        386,
+        64,
+        15.75
+      ],
+      "text": "Độ no: 90%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/FoodRow/FoodBar",
+      "rect": [
+        114,
+        388,
+        95,
+        12
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/WaterRow",
+      "rect": [
+        42,
+        406,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/WaterRow/WaterText",
+      "rect": [
+        42,
+        406,
+        69,
+        15.75
+      ],
+      "text": "Đủ nước: 75%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/WaterRow/WaterBar",
+      "rect": [
+        119,
+        408,
+        90,
+        12
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@681/Body/Produce",
+      "rect": [
+        42,
+        426,
+        167,
+        69
+      ],
+      "text": "Trứng gà: 0% Tạm dừng: Chưa trưởng thành Trưởng thành sau..."
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682",
+      "rect": [
+        227,
+        324,
+        187,
+        181
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body",
+      "rect": [
+        237,
+        334,
+        167,
+        161
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/CardHeader",
+      "rect": [
+        237,
+        334,
+        167,
+        48
+      ]
+    },
+    {
+      "class": "Control",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/CardHeader/Portrait",
+      "rect": [
+        237,
+        334,
+        32,
+        48
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/CardHeader/Names",
+      "rect": [
+        277,
+        334,
+        127,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/CardHeader/Names/Caption",
+      "rect": [
+        277,
+        334,
+        127,
+        18.38
+      ],
+      "text": "Gà · #205625"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/CardHeader/Names/Stage",
+      "rect": [
+        277,
+        357,
+        127,
+        15.75
+      ],
+      "text": "Trưởng thành"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/FoodRow",
+      "rect": [
+        237,
+        386,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/FoodRow/FoodText",
+      "rect": [
+        237,
+        386,
+        64,
+        15.75
+      ],
+      "text": "Độ no: 40%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/FoodRow/FoodBar",
+      "rect": [
+        309,
+        388,
+        95,
+        12
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/WaterRow",
+      "rect": [
+        237,
+        406,
+        167,
+        16
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/WaterRow/WaterText",
+      "rect": [
+        237,
+        406,
+        69,
+        15.75
+      ],
+      "text": "Đủ nước: 25%"
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/WaterRow/WaterBar",
+      "rect": [
+        314,
+        408,
+        90,
+        12
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Roster/AnimalScroll/AnimalGrid/@PanelContainer@682/Body/Produce",
+      "rect": [
+        237,
+        426,
+        167,
+        69
+      ],
+      "text": "Trứng gà: 0% Đang sản xuất Trưởng thành Tuổi thọ còn: 13n..."
+    },
+    {
+      "class": "VSeparator",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/Divider",
+      "rect": [
+        436,
+        135,
+        2,
+        219
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox",
+      "rect": [
+        446,
+        135,
+        188,
+        219
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll",
+      "rect": [
+        446,
+        135,
+        188,
+        163
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent",
+      "rect": [
+        446,
+        135,
+        188,
+        147
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/UpgradeInfo",
+      "rect": [
+        446,
+        135,
+        188,
+        39
+      ],
+      "text": "Chuồng cấp 2/6 · Sức chứa 10/30"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/CapacityNext",
+      "rect": [
+        446,
+        186,
+        188,
+        23.63
+      ],
+      "text": "10 → 15"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/UpgradeDescription",
+      "rect": [
+        446,
+        222,
+        188,
+        23.63
+      ],
+      "text": "Mở thêm 5 chỗ nuôi."
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/PriceRow",
+      "rect": [
+        446,
+        258,
+        188,
+        24
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/PriceRow/PriceTitle",
+      "rect": [
+        446,
+        258,
+        109,
+        23.63
+      ],
+      "text": "Cost"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeScroll/UpgradeContent/PriceRow/UpgradeCost",
+      "rect": [
+        559,
+        258,
+        75,
+        23.63
+      ],
+      "text": "40.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CoopPen/ManagementSign/PenMenu/Root/Center/Panel/Body/Main/UpgradeBox/UpgradeButton",
+      "rect": [
+        446,
+        306,
+        188,
+        48
+      ],
+      "text": "Mở thêm 5 chỗ"
+    }
+  ],
+  "counts": {
+    "controls": 99,
+    "findings": 0,
+    "hidden": 6,
+    "visible": 99
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/management_ui_2026-10-27/pen-compact-layout.json",
+  "findings": [],
+  "label": "pen-compact",
+  "node_path": "Farm/CoopPen/ManagementSign/PenMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

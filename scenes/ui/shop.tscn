@@ -1,184 +1,291 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://components/shop_ui.gd" id="1_ui"]
-[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://components/shop_ui.gd" id="ui"]
 
-[node name="ShopUI" type="CanvasLayer" unique_id=389748101 node_paths=PackedStringArray("root", "panel", "grid", "balance_label", "details", "status", "quantity", "buy_button", "close_button", "categories", "body", "heading", "hint", "quantity_label", "browse")]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[node name="ShopUI" type="CanvasLayer" node_paths=PackedStringArray("root", "panel", "grid", "balance_label", "details", "status", "quantity", "buy_button", "close_button", "categories", "body", "heading", "hint", "quantity_label", "browse")]
 layer = 25
-script = ExtResource("1_ui")
+script = ExtResource("ui")
 root = NodePath("Root")
 panel = NodePath("Root/Center/Panel")
-grid = NodePath("Root/Center/Panel/Body/Main/Scroll/Grid")
+grid = NodePath("Root/Center/Panel/Body/Main/Left/Scroll/Grid")
 balance_label = NodePath("Root/Center/Panel/Body/Header/Balance")
-details = NodePath("Root/Center/Panel/Body/Main/Info/Description/Details")
-status = NodePath("Root/Center/Panel/Body/Main/Info/Description/Status")
-quantity = NodePath("Root/Center/Panel/Body/Checkout/Quantity")
-buy_button = NodePath("Root/Center/Panel/Body/Checkout/Buy")
+details = NodePath("Root/Center/Panel/Body/Main/Sidebar/Info/Description/Details")
+status = NodePath("Root/Center/Panel/Body/Main/Sidebar/Info/Description/Status")
+quantity = NodePath("Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/Quantity")
+buy_button = NodePath("Root/Center/Panel/Body/Main/Sidebar/Checkout/Buy")
 close_button = NodePath("Root/Center/Panel/Body/Header/Close")
-categories = NodePath("Root/Center/Panel/Body/Categories")
+categories = NodePath("Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories")
 body = NodePath("Root/Center/Panel/Body")
 heading = NodePath("Root/Center/Panel/Body/Header/Title")
 hint = NodePath("Root/Center/Panel/Body/Hint")
-quantity_label = NodePath("Root/Center/Panel/Body/Checkout/Label")
-browse = NodePath("Root/Center/Panel/Body/Main/Scroll")
+quantity_label = NodePath("Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper/Label")
+browse = NodePath("Root/Center/Panel/Body/Main/Left/Scroll")
 
-[node name="Root" type="Control" parent="." unique_id=1266351200]
-visible = false
-texture_filter = 1
-layout_mode = 3
-anchors_preset = 15
+[node name="Root" type="Control" parent="."]
+layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_theme")
+visible = false
+texture_filter = 1
+theme = ExtResource("theme")
 
-[node name="Dim" type="ColorRect" parent="Root" unique_id=1320718259]
+[node name="Dim" type="ColorRect" parent="Root"]
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.1, 0.09, 0.07, 0.65)
 
-[node name="Center" type="CenterContainer" parent="Root" unique_id=950259603]
+[node name="Center" type="CenterContainer" parent="Root"]
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=968623755]
-custom_minimum_size = Vector2(760, 660)
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
 layout_mode = 2
+custom_minimum_size = Vector2(1040, 600)
 
-[node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=909842278]
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1224811884]
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=1927338745]
+[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 30
 text = "LAI BUON'S SHOP"
 clip_text = true
 text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 26
 
-[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=2094375519]
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
 layout_mode = 2
-text = "1000 coins"
+text = "0 coins"
 
-[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=981821326]
-custom_minimum_size = Vector2(44, 40)
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
 layout_mode = 2
-tooltip_text = "Close (Esc / E)"
+custom_minimum_size = Vector2(48, 48)
 text = "×"
+tooltip_text = "Close (Esc / E)"
 
-[node name="Categories" type="HFlowContainer" parent="Root/Center/Panel/Body" unique_id=1772630848]
+[node name="Rule" type="HSeparator" parent="Root/Center/Panel/Body"]
 layout_mode = 2
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 4
 
-[node name="Crops" type="Button" parent="Root/Center/Panel/Body/Categories" unique_id=2138235081]
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Left" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="CategoryScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/Left"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 62)
+vertical_scroll_mode = 0
+
+[node name="Categories" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Crops" type="Button" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
 toggle_mode = true
 text = "Crop seeds"
 
-[node name="Feed" type="Button" parent="Root/Center/Panel/Body/Categories" unique_id=1870321874]
+[node name="Feed" type="Button" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories"]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 48)
 toggle_mode = true
-text = "Feed"
+text = "Farm supplies"
 
-[node name="Flowers" type="Button" parent="Root/Center/Panel/Body/Categories" unique_id=1524020549]
+[node name="Flowers" type="Button" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories"]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 48)
 toggle_mode = true
 text = "Flower seeds"
 
-[node name="Animals" type="Button" parent="Root/Center/Panel/Body/Categories" unique_id=2142894727]
+[node name="Animals" type="Button" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories"]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 48)
 toggle_mode = true
 text = "Animals"
 
-[node name="SellAnimals" type="Button" parent="Root/Center/Panel/Body/Categories" unique_id=1941525930]
+[node name="SellAnimals" type="Button" parent="Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories"]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 48)
 toggle_mode = true
 text = "Sell animals"
 
-[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1989119333]
+[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/Left"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 16
-
-[node name="Scroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main" unique_id=1095079186]
-layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Main/Scroll" unique_id=1829345673]
+[node name="Grid" type="GridContainer" parent="Root/Center/Panel/Body/Main/Left/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
-columns = 6
+columns = 4
 
-[node name="Info" type="ScrollContainer" parent="Root/Center/Panel/Body/Main" unique_id=1330032866]
+[node name="Divider" type="VSeparator" parent="Root/Center/Panel/Body/Main"]
 layout_mode = 2
-size_flags_horizontal = 3
+
+
+[node name="Sidebar" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+layout_mode = 2
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+theme_override_constants/separation = 8
+
+[node name="Info" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/Sidebar"]
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Description" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Info" unique_id=1554244474]
+[node name="Description" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Info"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=1458057832]
-custom_minimum_size = Vector2(0, 50)
+[node name="Product" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_constants/separation = 12
+
+[node name="IconFrame" type="PanelContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product"]
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="ProductIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/IconFrame"]
+layout_mode = 2
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Names" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProductName" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names"]
+layout_mode = 2
+unique_name_in_owner = true
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 22
+
+[node name="ProductType" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description/Product/Names"]
+layout_mode = 2
+unique_name_in_owner = true
 autowrap_mode = 3
 
-[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=1922152420]
-custom_minimum_size = Vector2(0, 48)
+[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 autowrap_mode = 3
 
-[node name="Checkout" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1472609717]
+[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Info/Description"]
 layout_mode = 2
-theme_override_constants/separation = 16
+autowrap_mode = 3
 
-[node name="Label" type="Label" parent="Root/Center/Panel/Body/Checkout" unique_id=1470325379]
+[node name="Checkout" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PriceRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="PriceTitle" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Price"
+
+[node name="UnitPrice" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/PriceRow"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="OwnedRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="OwnedTitle" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "In bag"
+
+[node name="OwnedCount" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/OwnedRow"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="Rule" type="HSeparator" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+
+
+[node name="Stepper" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Quantity"
 
-[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Checkout" unique_id=427172186]
-custom_minimum_size = Vector2(108, 48)
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/Stepper"]
 layout_mode = 2
+custom_minimum_size = Vector2(64, 48)
 min_value = 1.0
 max_value = 99.0
 value = 1.0
 rounded = true
+alignment = 1
 
-[node name="Buy" type="Button" parent="Root/Center/Panel/Body/Checkout" unique_id=281128390]
+[node name="TotalRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="TotalTitle" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+text = "Total"
+
+[node name="TotalPrice" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout/TotalRow"]
+layout_mode = 2
+unique_name_in_owner = true
+
+
+[node name="Buy" type="Button" parent="Root/Center/Panel/Body/Main/Sidebar/Checkout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
 text = "Buy"
 
-[node name="Hint" type="Label" parent="Root/Center/Panel/Body" unique_id=365847663]
+[node name="BottomRule" type="HSeparator" parent="Root/Center/Panel/Body"]
+layout_mode = 2
+
+
+[node name="Hint" type="Label" parent="Root/Center/Panel/Body"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "Animals go to pens · Sell individually · Esc / E / Tab: close"
+text = "Choose an item to see its details. Esc / E / Tab to close."
 autowrap_mode = 3

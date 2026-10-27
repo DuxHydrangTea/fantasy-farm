@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-27",
+  "scene": "res://scenes/ui/grafting.tscn",
+  "integration_ui": {
+    "passed": 5,
+    "total": 5,
+    "assertions_passed": 49,
+    "assertions_total": 49
+  },
+  "combined_grafting_suites": {
+    "passed": 16,
+    "total": 17,
+    "assertions_passed": 189,
+    "assertions_total": 190
+  },
+  "pre_existing_failure": {
+    "test": "test_orchard_48h_pending_graft_single_and_hourly_steps_match",
+    "path": "tests/integration/test_grafting.gd",
+    "line": 300,
+    "reproduced_before_ui_edits": true
+  },
+  "native_runtime": {
+    "checks": 35,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "layout": {
+    "desktop": {
+      "ok": true,
+      "errors": 0,
+      "findings": {
+        "desktop-full": 0,
+        "desktop-header": 0,
+        "desktop-harvest": 0,
+        "desktop-confirm": 0
+      }
+    },
+    "compact": {
+      "ok": true,
+      "errors": 0,
+      "findings": {
+        "compact-full": 14,
+        "compact-header": 0,
+        "compact-harvest": 0,
+        "compact-confirm": 0
+      }
+    }
+  },
+  "layout_limitations": "Compact full report includes 14 offscreen findings for children clipped inside scroll containers. Zero-size/overlap gates pass. Header and pinned action reports have zero findings. Native tests separately check viewport bounds and 48px action targets.",
+  "validation": {
+    "errors": 0,
+    "existing_dependency_warnings": 28,
+    "grafting_scene_or_controller_diagnostics": 0
+  },
+  "lint": {
+    "components_errors": 0,
+    "components_warnings": 0,
+    "ui_scenes_errors": 0,
+    "ui_scenes_warnings": 0
+  },
+  "personal_save_used": false,
+  "gameplay_service_prices_save_schema_changed": false
+}

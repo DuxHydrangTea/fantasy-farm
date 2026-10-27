@@ -1,0 +1,1133 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/Chef/CookingMenu/Root",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/Chef/CookingMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel",
+      "rect": [
+        70,
+        50,
+        1140,
+        620
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body",
+      "rect": [
+        86,
+        62,
+        1108,
+        596
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Header",
+      "rect": [
+        86,
+        62,
+        1108,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Header/Heading",
+      "rect": [
+        86,
+        68,
+        977,
+        34.13
+      ],
+      "text": "Farm kitchen"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        1067,
+        74,
+        75,
+        23.63
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        1146,
+        62,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Rule",
+      "rect": [
+        86,
+        122,
+        1108,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main",
+      "rect": [
+        86,
+        136,
+        1108,
+        491
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel",
+      "rect": [
+        86,
+        136,
+        314,
+        491
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody",
+      "rect": [
+        96,
+        146,
+        294,
+        471
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters",
+      "rect": [
+        96,
+        146,
+        294,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters/AllRecipes",
+      "rect": [
+        96,
+        146,
+        145,
+        48
+      ],
+      "text": "All recipes"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Filters/CookableRecipes",
+      "rect": [
+        245,
+        146,
+        145,
+        48
+      ],
+      "text": "Can cook"
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse",
+      "rect": [
+        96,
+        198,
+        294,
+        419
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList",
+      "rect": [
+        96,
+        198,
+        280,
+        1792
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@226",
+      "rect": [
+        96,
+        198,
+        280,
+        64
+      ],
+      "text": "Trứng chiên"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@227",
+      "rect": [
+        96,
+        270,
+        280,
+        64
+      ],
+      "text": "Trứng ngỗng hấp"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@228",
+      "rect": [
+        96,
+        342,
+        280,
+        64
+      ],
+      "text": "Bánh mì"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@229",
+      "rect": [
+        96,
+        414,
+        280,
+        64
+      ],
+      "text": "Salad trái cây"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@230",
+      "rect": [
+        96,
+        486,
+        280,
+        64
+      ],
+      "text": "Bánh mì mật ong"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@231",
+      "rect": [
+        96,
+        558,
+        280,
+        64
+      ],
+      "text": "Dưỡng chất rễ cây"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@232",
+      "rect": [
+        96,
+        630,
+        280,
+        64
+      ],
+      "text": "Sáp Ghép Cành"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@233",
+      "rect": [
+        96,
+        702,
+        280,
+        64
+      ],
+      "text": "Bánh táo Star"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@234",
+      "rect": [
+        96,
+        774,
+        280,
+        64
+      ],
+      "text": "Kem đào Star"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@235",
+      "rect": [
+        96,
+        846,
+        280,
+        64
+      ],
+      "text": "Lê Star hầm"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@236",
+      "rect": [
+        96,
+        918,
+        280,
+        64
+      ],
+      "text": "Mứt anh đào Star"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@237",
+      "rect": [
+        96,
+        990,
+        280,
+        64
+      ],
+      "text": "Kem trứng Mật lai Hoa Hồng & Tú Cầu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@238",
+      "rect": [
+        96,
+        1062,
+        280,
+        64
+      ],
+      "text": "Kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@239",
+      "rect": [
+        96,
+        1134,
+        280,
+        64
+      ],
+      "text": "Kem trứng Mật lai Phong Lan & Hướng Dương"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@240",
+      "rect": [
+        96,
+        1206,
+        280,
+        64
+      ],
+      "text": "Kem trứng Mật hoa Cẩm Tú Cầu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@241",
+      "rect": [
+        96,
+        1278,
+        280,
+        64
+      ],
+      "text": "Kem trứng Mật hoa Vạn Thọ"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@242",
+      "rect": [
+        96,
+        1350,
+        280,
+        64
+      ],
+      "text": "Đại tiệc Táo Star (300 quả)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243",
+      "rect": [
+        96,
+        1422,
+        280,
+        64
+      ],
+      "text": "Đại tiệc Đào Star (300 quả)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244",
+      "rect": [
+        96,
+        1494,
+        280,
+        64
+      ],
+      "text": "Đại tiệc Lê Star (300 quả)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245",
+      "rect": [
+        96,
+        1566,
+        280,
+        64
+      ],
+      "text": "Đại tiệc Anh đào Star (300 quả)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246",
+      "rect": [
+        96,
+        1638,
+        280,
+        64
+      ],
+      "text": "Khay kem trứng Mật lai Hoa Hồng & Tú Cầu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247",
+      "rect": [
+        96,
+        1710,
+        280,
+        64
+      ],
+      "text": "Khay kem trứng Mật lai Cẩm Chướng & Vạn Thọ"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248",
+      "rect": [
+        96,
+        1782,
+        280,
+        64
+      ],
+      "text": "Khay kem trứng Mật lai Phong Lan & Hướng Dương"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249",
+      "rect": [
+        96,
+        1854,
+        280,
+        64
+      ],
+      "text": "Khay kem trứng Mật hoa Cẩm Tú Cầu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250",
+      "rect": [
+        96,
+        1926,
+        280,
+        64
+      ],
+      "text": "Khay kem trứng Mật hoa Vạn Thọ"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel",
+      "rect": [
+        412,
+        136,
+        420,
+        491
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll",
+      "rect": [
+        422,
+        146,
+        400,
+        471
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent",
+      "rect": [
+        422,
+        146,
+        400,
+        406
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/ProductIcon",
+      "rect": [
+        422,
+        146,
+        400,
+        112
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/ProductName",
+      "rect": [
+        422,
+        270,
+        400,
+        31.5
+      ],
+      "text": "Trứng chiên"
+    },
+    {
+      "class": "HSeparator",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/DetailRule",
+      "rect": [
+        422,
+        314,
+        400,
+        2
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/IngredientsHeading",
+      "rect": [
+        422,
+        328,
+        400,
+        23.63
+      ],
+      "text": "Ingredients"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients",
+      "rect": [
+        422,
+        364,
+        400,
+        32
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients/@HBoxContainer@251",
+      "rect": [
+        422,
+        364,
+        400,
+        32
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients/@HBoxContainer@251/@TextureRect@252",
+      "rect": [
+        422,
+        364,
+        32,
+        32
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients/@HBoxContainer@251/@Label@253",
+      "rect": [
+        462,
+        369,
+        319,
+        21
+      ],
+      "text": "Trứng gà · Thường"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Ingredients/@HBoxContainer@251/@Label@254",
+      "rect": [
+        789,
+        369,
+        33,
+        21
+      ],
+      "text": "9 / 1"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel",
+      "rect": [
+        422,
+        408,
+        400,
+        72
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox",
+      "rect": [
+        432,
+        418,
+        380,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox/OutputHeading",
+      "rect": [
+        432,
+        418,
+        380,
+        23.63
+      ],
+      "text": "Output"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/OutputPanel/OutputBox/Output",
+      "rect": [
+        432,
+        446,
+        380,
+        23.63
+      ],
+      "text": "Trứng chiên × 1"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/DetailPanel/DetailScroll/DetailContent/Details",
+      "rect": [
+        422,
+        492,
+        400,
+        60
+      ],
+      "text": "Giá bán món: 18 xu · Chênh so với bán nguyên liệu: 10 xu ..."
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn",
+      "rect": [
+        844,
+        136,
+        350,
+        491
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll",
+      "rect": [
+        844,
+        136,
+        350,
+        387
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent",
+      "rect": [
+        844,
+        136,
+        336,
+        392
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/ActionHeading",
+      "rect": [
+        844,
+        136,
+        336,
+        28.88
+      ],
+      "text": "Cooking"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityHeading",
+      "rect": [
+        844,
+        175,
+        336,
+        23.63
+      ],
+      "text": "Dishes to queue"
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow",
+      "rect": [
+        844,
+        209,
+        336,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/@Button@256",
+      "rect": [
+        844,
+        209,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/Quantity",
+      "rect": [
+        896,
+        209,
+        160,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/@Button@257",
+      "rect": [
+        1060,
+        209,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QuantityRow/Maximum",
+      "rect": [
+        1112,
+        209,
+        68,
+        48
+      ],
+      "text": "Max"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/Cost",
+      "rect": [
+        844,
+        267,
+        336,
+        23.63
+      ],
+      "text": "Chi phí: 0 xu"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/Duration",
+      "rect": [
+        844,
+        301,
+        336,
+        23.63
+      ],
+      "text": "Thời gian cả lượt: 04:00:00"
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel",
+      "rect": [
+        844,
+        335,
+        336,
+        193
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox",
+      "rect": [
+        854,
+        345,
+        316,
+        173
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/QueueHeading",
+      "rect": [
+        854,
+        345,
+        316,
+        23.63
+      ],
+      "text": "Kitchen queue"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/Summary",
+      "rect": [
+        854,
+        373,
+        316,
+        101
+      ],
+      "text": "Sức chứa: 3/20 Đang chờ: 2 · Xong: 1 Đang nấu: Trứng chiê..."
+    },
+    {
+      "class": "ProgressBar",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/CookingProgress",
+      "rect": [
+        854,
+        478,
+        316,
+        12
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/ActionScroll/ActionContent/QueuePanel/QueueBox/ReadyDishes",
+      "rect": [
+        854,
+        494,
+        316,
+        23.63
+      ],
+      "text": "Trứng chiên × 1"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/CookButton",
+      "rect": [
+        844,
+        527,
+        350,
+        48
+      ],
+      "text": "Give ingredients & cook"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/ActionColumn/CollectButton",
+      "rect": [
+        844,
+        579,
+        350,
+        48
+      ],
+      "text": "Nhận món đã nấu (1)"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Hint",
+      "rect": [
+        86,
+        639,
+        1108,
+        18.38
+      ],
+      "text": "Choose a recipe to view its ingredients."
+    }
+  ],
+  "counts": {
+    "controls": 81,
+    "findings": 12,
+    "hidden": 2,
+    "visible": 81
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/cooking_ui_2026-10-27/desktop-layout.json",
+  "findings": [
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@239 (Button) rect [96, 1134, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@239"
+      ],
+      "rects": [
+        [
+          96,
+          1134,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@240 (Button) rect [96, 1206, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@240"
+      ],
+      "rects": [
+        [
+          96,
+          1206,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@241 (Button) rect [96, 1278, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@241"
+      ],
+      "rects": [
+        [
+          96,
+          1278,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@242 (Button) rect [96, 1350, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@242"
+      ],
+      "rects": [
+        [
+          96,
+          1350,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243 (Button) rect [96, 1422, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243"
+      ],
+      "rects": [
+        [
+          96,
+          1422,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244 (Button) rect [96, 1494, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244"
+      ],
+      "rects": [
+        [
+          96,
+          1494,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245 (Button) rect [96, 1566, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245"
+      ],
+      "rects": [
+        [
+          96,
+          1566,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246 (Button) rect [96, 1638, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246"
+      ],
+      "rects": [
+        [
+          96,
+          1638,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247 (Button) rect [96, 1710, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247"
+      ],
+      "rects": [
+        [
+          96,
+          1710,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248 (Button) rect [96, 1782, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248"
+      ],
+      "rects": [
+        [
+          96,
+          1782,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249 (Button) rect [96, 1854, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249"
+      ],
+      "rects": [
+        [
+          96,
+          1854,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    {
+      "kind": "offscreen",
+      "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250 (Button) rect [96, 1926, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+      "nodes": [
+        "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250"
+      ],
+      "rects": [
+        [
+          96,
+          1926,
+          280,
+          64
+        ]
+      ],
+      "viewport_rect": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    }
+  ],
+  "label": "cooking-desktop",
+  "node_path": "Farm/Chef/CookingMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

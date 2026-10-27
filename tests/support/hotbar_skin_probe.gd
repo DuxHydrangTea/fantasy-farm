@@ -65,6 +65,21 @@ func _touch(id: int, point: Vector2, pressed: bool) -> void:
 	get_viewport().push_input(event, true)
 
 
+func _screen_rect(control: Control) -> Rect2:
+	return control.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, control.size)
+
+func _check_hud_layout(hotbar: HotbarUI) -> void:
+	var bounds: Rect2 = get_viewport().get_visible_rect()
+	var balance: Rect2 = _screen_rect(hotbar.wallet_hud.panel)
+	_check(bounds.encloses(balance), "Balance remains inside viewport")
+	_check(not balance.intersects(_screen_rect(world.player.tool_range_ui.button)), "Balance does not cover tool area selector")
+	_check(not balance.intersects(_screen_rect(world.seed_picker.launcher)), "Balance does not cover seed picker")
+	var tray: Control = hotbar.root.get_node("Bottom/Tray") as Control
+	_check(bounds.encloses(_screen_rect(tray)), "Whole hotbar frame remains inside viewport")
+	var weather_panel: PanelContainer = world.weather.hud.label.get_parent() as PanelContainer
+	_check(weather_panel.theme_type_variation == &"WeatherPanel", "Weather uses normalized frame")
+	_check(bounds.encloses(_screen_rect(weather_panel)), "Weather remains inside viewport")
+
 func _run() -> void:
 	world = WORLD.instantiate() as FarmWorld
 	add_child(world)
@@ -72,11 +87,14 @@ func _run() -> void:
 	world.tool_upgrades.profile_ready = true
 	var hotbar: HotbarUI = world.player.get_node("Hotbar") as HotbarUI
 	_check(hotbar.buttons.size() == 6,"Six hotbar slots retained")
+	_check(hotbar.wallet_hud.panel.theme_type_variation == &"WalletPanel","Wallet uses normalized frame")
+	_check(hotbar.wallet_hud.panel.is_visible_in_tree(),"Balance appears on gameplay HUD")
 	for button: InventorySlot in hotbar.buttons:
 		_check(button.hotbar_skin,"Only hotbar uses new skin")
-		_check((button.texture_normal as AtlasTexture).atlas.resource_path == "res://assets/Ui/hotbar.png","Hotbar uses supplied asset")
-		_check((button.texture_normal as AtlasTexture).region == Rect2(6,6,52,52),"Normal frame cropped without transparent gutter")
-		_check((button.texture_pressed as AtlasTexture).region == Rect2(70,6,52,52),"Selected frame uses white border")
+		var frame: NinePatchRect = button.get_node("HotbarFrame") as NinePatchRect
+		_check(frame.texture.resource_path.begins_with("res://assets/Ui/CozyHUD/"),"Hotbar uses normalized HUD asset")
+		_check(frame.patch_margin_left == 8 and frame.patch_margin_bottom == 8,"Corners retain native 8px margins")
+		_check(button.texture_normal == null,"No stretched texture underneath the frame")
 	await _click(hotbar.buttons[1])
 	_check(world.player.selection.selected_index == 1,"Mouse selects watering can")
 	_check(not hotbar.buttons[1]._selection_frame.visible,"Old gold overlay removed from hotbar")
@@ -88,12 +106,14 @@ func _run() -> void:
 	key.pressed = false
 	get_viewport().push_input(key,true)
 	_check(world.player.selection.selected_index == 0,"Number key selects first slot")
+	_check_hud_layout(hotbar)
 	await _capture("hotbar-new-desktop")
 	await _click(hotbar.inventory_button)
 	var bag: InventoryUI = world.player.get_node("InventoryUI") as InventoryUI
 	_check(world.player.selection.inventory_open,"Bag button opens inventory")
-	_check(not bag.buttons[0].hotbar_skin,"Bag grid retains its own skin")
-	_check((bag.buttons[0].texture_normal as AtlasTexture).atlas.resource_path != "res://assets/Ui/hotbar.png","Bag art is unchanged")
+	_check(not hotbar.wallet_hud.panel.visible,"HUD balance hides behind inventory")
+	_check(not bag.buttons[0].hotbar_skin,"Bag grid remains independent of hotbar selection")
+	_check(bag.buttons[0].cozy_skin,"Bag grid uses matching nine-patch skin")
 	bag.close()
 	get_viewport().set_meta("touch_ui_override",true)
 	get_tree().root.size = Vector2i(844,390)
@@ -103,6 +123,7 @@ func _run() -> void:
 		_check(Rect2(Vector2.ZERO,hotbar.root.size).encloses(button.get_global_rect()),"Phone slot remains in viewport")
 	await _touch_click(hotbar.buttons[1])
 	_check(world.player.selection.selected_index == 1,"Touch selects second slot")
+	_check_hud_layout(hotbar)
 	await _capture("hotbar-new-phone-landscape")
 	await _touch_click(hotbar.inventory_button)
 	_check(world.player.selection.inventory_open,"Touch bag button opens inventory")

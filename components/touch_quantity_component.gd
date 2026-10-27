@@ -5,10 +5,12 @@ var quantity: SpinBox
 var layout_root: Control
 var decrease: Button
 var increase: Button
+var always_show_buttons: bool = false
 var _empty_arrows: ImageTexture
 
-static func attach(spin: SpinBox, ui_root: Control) -> void:
+static func attach(spin: SpinBox, ui_root: Control, always_buttons: bool = false) -> void:
 	var component: TouchQuantityComponent = TouchQuantityComponent.new()
+	component.always_show_buttons = always_buttons
 	component.quantity = spin
 	component.layout_root = ui_root
 	spin.add_child(component)
@@ -51,8 +53,8 @@ func _value_changed(_value: float) -> void:
 
 func refresh() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
-	decrease.visible = touch and quantity.visible
-	increase.visible = touch and quantity.visible
+	decrease.visible = (touch or always_show_buttons) and quantity.visible
+	increase.visible = (touch or always_show_buttons) and quantity.visible
 	decrease.disabled = not quantity.editable or quantity.value <= quantity.min_value
 	increase.disabled = not quantity.editable or quantity.value >= quantity.max_value
 	decrease.tooltip_text = tr("Decrease quantity")
@@ -62,7 +64,7 @@ func refresh() -> void:
 	edit.mouse_filter = Control.MOUSE_FILTER_IGNORE if touch else Control.MOUSE_FILTER_STOP
 	edit.focus_mode = Control.FOCUS_NONE if touch else Control.FOCUS_ALL
 	quantity.mouse_filter = Control.MOUSE_FILTER_IGNORE if touch else Control.MOUSE_FILTER_STOP
-	if touch:
+	if touch or always_show_buttons:
 		quantity.add_theme_icon_override("updown", _empty_arrows)
 	else:
 		quantity.remove_theme_icon_override("updown")

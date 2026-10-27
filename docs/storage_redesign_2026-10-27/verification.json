@@ -1,0 +1,181 @@
+{
+  "feature_tests": {
+    "tests": 26,
+    "passed": 26,
+    "assertions": 2350
+  },
+  "native_quality": {
+    "checks": 39,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "native_storage_lifecycle": {
+    "checks": 26,
+    "failures": [],
+    "ok": true
+  },
+  "extended_tests": {
+    "worker_warehouse": {
+      "tests": 10,
+      "passed": 8,
+      "failed": 2,
+      "baseline_same": true
+    },
+    "offline_parity": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "baseline_same": true
+    },
+    "baseline_scope": "Storage service/menu/access from git HEAD in a separate QA project; same failed assertions, no parse errors."
+  },
+  "layout": {
+    "desktop": {
+      "header": {
+        "controls": 3,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 3
+      },
+      "selection": {
+        "controls": 11,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 11
+      },
+      "command": {
+        "controls": 8,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 8
+      },
+      "status": {
+        "controls": 1,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 1
+      },
+      "bag-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      },
+      "store-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      }
+    },
+    "compact": {
+      "header": {
+        "controls": 3,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 3
+      },
+      "selection": {
+        "controls": 11,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 11
+      },
+      "command": {
+        "controls": 7,
+        "findings": 0,
+        "hidden": 1,
+        "visible": 7
+      },
+      "status": {
+        "controls": 1,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 1
+      },
+      "bag-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      },
+      "store-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      }
+    }
+  },
+  "screenshots": {
+    "supply-desktop.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "storage-desktop-en.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "storage-phone-vi.png": {
+      "size": [
+        844,
+        390
+      ],
+      "not_blank": true
+    },
+    "supply-touch.png": {
+      "size": [
+        844,
+        390
+      ],
+      "not_blank": true
+    },
+    "storage-small-phone.png": {
+      "size": [
+        667,
+        375
+      ],
+      "not_blank": true
+    },
+    "storage-desktop-vi.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    },
+    "produce-desktop.png": {
+      "size": [
+        1280,
+        720
+      ],
+      "not_blank": true
+    }
+  },
+  "lint": {
+    "total": 11,
+    "errors": 0,
+    "warnings": 11,
+    "parse_errors": 0
+  },
+  "validation": {
+    "ok": true,
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "checked": 2,
+    "config_warning_count": 0
+  },
+  "physical_phone_tested": false
+}

@@ -1,0 +1,96 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://components/animals/management/animal_card.gd" id="script"]
+
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+
+[sub_resource type="SpriteFrames" id="EmptyPreview"]
+animations = [{"frames": [], "loop": true, "name": &"default", "speed": 5.0}]
+
+[node name="AnimalCard" type="PanelContainer"]
+script = ExtResource("script")
+theme = ExtResource("theme")
+mouse_filter = 1
+
+[node name="Body" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CardHeader" type="HBoxContainer" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Portrait" type="Control" parent="Body/CardHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(72, 72)
+clip_contents = true
+mouse_filter = 2
+
+[node name="Preview" type="AnimatedSprite2D" parent="Body/CardHeader/Portrait"]
+unique_name_in_owner = true
+texture_filter = 1
+sprite_frames = SubResource("EmptyPreview")
+
+[node name="Names" type="VBoxContainer" parent="Body/CardHeader"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Caption" type="Label" parent="Body/CardHeader/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="Stage" type="Label" parent="Body/CardHeader/Names"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="FoodRow" type="HBoxContainer" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FoodText" type="Label" parent="Body/FoodRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 0)
+theme_override_font_sizes/font_size = 16
+
+[node name="FoodBar" type="ProgressBar" parent="Body/FoodRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(20, 12)
+show_percentage = false
+
+[node name="WaterRow" type="HBoxContainer" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WaterText" type="Label" parent="Body/WaterRow"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(96, 0)
+theme_override_font_sizes/font_size = 16
+
+[node name="WaterBar" type="ProgressBar" parent="Body/WaterRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(20, 12)
+show_percentage = false
+
+[node name="Produce" type="Label" parent="Body"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 16

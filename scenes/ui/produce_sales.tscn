@@ -1,149 +1,325 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://components/produce_sales_ui.gd" id="1_bbk2h"]
-[ext_resource type="Resource" path="res://resources/shops/produce_prices.tres" id="2_xy44j"]
-[ext_resource type="Theme" path="res://resources/ui/game_theme.tres" id="3_7gi0a"]
-[ext_resource type="Texture2D" path="res://resources/ui/inventory_panel.tres" id="4_47s55"]
-[ext_resource type="Texture2D" path="res://resources/ui/hotbar_selected.tres" id="5_j2uci"]
+[ext_resource type="Script" path="res://components/produce_sales_ui.gd" id="script"]
 
-[sub_resource type="StyleBoxTexture" id="Panel"]
-content_margin_left = 24.0
-content_margin_top = 20.0
-content_margin_right = 24.0
-content_margin_bottom = 24.0
-texture = ExtResource("4_47s55")
-texture_margin_left = 6.0
-texture_margin_top = 6.0
-texture_margin_right = 6.0
-texture_margin_bottom = 6.0
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
 
-[sub_resource type="StyleBoxTexture" id="Pressed"]
-texture = ExtResource("5_j2uci")
-texture_margin_left = 5.0
-texture_margin_top = 5.0
-texture_margin_right = 5.0
-texture_margin_bottom = 7.0
+[ext_resource type="Resource" path="res://resources/shops/produce_prices.tres" id="catalog"]
 
-[node name="ProduceSalesUI" type="CanvasLayer" unique_id=2096592076 node_paths=PackedStringArray("panel", "body", "heading", "balance_label", "items", "details", "status", "quantity", "sell_quantity_button", "sell_all_button", "root", "close_button")]
+[ext_resource type="StyleBoxTexture" path="res://resources/ui/cozy_hud/cooking_selected.tres" id="selected"]
+
+[node name="ProduceSalesUI" type="CanvasLayer"]
 layer = 25
-script = ExtResource("1_bbk2h")
-catalog = ExtResource("2_xy44j")
-panel = NodePath("Root/Center/Panel")
-body = NodePath("Root/Center/Panel/Body")
-heading = NodePath("Root/Center/Panel/Body/Header/Title")
-balance_label = NodePath("Root/Center/Panel/Body/Header/Balance")
-items = NodePath("Root/Center/Panel/Body/Main/Produce")
-details = NodePath("Root/Center/Panel/Body/Main/Info/Description/Details")
-status = NodePath("Root/Center/Panel/Body/Main/Info/Description/Status")
-quantity = NodePath("Root/Center/Panel/Body/QuantitySale/Quantity")
-sell_quantity_button = NodePath("Root/Center/Panel/Body/QuantitySale/SellQuantity")
-sell_all_button = NodePath("Root/Center/Panel/Body/SellAll")
-root = NodePath("Root")
-close_button = NodePath("Root/Center/Panel/Body/Header/Close")
+script = ExtResource("script")
+catalog = ExtResource("catalog")
 
-[node name="Root" type="Control" parent="." unique_id=1805127674]
-layout_mode = 3
-anchors_preset = 15
+[node name="Root" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource("3_7gi0a")
+texture_filter = 1
+theme = ExtResource("theme")
+visible = false
 
-[node name="Dim" type="ColorRect" parent="Root" unique_id=906090985]
-layout_mode = 0
+[node name="Dim" type="ColorRect" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.1, 0.09, 0.07, 0.65)
+color = Color(0.1,0.09,0.07,0.65)
 
-[node name="Center" type="CenterContainer" parent="Root" unique_id=1961116466]
-layout_mode = 0
+[node name="Center" type="CenterContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Root/Center" unique_id=1972296355]
-custom_minimum_size = Vector2(960, 660)
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Body" type="VBoxContainer" parent="Root/Center/Panel" unique_id=1790785345]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=68221180]
+[node name="Body" type="VBoxContainer" parent="Root/Center/Panel"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=1180723529]
+[node name="Header" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Heading" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sell produce"
 size_flags_horizontal = 3
-text = "PRODUCE BUYER"
 clip_text = true
 text_overrun_behavior = 3
+theme_override_font_sizes/font_size = 26
+autowrap_mode = 0
 
-[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header" unique_id=545339877]
+[node name="Balance" type="Label" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
 layout_mode = 2
+text = "0 coins"
+autowrap_mode = 0
 
-[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header" unique_id=1454559977]
-custom_minimum_size = Vector2(44, 40)
+[node name="Close" type="Button" parent="Root/Center/Panel/Body/Header"]
+unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Close (Esc / E)"
 text = "×"
+custom_minimum_size = Vector2(48,48)
+tooltip_text = "Close (Esc / E)"
 
-[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=296255363]
+[node name="QualityTabs" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Normal" type="Button" parent="Root/Center/Panel/Body/QualityTabs"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Normal"
+toggle_mode = true
+size_flags_horizontal = 3
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,48)
+
+[node name="Silver" type="Button" parent="Root/Center/Panel/Body/QualityTabs"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Silver"
+toggle_mode = true
+size_flags_horizontal = 3
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,48)
+
+[node name="Gold" type="Button" parent="Root/Center/Panel/Body/QualityTabs"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Gold"
+toggle_mode = true
+size_flags_horizontal = 3
+theme_override_styles/pressed = ExtResource("selected")
+custom_minimum_size = Vector2(0,48)
+
+[node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="Produce" type="ItemList" parent="Root/Center/Panel/Body/Main" unique_id=1587129657]
+[node name="BrowsePanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.28, 0.18, 0.12, 1)
-theme_override_colors/font_selected_color = Color(0.28, 0.18, 0.12, 1)
-theme_override_styles/panel = SubResource("Panel")
-theme_override_styles/selected = SubResource("Pressed")
-max_text_lines = 2
-fixed_icon_size = Vector2i(32, 32)
+size_flags_stretch_ratio = 1.6
+theme_type_variation = &"DetailCard"
 
-[node name="Info" type="ScrollContainer" parent="Root/Center/Panel/Body/Main" unique_id=1022537470]
+[node name="BrowseBody" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BrowseHeading" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Produce in bag"
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3
+
+[node name="ColumnHeadings" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ItemHeading" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Product"
 size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="OwnedHeading" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Owned"
+custom_minimum_size = Vector2(72,0)
+horizontal_alignment = 2
+autowrap_mode = 3
+
+[node name="PriceHeading" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/ColumnHeadings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unit price"
+custom_minimum_size = Vector2(96,0)
+horizontal_alignment = 2
+autowrap_mode = 3
+
+[node name="Browse" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+unique_name_in_owner = true
+layout_mode = 2
 horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
 
-[node name="Description" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Info" unique_id=523671303]
+[node name="Items" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Empty" type="Label" parent="Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No produce to sell."
+visible = false
+autowrap_mode = 3
+
+[node name="Sidebar" type="VBoxContainer" parent="Root/Center/Panel/Body/Main"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 8
+
+[node name="InfoScroll" type="ScrollContainer" parent="Root/Center/Panel/Body/Main/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_scroll_mode = 0
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="InfoContent" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=1607599382]
+[node name="Hero" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+
+[node name="ProductIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(64,64)
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="ProductLabels" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProductName" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 24
 autowrap_mode = 3
 
-[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/Info/Description" unique_id=890321596]
+[node name="Quality" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero/ProductLabels"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+text = ""
 autowrap_mode = 3
 
-[node name="QuantitySale" type="HBoxContainer" parent="Root/Center/Panel/Body" unique_id=1467092269]
+[node name="Details" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 12
+text = ""
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
 
-[node name="Label" type="Label" parent="Root/Center/Panel/Body/QuantitySale" unique_id=1002350596]
+[node name="QuantityHeading" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar"]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Qty"
+text = "Quantity to sell"
+autowrap_mode = 3
 
-[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/QuantitySale" unique_id=459748357]
-custom_minimum_size = Vector2(96, 40)
+[node name="QuantityRow" type="HBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Quantity" type="SpinBox" parent="Root/Center/Panel/Body/Main/Sidebar/QuantityRow"]
+unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 2048000.0
 value = 1.0
 rounded = true
-
-[node name="SellQuantity" type="Button" parent="Root/Center/Panel/Body/QuantitySale" unique_id=1791451000]
-layout_mode = 2
+custom_minimum_size = Vector2(48,48)
 size_flags_horizontal = 3
 
-[node name="SellAll" type="Button" parent="Root/Center/Panel/Body" unique_id=1904638095]
-custom_minimum_size = Vector2(0, 40)
+[node name="Maximum" type="Button" parent="Root/Center/Panel/Body/Main/Sidebar/QuantityRow"]
+unique_name_in_owner = true
 layout_mode = 2
+text = "Max"
+custom_minimum_size = Vector2(0,48)
+
+[node name="TotalCard" type="PanelContainer" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+
+[node name="TotalBox" type="VBoxContainer" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TotalHeading" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Total received"
+autowrap_mode = 3
+
+[node name="Total" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/TotalCard/TotalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 coins"
+theme_override_font_sizes/font_size = 28
+autowrap_mode = 3
+
+[node name="BulkSummary" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+visible = false
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="SellQuantity" type="Button" parent="Root/Center/Panel/Body/Main/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sell selected produce"
+theme_type_variation = &"PrimaryAction"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="SellAll" type="Button" parent="Root/Center/Panel/Body/Main/Sidebar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sell all produce"
+autowrap_mode = 3
+custom_minimum_size = Vector2(0,48)
+
+[node name="WarningPanel" type="PanelContainer" parent="Root/Center/Panel/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"DetailCard"
+visible = false
+
+[node name="Warning" type="Label" parent="Root/Center/Panel/Body/WarningPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.62,0.29,0.09,1)
+autowrap_mode = 3

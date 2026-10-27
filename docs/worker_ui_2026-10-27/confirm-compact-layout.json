@@ -1,0 +1,177 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "Farm/CropWorkers/WorkerMenu/Root",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Dim",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center",
+      "rect": [
+        0,
+        0,
+        666,
+        374.63
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel",
+      "rect": [
+        12,
+        8,
+        642,
+        358.63
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell",
+      "rect": [
+        28,
+        20,
+        610,
+        334.63
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header",
+      "rect": [
+        28,
+        20,
+        610,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Heading",
+      "rect": [
+        28,
+        30,
+        496,
+        26.25
+      ],
+      "text": "Nhân công trồng trọt"
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Balance",
+      "rect": [
+        528,
+        34,
+        58,
+        18.38
+      ],
+      "text": "12.500 xu"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Header/Close",
+      "rect": [
+        590,
+        20,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation",
+      "rect": [
+        28,
+        72,
+        610,
+        282
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation/ConfirmHeading",
+      "rect": [
+        28,
+        72,
+        610,
+        31.5
+      ],
+      "text": "Dismiss worker"
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation/ConfirmScroll",
+      "rect": [
+        28,
+        116,
+        610,
+        118
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation/ConfirmScroll/ConfirmationText",
+      "rect": [
+        28,
+        116,
+        610,
+        101
+      ],
+      "text": "Cho Nhân công trồng trọt nghỉ việc? Giỏ cũ được giữ lại. ..."
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation/ConfirmDismiss",
+      "rect": [
+        28,
+        246,
+        610,
+        48
+      ],
+      "text": "Confirm dismissal (basket is kept)"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/CropWorkers/WorkerMenu/Root/Center/Panel/Shell/Confirmation/CancelDismiss",
+      "rect": [
+        28,
+        306,
+        610,
+        48
+      ],
+      "text": "Cancel"
+    }
+  ],
+  "counts": {
+    "controls": 15,
+    "findings": 0,
+    "hidden": 74,
+    "visible": 15
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/worker_ui_2026-10-27/confirm-compact-layout.json",
+  "findings": [],
+  "label": "confirm-compact",
+  "node_path": "Farm/CropWorkers/WorkerMenu/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

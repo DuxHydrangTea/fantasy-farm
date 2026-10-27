@@ -25,6 +25,7 @@ func select(tool: StringName) -> void:
 	refresh()
 
 func refresh() -> void:
+	shop.present_product(ICONS[selected].icon, tr(TITLES[selected]), tr("Tool upgrades"))
 	if upgrades == null:
 		shop.details.text = tr("Tool upgrades are unavailable.")
 		shop.buy_button.disabled = true

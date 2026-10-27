@@ -1,0 +1,2619 @@
+{
+  "controls": [
+    {
+      "class": "Control",
+      "path": "InventoryUI/Root",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "ColorRect",
+      "path": "InventoryUI/Root/Dim",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "InventoryUI/Root/Center",
+      "rect": [
+        0,
+        0,
+        1280,
+        720
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "InventoryUI/Root/Center/Panel",
+      "rect": [
+        120,
+        60,
+        1040,
+        600
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body",
+      "rect": [
+        136,
+        72,
+        1008,
+        576
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Header",
+      "rect": [
+        136,
+        72,
+        1008,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Header/Title",
+      "rect": [
+        136,
+        76,
+        853,
+        39.38
+      ],
+      "text": "INVENTORY"
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Header/Balance",
+      "rect": [
+        1005,
+        84,
+        75,
+        23.63
+      ],
+      "text": "10.000 xu"
+    },
+    {
+      "class": "Button",
+      "path": "InventoryUI/Root/Center/Panel/Body/Header/Close",
+      "rect": [
+        1096,
+        72,
+        48,
+        48
+      ],
+      "text": "×"
+    },
+    {
+      "class": "HSeparator",
+      "path": "InventoryUI/Root/Center/Panel/Body/TopRule",
+      "rect": [
+        136,
+        132,
+        1008,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content",
+      "rect": [
+        136,
+        146,
+        1008,
+        455
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left",
+      "rect": [
+        136,
+        146,
+        702,
+        455
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll",
+      "rect": [
+        136,
+        146,
+        702,
+        428
+      ]
+    },
+    {
+      "class": "CenterContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center",
+      "rect": [
+        136,
+        146,
+        688,
+        632
+      ]
+    },
+    {
+      "class": "GridContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid",
+      "rect": [
+        164,
+        146,
+        632,
+        632
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0",
+      "rect": [
+        164,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/HotbarFrame",
+      "rect": [
+        164,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Icon",
+      "rect": [
+        174,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Shortcut",
+      "rect": [
+        170,
+        147,
+        8,
+        18.38
+      ],
+      "text": "1"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1",
+      "rect": [
+        244,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/HotbarFrame",
+      "rect": [
+        244,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Icon",
+      "rect": [
+        254,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Shortcut",
+      "rect": [
+        250,
+        147,
+        8,
+        18.38
+      ],
+      "text": "2"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2",
+      "rect": [
+        324,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/HotbarFrame",
+      "rect": [
+        324,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Icon",
+      "rect": [
+        334,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Shortcut",
+      "rect": [
+        330,
+        147,
+        8,
+        18.38
+      ],
+      "text": "3"
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Count",
+      "rect": [
+        367,
+        191,
+        23,
+        21
+      ],
+      "text": "24"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3",
+      "rect": [
+        404,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/HotbarFrame",
+      "rect": [
+        404,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Icon",
+      "rect": [
+        414,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Shortcut",
+      "rect": [
+        410,
+        147,
+        8,
+        18.38
+      ],
+      "text": "4"
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Count",
+      "rect": [
+        455,
+        191,
+        15,
+        21
+      ],
+      "text": "5"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4",
+      "rect": [
+        484,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/HotbarFrame",
+      "rect": [
+        484,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Icon",
+      "rect": [
+        494,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Shortcut",
+      "rect": [
+        490,
+        147,
+        8,
+        18.38
+      ],
+      "text": "5"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5",
+      "rect": [
+        564,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/HotbarFrame",
+      "rect": [
+        564,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Icon",
+      "rect": [
+        574,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Shortcut",
+      "rect": [
+        570,
+        147,
+        8,
+        18.38
+      ],
+      "text": "6"
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot6",
+      "rect": [
+        644,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot6/HotbarFrame",
+      "rect": [
+        644,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot6/Icon",
+      "rect": [
+        654,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot7",
+      "rect": [
+        724,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot7/HotbarFrame",
+      "rect": [
+        724,
+        146,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot7/Icon",
+      "rect": [
+        734,
+        154,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot8",
+      "rect": [
+        164,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot8/HotbarFrame",
+      "rect": [
+        164,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot8/Icon",
+      "rect": [
+        174,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot9",
+      "rect": [
+        244,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot9/HotbarFrame",
+      "rect": [
+        244,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot9/Icon",
+      "rect": [
+        254,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot10",
+      "rect": [
+        324,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot10/HotbarFrame",
+      "rect": [
+        324,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot10/Icon",
+      "rect": [
+        334,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot11",
+      "rect": [
+        404,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot11/HotbarFrame",
+      "rect": [
+        404,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot11/Icon",
+      "rect": [
+        414,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot12",
+      "rect": [
+        484,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot12/HotbarFrame",
+      "rect": [
+        484,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot12/Icon",
+      "rect": [
+        494,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot13",
+      "rect": [
+        564,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot13/HotbarFrame",
+      "rect": [
+        564,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot13/Icon",
+      "rect": [
+        574,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot14",
+      "rect": [
+        644,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot14/HotbarFrame",
+      "rect": [
+        644,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot14/Icon",
+      "rect": [
+        654,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot15",
+      "rect": [
+        724,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot15/HotbarFrame",
+      "rect": [
+        724,
+        226,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot15/Icon",
+      "rect": [
+        734,
+        234,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot16",
+      "rect": [
+        164,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot16/HotbarFrame",
+      "rect": [
+        164,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot16/Icon",
+      "rect": [
+        174,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot17",
+      "rect": [
+        244,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot17/HotbarFrame",
+      "rect": [
+        244,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot17/Icon",
+      "rect": [
+        254,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot18",
+      "rect": [
+        324,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot18/HotbarFrame",
+      "rect": [
+        324,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot18/Icon",
+      "rect": [
+        334,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot19",
+      "rect": [
+        404,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot19/HotbarFrame",
+      "rect": [
+        404,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot19/Icon",
+      "rect": [
+        414,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot20",
+      "rect": [
+        484,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot20/HotbarFrame",
+      "rect": [
+        484,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot20/Icon",
+      "rect": [
+        494,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot21",
+      "rect": [
+        564,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot21/HotbarFrame",
+      "rect": [
+        564,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot21/Icon",
+      "rect": [
+        574,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot22",
+      "rect": [
+        644,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot22/HotbarFrame",
+      "rect": [
+        644,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot22/Icon",
+      "rect": [
+        654,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot23",
+      "rect": [
+        724,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot23/HotbarFrame",
+      "rect": [
+        724,
+        306,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot23/Icon",
+      "rect": [
+        734,
+        314,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot24",
+      "rect": [
+        164,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot24/HotbarFrame",
+      "rect": [
+        164,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot24/Icon",
+      "rect": [
+        174,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot25",
+      "rect": [
+        244,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot25/HotbarFrame",
+      "rect": [
+        244,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot25/Icon",
+      "rect": [
+        254,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot26",
+      "rect": [
+        324,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot26/HotbarFrame",
+      "rect": [
+        324,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot26/Icon",
+      "rect": [
+        334,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot27",
+      "rect": [
+        404,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot27/HotbarFrame",
+      "rect": [
+        404,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot27/Icon",
+      "rect": [
+        414,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot28",
+      "rect": [
+        484,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot28/HotbarFrame",
+      "rect": [
+        484,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot28/Icon",
+      "rect": [
+        494,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot29",
+      "rect": [
+        564,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot29/HotbarFrame",
+      "rect": [
+        564,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot29/Icon",
+      "rect": [
+        574,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot30",
+      "rect": [
+        644,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot30/HotbarFrame",
+      "rect": [
+        644,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot30/Icon",
+      "rect": [
+        654,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot31",
+      "rect": [
+        724,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot31/HotbarFrame",
+      "rect": [
+        724,
+        386,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot31/Icon",
+      "rect": [
+        734,
+        394,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot32",
+      "rect": [
+        164,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot32/HotbarFrame",
+      "rect": [
+        164,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot32/Icon",
+      "rect": [
+        174,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot33",
+      "rect": [
+        244,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot33/HotbarFrame",
+      "rect": [
+        244,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot33/Icon",
+      "rect": [
+        254,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot34",
+      "rect": [
+        324,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot34/HotbarFrame",
+      "rect": [
+        324,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot34/Icon",
+      "rect": [
+        334,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot35",
+      "rect": [
+        404,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot35/HotbarFrame",
+      "rect": [
+        404,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot35/Icon",
+      "rect": [
+        414,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot36",
+      "rect": [
+        484,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot36/HotbarFrame",
+      "rect": [
+        484,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot36/Icon",
+      "rect": [
+        494,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot37",
+      "rect": [
+        564,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot37/HotbarFrame",
+      "rect": [
+        564,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot37/Icon",
+      "rect": [
+        574,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot38",
+      "rect": [
+        644,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot38/HotbarFrame",
+      "rect": [
+        644,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot38/Icon",
+      "rect": [
+        654,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot39",
+      "rect": [
+        724,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot39/HotbarFrame",
+      "rect": [
+        724,
+        466,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot39/Icon",
+      "rect": [
+        734,
+        474,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot40",
+      "rect": [
+        164,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot40/HotbarFrame",
+      "rect": [
+        164,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot40/Icon",
+      "rect": [
+        174,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot41",
+      "rect": [
+        244,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot41/HotbarFrame",
+      "rect": [
+        244,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot41/Icon",
+      "rect": [
+        254,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot42",
+      "rect": [
+        324,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot42/HotbarFrame",
+      "rect": [
+        324,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot42/Icon",
+      "rect": [
+        334,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot43",
+      "rect": [
+        404,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot43/HotbarFrame",
+      "rect": [
+        404,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot43/Icon",
+      "rect": [
+        414,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot44",
+      "rect": [
+        484,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot44/HotbarFrame",
+      "rect": [
+        484,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot44/Icon",
+      "rect": [
+        494,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot45",
+      "rect": [
+        564,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot45/HotbarFrame",
+      "rect": [
+        564,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot45/Icon",
+      "rect": [
+        574,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot46",
+      "rect": [
+        644,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot46/HotbarFrame",
+      "rect": [
+        644,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot46/Icon",
+      "rect": [
+        654,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot47",
+      "rect": [
+        724,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot47/HotbarFrame",
+      "rect": [
+        724,
+        546,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot47/Icon",
+      "rect": [
+        734,
+        554,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot48",
+      "rect": [
+        164,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot48/HotbarFrame",
+      "rect": [
+        164,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot48/Icon",
+      "rect": [
+        174,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot49",
+      "rect": [
+        244,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot49/HotbarFrame",
+      "rect": [
+        244,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot49/Icon",
+      "rect": [
+        254,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot50",
+      "rect": [
+        324,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot50/HotbarFrame",
+      "rect": [
+        324,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot50/Icon",
+      "rect": [
+        334,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot51",
+      "rect": [
+        404,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot51/HotbarFrame",
+      "rect": [
+        404,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot51/Icon",
+      "rect": [
+        414,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot52",
+      "rect": [
+        484,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot52/HotbarFrame",
+      "rect": [
+        484,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot52/Icon",
+      "rect": [
+        494,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot53",
+      "rect": [
+        564,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot53/HotbarFrame",
+      "rect": [
+        564,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot53/Icon",
+      "rect": [
+        574,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot54",
+      "rect": [
+        644,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot54/HotbarFrame",
+      "rect": [
+        644,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot54/Icon",
+      "rect": [
+        654,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot55",
+      "rect": [
+        724,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot55/HotbarFrame",
+      "rect": [
+        724,
+        626,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot55/Icon",
+      "rect": [
+        734,
+        634,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot56",
+      "rect": [
+        164,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot56/HotbarFrame",
+      "rect": [
+        164,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot56/Icon",
+      "rect": [
+        174,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot57",
+      "rect": [
+        244,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot57/HotbarFrame",
+      "rect": [
+        244,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot57/Icon",
+      "rect": [
+        254,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot58",
+      "rect": [
+        324,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot58/HotbarFrame",
+      "rect": [
+        324,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot58/Icon",
+      "rect": [
+        334,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot59",
+      "rect": [
+        404,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot59/HotbarFrame",
+      "rect": [
+        404,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot59/Icon",
+      "rect": [
+        414,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot60",
+      "rect": [
+        484,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot60/HotbarFrame",
+      "rect": [
+        484,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot60/Icon",
+      "rect": [
+        494,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot61",
+      "rect": [
+        564,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot61/HotbarFrame",
+      "rect": [
+        564,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot61/Icon",
+      "rect": [
+        574,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot62",
+      "rect": [
+        644,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot62/HotbarFrame",
+      "rect": [
+        644,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot62/Icon",
+      "rect": [
+        654,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "TextureButton",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot63",
+      "rect": [
+        724,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "NinePatchRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot63/HotbarFrame",
+      "rect": [
+        724,
+        706,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot63/Icon",
+      "rect": [
+        734,
+        714,
+        52,
+        52
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Left/InventoryHint",
+      "rect": [
+        136,
+        582,
+        702,
+        18.38
+      ],
+      "text": "Kéo thả để đổi chỗ / gộp"
+    },
+    {
+      "class": "VSeparator",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Divider",
+      "rect": [
+        850,
+        146,
+        2,
+        455
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar",
+      "rect": [
+        864,
+        146,
+        280,
+        455
+      ]
+    },
+    {
+      "class": "ScrollContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll",
+      "rect": [
+        864,
+        146,
+        280,
+        343
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo",
+      "rect": [
+        864,
+        146,
+        280,
+        139
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader",
+      "rect": [
+        864,
+        146,
+        280,
+        92
+      ]
+    },
+    {
+      "class": "PanelContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/IconFrame",
+      "rect": [
+        864,
+        146,
+        92,
+        92
+      ]
+    },
+    {
+      "class": "TextureRect",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/IconFrame/ItemIcon",
+      "rect": [
+        874,
+        156,
+        72,
+        72
+      ]
+    },
+    {
+      "class": "VBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/Captions",
+      "rect": [
+        968,
+        146,
+        176,
+        92
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/Captions/ItemName",
+      "rect": [
+        968,
+        163,
+        176,
+        31.5
+      ],
+      "text": "Cuốc"
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/Captions/ItemType",
+      "rect": [
+        968,
+        199,
+        176,
+        21
+      ],
+      "text": "Công cụ"
+    },
+    {
+      "class": "HSeparator",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/DescriptionRule",
+      "rect": [
+        864,
+        250,
+        280,
+        2
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/Details",
+      "rect": [
+        864,
+        264,
+        280,
+        21
+      ],
+      "text": "1 trong túi"
+    },
+    {
+      "class": "BoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InventoryActions",
+      "rect": [
+        864,
+        497,
+        280,
+        104
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InventoryActions/MoveButton",
+      "rect": [
+        864,
+        497,
+        280,
+        48
+      ],
+      "text": "Chuyển vật phẩm"
+    },
+    {
+      "class": "Button",
+      "path": "InventoryUI/Root/Center/Panel/Body/Content/Sidebar/InventoryActions/AssignButton",
+      "rect": [
+        864,
+        553,
+        280,
+        48
+      ],
+      "text": "Gán hotbar"
+    },
+    {
+      "class": "HSeparator",
+      "path": "InventoryUI/Root/Center/Panel/Body/BottomRule",
+      "rect": [
+        136,
+        613,
+        1008,
+        2
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "InventoryUI/Root/Center/Panel/Body/Footer",
+      "rect": [
+        136,
+        627,
+        1008,
+        21
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "InventoryUI/Root/Center/Panel/Body/Footer/Capacity",
+      "rect": [
+        136,
+        627,
+        1008,
+        21
+      ],
+      "text": "4 / 64 ô"
+    }
+  ],
+  "counts": {
+    "controls": 234,
+    "findings": 8,
+    "hidden": 328,
+    "visible": 234
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/inventory_redesign_2026-10-27/desktop-layout.json",
+  "findings": [
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Icon (TextureRect) [174, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Shortcut (Label) [170, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0/Shortcut"
+      ],
+      "overlap_rect": [
+        174,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot0",
+      "ratio": 0.31,
+      "rects": [
+        [
+          174,
+          154,
+          52,
+          52
+        ],
+        [
+          170,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Icon (TextureRect) [254, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Shortcut (Label) [250, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1/Shortcut"
+      ],
+      "overlap_rect": [
+        254,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot1",
+      "ratio": 0.31,
+      "rects": [
+        [
+          254,
+          154,
+          52,
+          52
+        ],
+        [
+          250,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Icon (TextureRect) [334, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Shortcut (Label) [330, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Shortcut"
+      ],
+      "overlap_rect": [
+        334,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2",
+      "ratio": 0.31,
+      "rects": [
+        [
+          334,
+          154,
+          52,
+          52
+        ],
+        [
+          330,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Icon (TextureRect) [334, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Count (Label) [367, 191, 23, 21] cover 59% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2/Count"
+      ],
+      "overlap_rect": [
+        367,
+        191,
+        19,
+        15
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot2",
+      "ratio": 0.59,
+      "rects": [
+        [
+          334,
+          154,
+          52,
+          52
+        ],
+        [
+          367,
+          191,
+          23,
+          21
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Icon (TextureRect) [414, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Shortcut (Label) [410, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Shortcut"
+      ],
+      "overlap_rect": [
+        414,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3",
+      "ratio": 0.31,
+      "rects": [
+        [
+          414,
+          154,
+          52,
+          52
+        ],
+        [
+          410,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Icon (TextureRect) [414, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Count (Label) [455, 191, 15, 21] cover 52% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3/Count"
+      ],
+      "overlap_rect": [
+        455,
+        191,
+        11,
+        15
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot3",
+      "ratio": 0.52,
+      "rects": [
+        [
+          414,
+          154,
+          52,
+          52
+        ],
+        [
+          455,
+          191,
+          15,
+          21
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Icon (TextureRect) [494, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Shortcut (Label) [490, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4/Shortcut"
+      ],
+      "overlap_rect": [
+        494,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot4",
+      "ratio": 0.31,
+      "rects": [
+        [
+          494,
+          154,
+          52,
+          52
+        ],
+        [
+          490,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    },
+    {
+      "kind": "overlap",
+      "message": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Icon (TextureRect) [574, 154, 52, 52] and InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Shortcut (Label) [570, 147, 8, 18.38] cover 31% of the smaller rect, but their parent InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5 (TextureButton) leaves placement to the author",
+      "nodes": [
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Icon",
+        "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5/Shortcut"
+      ],
+      "overlap_rect": [
+        574,
+        154,
+        4,
+        11.38
+      ],
+      "parent": "InventoryUI/Root/Center/Panel/Body/Content/Left/ItemScroll/Center/Grid/Slot5",
+      "ratio": 0.31,
+      "rects": [
+        [
+          574,
+          154,
+          52,
+          52
+        ],
+        [
+          570,
+          147,
+          8,
+          18.38
+        ]
+      ]
+    }
+  ],
+  "label": "desktop",
+  "node_path": "InventoryUI/Root",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

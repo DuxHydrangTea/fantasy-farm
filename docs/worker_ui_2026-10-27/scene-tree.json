@@ -1,0 +1,1648 @@
+{
+  "base_scene_path": "",
+  "connection_count": 0,
+  "connections": [],
+  "dependencies": [
+    "res://components/workers/worker_menu.gd",
+    "res://resources/ui/cozy_hud/shop_theme.tres",
+    "res://resources/ui/cozy_hud/cooking_selected.tres"
+  ],
+  "node_count": 91,
+  "nodes": [
+    {
+      "groups": [],
+      "index": 0,
+      "instance_placeholder": "",
+      "name": "WorkerMenu",
+      "owner_path": "",
+      "path": ".",
+      "properties": {
+        "layer": 25,
+        "script": {
+          "__resource": "res://components/workers/worker_menu.gd",
+          "resource_type": "GDScript"
+        }
+      },
+      "sibling_index": -1,
+      "type": "CanvasLayer"
+    },
+    {
+      "groups": [],
+      "index": 1,
+      "instance_placeholder": "",
+      "name": "Root",
+      "owner_path": ".",
+      "path": "./Root",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "texture_filter": 1,
+        "theme": {
+          "__resource": "res://resources/ui/cozy_hud/shop_theme.tres",
+          "resource_type": "Theme"
+        },
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 2,
+      "instance_placeholder": "",
+      "name": "Dim",
+      "owner_path": ".",
+      "path": "./Root/Dim",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "color": {
+          "__type": "Color",
+          "a": 0.649999976158142,
+          "b": 0.0700000002980232,
+          "g": 0.0900000035762787,
+          "r": 0.100000001490116
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ColorRect"
+    },
+    {
+      "groups": [],
+      "index": 3,
+      "instance_placeholder": "",
+      "name": "Center",
+      "owner_path": ".",
+      "path": "./Root/Center",
+      "properties": {
+        "anchor_bottom": 1.0,
+        "anchor_right": 1.0,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "CenterContainer"
+    },
+    {
+      "groups": [],
+      "index": 4,
+      "instance_placeholder": "",
+      "name": "Panel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 5,
+      "instance_placeholder": "",
+      "name": "Shell",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 6,
+      "instance_placeholder": "",
+      "name": "Header",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 7,
+      "instance_placeholder": "",
+      "name": "Heading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Heading",
+      "properties": {
+        "autowrap_mode": 0,
+        "clip_text": true,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Hired workers",
+        "text_overrun_behavior": 3,
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 8,
+      "instance_placeholder": "",
+      "name": "Balance",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Balance",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 9,
+      "instance_placeholder": "",
+      "name": "Close",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Header/Close",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 48.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "×",
+        "tooltip_text": "Close (Esc / E)",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 10,
+      "instance_placeholder": "",
+      "name": "Page",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 11,
+      "instance_placeholder": "",
+      "name": "Main",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 12,
+      "instance_placeholder": "",
+      "name": "OverviewPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 0.85,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 13,
+      "instance_placeholder": "",
+      "name": "OverviewScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll",
+      "properties": {
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 14,
+      "instance_placeholder": "",
+      "name": "OverviewContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 15,
+      "instance_placeholder": "",
+      "name": "Portrait",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Portrait",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 180.0
+        },
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Control"
+    },
+    {
+      "groups": [],
+      "index": 16,
+      "instance_placeholder": "",
+      "name": "Preview",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Portrait/Preview",
+      "properties": {
+        "layout_mode": 2,
+        "sprite_frames": {
+          "__resource_type": "SpriteFrames",
+          "properties": {
+            "animations": [
+              {
+                "frames": {
+                  "__truncated": true,
+                  "type": "Array"
+                },
+                "loop": {
+                  "__truncated": true,
+                  "type": "int"
+                },
+                "name": {
+                  "__truncated": true,
+                  "type": "StringName"
+                },
+                "speed": {
+                  "__truncated": true,
+                  "type": "float"
+                }
+              }
+            ],
+            "resource_local_to_scene": false,
+            "resource_name": "",
+            "script": null
+          },
+          "resource_name": ""
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "AnimatedSprite2D"
+    },
+    {
+      "groups": [],
+      "index": 17,
+      "instance_placeholder": "",
+      "name": "WorkerName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/WorkerName",
+      "properties": {
+        "autowrap_mode": 3,
+        "horizontal_alignment": 1,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 18,
+      "instance_placeholder": "",
+      "name": "Employment",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Employment",
+      "properties": {
+        "autowrap_mode": 3,
+        "horizontal_alignment": 1,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 19,
+      "instance_placeholder": "",
+      "name": "OverviewRule",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/OverviewRule",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HSeparator"
+    },
+    {
+      "groups": [],
+      "index": 20,
+      "instance_placeholder": "",
+      "name": "WageHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/WageHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Daily wage",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 21,
+      "instance_placeholder": "",
+      "name": "Wage",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/Wage",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 26,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 22,
+      "instance_placeholder": "",
+      "name": "DawnNote",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/DawnNote",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Wages are paid at dawn.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 23,
+      "instance_placeholder": "",
+      "name": "HireCost",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent/HireCost",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 24,
+      "instance_placeholder": "",
+      "name": "WorkPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.4,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 25,
+      "instance_placeholder": "",
+      "name": "WorkScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 26,
+      "instance_placeholder": "",
+      "name": "WorkContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 27,
+      "instance_placeholder": "",
+      "name": "WorkHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/WorkHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Work settings",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 28,
+      "instance_placeholder": "",
+      "name": "CropOptions",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 29,
+      "instance_placeholder": "",
+      "name": "PlantCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 30,
+      "instance_placeholder": "",
+      "name": "PlantRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 31,
+      "instance_placeholder": "",
+      "name": "PlantText",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 32,
+      "instance_placeholder": "",
+      "name": "PlantTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText/PlantTitle",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Auto till and replant",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 33,
+      "instance_placeholder": "",
+      "name": "PlantHint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/PlantText/PlantHint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Uses seeds from farm supply storage.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 34,
+      "instance_placeholder": "",
+      "name": "AutoPlant",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/PlantCard/PlantRow/AutoPlant",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 64.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "On",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 35,
+      "instance_placeholder": "",
+      "name": "FertilizeCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 36,
+      "instance_placeholder": "",
+      "name": "FertilizeRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 37,
+      "instance_placeholder": "",
+      "name": "FertilizeText",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 38,
+      "instance_placeholder": "",
+      "name": "FertilizeTitle",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText/FertilizeTitle",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Automatically fertilize crops",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 39,
+      "instance_placeholder": "",
+      "name": "FertilizeHint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/FertilizeText/FertilizeHint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Applies only to worker-planted crops.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 40,
+      "instance_placeholder": "",
+      "name": "AutoFertilize",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/CropOptions/FertilizeCard/FertilizeRow/AutoFertilize",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 64.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "On",
+        "theme_override_styles/pressed": {
+          "__resource": "res://resources/ui/cozy_hud/cooking_selected.tres",
+          "resource_type": "StyleBoxTexture"
+        },
+        "toggle_mode": true,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 41,
+      "instance_placeholder": "",
+      "name": "ZoneBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/ZoneBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 42,
+      "instance_placeholder": "",
+      "name": "ZoneHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/ZoneBox/ZoneHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Assigned animal pen",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 43,
+      "instance_placeholder": "",
+      "name": "Zones",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/ZoneBox/Zones",
+      "properties": {
+        "clip_text": true,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "OptionButton"
+    },
+    {
+      "groups": [],
+      "index": 44,
+      "instance_placeholder": "",
+      "name": "RoleDescription",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/RoleDescription",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 45,
+      "instance_placeholder": "",
+      "name": "TaskCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 46,
+      "instance_placeholder": "",
+      "name": "TaskBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 47,
+      "instance_placeholder": "",
+      "name": "TaskHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox/TaskHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Worker status",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 48,
+      "instance_placeholder": "",
+      "name": "Task",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/TaskCard/TaskBox/Task",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 49,
+      "instance_placeholder": "",
+      "name": "Unlock",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/Unlock",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_colors/font_color": {
+          "__type": "Color",
+          "a": 1.0,
+          "b": 0.0900000035762787,
+          "g": 0.28999999165535,
+          "r": 0.620000004768372
+        },
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 50,
+      "instance_placeholder": "",
+      "name": "PauseNote",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/PauseNote",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Crop work is manually paused. Wages still apply.",
+        "theme_override_colors/font_color": {
+          "__type": "Color",
+          "a": 1.0,
+          "b": 0.0900000035762787,
+          "g": 0.28999999165535,
+          "r": 0.620000004768372
+        },
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 51,
+      "instance_placeholder": "",
+      "name": "Status",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/Status",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 52,
+      "instance_placeholder": "",
+      "name": "Info",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent/Info",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 53,
+      "instance_placeholder": "",
+      "name": "SupplyPanel",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "size_flags_stretch_ratio": 1.0,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 54,
+      "instance_placeholder": "",
+      "name": "SupplyScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll",
+      "properties": {
+        "follow_focus": true,
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 55,
+      "instance_placeholder": "",
+      "name": "SupplyContent",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 56,
+      "instance_placeholder": "",
+      "name": "SupplyHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/SupplyHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Supply storage",
+        "theme_override_font_sizes/font_size": 20,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 57,
+      "instance_placeholder": "",
+      "name": "Supplies",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/Supplies",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 58,
+      "instance_placeholder": "",
+      "name": "CropSupplyRows",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 59,
+      "instance_placeholder": "",
+      "name": "SeedSupplyCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 60,
+      "instance_placeholder": "",
+      "name": "SeedSupplyRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 61,
+      "instance_placeholder": "",
+      "name": "SeedIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 32.0,
+          "y": 32.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 62,
+      "instance_placeholder": "",
+      "name": "SeedSupplyName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedSupplyName",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Crop seeds",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 63,
+      "instance_placeholder": "",
+      "name": "SeedCount",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/SeedSupplyCard/SeedSupplyRow/SeedCount",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "0",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 64,
+      "instance_placeholder": "",
+      "name": "FertilizerSupplyCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 65,
+      "instance_placeholder": "",
+      "name": "FertilizerSupplyRow",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 66,
+      "instance_placeholder": "",
+      "name": "FertilizerIcon",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerIcon",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 32.0,
+          "y": 32.0
+        },
+        "expand_mode": 1,
+        "layout_mode": 2,
+        "mouse_filter": 2,
+        "stretch_mode": 5,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "TextureRect"
+    },
+    {
+      "groups": [],
+      "index": 67,
+      "instance_placeholder": "",
+      "name": "FertilizerSupplyName",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerSupplyName",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Fertilizer",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 68,
+      "instance_placeholder": "",
+      "name": "FertilizerCount",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/CropSupplyRows/FertilizerSupplyCard/FertilizerSupplyRow/FertilizerCount",
+      "properties": {
+        "autowrap_mode": 0,
+        "layout_mode": 2,
+        "text": "0",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 69,
+      "instance_placeholder": "",
+      "name": "SupplyHint",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/SupplyHint",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 70,
+      "instance_placeholder": "",
+      "name": "DestinationCard",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard",
+      "properties": {
+        "layout_mode": 2,
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "DetailCard"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "PanelContainer"
+    },
+    {
+      "groups": [],
+      "index": 71,
+      "instance_placeholder": "",
+      "name": "DestinationBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard/DestinationBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 72,
+      "instance_placeholder": "",
+      "name": "DestinationHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard/DestinationBox/DestinationHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Produce warehouse",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 73,
+      "instance_placeholder": "",
+      "name": "Destination",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/DestinationCard/DestinationBox/Destination",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Harvested products go directly to the produce warehouse.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 74,
+      "instance_placeholder": "",
+      "name": "LegacyBox",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox",
+      "properties": {
+        "layout_mode": 2,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 75,
+      "instance_placeholder": "",
+      "name": "LegacyHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox/LegacyHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Old basket recovery",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 76,
+      "instance_placeholder": "",
+      "name": "LegacyContents",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox/LegacyContents",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 77,
+      "instance_placeholder": "",
+      "name": "Collect",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox/Collect",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Recover old basket products",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 78,
+      "instance_placeholder": "",
+      "name": "Withdraw",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox/Withdraw",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Recover old basket feed",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 79,
+      "instance_placeholder": "",
+      "name": "Deposit",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Main/SupplyPanel/SupplyScroll/SupplyContent/LegacyBox/Deposit",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Deposit feed",
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 80,
+      "instance_placeholder": "",
+      "name": "Actions",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Actions",
+      "properties": {
+        "layout_mode": 2,
+        "theme_override_constants/separation": 8,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "HBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 81,
+      "instance_placeholder": "",
+      "name": "Hire",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Actions/Hire",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Hire worker",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 82,
+      "instance_placeholder": "",
+      "name": "PauseCrop",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Actions/PauseCrop",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Pause crop work (wages continue)",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 83,
+      "instance_placeholder": "",
+      "name": "Dismiss",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/Actions/Dismiss",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "Dismiss worker",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 84,
+      "instance_placeholder": "",
+      "name": "TrialNote",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Page/TrialNote",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "First shift is free once per role. Rehiring costs today's wage.",
+        "theme_override_font_sizes/font_size": 14,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 85,
+      "instance_placeholder": "",
+      "name": "Confirmation",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation",
+      "properties": {
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "theme_override_constants/separation": 12,
+        "unique_name_in_owner": true,
+        "visible": false
+      },
+      "sibling_index": -1,
+      "type": "VBoxContainer"
+    },
+    {
+      "groups": [],
+      "index": 86,
+      "instance_placeholder": "",
+      "name": "ConfirmHeading",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmHeading",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "text": "Dismiss worker",
+        "theme_override_font_sizes/font_size": 24,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 87,
+      "instance_placeholder": "",
+      "name": "ConfirmScroll",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmScroll",
+      "properties": {
+        "horizontal_scroll_mode": 0,
+        "layout_mode": 2,
+        "size_flags_vertical": 3,
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "ScrollContainer"
+    },
+    {
+      "groups": [],
+      "index": 88,
+      "instance_placeholder": "",
+      "name": "ConfirmationText",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmScroll/ConfirmationText",
+      "properties": {
+        "autowrap_mode": 3,
+        "layout_mode": 2,
+        "size_flags_horizontal": 3,
+        "text": "",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Label"
+    },
+    {
+      "groups": [],
+      "index": 89,
+      "instance_placeholder": "",
+      "name": "ConfirmDismiss",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/ConfirmDismiss",
+      "properties": {
+        "autowrap_mode": 3,
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Confirm dismissal (basket is kept)",
+        "theme_type_variation": {
+          "__type": "StringName",
+          "value": "PrimaryAction"
+        },
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    },
+    {
+      "groups": [],
+      "index": 90,
+      "instance_placeholder": "",
+      "name": "CancelDismiss",
+      "owner_path": ".",
+      "path": "./Root/Center/Panel/Shell/Confirmation/CancelDismiss",
+      "properties": {
+        "custom_minimum_size": {
+          "__type": "Vector2",
+          "x": 0.0,
+          "y": 48.0
+        },
+        "layout_mode": 2,
+        "text": "Cancel",
+        "unique_name_in_owner": true
+      },
+      "sibling_index": -1,
+      "type": "Button"
+    }
+  ],
+  "scene_path": "res://scenes/ui/workers.tscn",
+  "uid": ""
+}

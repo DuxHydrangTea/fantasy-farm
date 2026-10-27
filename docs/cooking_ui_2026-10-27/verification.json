@@ -1,0 +1,553 @@
+{
+  "feature_tests": {
+    "passed": 12,
+    "total": 12,
+    "assertions": 178,
+    "suites": [
+      "tests/integration/test_cooking_ui.gd",
+      "tests/unit/test_chef_cooking.gd"
+    ]
+  },
+  "compatibility_tests": {
+    "passed": 4,
+    "total": 5,
+    "remaining_failure": "test_cooking_snapshot_roundtrips_through_disk line 91: expected 2 ready, got 1; reproduced before UI changes, intermittently passes near timestamp boundary."
+  },
+  "runtime": {
+    "checks": 22,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "validation": {
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "changed_cooking_file_diagnostics": [],
+    "note": "Warnings are in existing dependencies; not claiming whole-project warning-free."
+  },
+  "layout": {
+    "desktop": {
+      "passed": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "cooking-desktop",
+          "counts": {
+            "controls": 81,
+            "findings": 12,
+            "hidden": 2,
+            "visible": 81
+          },
+          "findings": [
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@239 (Button) rect [96, 1134, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@239"
+              ],
+              "rects": [
+                [
+                  96,
+                  1134,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@240 (Button) rect [96, 1206, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@240"
+              ],
+              "rects": [
+                [
+                  96,
+                  1206,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@241 (Button) rect [96, 1278, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@241"
+              ],
+              "rects": [
+                [
+                  96,
+                  1278,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@242 (Button) rect [96, 1350, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@242"
+              ],
+              "rects": [
+                [
+                  96,
+                  1350,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243 (Button) rect [96, 1422, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243"
+              ],
+              "rects": [
+                [
+                  96,
+                  1422,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244 (Button) rect [96, 1494, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244"
+              ],
+              "rects": [
+                [
+                  96,
+                  1494,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245 (Button) rect [96, 1566, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245"
+              ],
+              "rects": [
+                [
+                  96,
+                  1566,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246 (Button) rect [96, 1638, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246"
+              ],
+              "rects": [
+                [
+                  96,
+                  1638,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247 (Button) rect [96, 1710, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247"
+              ],
+              "rects": [
+                [
+                  96,
+                  1710,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248 (Button) rect [96, 1782, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248"
+              ],
+              "rects": [
+                [
+                  96,
+                  1782,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249 (Button) rect [96, 1854, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249"
+              ],
+              "rects": [
+                [
+                  96,
+                  1854,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250 (Button) rect [96, 1926, 280, 64] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250"
+              ],
+              "rects": [
+                [
+                  96,
+                  1926,
+                  280,
+                  64
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            }
+          ]
+        },
+        {
+          "label": "desktop-header",
+          "counts": {
+            "controls": 4,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 4
+          },
+          "findings": []
+        },
+        {
+          "label": "desktop-cook",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "findings": []
+        },
+        {
+          "label": "desktop-collect",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "findings": []
+        }
+      ],
+      "note": "Full-tree offscreen findings correspond to rows clipped inside scrolling recipe list; zero_size and overlap gated. Header and pinned actions gate all findings. Native checks verify actual viewport enclosure at 844x390 and 667x375 with safe insets."
+    },
+    "compact": {
+      "passed": true,
+      "errors": [],
+      "reports": [
+        {
+          "label": "cooking-compact",
+          "counts": {
+            "controls": 77,
+            "findings": 8,
+            "hidden": 6,
+            "visible": 77
+          },
+          "findings": [
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243 (Button) rect [38, 1092, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@243"
+              ],
+              "rects": [
+                [
+                  38,
+                  1092,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244 (Button) rect [38, 1148, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@244"
+              ],
+              "rects": [
+                [
+                  38,
+                  1148,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245 (Button) rect [38, 1204, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@245"
+              ],
+              "rects": [
+                [
+                  38,
+                  1204,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246 (Button) rect [38, 1260, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@246"
+              ],
+              "rects": [
+                [
+                  38,
+                  1260,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247 (Button) rect [38, 1316, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@247"
+              ],
+              "rects": [
+                [
+                  38,
+                  1316,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248 (Button) rect [38, 1372, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@248"
+              ],
+              "rects": [
+                [
+                  38,
+                  1372,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249 (Button) rect [38, 1428, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@249"
+              ],
+              "rects": [
+                [
+                  38,
+                  1428,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            },
+            {
+              "kind": "offscreen",
+              "message": "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250 (Button) rect [38, 1484, 251, 48] lies entirely outside the viewport [0, 0, 1920, 1080]",
+              "nodes": [
+                "Farm/Chef/CookingMenu/Root/Center/Panel/Body/Main/BrowsePanel/BrowseBody/Browse/RecipeList/@Button@250"
+              ],
+              "rects": [
+                [
+                  38,
+                  1484,
+                  251,
+                  48
+                ]
+              ],
+              "viewport_rect": [
+                0,
+                0,
+                1920,
+                1080
+              ]
+            }
+          ]
+        },
+        {
+          "label": "compact-header",
+          "counts": {
+            "controls": 4,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 4
+          },
+          "findings": []
+        },
+        {
+          "label": "compact-cook",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "findings": []
+        },
+        {
+          "label": "compact-collect",
+          "counts": {
+            "controls": 1,
+            "findings": 0,
+            "hidden": 0,
+            "visible": 1
+          },
+          "findings": []
+        }
+      ],
+      "note": "Full-tree offscreen findings correspond to rows clipped inside scrolling recipe list; zero_size and overlap gated. Header and pinned actions gate all findings. Native checks verify actual viewport enclosure at 844x390 and 667x375 with safe insets."
+    }
+  },
+  "personal_save_used": false,
+  "scene_nodes": 53
+}

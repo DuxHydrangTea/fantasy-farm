@@ -6,12 +6,14 @@ var player: FarmPlayer
 var merchant: ShopMerchant
 
 func before_each() -> void:
+	Language.set_language("en")
 	viewport = SubViewport.new()
 	viewport.size = Vector2i(1920, 1080)
 	viewport.world_2d = World2D.new()
 	add_child_autofree(viewport)
 	player = PLAYER.instantiate() as FarmPlayer
 	viewport.add_child(player)
+	player.wallet.balance = 1000
 	merchant = MERCHANT.instantiate() as ShopMerchant
 	merchant.position = Vector2(24, 0)
 	viewport.add_child(merchant)
@@ -21,7 +23,7 @@ func after_each() -> void:
 	Language.set_language("en")
 	await wait_process_frames(2)
 
-func test_english_default_and_live_inventory_hotbar_wallet_and_tooltips() -> void:
+func test_live_inventory_hotbar_wallet_and_tooltips() -> void:
 	assert_eq(TranslationServer.get_locale(), "en")
 	var bag: InventoryUI = player.get_node("InventoryUI") as InventoryUI
 	var hotbar: HotbarUI = player.get_node("Hotbar") as HotbarUI
@@ -31,12 +33,12 @@ func test_english_default_and_live_inventory_hotbar_wallet_and_tooltips() -> voi
 	for index: int in range(player.selection.inventory.slot_count):
 		before.append(player.selection.inventory.slot(index))
 	assert_eq(hotbar.selected_name.text, "Watering Can")
-	assert_string_contains(bag.details.text, "Watering Can")
+	assert_eq(bag.item_name.text, "Watering Can")
 	assert_string_contains(bag.capacity.text, "slots")
 	assert_true(Language.set_language("vi"))
 	await wait_process_frames(3)
 	assert_eq(hotbar.selected_name.text, "Bình tưới")
-	assert_string_contains(bag.details.text, "Bình tưới")
+	assert_eq(bag.item_name.text, "Bình tưới")
 	assert_string_contains(bag.capacity.text, "ô")
 	assert_eq(bag.buttons[1].tooltip_text, "Bình tưới")
 	assert_eq(bag.wallet_label.text, "1.000 xu")
@@ -59,15 +61,15 @@ func test_shop_retranslates_scene_and_generated_cards_without_changing_checkout(
 	var offer: ShopOffer = merchant.catalog.offers.filter(func(entry: ShopOffer) -> bool: return entry.category == ShopOffer.Category.FEED and entry.item.item_id == &"livestock_feed")[0]
 	shop.select_offer(offer)
 	shop.quantity.value = 3
-	assert_string_contains(shop.details.text, "Livestock Feed")
+	assert_eq(shop.product_name.text, "Livestock Feed")
 	assert_string_contains(shop.buy_button.text, "Buy ×3")
 	Language.set_language("vi")
 	await wait_process_frames(3)
 	assert_eq(shop.selected, offer)
 	assert_eq(shop.quantity.value, 3.0)
-	assert_string_contains(shop.details.text, "Thức ăn gia súc")
+	assert_eq(shop.product_name.text, "Thức ăn gia súc")
 	assert_string_contains(shop.buy_button.text, "Mua ×3")
-	assert_eq((shop.categories.get_child(1) as Button).text, "Farm supplies", "Scene text stays an English source key; Godot translates it at draw time")
+	assert_eq((shop.categories.get_child(1) as Button).text, tr("Farm supplies"), "Dynamic category captions update with the locale")
 	assert_eq(tr((shop.categories.get_child(1) as Button).text), "Đồ dùng nông trại")
 	assert_true(shop.grid.get_children().any(func(card: Node) -> bool: return (card as Button).tooltip_text == "Thức ăn gia súc"))
 	assert_true(player.selection.shop_open)
@@ -75,12 +77,14 @@ func test_shop_retranslates_scene_and_generated_cards_without_changing_checkout(
 	Language.set_language("en")
 	await wait_process_frames(3)
 	assert_eq(shop.selected, offer)
-	assert_string_contains(shop.details.text, "Livestock Feed")
+	assert_eq(shop.product_name.text, "Livestock Feed")
 	assert_string_contains(shop.buy_button.text, "Buy ×3")
+	assert_eq((shop.categories.get_child(1) as Button).text, "Farm supplies")
 	shop.close()
 	assert_false(merchant.bubble.visible, "Translation refresh is never a purchase")
 
 func test_animal_sale_selection_survives_language_change() -> void:
+	player.wallet.set_balance(1000000)
 	var pen: AnimalPen = AnimalPen.new()
 	pen.accepted_species = [AnimalTypes.Species.CHICKEN]
 	viewport.add_child(pen)
@@ -99,13 +103,13 @@ func test_animal_sale_selection_survives_language_change() -> void:
 	assert_false(shop.buy_button.disabled)
 	assert_string_contains(shop.details.text, "Gà")
 	assert_string_contains(shop.details.text, "Con non")
-	assert_eq(player.wallet.balance, 840)
+	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price)
 	Language.set_language("en")
 	await wait_process_frames(3)
 	assert_eq(shop.selected_animal, animal)
 	assert_string_contains(shop.details.text, "Chicken")
 	assert_string_contains(shop.details.text, "Young")
-	assert_string_contains(shop.buy_button.text, "80 coins")
+	assert_string_contains(shop.buy_button.text, str(floori(merchant.catalog.animal_offers[0].price * 0.5)) + " coins")
 
 func test_backend_errors_keep_source_keys_and_localize_only_for_display() -> void:
 	var result: Dictionary = SaveSchema.failure("Invalid list: {list}", "invalid", {"list": "crops"})

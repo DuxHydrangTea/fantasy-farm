@@ -1,0 +1,106 @@
+{
+  "controls": [
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+      "rect": [
+        106,
+        601,
+        1068,
+        48
+      ]
+    },
+    {
+      "class": "Label",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/QuantityTitle",
+      "rect": [
+        106,
+        613,
+        73,
+        23.63
+      ],
+      "text": "Quantity"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/@Button@417",
+      "rect": [
+        187,
+        601,
+        48,
+        48
+      ],
+      "text": "−"
+    },
+    {
+      "class": "SpinBox",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Quantity",
+      "rect": [
+        243,
+        601,
+        78,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/@Button@418",
+      "rect": [
+        329,
+        601,
+        48,
+        48
+      ],
+      "text": "+"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Maximum",
+      "rect": [
+        385,
+        601,
+        68,
+        48
+      ],
+      "text": "Max"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Deposit",
+      "rect": [
+        461,
+        601,
+        352,
+        48
+      ],
+      "text": "Gửi vào kho →"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command/Withdraw",
+      "rect": [
+        821,
+        601,
+        353,
+        48
+      ],
+      "text": "← Rút về túi"
+    }
+  ],
+  "counts": {
+    "controls": 8,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 8
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/storage_redesign_2026-10-27/desktop-command-layout.json",
+  "findings": [],
+  "label": "desktop-command",
+  "node_path": "Farm/Warehouse/StorageAccess/StorageMenu/Root/Center/Panel/Body/Command",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "integration": {
+    "tests": 29,
+    "passed": 29,
+    "assertions": 2432
+  },
+  "native": {
+    "checks": 50,
+    "failures": [],
+    "ok": true,
+    "personal_save_used": false
+  },
+  "lint": {
+    "total": 11,
+    "errors": 0,
+    "warnings": 11,
+    "parse_errors": 0
+  },
+  "validation": {
+    "ok": true,
+    "counts": {
+      "total": 28,
+      "errors": 0,
+      "parse_errors": 0,
+      "warnings": 28,
+      "info": 0
+    },
+    "scenes_checked": 7,
+    "failed": [],
+    "config_warning_count": 0
+  },
+  "layout": {
+    "desktop": {
+      "full": {
+        "controls": 163,
+        "findings": 2,
+        "hidden": 0,
+        "visible": 163
+      },
+      "-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      },
+      "-checkout": {
+        "controls": 28,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 28
+      },
+      "-tabs": {
+        "controls": 8,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 8
+      },
+      "scenario_ok": true
+    },
+    "compact": {
+      "full": {
+        "controls": 161,
+        "findings": 0,
+        "hidden": 2,
+        "visible": 161
+      },
+      "-header": {
+        "controls": 4,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 4
+      },
+      "-checkout": {
+        "controls": 27,
+        "findings": 0,
+        "hidden": 1,
+        "visible": 27
+      },
+      "-tabs": {
+        "controls": 8,
+        "findings": 0,
+        "hidden": 0,
+        "visible": 8
+      },
+      "scenario_ok": true
+    }
+  },
+  "physical_phone_tested": false
+}

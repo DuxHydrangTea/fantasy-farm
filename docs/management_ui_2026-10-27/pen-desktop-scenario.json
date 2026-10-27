@@ -1,0 +1,19 @@
+{
+  "scene_path": "tests/support/management_redesign_fixture.tscn",
+  "viewport_size": {
+    "width": 1280,
+    "height": 720
+  },
+  "settle_frames": 12,
+  "steps": [
+    {
+      "type": "ui_report",
+      "node_path": "Farm/CoopPen/ManagementSign/PenMenu/Root",
+      "label": "pen-desktop",
+      "fail_on": [
+        "any"
+      ],
+      "path": "/home/dungnguyen/Projects/test-js/docs/management_ui_2026-10-27/pen-desktop-layout.json"
+    }
+  ]
+}

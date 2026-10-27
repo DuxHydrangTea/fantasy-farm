@@ -1,0 +1,106 @@
+{
+  "controls": [
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll",
+      "rect": [
+        106,
+        136,
+        742,
+        62
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories",
+      "rect": [
+        106,
+        136,
+        746,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Crops",
+      "rect": [
+        106,
+        136,
+        129,
+        48
+      ],
+      "text": "Hạt cây trồng"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Feed",
+      "rect": [
+        239,
+        136,
+        162,
+        48
+      ],
+      "text": "Đồ dùng nông trại"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Flowers",
+      "rect": [
+        405,
+        136,
+        77,
+        48
+      ],
+      "text": "Hạt hoa"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Animals",
+      "rect": [
+        486,
+        136,
+        87,
+        48
+      ],
+      "text": "Vật nuôi"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/SellAnimals",
+      "rect": [
+        577,
+        136,
+        119,
+        48
+      ],
+      "text": "Bán vật nuôi"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/ToolUpgrades",
+      "rect": [
+        700,
+        136,
+        152,
+        48
+      ],
+      "text": "Nâng cấp nông cụ"
+    }
+  ],
+  "counts": {
+    "controls": 8,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 8
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/desktop-tabs-layout.json",
+  "findings": [],
+  "label": "desktop-tabs",
+  "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}

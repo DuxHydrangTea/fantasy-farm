@@ -1,0 +1,106 @@
+{
+  "controls": [
+    {
+      "class": "ScrollContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll",
+      "rect": [
+        32,
+        78,
+        360,
+        62
+      ]
+    },
+    {
+      "class": "HBoxContainer",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories",
+      "rect": [
+        32,
+        78,
+        412,
+        48
+      ]
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Crops",
+      "rect": [
+        32,
+        78,
+        87,
+        48
+      ],
+      "text": "Hạt giống"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Feed",
+      "rect": [
+        123,
+        78,
+        63,
+        48
+      ],
+      "text": "Vật tư"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Flowers",
+      "rect": [
+        190,
+        78,
+        42,
+        48
+      ],
+      "text": "Hoa"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/Animals",
+      "rect": [
+        236,
+        78,
+        79,
+        48
+      ],
+      "text": "Vật nuôi"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/SellAnimals",
+      "rect": [
+        319,
+        78,
+        42,
+        48
+      ],
+      "text": "Bán"
+    },
+    {
+      "class": "Button",
+      "path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll/Categories/ToolUpgrades",
+      "rect": [
+        365,
+        78,
+        79,
+        48
+      ],
+      "text": "Nâng cấp"
+    }
+  ],
+  "counts": {
+    "controls": 8,
+    "findings": 0,
+    "hidden": 0,
+    "visible": 8
+  },
+  "file": "/home/dungnguyen/Projects/test-js/docs/shop_redesign_2026-10-27/compact-tabs-layout.json",
+  "findings": [],
+  "label": "compact-tabs",
+  "node_path": "Farm/LaiBuon/MerchantInteraction/ShopUI/Root/Center/Panel/Body/Main/Left/CategoryScroll",
+  "passed": true,
+  "rect_format": "[x, y, width, height]",
+  "viewport": {
+    "height": 1080,
+    "width": 1920
+  }
+}
