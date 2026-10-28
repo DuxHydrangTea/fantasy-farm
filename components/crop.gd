@@ -2,6 +2,9 @@ class_name Crop
 extends Node2D
 ## Shared stage textures have identical opaque bounds across crop instances.
 static var _visible_tops: Dictionary[Texture2D, float] = {}
+static var _quality_material: ParticleProcessMaterial
+static var _quality_texture: ImageTexture
+static var _silver_texture: ImageTexture
 
 signal matured
 var definition: CropDefinition
@@ -11,7 +14,8 @@ var progress: float = 0.0
 var stage: int = 0
 var watered: bool = false
 var root_boost: bool = false
-var quality_label: Label
+var quality_particles: GPUParticles2D
+var _displayed_quality: int = 0
 var fertilized: bool = false
 var pollination_reduction: float = 0.0
 var time_manager: FarmClock
@@ -23,14 +27,6 @@ var _retiring: bool = false
 
 func _ready() -> void:
 	progress_frame.hide()
-	quality_label = Label.new()
-	quality_label.name = "HarvestQuality"
-	quality_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	quality_label.add_theme_font_size_override("font_size", 8)
-	quality_label.add_theme_color_override("font_shadow_color", Color.BLACK)
-	quality_label.add_theme_constant_override("shadow_offset_x", 1)
-	quality_label.add_theme_constant_override("shadow_offset_y", 1)
-	add_child(quality_label)
 	_update_quality()
 	if is_instance_valid(motion):
 		motion.effect_finished.connect(_on_motion_finished)
@@ -58,8 +54,9 @@ func play_sprout() -> void:
 # The component reports completion; only the crop owns its lifetime.
 func retire_after_harvest() -> void:
 	_retiring = true
-	if quality_label != null:
-		quality_label.hide()
+	if quality_particles != null:
+		quality_particles.emitting = false
+		quality_particles.hide()
 	add_to_group(&"harvest_effects")
 	progress_frame.hide()
 	if is_instance_valid(motion):
@@ -175,10 +172,60 @@ func apply_root() -> bool:
 	return true
 
 func _update_quality() -> void:
-	if quality_label == null:
+	var tier: int = harvest_tier() if not _retiring else 0
+	if tier == _displayed_quality:
 		return
-	var tier: int = harvest_tier()
-	quality_label.text = ("* " if root_boost else "") + ItemQuality.label(tier)
-	quality_label.modulate = ItemQuality.color(tier)
-	quality_label.position = Vector2(-14, progress_frame.position.y - 10)
-	quality_label.visible = not _retiring and (progress_frame.visible or root_boost)
+	_displayed_quality = tier
+	if tier == 0:
+		if quality_particles != null:
+			quality_particles.emitting = false
+			quality_particles.hide()
+		return
+	if quality_particles == null:
+		_create_quality_particles()
+	quality_particles.modulate = Color(1.0, 0.78, 0.25, 0.7) if tier == 2 else Color(0.82, 0.86, 0.91, 0.65)
+	quality_particles.texture = _quality_texture if tier == 2 else _silver_texture
+	quality_particles.show()
+	quality_particles.restart()
+	quality_particles.emitting = true
+
+func _create_quality_particles() -> void:
+	if _quality_material == null:
+		_quality_material = ParticleProcessMaterial.new()
+		_quality_material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+		_quality_material.emission_box_extents = Vector3(11, 4, 0)
+		_quality_material.direction = Vector3(0, -1, 0)
+		_quality_material.spread = 25.0
+		_quality_material.gravity = Vector3(0, -3, 0)
+		_quality_material.initial_velocity_min = 5.0
+		_quality_material.initial_velocity_max = 10.0
+		_quality_material.scale_min = 0.55
+		_quality_material.scale_max = 1.0
+		_quality_material.particle_flag_disable_z = true
+		var fade: Gradient = Gradient.new()
+		fade.set_color(0, Color(1, 1, 1, 0))
+		fade.add_point(0.25, Color.WHITE)
+		fade.set_color(2, Color(1, 1, 1, 0))
+		var ramp: GradientTexture1D = GradientTexture1D.new()
+		ramp.gradient = fade
+		_quality_material.color_ramp = ramp
+		var image: Image = Image.create(5, 5, false, Image.FORMAT_RGBA8)
+		for point: Vector2i in [Vector2i(2, 0), Vector2i(2, 1), Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2), Vector2i(3, 2), Vector2i(4, 2), Vector2i(2, 3), Vector2i(2, 4)]:
+			image.set_pixel(point.x, point.y, Color.WHITE)
+		_quality_texture = ImageTexture.create_from_image(image)
+		var dot: Image = Image.create(3, 3, false, Image.FORMAT_RGBA8)
+		for point: Vector2i in [Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1), Vector2i(1, 2)]:
+			dot.set_pixel(point.x, point.y, Color.WHITE)
+		_silver_texture = ImageTexture.create_from_image(dot)
+	quality_particles = GPUParticles2D.new()
+	quality_particles.name = "QualityParticles"
+	quality_particles.emitting = false
+	quality_particles.amount = 3
+	quality_particles.lifetime = 1.5
+	quality_particles.randomness = 0.7
+	quality_particles.preprocess = 1.5
+	quality_particles.position = Vector2(0, -8)
+	quality_particles.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	quality_particles.texture = _quality_texture
+	quality_particles.process_material = _quality_material
+	add_child(quality_particles)

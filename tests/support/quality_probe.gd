@@ -110,7 +110,7 @@ func _run() -> void:
 	_check(command.use(world.farming, fields[2], null, bag, index, tonic, world.player).ok, "Root Tonic applies through player command")
 	var crop: Crop = world.farming.get_crop(fields[2])
 	crop.set_status_focused(true)
-	_check(crop.quality_label.visible, "Gold promise displayed on crop")
+	_check(crop.quality_particles != null and crop.quality_particles.emitting, "Gold particles displayed on crop")
 	world.player.camera.zoom = Vector2(3, 3)
 	world.player.camera.reset_smoothing()
 	await _capture("quality-field")

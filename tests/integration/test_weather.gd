@@ -199,6 +199,23 @@ func test_effects_sleep_after_sunny_fade_and_wake_without_skipping_transitions()
 	assert_eq(effects.active_weather, WeatherManager.Weather.CLOUDY)
 	assert_true(effects.is_processing())
 
+func test_debug_panel_lists_groups_and_can_be_opened_and_closed() -> void:
+	Language.set_language("en")
+	var hud: WeatherHUD = world.weather.hud
+	assert_not_null(hud.debug_toggle)
+	assert_false(hud.debug_bar.visible)
+	hud.debug_toggle.button_pressed = true
+	assert_true(hud.debug_bar.visible)
+	assert_eq(hud._time_title.text, "Day and night")
+	assert_eq(hud._weather_title.text, "Weather")
+	Language.set_language("vi")
+	assert_eq(hud._time_title.text, "Ngày và đêm")
+	assert_eq(hud._weather_title.text, "Thời tiết")
+	assert_true(hud.debug_bar.visible)
+	Language.set_language("en")
+	hud.debug_toggle.button_pressed = false
+	assert_false(hud.debug_bar.visible)
+
 func test_debug_time_buttons_preview_day_night_without_advancing_the_farm_clock() -> void:
 	var manager: WeatherManager = world.weather
 	var hud: WeatherHUD = manager.hud

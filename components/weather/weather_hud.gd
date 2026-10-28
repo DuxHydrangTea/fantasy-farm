@@ -3,9 +3,12 @@ extends CanvasLayer
 var manager: WeatherManager
 var label: Label
 var debug_bar: PanelContainer
+var debug_toggle: Button
 var time_buttons: Array[Button] = []
 var weather_buttons: Array[Button] = []
 var _debug_title: Label
+var _time_title: Label
+var _weather_title: Label
 var _last_timestamp: float = 0.0
 
 func _ready() -> void:
@@ -37,10 +40,20 @@ func _ready() -> void:
 		_build_debug_bar(column, panel.theme)
 
 func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
+	debug_toggle = Button.new()
+	debug_toggle.name = "DebugToggle"
+	debug_toggle.theme = theme
+	debug_toggle.toggle_mode = true
+	debug_toggle.focus_mode = Control.FOCUS_NONE
+	debug_toggle.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	debug_toggle.custom_minimum_size.y = 30
+	debug_toggle.toggled.connect(_toggle_debug_panel)
+	column.add_child(debug_toggle)
 	debug_bar = PanelContainer.new()
-	debug_bar.name = "WeatherDebugBar"
+	debug_bar.name = "DebugPanel"
 	debug_bar.theme = theme
 	debug_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	debug_bar.hide()
 	var style: StyleBoxTexture = theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBoxTexture
 	style.content_margin_left = 8
 	style.content_margin_right = 8
@@ -52,8 +65,9 @@ func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
 	rows.add_theme_constant_override("separation", 4)
 	debug_bar.add_child(rows)
 	_debug_title = Label.new()
-	_debug_title.add_theme_font_size_override("font_size", 12)
+	_debug_title.add_theme_font_size_override("font_size", 18)
 	rows.add_child(_debug_title)
+	_time_title = _group_title(rows)
 	var time_row: HBoxContainer = HBoxContainer.new()
 	time_row.add_theme_constant_override("separation", 4)
 	rows.add_child(time_row)
@@ -61,6 +75,7 @@ func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
 		var button: Button = _debug_button(time_row)
 		button.pressed.connect(manager.set_debug_hour.bind(hour))
 		time_buttons.append(button)
+	_weather_title = _group_title(rows)
 	var weather_row: HBoxContainer = HBoxContainer.new()
 	weather_row.add_theme_constant_override("separation", 4)
 	rows.add_child(weather_row)
@@ -70,6 +85,15 @@ func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
 		button.pressed.connect(_select_weather.bind(kind))
 		weather_buttons.append(button)
 	_refresh_debug_bar()
+
+func _group_title(rows: VBoxContainer) -> Label:
+	var title: Label = Label.new()
+	title.add_theme_font_size_override("font_size", 14)
+	rows.add_child(title)
+	return title
+
+func _toggle_debug_panel(open: bool) -> void:
+	debug_bar.visible = open and not MobileLayout.is_touch(get_viewport())
 
 func _select_weather(kind: WeatherSchedule.Weather) -> void:
 	manager.set_weather(kind)
@@ -94,8 +118,12 @@ func _debug_button(row: HBoxContainer) -> Button:
 func _refresh_debug_bar() -> void:
 	if debug_bar == null:
 		return
-	debug_bar.visible = not MobileLayout.is_touch(get_viewport())
-	_debug_title.text = "DEBUG"
+	debug_toggle.visible = not MobileLayout.is_touch(get_viewport())
+	debug_bar.visible = debug_toggle.visible and debug_toggle.button_pressed
+	debug_toggle.text = tr("Debug tools")
+	_debug_title.text = tr("Debug tools")
+	_time_title.text = tr("Day and night")
+	_weather_title.text = tr("Weather")
 	var times: Array[String] = [tr("Day"), tr("Night"), tr("Live time")]
 	var hours: Array[int] = [12, 23, -1]
 	for index: int in range(time_buttons.size()):

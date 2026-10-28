@@ -109,6 +109,8 @@ func _place_badge(preferred: Vector2, anchor: Vector2) -> Vector2:
 			var weather_hud: WeatherHUD = world.weather.hud
 			if weather_hud.label.is_visible_in_tree():
 				occupied.append(_ui_rect(weather_hud.label.get_parent() as Control, weather_hud).grow(8))
+			if is_instance_valid(weather_hud.debug_toggle) and weather_hud.debug_toggle.is_visible_in_tree():
+				occupied.append(_ui_rect(weather_hud.debug_toggle, weather_hud).grow(8))
 			if is_instance_valid(weather_hud.debug_bar) and weather_hud.debug_bar.is_visible_in_tree():
 				occupied.append(_ui_rect(weather_hud.debug_bar, weather_hud).grow(8))
 	var choices: Array[Vector2] = [preferred, anchor + Vector2(-badge.size.x * 0.5,24), Vector2(8,preferred.y), Vector2(root.size.x-badge.size.x-8,preferred.y), Vector2(8,root.size.y-badge.size.y-128)]
