@@ -92,19 +92,19 @@ func test_hit_bounds_include_pot_and_flower_and_follow_custom_offset() -> void:
 	pot.stage = 4
 	pot._update_visual()
 	assert_true(resolver.hit(target, pot.to_global(Vector2(0, -10))))
-	assert_true(resolver.hit(target, pot.to_global(Vector2(0, -38))))
+	assert_true(resolver.hit(target, pot.to_global(Vector2(0, -25))))
 	var before: Rect2 = pot.get_visual_rect()
 	pot.visual.plant_offset.position = Vector2(0, -12)
 	var after: Rect2 = pot.get_visual_rect()
 	assert_almost_eq(after.position.y, before.position.y-12.0, 0.001)
-	assert_true(resolver.hit(target, pot.to_global(Vector2(0, -50))))
+	assert_true(resolver.hit(target, pot.to_global(Vector2(0, -37))))
 	assert_false(resolver.hit(target, pot.to_global(Vector2(100, 100))))
 
 func test_default_pot_points_directly_to_the_editable_texture() -> void:
 	var pot: FlowerPot = _pot()
-	assert_eq(pot.pot_definition.texture.resource_path, "res://assets/Flowers/Unzoom30/clay_pot_32x24.png")
+	assert_eq(pot.pot_definition.texture.resource_path, "res://assets/Flowers/Unzoom30/clay_pot_16x16.png")
 	assert_eq(pot.visual.pot_sprite.texture, pot.pot_definition.texture)
-	assert_eq(pot.visual.plant_socket.position, Vector2(0, -15))
+	assert_eq(pot.visual.plant_socket.position, Vector2(0, -10))
 	assert_eq(pot.sprite.position, Vector2(0, -14))
 	assert_eq(pot.visual.plant_offset.position, Vector2.ZERO)
 	assert_eq(pot.sprite.z_index, pot.visual.pot_sprite.z_index)

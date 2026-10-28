@@ -54,6 +54,24 @@ func test_previous_600_stock_save_restores_without_clamping_or_rewriting_input()
 		var trough: AnimalTrough = world.get_node(path)
 		assert_eq(trough.stock, 120 if path.begins_with("CoopPen/") else 600)
 
+func test_restore_uses_scene_positions_and_preserves_saved_stock() -> void:
+	var saved: Dictionary = _legacy_snapshot()
+	var authored: Dictionary = {}
+	for path: String in IDS:
+		var trough: AnimalTrough = world.get_node(path)
+		authored[IDS[path]] = trough.position
+	for row: Dictionary in saved.troughs:
+		row.position = [999.0, 999.0] # An old layout, not the authored location.
+	assert_true(adapter.restore(saved, saved.saved_at).ok)
+	for path: String in IDS:
+		var trough: AnimalTrough = world.get_node(path)
+		assert_eq(trough.position, authored[IDS[path]])
+		assert_eq(trough.stock, 120 if path.begins_with("CoopPen/") else 600)
+	var captured: Dictionary = adapter.capture("compatibility_test", 2, saved.saved_at)
+	for row: Dictionary in captured.troughs:
+		var expected: Vector2 = authored[row.id]
+		assert_eq(row.position, [expected.x, expected.y])
+
 func test_real_capacity_mismatch_is_still_rejected_before_restore() -> void:
 	var saved: Dictionary = _legacy_snapshot()
 	var trough: AnimalTrough = world.get_node("BarnPen/FeedTrough")

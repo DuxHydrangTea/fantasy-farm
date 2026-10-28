@@ -1,9 +1,11 @@
 class_name UIScaleComponent
 extends Node
-## Canvas-only scale: keep UI readable when the world viewport shrinks to a small window.
+## Canvas-only scale: preserve desktop layout proportions and keep touch UI readable.
 ## Roots use virtual coordinates; engine input follows the same CanvasLayer transform.
 signal layout_changed(virtual_size: Vector2)
 const MINIMUM_VIEW: Vector2 = Vector2(640, 360)
+# At the original 1280x720 window, the 1920x1080 viewport scales by 2/3.
+const MAX_DESKTOP_COMPENSATION: float = 1.5
 var canvas: CanvasLayer
 var root: Control
 var _last_view_size: Vector2
@@ -51,7 +53,7 @@ func refresh() -> void:
 	_last_insets = MobileLayout.safe_insets(viewport)
 	_last_point_scale = MobileLayout.point_scale(viewport)
 	var stretch: float = maxf(0.001, minf(screen_scale.x, screen_scale.y))
-	var factor: float = maxf(1.0, minf(1.0 / stretch, minf(view.x / MINIMUM_VIEW.x, view.y / MINIMUM_VIEW.y)))
+	var factor: float = maxf(1.0, minf(MAX_DESKTOP_COMPENSATION, minf(1.0 / stretch, minf(view.x / MINIMUM_VIEW.x, view.y / MINIMUM_VIEW.y))))
 	if _last_touch:
 		factor = _last_point_scale / stretch
 	var virtual_size: Vector2 = view / factor

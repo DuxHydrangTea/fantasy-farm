@@ -1,14 +1,10 @@
-[gd_resource type="Resource" script_class="WorkerDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="WorkerDefinition" format=3 uid="uid://dv5n31ammjlfo"]
 
-[ext_resource type="Script" path="res://scripts/workers/worker_definition.gd" id="1_def"]
-[ext_resource type="SpriteFrames" path="res://sprite_frames/character/lumberjack_jack_frames.tres" id="2_frames"]
+[ext_resource type="Script" uid="uid://5qvbmthhjw3e" path="res://scripts/workers/worker_definition.gd" id="1_def"]
+[ext_resource type="SpriteFrames" uid="uid://cvwo6cx8o03d0" path="res://sprite_frames/character/lumberjack_jack_frames.tres" id="2_frames"]
 
 [resource]
 script = ExtResource("1_def")
 worker_id = &"orchard_hand"
 display_name = "Jack (Orchard Hand)"
 frames = ExtResource("2_frames")
-move_speed = 120.0
-work_seconds = 2.0
-footprint = Vector2(14, 8)
-faces_left = true

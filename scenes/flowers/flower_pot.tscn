@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://components/flowers/flower_pot_visual.gd" id="2_2hk72"]
 [ext_resource type="Material" path="res://resources/effects/crop_wind.tres" id="flower_wind"]
 [ext_resource type="Script" path="res://components/visual_motion_component.gd" id="flower_motion"]
-[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_32x24.png" id="3_4nilf"]
+[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_16x16.png" id="3_4nilf"]
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="5_8ou0k"]
 [ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_8kek3"]
 [ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="7_wxput"]
@@ -30,12 +30,12 @@ plant_offset = NodePath("PlantSocket/PlantOffset")
 flower = NodePath("PlantSocket/PlantOffset/Flower")
 
 [node name="PotSprite" type="Sprite2D" parent="VisualRoot" unique_id=305184637]
-position = Vector2(-16, -24)
+position = Vector2(-8, -16)
 texture = ExtResource("3_4nilf")
 centered = false
 
 [node name="PlantSocket" type="Node2D" parent="VisualRoot" unique_id=1308649893]
-position = Vector2(0, -15)
+position = Vector2(0, -10)
 
 [node name="PlantOffset" type="Node2D" parent="VisualRoot/PlantSocket" unique_id=1583751310]
 

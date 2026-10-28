@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://deod30tqmk35b" path="res://components/animals/pond_pen.gd" id="1_gvknp"]
 [ext_resource type="PackedScene" uid="uid://cn2ms4ioidlvh" path="res://scenes/animals/feed_trough.tscn" id="2_b5n8e"]
 [ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="4_dkfll"]
-[ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="5_g1m05"]
+[ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="5_g1m05"]
 [ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="6_kff10"]
 [ext_resource type="PackedScene" path="res://scenes/animals/duck.tscn" id="7_1egdl"]
 [ext_resource type="SpriteFrames" uid="uid://0njsy44k5n0o" path="res://sprite_frames/animals/duck_02_frames.tres" id="11_242hp"]
@@ -41,7 +41,7 @@ persistent_id = &"waterfowl_pen_01"
 bounds = Rect2(0, 0, 384, 272)
 
 [node name="FeedTrough" parent="." unique_id=624608384 instance=ExtResource("2_b5n8e")]
-position = Vector2(48, 24)
+position = Vector2(16, 30)
 persistent_id = &"pond_feedtrough"
 capacity = 1200.0
 stock = 600
@@ -50,7 +50,7 @@ full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough" parent="." unique_id=684452871 instance=ExtResource("6_kff10")]
-position = Vector2(112, 24)
+position = Vector2(59, 22)
 persistent_id = &"pond_watertrough"
 capacity = 1200.0
 stock = 600

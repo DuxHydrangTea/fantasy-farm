@@ -2,6 +2,7 @@ class_name WorkerService
 extends Node
 ## One ordered event timeline for all roles. No background per-tile nodes.
 signal changed
+const SCENES: Dictionary = {"orchard": preload("res://scenes/workers/orchard_worker.tscn"), "ranch": preload("res://scenes/workers/ranch_worker.tscn"), "crop": preload("res://scenes/workers/crop_worker.tscn")}
 const DEFINITIONS: Dictionary = {"orchard": preload("res://resources/workers/orchard_hand.tres"), "ranch": preload("res://resources/workers/ranch_hand.tres"), "crop": preload("res://resources/workers/crop_hand.tres")}
 var world: FarmWorld
 var bridge: WorkerWorldBridge
@@ -183,8 +184,7 @@ func transfer(role: String, customer: InventoryComponent, deposit: bool, supplie
 	return total
 
 func _spawn(row: Dictionary) -> void:
-	var actor: WorkerActor = WorkerActor.new()
-	actor.definition = DEFINITIONS[row.role]
+	var actor: WorkerActor = (SCENES[row.role] as PackedScene).instantiate() as WorkerActor
 	actor.persistent_id = StringName(row.id)
 	actor.worker_service = self
 	actor.worker_role = row.role

@@ -7,7 +7,6 @@ extends Resource
 @export var frames: SpriteFrames
 @export_range(20.0, 400.0) var move_speed: float = 120.0
 @export_range(0.5, 10.0) var work_seconds: float = 2.0
-@export var footprint: Vector2 = Vector2(14.0, 8.0)
 ## Hướng nhìn gốc của ảnh sprite (AnimationComponent.single_direction_faces_left).
 @export var faces_left: bool = true
 

@@ -352,7 +352,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 		garden.refresh(maxf(now,data.saved_at))
 	for row: Dictionary in data.troughs:
 		var trough: AnimalTrough = troughs[row.id]
-		trough.global_position = (pens[row.pen] as AnimalPen).to_global(_point(row.position))
+		# Troughs are authored in the scene; old saved coordinates must not override layout edits.
 		trough.feed_reserve = int(row.feed_reserve)
 		trough.stock = int(row.stock)
 		trough.consumed_fraction = float(row.consumed_fraction)

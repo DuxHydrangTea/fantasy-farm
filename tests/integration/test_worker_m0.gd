@@ -3,18 +3,33 @@ extends GutTest
 ## no save — those arrive in M1+ per docs/hired_workers.md.
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
 const WORKER: WorkerDefinition = preload("res://resources/workers/orchard_hand.tres")
+const WORKER_SCENES: Array[PackedScene] = [preload("res://scenes/workers/crop_worker.tscn"), preload("res://scenes/workers/ranch_worker.tscn"), preload("res://scenes/workers/orchard_worker.tscn")]
+
+func test_each_worker_scene_keeps_edited_collision_and_sprite_position() -> void:
+	for scene: PackedScene in WORKER_SCENES:
+		var actor: WorkerActor = scene.instantiate() as WorkerActor
+		var shape_node: CollisionShape2D = actor.get_node("Collision")
+		shape_node.shape = RectangleShape2D.new()
+		(shape_node.shape as RectangleShape2D).size = Vector2(22, 12)
+		shape_node.position = Vector2(3, 4)
+		var sprite_node: AnimatedSprite2D = actor.get_node("Sprite")
+		sprite_node.position = Vector2(2, -11)
+		add_child(actor)
+		assert_eq((actor.collision.shape as RectangleShape2D).size, Vector2(22, 12))
+		assert_eq(actor.collision.position, Vector2(3, 4))
+		assert_eq(actor.sprite.position, Vector2(2, -11))
+		assert_not_null(actor.sprite.sprite_frames)
+		actor.free()
 
 func test_definition_is_valid_and_paced() -> void:
 	assert_true(WORKER.is_valid())
 	assert_between(WORKER.move_speed, 20.0, 400.0)
 	assert_between(WORKER.work_seconds, 0.5, 10.0)
-	assert_gt(WORKER.footprint.x, 0.0)
 	for action: StringName in [&"idle_down", &"walk_down"]:
 		assert_true(WORKER.frames.has_animation(action), String(action))
 
 func test_actor_composes_components_and_reissues_goal_when_cancelled() -> void:
-	var actor: WorkerActor = WorkerActor.new()
-	actor.definition = WORKER
+	var actor: WorkerActor = (load("res://scenes/workers/orchard_worker.tscn") as PackedScene).instantiate() as WorkerActor
 	add_child(actor)
 	assert_not_null(actor.movement)
 	assert_not_null(actor.animation)
@@ -36,7 +51,8 @@ func test_actor_composes_components_and_reissues_goal_when_cancelled() -> void:
 	await get_tree().process_frame
 
 func test_actor_without_definition_stands_idle_safely() -> void:
-	var actor: WorkerActor = WorkerActor.new()
+	var actor: WorkerActor = (load("res://scenes/workers/orchard_worker.tscn") as PackedScene).instantiate() as WorkerActor
+	actor.definition = null
 	add_child(actor)
 	assert_false(actor.behaviour.is_physics_processing())
 	actor.queue_free()
