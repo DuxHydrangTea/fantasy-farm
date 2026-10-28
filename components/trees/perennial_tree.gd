@@ -83,6 +83,13 @@ func set_texture(texture: Texture2D) -> void:
 		_wind_materials[texture] = wind
 	sprite.material = _wind_materials[texture]
 
+func get_status_sprite() -> Node2D:
+	return sprite
+
+func set_status_focused(value: bool) -> void:
+	if is_instance_valid(motion):
+		motion.set_focused(value and not removed)
+
 func react() -> void:
 	if motion != null:
 		motion.react()

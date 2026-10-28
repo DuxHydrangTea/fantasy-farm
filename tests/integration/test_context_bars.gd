@@ -57,6 +57,38 @@ func test_crops_are_hidden_until_hover_and_hide_when_pointer_leaves() -> void:
 	assert_false(crop.get_node("Progress").visible)
 	assert_true(crop.is_mature(), "Visibility cannot change growth")
 
+func test_plant_focus_glow_fades_and_keeps_the_crop_material() -> void:
+	var crop: Crop = _crop() as Crop
+	var original: Material = crop.sprite.material
+	var point: Vector2 = _hover_point(crop)
+	context.refresh_at(point)
+	var effect: Node = crop.get_node("PlantFocusEffect")
+	var glow: Sprite2D = crop.sprite.get_node("PlantFocusGlow") as Sprite2D
+	assert_not_null(effect)
+	assert_eq(glow.texture, crop.sprite.texture)
+	assert_eq(crop.sprite.material, original)
+	await wait_seconds(0.25)
+	assert_almost_eq(glow.modulate.a, 0.14, 0.01)
+	context.refresh_at(point + Vector2(100, 100))
+	await wait_seconds(0.25)
+	assert_almost_eq(glow.modulate.a, 0.0, 0.01)
+	assert_eq(crop.sprite.material, original)
+
+func test_hover_focuses_fruit_and_timber_trees() -> void:
+	for entry: Array in [[FruitTree, "apple"], [TimberTree, "oak"]]:
+		var tree: PerennialTree = entry[0].new() as PerennialTree
+		var path: String = "res://trees/definitions/%s.tres" % entry[1]
+		tree.definition = load(path)
+		tree.position = Vector2(1500, 1500)
+		field.add_child(tree)
+		watch_signals(tree.motion)
+		context.refresh_at(_hover_point(tree))
+		assert_not_null(tree.get_node_or_null("PlantFocusEffect"))
+		assert_not_null(tree.sprite.get_node_or_null("PlantFocusGlow"))
+		assert_signal_emit_count(tree.motion, "effect_started", 1)
+		context.refresh_at(Vector2(-3000, -3000), false)
+		tree.free()
+
 func test_facing_crop_is_visible_without_hover_then_hides_on_turn() -> void:
 	var crop: Node2D = _crop()
 	player.position = farm.farmland.map_to_local(Vector2i(20, 21))

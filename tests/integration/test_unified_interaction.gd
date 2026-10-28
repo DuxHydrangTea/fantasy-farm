@@ -32,7 +32,7 @@ func after_each() -> void:
 	Input.action_release(&"move_left")
 	Language.set_language("en")
 
-func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and_one_outline() -> void:
+func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop() -> void:
 	var crop_cell: Vector2i = Vector2i(20,21)
 	FIXTURE.mark_cell(field,crop_cell)
 	var seed: ItemDefinition = load("res://items/seeds/wheat_seed.tres")
@@ -53,15 +53,14 @@ func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and
 	var soil_focus: SoilFocusComponent = player.get_node("SoilFocus") as SoilFocusComponent
 	soil_focus.refresh()
 	assert_false(soil_focus.visible, "Highlight the merchant instead of unrelated ground")
-	assert_eq(controller.presenter.outline.get_parent(),merchant.interaction_sprite())
-	var only_outline: Sprite2D = controller.presenter.outline
+	assert_true(controller.presenter.badge.visible)
 	merchant.hide()
 	merchant.collision_layer = 0
 	controller.refresh()
 	assert_eq(controller.focused.node,trough)
 	soil_focus.refresh()
 	assert_false(soil_focus.visible)
-	assert_eq(controller.presenter.outline,only_outline)
+	assert_true(controller.presenter.badge.visible)
 	trough.hide()
 	trough.collision_layer = 0
 	controller.refresh()
@@ -71,10 +70,10 @@ func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop_and
 	animal.hide()
 	controller.refresh()
 	assert_eq(controller.focused.node,farm.get_crop(crop_cell))
-	assert_eq(controller.presenter.outline,only_outline)
+	assert_true(controller.presenter.badge.visible)
 	soil_focus.refresh()
-	assert_false(soil_focus.visible, "The crop outline replaces the duplicate ground square")
-	assert_true(only_outline.visible)
+	assert_false(soil_focus.visible, "The crop focus replaces the duplicate ground square")
+	assert_true(controller.presenter.badge.visible)
 
 func test_e_requires_facing_and_obstacle_clearance_and_never_falls_back_to_trough() -> void:
 	player.animation.face(Vector2.UP)

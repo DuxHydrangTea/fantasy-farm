@@ -267,7 +267,7 @@ func test_unified_e_click_priority_collection_and_honey_sale() -> void:
 	player.interactions.refresh()
 	assert_eq(player.interactions.focused.node,hive)
 	assert_eq(player.interactions.focused.priority(),1)
-	assert_eq(player.interactions.presenter.outline.get_parent(),hive.sprite)
+	assert_true(player.interactions.presenter.badge.visible)
 	assert_true(hive.range_display.visible)
 	assert_string_contains(player.interactions.presenter.label.text,"Collect Wild Honey")
 	assert_true(player.interactions.press())

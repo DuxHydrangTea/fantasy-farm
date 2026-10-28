@@ -1,6 +1,6 @@
 class_name ContextBarsComponent
 extends Node2D
-## Crop/flower focus only. Animals are managed explicitly at pen boards.
+## Plant focus. Animals are managed explicitly at pen boards.
 ## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
 @export var mouse_padding: float = 5.0
 @export var refresh_interval: float = 0.05
@@ -10,6 +10,7 @@ extends Node2D
 @export var selection: ToolSelectionComponent
 @export var trough_interaction: TroughInteractionComponent
 @export var flower_interaction: FlowerInteraction
+const PlantFocusEffect = preload("res://components/interaction/plant_focus_effect.gd")
 var _visible: Array[Node2D] = []
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 var _elapsed: float = 0.0
@@ -32,19 +33,37 @@ func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
 			next.append(hovered)
 	for target: Node2D in _visible:
 		if is_instance_valid(target) and not target.is_queued_for_deletion() and not next.has(target):
-			target.set_status_focused(false)
+			_set_plant_focused(target, false)
 	for target: Node2D in next:
-		target.set_status_focused(true)
+		_set_plant_focused(target, true)
 	_visible = next
 
 func _exit_tree() -> void:
 	for target: Node2D in _visible:
 		if is_instance_valid(target) and not target.is_queued_for_deletion():
-			target.set_status_focused(false)
+			_set_plant_focused(target, false)
+
+func _set_plant_focused(target: Node2D, value: bool) -> void:
+	target.set_status_focused(value)
+	if target is FlowerPot and (target as FlowerPot).definition == null:
+		value = false
+	var sprite: Sprite2D = target.get_status_sprite() as Sprite2D
+	if sprite == null:
+		return
+	var effect: Node = target.get_node_or_null("PlantFocusEffect")
+	if effect == null and value:
+		effect = PlantFocusEffect.new()
+		effect.name = "PlantFocusEffect"
+		target.add_child(effect)
+		effect.call("setup", sprite)
+	if effect != null:
+		effect.call("set_focused", value)
 
 func _focused_target() -> Node2D:
 	if player.interactions != null and player.interactions.focused != null:
 		var target: InteractionTarget = player.interactions.focused
+		if target.valid() and target.kind == InteractionTarget.Kind.TREE:
+			return target.node
 		if target.valid() and target.priority() < 3:
 			return null
 	if trough_interaction != null and is_instance_valid(trough_interaction.focused_trough):
@@ -61,6 +80,9 @@ func _focused_target() -> Node2D:
 # Chỉ giữ một focus và một hover để không hiện hàng loạt thanh cùng lúc; số mục tiêu là lựa chọn UI.
 func _hovered_target(point: Vector2) -> Node2D:
 	var candidates: Array[Node2D] = []
+	for node: Node in get_tree().get_nodes_in_group(&"perennial_trees"):
+		if not (node as PerennialTree).removed:
+			candidates.append(node as Node2D)
 	for node: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
 		for pot: FlowerPot in (node as FlowerGarden).pots.values():
 			if pot.definition != null:

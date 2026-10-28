@@ -1,16 +1,12 @@
 class_name InteractionPresenter
 extends CanvasLayer
-## One context badge and one outline overlay. Original materials stay scene-owned.
+## Context badge for the current interaction target.
 var player: FarmPlayer
 var resolver: InteractionResolver
 var root: Control
 var badge: PanelContainer
 var label: Label
-var outline: Sprite2D
-var _pot_outline: Sprite2D
-var _pot_material: ShaderMaterial
 var _range: BeehiveRangeDisplay
-var _material: ShaderMaterial
 var keycap: Label
 var _hotbar: HotbarUI
 
@@ -57,8 +53,6 @@ func _ready() -> void:
 	label.add_theme_font_size_override("font_size",18)
 	label.add_theme_color_override("font_color",Color(1,0.95,0.80))
 	row.add_child(label)
-	_material = ShaderMaterial.new()
-	_material.shader = preload("res://shaders/interaction_outline.gdshader")
 	clear()
 
 func clear() -> void:
@@ -66,10 +60,6 @@ func clear() -> void:
 		_range.hide()
 	if is_instance_valid(badge):
 		badge.hide()
-	if is_instance_valid(outline):
-		outline.hide()
-	if is_instance_valid(_pot_outline):
-		_pot_outline.hide()
 
 func show_target(target: InteractionTarget, walking: bool, feedback: String = "") -> void:
 	if target == null or not target.valid() or player.selection.is_menu_open():
@@ -77,8 +67,6 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		return
 	if is_instance_valid(_range):
 		_range.hide()
-	if is_instance_valid(_pot_outline):
-		_pot_outline.hide()
 	if target.kind == InteractionTarget.Kind.BEEHIVE:
 		_range = (target.node as Beehive).range_display
 		_range.modulate.a = 0.35
@@ -88,58 +76,6 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 	if sprite == null or texture == null:
 		clear()
 		return
-	if not is_instance_valid(outline):
-		outline = Sprite2D.new()
-		outline.name = "InteractionOutline"
-		outline.material = _material
-		outline.z_index = 1
-		sprite.add_child(outline)
-	elif outline.get_parent() != sprite:
-		outline.reparent(sprite,false)
-	outline.transform = Transform2D.IDENTITY
-	outline.texture = texture
-	outline.flip_h = bool(sprite.get("flip_h"))
-	outline.flip_v = bool(sprite.get("flip_v"))
-	outline.offset = Vector2(sprite.get("offset"))
-	outline.centered = bool(sprite.get("centered"))
-	outline.region_enabled = sprite is Sprite2D and (sprite as Sprite2D).region_enabled
-	var uv_rect: Rect2 = Rect2(0,0,1,1)
-	if texture is AtlasTexture:
-		var atlas: AtlasTexture = texture as AtlasTexture
-		uv_rect = Rect2(atlas.region.position / atlas.atlas.get_size(), atlas.region.size / atlas.atlas.get_size())
-	elif outline.region_enabled:
-		outline.region_rect = (sprite as Sprite2D).region_rect
-		uv_rect = Rect2(outline.region_rect.position / texture.get_size(),outline.region_rect.size / texture.get_size())
-	_material.set_shader_parameter("frame_uv",Vector4(uv_rect.position.x,uv_rect.position.y,uv_rect.end.x,uv_rect.end.y))
-	outline.show()
-	if target.kind == InteractionTarget.Kind.FLOWER:
-		var pot_sprite: Sprite2D = (target.node as FlowerPot).visual.pot_sprite
-		if pot_sprite != sprite:
-			if not is_instance_valid(_pot_outline):
-				_pot_outline = Sprite2D.new()
-				_pot_outline.name = "InteractionPotOutline"
-				_pot_material = _material.duplicate() as ShaderMaterial
-				_pot_outline.material = _pot_material
-				_pot_outline.z_index = 1
-				pot_sprite.add_child(_pot_outline)
-			elif _pot_outline.get_parent() != pot_sprite:
-				_pot_outline.reparent(pot_sprite, false)
-			_pot_outline.transform = Transform2D.IDENTITY
-			_pot_outline.texture = pot_sprite.texture
-			_pot_outline.centered = pot_sprite.centered
-			_pot_outline.offset = pot_sprite.offset
-			_pot_outline.flip_h = pot_sprite.flip_h
-			_pot_outline.flip_v = pot_sprite.flip_v
-			_pot_outline.region_enabled = pot_sprite.region_enabled
-			_pot_outline.region_rect = pot_sprite.region_rect
-			var pot_uv: Rect2 = Rect2(0, 0, 1, 1)
-			if pot_sprite.texture is AtlasTexture:
-				var atlas: AtlasTexture = pot_sprite.texture as AtlasTexture
-				pot_uv = Rect2(atlas.region.position / atlas.atlas.get_size(), atlas.region.size / atlas.atlas.get_size())
-			elif pot_sprite.region_enabled:
-				pot_uv = Rect2(pot_sprite.region_rect.position / pot_sprite.texture.get_size(), pot_sprite.region_rect.size / pot_sprite.texture.get_size())
-			_pot_material.set_shader_parameter("frame_uv", Vector4(pot_uv.position.x, pot_uv.position.y, pot_uv.end.x, pot_uv.end.y))
-			_pot_outline.show()
 	var action: String = target.action_text()
 	keycap.text = GameText.action_key(player.state.action_harvest)
 	keycap.visible = not walking and not MobileLayout.is_touch(get_viewport())
@@ -199,7 +135,3 @@ func _ui_rect(control: Control, canvas: CanvasLayer) -> Rect2:
 
 func _exit_tree() -> void:
 	clear()
-	if is_instance_valid(outline):
-		outline.free()
-	if is_instance_valid(_pot_outline):
-		_pot_outline.free()

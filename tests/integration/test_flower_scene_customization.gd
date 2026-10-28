@@ -114,5 +114,5 @@ func test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot() -> voi
 	if target != null:
 		assert_eq(target.node, pot)
 	world.player.interactions.presenter.show_target(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, world.player), false)
-	assert_true(world.player.interactions.presenter.outline.visible)
+	assert_true(world.player.interactions.presenter.badge.visible)
 	assert_not_null(pot.visual.pot_sprite.get_node_or_null("InteractionPotOutline"))
