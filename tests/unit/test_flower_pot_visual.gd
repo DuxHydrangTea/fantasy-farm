@@ -24,7 +24,7 @@ func test_empty_and_planted_pots_share_live_texture_without_baking() -> void:
 	empty.pot_definition = shared
 	planted.pot_definition = shared
 	_plant(planted)
-	var frames: SpriteFrames = planted.sprite.sprite_frames
+	var texture: Texture2D = planted.sprite.texture
 	assert_eq(empty.get_status_sprite(), empty.visual.pot_sprite)
 	assert_false(empty.sprite.visible)
 	assert_true(planted.sprite.visible)
@@ -36,7 +36,7 @@ func test_empty_and_planted_pots_share_live_texture_without_baking() -> void:
 	shared.texture = _texture(Color.GREEN)
 	assert_eq(empty.visual.pot_sprite.texture, shared.texture)
 	assert_eq(planted.visual.pot_sprite.texture, shared.texture)
-	assert_eq(planted.sprite.sprite_frames, frames)
+	assert_eq(planted.sprite.texture, texture)
 	assert_eq(planted.progress, 0.5)
 
 func test_skin_change_is_isolated_and_does_not_reset_custom_transforms_or_state() -> void:
@@ -73,7 +73,7 @@ func test_editor_preview_is_presentation_only() -> void:
 	pot.preview_stage = 3
 	pot.apply_editor_preview()
 	assert_true(pot.sprite.visible)
-	assert_eq(pot.sprite.sprite_frames, pot.preview_flower.stage_frames[3])
+	assert_eq(pot.sprite.texture, pot.preview_flower.stage_textures[3])
 	assert_null(pot.definition)
 	assert_eq(pot.stage, 0)
 	assert_eq(pot.planted_at, 0.0)
@@ -105,7 +105,40 @@ func test_default_pot_points_directly_to_the_editable_texture() -> void:
 	assert_eq(pot.pot_definition.texture.resource_path, "res://assets/Flowers/Unzoom30/clay_pot_32x24.png")
 	assert_eq(pot.visual.pot_sprite.texture, pot.pot_definition.texture)
 	assert_eq(pot.visual.plant_socket.position, Vector2(0, -15))
-	assert_eq(pot.sprite.position, Vector2(-16, -30))
+	assert_eq(pot.sprite.position, Vector2(0, -14))
 	assert_eq(pot.visual.plant_offset.position, Vector2.ZERO)
 	assert_eq(pot.sprite.z_index, pot.visual.pot_sprite.z_index)
 	assert_false(pot.visual.y_sort_enabled)
+
+func test_flower_uses_crop_wind_without_moving_the_pot() -> void:
+	var first: FlowerPot = _pot()
+	var second: FlowerPot = _pot()
+	_plant(first)
+	_plant(second)
+	assert_eq(first.sprite.material, load("res://resources/effects/crop_wind.tres"))
+	assert_eq(first.sprite.material, second.sprite.material)
+	assert_null(first.visual.pot_sprite.material)
+	assert_true(first.sprite.centered)
+	assert_eq(first.sprite.position, Vector2(0, -14))
+	assert_false(first.is_processing())
+
+func test_hover_reacts_once_around_flower_base_and_preserves_state() -> void:
+	var pot: FlowerPot = _pot()
+	_plant(pot)
+	var rest: Transform2D = pot.sprite.transform
+	var base: Vector2 = pot.sprite.to_global(Vector2(0, 16))
+	var pot_transform: Transform2D = pot.visual.pot_sprite.transform
+	watch_signals(pot.motion)
+	pot.set_status_focused(true)
+	pot.set_status_focused(true)
+	assert_signal_emit_count(pot.motion, "effect_started", 1)
+	await wait_seconds(0.06)
+	assert_gt(absf(pot.sprite.rotation), 0.001)
+	assert_almost_eq(pot.sprite.to_global(Vector2(0, 16)).distance_to(base), 0.0, 0.001)
+	assert_eq(pot.visual.pot_sprite.transform, pot_transform)
+	assert_eq(pot.progress, 0.5)
+	await wait_seconds(0.5)
+	assert_eq(pot.sprite.transform, rest)
+	pot.set_status_focused(false)
+	pot.set_status_focused(true)
+	assert_signal_emit_count(pot.motion, "effect_started", 2)

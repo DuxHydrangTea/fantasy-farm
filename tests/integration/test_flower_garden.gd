@@ -157,13 +157,11 @@ func test_actual_sprite_pixels_stay_inside_authored_block_footprint() -> void:
 		var path: String = "res://flowers/definitions/flower_%02d.tres" % index
 		var definition: FlowerDefinition = load(path)
 		pot.definition = definition
-		for frames: SpriteFrames in definition.stage_frames:
-			pot.visual.show_plant(frames)
-			for frame: int in range(frames.get_frame_count(&"grow")):
-				pot.sprite.frame = frame
-				var bounds: Rect2 = pot.get_visual_rect()
-				visual_bounds = visual_bounds.merge(bounds) if initialized else bounds
-				initialized = true
+		for texture: Texture2D in definition.stage_textures:
+			pot.visual.show_plant(texture)
+			var bounds: Rect2 = pot.get_visual_rect()
+			visual_bounds = visual_bounds.merge(bounds) if initialized else bounds
+			initialized = true
 	for cell: Vector2i in garden.pots:
 		var soil: Rect2 = garden.Layout.soil_bounds_for(cell)
 		var inner: Rect2 = Rect2(soil.position + Vector2(3, -17), soil.size + Vector2(-6, 10))

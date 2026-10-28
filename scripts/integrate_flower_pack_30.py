@@ -57,11 +57,6 @@ def main():
         # Byte-for-byte copies of the approved transparent sprites.
         (ASSETS / filename).write_bytes((SOURCE / 'sprites32' / filename).read_bytes())
         image_path = f'res://assets/Flowers/Unzoom30/{filename}'
-        for stage in (4, 5):
-            path = f'flowers/frames/flower_{i:02}_stage_{stage}.tres'
-            old = (ROOT / path).read_text() if (ROOT / path).exists() else ''
-            frames = ', '.join(['{"duration": 1.0, "texture": ExtResource("art")}'] * 6)
-            write(path, f'{header(old, "SpriteFrames")}\n\n[ext_resource type="Texture2D" path="{image_path}" id="art"]\n\n[resource]\nanimations = [{{"frames": [{frames}], "loop": true, "name": &"grow", "speed": 8.0}}]\n')
         path = f'items/flowers/flower_{i:02}.tres'
         old = (ROOT / path).read_text() if (ROOT / path).exists() else ''
         write(path, f'{header(old, "Resource", "ItemDefinition")}\n\n[ext_resource type="Script" path="res://scripts/item_definition.gd" id="script"]\n[ext_resource type="Texture2D" path="{image_path}" id="art"]\n\n[resource]\nscript = ExtResource("script")\nitem_id = &"flower_{i:02}"\ndisplay_name = "{name}"\nicon = ExtResource("art")\nitem_type = 2\nmax_stack = 32000\n')
@@ -72,11 +67,12 @@ def main():
             amount = int(re.search(r'harvest_amount = (\d+)', template).group(1))
             ext = '[ext_resource type="Script" path="res://scripts/flower_definition.gd" id="script"]\n'
             ext += f'[ext_resource type="Resource" path="res://items/flowers/flower_{i:02}.tres" id="produce"]\n'
-            for stage in range(1, 6):
-                source_index = 1 if stage <= 3 else i
-                ext += f'[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_{source_index:02}_stage_{stage}.tres" id="stage_{stage}"]\n'
-            stages = ', '.join(f'ExtResource("stage_{s}")' for s in range(1, 6))
-            write(f'flowers/definitions/flower_{i:02}.tres', f'[gd_resource type="Resource" script_class="FlowerDefinition" format=3]\n\n{ext}\n[resource]\nscript = ExtResource("script")\nflower_id = &"flower_{i:02}"\ndisplay_name = "{name}"\nstage_frames = Array[SpriteFrames]([{stages}])\ngrowth_seconds = {seconds}\nharvest_item = ExtResource("produce")\nharvest_amount = {amount}\n')
+            for stage in range(1, 4):
+                ext += f'[ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/flower_01_stage_{stage}_plant.png" id="stage_{stage}"]\n'
+            ext += f'[ext_resource type="Texture2D" path="{image_path}" id="mature"]\n'
+            sub = ''.join(f'[sub_resource type="AtlasTexture" id="static_{s}"]\natlas = ExtResource("stage_{s}")\nregion = Rect2(0, 0, 32, 32)\nfilter_clip = true\n\n' for s in range(1, 4))
+            stages = ', '.join([*(f'SubResource("static_{s}")' for s in range(1, 4)), 'ExtResource("mature")', 'ExtResource("mature")'])
+            write(f'flowers/definitions/flower_{i:02}.tres', f'[gd_resource type="Resource" script_class="FlowerDefinition" format=3]\n\n{ext}\n{sub}[resource]\nscript = ExtResource("script")\nflower_id = &"flower_{i:02}"\ndisplay_name = "{name}"\nstage_textures = Array[Texture2D]([{stages}])\ngrowth_seconds = {seconds}\nharvest_item = ExtResource("produce")\nharvest_amount = {amount}\n')
             stock_decl += f'[ext_resource type="Resource" path="res://items/seeds/flower_{i:02}_seed.tres" id="flower_pack_{i:02}"]\n'
             stock_blocks += f'[sub_resource type="Resource" id="flower_pack_offer_{i:02}"]\nscript = ExtResource("2_offer")\nitem = ExtResource("flower_pack_{i:02}")\nprice = {stock_prices[tier]}\ncategory = 2\n\n'
             stock_refs.append(f'SubResource("flower_pack_offer_{i:02}")')

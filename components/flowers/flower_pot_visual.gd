@@ -5,7 +5,7 @@ extends Node2D
 @export var pot_sprite: Sprite2D
 @export var plant_socket: Node2D
 @export var plant_offset: Node2D
-@export var flower: AnimatedSprite2D
+@export var flower: Sprite2D
 var _pot: PotDefinition
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 
@@ -27,13 +27,11 @@ func _apply_pot() -> void:
 	plant_socket.position = _pot.plant_socket
 	_bounds.clear()
 
-func show_plant(frames: SpriteFrames) -> void:
+func show_plant(texture: Texture2D) -> void:
 	if flower == null:
 		return
-	flower.visible = frames != null
-	if frames != null and flower.sprite_frames != frames:
-		flower.sprite_frames = frames
-		flower.play(&"grow")
+	flower.texture = texture
+	flower.visible = texture != null
 
 func status_sprite() -> Node2D:
 	return flower if flower != null and flower.visible else pot_sprite
@@ -47,13 +45,7 @@ func bounds_in(reference: Node2D) -> Rect2:
 	for layer: Node2D in [pot_sprite, flower]:
 		if layer == null or not layer.visible:
 			continue
-		var texture: Texture2D
-		if layer is Sprite2D:
-			texture = (layer as Sprite2D).texture
-		else:
-			var animated: AnimatedSprite2D = layer as AnimatedSprite2D
-			if animated.sprite_frames != null and animated.sprite_frames.has_animation(animated.animation):
-				texture = animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+		var texture: Texture2D = (layer as Sprite2D).texture
 		if texture == null:
 			continue
 		if not _bounds.has(texture):

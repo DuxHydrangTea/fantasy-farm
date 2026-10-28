@@ -34,7 +34,8 @@ var stage: int = 0
 var _focused: bool = false
 var _status_focused: bool = false
 var _harvesting: bool = false
-@export var sprite: AnimatedSprite2D
+@export var sprite: Sprite2D
+@export var motion: VisualMotionComponent
 @export var marker: Sprite2D
 @export var progress_frame: TextureRect
 @export var bar: ProgressBar
@@ -151,6 +152,8 @@ func set_focused(value: bool, allowed: bool = true) -> void:
 func set_status_focused(value: bool) -> void:
 	_refresh_for_focus(value)
 	_status_focused = value
+	if is_instance_valid(motion):
+		motion.set_focused(value and definition != null)
 	_update_status_visibility()
 
 func get_status_sprite() -> Node2D:
@@ -164,10 +167,10 @@ func apply_editor_preview() -> void:
 		return
 	visual.apply_definition(pot_definition)
 	# Resource scripts may be editor placeholders; preview reads exported data only.
-	var frames: SpriteFrames
-	if preview_flower != null and preview_stage < preview_flower.stage_frames.size():
-		frames = preview_flower.stage_frames[preview_stage]
-	visual.show_plant(frames)
+	var texture: Texture2D
+	if preview_flower != null and preview_stage < preview_flower.stage_textures.size():
+		texture = preview_flower.stage_textures[preview_stage]
+	visual.show_plant(texture)
 
 func _refresh_for_focus(value: bool) -> void:
 	if value and garden != null and garden.time_manager != null:
@@ -180,7 +183,9 @@ func _update_visual() -> void:
 	if not is_node_ready() or visual == null or progress_frame == null or bar == null:
 		return
 	visual.apply_definition(pot_definition)
-	visual.show_plant(definition.stage_frames[stage] if definition != null else null)
+	visual.show_plant(definition.stage_textures[stage] if definition != null else null)
+	if is_instance_valid(motion):
+		motion.set_focused(_status_focused and definition != null)
 	_update_status_visibility()
 	bar.value = progress
 	bar.modulate = Color(1, 0.85, 0.35) if is_mature() else (Color(0.6, 0.8, 1) if can_water() else Color.WHITE)

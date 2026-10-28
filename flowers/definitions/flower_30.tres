@@ -1,18 +1,32 @@
-[gd_resource type="Resource" script_class="FlowerDefinition" format=3]
+[gd_resource type="Resource" script_class="FlowerDefinition" format=3 uid="uid://ctocrhljqpy1q"]
 
-[ext_resource type="Script" path="res://scripts/flower_definition.gd" id="script"]
 [ext_resource type="Resource" path="res://items/flowers/flower_30.tres" id="produce"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_01_stage_1.tres" id="stage_1"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_01_stage_2.tres" id="stage_2"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_01_stage_3.tres" id="stage_3"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_30_stage_4.tres" id="stage_4"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_30_stage_5.tres" id="stage_5"]
+[ext_resource type="Script" uid="uid://hvr7d106wdyc" path="res://scripts/flower_definition.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://bvfumbhcks0c6" path="res://assets/Flowers/Unzoom30/flower_01_stage_1_plant.png" id="stage_1"]
+[ext_resource type="Texture2D" uid="uid://dtdiqbcajgkhk" path="res://assets/Flowers/Unzoom30/flower_01_stage_2_plant.png" id="stage_2"]
+[ext_resource type="Texture2D" uid="uid://bch5x4niaf4p2" path="res://assets/Flowers/Unzoom30/flower_01_stage_3_plant.png" id="stage_3"]
+[ext_resource type="Texture2D" uid="uid://dkv3qikyk6th7" path="res://assets/Flowers/Unzoom30/flower_30_gardenia.png" id="stage_5"]
+
+[sub_resource type="AtlasTexture" id="static_stage_1"]
+atlas = ExtResource("stage_1")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_stage_2"]
+atlas = ExtResource("stage_2")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_stage_3"]
+atlas = ExtResource("stage_3")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
 
 [resource]
 script = ExtResource("script")
 flower_id = &"flower_30"
 display_name = "Gardenia"
-stage_frames = Array[SpriteFrames]([ExtResource("stage_1"), ExtResource("stage_2"), ExtResource("stage_3"), ExtResource("stage_4"), ExtResource("stage_5")])
+stage_textures = Array[Texture2D]([SubResource("static_stage_1"), SubResource("static_stage_2"), SubResource("static_stage_3"), ExtResource("stage_5"), ExtResource("stage_5")])
 growth_seconds = 86400.0
 harvest_item = ExtResource("produce")
 harvest_amount = 100

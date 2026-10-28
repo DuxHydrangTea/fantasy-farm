@@ -18,14 +18,14 @@ func before_each() -> void:
 	seed.crop.harvest_amount = 1
 	bag.add(seed, 3)
 
-func test_all_ten_flowers_have_five_stages_and_six_frames_each() -> void:
+func test_all_ten_flowers_have_five_static_stages() -> void:
 	for index: int in range(1, 11):
 		var path: String = "res://items/seeds/flower_%02d_seed.tres" % index
 		var item: ItemDefinition = load(path) as ItemDefinition
 		assert_true(item.crop.is_valid())
-		assert_eq(item.crop.stage_frames.size(), 5)
-		for stage: SpriteFrames in item.crop.stage_frames:
-			assert_eq(stage.get_frame_count(&"grow"), 6)
+		assert_eq(item.crop.stage_textures.size(), 5)
+		for texture: Texture2D in item.crop.stage_textures:
+			assert_not_null(texture)
 		assert_eq(item.crop.harvest_item.item_type, ItemDefinition.ItemType.PRODUCE)
 
 func test_plant_spends_one_seed_once_and_rejects_other_crops() -> void:
@@ -51,7 +51,7 @@ func test_water_starts_clock_once_and_five_stages_follow_timestamp() -> void:
 	for stage: int in range(5):
 		pot.refresh(1010.0 + stage * 30.0)
 		assert_eq(pot.stage, stage)
-		assert_eq(pot.sprite.sprite_frames, seed.crop.stage_frames[stage])
+		assert_eq(pot.sprite.texture, seed.crop.stage_textures[stage])
 	assert_true(pot.is_mature())
 
 func test_harvest_preserves_full_pot_when_bag_full_then_returns_empty_once() -> void:
@@ -82,9 +82,3 @@ func test_progress_never_moves_back_and_bar_only_shows_on_focus() -> void:
 	assert_true(pot.marker.visible)
 	pot.set_focused(false)
 	assert_false(pot.progress_frame.visible)
-
-func test_animation_frames_do_not_advance_growth_stage() -> void:
-	pot.plant(bag, 0, 1000.0)
-	pot.sprite.frame = 5
-	assert_eq(pot.stage, 0)
-	assert_eq(pot.progress, 0.0)

@@ -2,17 +2,31 @@
 
 [ext_resource type="Resource" uid="uid://cb77jqqmysnpl" path="res://items/flowers/flower_09.tres" id="1_0js02"]
 [ext_resource type="Script" uid="uid://hvr7d106wdyc" path="res://scripts/flower_definition.gd" id="2_8jy8n"]
-[ext_resource type="SpriteFrames" uid="uid://c14qnggylqtbe" path="res://flowers/frames/flower_09_stage_1.tres" id="3_0ianb"]
-[ext_resource type="SpriteFrames" uid="uid://dyy3x7ly71h53" path="res://flowers/frames/flower_09_stage_2.tres" id="4_6fmnx"]
-[ext_resource type="SpriteFrames" uid="uid://d2caytwtetm1w" path="res://flowers/frames/flower_09_stage_3.tres" id="5_veby1"]
-[ext_resource type="SpriteFrames" uid="uid://bxsd5kjayapc5" path="res://flowers/frames/flower_09_stage_4.tres" id="6_j7gnt"]
-[ext_resource type="SpriteFrames" uid="uid://bngajmd758nq2" path="res://flowers/frames/flower_09_stage_5.tres" id="7_udtfq"]
+[ext_resource type="Texture2D" uid="uid://c8xejnndwonjl" path="res://assets/Flowers/Unzoom30/flower_09_stage_1_plant.png" id="3_0ianb"]
+[ext_resource type="Texture2D" uid="uid://bnkeusfh3t031" path="res://assets/Flowers/Unzoom30/flower_09_stage_2_plant.png" id="4_6fmnx"]
+[ext_resource type="Texture2D" uid="uid://c4f7dq46yfvfs" path="res://assets/Flowers/Unzoom30/flower_09_stage_3_plant.png" id="5_veby1"]
+[ext_resource type="Texture2D" uid="uid://cqwigy2h2tu2m" path="res://assets/Flowers/Unzoom30/flower_09_lily_of_the_valley.png" id="7_udtfq"]
+
+[sub_resource type="AtlasTexture" id="static_3_0ianb"]
+atlas = ExtResource("3_0ianb")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_4_6fmnx"]
+atlas = ExtResource("4_6fmnx")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_5_veby1"]
+atlas = ExtResource("5_veby1")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
 
 [resource]
 script = ExtResource("2_8jy8n")
 flower_id = &"flower_09"
 display_name = "Lily of the Valley"
-stage_frames = Array[SpriteFrames]([ExtResource("3_0ianb"), ExtResource("4_6fmnx"), ExtResource("5_veby1"), ExtResource("6_j7gnt"), ExtResource("7_udtfq")])
+stage_textures = Array[Texture2D]([SubResource("static_3_0ianb"), SubResource("static_4_6fmnx"), SubResource("static_5_veby1"), ExtResource("7_udtfq"), ExtResource("7_udtfq")])
 growth_seconds = 64800.0
 harvest_item = ExtResource("1_0js02")
 harvest_amount = 100

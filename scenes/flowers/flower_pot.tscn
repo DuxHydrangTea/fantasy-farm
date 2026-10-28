@@ -2,20 +2,22 @@
 
 [ext_resource type="Script" path="res://components/flowers/flower_pot.gd" id="1_hqowy"]
 [ext_resource type="Script" path="res://components/flowers/flower_pot_visual.gd" id="2_2hk72"]
+[ext_resource type="Material" path="res://resources/effects/crop_wind.tres" id="flower_wind"]
+[ext_resource type="Script" path="res://components/visual_motion_component.gd" id="flower_motion"]
 [ext_resource type="Texture2D" path="res://assets/Flowers/Unzoom30/clay_pot_32x24.png" id="3_4nilf"]
-[ext_resource type="SpriteFrames" path="res://flowers/frames/flower_01_stage_1.tres" id="4_nyyt0"]
 [ext_resource type="Texture2D" path="res://resources/ui/soil_focus.tres" id="5_8ou0k"]
 [ext_resource type="Texture2D" path="res://assets/Ui/progress_bar.png" id="6_8kek3"]
 [ext_resource type="StyleBox" path="res://flowers/progress_empty.tres" id="7_wxput"]
 [ext_resource type="StyleBox" path="res://flowers/progress_fill.tres" id="8_gvpyv"]
 [ext_resource type="Shape2D" path="res://flowers/pot_collision.tres" id="9_nn5jk"]
 
-[node name="FlowerPot" type="StaticBody2D" unique_id=971002361 node_paths=PackedStringArray("visual", "sprite", "marker", "progress_frame", "bar")]
+[node name="FlowerPot" type="StaticBody2D" unique_id=971002361 node_paths=PackedStringArray("visual", "sprite", "motion", "marker", "progress_frame", "bar")]
 texture_filter = 1
 collision_mask = 0
 script = ExtResource("1_hqowy")
 visual = NodePath("VisualRoot")
 sprite = NodePath("VisualRoot/PlantSocket/PlantOffset/Flower")
+motion = NodePath("VisualRoot/PlantSocket/PlantOffset/VisualMotion")
 marker = NodePath("Focus")
 progress_frame = NodePath("Progress")
 bar = NodePath("Progress/Bar")
@@ -37,12 +39,15 @@ position = Vector2(0, -15)
 
 [node name="PlantOffset" type="Node2D" parent="VisualRoot/PlantSocket" unique_id=1583751310]
 
-[node name="Flower" type="AnimatedSprite2D" parent="VisualRoot/PlantSocket/PlantOffset" unique_id=658614096]
+[node name="Flower" type="Sprite2D" parent="VisualRoot/PlantSocket/PlantOffset" unique_id=658614096]
 visible = false
-position = Vector2(-16, -30)
-sprite_frames = ExtResource("4_nyyt0")
-animation = &"grow"
-centered = false
+position = Vector2(0, -14)
+material = ExtResource("flower_wind")
+
+[node name="VisualMotion" type="Node" parent="VisualRoot/PlantSocket/PlantOffset" node_paths=PackedStringArray("target")]
+script = ExtResource("flower_motion")
+target = NodePath("../Flower")
+pivot = Vector2(0, 2)
 
 [node name="Focus" type="Sprite2D" parent="." unique_id=235238210]
 visible = false

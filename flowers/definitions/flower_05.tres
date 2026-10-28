@@ -2,17 +2,31 @@
 
 [ext_resource type="Resource" uid="uid://du2dprhnxm8yj" path="res://items/flowers/flower_05.tres" id="1_ry04f"]
 [ext_resource type="Script" uid="uid://hvr7d106wdyc" path="res://scripts/flower_definition.gd" id="2_fym6y"]
-[ext_resource type="SpriteFrames" uid="uid://c50fl8g70ne4v" path="res://flowers/frames/flower_05_stage_1.tres" id="3_khhc0"]
-[ext_resource type="SpriteFrames" uid="uid://b2nubcur8hq3y" path="res://flowers/frames/flower_05_stage_2.tres" id="4_tv7dj"]
-[ext_resource type="SpriteFrames" uid="uid://sbkyclwltgs0" path="res://flowers/frames/flower_05_stage_3.tres" id="5_x1i1v"]
-[ext_resource type="SpriteFrames" uid="uid://uwfumkejxlh4" path="res://flowers/frames/flower_05_stage_4.tres" id="6_csl28"]
-[ext_resource type="SpriteFrames" uid="uid://qd2rifcfyy45" path="res://flowers/frames/flower_05_stage_5.tres" id="7_xvu5u"]
+[ext_resource type="Texture2D" uid="uid://d0hyea1ha1y8l" path="res://assets/Flowers/Unzoom30/flower_05_stage_1_plant.png" id="3_khhc0"]
+[ext_resource type="Texture2D" uid="uid://3857o1q0vl6m" path="res://assets/Flowers/Unzoom30/flower_05_stage_2_plant.png" id="4_tv7dj"]
+[ext_resource type="Texture2D" uid="uid://mw0kn3be10br" path="res://assets/Flowers/Unzoom30/flower_05_stage_3_plant.png" id="5_x1i1v"]
+[ext_resource type="Texture2D" uid="uid://bbysaog3j53fv" path="res://assets/Flowers/Unzoom30/flower_05_bluebell.png" id="7_xvu5u"]
+
+[sub_resource type="AtlasTexture" id="static_3_khhc0"]
+atlas = ExtResource("3_khhc0")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_4_tv7dj"]
+atlas = ExtResource("4_tv7dj")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="static_5_x1i1v"]
+atlas = ExtResource("5_x1i1v")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
 
 [resource]
 script = ExtResource("2_fym6y")
 flower_id = &"flower_05"
 display_name = "Bluebell"
-stage_frames = Array[SpriteFrames]([ExtResource("3_khhc0"), ExtResource("4_tv7dj"), ExtResource("5_x1i1v"), ExtResource("6_csl28"), ExtResource("7_xvu5u")])
+stage_textures = Array[Texture2D]([SubResource("static_3_khhc0"), SubResource("static_4_tv7dj"), SubResource("static_5_x1i1v"), ExtResource("7_xvu5u"), ExtResource("7_xvu5u")])
 growth_seconds = 7200.0
 harvest_item = ExtResource("1_ry04f")
 harvest_amount = 100

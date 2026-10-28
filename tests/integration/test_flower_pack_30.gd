@@ -46,9 +46,9 @@ func test_all_thirty_can_plant_water_mature_and_harvest_new_art() -> void:
 		for stage: int in range(5):
 			pot.refresh(1000.0 + flower.growth_seconds * float(stage) / 4.0)
 			assert_eq(pot.stage, stage)
-			assert_eq(pot.sprite.sprite_frames.get_frame_count(&"grow"), 6)
-			var texture: Texture2D = pot.sprite.sprite_frames.get_frame_texture(&"grow", 0)
-			assert_eq(pot.sprite.position, Vector2(-16, -30))
+			var texture: Texture2D = pot.sprite.texture
+			assert_eq(texture, flower.stage_textures[stage])
+			assert_eq(pot.sprite.position, Vector2(0, -14))
 			if stage >= 3:
 				assert_eq(texture.get_size(), Vector2(32, 32))
 				assert_eq(texture, flower.harvest_item.icon)
