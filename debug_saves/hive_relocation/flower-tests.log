@@ -1,0 +1,64 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6572
+[MCPRegistry] runtime port 6572 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+WARNING: res://scenes/animals/feed_trough.tscn:5 - ext_resource, invalid UID: uid://1447j7kch4l0 - using text path instead: res://items/feeds/poultry_feed.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] load_script_using_custom_warnings (res://addons/gut/warnings_manager.gd:173)
+       [1] _parse_script (res://addons/gut/test_collector.gd:76)
+       [2] add_script (res://addons/gut/test_collector.gd:128)
+       [3] add_script (res://addons/gut/gut.gd:1070)
+       [4] add_directory (res://addons/gut/gut.gd:1093)
+       [5] _apply_options (res://addons/gut/gut_config.gd:136)
+       [6] apply_options (res://addons/gut/gut_config.gd:207)
+       [7] run_tests (res://addons/gut/gui/GutRunner.gd:192)
+       [8] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [9] main (res://addons/gut/cli/gut_cli.gd:297)
+       [10] _init (res://addons/gut/gut_cmdln.gd:39)
+
+
+res://tests/integration/test_flower_scene_customization.gd
+* test_all_80_pots_are_serialized_and_registration_is_idempotent
+* test_duplicate_missing_and_invalid_cell_configuration_is_reported
+* test_custom_node_and_block_transforms_survive_scene_pack_and_startup
+* test_fixed_hives_stay_on_path_after_moving_flower_blocks
+* test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+      at line 109
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+      at line 127
+4/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_flower_scene_customization.gd
+- test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+          at line 109
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+          at line 127
+
+Totals
+------
+Scripts               1
+Tests                 5
+Passing Tests         4
+Failing Tests         1
+Asserts           42/44
+Time              4.743s
+
+
+Ran Scripts matching "test_flower_scene_customization.gd"
+---- 1 failing tests ----
+

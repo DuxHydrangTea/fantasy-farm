@@ -1,0 +1,37 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_farm_storage_world.gd
+* test_doorways_range_readiness_and_filters
+* test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips
+* test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers
+* test_full_storage_disables_the_selected_transfer
+4/4 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 4
+Passing Tests         4
+Asserts              38
+Time              2.587s
+
+
+Ran Scripts matching "test_farm_storage_world.gd"
+---- All tests passed! ----
+

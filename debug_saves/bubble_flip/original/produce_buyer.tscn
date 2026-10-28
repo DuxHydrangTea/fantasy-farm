@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c1vdsb5iy067i"]
+
+[ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="1_6cpxk"]
+[ext_resource type="SpriteFrames" uid="uid://1g6ajdx4jgti" path="res://sprite_frames/character/farmer_buba_frames.tres" id="2_o0pap"]
+[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="3_x0pey"]
+[ext_resource type="StyleBox" path="res://resources/ui/merchant_bubble_panel.tres" id="4_8cdsg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/produce_sales.tscn" id="4_c7r0l"]
+
+[sub_resource type="RectangleShape2D" id="Trunk"]
+size = Vector2(12, 8)
+
+[node name="ProduceBuyer" type="StaticBody2D" unique_id=1281232383 node_paths=PackedStringArray("menu", "bubble", "bubble_text", "prompt", "bubble_timer")]
+texture_filter = 1
+collision_mask = 0
+script = ExtResource("1_6cpxk")
+menu = NodePath("ProduceSalesUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=688961087]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("2_o0pap")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=744817168]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Bubble" type="PanelContainer" parent="." unique_id=212661190]
+z_index = 20
+texture_filter = 1
+offset_left = -64.0
+offset_top = -78.0
+offset_right = 64.0
+offset_bottom = -38.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme = ExtResource("3_x0pey")
+theme_override_styles/panel = ExtResource("4_8cdsg")
+
+[node name="Text" type="Label" parent="Bubble" unique_id=1765854233]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 12
+text = "Thank you!
+See you again!"
+horizontal_alignment = 1
+
+[node name="Prompt" type="Label" parent="." unique_id=1763084052]
+offset_left = -85.0
+offset_top = -45.0
+offset_right = 85.0
+offset_bottom = -25.0
+theme = ExtResource("3_x0pey")
+theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "[E] Sell produce"
+horizontal_alignment = 1
+
+[node name="BubbleTimer" type="Timer" parent="." unique_id=1016759557]
+one_shot = true
+
+[node name="ProduceSalesUI" parent="." unique_id=2096592076 instance=ExtResource("4_c7r0l")]

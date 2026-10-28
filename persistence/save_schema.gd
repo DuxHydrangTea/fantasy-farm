@@ -499,8 +499,6 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			var cell: Vector2i = Vector2i(int(flower.cell[0]), int(flower.cell[1]))
 			if cell.x < 0 or cell.x >= FlowerLayout.SAVE_COLUMNS or cell.y < 0 or cell.y >= FlowerLayout.SAVE_ROWS or cells.has(cell) or flower.planted_at > data.saved_at:
 				return failure("Invalid flower cell or planting time.")
-			if data.honey_garden.migrated and cell in HoneyGardenSystem.CENTERS:
-				return failure("A flower overlaps a fixed garden hive.")
 			cells[cell] = true
 			if flower.growth_started_at == -1:
 				if flower.matures_at != 0 or flower.progress != 0:

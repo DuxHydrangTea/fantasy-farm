@@ -9,6 +9,10 @@ var label: Label
 var _range: BeehiveRangeDisplay
 var keycap: Label
 var _hotbar: HotbarUI
+var _shown_node: Node2D
+var _shown_kind: int = -1
+var _entrance: Tween
+var _plant_anchor: Vector2
 
 func _ready() -> void:
 	layer = 18
@@ -56,6 +60,11 @@ func _ready() -> void:
 	clear()
 
 func clear() -> void:
+	_shown_node = null
+	_shown_kind = -1
+	if _entrance != null and _entrance.is_valid():
+		_entrance.kill()
+	_entrance = null
 	if is_instance_valid(_range):
 		_range.hide()
 	if is_instance_valid(badge):
@@ -88,12 +97,34 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		text_width = maxf(text_width,font.get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x + 2)
 	label.custom_minimum_size.x = minf(root.size.x - 100.0, minf(text_width,360.0))
 	badge.reset_size()
-	var local_rect: Rect2 = resolver.visual_rect(target)
-	var world_anchor: Vector2 = sprite.to_global(Vector2(local_rect.get_center().x,local_rect.position.y))
+	var new_target: bool = not badge.visible or _shown_node != target.node or _shown_kind != target.kind
+	var world_anchor: Vector2
+	if target.kind in [InteractionTarget.Kind.CROP, InteractionTarget.Kind.FLOWER] and not new_target:
+		world_anchor = target.node.to_global(_plant_anchor)
+	else:
+		var local_rect: Rect2 = resolver.visual_rect(target)
+		world_anchor = sprite.to_global(Vector2(local_rect.get_center().x,local_rect.position.y))
+		if target.kind in [InteractionTarget.Kind.CROP, InteractionTarget.Kind.FLOWER]:
+			_plant_anchor = target.node.to_local(world_anchor)
 	var screen: Vector2 = player.get_canvas_transform() * world_anchor / scale - root.position
 	var position: Vector2 = screen - Vector2(badge.size.x * 0.5,badge.size.y + 12)
 	badge.position = _place_badge(position,screen).round()
+	badge.pivot_offset = Vector2(badge.size.x * 0.5, badge.size.y)
+	_shown_node = target.node
+	_shown_kind = target.kind
 	badge.show()
+	if new_target:
+		_animate_entrance()
+
+func _animate_entrance() -> void:
+	if _entrance != null and _entrance.is_valid():
+		_entrance.kill()
+	badge.scale = Vector2(0.88, 0.88)
+	badge.modulate.a = 0.0
+	_entrance = create_tween().set_parallel(true)
+	_entrance.tween_property(badge, "modulate:a", 1.0, 0.12)
+	_entrance.tween_property(badge, "scale", Vector2(1.04, 1.04), 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_entrance.chain().tween_property(badge, "scale", Vector2.ONE, 0.10).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _place_badge(preferred: Vector2, anchor: Vector2) -> Vector2:
 	var occupied: Array[Rect2] = []

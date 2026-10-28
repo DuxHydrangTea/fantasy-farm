@@ -112,7 +112,7 @@ func test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quanti
 	_click(menu.close_button)
 	assert_false(menu.is_open)
 
-func test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_menu() -> void:
+func test_relocated_produce_buyer_and_seed_merchant_open_their_own_menus() -> void:
 	buyer.free()
 	player.free()
 	var world: FarmWorld = WORLD.instantiate() as FarmWorld
@@ -124,8 +124,14 @@ func test_npc_is_sixteen_pixels_beside_laibuon_and_nearest_npc_opens_correct_men
 	buyer = world.get_node("ProduceBuyer") as ShopMerchant
 	player = world.player
 	menu = buyer.menu as ProduceSalesUI
-	assert_eq(buyer.interaction_position() - merchant.interaction_position(), Vector2(16, 0))
+	assert_eq(buyer.scene_file_path, "res://scenes/characters/produce_buyer.tscn")
+	assert_true((buyer.interaction_sprite().global_position - buyer.global_position).is_equal_approx(Vector2(0, -9)))
+	assert_true(((buyer.get_node("CollisionShape2D") as CollisionShape2D).global_position - buyer.global_position).is_equal_approx(Vector2(-1, -5)))
+	assert_eq(buyer.interaction_position(), buyer.global_position)
+	assert_gt(buyer.interaction_position().distance_to(merchant.interaction_position()), 48.0)
 	player.position = buyer.interaction_position() + Vector2(0, 24)
+	await wait_physics_frames(2)
+	assert_true(InteractionTarget.new(buyer, InteractionTarget.Kind.MERCHANT, player).reachable_from(player.global_position))
 	assert_eq(player.shop_interaction.nearest_merchant(), buyer)
 	assert_true(player.shop_interaction.try_interact())
 	assert_true(menu.is_open)

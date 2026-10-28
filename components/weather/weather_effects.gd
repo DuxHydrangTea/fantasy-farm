@@ -7,13 +7,14 @@ const CLOUDS: Texture2D = preload("res://assets/Weather effects/Clouds.png")
 # Roughly twice as many cloud shadows per world area during cloudy weather.
 const CLOUD_SPACING: Vector2 = Vector2(176, 132)
 const WIND_SPACING: Vector2 = Vector2(128, 112)
+const RAIN_SPACING: Vector2 = Vector2(48, 48)
+const SPLASH_SPACING: Vector2 = Vector2(96, 96)
 var world: FarmWorld
 var active_weather: int = WeatherManager.Weather.SUNNY
 var strength: float = 0.0
 var wind_audio: AudioStreamPlayer
 var _tween: Tween
 var _phase: float = 0.0
-var _area: Vector2 = Vector2(640, 360)
 var _rain: AtlasTexture
 var _splashes: Array[AtlasTexture] = []
 var _clouds: Array[AtlasTexture] = []
@@ -30,7 +31,7 @@ func _ready() -> void:
 	var unshaded: CanvasItemMaterial = CanvasItemMaterial.new()
 	unshaded.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	material = unshaded
-	_rain = _atlas(RAIN, Rect2(0, 0, 9, 8))
+	_rain = _atlas(RAIN, Rect2(0, 0, 16, 16))
 	for index: int in range(5):
 		_splashes.append(_atlas(SPLASH, Rect2(index * 16, 0, 16, 16)))
 	for point: Vector2 in [Vector2(0, 0), Vector2(64, 0), Vector2(0, 64), Vector2(64, 64)]:
@@ -61,8 +62,7 @@ func _finish_transition() -> void:
 func _activate(next: int) -> void:
 	active_weather = next
 	z_index = 1 if next == WeatherManager.Weather.CLOUDY else 100
-	if next == WeatherManager.Weather.CLOUDY or next == WeatherManager.Weather.WINDY:
-		position = Vector2.ZERO
+	position = Vector2.ZERO
 	if next == WeatherManager.Weather.WINDY:
 		wind_audio.play()
 	else:
@@ -74,10 +74,6 @@ func weather_tint() -> Color:
 
 func _process(delta: float) -> void:
 	_phase += delta
-	if active_weather == WeatherManager.Weather.RAIN:
-		var camera: Camera2D = world.player.camera
-		_area = get_viewport_rect().size / camera.zoom
-		global_position = camera.get_screen_center_position()
 	wind_audio.volume_db = linear_to_db(maxf(0.0001, strength * 0.17))
 	queue_redraw()
 
@@ -99,20 +95,29 @@ func _wind_point(cell: Vector2i) -> Vector2:
 	var jitter: Vector2 = Vector2(sin(seed) * 32.0, cos(seed * 1.3) * 28.0)
 	return Vector2(cell) * WIND_SPACING + Vector2(100, 18) * _phase + jitter + Vector2(0, sin(_phase * 3 + seed) * 4)
 
+func _rain_point(cell: Vector2i) -> Vector2:
+	var seed: float = float(cell.x * 73 + cell.y * 137)
+	var jitter: Vector2 = Vector2(sin(seed), cos(seed * 1.7)) * 18.0
+	return Vector2(cell) * RAIN_SPACING + Vector2(-90, 260) * _phase + jitter
+
+func _splash_point(cell: Vector2i) -> Vector2:
+	var seed: float = float(cell.x * 107 + cell.y * 53)
+	return Vector2(cell) * SPLASH_SPACING + Vector2(sin(seed), cos(seed * 1.7)) * 32.0
+
 func _draw() -> void:
 	if strength <= 0.001:
 		return
-	var extent: Vector2 = _area + Vector2(80, 80)
 	if active_weather == WeatherManager.Weather.RAIN:
-		for index: int in range(100):
-			var point: Vector2 = Vector2(fposmod(index * 83.31 - _phase * 90.0, extent.x), fposmod(index * 61.73 + _phase * 260.0, extent.y)) - extent * 0.5
-			draw_line(point, point + Vector2(-3, 10), Color(0.65, 0.82, 1.0, strength * 0.45), 1.0)
-			draw_texture(_rain, point + Vector2(-3, 10), Color(0.65, 0.82, 1.0, strength * 0.75))
-		for index: int in range(24):
-			var frame: int = int(fposmod(_phase * 10.0 + index * 1.71, 9.0))
-			if frame < _splashes.size():
-				var point: Vector2 = Vector2(fposmod(index * 137.3, extent.x), fposmod(index * 47.7, extent.y)) - extent * 0.5
-				draw_texture(_splashes[frame], point, Color(0.65, 0.82, 1.0, strength * 0.6))
+		var drops: Rect2i = _visible_cells(RAIN_SPACING, Vector2(-90, 260) * _phase, 40.0)
+		for y: int in range(drops.position.y, drops.end.y):
+			for x: int in range(drops.position.x, drops.end.x):
+				draw_texture(_rain, _rain_point(Vector2i(x, y)), Color(0.65, 0.82, 1.0, strength * 0.75))
+		var splashes: Rect2i = _visible_cells(SPLASH_SPACING, Vector2.ZERO, 48.0)
+		for y: int in range(splashes.position.y, splashes.end.y):
+			for x: int in range(splashes.position.x, splashes.end.x):
+				var frame: int = int(fposmod(_phase * 10.0 + float(x * 73 + y * 137) * 1.71, 9.0))
+				if frame < _splashes.size():
+					draw_texture(_splashes[frame], _splash_point(Vector2i(x, y)), Color(0.65, 0.82, 1.0, strength * 0.6))
 	elif active_weather == WeatherManager.Weather.CLOUDY:
 		var cells: Rect2i = _visible_cells(CLOUD_SPACING, Vector2(5, 1) * _phase, 160.0)
 		for y: int in range(cells.position.y, cells.end.y):

@@ -245,6 +245,27 @@ func test_debug_time_buttons_preview_day_night_without_advancing_the_farm_clock(
 	assert_eq(hud.label.text, original_text)
 	assert_true(hud.time_buttons[2].button_pressed)
 
+func test_rain_paths_do_not_follow_camera_pan_or_zoom() -> void:
+	var effects: WeatherEffects = world.weather.effects
+	var camera: Camera2D = world.player.camera
+	world.position = Vector2(96, 48)
+	world.scale = Vector2(1.5, 1.25)
+	effects._activate(WeatherManager.Weather.RAIN)
+	effects._phase = 7.5
+	effects._process(0.0)
+	var cell: Vector2i = Vector2i(2, -1)
+	var drop: Vector2 = effects.to_global(effects._rain_point(cell))
+	var splash: Vector2 = effects.to_global(effects._splash_point(cell))
+	camera.global_position += Vector2(240, 128)
+	camera.zoom = Vector2(5, 5)
+	camera.force_update_scroll()
+	effects._process(0.0)
+	assert_eq(effects.to_global(effects._rain_point(cell)), drop)
+	assert_eq(effects.to_global(effects._splash_point(cell)), splash)
+	effects._process(1.0)
+	assert_true((effects._rain_point(cell) - effects.to_local(drop)).is_equal_approx(Vector2(-90, 260)))
+	assert_eq(effects.to_global(effects._splash_point(cell)), splash)
+
 func test_cloud_and_wind_paths_do_not_follow_camera_pan_zoom_or_world_transform() -> void:
 	var effects: WeatherEffects = world.weather.effects
 	var camera: Camera2D = world.player.camera

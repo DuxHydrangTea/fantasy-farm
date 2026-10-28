@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://dxu7wq5i0inb2"]
+
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="1_3ushl"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="2_14sbx"]
+[ext_resource type="Resource" uid="uid://t4ko7gyg4qmx" path="res://items/tools/axe.tres" id="3_pe0tg"]
+[ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="4_5c1pw"]
+[ext_resource type="Resource" uid="uid://bwv7habiobaqu" path="res://items/tools/hoe.tres" id="5_dtrsn"]
+[ext_resource type="Resource" uid="uid://bghbkp1kho21r" path="res://items/tools/watering_can.tres" id="6_lw2uy"]
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="7_6okf1"]
+
+[sub_resource type="Resource" id="Resource_l8e54"]
+script = ExtResource("2_14sbx")
+item = ExtResource("3_pe0tg")
+price = 250
+category = 6
+
+[sub_resource type="Resource" id="Resource_evowy"]
+script = ExtResource("2_14sbx")
+item = ExtResource("4_5c1pw")
+price = 63
+category = 1
+
+[sub_resource type="Resource" id="Resource_n5a7c"]
+script = ExtResource("2_14sbx")
+item = ExtResource("5_dtrsn")
+price = 250
+category = 6
+
+[sub_resource type="Resource" id="Resource_3rehg"]
+script = ExtResource("2_14sbx")
+item = ExtResource("6_lw2uy")
+price = 250
+category = 6
+
+[resource]
+script = ExtResource("7_6okf1")
+display_name = "Blacksmith"
+category_ids = Array[int]([6, 5, 1])
+offers = Array[ExtResource("2_14sbx")]([SubResource("Resource_l8e54"), SubResource("Resource_evowy"), SubResource("Resource_n5a7c"), SubResource("Resource_3rehg")])

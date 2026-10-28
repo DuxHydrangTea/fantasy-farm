@@ -21,12 +21,13 @@
 [ext_resource type="Script" uid="uid://birn2jpdp32qn" path="res://components/camera_zoom_component.gd" id="19_3wg1y"]
 [ext_resource type="Script" uid="uid://b8ewk02kjngvp" path="res://components/flowers/flower_interaction.gd" id="19_o6auj"]
 [ext_resource type="Script" uid="uid://dgs0b3ufl14w2" path="res://components/player_navigation_component.gd" id="20_kmyvj"]
-
-[ext_resource type="Script" path="res://components/player_occlusion_overlay.gd" id="occlusion_script"]
-[ext_resource type="Shader" path="res://shaders/player_occlusion.gdshader" id="occlusion_shader"]
+[ext_resource type="Script" uid="uid://bowfd6nydvk6f" path="res://components/player_occlusion_overlay.gd" id="occlusion_script"]
+[ext_resource type="Shader" uid="uid://b7a4kgjwwi4pr" path="res://shaders/player_occlusion.gdshader" id="occlusion_shader"]
 
 [sub_resource type="ShaderMaterial" id="PlayerOcclusionMaterial"]
 shader = ExtResource("occlusion_shader")
+shader_parameter/mask_rect = Vector4(0, 0, 64, 96)
+shader_parameter/silhouette_color = Color(1, 0.93, 0.72, 0.65)
 
 [sub_resource type="RectangleShape2D" id="FeetShape"]
 size = Vector2(10, 2)
@@ -80,13 +81,14 @@ sprite_frames = ExtResource("1_3wg1y")
 animation = &"idle_down"
 autoplay = "idle_down"
 
-[node name="OcclusionSilhouette" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("source")]
+[node name="OcclusionSilhouette" type="AnimatedSprite2D" parent="." unique_id=1748781234 node_paths=PackedStringArray("source")]
 visible = false
 z_index = 20
 z_as_relative = false
 texture_filter = 1
 material = SubResource("PlayerOcclusionMaterial")
 sprite_frames = ExtResource("1_3wg1y")
+animation = &"faint"
 script = ExtResource("occlusion_script")
 source = NodePath("../AnimatedSprite2D")
 

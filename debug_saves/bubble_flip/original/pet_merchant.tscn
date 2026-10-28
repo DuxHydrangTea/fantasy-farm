@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://b7fji0q3pty0p"]
+
+[ext_resource type="Script" uid="uid://cmdgcrcad2q67" path="res://components/shop_merchant.gd" id="1_aqxry"]
+[ext_resource type="Resource" uid="uid://dnyn2o0ctlkv2" path="res://resources/shops/pet_shop.tres" id="2_wu7tx"]
+[ext_resource type="SpriteFrames" uid="uid://cvwo6cx8o03d0" path="res://sprite_frames/character/lumberjack_jack_frames.tres" id="3_5iq23"]
+[ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="4_1iuis"]
+[ext_resource type="StyleBox" path="res://resources/ui/merchant_bubble_panel.tres" id="5_aktxx"]
+[ext_resource type="PackedScene" path="res://scenes/ui/shop.tscn" id="6_lnsqo"]
+
+[sub_resource type="RectangleShape2D" id="Trunk"]
+size = Vector2(12, 8)
+
+[node name="PetMerchant" type="StaticBody2D" unique_id=781951072 node_paths=PackedStringArray("shop_ui", "bubble", "bubble_text", "prompt", "bubble_timer")]
+texture_filter = 1
+collision_mask = 0
+script = ExtResource("1_aqxry")
+catalog = ExtResource("2_wu7tx")
+shop_ui = NodePath("ShopUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2123087566]
+position = Vector2(0, -9)
+sprite_frames = ExtResource("3_5iq23")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1712120370]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Bubble" type="PanelContainer" parent="." unique_id=1430910433]
+z_index = 20
+texture_filter = 1
+offset_left = -64.0
+offset_top = -67.0
+offset_right = 85.0
+offset_bottom = 6.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+theme = ExtResource("4_1iuis")
+theme_override_styles/panel = ExtResource("5_aktxx")
+
+[node name="Text" type="Label" parent="Bubble" unique_id=910400758]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 12
+text = "Thank you!
+See you again!"
+horizontal_alignment = 1
+
+[node name="Prompt" type="Label" parent="." unique_id=154575597]
+offset_left = -85.0
+offset_top = -32.0
+offset_right = 85.0
+offset_bottom = -12.0
+theme = ExtResource("4_1iuis")
+theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 12
+text = "[E] Shop"
+horizontal_alignment = 1
+
+[node name="BubbleTimer" type="Timer" parent="." unique_id=688872442]
+one_shot = true
+
+[node name="ShopUI" parent="." unique_id=387675660 instance=ExtResource("6_lnsqo")]

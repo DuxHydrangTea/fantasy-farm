@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d1ugktlqqd83e"]
+
+[ext_resource type="Texture2D" uid="uid://dm4onttfsa2xy" path="res://assets/Buildings/Extracted/VillageSet/seed_shop.png" id="1_texture"]
+[ext_resource type="PackedScene" path="res://scenes/storage/storage_access.tscn" id="2_access"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_building"]
+size = Vector2(138, 20)
+
+[node name="SeedStorage" type="StaticBody2D" unique_id=770603183]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1876104357]
+position = Vector2(0, -74)
+texture = ExtResource("1_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=800057608]
+position = Vector2(1, -10)
+shape = SubResource("RectangleShape2D_building")
+
+[node name="StorageAccess" parent="." unique_id=867887226 instance=ExtResource("2_access")]
+position = Vector2(-40, 14)
+storage_id = "farm_supply_storage"

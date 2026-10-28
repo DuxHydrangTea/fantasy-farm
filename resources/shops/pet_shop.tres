@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://dnyn2o0ctlkv2"]
+
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="1_nx1d4"]
+[ext_resource type="Resource" uid="uid://jms8lvhuyipw" path="res://resources/shops/animals/chicken.tres" id="2_wfh1r"]
+[ext_resource type="Resource" uid="uid://creg2yit3ood4" path="res://resources/shops/animals/duck.tres" id="3_si7x6"]
+[ext_resource type="Resource" uid="uid://oy4or8tj7464" path="res://resources/shops/animals/goose.tres" id="4_sd1yl"]
+[ext_resource type="Resource" uid="uid://cjbl4yb3hp8d5" path="res://resources/shops/animals/pig.tres" id="5_fduly"]
+[ext_resource type="Resource" uid="uid://gflfbkk7r8qo" path="res://resources/shops/animals/sheep.tres" id="6_r622f"]
+[ext_resource type="Resource" uid="uid://cvlq6nc5ustwu" path="res://resources/shops/animals/cow.tres" id="7_ity3k"]
+[ext_resource type="Resource" uid="uid://dl5aht8o7lg2c" path="res://resources/shops/animals/horse.tres" id="8_3obol"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="9_w6m0o"]
+[ext_resource type="Resource" uid="uid://c2ii5df2nr7md" path="res://items/feeds/livestock_feed.tres" id="10_frju6"]
+[ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="11_w3l5q"]
+[ext_resource type="Resource" uid="uid://btwdtqq0ewgad" path="res://items/boosters/animal_tonic.tres" id="12_ces6m"]
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="13_o0s8t"]
+
+[sub_resource type="Resource" id="Resource_hwc11"]
+script = ExtResource("9_w6m0o")
+item = ExtResource("10_frju6")
+price = 2000
+category = 1
+
+[sub_resource type="Resource" id="Resource_idjwa"]
+script = ExtResource("9_w6m0o")
+item = ExtResource("11_w3l5q")
+price = 2000
+category = 1
+
+[sub_resource type="Resource" id="Resource_dq4je"]
+script = ExtResource("9_w6m0o")
+item = ExtResource("12_ces6m")
+price = 3
+category = 1
+
+[resource]
+script = ExtResource("13_o0s8t")
+display_name = "Animal shop"
+category_ids = Array[int]([3, 4, 1])
+offers = Array[ExtResource("9_w6m0o")]([SubResource("Resource_hwc11"), SubResource("Resource_idjwa"), SubResource("Resource_dq4je")])
+animal_offers = Array[ExtResource("1_nx1d4")]([ExtResource("2_wfh1r"), ExtResource("3_si7x6"), ExtResource("4_sd1yl"), ExtResource("5_fduly"), ExtResource("6_r622f"), ExtResource("7_ity3k"), ExtResource("8_3obol")])

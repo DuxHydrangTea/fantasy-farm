@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/Extracted/VillageSet/flower_shop.png" id="1_2jgsm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kbfxj"]
+size = Vector2(100, 20)
+
+[node name="ShopBuilding" type="StaticBody2D" unique_id=1306162918]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1633857013]
+position = Vector2(0, -86)
+texture = ExtResource("1_2jgsm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=10221328]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_kbfxj")

@@ -4,6 +4,8 @@ extends Node
 signal changed
 const Layout = preload("res://scripts/flower_garden_layout.gd")
 const CENTERS: Array[Vector2i] = [Vector2i(1,2), Vector2i(1,6), Vector2i(8,2)]
+# Physical hives sit on the path below the beds; CENTERS only defines flower recipes.
+const HIVE_POSITIONS: Array[Vector2] = [Vector2(64, 280), Vector2(192, 280), Vector2(320, 280)]
 var world: FarmWorld
 var migrated: bool = false
 var discoveries: Array[String] = []
@@ -44,10 +46,10 @@ func garden() -> FlowerGarden:
 
 func inside(hive: Beehive) -> bool:
 	var area: FlowerGarden = garden()
-	return area != null and Rect2(Vector2.ZERO, FlowerGarden.SIZE).has_point(area.to_local(hive.global_position))
+	return area != null and ((hive.garden_slot >= 0 and hive.garden_id == String(area.persistent_id)) or Rect2(Vector2.ZERO, FlowerGarden.SIZE).has_point(area.to_local(hive.global_position)))
 
 func center_point(slot: int) -> Vector2:
-	return garden().pots[CENTERS[slot]].global_position
+	return garden().to_global(HIVE_POSITIONS[slot])
 
 func owner_slot(cell: Vector2i) -> int:
 	for slot: int in range(3):
@@ -68,16 +70,16 @@ func restore(data: Dictionary) -> void:
 	migrated = data.migrated
 	discoveries.assign(data.discoveries)
 	notice = ""
-	reserve_centers(migrated)
+	_release_centers()
 
-func reserve_centers(value: bool) -> void:
+func _release_centers() -> void:
 	if garden() == null:
 		return
 	for cell: Vector2i in CENTERS:
 		var pot: FlowerPot = garden().pots[cell]
-		pot.reserved = value
-		pot.visible = not value
-		pot.collision_layer = 0 if value else 1
+		pot.reserved = false
+		pot.visible = true
+		pot.collision_layer = 1
 
 func _process(delta: float) -> void:
 	_elapsed += delta
@@ -105,26 +107,11 @@ func try_migrate() -> bool:
 		if hive.production.work > 0.0 or hive.production.ready_item != null:
 			notice = "Garden conversion waiting: collect every existing garden honey batch first."
 			return false
-	var moves: Array[Dictionary] = []
-	var claimed: Dictionary = {}
-	for center: Vector2i in CENTERS:
-		var source: FlowerPot = garden().pots[center]
-		if source.definition == null:
-			continue
-		var destination: FlowerPot
-		var best: float = INF
-		for candidate: FlowerPot in garden().pots.values():
-			if candidate.cell in CENTERS or owner_slot(candidate.cell) >= 0 or candidate.definition != null or claimed.has(candidate.cell):
-				continue
-			var distance: float = candidate.global_position.distance_squared_to(source.global_position)
-			if distance < best:
-				best = distance
-				destination = candidate
-		if destination == null:
-			notice = "Garden conversion waiting: free a non-combo pot for each center flower."
+	for slot: int in range(HIVE_POSITIONS.size()):
+		var point: Vector2 = center_point(slot)
+		if not world.apiary.placement_error(point, -1, true).is_empty() or world.farming.get_crop(world.farming.world_to_cell(point)) != null:
+			notice = "This space is blocked."
 			return false
-		claimed[destination.cell] = true
-		moves.append({"source":source,"target":destination,"state":source.capture(world.apiary.last_at),"flower":source.definition})
 	var extra: int = maxi(0,legacy.size()-3)
 	var bag: InventoryComponent = world.player.selection.inventory
 	if bag.capacity_for(world.apiary.definition.hive_item) < extra:
@@ -133,9 +120,6 @@ func try_migrate() -> bool:
 	# All prerequisites have passed. No add-and-discard or partial conversion.
 	_lock(true)
 	world.apiary.loading = true
-	for move: Dictionary in moves:
-		move.source.clear()
-		move.target.restore_state(move.state,move.flower,world.apiary.last_at)
 	for hive: Beehive in legacy:
 		world.farming.set_cell_occupied(world.farming.world_to_cell(hive.global_position),false)
 	for slot: int in range(3):
@@ -155,7 +139,7 @@ func try_migrate() -> bool:
 		world.apiary.hives.erase(legacy[index])
 		legacy[index].free()
 	migrated = true
-	reserve_centers(true)
+	_release_centers()
 	if extra > 0:
 		bag.add(world.apiary.definition.hive_item,extra,0,false)
 	world.apiary.loading = false

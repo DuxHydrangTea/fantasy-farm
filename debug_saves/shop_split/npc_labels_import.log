@@ -1,0 +1,49 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+Godot MCP Toolkit v1.0.3 — by NPGameDev · npgamedev.com
+[MCPExtensions] Hot-reload watcher active
+[MCPServer] unfocused-responsive self-heal: reverted leftover interface/editor/unfocused_low_processor_mode_sleep_usec to 16666 (crash/concurrent leftover)
+[MCPServer] port: scanning 6550-6560 (default)
+[MCPServer] session token written to user://addons/godot_mcp_toolkit/project_instance_4ab22fe971fc/mcp_token
+[MCPServer] listening on 127.0.0.1:6551
+[MCPRegistry] registered c:/projects/fantasy-farm on port 6551
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+WARNING: UID duplicate detected between res://scenes/characters/blacksmith_merchant.tscn and res://debug_saves/bubble_flip/original/blacksmith_merchant.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/characters/flower_merchant.tscn and res://debug_saves/bubble_flip/original/flower_merchant.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/characters/pet_merchant.tscn and res://debug_saves/bubble_flip/original/pet_merchant.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/characters/produce_buyer.tscn and res://debug_saves/bubble_flip/original/produce_buyer.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/characters/seed_flower_merchant.tscn and res://debug_saves/bubble_flip/original/seed_flower_merchant.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/characters/shop_merchant.tscn and res://debug_saves/bubble_flip/original/shop_merchant.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://scenes/ui/merchant_interaction.tscn and res://debug_saves/bubble_flip/original/merchant_interaction.tscn.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+[   0% ] update_scripts_classes | Started Registering global classes... (3 steps)
+[   0% ] update_scripts_classes | ShopMerchant
+[  25% ] update_scripts_classes | 
+[  50% ] update_scripts_classes | 
+[ DONE ] update_scripts_classes
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+
+[MCPServer] stopped
+[MCPRegistry] deregistered c:/projects/fantasy-farm

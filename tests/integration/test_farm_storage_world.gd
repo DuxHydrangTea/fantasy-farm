@@ -32,6 +32,15 @@ func test_doorways_range_readiness_and_filters() -> void:
 	await wait_physics_frames(2)
 	assert_false(access.can_reach(world.player), "Building collision prevents using the door through its back wall")
 
+func test_seed_storage_doorway_is_reachable() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.set_physics_process(false)
+	var access: FarmStorageAccess = world.storage_accesses["farm_supply_storage"]
+	world.player.global_position = access.global_position + Vector2(0, 24)
+	await wait_physics_frames(2)
+	assert_true(access.can_reach(world.player), "Seed storage must be reachable from in front of the door")
+	assert_true(access.open_shop(world.player), "Seed storage menu must open from its doorway")
+
 func test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var now: float = world.farming.time_manager.now()

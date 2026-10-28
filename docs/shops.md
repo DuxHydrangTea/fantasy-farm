@@ -2,15 +2,28 @@
 
 ## Cách dùng
 
-Cửa hàng được gắn trực tiếp vào node `MainWorld/LaiBuon` có sẵn, tại
-`(1779, 214)`, cạnh hai quầy hàng phía trên vườn hoa. Giữ nguyên sprite và
-collision của nhân vật. Điểm tương tác lệch `(-38, 10)` theo vị trí sprite thực;
-đứng trong phạm vi 48 pixel, quay mặt về NPC rồi nhấn **E** (hoặc action `interact` trên tay cầm).
+Khu cửa hàng nằm thành một dãy phía trên vườn hoa. Mỗi cửa hàng có một NPC,
+catalog và các mục giao dịch riêng:
+
+| Cửa hàng | NPC / ngoại hình | Mục giao dịch | Catalog |
+|---|---|---|---|
+| Hạt giống | `LaiBuon` / Katy | Hạt cây trồng, vật tư trồng trọt | `seed_flower_shop.tres` |
+| Hoa | `FlowerMerchant` / Bruno | 30 loại hạt hoa | `flower_shop.tres` |
+| Vật nuôi | `PetMerchant` / Jack | Mua vật nuôi, bán vật nuôi, thức ăn và thuốc vật nuôi | `pet_shop.tres` |
+| Lò rèn | `BlacksmithMerchant` / Mike | Mua nông cụ, nâng cấp nông cụ, gỗ | `blacksmith.tres` |
+
+Các catalog nằm trong `resources/shops/`. Thuộc tính `ShopCatalog.category_ids`
+quy định các mục được phép và thứ tự tab; `display_name` là tiêu đề được dịch.
+Mỗi `ShopService` chỉ nhận offer thuộc catalog của NPC đang giao dịch.
+Đứng trong phạm vi 48 pixel, quay mặt về NPC rồi nhấn **E** (hoặc action `interact` trên tay cầm).
 Có thể click trực tiếp sprite NPC để tự tìm đường đến và mở menu khi đã tới gần.
 Outline và huy hiệu dùng chung với [hệ thống tương tác](unified_interaction.md).
-`ShopMerchant` thêm phần menu/bong bóng từ `scenes/ui/merchant_interaction.tscn`
-vào chính NPC khi chạy. Không sinh thêm NPC Buba.
-Menu có 5 nhóm: hạt cây trồng, thức ăn, hạt hoa, vật nuôi và bán vật nuôi.
+Các NPC có scene riêng trong `scenes/characters/`, dùng chung `ShopMerchant`,
+`ShopUI` và vòng đời menu. Asset: `crop_flower_shop_red.png`,
+`pet_shop_pigpen.png`, `Blacksmith_House_Black.png` và
+`assets/Buildings/Extracted/VillageSet/flower_shop.png`.
+Shop hoa và Bruno đứng bên phải shop hạt giống; vị trí các shop khác được giữ
+theo bố cục đã soạn trong bản đồ. Catalog của LaiBuon không còn mục hạt hoa.
 Chọn hàng, số lượng 1–99 rồi nhấn Mua (vật nuôi còn bị giới hạn bởi sức chứa chuồng).
 Để bán, mở **Bán vật nuôi**, chọn đúng cá thể rồi nhấn nút Bán; mỗi lần bán một con.
 Sau một lần bán phải chọn lại cá thể khác, tránh bấm lặp làm bán nhầm con kế tiếp.
@@ -25,12 +38,15 @@ Bong bóng tồn tại 3,5 giây; mở cửa hàng lại sẽ ẩn và bắt đ�
 
 ## Danh mục và giá ban đầu
 
-`resources/shops/farm_supply.tres` khai báo rõ 34 `ShopOffer`, không quét thư mục
-khi game chạy: 22 hạt cây trồng (10 xu), 10 hạt hoa (15 xu), 2 thức ăn (25 xu).
+Bốn catalog riêng giữ đủ hàng hóa và giá từ `farm_supply.tres`: 22 hạt cây trồng,
+30 hạt hoa, cây giống, phân bón, tổ ong, thức ăn, thuốc vật nuôi, rìu và gỗ.
+Lò rèn bổ sung cuốc và bình tưới, mỗi nông cụ có giá 250 xu.
+`farm_supply.tres` được giữ làm catalog tổng cho kiểm thử/tương thích;
+NPC trên bản đồ dùng các catalog riêng, không quét thư mục khi game chạy.
 Giá tính cho một vật phẩm; thức ăn vẫn dùng lượng dinh dưỡng hiện có của item.
 Chỉnh `price`, `category`, `item` trong Resource để đổi hàng bán. Hàng không giới hạn.
 
-Game mới có 1.000 xu. Bán vật nuôi là một nguồn thu xu; chưa thêm bán nông sản.
+Bán vật nuôi tại `PetMerchant`; bán nông sản tại `ProduceBuyer` gần nhà bếp.
 
 ## Mua và bán vật nuôi
 
@@ -125,14 +141,14 @@ Xem [animal_status_ui.md](animal_status_ui.md).
 
 ## NPC thu mua nông sản
 
-`ProduceBuyer` đứng bên phải LaiBuon 16 px, dùng avatar Farmer Buba. Đến gần NPC
+`ProduceBuyer` là instance của scene riêng tại `(1445, 206)`, dùng avatar Farmer Buba. Đến gần NPC
 cần giao dịch rồi nhấn E. Menu riêng có **Sell quantity** cho loại đang chọn và
 **Sell all produce** cho toàn bộ mặt hàng được thu mua trong túi; đều hiển thị
 số xu nhận trước khi bán. Bảng giá, phạm vi thu mua và quy tắc giao dịch được mô
 tả tại [produce_sales.md](produce_sales.md).
 
-LaiBuon's Supplies tab (Farm supplies in the full-size view) also sells Crop
-Fertilizer for 5 coins and Animal Tonic for 3 coins. See [boosters](boosters.md).
+Crop Fertilizer (5 coins) is sold by the seed/flower merchant; Animal Tonic
+(3 coins) is sold by the animal merchant. See [boosters](boosters.md).
 
 ## Beehives and honey
 

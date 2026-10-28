@@ -2,6 +2,7 @@ class_name ShopMerchant
 extends PhysicsBody2D
 ## Attaches to an existing NPC body; its sprite and collision stay scene-owned.
 @export var interaction_offset: Vector2 = Vector2.ZERO
+@export var interaction_label: String = ""
 @export var catalog: ShopCatalog
 @export var shop_ui: ShopUI
 @export var menu: TradeMenu
@@ -43,6 +44,7 @@ func _ready() -> void:
 	add_to_group(&"shop_merchants")
 	bubble.hide()
 	prompt.hide()
+	_refresh_prompt()
 	bubble_timer.timeout.connect(bubble.hide)
 	bubble.resized.connect(_place_bubble)
 	_place_bubble()
@@ -51,10 +53,10 @@ func _ready() -> void:
 			(child as AnimatedSprite2D).play(&"idle_down")
 
 func _place_bubble() -> void:
-	# The atlas keeps its tail in the fixed right/bottom nine-patch borders.
+	# The mirrored atlas keeps its tail in the fixed left/bottom borders.
 	# Anchor its tip to the NPC body, including presentations offset for interaction.
 	var anchor: Vector2 = (bubble.get_parent() as Node2D).to_local(global_position)
-	bubble.position = anchor + Vector2(-(bubble.size.x - 5.5) * bubble.scale.x, -36.0 - bubble.size.y * bubble.scale.y)
+	bubble.position = anchor + Vector2(-5.5 * bubble.scale.x, -36.0 - bubble.size.y * bubble.scale.y)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(_player):
@@ -64,6 +66,8 @@ func _process(_delta: float) -> void:
 			_player = players[0] as FarmPlayer
 	if is_instance_valid(_player):
 		prompt.visible = _player.interactions == null and not _player.selection.is_menu_open() and not bubble.visible and _player.shop_interaction.nearest_merchant() == self
+		if prompt.visible:
+			_refresh_prompt()
 
 func open_shop(customer: FarmPlayer) -> bool:
 	if customer.global_position.distance_to(interaction_position()) > 48.0 or customer.selection.is_menu_open():
@@ -81,6 +85,13 @@ func thank_customer() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		bubble_text.text = tr("Thank you!\nSee you again!")
+		_refresh_prompt()
+
+func _refresh_prompt() -> void:
+	if not is_instance_valid(prompt):
+		return
+	var action: StringName = _player.state.action_harvest if is_instance_valid(_player) and is_instance_valid(_player.state) else &"harvest"
+	prompt.text = "[%s] %s" % [GameText.action_key(action), interaction_action_text()]
 
 func interaction_sprite() -> Node2D:
 	for child: Node in get_children():
@@ -89,4 +100,10 @@ func interaction_sprite() -> Node2D:
 	return null
 
 func interaction_action_text() -> String:
+	if not interaction_label.is_empty():
+		return tr(interaction_label)
+	if menu is CookingMenu:
+		return tr("Kitchen")
+	if menu is ShopUI and catalog != null and catalog.display_name != "LAI BUON'S SHOP":
+		return tr(catalog.display_name)
 	return tr("Sell produce") if menu is ProduceSalesUI else tr("Trade")

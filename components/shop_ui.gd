@@ -1,6 +1,6 @@
 class_name ShopUI
 extends TradeMenu
-const UPGRADES: int = 5
+const UPGRADES: int = ShopOffer.Category.UPGRADES
 var upgrade_view: ToolUpgradeShopView
 var _normal_hint: String
 ## Inventory-style view adapted from the skill inventory_ui template.
@@ -27,6 +27,7 @@ var _elapsed: float = 0.0
 var selected: ShopOffer
 var category: int = ShopOffer.Category.CROP
 var _buttons: Dictionary = {}
+var _category_tabs: Dictionary[int, Button] = {}
 @onready var product_icon: TextureRect = %ProductIcon
 @onready var product_name: Label = %ProductName
 @onready var product_type: Label = %ProductType
@@ -41,6 +42,7 @@ var _compact: bool = false
 var _animal_text: AnimalStatusText = AnimalStatusText.new()
 
 func _ready() -> void:
+	InventorySlot.style_count(owned_count)
 	super._ready()
 	_normal_hint = hint.text
 	TouchQuantityComponent.attach(quantity, root, true)
@@ -53,12 +55,14 @@ func _ready() -> void:
 	upgrades_tab.toggle_mode = true
 	upgrades_tab.custom_minimum_size.y = 48
 	categories.add_child(upgrades_tab)
-	_fit_layout()
 	buy_button.pressed.connect(purchase)
 	quantity.value_changed.connect(_quantity_changed)
 	for index: int in range(categories.get_child_count()):
 		var button: Button = categories.get_child(index) as Button
+		button.set_meta("category_id", index)
+		_category_tabs[index] = button
 		button.pressed.connect(show_category.bind(index))
+	_fit_layout()
 
 func _start_visit() -> void:
 	service = ShopService.new(merchant.catalog, customer.wallet, customer.selection.inventory)
@@ -68,11 +72,28 @@ func _start_visit() -> void:
 	var farm: FarmingController = customer.farming_actions.get_farming_controller() as FarmingController
 	animal_service = AnimalTradeService.new(merchant.catalog, customer.wallet, customer.get_parent(), farm.time_manager if farm != null else TimeManager)
 	quantity.value = 1
-	show_category(ShopOffer.Category.CROP)
-	categories.get_child(0).grab_focus()
+	_configure_categories()
+	show_category(merchant.catalog.category_ids[0])
+	_category_tabs[category].grab_focus()
+
+func _configure_categories() -> void:
+	if ShopOffer.Category.TOOLS in merchant.catalog.category_ids and not _category_tabs.has(ShopOffer.Category.TOOLS):
+		var tools_tab: Button = Button.new()
+		tools_tab.name = "BuyTools"
+		tools_tab.toggle_mode = true
+		tools_tab.custom_minimum_size.y = 48
+		tools_tab.set_meta("category_id", ShopOffer.Category.TOOLS)
+		tools_tab.pressed.connect(show_category.bind(ShopOffer.Category.TOOLS))
+		categories.add_child(tools_tab)
+		_category_tabs[ShopOffer.Category.TOOLS] = tools_tab
+	for id: int in _category_tabs:
+		_category_tabs[id].visible = id in merchant.catalog.category_ids
+	for index: int in range(merchant.catalog.category_ids.size()):
+		categories.move_child(_category_tabs[merchant.catalog.category_ids[index]], index)
+	_fit_layout()
 
 func _process(delta: float) -> void:
-	if not is_open or (category < ShopOffer.Category.ANIMAL and (selected == null or selected.item.item_id != WoodMarket.ITEM)):
+	if not is_open or (category not in [ShopOffer.Category.ANIMAL, ShopOffer.Category.SELL_ANIMAL, UPGRADES] and (selected == null or selected.item.item_id != WoodMarket.ITEM)):
 		return
 	_elapsed += delta
 	if _elapsed < 0.5:
@@ -84,6 +105,8 @@ func _process(delta: float) -> void:
 		_refresh()
 
 func show_category(value: int) -> void:
+	if merchant != null and value not in merchant.catalog.category_ids:
+		return
 	var previous_item: ShopOffer = selected if category == value else null
 	var previous_offer: AnimalShopOffer = selected_animal_offer if category == value else null
 	var previous: AnimalActor = selected_animal if category == value and is_instance_valid(selected_animal) else null
@@ -99,9 +122,9 @@ func show_category(value: int) -> void:
 	quantity.max_value = 1.0 if category == ShopOffer.Category.SELL_ANIMAL else 99.0
 	quantity.visible = category != UPGRADES
 	quantity_label.visible = category != UPGRADES and not _compact
-	price_row.visible = category < ShopOffer.Category.SELL_ANIMAL
-	owned_row.visible = category < ShopOffer.Category.ANIMAL
-	total_row.visible = category < ShopOffer.Category.SELL_ANIMAL
+	price_row.visible = category not in [ShopOffer.Category.SELL_ANIMAL, UPGRADES]
+	owned_row.visible = category not in [ShopOffer.Category.ANIMAL, ShopOffer.Category.SELL_ANIMAL, UPGRADES]
+	total_row.visible = category not in [ShopOffer.Category.SELL_ANIMAL, UPGRADES]
 	TouchQuantityComponent.refresh_for(quantity)
 	hint.text = tr("Choose a tool to upgrade. Esc / E / Tab to close.") if category == UPGRADES else tr(_normal_hint)
 	if category == UPGRADES:
@@ -131,8 +154,8 @@ func show_category(value: int) -> void:
 				selected = offer
 	if previous_item != null and _buttons.has(previous_item):
 		selected = previous_item
-	for index: int in range(categories.get_child_count()):
-		(categories.get_child(index) as Button).set_pressed_no_signal(index == value)
+	for id: int in _category_tabs:
+		_category_tabs[id].set_pressed_no_signal(id == value)
 	_refresh()
 
 func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback: Callable) -> void:
@@ -177,6 +200,8 @@ func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback:
 	_price_labels[key] = price
 
 func select_animal_offer(offer: AnimalShopOffer) -> void:
+	if category != ShopOffer.Category.ANIMAL or not merchant.catalog.animal_offers.has(offer):
+		return
 	selected_animal_offer = offer
 	_refresh()
 
@@ -188,6 +213,8 @@ func select_animal(animal: AnimalActor) -> void:
 	_refresh()
 
 func select_offer(offer: ShopOffer) -> void:
+	if offer == null or offer.category != category or not merchant.catalog.offers.has(offer):
+		return
 	selected = offer
 	_refresh()
 
@@ -219,7 +246,7 @@ func _refresh() -> void:
 		return
 	var amount: int = int(quantity.value)
 	var checked: Dictionary = service.quote(selected, amount)
-	present_product(selected.item.icon, tr(selected.item.display_name), tr("Flower seeds") if category == ShopOffer.Category.FLOWER else (tr("Crop seeds") if category == ShopOffer.Category.CROP else tr("Farm supplies")))
+	present_product(selected.item.icon, tr(selected.item.display_name), tr("Flower seeds") if category == ShopOffer.Category.FLOWER else tr("Crop seeds") if category == ShopOffer.Category.CROP else tr("Buy tools") if category == ShopOffer.Category.TOOLS else tr("Farm supplies"))
 	unit_price.text = _coins(selected.price)
 	owned_count.text = str(customer.selection.inventory.count_item(selected.item.item_id))
 	total_price.text = _coins(selected.price * amount)
@@ -289,6 +316,8 @@ func _refresh_animal_sale() -> void:
 func purchase() -> void:
 	if not is_open:
 		return
+	if category not in merchant.catalog.category_ids:
+		return
 	if category == UPGRADES:
 		upgrade_view.purchase()
 		return
@@ -357,12 +386,14 @@ func _fit_layout() -> void:
 	status.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	buy_button.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	hint.visible = not _compact
-	var short_titles: Array[String] = ["Seeds", "Supplies", "Flowers", "Animals", "Sell", "Upgrades"]
-	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals", "Tool upgrades"]
+	heading.text = tr(merchant.catalog.display_name) if merchant != null and merchant.catalog != null else tr("LAI BUON'S SHOP")
+	var short_titles: Array[String] = ["Seeds", "Supplies", "Flowers", "Animals", "Sell", "Upgrades", "Tools"]
+	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals", "Tool upgrades", "Buy tools"]
 	for index: int in range(categories.get_child_count()):
 		var tab: Button = categories.get_child(index) as Button
-		tab.text = tr(short_titles[index] if _compact else full_titles[index])
-		tab.tooltip_text = tr(full_titles[index])
+		var id: int = int(tab.get_meta("category_id", index))
+		tab.text = tr(short_titles[id] if _compact else full_titles[id])
+		tab.tooltip_text = tr(full_titles[id])
 		tab.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	var width: float = panel.custom_minimum_size.x - 32.0 - sidebar.custom_minimum_size.x - 26.0 - 16.0
 	var card_width: float = 104.0 if _compact else 148.0

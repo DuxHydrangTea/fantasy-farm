@@ -1,0 +1,39 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_specialized_shops.gd
+* test_stock_is_split_without_losing_or_duplicating_existing_items
+* test_each_npc_opens_its_own_tabs_and_rejects_other_shop_categories
+* test_seed_purchase_animal_purchase_sale_and_tool_purchase_use_separate_vendors
+* test_npcs_have_distinct_visuals_are_nearby_and_can_be_reached_from_the_path
+* test_shop_titles_translate_and_compact_tabs_stay_restricted
+* test_flowers_can_only_be_bought_from_the_new_flower_merchant
+6/6 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 6
+Passing Tests         6
+Asserts             341
+Time              3.699s
+
+
+Ran Scripts matching "test_specialized_shops.gd"
+---- All tests passed! ----
+

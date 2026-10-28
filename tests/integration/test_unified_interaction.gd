@@ -32,6 +32,27 @@ func after_each() -> void:
 	Input.action_release(&"move_left")
 	Language.set_language("en")
 
+func test_badge_entrance_restarts_only_for_a_new_focus() -> void:
+	var presenter: InteractionPresenter = controller.presenter
+	var target: InteractionTarget = InteractionTarget.new(merchant, InteractionTarget.Kind.MERCHANT, player)
+	presenter.clear()
+	presenter.show_target(target, false)
+	var entrance: Tween = presenter._entrance
+	assert_true(presenter.badge.visible)
+	assert_eq(presenter.badge.scale, Vector2(0.88, 0.88))
+	entrance.custom_step(0.08)
+	presenter.show_target(target, false)
+	assert_eq(presenter._entrance, entrance, "Refreshing the same target must not restart the animation")
+	entrance.custom_step(0.09)
+	assert_gt(presenter.badge.scale.x, 1.0, "The badge briefly overshoots before settling")
+	entrance.custom_step(0.2)
+	assert_true(presenter.badge.scale.is_equal_approx(Vector2.ONE))
+	presenter.show_target(InteractionTarget.new(trough, InteractionTarget.Kind.TROUGH, player), false)
+	assert_ne(presenter._entrance, entrance, "Changing target starts a new animation")
+	presenter.clear()
+	assert_false(presenter.badge.visible)
+	assert_null(presenter._entrance)
+
 func test_priority_is_merchant_then_trough_then_collectible_animal_then_crop() -> void:
 	var crop_cell: Vector2i = Vector2i(20,21)
 	FIXTURE.mark_cell(field,crop_cell)

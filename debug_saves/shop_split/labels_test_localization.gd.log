@@ -1,0 +1,38 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_localization.gd
+* test_live_inventory_hotbar_wallet_and_tooltips
+* test_shop_retranslates_scene_and_generated_cards_without_changing_checkout
+* test_animal_sale_selection_survives_language_change
+* test_backend_errors_keep_source_keys_and_localize_only_for_display
+* test_catalog_placeholders_and_vietnamese_font_coverage
+5/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 5
+Passing Tests         5
+Asserts            2396
+Time              1.815s
+
+
+Ran Scripts matching "test_localization.gd"
+---- All tests passed! ----
+

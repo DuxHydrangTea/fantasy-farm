@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ds6dh8xf4ggwm"]
+
+[ext_resource type="Texture2D" uid="uid://caqrqlo3u4vim" path="res://assets/Buildings/pet_shop_pigpen.png" id="1_gjl4g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md3j6"]
+size = Vector2(113, 20)
+
+[node name="ShopBuilding" type="StaticBody2D" unique_id=1953349969]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1171943666]
+position = Vector2(0, -33)
+texture = ExtResource("1_gjl4g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1138695027]
+position = Vector2(2, 5)
+shape = SubResource("RectangleShape2D_md3j6")

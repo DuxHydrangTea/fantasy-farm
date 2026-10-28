@@ -1,24 +1,24 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dvko44wangl3w"]
 
-[ext_resource type="Script" path="res://components/animals/management/pen_board.gd" id="1_board"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Signs.png" id="2_signs"]
+[ext_resource type="Script" uid="uid://c2mrwx2yutlkj" path="res://components/animals/management/pen_board.gd" id="1_board"]
+[ext_resource type="Texture2D" uid="uid://behuiqg14j01t" path="res://assets/Outdoor decoration/Signs.png" id="2_signs"]
 
 [sub_resource type="AtlasTexture" id="SignTexture"]
 atlas = ExtResource("2_signs")
 region = Rect2(0, 192, 32, 48)
 
 [sub_resource type="RectangleShape2D" id="PostShape"]
-size = Vector2(6, 6)
+size = Vector2(5, 3)
 
-[node name="ManagementSign" type="StaticBody2D" node_paths=PackedStringArray("sprite")]
+[node name="ManagementSign" type="StaticBody2D" unique_id=1226054328 node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_board")
 sprite = NodePath("Sprite2D")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -18)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=316577242]
+position = Vector2(-6, -17)
 scale = Vector2(0.75, 0.75)
 texture = SubResource("SignTexture")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1540398212]
+position = Vector2(-0.5, -2.5)
 shape = SubResource("PostShape")

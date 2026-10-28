@@ -92,7 +92,7 @@ func test_range_categories_and_checkout_revalidation() -> void:
 	shop.show_category(ShopOffer.Category.FEED)
 	assert_eq(shop.grid.get_child_count(), merchant.catalog.offers.filter(func(offer: ShopOffer) -> bool: return offer.category == ShopOffer.Category.FEED).size())
 	shop.show_category(ShopOffer.Category.FLOWER)
-	assert_eq(shop.grid.get_child_count(), 10)
+	assert_eq(shop.grid.get_child_count(), 30)
 	shop.quantity.value = 99
 	player.wallet.set_balance(1000)
 	assert_true(shop.buy_button.disabled)
@@ -112,7 +112,7 @@ func test_removing_merchant_releases_modal_lock() -> void:
 	assert_false(player.selection.shop_open)
 	assert_null(player.shop_interaction.active_shop)
 
-func test_main_world_attaches_shop_to_existing_laibuon_at_sprite_position() -> void:
+func test_main_world_seed_merchant_stands_in_front_of_the_seed_shop() -> void:
 	merchant.free()
 	player.free()
 	var world: FarmWorld = load("res://world/main_world.tscn").instantiate() as FarmWorld
@@ -124,10 +124,10 @@ func test_main_world_attaches_shop_to_existing_laibuon_at_sprite_position() -> v
 	merchant = world.get_node("LaiBuon") as ShopMerchant
 	assert_not_null(merchant)
 	assert_false(world.has_node("SeedMerchant"))
-	assert_eq(merchant.position, Vector2(1779, 214))
-	assert_eq((merchant.get_node("AnimatedSprite2D") as Node2D).position, Vector2(-38, 1))
-	assert_eq((merchant.get_node("CollisionShape2D") as Node2D).position, Vector2(-39, 6))
-	assert_eq(merchant.interaction_position(), Vector2(1741, 224))
+	assert_lt(merchant.position.distance_to((world.get_node("SeedFlowerShop") as Node2D).position), 100.0)
+	assert_eq((merchant.get_node("Sprite") as Node2D).position, Vector2(0, -9))
+	assert_eq((merchant.get_node("CollisionShape2D") as Node2D).position, Vector2(0, -2))
+	assert_eq(merchant.interaction_position(), merchant.global_position)
 	assert_true(viewport.get_tree().get_nodes_in_group(&"shop_merchants").has(merchant))
 	player.position = merchant.interaction_position() + Vector2(0, 24)
 	player.animation.face(merchant.interaction_position() - player.global_position)
@@ -181,7 +181,7 @@ func test_real_farm_can_buy_all_seven_species_into_configured_pens() -> void:
 	await wait_physics_frames(4)
 	player = world.player
 	player.wallet.set_balance(10000000)
-	merchant = world.get_node("LaiBuon") as ShopMerchant
+	merchant = world.get_node("PetMerchant") as ShopMerchant
 	player.position = merchant.interaction_position() + Vector2(0, 24)
 	assert_true(merchant.open_shop(player))
 	player.animation.face(merchant.interaction_position() - player.global_position)

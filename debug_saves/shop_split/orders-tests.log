@@ -1,0 +1,59 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/unit/test_orders.gd
+* test_catalog_is_authored_and_rewards_reference_normal_sales
+* test_atomic_delivery_across_split_stacks_and_reentry
+* test_missing_items_and_full_wallet_leave_all_state_unchanged
+* test_roundtrip_keeps_instances_and_cursor_and_abandon_has_no_reward
+* test_rotation_skips_unavailable_and_active_templates_and_handles_empty
+* test_corrupt_saves_rejected_before_mutation
+* test_multiple_requirements_are_all_checked_before_any_removal
+* test_repeatable_rotation_keeps_three_unique_instances_and_bounded_state
+* test_restore_notifies_once_and_blocks_reentrant_delivery
+* test_perfect_preview_consumes_silver_then_gold_and_preserves_normal
+* test_perfect_requires_every_ingredient_and_never_falls_back_to_normal
+* test_stale_perfect_preview_requires_review_and_ordinary_never_uses_quality
+12/12 passed.
+
+
+res://tests/integration/test_orders.gd
+* test_board_is_separate_reachable_and_uses_shared_interaction_modal
+* test_all_authored_templates_have_real_world_sources_and_missing_source_is_skipped
+* test_confirmation_cancel_inventory_change_double_click_and_localization
+* test_save_load_preserves_orders_and_closes_pending_confirmation
+* test_legacy_v13_migration_and_corrupt_order_preflight_are_pure
+* test_sell_all_warns_but_does_not_fulfill_orders
+* test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three
+* test_scene_cards_and_quotes_show_normal_and_perfect_rewards
+* test_empty_slots_disable_delivery_and_find_orders_repopulates_available_slots
+* test_switching_cards_and_language_preserves_confirmation_exact_plan
+10/10 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               2
+Tests                22
+Passing Tests        22
+Asserts             530
+Time              8.277s
+
+
+Ran Scripts matching "test_orders.gd"
+---- All tests passed! ----
+

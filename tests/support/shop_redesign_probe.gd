@@ -43,10 +43,19 @@ func _run() -> void:
 	_check(shop.product_name.text == tr(SEED.display_name), "Product title translates live")
 	_check((shop.categories.get_child(0) as Button).text == "Crop seeds", "Category tabs translate live")
 	await _capture("shop-desktop-en")
+	shop.close(false)
+	var blacksmith: ShopMerchant = world.get_node("BlacksmithMerchant") as ShopMerchant
+	world.player.global_position = blacksmith.interaction_position() + Vector2(0, 20)
+	_check(blacksmith.open_shop(world.player), "Blacksmith opens its own upgrade menu")
+	shop = blacksmith.shop_ui
 	shop.show_category(ShopUI.UPGRADES)
 	await _frames(4)
 	_check(not shop.quantity.visible and not shop.total_row.visible, "Upgrade hides quantity and purchase total")
 	await _capture("shop-upgrades-desktop")
+	shop.close(false)
+	world.player.global_position = merchant.interaction_position() + Vector2(0, 20)
+	_check(merchant.open_shop(world.player), "Seed merchant reopens its own catalog")
+	shop = merchant.shop_ui
 	Language.set_language("vi")
 	get_viewport().set_meta("touch_ui_override", true)
 	get_viewport().set_meta("safe_insets", Vector4(44, 0, 44, 21))
@@ -75,10 +84,10 @@ func _run() -> void:
 	await _frames(5)
 	_check(_screen_rect(shop.browse).grow(1).encloses(_screen_rect(shop.grid.get_child(shop.grid.get_child_count() - 1) as Control)), "Last offer is reachable by scrolling")
 	await _capture("shop-small-phone")
-	for index: int in range(shop.categories.get_child_count()):
-		shop.show_category(index)
+	for id: int in merchant.catalog.category_ids:
+		shop.show_category(id)
 		await _frames(2)
-		_check(get_viewport().get_visible_rect().grow(1).encloses(_screen_rect(shop.panel)), "Category stays on screen: " + str(index))
+		_check(get_viewport().get_visible_rect().grow(1).encloses(_screen_rect(shop.panel)), "Category stays on screen: " + str(id))
 	shop.close(false)
 	_check(not world.player.selection.shop_open, "Closing releases modal lock")
 	var report: Dictionary = {"ok": _failures.is_empty(), "checks": _checks, "failures": _failures, "personal_save_used": false}

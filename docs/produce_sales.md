@@ -1,9 +1,9 @@
 # Produce buyer
 
-`ProduceBuyer` is a separate NPC immediately to the right of LaiBuon. Its
-interaction point is 16 world pixels to the right of LaiBuon's interaction
-point, at `(1757, 224)`. It uses the Farmer Buba sprite to distinguish it from
-LaiBuon's Fisherman Fin sprite. Face the desired NPC and press E, or click its sprite to approach and open its
+`ProduceBuyer` is an instance of `scenes/characters/produce_buyer.tscn` at
+`(1445, 206)`. Its root, sprite, collision and interaction point are aligned,
+so it can be moved as one NPC in the editor. It uses the Farmer Buba sprite.
+Face the desired NPC and press E, or click its sprite to approach and open its
 menu. The shared resolver highlights one eligible target and shows `Sell produce`
 for this buyer; see [unified interaction](unified_interaction.md).
 

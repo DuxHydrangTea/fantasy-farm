@@ -1,0 +1,304 @@
+[gd_resource type="Resource" script_class="ShopCatalog" format=3 uid="uid://bxi7s4gb0bnd6"]
+
+[ext_resource type="Script" uid="uid://cd3rtioioler2" path="res://scripts/animal_shop_offer.gd" id="1_x3gam"]
+[ext_resource type="Script" uid="uid://bamuxmuawxotr" path="res://scripts/shop_offer.gd" id="2_o2k04"]
+[ext_resource type="Resource" uid="uid://d3u31scn2lmn7" path="res://items/seeds/beetroot_seed.tres" id="3_iqk1g"]
+[ext_resource type="Resource" uid="uid://bnuneadnyl63o" path="res://items/seeds/bell_pepper_seed.tres" id="4_mwvyk"]
+[ext_resource type="Resource" uid="uid://hfi6tumxf1gf" path="res://items/seeds/broccoli_seed.tres" id="5_hk31k"]
+[ext_resource type="Resource" uid="uid://brm6xbaqufev1" path="res://items/seeds/cabbage_seed.tres" id="6_rmvtm"]
+[ext_resource type="Resource" uid="uid://bbckhpm2lr067" path="res://items/seeds/carrot_seed.tres" id="7_bu6v1"]
+[ext_resource type="Resource" uid="uid://cgvr23idhq4gx" path="res://items/seeds/chili_pepper_seed.tres" id="8_3axvo"]
+[ext_resource type="Resource" uid="uid://di11lnq3n268k" path="res://items/seeds/corn_seed.tres" id="9_c4wlj"]
+[ext_resource type="Resource" uid="uid://dyi5coaxrbw14" path="res://items/seeds/cucumber_seed.tres" id="10_li4ee"]
+[ext_resource type="Resource" uid="uid://c514js3vx1kij" path="res://items/seeds/eggplant_seed.tres" id="11_5aukb"]
+[ext_resource type="Resource" uid="uid://cdfosp824ruxh" path="res://items/seeds/garlic_seed.tres" id="22_lkwsw"]
+[ext_resource type="Resource" uid="uid://k2lq2ho3vp6k" path="res://items/seeds/green_bell_pepper_seed.tres" id="23_ia3b5"]
+[ext_resource type="Resource" uid="uid://cqxt4cqf0q1sd" path="res://items/seeds/leek_seed.tres" id="24_lbd0t"]
+[ext_resource type="Resource" uid="uid://cblfl65bahv58" path="res://items/seeds/onion_seed.tres" id="25_x1tlu"]
+[ext_resource type="Resource" uid="uid://cmjs3s1jf8c3h" path="res://items/seeds/parsnip_seed.tres" id="26_2j7cw"]
+[ext_resource type="Resource" uid="uid://u0txknb11dj" path="res://items/seeds/potato_seed.tres" id="27_godyo"]
+[ext_resource type="Resource" uid="uid://dnpvb1khrupek" path="res://items/seeds/pumpkin_seed.tres" id="28_x2xja"]
+[ext_resource type="Resource" uid="uid://cqyciu8fdl8bb" path="res://items/seeds/radish_seed.tres" id="29_pad0n"]
+[ext_resource type="Resource" uid="uid://canjm4gmiyong" path="res://items/seeds/strawberry_seed.tres" id="30_5agt2"]
+[ext_resource type="Resource" uid="uid://cd0ro570dliao" path="res://items/seeds/sunflower_seed.tres" id="31_nmu50"]
+[ext_resource type="Resource" uid="uid://p5dbpgkbmhdh" path="res://items/seeds/tomato_seed.tres" id="32_rrecu"]
+[ext_resource type="Resource" uid="uid://bja6prlt8d6o7" path="res://items/seeds/wheat_seed.tres" id="33_yfd5a"]
+[ext_resource type="Resource" uid="uid://c5g7yqsv8xebb" path="res://items/seeds/yellow_bell_pepper_seed.tres" id="34_wu4vj"]
+[ext_resource type="Resource" uid="uid://bkch5xnn0kjun" path="res://items/boosters/crop_fertilizer.tres" id="35_52fdn"]
+[ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="36_7vuvk"]
+[ext_resource type="Resource" uid="uid://gi8573nwgyvm" path="res://items/trees/apple_sapling.tres" id="37_sl3il"]
+[ext_resource type="Resource" uid="uid://c7ylms4br4tvn" path="res://items/trees/peach_sapling.tres" id="38_jtk4o"]
+[ext_resource type="Resource" uid="uid://suq3ph47mrdl" path="res://items/trees/pear_sapling.tres" id="39_8nws6"]
+[ext_resource type="Resource" uid="uid://h45dmonqtqb3" path="res://items/trees/cherry_sapling.tres" id="40_vefau"]
+[ext_resource type="Resource" uid="uid://cyv1fu028ly8l" path="res://items/trees/oak_sapling.tres" id="41_eugb2"]
+[ext_resource type="Resource" uid="uid://d4jdch55rpo55" path="res://items/trees/birch_sapling.tres" id="42_46otd"]
+[ext_resource type="Resource" uid="uid://c70ygql7pch63" path="res://items/trees/spruce_sapling.tres" id="43_rp1ra"]
+[ext_resource type="Resource" path="res://items/trees/autumn_maple_sapling.tres" id="44_6tap4"]
+[ext_resource type="Resource" path="res://items/trees/blue_conifer_sapling.tres" id="45_08myi"]
+[ext_resource type="Resource" path="res://items/trees/brown_palm_sapling.tres" id="46_q5dai"]
+[ext_resource type="Resource" path="res://items/trees/evergreen_spruce_sapling.tres" id="47_wko8c"]
+[ext_resource type="Resource" path="res://items/trees/flowering_cactus_sapling.tres" id="48_jv3mx"]
+[ext_resource type="Resource" path="res://items/trees/golden_aspen_sapling.tres" id="49_iam3s"]
+[ext_resource type="Resource" path="res://items/trees/golden_birch_sapling.tres" id="50_63vj2"]
+[ext_resource type="Resource" path="res://items/trees/magic_blue_sapling.tres" id="51_sie55"]
+[ext_resource type="Resource" path="res://items/trees/orange_oak_sapling.tres" id="52_fkjh4"]
+[ext_resource type="Resource" path="res://items/trees/palm_sapling.tres" id="53_j3n7j"]
+[ext_resource type="Resource" path="res://items/trees/pink_blossom_sapling.tres" id="54_ny4ld"]
+[ext_resource type="Resource" path="res://items/trees/purple_blossom_sapling.tres" id="55_q0acb"]
+[ext_resource type="Resource" path="res://items/trees/red_maple_sapling.tres" id="56_qiux3"]
+[ext_resource type="Resource" path="res://items/trees/willow_sapling.tres" id="57_a1uk2"]
+[ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="78_2qwyu"]
+
+[sub_resource type="Resource" id="Resource_6x1jo"]
+script = ExtResource("2_o2k04")
+item = ExtResource("3_iqk1g")
+price = 5500
+
+[sub_resource type="Resource" id="Resource_5beii"]
+script = ExtResource("2_o2k04")
+item = ExtResource("4_mwvyk")
+price = 20000
+
+[sub_resource type="Resource" id="Resource_sgrb8"]
+script = ExtResource("2_o2k04")
+item = ExtResource("5_hk31k")
+price = 12000
+
+[sub_resource type="Resource" id="Resource_s61nw"]
+script = ExtResource("2_o2k04")
+item = ExtResource("6_rmvtm")
+price = 6800
+
+[sub_resource type="Resource" id="Resource_o8xeo"]
+script = ExtResource("2_o2k04")
+item = ExtResource("7_bu6v1")
+price = 2700
+
+[sub_resource type="Resource" id="Resource_47mjr"]
+script = ExtResource("2_o2k04")
+item = ExtResource("8_3axvo")
+price = 15000
+
+[sub_resource type="Resource" id="Resource_tjh5r"]
+script = ExtResource("2_o2k04")
+item = ExtResource("9_c4wlj")
+price = 5000
+
+[sub_resource type="Resource" id="Resource_p2rce"]
+script = ExtResource("2_o2k04")
+item = ExtResource("10_li4ee")
+price = 12000
+
+[sub_resource type="Resource" id="Resource_6sd6o"]
+script = ExtResource("2_o2k04")
+item = ExtResource("11_5aukb")
+price = 12000
+
+[sub_resource type="Resource" id="Resource_xckwf"]
+script = ExtResource("2_o2k04")
+item = ExtResource("22_lkwsw")
+price = 9000
+
+[sub_resource type="Resource" id="Resource_mnk4a"]
+script = ExtResource("2_o2k04")
+item = ExtResource("23_ia3b5")
+price = 16000
+
+[sub_resource type="Resource" id="Resource_4gbbk"]
+script = ExtResource("2_o2k04")
+item = ExtResource("24_lbd0t")
+price = 8000
+
+[sub_resource type="Resource" id="Resource_5kb4u"]
+script = ExtResource("2_o2k04")
+item = ExtResource("25_x1tlu")
+price = 13000
+
+[sub_resource type="Resource" id="Resource_1ii71"]
+script = ExtResource("2_o2k04")
+item = ExtResource("26_2j7cw")
+price = 4500
+
+[sub_resource type="Resource" id="Resource_ox8jo"]
+script = ExtResource("2_o2k04")
+item = ExtResource("27_godyo")
+price = 8000
+
+[sub_resource type="Resource" id="Resource_evtxl"]
+script = ExtResource("2_o2k04")
+item = ExtResource("28_x2xja")
+price = 50000
+
+[sub_resource type="Resource" id="Resource_rt4gc"]
+script = ExtResource("2_o2k04")
+item = ExtResource("29_pad0n")
+price = 3600
+
+[sub_resource type="Resource" id="Resource_p0d7f"]
+script = ExtResource("2_o2k04")
+item = ExtResource("30_5agt2")
+price = 30000
+
+[sub_resource type="Resource" id="Resource_la8hy"]
+script = ExtResource("2_o2k04")
+item = ExtResource("31_nmu50")
+price = 25000
+
+[sub_resource type="Resource" id="Resource_1fohw"]
+script = ExtResource("2_o2k04")
+item = ExtResource("32_rrecu")
+price = 9500
+
+[sub_resource type="Resource" id="Resource_rn706"]
+script = ExtResource("2_o2k04")
+item = ExtResource("33_yfd5a")
+price = 6000
+
+[sub_resource type="Resource" id="Resource_8bu36"]
+script = ExtResource("2_o2k04")
+item = ExtResource("34_wu4vj")
+price = 18000
+
+[sub_resource type="Resource" id="Resource_2vgl6"]
+script = ExtResource("2_o2k04")
+item = ExtResource("35_52fdn")
+price = 5
+category = 1
+
+[sub_resource type="Resource" id="Resource_nojnk"]
+script = ExtResource("2_o2k04")
+item = ExtResource("36_7vuvk")
+price = 150000
+category = 1
+
+[sub_resource type="Resource" id="Resource_k1erj"]
+script = ExtResource("2_o2k04")
+item = ExtResource("37_sl3il")
+price = 20000
+category = 1
+
+[sub_resource type="Resource" id="Resource_0i6wa"]
+script = ExtResource("2_o2k04")
+item = ExtResource("38_jtk4o")
+price = 20000
+category = 1
+
+[sub_resource type="Resource" id="Resource_155aq"]
+script = ExtResource("2_o2k04")
+item = ExtResource("39_8nws6")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_ofgex"]
+script = ExtResource("2_o2k04")
+item = ExtResource("40_vefau")
+price = 30000
+category = 1
+
+[sub_resource type="Resource" id="Resource_o1wjd"]
+script = ExtResource("2_o2k04")
+item = ExtResource("41_eugb2")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_j5nk4"]
+script = ExtResource("2_o2k04")
+item = ExtResource("42_46otd")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_qjf7j"]
+script = ExtResource("2_o2k04")
+item = ExtResource("43_rp1ra")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_ys0wb"]
+script = ExtResource("2_o2k04")
+item = ExtResource("44_6tap4")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_dt8r0"]
+script = ExtResource("2_o2k04")
+item = ExtResource("45_08myi")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_82nq1"]
+script = ExtResource("2_o2k04")
+item = ExtResource("46_q5dai")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_85xdg"]
+script = ExtResource("2_o2k04")
+item = ExtResource("47_wko8c")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_mleay"]
+script = ExtResource("2_o2k04")
+item = ExtResource("48_jv3mx")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_6vni3"]
+script = ExtResource("2_o2k04")
+item = ExtResource("49_iam3s")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_ouqtt"]
+script = ExtResource("2_o2k04")
+item = ExtResource("50_63vj2")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_b8fma"]
+script = ExtResource("2_o2k04")
+item = ExtResource("51_sie55")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_ny67i"]
+script = ExtResource("2_o2k04")
+item = ExtResource("52_fkjh4")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_ldrqj"]
+script = ExtResource("2_o2k04")
+item = ExtResource("53_j3n7j")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_d8qsc"]
+script = ExtResource("2_o2k04")
+item = ExtResource("54_ny4ld")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_fk02m"]
+script = ExtResource("2_o2k04")
+item = ExtResource("55_q0acb")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_usvbe"]
+script = ExtResource("2_o2k04")
+item = ExtResource("56_qiux3")
+price = 25000
+category = 1
+
+[sub_resource type="Resource" id="Resource_wv2k2"]
+script = ExtResource("2_o2k04")
+item = ExtResource("57_a1uk2")
+price = 25000
+category = 1
+
+[resource]
+script = ExtResource("78_2qwyu")
+display_name = "Seed shop"
+category_ids = Array[int]([0, 1])
+offers = Array[ExtResource("2_o2k04")]([SubResource("Resource_6x1jo"), SubResource("Resource_5beii"), SubResource("Resource_sgrb8"), SubResource("Resource_s61nw"), SubResource("Resource_o8xeo"), SubResource("Resource_47mjr"), SubResource("Resource_tjh5r"), SubResource("Resource_p2rce"), SubResource("Resource_6sd6o"), SubResource("Resource_xckwf"), SubResource("Resource_mnk4a"), SubResource("Resource_4gbbk"), SubResource("Resource_5kb4u"), SubResource("Resource_1ii71"), SubResource("Resource_ox8jo"), SubResource("Resource_evtxl"), SubResource("Resource_rt4gc"), SubResource("Resource_p0d7f"), SubResource("Resource_la8hy"), SubResource("Resource_1fohw"), SubResource("Resource_rn706"), SubResource("Resource_8bu36"), SubResource("Resource_2vgl6"), SubResource("Resource_nojnk"), SubResource("Resource_k1erj"), SubResource("Resource_0i6wa"), SubResource("Resource_155aq"), SubResource("Resource_ofgex"), SubResource("Resource_o1wjd"), SubResource("Resource_j5nk4"), SubResource("Resource_qjf7j"), SubResource("Resource_ys0wb"), SubResource("Resource_dt8r0"), SubResource("Resource_82nq1"), SubResource("Resource_85xdg"), SubResource("Resource_mleay"), SubResource("Resource_6vni3"), SubResource("Resource_ouqtt"), SubResource("Resource_b8fma"), SubResource("Resource_ny67i"), SubResource("Resource_ldrqj"), SubResource("Resource_d8qsc"), SubResource("Resource_fk02m"), SubResource("Resource_usvbe"), SubResource("Resource_wv2k2")])

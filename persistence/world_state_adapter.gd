@@ -233,7 +233,7 @@ func preflight(data: Dictionary) -> Dictionary:
 	var hive_cells: Dictionary = {}
 	for row: Dictionary in data.beehives:
 		var point: Vector2 = world.to_global(_point(row.position))
-		# Fixed hive slots belong to scene-authored pot nodes; saved positions are advisory.
+		# Garden hives use the path anchors; older saves may still put them inside beds.
 		if int(row.garden_slot) >= 0 and world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id):
 			point = world.honey_garden.center_point(int(row.garden_slot))
 			var local_point: Vector2 = world.to_local(point)

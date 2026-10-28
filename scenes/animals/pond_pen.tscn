@@ -5,17 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="4_dkfll"]
 [ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="5_g1m05"]
 [ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="6_kff10"]
-[ext_resource type="PackedScene" path="res://scenes/animals/duck.tscn" id="7_1egdl"]
-[ext_resource type="SpriteFrames" uid="uid://0njsy44k5n0o" path="res://sprite_frames/animals/duck_02_frames.tres" id="11_242hp"]
-[ext_resource type="SpriteFrames" uid="uid://bom085xef1tkc" path="res://sprite_frames/animals/duck_03_frames.tres" id="12_m1um4"]
-[ext_resource type="SpriteFrames" uid="uid://cnlhp7wsefpx3" path="res://sprite_frames/animals/duck_04_frames.tres" id="13_jvg15"]
-[ext_resource type="SpriteFrames" uid="uid://s4xwhmtcqa3j" path="res://sprite_frames/animals/duck_in_a_hat_frames.tres" id="14_34fvk"]
-[ext_resource type="PackedScene" path="res://scenes/animals/goose.tscn" id="15_s3yga"]
-[ext_resource type="SpriteFrames" uid="uid://muljw1afcina" path="res://sprite_frames/animals/goose_02_frames.tres" id="18_pkhdw"]
-[ext_resource type="SpriteFrames" uid="uid://bd3d73n4u1eyh" path="res://sprite_frames/animals/goose_03_frames.tres" id="19_u4fm7"]
-[ext_resource type="SpriteFrames" uid="uid://bkanqk6d6e8qt" path="res://sprite_frames/animals/goose_04_frames.tres" id="20_u4bip"]
-[ext_resource type="SpriteFrames" uid="uid://dj837w0emrfc0" path="res://sprite_frames/animals/goose_05_frames.tres" id="21_wkb2v"]
-[ext_resource type="SpriteFrames" uid="uid://dpe7b8k8lfoi5" path="res://sprite_frames/animals/goose_06_frames.tres" id="22_483df"]
 [ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="23_8e3lu"]
 
 [sub_resource type="AtlasTexture" id="Full"]
@@ -57,70 +46,6 @@ stock = 600
 allowed_species = Array[int]([1, 5])
 full_texture = SubResource("AtlasTexture_no06q")
 empty_texture = SubResource("AtlasTexture_qanod")
-
-[node name="Duck_1" parent="." unique_id=877260834 instance=ExtResource("7_1egdl")]
-position = Vector2(72, 40)
-persistent_id = &"pond_duck_01"
-initial_age_seconds = 120.0
-
-[node name="Duck_2" parent="." unique_id=1389559881 instance=ExtResource("7_1egdl")]
-position = Vector2(152, 72)
-persistent_id = &"pond_duck_02"
-skin_frames = ExtResource("11_242hp")
-initial_age_seconds = 120.0
-
-[node name="Duck_3" parent="." unique_id=1507268649 instance=ExtResource("7_1egdl")]
-position = Vector2(120, 200)
-persistent_id = &"pond_duck_03"
-skin_frames = ExtResource("12_m1um4")
-initial_age_seconds = 120.0
-
-[node name="Duck_4" parent="." unique_id=842589534 instance=ExtResource("7_1egdl")]
-position = Vector2(304, 160)
-persistent_id = &"pond_duck_04"
-skin_frames = ExtResource("13_jvg15")
-initial_age_seconds = 120.0
-
-[node name="Duck_5" parent="." unique_id=1863409276 instance=ExtResource("7_1egdl")]
-position = Vector2(208, 88)
-persistent_id = &"pond_duck_05"
-skin_frames = ExtResource("14_34fvk")
-initial_age_seconds = 120.0
-
-[node name="Goose_1" parent="." unique_id=1367482854 instance=ExtResource("15_s3yga")]
-position = Vector2(56, 72)
-persistent_id = &"pond_goose_01"
-initial_age_seconds = 120.0
-
-[node name="Goose_2" parent="." unique_id=1891998967 instance=ExtResource("15_s3yga")]
-position = Vector2(120, 40)
-persistent_id = &"pond_goose_02"
-skin_frames = ExtResource("18_pkhdw")
-initial_age_seconds = 120.0
-
-[node name="Goose_3" parent="." unique_id=1005061667 instance=ExtResource("15_s3yga")]
-position = Vector2(168, 24)
-persistent_id = &"pond_goose_03"
-skin_frames = ExtResource("19_u4fm7")
-initial_age_seconds = 120.0
-
-[node name="Goose_4" parent="." unique_id=1844005527 instance=ExtResource("15_s3yga")]
-position = Vector2(200, 88)
-persistent_id = &"pond_goose_04"
-skin_frames = ExtResource("20_u4bip")
-initial_age_seconds = 120.0
-
-[node name="Goose_5" parent="." unique_id=1901283590 instance=ExtResource("15_s3yga")]
-position = Vector2(56, 104)
-persistent_id = &"pond_goose_05"
-skin_frames = ExtResource("21_wkb2v")
-initial_age_seconds = 120.0
-
-[node name="Goose_6" parent="." unique_id=331113009 instance=ExtResource("15_s3yga")]
-position = Vector2(136, 72)
-persistent_id = &"pond_goose_06"
-skin_frames = ExtResource("22_483df")
-initial_age_seconds = 120.0
 
 [node name="PoultryFeed" parent="." unique_id=1466488313 instance=ExtResource("23_8e3lu")]
 position = Vector2(24, 40)

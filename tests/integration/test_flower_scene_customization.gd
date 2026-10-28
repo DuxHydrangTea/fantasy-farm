@@ -59,7 +59,7 @@ func test_custom_node_and_block_transforms_survive_scene_pack_and_startup() -> v
 	assert_eq(restored.position, position)
 	assert_eq(restored.visual.plant_offset.position, Vector2(2, -3))
 
-func test_fixed_hives_and_save_restore_use_authored_nodes_after_moving_blocks() -> void:
+func test_fixed_hives_stay_on_path_after_moving_flower_blocks() -> void:
 	var world: FarmWorld = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
@@ -80,13 +80,13 @@ func test_fixed_hives_and_save_restore_use_authored_nodes_after_moving_blocks() 
 	var cell: Vector2i = HoneyGardenSystem.CENTERS[0]
 	garden.pots[cell].position += Vector2(1, 0)
 	var expected: Vector2 = garden.pots[cell].global_position
-	assert_eq(world.honey_garden.center_point(0), expected)
+	assert_eq(world.honey_garden.center_point(0), garden.to_global(HoneyGardenSystem.HIVE_POSITIONS[0]))
 	var result: Dictionary = adapter.restore(snapshot, now)
 	assert_true(result.ok, str(result.get("error")))
 	assert_eq(JSON.stringify(snapshot), before)
 	assert_eq(garden.pots[cell].global_position, expected)
 	for hive: Beehive in world.apiary.hives:
-		assert_eq(hive.global_position, garden.pots[HoneyGardenSystem.CENTERS[hive.garden_slot]].global_position)
+		assert_eq(hive.global_position, world.honey_garden.center_point(hive.garden_slot))
 		assert_eq(hive.range_display.garden, garden)
 
 func test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot() -> void:
@@ -115,4 +115,13 @@ func test_clicking_tall_flower_head_and_pot_body_resolves_the_same_slot() -> voi
 		assert_eq(target.node, pot)
 	world.player.interactions.presenter.show_target(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, world.player), false)
 	assert_true(world.player.interactions.presenter.badge.visible)
+	var presenter: InteractionPresenter = world.player.interactions.presenter
+	var original_position: Vector2 = presenter.badge.position
+	pot.motion.target.rotation += 0.2
+	presenter.show_target(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, world.player), false)
+	assert_eq(presenter.badge.position, original_position, "Plant motion must not move the interaction tooltip")
+	var original_anchor: Vector2 = pot.to_global(presenter._plant_anchor)
+	pot.position += Vector2(20, 0)
+	presenter.show_target(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, world.player), false)
+	assert_true(pot.to_global(presenter._plant_anchor).is_equal_approx(original_anchor + Vector2(20, 0)), "The anchor still follows the object's world position")
 	assert_not_null(pot.visual.pot_sprite.get_node_or_null("InteractionPotOutline"))

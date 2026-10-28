@@ -1,0 +1,43 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6572
+[MCPRegistry] runtime port 6572 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_shop.gd
+* test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory
+* test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit
+* test_failed_purchase_and_load_close_have_no_thanks
+* test_range_categories_and_checkout_revalidation
+* test_shop_panel_is_inside_full_hd_viewport
+* test_removing_merchant_releases_modal_lock
+* test_main_world_seed_merchant_stands_in_front_of_the_seed_shop
+* test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal
+* test_real_farm_can_buy_all_seven_species_into_configured_pens
+* test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell
+10/10 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                10
+Passing Tests        10
+Asserts             110
+Time              2.975s
+
+
+Ran Scripts matching "test_shop.gd"
+---- All tests passed! ----
+

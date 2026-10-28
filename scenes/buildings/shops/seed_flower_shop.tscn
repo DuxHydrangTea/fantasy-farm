@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/Shops/crop_flower_shop_red.png" id="1_ftd12"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nw6h4"]
+size = Vector2(106, 20)
+
+[node name="ShopBuilding" type="StaticBody2D" unique_id=1821166723]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1397115783]
+position = Vector2(0, -50)
+texture = ExtResource("1_ftd12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1868841864]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_nw6h4")

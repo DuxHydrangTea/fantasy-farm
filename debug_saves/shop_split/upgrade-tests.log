@@ -1,0 +1,38 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_tool_upgrade_ui.gd
+* test_existing_vendor_exposes_three_upgrade_cards_and_sequential_purchases
+* test_money_land_and_loading_guards_disable_the_checkout
+* test_other_shop_categories_and_modal_lifecycle_still_work
+* test_range_selector_cycles_only_unlocked_sizes_and_locks_during_action
+* test_landscape_touch_layout_and_secondary_finger_range_control
+5/5 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 5
+Passing Tests         5
+Asserts              53
+Time              3.664s
+
+
+Ran Scripts matching "test_tool_upgrade_ui.gd"
+---- All tests passed! ----
+

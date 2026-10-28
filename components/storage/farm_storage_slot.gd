@@ -27,6 +27,7 @@ func _ready() -> void:
 	_count.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_count.add_theme_font_size_override("font_size", 16)
+	InventorySlot.style_count(_count)
 	add_child(_count)
 	_count.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	_count.offset_left = 4

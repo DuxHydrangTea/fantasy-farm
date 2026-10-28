@@ -89,13 +89,10 @@ func _ready() -> void:
 	_count.name = "Count"
 	_count.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_count.add_theme_font_size_override("font_size", 16 if compact else 20)
-	_count.add_theme_color_override("font_color", Color(0.28, 0.18, 0.12) if framed else Color(1, 0.95, 0.80))
-	_count.add_theme_color_override("font_shadow_color", Color(0.28,0.18,0.12))
-	_count.add_theme_constant_override("shadow_offset_x", 0 if framed else 1)
-	_count.add_theme_constant_override("shadow_offset_y", 0 if framed else 1)
+	_count.add_theme_font_size_override("font_size", 18 if cozy_skin else 16 if compact else 20)
+	style_count(_count)
 	var count_style: StyleBoxFlat = StyleBoxFlat.new()
-	count_style.bg_color = Color.TRANSPARENT if framed else Color(0.20, 0.16, 0.10, 0.92)
+	count_style.bg_color = Color.TRANSPARENT
 	count_style.content_margin_left = 3
 	count_style.content_margin_right = 3
 	_count.add_theme_stylebox_override("normal", count_style)
@@ -120,7 +117,7 @@ func refresh() -> void:
 	_shortcut.visible = show_shortcut and not MobileLayout.is_touch(get_viewport())
 	_icon.texture = item.icon if item != null else null
 	_star.visible = item != null and item.star_fruit
-	_count.text = str(count) if count > 1 else ""
+	_count.text = _format_count(count) if count > 1 else ""
 	_count.visible = count > 1
 	if _quality_badge != null:
 		var highest_tier: int = 0
@@ -147,6 +144,21 @@ func refresh() -> void:
 		tooltip_text += "\n" + ItemQuality.summary(inventory.slot(slot_index).tiers)
 	if item != null and not item.description.is_empty():
 		tooltip_text += "\n" + tr(item.description)
+
+static func style_count(label: Label) -> void:
+	label.add_theme_color_override("font_color", Color(1, 0.95, 0.80))
+	label.add_theme_color_override("font_outline_color", Color(0.20, 0.10, 0.06))
+	label.add_theme_color_override("font_shadow_color", Color(0.28, 0.18, 0.12))
+	label.add_theme_constant_override("outline_size", 2)
+	label.add_theme_constant_override("shadow_offset_x", 2)
+	label.add_theme_constant_override("shadow_offset_y", 2)
+
+func _format_count(count: int) -> String:
+	if not cozy_skin or count < 1000:
+		return str(count)
+	var whole: int = count / 1000
+	var decimal: int = (count % 1000) / 100
+	return str(whole) + ("," + str(decimal) if decimal > 0 else "") + "K"
 
 func _place_count() -> void:
 	_star.position = Vector2(size.x - 18, 0)

@@ -1,6 +1,6 @@
 class_name FarmStorageAccess
 extends ShopMerchant
-## Invisible doorway interaction; the parent Barn owns its visuals and collisions.
+## Invisible doorway interaction; the parent building owns its visuals and collisions.
 @export var storage_id: String = "produce_warehouse"
 var world: FarmWorld
 

@@ -54,7 +54,7 @@ func _jump(seconds: float) -> void:
 	clock[0] += seconds
 	world.apiary.advance(clock[0])
 
-func test_layout_keeps_80_positions_reserves_only_three_and_repairs_center_free() -> void:
+func test_layout_keeps_all_80_pots_and_places_hives_outside_flower_beds() -> void:
 	assert_true(service.try_migrate())
 	assert_eq(garden.pots.size(),80)
 	assert_eq(world.apiary.hives.size(),3)
@@ -68,38 +68,33 @@ func test_layout_keeps_80_positions_reserves_only_three_and_repairs_center_free(
 			reserved += 1
 		if service.owner_slot(pot.cell) >= 0:
 			combo += 1
-	assert_eq(reserved,3)
+	assert_eq(reserved,0)
 	assert_eq(combo,24)
+	for hive: Beehive in world.apiary.hives:
+		assert_false(Rect2(Vector2.ZERO, FlowerGarden.SIZE).has_point(garden.to_local(hive.global_position)))
+		assert_true(service.inside(hive), "Path hives still open the bee journal")
 	assert_true(service.try_migrate())
 	assert_eq(world.apiary.hives.size(),3)
 
-func test_center_flower_relocation_preserves_identity_and_lifecycle() -> void:
+func test_center_flower_stays_in_its_pot_when_hives_move_outside() -> void:
 	var pot: FlowerPot = _flower(HoneyGardenSystem.CENTERS[1],8,false)
 	var original: Dictionary = pot.capture(now)
 	assert_true(service.try_migrate())
-	assert_null(pot.definition)
-	var found: FlowerPot
-	for candidate: FlowerPot in garden.pots.values():
-		if candidate.definition != null:
-			found = candidate
-	assert_not_null(found)
-	assert_eq(service.owner_slot(found.cell),-1)
-	var result: Dictionary = found.capture(now)
+	assert_not_null(pot.definition)
+	var result: Dictionary = pot.capture(now)
 	for key: String in ["flower","planted_at","growth_started_at","matures_at","progress"]:
 		assert_eq(result[key],original[key])
 
-func test_full_garden_defers_everything_then_retries_without_item_loss() -> void:
+func test_full_garden_migrates_without_moving_or_losing_flowers() -> void:
 	for pot: FlowerPot in garden.pots.values():
 		_flower(pot.cell)
 	var before: String = JSON.stringify(garden.capture(now))
-	assert_false(service.try_migrate())
-	assert_eq(JSON.stringify(garden.capture(now)),before)
-	assert_eq(world.apiary.hives.size(),0)
-	assert_false(service.notice.is_empty())
-	for cell: Vector2i in [Vector2i(0,0),Vector2i(1,0),Vector2i(2,0)]:
-		garden.pots[cell].clear()
 	assert_true(service.try_migrate())
-	assert_eq(garden.capture(now).flowers.size(),77)
+	assert_eq(JSON.stringify(garden.capture(now)),before)
+	assert_eq(world.apiary.hives.size(),3)
+	assert_eq(garden.capture(now).flowers.size(),80)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	assert_true(adapter.preflight(adapter.capture("test", 1, clock[0])).ok)
 
 func test_uncollected_legacy_batch_drains_without_restarting_before_migration() -> void:
 	var hive: Beehive = world.apiary.create_hive(garden.global_position+Vector2(24,24),&"legacy_hive")

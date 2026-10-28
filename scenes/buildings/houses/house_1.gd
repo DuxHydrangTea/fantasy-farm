@@ -23,6 +23,7 @@ enum Variant {
 	WOOD_RED_BLACK,
 	WOOD_RED_BLUE,
 	WOOD_RED_RED,
+	RESTAURANT_KITCHEN,
 }
 
 const VARIANT_TEXTURES = {
@@ -47,6 +48,7 @@ const VARIANT_TEXTURES = {
 	Variant.WOOD_RED_BLACK: preload("res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Black.png"),
 	Variant.WOOD_RED_BLUE: preload("res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Blue.png"),
 	Variant.WOOD_RED_RED: preload("res://assets/Buildings/Buildings/Houses/Wood/House_1_Wood_Red_Red.png"),
+	Variant.RESTAURANT_KITCHEN: preload("res://assets/Buildings/Extracted/VillageSet/restaurant_kitchen.png"),
 }
 
 @export var variant: Variant = Variant.LIMESTONE_BLACK:
@@ -63,3 +65,5 @@ func _update_texture() -> void:
 	var sprite := get_node_or_null("Sprite2D") as Sprite2D
 	if sprite != null:
 		sprite.texture = VARIANT_TEXTURES[variant]
+		sprite.scale = Vector2(0.5, 0.5) if variant == Variant.RESTAURANT_KITCHEN else Vector2.ONE
+		sprite.position = Vector2(0, -42) if variant == Variant.RESTAURANT_KITCHEN else Vector2(0, -49)

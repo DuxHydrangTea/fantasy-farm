@@ -150,7 +150,7 @@ func restore_legacy_flowers() -> void:
 	for pot: FlowerPot in pots.values():
 		if _legacy_flowers.is_empty():
 			break
-		if pot.definition != null or pot.reserved or pot.cell in HoneyGardenSystem.CENTERS:
+		if pot.definition != null or pot.reserved:
 			continue
 		var data: Dictionary = _legacy_flowers.pop_front()
 		var path: String = "res://flowers/definitions/%s.tres" % String(data.flower)

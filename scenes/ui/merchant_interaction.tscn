@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://cthkyohjwmpqy"]
 
+[ext_resource type="Material" path="res://resources/ui/bubble_flip_material.tres" id="bubble_flip_material"]
+
 [ext_resource type="StyleBox" path="res://resources/ui/merchant_bubble_panel.tres" id="2_30pt8"]
 [ext_resource type="Theme" uid="uid://c62o43wc52lav" path="res://resources/ui/game_theme.tres" id="4_theme"]
 [ext_resource type="PackedScene" path="res://scenes/ui/shop.tscn" id="5_ui"]
@@ -7,6 +9,7 @@
 [node name="MerchantInteraction" type="Node2D" unique_id=349085037]
 
 [node name="Bubble" type="PanelContainer" parent="." unique_id=1014735576]
+material = ExtResource("bubble_flip_material")
 z_index = 20
 texture_filter = 1
 offset_left = -64.0
@@ -22,7 +25,7 @@ theme_override_styles/panel = ExtResource("2_30pt8")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 0
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 12
 text = "Thank you!
 See you again!"
 horizontal_alignment = 1
@@ -37,7 +40,7 @@ theme_override_colors/font_color = Color(1, 0.95, 0.78, 1)
 theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 12
-text = "[E] Shop"
+text = "[E] Trade"
 horizontal_alignment = 1
 
 [node name="BubbleTimer" type="Timer" parent="." unique_id=1508524061]

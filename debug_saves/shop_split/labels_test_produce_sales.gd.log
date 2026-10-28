@@ -1,0 +1,40 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_produce_sales.gd
+* test_entered_quantity_commits_text_and_sell_all_sells_other_types
+* test_over_quantity_rejected_and_menu_close_for_load_or_removal_releases_lock
+* test_english_vietnamese_resize_and_physical_clicks_preserve_selected_quantity
+* test_relocated_produce_buyer_and_seed_merchant_open_their_own_menus
+* test_quality_tabs_maximum_and_bulk_sale_keep_other_qualities
+* test_maximum_respects_wallet_room_and_bulk_overflow_does_not_sell
+* test_empty_quality_and_live_inventory_updates_restore_rows
+7/7 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 7
+Passing Tests         7
+Asserts              78
+Time              2.751s
+
+
+Ran Scripts matching "test_produce_sales.gd"
+---- All tests passed! ----
+

@@ -17,10 +17,7 @@ func before_each() -> void:
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(10000000)
 	world.land.state.restore_columns(13, 4)
-	for candidate: Node in get_tree().get_nodes_in_group(&"shop_merchants"):
-		if world.is_ancestor_of(candidate):
-			merchant = candidate as ShopMerchant
-			break
+	merchant = world.get_node("BlacksmithMerchant") as ShopMerchant
 	shop = merchant.shop_ui
 	world.player.global_position = merchant.interaction_position() + Vector2(0, 20)
 	assert_true(merchant.open_shop(world.player))
@@ -28,7 +25,7 @@ func before_each() -> void:
 	await wait_process_frames(3)
 
 func test_existing_vendor_exposes_three_upgrade_cards_and_sequential_purchases() -> void:
-	assert_eq(shop.categories.get_child_count(), 6)
+	assert_eq(shop._category_tabs.values().filter(func(tab: Button) -> bool: return tab.visible).size(), 3)
 	assert_eq(shop.grid.get_child_count(), 3)
 	assert_false(shop.quantity.visible)
 	for tool: StringName in ToolUpgradeState.TOOLS:
@@ -60,9 +57,9 @@ func test_money_land_and_loading_guards_disable_the_checkout() -> void:
 	assert_true(shop.buy_button.disabled)
 
 func test_other_shop_categories_and_modal_lifecycle_still_work() -> void:
-	shop.show_category(ShopOffer.Category.CROP)
+	shop.show_category(ShopOffer.Category.TOOLS)
 	assert_true(shop.quantity.visible)
-	assert_gt(shop.grid.get_child_count(), 3)
+	assert_eq(shop.grid.get_child_count(), 3)
 	shop.show_category(ShopUI.UPGRADES)
 	assert_true(world.player.selection.shop_open)
 	world.player.tool_range_ui.cycle()
