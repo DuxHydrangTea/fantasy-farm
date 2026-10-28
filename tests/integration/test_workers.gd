@@ -4,8 +4,15 @@ const APPLE: ItemDefinition = preload("res://items/trees/apple.tres")
 var world: FarmWorld
 var service: WorkerService
 var now: float
+const FIXED_TIME: float = 1793155000.0
+var _old_clock_source: Callable
+var _old_clock_floor: float
 
 func before_each() -> void:
+	_old_clock_source = TimeManager.clock_source
+	_old_clock_floor = TimeManager._last_timestamp
+	TimeManager._last_timestamp = FIXED_TIME
+	TimeManager.clock_source = func() -> float: return FIXED_TIME
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
@@ -13,11 +20,16 @@ func before_each() -> void:
 	now = world.farming.time_manager.now()
 	var fixed_now: float = now
 	world.farming.time_manager.clock_source = func() -> float: return fixed_now
+	world.weather.schedule.seed = 12345
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
 	world.trees.reset()
+	# The fixture spans ten columns; the current save schema requires ownership.
+	assert_true(world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1}))
 	for index: int in range(10):
-		var tree: FruitTree = world.trees.create_tree(Vector2i(12 + index * 3, 61), world.trees.definitions[&"apple"], now) as FruitTree
+		var cell: Vector2i = Vector2i(12 + index * 3, 61)
+		assert_true(TreePlotUpgradeState.allows(world.tree_plot_upgrades.state.capture(), cell, TreeDefinition.Kind.FRUIT))
+		var tree: FruitTree = world.trees.create_tree(cell, world.trees.definitions[&"apple"], now) as FruitTree
 		tree.planted_at = now - tree.definition.growth_seconds - 1.0
 		tree.growth_started_at = tree.planted_at
 		tree.matures_at = now - 1
@@ -25,6 +37,26 @@ func before_each() -> void:
 		tree.fruit_work = tree.definition.fruit_cycle_seconds if index == 0 else 0.0
 		tree.refresh(now)
 	await wait_process_frames(2)
+
+
+func after_each() -> void:
+	TimeManager.clock_source = _old_clock_source
+	TimeManager._last_timestamp = _old_clock_floor
+
+
+func _checkpoint_ok(adapter: WorldStateAdapter, snapshot: Dictionary) -> bool:
+	var checked: Dictionary = SaveSchema.validate(snapshot, adapter.catalog)
+	assert_true(checked.ok, "Checkpoint validation: " + str(checked))
+	if not checked.ok:
+		return false
+	var preflight: Dictionary = adapter.preflight(snapshot)
+	assert_true(preflight.ok, "Checkpoint preflight: " + str(preflight))
+	return bool(preflight.ok)
+
+func _restore_ok(adapter: WorldStateAdapter, snapshot: Dictionary, timestamp: float) -> bool:
+	var restored: Dictionary = adapter.restore(snapshot, timestamp)
+	assert_true(restored.ok, "Checkpoint restore: " + str(restored))
+	return bool(restored.ok)
 
 func test_hire_harvest_goes_directly_to_warehouse_not_worker_or_player_bag() -> void:
 	assert_eq(service.hire("orchard"), "")
@@ -73,11 +105,12 @@ func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	assert_false(old.has("workers"))
 	service.hire("orchard")
 	var saved: Dictionary = adapter.capture("worker_test", 1, now)
-	assert_true(SaveSchema.validate(saved, adapter.catalog).ok)
-	assert_true(adapter.restore(saved, now + 20.0).ok)
+	if not _checkpoint_ok(adapter, saved) or not _restore_ok(adapter, saved, now + 20.0):
+		return
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 	var second: Dictionary = adapter.capture("worker_test", 2, now + 20.0)
-	assert_true(adapter.restore(second, now + 20.0).ok)
+	if not _checkpoint_ok(adapter, second) or not _restore_ok(adapter, second, now + 20.0):
+		return
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 	second.workers.rows[0].basket[0].count = 101
 	assert_false(adapter.restore(second, now + 20.0).ok)
@@ -145,11 +178,14 @@ func test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task() -> v
 	service.hire("orchard")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	if not _checkpoint_ok(adapter, checkpoint):
+		return
 	service.advance(now + 172800.0)
 	var single: Dictionary = service.capture(now + 172800.0)
 	var warehouse: Dictionary = world.storages.capture()
 	var coins: int = world.player.wallet.balance
-	assert_true(adapter.restore(checkpoint, now).ok)
+	if not _restore_ok(adapter, checkpoint, now):
+		return
 	for hour: int in range(1, 49):
 		service.advance(now + hour * 3600.0)
 	var stepped: Dictionary = service.capture(now + 172800.0)
@@ -181,8 +217,8 @@ func test_crop_worker_load_validates_against_saved_land_not_current_land() -> vo
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("worker_test", 1, now)
 	world.land.state.restore_columns(4, 4)
-	assert_true(adapter.preflight(saved).ok)
-	assert_true(adapter.restore(saved, now).ok)
+	if not _checkpoint_ok(adapter, saved) or not _restore_ok(adapter, saved, now):
+		return
 	assert_eq(world.land.state.unlocked_columns, 12)
 
 func test_hiring_another_role_does_not_teleport_a_blocked_online_worker() -> void:
@@ -220,12 +256,14 @@ func test_ranch_two_hour_jump_matches_minute_steps() -> void:
 	service.feed_inventory("ranch").add(food.feed_item, 10)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
-	assert_true(SaveSchema.validate(checkpoint, adapter.catalog).ok)
+	if not _checkpoint_ok(adapter, checkpoint):
+		return
 	service.advance(now + 7200.0)
 	var single: Dictionary = service.capture(now + 7200.0)
 	var warehouse: Dictionary = world.storages.capture()
 	var stock: float = food.available_units()
-	assert_true(adapter.restore(checkpoint, now).ok)
+	if not _restore_ok(adapter, checkpoint, now):
+		return
 	for minute: int in range(1, 121):
 		service.advance(now + minute * 60.0)
 	assert_eq(world.storages.capture(), warehouse)
@@ -241,10 +279,13 @@ func test_crop_two_minute_jump_matches_second_steps() -> void:
 	service.hire("crop")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	if not _checkpoint_ok(adapter, checkpoint):
+		return
 	service.advance(now + 120)
 	var single: Dictionary = service.capture(now + 120)
 	var warehouse: Dictionary = world.storages.capture()
-	assert_true(adapter.restore(checkpoint, now).ok)
+	if not _restore_ok(adapter, checkpoint, now):
+		return
 	for second: int in range(1, 121):
 		service.advance(now + second)
 	assert_eq(world.storages.capture(), warehouse)
@@ -272,3 +313,37 @@ func test_hiring_boards_do_not_occupy_existing_crop_or_tree_cells() -> void:
 	assert_false(LandExpansionState.REGION.has_point(world.farming.world_to_cell(crop_board.global_position)))
 	var orchard_board: WorkerBoard = world.get_node("OrchardWorkers") as WorkerBoard
 	assert_false(TreePlantation.valid_cell(world.farming.world_to_cell(orchard_board.global_position), TreeDefinition.Kind.FRUIT))
+
+func test_finish_boundary_roundtrip_and_repeated_timestamp_collect_once() -> void:
+	assert_eq(service.hire("orchard"), "")
+	service.advance(now)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	if not _checkpoint_ok(adapter, checkpoint):
+		return
+	var task: Dictionary = checkpoint.workers.rows[0].task
+	assert_eq(task.kind, "fruit")
+	var finish: float = float(task.finish_at)
+	assert_gt(finish, now + 0.001)
+	if not _restore_ok(adapter, checkpoint, now):
+		return
+	assert_almost_eq(float(service.record("orchard").task.finish_at), finish, 0.000001)
+	service.advance(finish - 0.001)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 0)
+	service.advance(finish)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
+	service.advance(finish)
+	service.advance(finish + 0.001)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
+
+func test_dawn_boundary_and_repeated_timestamp_pay_once() -> void:
+	assert_eq(service.hire("orchard"), "")
+	var dawn: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
+	var initial: int = world.player.wallet.balance
+	service.advance(dawn - 0.001)
+	assert_eq(world.player.wallet.balance, initial)
+	service.advance(dawn)
+	assert_eq(world.player.wallet.balance, initial - int(WorkerRole.WAGES.orchard))
+	service.advance(dawn)
+	service.advance(dawn + 0.001)
+	assert_eq(world.player.wallet.balance, initial - int(WorkerRole.WAGES.orchard))

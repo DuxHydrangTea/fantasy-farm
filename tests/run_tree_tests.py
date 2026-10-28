@@ -24,7 +24,11 @@ def main() -> int:
     parser.add_argument("--suite", action="append", help="Project-relative test suite; repeat to run several.")
     parser.add_argument("--preview", action="store_true")
     parser.add_argument("--validate", action="store_true")
+    parser.add_argument("--offline-stress", choices=("48h", "7d", "all"),
+                        help="Opt in to the large offline matrix only; retains the 240s timeout.")
     args = parser.parse_args()
+    if args.offline_stress and (args.all or args.suite or args.preview or args.validate):
+        parser.error("--offline-stress runs its own suite; do not combine it with other run modes")
     root = Path(__file__).resolve().parents[1]
     with tempfile.TemporaryDirectory(prefix="farm-tree-tests-") as directory:
         scratch = Path(directory)
@@ -76,8 +80,22 @@ def main() -> int:
                     shutil.copyfile(cache / name, root / ".godot" / name)
             return result.returncode
         suites = args.suite or ["tests/unit/test_trees.gd", "tests/integration/test_tree_plantation.gd"]
+        if args.offline_stress:
+            suites = ["tests/integration/test_storage_offline_parity.gd"]
         tests = ["-gdir=res://tests/unit,res://tests/integration", "-ginclude_subdirs"] if args.all else ["-gtest=" + ",".join("res://" + p for p in suites)]
-        result = subprocess.run(command + ["--fixed-fps", "60", "-s", "addons/gut/gut_cmdln.gd", "-gconfig=", "-gexit", "-gdisable_colors"] + tests, timeout=240, check=False)
+        if args.offline_stress:
+            selection = {"48h": "matrix_large_48_hours", "7d": "matrix_large_7_days", "all": "matrix_large"}
+            tests.append("-gunit_test_name=" + selection[args.offline_stress])
+        run_env = os.environ.copy()
+        # A parent shell's stress preference must not change a regression run.
+        run_env["FARM_OFFLINE_STRESS"] = args.offline_stress or ""
+        try:
+            result = subprocess.run(command + ["--fixed-fps", "60", "-s", "addons/gut/gut_cmdln.gd", "-gconfig=", "-gexit", "-gdisable_colors"] + tests, timeout=240, check=False, env=run_env)
+        except subprocess.TimeoutExpired:
+            print(json.dumps({"ok": False, "timed_out": True, "timeout_seconds": 240,
+                              "offline_stress": args.offline_stress,
+                              "note": "No parity result. Last T02_MATRIX_PHASE identifies the active phase."}), flush=True)
+            return 124
         return result.returncode
 
 
