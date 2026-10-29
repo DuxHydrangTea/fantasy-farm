@@ -13,7 +13,21 @@ var _advancing: bool = false
 var _placing: bool = false
 var _boosted: Array[Crop] = []
 var _weather_at: float = 0.0
-
+const Assignment = preload("res://components/bees/pollination_assignment.gd")
+var _owner_signature: Array = []
+var _owners: Dictionary = {}
+var _flowers_dirty: bool = true
+var _source_revision: int = 0
+var _nearby_signature: Array = []
+var _nearby: Array[Crop] = []
+var _crop_points: Dictionary = {}
+var _source_nodes: Array[Node2D] = []
+var _source_cells: Array[Vector2i] = []
+var _source_rows: Array[Dictionary] = []
+var _assigned_sources: Array[Dictionary] = []
+var _assigned_signature: Array = []
+var _assigned_from: float = INF
+var _assigned_until: float = -INF
 func _ready() -> void:
 	clock = farming.time_manager
 	for node: Node in get_tree().get_nodes_in_group(&"flower_gardens"):
@@ -24,24 +38,75 @@ func _ready() -> void:
 	last_at = clock.now()
 	loading = false
 	clock.tick.connect(advance)
+	farming.crop_planted.connect(invalidate_sources)
+	farming.crop_harvested.connect(invalidate_sources)
 
 func sync() -> void:
 	if clock != null:
 		advance(clock.now())
 
+func invalidate_sources(_cell: Vector2i = Vector2i.ZERO, _crop: Crop = null) -> void:
+	_flowers_dirty = true
+	_source_revision += 1
+
 func _flowers() -> Array[Dictionary]:
+	if not _flowers_dirty:
+		for index: int in range(_source_nodes.size()):
+			var node: Node2D = _source_nodes[index]
+			if not is_instance_valid(node):
+				_flowers_dirty = true
+				return _flowers()
+			var source: Dictionary = _source_rows[index]
+			if node is Crop:
+				source.ready_at = (node as Crop).matures_at
+				source.point = farming.farmland.to_global(farming.farmland.map_to_local(_source_cells[index]))
+			else:
+				var pot: FlowerPot = node as FlowerPot
+				source.ready_at = pot.matures_at
+				source.point = pot.global_position
+		return _source_rows
+	_flowers_dirty = false
+	_source_nodes.clear()
+	_source_cells.clear()
 	var result: Array[Dictionary] = []
 	for garden: FlowerGarden in gardens:
 		if garden.starter_content_locked:
 			continue
 		for pot: FlowerPot in garden.pots.values():
 			if pot.definition != null and pot.growth_started_at >= 0:
+				_source_nodes.append(pot)
+				_source_cells.append(pot.cell)
 				result.append({"type":String(pot.definition.flower_id),"name":pot.definition.display_name,"point":pot.global_position,"ready_at":pot.matures_at,"garden":String(garden.persistent_id),"cell":pot.cell})
 	for cell: Vector2i in farming.crop_cells():
 		var crop: Crop = farming.get_crop(cell)
 		if crop != null and crop.definition.crop_id == &"sunflower":
+			_source_nodes.append(crop)
+			_source_cells.append(cell)
 			result.append({"type":"sunflower","name":"Sunflower","point":farming.farmland.to_global(farming.farmland.map_to_local(cell)),"ready_at":crop.matures_at})
+	_source_rows = result
 	return result
+
+func _nearby_crops(radius_squared: float) -> Array[Crop]:
+	var points: Array[Vector2] = []
+	for hive: Beehive in hives:
+		points.append(hive.global_position)
+	var signature: Array = [_source_revision, points, radius_squared, farming.farmland.global_transform]
+	if signature == _nearby_signature:
+		return _nearby
+	_nearby_signature = signature
+	_nearby.clear()
+	_crop_points.clear()
+	for cell: Vector2i in farming.crop_cells():
+		var crop: Crop = farming.get_crop(cell)
+		if crop == null:
+			continue
+		var point: Vector2 = farming.farmland.to_global(farming.farmland.map_to_local(cell))
+		for origin: Vector2 in points:
+			if origin.distance_squared_to(point) <= radius_squared:
+				_nearby.append(crop)
+				_crop_points[crop] = point
+				break
+	return _nearby
 
 func effective_radius(timestamp: float) -> float:
 	return definition.radius * (farming.weather.radius_multiplier(timestamp) if farming.weather != null else 1.0)
@@ -51,30 +116,45 @@ func raining(timestamp: float) -> bool:
 
 func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 	_weather_at = timestamp
+	var rain: bool = raining(timestamp)
+	var radius_squared: float = pow(effective_radius(timestamp), 2)
+	var fixed_garden: FlowerGarden = world.honey_garden.garden() if world.honey_garden != null and world.honey_garden.migrated else null
+	var geometry: Array[Dictionary] = []
+	for hive: Beehive in hives:
+		geometry.append({"id": String(hive.persistent_id), "point": hive.global_position, "repaired": hive.repaired, "slot": hive.garden_slot, "garden": hive.garden_id})
+	var signature: Array = [geometry, radius_squared, String(fixed_garden.persistent_id) if fixed_garden != null else ""]
+	var batches: Array = []
+	for hive: Beehive in hives:
+		batches.append(hive.production.legacy_batch)
+	var assigned_signature: Array = [signature, rain, batches, definition.pollen_speed, definition.sunflower_speed, definition.floral_speed]
+	if timestamp >= _assigned_from and timestamp < _assigned_until and sources == _assigned_sources and assigned_signature == _assigned_signature:
+		return
+	_assigned_from = timestamp
+	_assigned_until = INF
+	_assigned_sources = sources.duplicate(true)
+	_assigned_signature = assigned_signature
+	for source: Dictionary in sources:
+		if float(source.ready_at) > timestamp + 0.000001:
+			_assigned_until = minf(_assigned_until, float(source.ready_at) - 0.000001)
 	for hive: Beehive in hives:
 		hive.pollination.sources.clear()
+	if signature != _owner_signature or _owners.size() > sources.size() * 2 + 16:
+		_owner_signature = signature
+		_owners.clear()
 	for source: Dictionary in sources:
-		if raining(timestamp):
+		if rain:
 			break
 		if float(source.ready_at) > timestamp + 0.000001:
 			continue
-		var nearest: Beehive
-		var distance: float = INF
-		for hive: Beehive in hives:
-			if not hive.repaired:
-				continue
-			var fixed_slot: int = world.honey_garden.owner_slot(source.get("cell",Vector2i(-99,-99))) if world.honey_garden != null and world.honey_garden.migrated and source.get("garden", "") == String(world.honey_garden.garden().persistent_id) else -1
-			if fixed_slot >= 0 or hive.garden_slot >= 0:
-				if fixed_slot == hive.garden_slot and source.get("garden", "") == hive.garden_id:
-					nearest = hive
-					break
-				continue
-			var candidate: float = hive.global_position.distance_squared_to(source.point)
-			if candidate <= effective_radius(timestamp)*effective_radius(timestamp) and (candidate < distance or (is_equal_approx(candidate,distance) and (nearest == null or String(hive.persistent_id) < String(nearest.persistent_id)))):
-				nearest = hive
-				distance = candidate
-		if nearest != null:
-			nearest.pollination.sources.append(source)
+		var garden: String = String(source.get("garden", ""))
+		var cell: Vector2i = source.get("cell", Vector2i(-99, -99))
+		var key: Array = [source.point, garden, cell]
+		if not _owners.has(key):
+			var fixed_slot: int = world.honey_garden.owner_slot(cell) if fixed_garden != null and garden == String(fixed_garden.persistent_id) else -1
+			_owners[key] = Assignment.choose(source.point, garden, fixed_slot, geometry, radius_squared)
+		var nearest: int = int(_owners[key])
+		if nearest >= 0:
+			hives[nearest].pollination.sources.append(source)
 	for hive: Beehive in hives:
 		hive.pollination.resolve(hive.global_position, definition, hive.production.legacy_batch)
 
@@ -100,12 +180,14 @@ func advance(timestamp: float) -> void:
 			if float(source.ready_at) > cursor + 0.000001:
 				boundary = minf(boundary,float(source.ready_at))
 		var accelerated: Array[Crop] = []
-		for cell: Vector2i in farming.crop_cells():
-			var crop: Crop = farming.get_crop(cell)
-			if crop == null or crop.matures_at <= cursor + 0.000001:
+		var radius_squared: float = pow(effective_radius(cursor), 2)
+		# Unboosted, distant crops cannot alter pollen. Sunflower bloom
+		# boundaries are already in sources; other distant deadlines are no-ops.
+		for crop: Crop in _nearby_crops(radius_squared):
+			if not is_instance_valid(crop) or crop.matures_at <= cursor + 0.000001:
 				continue
-			var point: Vector2 = farming.farmland.to_global(farming.farmland.map_to_local(cell))
-			var boosted: bool = crop_is_pollinated(point)
+			var point: Vector2 = _crop_points[crop]
+			var boosted: bool = _point_is_pollinated(point, radius_squared)
 			if boosted:
 				accelerated.append(crop)
 			var rate: float = 1.0 + definition.crop_bonus if boosted else 1.0
@@ -152,8 +234,12 @@ func _update_boosted(next: Array[Crop], timestamp: float) -> void:
 	_boosted = next
 
 func crop_is_pollinated(point: Vector2) -> bool:
+	var radius_squared: float = pow(effective_radius(_weather_at), 2)
+	return _point_is_pollinated(point, radius_squared)
+
+func _point_is_pollinated(point: Vector2, radius_squared: float) -> bool:
 	for hive: Beehive in hives:
-		if hive.pollination.active() and hive.global_position.distance_squared_to(point) <= effective_radius(_weather_at)*effective_radius(_weather_at):
+		if hive.pollination.active() and hive.global_position.distance_squared_to(point) <= radius_squared:
 			return true
 	return false
 
@@ -234,6 +320,16 @@ func create_hive(point: Vector2, id: StringName) -> Beehive:
 
 func begin_restore() -> void:
 	loading = true
+	invalidate_sources()
+	_source_nodes.clear()
+	_source_cells.clear()
+	_source_rows.clear()
+	_owners.clear()
+	_owner_signature.clear()
+	_assigned_sources.clear()
+	_assigned_signature.clear()
+	_assigned_from = INF
+	_assigned_until = -INF
 	for hive: Beehive in hives:
 		farming.set_cell_occupied(farming.world_to_cell(hive.global_position),false)
 		hive.free()

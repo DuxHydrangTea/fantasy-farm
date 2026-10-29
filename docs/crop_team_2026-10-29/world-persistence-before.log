@@ -1,0 +1,304 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-baseline-save-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_world_persistence.gd
+* test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip
+    [Failed] 
+      at line 75
+    [Failed]:  [10000] expected to equal [970]:  
+      at line 77
+    [Failed]:  [10000] expected to equal [970]:  
+      at line 85
+    [Failed]:  [0] expected to equal [3]:  
+      at line 86
+* test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold
+    [Failed] 
+      at line 96
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at: test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold (res://tests/integration/test_world_persistence.gd:97)
+          GDScript backtrace (most recent call first):
+              [0] test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold (res://tests/integration/test_world_persistence.gd:97)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_saving_mid_attraction_keeps_ground_quantity_and_position_until_arrival
+* test_player_inventory_soil_and_crop_roundtrip_through_file
+    [Failed]:  [21] expected to equal [9]:  
+      at line 176
+* test_offline_production_stacks_into_same_saved_pile_once
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:187)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at: test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:189)
+          GDScript backtrace (most recent call first):
+              [0] test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:189)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_long_offline_interval_stops_production_when_needs_run_out
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:203)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at: test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:205)
+          GDScript backtrace (most recent call first):
+              [0] test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:205)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_collected_default_pickup_and_removed_animal_do_not_respawn
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:216)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+          at: test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:217)
+          GDScript backtrace (most recent call first):
+              [0] test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:217)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid call. Nonexistent function 'free' in base 'Nil'.
+      at line -1
+* test_capture_sync_excludes_animals_that_die_before_the_same_frame_save
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at: test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+          GDScript backtrace (most recent call first):
+              [0] test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:237)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at: test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:238)
+          GDScript backtrace (most recent call first):
+              [0] test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:238)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_trough_stock_and_entity_ids_survive_renaming
+* test_invalid_load_does_not_mutate_world
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+          at: test_invalid_load_does_not_mutate_world (res://tests/integration/test_world_persistence.gd:280)
+          GDScript backtrace (most recent call first):
+              [0] test_invalid_load_does_not_mutate_world (res://tests/integration/test_world_persistence.gd:280)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access of index '0' on a base object of type: 'Array'.
+      at line -1
+* test_progress_does_not_go_back_when_system_clock_moves_back
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:286)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at: test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:289)
+          GDScript backtrace (most recent call first):
+              [0] test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:289)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_test_world_does_not_bind_real_profile
+* test_inventory_replace_is_atomic_and_emits_once
+* test_service_supports_async_backend_and_blocks_overlapping_operations
+* test_service_autosaves_and_loads_through_injected_repository
+* test_loading_pauses_clock_signals_and_restores_processing_on_success_and_failure
+* test_failed_read_disables_autosave_and_keeps_live_world_intact
+* test_failed_write_keeps_revision_and_can_be_retried
+* test_remote_invalid_snapshot_is_rejected_before_mutation
+* test_binding_existing_profile_restores_it_automatically
+* test_revision_conflict_disables_writes_until_successful_reload
+* test_quit_write_failure_leaves_game_running_for_retry
+* test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies
+    [Failed]:  [0.00000000000000000000] expected to equal [0.5] +/- [0.001]:  
+      at line 446
+    [Failed]:  [0] expected to equal [2]:  
+      at line 447
+    [Failed] 
+      at line 454
+* test_version_one_migration_keeps_progress_and_initializes_new_garden
+    [Failed]:  [0] expected to equal [36]:  
+      at line 468
+* test_invalid_flower_cell_rejects_whole_load_before_mutation
+* test_version_two_garden_migration_preserves_flowers_in_reduced_layout
+* test_collected_flower_seed_supply_stays_collected_after_reload
+ERROR: Node not found: "FlowerGarden/FlowerSeedSupply_01" (relative to "/root/GutRunner/@Node@11/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Attempt to call function 'free' in base 'null instance' on a null instance.
+          at: test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+          GDScript backtrace (most recent call first):
+              [0] test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Attempt to call function 'free' in base 'null instance' on a null instance.
+      at line -1
+* test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning
+SCRIPT ERROR: Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+          at: test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning (res://tests/integration/test_world_persistence.gd:526)
+          GDScript backtrace (most recent call first):
+              [0] test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning (res://tests/integration/test_world_persistence.gd:526)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+      at line -1
+* test_produce_sale_wallet_inventory_and_open_menu_roundtrip
+    [Failed]:  [13675] expected to equal [1525]:  
+      at line 539
+    [Failed]:  [13675] expected to equal [1525]:  
+      at line 554
+* test_retained_feed_survives_disk_roundtrip_and_invalid_reserve_is_atomic
+* test_v7_trough_migration_starts_with_no_retained_feed_without_mutating_input
+17/32 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_world_persistence.gd
+- test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip
+    [Failed]:  
+          at line 75
+    [Failed]:  [10000] expected to equal [970]:  
+          at line 77
+    [Failed]:  [10000] expected to equal [970]:  
+          at line 85
+    [Failed]:  [0] expected to equal [3]:  
+          at line 86
+- test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold
+    [Failed]:  
+          at line 96
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_player_inventory_soil_and_crop_roundtrip_through_file
+    [Failed]:  [21] expected to equal [9]:  
+          at line 176
+- test_offline_production_stacks_into_same_saved_pile_once
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_long_offline_interval_stops_production_when_needs_run_out
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_collected_default_pickup_and_removed_animal_do_not_respawn
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid call. Nonexistent function 'free' in base 'Nil'.
+          at line -1
+- test_capture_sync_excludes_animals_that_die_before_the_same_frame_save
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_invalid_load_does_not_mutate_world
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access of index '0' on a base object of type: 'Array'.
+          at line -1
+- test_progress_does_not_go_back_when_system_clock_moves_back
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies
+    [Failed]:  [0.00000000000000000000] expected to equal [0.5] +/- [0.001]:  
+          at line 446
+    [Failed]:  [0] expected to equal [2]:  
+          at line 447
+    [Failed]:  
+          at line 454
+- test_version_one_migration_keeps_progress_and_initializes_new_garden
+    [Failed]:  [0] expected to equal [36]:  
+          at line 468
+- test_collected_flower_seed_supply_stays_collected_after_reload
+    [Failed]:  Unexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Attempt to call function 'free' in base 'null instance' on a null instance.
+          at line -1
+- test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+          at line -1
+- test_produce_sale_wallet_inventory_and_open_menu_roundtrip
+    [Failed]:  [13675] expected to equal [1525]:  
+          at line 539
+    [Failed]:  [13675] expected to equal [1525]:  
+          at line 554
+
+Totals
+------
+Scripts               1
+Tests                32
+Passing Tests        17
+Failing Tests        15
+Asserts           143/165
+Time              8.774s
+
+
+Ran Scripts matching "test_world_persistence.gd"
+---- 15 failing tests ----
+

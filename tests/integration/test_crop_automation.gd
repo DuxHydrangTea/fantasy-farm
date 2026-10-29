@@ -80,7 +80,7 @@ func test_tilling_does_not_spend_seed_and_failed_plant_preserves_prepared_plot()
 	source.remove(SEED.item_id, 1)
 	var plant: Dictionary = service.crop_policy.task("plant", cell, 4, SEED)
 	assert_false(_commit(plant))
-	assert_eq(world.farming.get_soil_state(service.crop_automation.prepared), FarmingController.Soil.DRY)
+	assert_eq(world.farming.get_soil_state(service.crop_automation.prepared_for(service.record("crop").id)), FarmingController.Soil.DRY)
 	assert_true(service.crop_policy.planting_task(service.record("crop")).is_empty())
 	source.add(OTHER, 1)
 	var replacement: Dictionary = service.crop_policy.planting_task(service.record("crop"))
@@ -253,7 +253,7 @@ func test_full_field_48h_single_and_segmented_loops_match_with_fertilizer_and_no
 			if point != cell and point != cell + Vector2i.RIGHT:
 				world.farming.set_cell_occupied(point, true)
 	service.crop_policy.invalidate()
-	var actor: WorkerActor = service.actors.crop as WorkerActor
+	var actor: WorkerActor = service.actor_for("crop")
 	actor.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell + Vector2i.UP))
 	service.record("crop").position = WorkerRole.pair(actor.global_position)
 	source.add(SEED, 8)

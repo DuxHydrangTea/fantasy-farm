@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 35
+const VERSION: int = 36
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,7 +65,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -292,9 +292,29 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if data.get("version") == 34:
 		data = data.duplicate(true)
 		data["tree_plot_upgrades"] = TreePlotUpgradeState.migrate(data.get("trees"), catalog)
+		data.version = 35
+	if data.get("version") == 35:
+		data = data.duplicate(true)
+		if not data.get("workers") is Dictionary or not data.workers.get("rows") is Array or not data.workers.get("crop_automation") is Dictionary:
+			return failure("Invalid legacy worker data.")
+		var prepared: Variant = data.workers.crop_automation.get("prepared")
+		if not prepared is Array or (not prepared.is_empty() and not vector(prepared, true)):
+			return failure("Invalid legacy prepared plot.")
+		var prepared_rows: Array = []
+		var role_counts: Dictionary = {}
+		for row: Variant in data.workers.rows:
+			if not row is Dictionary or not row.get("role") is String or role_counts.has(row.role):
+				return failure("Invalid legacy worker role.")
+			role_counts[row.role] = true
+			row["slot"] = 1
+			if row.role == "crop" and row.get("employed", false) and not prepared.is_empty():
+				prepared_rows.append({"worker": row.get("id", ""), "cell": prepared.duplicate()})
+		data.workers.crop_automation.prepared = prepared_rows
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
+	if data.has("wall_saved_at") and not number(data.wall_saved_at):
+		return failure("Invalid wall clock checkpoint.")
 	if not FertileSoil.valid_version(data.get("fertile_layout_version")):
 		return failure("Invalid fertile soil layout version.")
 	if not HoneyGardenSystem.valid(data.get("honey_garden")):
@@ -352,8 +372,9 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if not number(data.get("land_starting_columns"), 1, data.land_columns, true):
 		return failure("Invalid starting farmland columns.")
 	var automation: Dictionary = data.workers.crop_automation
-	if automation.prepared.size() == 2 and not LandExpansionState.cell_is_open(Vector2i(int(automation.prepared[0]), int(automation.prepared[1])), int(data.land_columns)):
-		return failure("Invalid crop automation plot.")
+	for prepared: Dictionary in automation.prepared:
+		if not LandExpansionState.cell_is_open(Vector2i(int(prepared.cell[0]), int(prepared.cell[1])), int(data.land_columns)):
+			return failure("Invalid crop automation plot.")
 	for plot: Dictionary in automation.plots:
 		if not LandExpansionState.cell_is_open(Vector2i(int(plot.cell[0]), int(plot.cell[1])), int(data.land_columns)):
 			return failure("Invalid crop automation plot.")

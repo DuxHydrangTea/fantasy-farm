@@ -1,0 +1,223 @@
+{
+  "reference_models": true,
+  "fixture_sha256": "a8aae94e9232bd9d5fe6819bde245a9817a1a7ef337188bc28f6a39634e9badf",
+  "fixture_bytes": 283497,
+  "fixture_name": "profile_local.before-quality-particles.json",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "git_head": "e102018f198ddab02c9f8e65cb11510be6279431",
+  "production_diff_sha256": "0acd69f7b7c2ea8a34389c0c2dcccb79ad31f5f9e546f2f391f87ca7f6e2ede3",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "cache_policy": "Fresh process; existing imported assets and OS cache reused; not a cold import benchmark",
+  "measurement_scope": "load_game plus separately measured catalog and world setup; no native rendering; no save writes",
+  "runs": [
+    {
+      "file": "gap-3600-run-1.json",
+      "bridge_metrics": {
+        "candidates_crop": {
+          "calls": 164,
+          "usec": 289933
+        },
+        "candidates_orchard": {
+          "calls": 174,
+          "usec": 70284
+        },
+        "candidates_ranch": {
+          "calls": 176,
+          "usec": 33874
+        },
+        "commit_crop": {
+          "calls": 52,
+          "usec": 409
+        },
+        "commit_orchard": {
+          "calls": 103,
+          "usec": 10451
+        },
+        "commit_ranch": {
+          "calls": 81,
+          "usec": 11841
+        },
+        "next_wake_crop": {
+          "calls": 164,
+          "usec": 77373
+        },
+        "next_wake_orchard": {
+          "calls": 174,
+          "usec": 124306
+        },
+        "next_wake_ranch": {
+          "calls": 176,
+          "usec": 47130
+        },
+        "sync": {
+          "calls": 232,
+          "usec": 3920698
+        },
+        "sync_farming": {
+          "calls": 232,
+          "usec": 3401972
+        },
+        "sync_pens": {
+          "calls": 232,
+          "usec": 493912
+        },
+        "sync_weather": {
+          "calls": 232,
+          "usec": 23850
+        }
+      },
+      "budget_usec": 32000,
+      "catalog_ms": 1.925,
+      "checkpoint_ms": 294.263,
+      "clock_and_process_state_restored": true,
+      "counts": {
+        "animals": 48,
+        "crops": 396,
+        "trees": 306,
+        "workers": 3
+      },
+      "crop_policy_metrics": {
+        "fertilizer_calls": 0,
+        "fertilizer_usec": 0,
+        "planting_calls": 164,
+        "planting_usec": 18008
+      },
+      "engine": "4.7.2-stable (official)",
+      "final_sync_ms": 9.711,
+      "first_process_frame_ms": 0.407,
+      "frame_gap_max_ms": 419.682,
+      "frame_gap_p95_ms": 58.609,
+      "gap_seconds": 3600.0,
+      "load_game_ms": 5064.668,
+      "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+      "ok": true,
+      "other_load_including_workers_and_yields_ms": 4726.224,
+      "progress_completed": true,
+      "progress_monotonic": true,
+      "progress_updates": 107,
+      "read_validate_ms": 34.47,
+      "renderer": "headless",
+      "sampled_frame_intervals": 108,
+      "scene_setup_ms": 1056.685,
+      "exit_code": 0,
+      "process_wall_ms": 7656.62844000326
+    },
+    {
+      "file": "gap-55800-run-1.json",
+      "bridge_metrics": {
+        "candidates_crop": {
+          "calls": 3128,
+          "usec": 2643799
+        },
+        "candidates_orchard": {
+          "calls": 2844,
+          "usec": 620489
+        },
+        "candidates_ranch": {
+          "calls": 2989,
+          "usec": 398695
+        },
+        "commit_crop": {
+          "calls": 1603,
+          "usec": 1653452
+        },
+        "commit_orchard": {
+          "calls": 1340,
+          "usec": 95909
+        },
+        "commit_ranch": {
+          "calls": 1266,
+          "usec": 151059
+        },
+        "next_wake_crop": {
+          "calls": 3128,
+          "usec": 662629
+        },
+        "next_wake_orchard": {
+          "calls": 2844,
+          "usec": 1375825
+        },
+        "next_wake_ranch": {
+          "calls": 2989,
+          "usec": 506615
+        },
+        "sync": {
+          "calls": 4383,
+          "usec": 42024845
+        },
+        "sync_farming": {
+          "calls": 4383,
+          "usec": 35822032
+        },
+        "sync_pens": {
+          "calls": 4383,
+          "usec": 5773370
+        },
+        "sync_weather": {
+          "calls": 4383,
+          "usec": 415064
+        }
+      },
+      "budget_usec": 32000,
+      "catalog_ms": 2.444,
+      "checkpoint_ms": 735.188,
+      "clock_and_process_state_restored": true,
+      "counts": {
+        "animals": 48,
+        "crops": 396,
+        "trees": 306,
+        "workers": 3
+      },
+      "crop_policy_metrics": {
+        "fertilizer_calls": 0,
+        "fertilizer_usec": 0,
+        "planting_calls": 3128,
+        "planting_usec": 209977
+      },
+      "engine": "4.7.2-stable (official)",
+      "final_sync_ms": 1.907,
+      "first_process_frame_ms": 3.458,
+      "frame_gap_max_ms": 928.496,
+      "frame_gap_p95_ms": 45.79,
+      "gap_seconds": 55800.0,
+      "load_game_ms": 52243.483,
+      "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+      "ok": true,
+      "other_load_including_workers_and_yields_ms": 51414.396,
+      "progress_completed": true,
+      "progress_monotonic": true,
+      "progress_updates": 1325,
+      "read_validate_ms": 91.992,
+      "renderer": "headless",
+      "sampled_frame_intervals": 1326,
+      "scene_setup_ms": 1297.639,
+      "exit_code": 0,
+      "process_wall_ms": 55139.255303001846
+    }
+  ],
+  "copied_fixture_unchanged": true,
+  "original_fixture_unchanged": true,
+  "summary": [
+    {
+      "gap_seconds": 3600.0,
+      "successful_runs": 1,
+      "attempted_runs": 1,
+      "median_load_game_ms": 5064.668,
+      "min_load_game_ms": 5064.668,
+      "max_load_game_ms": 5064.668,
+      "p95_load_game_ms": null,
+      "p95_note": "Not estimated; use an adequate native sample set for acceptance"
+    },
+    {
+      "gap_seconds": 55800.0,
+      "successful_runs": 1,
+      "attempted_runs": 1,
+      "median_load_game_ms": 52243.483,
+      "min_load_game_ms": 52243.483,
+      "max_load_game_ms": 52243.483,
+      "p95_load_game_ms": null,
+      "p95_note": "Not estimated; use an adequate native sample set for acceptance"
+    }
+  ],
+  "ok": true
+}

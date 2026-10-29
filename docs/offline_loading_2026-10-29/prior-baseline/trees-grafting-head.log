@@ -1,0 +1,207 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for /tmp/codex-loading-baseline
+---  GUT  ---
+[1m[INFO]:  [0musing [/home/dungnguyen/.local/share/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/unit/test_trees.gd
+[0m* test_all_definitions_use_the_shipped_atlases_and_noncyclic_planting_items
+* test_fruit_needs_one_watering_and_ignores_repeated_water_and_clock_reversal
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 46
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 48
+[31m    [Failed] [0m
+      at line 50
+* test_wind_pins_visible_root_at_every_stage_and_keeps_collider_unchanged
+[31m    [Failed]:  [0m[fruit_trees_shared_stage_01 (res://crops/fruit_trees/shared/stage_01.tres):<AtlasTexture#-9223371824790762324>] expected to equal [fruit_trees_apple_ready (res://crops/fruit_trees/apple/ready.tres):<AtlasTexture#-9223371823918347080>]:  
+      at line 69
+* test_stump_stops_wind_and_regrowth_reuses_shared_sapling_material
+[31m    [Failed]:  [0mExpected [():<ShaderMaterial#-9223371621299908105>] to be NULL:  
+      at line 75
+* test_repeated_harvest_keeps_same_tree_and_does_not_bank_offline_cycles
+[31m    [Failed] [0m
+      at line 95
+[31m    [Failed]:  [0m[300] expected to equal [6]:  
+      at line 96
+* test_full_bag_preserves_fruit_and_uproot_then_returns_one_sapling
+[31m    [Failed] [0m
+      at line 105
+* test_reentrant_inventory_signal_cannot_harvest_twice
+[31m    [Failed] [0m
+      at line 117
+[31m    [Failed]:  [0m[0] expected to equal [3]:  
+      at line 118
+* test_pollination_shortens_only_fruit_cycle_by_25_percent
+[31m    [Failed] [0m
+      at line 124
+[31m    [Failed]:  [0m[44200.0] expected to equal [1180.0]:  
+      at line 125
+* test_timestamp_roundtrip_resumes_remaining_fruit_without_duplicate_work
+[31m    [Failed] [0m
+      at line 136
+[31m    [Failed]:  [0m[0.0] expected to equal [90.0]:  
+      at line 137
+* test_timber_rejects_immature_chop_then_keeps_solid_stump_after_four_hits
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 147
+[31m    [Failed] [0m
+      at line 148
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 152
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 153
+[31m    [Failed]:  [0m[(res://trees/textures/oak_stage1.tres):<AtlasTexture#-9223371894835639814>] expected to equal [(res://trees/textures/oak_stump.tres):<AtlasTexture#-9223371894164551166>]:  
+      at line 154
+* test_stump_requires_three_digs_and_yields_roots_once
+[31m    [Failed] [0m
+      at line 159
+[31m    [Failed] [0m
+      at line 160
+[31m    [Failed] [0m
+      at line 161
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+      at line 164
+* test_stump_regrows_automatically_in_half_the_original_growth_time
+[31m    [Failed]:  [0m[87400.0] expected to equal [1480.0]:  
+      at line 177
+[31m    [Failed] [0m
+      at line 179
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 180
+* test_partial_chops_and_partial_digs_survive_restore_without_extra_rewards
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+      at line 191
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+      at line 196
+[1m1/13 passed.
+[0m[4m
+
+res://tests/integration/test_grafting.gd
+[0m* test_first_choice_free_preserves_ready_crop_and_applies_only_after_harvest
+* test_yield_doubles_only_after_first_crop_and_switch_does_not_rewrite_progress
+* test_duplicate_and_stale_clicks_never_spend_extra_wax
+* test_missing_wax_immature_loading_and_distance_do_not_change_tree
+* test_worker_uses_dynamic_amount_and_keeps_pending_graft_when_warehouse_too_small
+* test_worker_delivers_star_to_warehouse_and_transport_never_turns_it_into_ordinary_fruit
+* test_snapshot_v29_migration_and_pending_roundtrip_preserve_crop_and_do_not_spend_again
+* test_e_and_click_open_shared_menu_without_harvesting_or_uprooting
+* test_graft_transaction_locks_reentry_and_observers_see_paid_wax_and_pending_direction
+* test_all_star_fruits_have_normal_raw_price_and_are_separate_exact_chef_inputs
+* test_wax_crafting_spends_coins_and_inputs_atomically_and_keeps_serial_progress
+* test_orchard_48h_pending_graft_single_and_hourly_steps_match
+[31m    [Failed] [0m
+      at line 300
+[1m11/12 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/unit/test_trees.gd
+[0m- test_fruit_needs_one_watering_and_ignores_repeated_water_and_clock_reversal
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+          at line 46
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+          at line 48
+[31m    [Failed]:  [0m
+          at line 50
+- test_wind_pins_visible_root_at_every_stage_and_keeps_collider_unchanged
+[31m    [Failed]:  [0m[fruit_trees_shared_stage_01 (res://crops/fruit_trees/shared/stage_01.tres):<AtlasTexture#-9223371824790762324>] expected to equal [fruit_trees_apple_ready (res://crops/fruit_trees/apple/ready.tres):<AtlasTexture#-9223371823918347080>]:  
+          at line 69
+- test_stump_stops_wind_and_regrowth_reuses_shared_sapling_material
+[31m    [Failed]:  [0mExpected [():<ShaderMaterial#-9223371621299908105>] to be NULL:  
+          at line 75
+- test_repeated_harvest_keeps_same_tree_and_does_not_bank_offline_cycles
+[31m    [Failed]:  [0m
+          at line 95
+[31m    [Failed]:  [0m[300] expected to equal [6]:  
+          at line 96
+- test_full_bag_preserves_fruit_and_uproot_then_returns_one_sapling
+[31m    [Failed]:  [0m
+          at line 105
+- test_reentrant_inventory_signal_cannot_harvest_twice
+[31m    [Failed]:  [0m
+          at line 117
+[31m    [Failed]:  [0m[0] expected to equal [3]:  
+          at line 118
+- test_pollination_shortens_only_fruit_cycle_by_25_percent
+[31m    [Failed]:  [0m
+          at line 124
+[31m    [Failed]:  [0m[44200.0] expected to equal [1180.0]:  
+          at line 125
+- test_timestamp_roundtrip_resumes_remaining_fruit_without_duplicate_work
+[31m    [Failed]:  [0m
+          at line 136
+[31m    [Failed]:  [0m[0.0] expected to equal [90.0]:  
+          at line 137
+- test_timber_rejects_immature_chop_then_keeps_solid_stump_after_four_hits
+[31m    [Failed]:  [0m
+          at line 145
+[31m    [Failed]:  [0m
+          at line 145
+[31m    [Failed]:  [0m
+          at line 145
+[31m    [Failed]:  [0m
+          at line 147
+[31m    [Failed]:  [0m
+          at line 148
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+          at line 152
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+          at line 153
+[31m    [Failed]:  [0m[(res://trees/textures/oak_stage1.tres):<AtlasTexture#-9223371894835639814>] expected to equal [(res://trees/textures/oak_stump.tres):<AtlasTexture#-9223371894164551166>]:  
+          at line 154
+- test_stump_requires_three_digs_and_yields_roots_once
+[31m    [Failed]:  [0m
+          at line 159
+[31m    [Failed]:  [0m
+          at line 160
+[31m    [Failed]:  [0m
+          at line 161
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+          at line 164
+- test_stump_regrows_automatically_in_half_the_original_growth_time
+[31m    [Failed]:  [0m[87400.0] expected to equal [1480.0]:  
+          at line 177
+[31m    [Failed]:  [0m
+          at line 179
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+          at line 180
+- test_partial_chops_and_partial_digs_survive_restore_without_extra_rewards
+[31m    [Failed]:  [0m[0] expected to equal [5]:  
+          at line 191
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+          at line 196
+[4m
+res://tests/integration/test_grafting.gd
+[0m- test_orchard_48h_pending_graft_single_and_hourly_steps_match
+[31m    [Failed]:  [0m
+          at line 300
+
+Totals
+------
+Scripts               2
+Tests                25
+Passing Tests        12
+Failing Tests        13
+Asserts           230/262
+Time              5.24s
+
+
+[31m---- 13 failing tests ----
+[0m

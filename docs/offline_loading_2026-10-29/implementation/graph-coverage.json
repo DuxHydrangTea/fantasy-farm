@@ -1,0 +1,164 @@
+{
+  "project": "home-dungnguyen-Projects-test-js",
+  "signal": "best_effort",
+  "indexed_at": "2026-10-29T02:53:05Z",
+  "metadata": {
+    "generation": "2026-10-29T02:53:05Z",
+    "index_mode": "full",
+    "recorded_at": "2026-10-29T02:53:06Z",
+    "recording_status": "complete",
+    "ignored_files_stored": 1940,
+    "ignored_files_total": 1940,
+    "hash_records_complete": true,
+    "coverage_version": 3,
+    "generation_matches": true
+  },
+  "paths": [
+    {
+      "requested_path": "components/bees/apiary_system.gd",
+      "path": "components/bees/apiary_system.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/bees/pollination_assignment.gd",
+      "path": "components/bees/pollination_assignment.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/farming_controller.gd",
+      "path": "components/farming_controller.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/flowers/flower_garden.gd",
+      "path": "components/flowers/flower_garden.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/trees/tree_plantation.gd",
+      "path": "components/trees/tree_plantation.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/trees/perennial_tree.gd",
+      "path": "components/trees/perennial_tree.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/workers/worker_service.gd",
+      "path": "components/workers/worker_service.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/workers/worker_world_bridge.gd",
+      "path": "components/workers/worker_world_bridge.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/workers/crop_worker_policy.gd",
+      "path": "components/workers/crop_worker_policy.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/weather/weather_manager.gd",
+      "path": "components/weather/weather_manager.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "persistence/save_manager.gd",
+      "path": "persistence/save_manager.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "persistence/world_state_adapter.gd",
+      "path": "persistence/world_state_adapter.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "world/loading_screen.gd",
+      "path": "world/loading_screen.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "world/loading_screen.tscn",
+      "path": "world/loading_screen.tscn",
+      "status": "no_recorded_issue",
+      "freshness": "not_tracked",
+      "recommended_action": "read_source_and_reindex",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/integration/test_workers.gd",
+      "path": "tests/integration/test_workers.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/unit/test_farming_query_cost.gd",
+      "path": "tests/unit/test_farming_query_cost.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/unit/test_pollination_assignment.gd",
+      "path": "tests/unit/test_pollination_assignment.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/support/startup_load_probe.gd",
+      "path": "tests/support/startup_load_probe.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    }
+  ],
+  "scopes": [],
+  "caveat": "Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable."
+}

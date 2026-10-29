@@ -30,7 +30,7 @@ func _ready() -> void:
 	world.farming.time_manager.tick.connect(advance)
 	advance(last_at)
 
-func advance(timestamp: float) -> void:
+func advance(timestamp: float, refresh_visuals: bool = true) -> void:
 	if _advancing:
 		return
 	_advancing = true
@@ -48,8 +48,9 @@ func advance(timestamp: float) -> void:
 		current_weather = next
 		effects.transition_to(next)
 		weather_changed.emit(next)
-	day_night.refresh(display_timestamp(timestamp), effects.weather_tint())
-	hud.refresh(display_timestamp(timestamp))
+	if refresh_visuals:
+		day_night.refresh(display_timestamp(timestamp), effects.weather_tint())
+		hud.refresh(display_timestamp(timestamp))
 	_advancing = false
 
 func _apply_rain(timestamp: float) -> void:

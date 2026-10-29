@@ -1,0 +1,76 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for /home/dungnguyen/Projects/test-js
+---  GUT  ---
+[1m[INFO]:  [0musing [/home/dungnguyen/.local/share/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/unit/test_worker_roles.gd
+[0m* test_priority_distance_and_stable_ties
+* test_worker_stack_cap_is_runtime_and_player_inventory_is_unchanged
+* test_fresh_schema_and_invalid_fields
+* test_task_selection_is_stable_under_input_permutations_and_returns_an_owned_copy
+* test_worker_checkpoint_rejects_future_time_and_nonfinite_time
+[1m5/5 passed.
+[0m[4m
+
+res://tests/unit/test_pen_offline.gd
+[0m* test_full_barn_uses_2160_units_per_kind_in_24_hours
+* test_empty_troughs_use_body_reserves_and_preserve_half_hour_of_water
+* test_stock_exhaustion_is_fair_and_independent_of_actor_order
+* test_short_and_long_catchup_match_including_fractional_units
+* test_death_stops_consumption_and_late_arrivals_do_not_eat_in_the_past
+* test_cloudy_weather_reduces_water_and_restricted_troughs_cannot_feed_other_species
+* test_repeating_timestamp_or_backwards_clock_does_not_consume_anything
+* test_empty_pen_and_long_gap_after_death_do_not_consume_stock
+* test_irregular_partitions_preserve_weather_death_arrival_and_fractional_stock
+[1m9/9 passed.
+[0m[4m
+
+res://tests/integration/test_workers.gd
+[0m* test_hire_harvest_goes_directly_to_warehouse_not_worker_or_player_bag
+* test_free_shift_only_once_and_unpaid_pause_at_dawn
+* test_warehouse_full_preserves_entire_tree_yield_and_task_budget
+* test_v22_migration_and_worker_basket_roundtrip_offline
+* test_authored_board_and_worker_support_e_and_modal_lifecycle
+* test_ranch_feed_and_water_use_apis_and_separate_transfer_commands
+* test_crop_waters_then_harvests_without_tilling_or_planting
+* test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task
+* test_partial_product_transfer_preserves_feed_and_full_destination
+* test_crop_worker_load_validates_against_saved_land_not_current_land
+* test_hiring_another_role_does_not_teleport_a_blocked_online_worker
+* test_worker_commands_are_locked_through_observer_notifications
+* test_ranch_two_hour_jump_matches_minute_steps
+* test_crop_two_minute_jump_matches_second_steps
+* test_unpaid_shift_preserves_remaining_task_and_uses_hire_order
+* test_hiring_boards_do_not_occupy_existing_crop_or_tree_cells
+* test_finish_boundary_roundtrip_and_repeated_timestamp_collect_once
+* test_budgeted_catch_up_yields_and_matches_synchronous_event_results
+* test_dawn_boundary_and_repeated_timestamp_pay_once
+* test_offline_async_empty_roster_finishes_a_long_gap_without_changing_economy
+* test_offline_async_exact_finish_is_idempotent_and_restores_clock_scope
+* test_offline_async_full_warehouse_crosses_dawn_without_losing_yield_or_double_wages
+[1m22/22 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               3
+Tests                36
+Passing Tests        36
+Asserts             545
+Time              11.25s
+
+
+[32m---- All tests passed! ----
+[0m

@@ -14,6 +14,13 @@ func _player_at(point: Vector2) -> Node2D:
 	add_child_autofree(player)
 	return player
 
+func test_vertical_gate_sorts_sprite_at_its_own_y_position() -> void:
+	var gate: Gate = (load(GATE_PATHS[2]) as PackedScene).instantiate() as Gate
+	add_child_autofree(gate)
+	var sprite: AnimatedSprite2D = gate.get_node("AnimatedSprite2D")
+	assert_true(gate.y_sort_enabled, "The animated sprite must participate in world Y-sort")
+	assert_eq(sprite.position.y, -24.0, "Sort the tall gate near its center")
+
 func test_all_gate_scenes_open_hold_and_close_with_real_animation_playback() -> void:
 	var player: Node2D = _player_at(Vector2(200, 0))
 	for path: String in GATE_PATHS:

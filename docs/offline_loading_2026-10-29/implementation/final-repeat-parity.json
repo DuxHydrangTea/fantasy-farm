@@ -1,0 +1,65 @@
+{
+  "ok": true,
+  "comparisons": [
+    {
+      "left": "gap-0-run-1.json.state.json",
+      "right": "gap-0-run-2.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    },
+    {
+      "left": "gap-0-run-1.json.state.json",
+      "right": "gap-0-run-3.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    },
+    {
+      "left": "gap-3600-run-1.json.state.json",
+      "right": "gap-3600-run-2.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    },
+    {
+      "left": "gap-3600-run-1.json.state.json",
+      "right": "gap-3600-run-3.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    },
+    {
+      "left": "gap-55800-run-1.json.state.json",
+      "right": "gap-55800-run-2.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    },
+    {
+      "left": "gap-55800-run-1.json.state.json",
+      "right": "gap-55800-run-3.json.state.json",
+      "ok": true,
+      "difference_count": 0,
+      "max_float_error": 0.0,
+      "float_absolute_tolerance": 0.0001,
+      "differences": [],
+      "normalization": "Pickup UUIDs and id/cell collection order only; inventory slot order, tiers, quantities, wages and task timestamps retained."
+    }
+  ]
+}

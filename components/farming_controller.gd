@@ -26,12 +26,16 @@ var fertility: FertileSoil = FertileSoil.new()
 var apiary: ApiarySystem
 var weather: WeatherSchedule
 const SOIL_MOISTURE_SECONDS: float = 21600.0
+var defer_soil_edges: bool = false
+var _soil_edges_dirty: bool = false
 var _moisture: Dictionary[Vector2i, float] = {}
 var land: LandExpansionState
 var _crops: Dictionary[Vector2i, Crop] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
 var _harvesting: bool = false
 var _area_busy: bool = false
+var _layers_dirty: bool = true
+var _farming_layers: Array[TileMapLayer] = []
 
 func has_planted_crops() -> bool:
 	return not _crops.is_empty()
@@ -41,6 +45,8 @@ var _occupied: Dictionary[Vector2i, bool] = {}
 
 func _ready() -> void:
 	add_to_group("farming_controller")
+	get_parent().child_entered_tree.connect(_farming_layer_changed)
+	get_parent().child_exiting_tree.connect(_farming_layer_changed)
 	if time_manager == null:
 		time_manager = TimeManager
 	if time_manager != null:
@@ -57,13 +63,13 @@ func get_soil_state(cell: Vector2i) -> Soil:
 	return Soil.UNTILLED
 
 func can_till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
-	return _allowed(cell, &"can_till", actor) and get_soil_state(cell) == Soil.UNTILLED
+	return get_soil_state(cell) == Soil.UNTILLED and _allowed(cell, &"can_till", actor)
 
 func can_water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
-	return _allowed(cell, &"can_water", actor) and get_soil_state(cell) == Soil.DRY
+	return get_soil_state(cell) == Soil.DRY and _allowed(cell, &"can_water", actor)
 
 func can_plant(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
-	return get_crop(cell) == null and _allowed(cell, &"can_plant", actor) and get_soil_state(cell) != Soil.UNTILLED
+	return get_crop(cell) == null and get_soil_state(cell) != Soil.UNTILLED and _allowed(cell, &"can_plant", actor)
 
 func get_crop(cell: Vector2i) -> Crop:
 	var crop: Crop = _crops.get(cell) as Crop
@@ -203,6 +209,8 @@ func restore_soil(records: Array) -> void:
 		if is_instance_valid(crop):
 			crop.free()
 	_crops.clear()
+	if apiary != null:
+		apiary.invalidate_sources()
 	dry_soil.clear()
 	wet_soil.clear()
 	_moisture.clear()
@@ -228,6 +236,8 @@ func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, de
 	crop.restore_progress(definition, planted, deadline, progress, now, fertilized, pollination_reduction, watered, root_boost)
 	_schedule_crop(crop)
 	_crops[cell] = crop
+	if apiary != null:
+		apiary.invalidate_sources()
 
 func cell_is_occupied(cell: Vector2i) -> bool:
 	return _occupied.has(cell)
@@ -375,6 +385,10 @@ func _valid_terrain(layer: TileMapLayer, set_id: int, terrain_id: int) -> bool:
 # Kiểm tra thêm overlay có blocks_farming và vật cản physics để ô cỏ hợp lệ không cho trồng
 # xuyên qua công trình/cây cối ở lớp khác. Nếu chỉ xét tile nền, có thể cuốc dưới nhà/hàng rào.
 # query.exclude bỏ chính player khi kiểm tra, nếu không chân player cũng có thể chặn thao tác.
+func _farming_layer_changed(node: Node) -> void:
+	if node is TileMapLayer:
+		_layers_dirty = true
+
 func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> bool:
 	if farmland == null or farmland.tile_set == null or _occupied.has(cell) or (land != null and not land.is_unlocked(cell)):
 		return false
@@ -383,9 +397,14 @@ func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> b
 	if data == null or not data.has_custom_data(permission) or data.get_custom_data(permission) != true:
 		return false
 	var center: Vector2 = farmland.to_global(farmland.map_to_local(cell))
-	for child: Node in get_parent().get_children():
-		var layer: TileMapLayer = child as TileMapLayer
-		if layer == null or layer.tile_set == null:
+	if _layers_dirty:
+		_farming_layers.clear()
+		for child: Node in get_parent().get_children():
+			if child is TileMapLayer:
+				_farming_layers.append(child as TileMapLayer)
+		_layers_dirty = false
+	for layer: TileMapLayer in _farming_layers:
+		if not is_instance_valid(layer) or layer.tile_set == null:
 			continue
 		var tile: TileData = layer.get_cell_tile_data(layer.local_to_map(layer.to_local(center)))
 		if tile != null and tile.has_custom_data("blocks_farming") and tile.get_custom_data("blocks_farming") == true:
@@ -401,13 +420,13 @@ func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> b
 		query.exclude = [actor.get_rid()]
 	return farmland.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
-func fertilizer_error(cell: Vector2i, actor: PhysicsBody2D = null) -> String:
+func fertilizer_error(cell: Vector2i, actor: PhysicsBody2D = null, sync_apiary: bool = true) -> String:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null:
 		return "No crop to fertilize."
 	if not _allowed(cell, &"can_plant", actor):
 		return "This plot is unavailable."
-	if apiary != null:
+	if sync_apiary and apiary != null:
 		apiary.sync()
 	return crop.fertilizer_error(time_manager.now())
 
@@ -461,9 +480,17 @@ func evaporate_soil(seconds: float) -> void:
 		soil_changed.emit(cell, Soil.WET, Soil.DRY)
 	# Rebuild wet edges once, not for every dried tile.
 	if not expired.is_empty():
-		var remaining: Array[Vector2i] = wet_soil.get_used_cells()
-		if not remaining.is_empty():
-			wet_soil.set_cells_terrain_connect(remaining, wet_terrain_set, wet_terrain, false)
+		_soil_edges_dirty = true
+		if not defer_soil_edges:
+			flush_soil_edges()
+
+func flush_soil_edges() -> void:
+	if not _soil_edges_dirty:
+		return
+	_soil_edges_dirty = false
+	var remaining: Array[Vector2i] = wet_soil.get_used_cells()
+	if not remaining.is_empty():
+		wet_soil.set_cells_terrain_connect(remaining, wet_terrain_set, wet_terrain, false)
 
 func _initialize_quality(cell: Vector2i, crop: Crop) -> void:
 	if float(_moisture.get(cell, 0)) > 0.0 or (weather != null and weather.weather_at(time_manager.now()) == WeatherSchedule.Weather.RAIN):

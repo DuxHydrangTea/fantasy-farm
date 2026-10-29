@@ -1,0 +1,91 @@
+{
+  "bridge_metrics": {
+    "candidates_crop": {
+      "calls": 164,
+      "usec": 214236
+    },
+    "candidates_orchard": {
+      "calls": 174,
+      "usec": 45137
+    },
+    "candidates_ranch": {
+      "calls": 176,
+      "usec": 26547
+    },
+    "commit_crop": {
+      "calls": 52,
+      "usec": 359
+    },
+    "commit_orchard": {
+      "calls": 103,
+      "usec": 8087
+    },
+    "commit_ranch": {
+      "calls": 81,
+      "usec": 9915
+    },
+    "next_wake_crop": {
+      "calls": 164,
+      "usec": 60290
+    },
+    "next_wake_orchard": {
+      "calls": 174,
+      "usec": 92996
+    },
+    "next_wake_ranch": {
+      "calls": 176,
+      "usec": 37688
+    },
+    "sync": {
+      "calls": 232,
+      "usec": 770721
+    },
+    "sync_farming": {
+      "calls": 232,
+      "usec": 376807
+    },
+    "sync_pens": {
+      "calls": 232,
+      "usec": 371946
+    },
+    "sync_weather": {
+      "calls": 232,
+      "usec": 21162
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 2.581,
+  "checkpoint_ms": 245.968,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 164,
+    "planting_usec": 15670
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 3.419,
+  "first_process_frame_ms": 0.319,
+  "frame_gap_max_ms": 348.616,
+  "frame_gap_p95_ms": 40.037,
+  "gap_seconds": 3600.0,
+  "load_game_ms": 1630.79,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 1351.026,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 37,
+  "read_validate_ms": 30.377,
+  "renderer": "headless",
+  "sampled_frame_intervals": 38,
+  "scene_setup_ms": 826.453,
+  "exit_code": 0,
+  "process_wall_ms": 4294.3342340004165
+}

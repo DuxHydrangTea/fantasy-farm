@@ -16,6 +16,7 @@ func before_each() -> void:
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
 	world.trees.reset()
+	assert_true(world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1}))
 	for index: int in range(10):
 		var tree: FruitTree = world.trees.create_tree(Vector2i(12 + index * 3, 61), world.trees.definitions[&"apple"], now) as FruitTree
 		tree.planted_at = now - tree.definition.growth_seconds - 1.0
@@ -131,13 +132,14 @@ func test_legacy_save_import_is_partial_idempotent_and_keeps_feed_after_dismissa
 	service.dismiss("ranch")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("warehouse_test", 1, now)
-	assert_true(adapter.restore(saved, now).ok)
+	var restored: Dictionary = adapter.restore(saved, now)
+	assert_true(restored.ok, str(restored))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
 	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 195)
 	assert_eq(service.feed_inventory("ranch").count_item(feed.item_id), 8)
 	var migrated: Dictionary = adapter.capture("warehouse_test", 2, now)
-	assert_true(adapter.restore(migrated, now).ok)
-	assert_true(adapter.restore(migrated, now).ok)
+	assert_true(adapter.restore(migrated, now).ok, str(SaveSchema.validate(migrated, adapter.catalog)))
+	assert_true(adapter.restore(migrated, now).ok, str(SaveSchema.validate(migrated, adapter.catalog)))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
 	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 195)
 	assert_eq(service.transfer("ranch", world.player.selection.inventory, false, false), 195)
@@ -150,7 +152,8 @@ func test_legacy_remainder_drains_after_capacity_is_freed() -> void:
 	service.bag_for("orchard").add(APPLE, 20)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("warehouse_test", 1, now)
-	assert_true(adapter.restore(saved, now).ok)
+	var restored: Dictionary = adapter.restore(saved, now)
+	assert_true(restored.ok, str(restored))
 	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 20)
 	service.output_inventory().remove(APPLE.item_id, 10)
 	service.advance(now)

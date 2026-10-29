@@ -1,0 +1,41 @@
+{
+  "display": "X11",
+  "first_loading_post_draw_ms": 32.071,
+  "first_loading_process_ms": 28.968,
+  "frame_gap_max_ms": 584.193,
+  "frame_gap_p95_ms": 44.268,
+  "frames": 690,
+  "input_ready": true,
+  "loading_ui_ok": true,
+  "note": "Startup measured from probe autoload initialization. First loading process is not a measured display scanout.",
+  "ok": true,
+  "player_moved_after_load": true,
+  "renderer": "forward_plus",
+  "revision": 323,
+  "slow_frame_samples": [
+    {
+      "at_ms": 2303.29,
+      "focused": false,
+      "gap_ms": 584.193,
+      "low_processor_usage": false,
+      "max_fps": 0,
+      "window_mode": 0
+    },
+    {
+      "at_ms": 2796.378,
+      "focused": false,
+      "gap_ms": 493.088,
+      "low_processor_usage": false,
+      "max_fps": 0,
+      "window_mode": 0
+    }
+  ],
+  "startup_ms": 24958.542,
+  "window_size": "(960, 540)",
+  "topmost_requested": true,
+  "gap_seconds": 55800.0,
+  "exit_code": 0,
+  "source_sha256": "a8aae94e9232bd9d5fe6819bde245a9817a1a7ef337188bc28f6a39634e9badf",
+  "original_unchanged": true,
+  "isolated_copy_unchanged": true
+}

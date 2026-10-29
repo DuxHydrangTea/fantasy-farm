@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-regression-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_crop_automation.gd
+* test_hires_with_auto_plant_and_uses_any_seed_without_player_selection
+* test_tilling_does_not_spend_seed_and_failed_plant_preserves_prepared_plot
+* test_replants_after_harvest_and_prefers_never_planted_plot_before_old_one
+* test_does_not_use_bag_or_feed_flowers_and_saplings_as_seeds
+* test_fertilizes_own_crop_once_and_spends_exactly_one_from_storage
+* test_missing_late_or_replaced_crop_never_spends_fertilizer
+* test_toggle_cancels_old_seed_task_and_pause_resume_preserves_remaining_work
+* test_schema_v25_migrates_care_only_and_v26_roundtrips_work_and_fertilizer
+* test_blocked_or_player_planted_plot_is_not_destroyed_or_used_twice
+* test_plant_notification_blocks_reentry_and_exposes_complete_crop_batch
+* test_manual_pause_overlapping_unpaid_days_does_not_double_delay_task
+* test_full_field_48h_single_and_segmented_loops_match_with_fertilizer_and_no_quota
+CROP_AUTOMATION_48H {"elapsed_ms":929.41,"history_cells":2,"plantings":12}
+* test_full_1632_plot_field_has_no_daily_quota_and_consumes_only_supplied_stock
+CROP_AUTOMATION_FIELD {"elapsed_ms":3502.706,"fertilizer_left":0,"indexed_cells":1632,"plantings":60}
+13/13 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                13
+Passing Tests        13
+Asserts             123
+Time              11.404s
+
+
+Ran Scripts matching "test_crop_automation.gd"
+---- All tests passed! ----
+

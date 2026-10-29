@@ -1,0 +1,55 @@
+{
+  "bridge_metrics": {
+    "sync": {
+      "calls": 4,
+      "usec": 3593
+    },
+    "sync_farming": {
+      "calls": 4,
+      "usec": 2716
+    },
+    "sync_pens": {
+      "calls": 4,
+      "usec": 657
+    },
+    "sync_weather": {
+      "calls": 4,
+      "usec": 210
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 1.648,
+  "checkpoint_ms": 250.27,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 0,
+    "planting_usec": 0
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 2.085,
+  "first_process_frame_ms": 0.089,
+  "frame_gap_max_ms": 318.897,
+  "frame_gap_p95_ms": 318.897,
+  "gap_seconds": 0.0,
+  "load_game_ms": 318.986,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 39.486,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 1,
+  "read_validate_ms": 27.145,
+  "renderer": "headless",
+  "sampled_frame_intervals": 2,
+  "scene_setup_ms": 647.91,
+  "exit_code": 0,
+  "process_wall_ms": 2230.1598409976577
+}

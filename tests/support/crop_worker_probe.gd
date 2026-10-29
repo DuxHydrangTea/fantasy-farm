@@ -105,7 +105,7 @@ func _run() -> void:
 	_check(world.workers.crop_automation.auto_fertilize, "GUI enables fertilizer")
 	await _capture("crop-settings-desktop")
 	worker_menu.close(false)
-	var worker: WorkerActor = world.workers.actors.crop as WorkerActor
+	var worker: WorkerActor = world.workers.actor_for("crop")
 	var start: Vector2 = worker.global_position
 	world.player.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(Vector2i(49, 35)))
 	world.player.camera.zoom = Vector2(3, 3)

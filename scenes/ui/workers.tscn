@@ -96,6 +96,30 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
+[node name="TeamHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Workers"
+theme_override_font_sizes/font_size = 20
+
+[node name="TeamSummary" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="TeamList" type="VBoxContainer" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="TeamEmpty" type="Label" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+text = "No crop workers yet. Hire your first worker."
+
 [node name="Portrait" type="Control" parent="Root/Center/Panel/Shell/Page/Main/OverviewPanel/OverviewScroll/OverviewContent"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -171,6 +195,13 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
+
+[node name="TeamNote" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+text = "These settings apply to the whole crop team."
 
 [node name="WorkHeading" type="Label" parent="Root/Center/Panel/Shell/Page/Main/WorkPanel/WorkScroll/WorkContent"]
 unique_name_in_owner = true

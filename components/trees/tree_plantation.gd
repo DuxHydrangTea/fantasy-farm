@@ -136,15 +136,26 @@ func drop_item(item: ItemDefinition, count: int, point: Vector2) -> void:
 	tween.tween_property(pile.sprite, "position:y", pile.sprite.position.y, 0.16)
 
 func advance(now: float) -> void:
+	# All trees at one cursor share the weather interval. Keep this cache local
+	# so hive moves, repairs and weather edits are visible on the next call.
+	var weather_intervals: Dictionary = {}
 	for tree: PerennialTree in trees.values():
+		# A capped fruit batch or fully grown timber cannot gain more growth.
+		# Keep the clock advancing so the next harvest starts at the same event.
+		if (tree is FruitTree and (tree as FruitTree).has_fruit()) or (tree is TimberTree and not (tree as TimberTree).stump and tree.is_mature()):
+			tree.last_at = maxf(tree.last_at, now)
+			continue
 		var cursor: float = tree.last_at
 		# Chia theo mốc thời tiết để load offline và chạy liên tục cho cùng kết quả.
 		while cursor < now:
-			var boundary: float = minf(now, world.farming.weather.next_boundary(cursor)) if world.farming.weather != null else now
+			if not weather_intervals.has(cursor):
+				weather_intervals[cursor] = {"boundary": minf(now, world.farming.weather.next_boundary(cursor)) if world.farming.weather != null else now, "rain": world.apiary.raining(cursor) if world.apiary != null else true, "radius": world.apiary.effective_radius(cursor) if world.apiary != null else 0.0}
+			var weather: Dictionary = weather_intervals[cursor]
+			var boundary: float = float(weather.boundary)
 			var rate: float = 1.0
-			if world.apiary != null and not world.apiary.raining(cursor):
+			if not weather.rain:
 				for hive: Beehive in world.apiary.hives:
-					if hive.global_position.distance_to(tree.global_position) <= world.apiary.effective_radius(cursor):
+					if hive.global_position.distance_to(tree.global_position) <= float(weather.radius):
 						rate = 1.0 / 0.75 # Chu kỳ ngắn hơn 25%, không cộng dồn nhiều tổ.
 						break
 			tree.refresh(boundary, rate)

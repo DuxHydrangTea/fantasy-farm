@@ -2,6 +2,7 @@ class_name WorkerBoard
 extends ShopMerchant
 @export_enum("orchard", "ranch", "crop") var role: String = "orchard"
 @export var worker_access: bool = false
+var worker_id: String = ""
 
 func _enter_tree() -> void:
 	create_shop_ui = false
@@ -10,6 +11,7 @@ func _enter_tree() -> void:
 		return
 	menu = preload("res://scenes/ui/workers.tscn").instantiate() as WorkerMenu
 	(menu as WorkerMenu).role = role
+	(menu as WorkerMenu).selected_worker_id = worker_id
 	add_child(menu)
 
 func _ready() -> void:

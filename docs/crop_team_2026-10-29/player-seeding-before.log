@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-baseline-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_crops.gd
+* test_cancel_or_moved_seed_before_impact_does_not_spend_seed
+    --- Awaiting 0.8 seconds  ---
+    [Failed]:  [24] expected to equal [12]:  
+      at line 64
+    --- Awaiting 0.8 seconds  ---
+    [Failed]:  [24] expected to equal [12]:  
+      at line 70
+0/1 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_crops.gd
+- test_cancel_or_moved_seed_before_impact_does_not_spend_seed
+    [Failed]:  [24] expected to equal [12]:  
+          at line 64
+    [Failed]:  [24] expected to equal [12]:  
+          at line 70
+
+Totals
+------
+Scripts               1
+Tests                 1
+Passing Tests      none
+Failing Tests         1
+Asserts             5/7
+Time              2.184s
+
+
+Ran Scripts matching "test_crops.gd"
+Ran Tests matching "test_cancel_or_moved_seed"
+---- 1 failing tests ----
+

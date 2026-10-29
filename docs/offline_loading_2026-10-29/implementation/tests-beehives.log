@@ -1,0 +1,98 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for /home/dungnguyen/Projects/test-js
+---  GUT  ---
+[1m[INFO]:  [0musing [/home/dungnguyen/.local/share/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_beehives.gd
+[0m* test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [20.0] +/- [0.00001]:  
+      at line 75
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [10.0] +/- [0.00001]:  
+      at line 76
+* test_offline_bloom_boundary_does_not_apply_pollen_retroactively
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [70.0] +/- [0.00001]:  
+      at line 82
+SCRIPT ERROR: Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+          at: test_offline_bloom_boundary_does_not_apply_pollen_retroactively (res://tests/integration/test_beehives.gd:83)
+          GDScript backtrace (most recent call first):
+              [0] test_offline_bloom_boundary_does_not_apply_pollen_retroactively (res://tests/integration/test_beehives.gd:83)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+      at line -1
+* test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [60.0] +/- [0.00001]:  
+      at line 94
+SCRIPT ERROR: Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+          at: test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset (res://tests/integration/test_beehives.gd:95)
+          GDScript backtrace (most recent call first):
+              [0] test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset (res://tests/integration/test_beehives.gd:95)
+              [1] _run_test (res://addons/gut/gut.gd:622)
+              [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+      at line -1
+* test_crop_buff_is_ten_percent_non_stacking_and_fertilizer_uses_original_duration
+* test_sunflower_maturing_mid_interval_becomes_a_pollen_source
+* test_placement_is_atomic_spends_one_item_and_rejects_locked_occupied_and_distant_land
+* test_disk_roundtrip_preserves_pollen_offline_bloom_and_ready_honey_without_duplication
+* test_async_disk_roundtrip_accepts_captured_hive_and_keeps_revision_backup
+* test_invalid_honey_or_placement_rejects_the_whole_load_and_v8_migrates_without_reset
+* test_unified_e_click_priority_collection_and_honey_sale
+* test_click_approaches_a_full_hive_and_collects_only_on_arrival
+[33m    --- Awaiting 3 seconds  ---
+[0m* test_bought_hive_can_be_placed_by_left_click_without_navigation
+* test_pollination_saving_keeps_reduction_and_replays_offline_growth_once
+* test_continuous_pollination_does_not_append_stage_heap_entries_each_tick
+* test_bees_culling_keeps_notifier_visible_and_wakes_all_six_flying_sprites
+* test_bees_spread_across_wider_routes_without_duplicate_positions
+* test_v18_full_batch_preserves_old_honey_one_jar_then_new_batch_gives_100
+* test_v18_partial_batch_keeps_work_sources_and_historic_speed_until_collected
+* test_v18_empty_hive_uses_new_rules_and_invalid_batch_flags_do_not_mutate_world
+[1m16/19 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_beehives.gd
+[0m- test_one_flower_is_assigned_only_to_nearest_hive_and_ties_are_stable
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [20.0] +/- [0.00001]:  
+          at line 75
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [10.0] +/- [0.00001]:  
+          at line 76
+- test_offline_bloom_boundary_does_not_apply_pollen_retroactively
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [70.0] +/- [0.00001]:  
+          at line 82
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+          at line -1
+- test_harvesting_flower_keeps_credit_and_continues_as_wild_without_reset
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [60.0] +/- [0.00001]:  
+          at line 94
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'flower_06' on a base object of type 'Dictionary'.
+          at line -1
+
+Totals
+------
+Scripts               1
+Tests                19
+Passing Tests        16
+Failing Tests         3
+Asserts           1637/1643
+Time              9.174s
+
+
+[31m---- 3 failing tests ----
+[0m

@@ -1,0 +1,108 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-final-workers-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/unit/test_worker_roles.gd
+* test_priority_distance_and_stable_ties
+* test_worker_stack_cap_is_runtime_and_player_inventory_is_unchanged
+* test_fresh_schema_and_invalid_fields
+* test_task_selection_is_stable_under_input_permutations_and_returns_an_owned_copy
+* test_worker_checkpoint_rejects_future_time_and_nonfinite_time
+5/5 passed.
+
+
+res://tests/integration/test_worker_m0.gd
+* test_each_worker_scene_keeps_edited_collision_and_sprite_position
+* test_definition_is_valid_and_paced
+* test_actor_composes_components_and_reissues_goal_when_cancelled
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+    [DEPRECATED]:  wait_frames has been replaced with wait_physics_frames which is counted in _physics_process.  wait_process_frames has also been added which is counted in _process.
+* test_actor_without_definition_stands_idle_safely
+* test_debug_world_spawns_patrolling_orchard_worker
+    --- Awaiting 2.0 seconds  ---
+5/5 passed.
+
+
+res://tests/integration/test_worker_ui.gd
+* test_crop_settings_pause_and_shared_supply_counts_use_real_models
+* test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial
+* test_other_roles_show_only_appropriate_controls_and_lock_assigned_pen
+* test_locked_hiring_and_insufficient_rehire_funds_disable_action
+* test_compact_and_confirmation_keep_actions_in_safe_area_and_restore_columns
+* test_recovery_actions_only_appear_for_remaining_old_basket_contents
+* test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker
+* test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view
+8/8 passed.
+
+
+res://tests/integration/test_worker_warehouse.gd
+* test_filled_basket_does_not_limit_new_harvest
+* test_capacity_is_rechecked_when_arriving_after_warehouse_fills
+* test_crop_and_orchard_share_last_slot_and_preserve_unaccepted_crop
+* test_ranch_pickup_uses_warehouse_and_preserves_partial_pile_and_feed
+* test_each_role_pickup_candidate_uses_output_not_basket_capacity
+* test_legacy_save_import_is_partial_idempotent_and_keeps_feed_after_dismissal
+* test_legacy_remainder_drains_after_capacity_is_freed
+* test_v23_profile_imports_old_products_into_new_empty_warehouse_once
+* test_full_warehouse_still_allows_crop_watering_and_ranch_feeding
+* test_warehouse_notifications_hold_transaction_lock_and_refresh_open_panel
+10/10 passed.
+
+
+res://tests/integration/test_workers.gd
+* test_hire_harvest_goes_directly_to_warehouse_not_worker_or_player_bag
+* test_free_shift_only_once_and_unpaid_pause_at_dawn
+* test_warehouse_full_preserves_entire_tree_yield_and_task_budget
+* test_v22_migration_and_worker_basket_roundtrip_offline
+* test_authored_board_and_worker_support_e_and_modal_lifecycle
+* test_ranch_feed_and_water_use_apis_and_separate_transfer_commands
+* test_crop_waters_then_harvests_without_tilling_or_planting
+* test_48_hour_single_jump_matches_hourly_steps_and_keeps_partial_task
+* test_partial_product_transfer_preserves_feed_and_full_destination
+* test_crop_worker_load_validates_against_saved_land_not_current_land
+* test_hiring_another_role_does_not_teleport_a_blocked_online_worker
+* test_worker_commands_are_locked_through_observer_notifications
+* test_ranch_two_hour_jump_matches_minute_steps
+* test_crop_two_minute_jump_matches_second_steps
+* test_unpaid_shift_preserves_remaining_task_and_uses_hire_order
+* test_hiring_boards_do_not_occupy_existing_crop_or_tree_cells
+* test_finish_boundary_roundtrip_and_repeated_timestamp_collect_once
+* test_budgeted_catch_up_yields_and_matches_synchronous_event_results
+* test_dawn_boundary_and_repeated_timestamp_pay_once
+* test_offline_async_empty_roster_finishes_a_long_gap_without_changing_economy
+* test_offline_async_exact_finish_is_idempotent_and_restores_clock_scope
+* test_offline_async_full_warehouse_crosses_dawn_without_losing_yield_or_double_wages
+* test_pickup_event_uses_logical_time_for_every_async_budget
+* test_deferred_soil_edges_preserve_moisture_state_and_final_terrain
+* test_restoring_offline_replays_trees_with_workers_before_advancing_gardens_to_now
+* test_pollination_cache_rechecks_bloom_hive_moves_repairs_and_source_changes
+* test_flower_source_index_invalidates_on_restore_harvest_and_garden_lock
+* test_mature_timber_stump_still_crosses_offline_regrowth_boundary
+* test_pickup_commit_skips_a_queued_old_instance_of_the_restored_id
+29/29 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Deprecated            2
+
+Scripts               5
+Tests                57
+Passing Tests        57
+Asserts             740
+Time              24.536s
+
+
+Ran Scripts matching "test_worker"
+---- All tests passed! ----
+

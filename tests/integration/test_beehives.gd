@@ -8,6 +8,7 @@ var apiary: ApiarySystem
 var garden: FlowerGarden
 var bag: InventoryComponent
 var player: FarmPlayer
+var _old_locale: String
 
 func _clocks(node: Node) -> void:
 	if node is AnimalNeedsComponent:
@@ -18,6 +19,8 @@ func _clocks(node: Node) -> void:
 		_clocks(child)
 
 func before_each() -> void:
+	_old_locale = TranslationServer.get_locale()
+	TranslationServer.set_locale("en")
 	now = 1000.0
 	clock = FarmClock.new()
 	clock.clock_source = func() -> float: return now
@@ -42,6 +45,9 @@ func before_each() -> void:
 	for pot: FlowerPot in garden.pots.values():
 		pot.clear()
 	world.process_mode = Node.PROCESS_MODE_DISABLED
+
+func after_each() -> void:
+	TranslationServer.set_locale(_old_locale)
 
 func _pot(cell: Vector2i, seconds_until_bloom: float = 0, kind: int = 6) -> FlowerPot:
 	var pot: FlowerPot = garden.pots[cell]

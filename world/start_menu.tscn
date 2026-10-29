@@ -1,0 +1,231 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://world/start_menu.gd" id="script"]
+[ext_resource type="Theme" path="res://resources/ui/cozy_hud/shop_theme.tres" id="theme"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/vietnamese_house.png" id="house"]
+
+[node name="StartMenu" type="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("theme")
+texture_filter = 1
+script = ExtResource("script")
+
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.075, 0.14, 0.11, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Center"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(920, 620)
+
+[node name="Padding" type="MarginContainer" parent="Center/Card"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Layout" type="VBoxContainer" parent="Center/Card/Padding"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Center/Card/Padding/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fantasy Farm"
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/Card/Padding/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "A home for every new beginning."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Body" type="HBoxContainer" parent="Center/Card/Padding/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="Artwork" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.85
+alignment = 1
+
+[node name="House" type="TextureRect" parent="Center/Card/Padding/Layout/Body/Artwork"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("house")
+expand_mode = 1
+stretch_mode = 5
+custom_minimum_size = Vector2(0, 280)
+size_flags_horizontal = 3
+
+[node name="ArtNote" type="Label" parent="Center/Card/Padding/Layout/Body/Artwork"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Each farm has its own story."
+autowrap_mode = 3
+horizontal_alignment = 1
+
+[node name="Pages" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.1
+
+[node name="Home" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body/Pages"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="Continue" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/Home"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue"
+custom_minimum_size = Vector2(0, 58)
+size_flags_horizontal = 3
+autowrap_mode = 3
+theme_type_variation = &"PrimaryAction"
+
+[node name="NewGame" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/Home"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New game"
+custom_minimum_size = Vector2(0, 58)
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="SavedGames" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/Home"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Played farms"
+custom_minimum_size = Vector2(0, 58)
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="Quit" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/Home"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+custom_minimum_size = Vector2(0, 58)
+size_flags_horizontal = 3
+autowrap_mode = 3
+
+[node name="NewFarm" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body/Pages"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+size_flags_vertical = 3
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="NewTitle" type="Label" parent="Center/Card/Padding/Layout/Body/Pages/NewFarm"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Create a new farm"
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="NewHint" type="Label" parent="Center/Card/Padding/Layout/Body/Pages/NewFarm"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Your other farms will be kept."
+autowrap_mode = 3
+
+[node name="FarmName" type="LineEdit" parent="Center/Card/Padding/Layout/Body/Pages/NewFarm"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Farm name"
+max_length = 48
+custom_minimum_size = Vector2(0, 48)
+virtual_keyboard_enabled = true
+
+[node name="Create" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/NewFarm"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start playing"
+custom_minimum_size = Vector2(0, 48)
+
+[node name="BackNew" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/NewFarm"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+custom_minimum_size = Vector2(0, 48)
+
+[node name="FarmList" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body/Pages"]
+unique_name_in_owner = true
+layout_mode = 2
+visible = false
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="ListTitle" type="Label" parent="Center/Card/Padding/Layout/Body/Pages/FarmList"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Played farms"
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 26
+
+[node name="ListScroll" type="ScrollContainer" parent="Center/Card/Padding/Layout/Body/Pages/FarmList"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+custom_minimum_size = Vector2(0, 80)
+
+[node name="SavesList" type="VBoxContainer" parent="Center/Card/Padding/Layout/Body/Pages/FarmList/ListScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Empty" type="Label" parent="Center/Card/Padding/Layout/Body/Pages/FarmList"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No saved farms yet."
+autowrap_mode = 3
+
+[node name="BackList" type="Button" parent="Center/Card/Padding/Layout/Body/Pages/FarmList"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"
+custom_minimum_size = Vector2(0, 48)
+
+[node name="Status" type="Label" parent="Center/Card/Padding/Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.65, 0.18, 0.12, 1)
+theme_override_font_sizes/font_size = 16
+

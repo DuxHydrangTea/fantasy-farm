@@ -95,3 +95,38 @@ func test_empty_pen_and_long_gap_after_death_do_not_consume_stock() -> void:
 	assert_eq(result.steps.size(), 1, "A year gap does not replay every second/day after death")
 	assert_almost_eq(float(result.troughs[0].stock), 97.5, 0.00001)
 	assert_almost_eq(supplied(result, "old"), 3600.0, 0.00001)
+
+func test_irregular_partitions_preserve_weather_death_arrival_and_fractional_stock() -> void:
+	var weather: WeatherSchedule = WeatherSchedule.new()
+	weather.seed = 12345
+	weather.changes = [
+		{"at": 0.0, "weather": WeatherSchedule.Weather.CLOUDY},
+		{"at": 4000.0, "weather": WeatherSchedule.Weather.RAIN},
+		{"at": 9000.0, "weather": WeatherSchedule.Weather.SUNNY}]
+	var late: Dictionary = animal("late", 65.0, 30.0)
+	late.starts_at = 3500.0
+	var old: Dictionary = animal("old", 80.0, 60.0)
+	old.lifespan = 7500.0
+	var herd: Array[Dictionary] = [late, old, animal("resident", 35.0, 90.0)]
+	var stocks: Array[Dictionary] = [trough("f", 0, 8.125), trough("w", 1, 13.375)]
+	var input_herd: Array[Dictionary] = herd.duplicate(true)
+	var input_stocks: Array[Dictionary] = stocks.duplicate(true)
+	var whole: Dictionary = PenOfflineModel.advance(herd, stocks, 0.0, 100000.0, weather)
+	var totals: Dictionary = {"late": 0.0, "old": 0.0, "resident": 0.0}
+	var cursor: float = 0.0
+	for boundary: float in [1.0, 3499.5, 3500.0, 4000.0, 7499.75, 7500.0, 9000.0, 86400.0, 100000.0]:
+		var part: Dictionary = PenOfflineModel.advance(herd, stocks, cursor, boundary, weather)
+		for id: String in totals:
+			totals[id] += supplied(part, id)
+		herd.assign(part.animals)
+		stocks.assign(part.troughs)
+		cursor = boundary
+	for index: int in range(herd.size()):
+		assert_eq(herd[index].id, whole.animals[index].id)
+		for field: String in ["satiety", "hydration", "age"]:
+			assert_almost_eq(float(herd[index][field]), float(whole.animals[index][field]), 0.00001)
+		assert_almost_eq(float(totals[herd[index].id]), supplied(whole, herd[index].id), 0.00001)
+	for index: int in range(stocks.size()):
+		assert_almost_eq(float(stocks[index].stock), float(whole.troughs[index].stock), 0.00001)
+	var repeated: Dictionary = PenOfflineModel.advance(input_herd, input_stocks, 0.0, 100000.0, weather)
+	assert_eq(repeated, whole, "The reference calculation must be deterministic")

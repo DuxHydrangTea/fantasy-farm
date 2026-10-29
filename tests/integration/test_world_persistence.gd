@@ -346,6 +346,23 @@ func test_service_autosaves_and_loads_through_injected_repository() -> void:
 	assert_true((await service.save_game()).ok)
 	assert_eq(service.revision, 2)
 
+func test_loading_pauses_clock_signals_and_restores_processing_on_success_and_failure() -> void:
+	var repo: MemoryRepository = MemoryRepository.new()
+	var service: ServiceHarness = await _service(repo)
+	var paused: Array[bool] = []
+	service.status_changed.connect(func(_message: String, _success: bool) -> void:
+		if service.busy:
+			paused.append(not clock.is_processing()))
+	clock.set_process(true)
+	assert_true((await service.load_game()).ok)
+	assert_true(clock.is_processing())
+	repo.fail_read = true
+	assert_false((await service.load_game()).ok)
+	assert_true(clock.is_processing())
+	assert_eq(world.process_mode, Node.PROCESS_MODE_DISABLED)
+	assert_eq(paused, [true, true])
+	clock.set_process(false)
+
 func test_failed_read_disables_autosave_and_keeps_live_world_intact() -> void:
 	var repo: MemoryRepository = MemoryRepository.new()
 	repo.fail_read = true

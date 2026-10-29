@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-29",
+  "engine": "Godot 4.7.2",
+  "framework": "GUT 9.7.1",
+  "scripts": 3,
+  "tests": 36,
+  "passed": 36,
+  "failed": 0,
+  "assertions": 545,
+  "elapsed_seconds": 11.25,
+  "new_tests": 6,
+  "scope": [
+    "tests/unit/test_worker_roles.gd",
+    "tests/unit/test_pen_offline.gd",
+    "tests/integration/test_workers.gd"
+  ],
+  "new_test_names": [
+    "test_task_selection_is_stable_under_input_permutations_and_returns_an_owned_copy",
+    "test_worker_checkpoint_rejects_future_time_and_nonfinite_time",
+    "test_irregular_partitions_preserve_weather_death_arrival_and_fractional_stock",
+    "test_offline_async_empty_roster_finishes_a_long_gap_without_changing_economy",
+    "test_offline_async_exact_finish_is_idempotent_and_restores_clock_scope",
+    "test_offline_async_full_warehouse_crosses_dawn_without_losing_yield_or_double_wages"
+  ],
+  "whole_project_suite_run": false,
+  "log": "tests.log"
+}

@@ -1,0 +1,30 @@
+{
+  "catalog_ms": 1.854,
+  "checkpoint_ms": 2604.994,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 1.653,
+  "first_process_frame_ms": 0.27,
+  "frame_gap_max_ms": 2691.694,
+  "frame_gap_p95_ms": 63.938,
+  "gap_seconds": 55800.0,
+  "load_game_ms": 90143.332,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 87518.712,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 1987,
+  "read_validate_ms": 17.973,
+  "renderer": "headless",
+  "sampled_frame_intervals": 1988,
+  "scene_setup_ms": 662.324,
+  "exit_code": 0,
+  "process_wall_ms": 92006.4778119995
+}

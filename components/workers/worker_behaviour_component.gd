@@ -81,7 +81,7 @@ func begin_patrol(at: Vector2) -> void:
 	movement.set_target(current_goal)
 
 func _step_work(actor: WorkerActor, delta: float) -> void:
-	var row: Dictionary = actor.worker_service.record(actor.worker_role)
+	var row: Dictionary = actor.worker_service.record_for(String(actor.persistent_id))
 	if row.is_empty():
 		return
 	_badge_elapsed += delta
@@ -120,7 +120,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 	animation.play("walk" if displacement.length_squared() > 0.000001 else "idle")
 	_blocked_elapsed = _blocked_elapsed + delta if displacement.length_squared() < 0.000001 else 0.0
 	if _blocked_elapsed >= stuck_seconds:
-		actor.worker_service.blocked(actor.worker_role, actor.worker_service.world.farming.time_manager.now())
+		actor.worker_service.blocked(String(actor.persistent_id), actor.worker_service.world.farming.time_manager.now())
 		movement.cancel_target()
 		_blocked_elapsed = 0.0
 
@@ -128,7 +128,7 @@ func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
 	var used: int = 0
 	for i: int in range(actor.basket.slot_count):
 		used += 0 if actor.basket.is_empty_slot(i) else 1
-	actor.badge.text = tr("Products → Warehouse")
+	actor.badge.text = (tr("Crop worker #{number}").format({"number": actor.worker_service.worker_number(String(actor.persistent_id))}) + "\n" if actor.worker_role == "crop" else "") + tr("Products → Warehouse")
 	if actor.worker_role == "crop" and (row.task.is_empty() or row.task.kind == "patrol"):
 		actor.badge.text += "\n" + tr(actor.worker_service.crop_policy.waiting)
 	if used > 0:

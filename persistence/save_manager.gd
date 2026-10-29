@@ -3,6 +3,12 @@ extends Node
 ## Application service adapted from the Godot skill save_manager template.
 ## The repository owns IO; the adapter owns scene details. Replace repository
 ## with an HTTP implementation of save_repository.gd without changing gameplay.
+const ProfileStore = preload("res://persistence/game_profiles.gd")
+var selected_profile_id: String = "local"
+var pending_new_profile: bool = false
+var startup_error: String = ""
+var _track_profile: bool = false
+var _require_existing_profile: bool = false
 signal status_changed(message: String, success: bool)
 signal operation_finished
 @export var autosave_seconds: float = 30.0
@@ -24,11 +30,17 @@ var _status_success: bool = true
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: String = "local") -> Dictionary:
+func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: String = "") -> Dictionary:
 	if busy or adapter != null:
 		return SaveSchema.failure("Another world is already in use.", "busy")
+	profile = selected_profile_id if profile.is_empty() else profile
 	if not SaveSchema.identifier(profile):
 		return SaveSchema.failure("Invalid profile ID.")
+	revision = 0
+	_elapsed = 0.0
+	_closing = false
+	_quit_failed = false
+	_track_profile = backend == null
 	catalog = SaveCatalog.new()
 	repository = backend if backend != null else LocalSaveRepository.new(local_directory, catalog)
 	adapter = WorldStateAdapter.new(world, catalog)
@@ -37,9 +49,27 @@ func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: Strin
 	profile_id = profile
 	world.tree_exiting.connect(_unbind_world, CONNECT_ONE_SHOT)
 	get_tree().auto_accept_quit = false
-	return await load_game()
+	var result: Dictionary = await load_game()
+	if result.ok and pending_new_profile and revision == 0:
+		result = await save_game()
+	pending_new_profile = false
+	return result
+
+func profile_store() -> RefCounted:
+	return ProfileStore.new(local_directory)
+
+func select_profile(id: String, is_new: bool = false) -> bool:
+	if busy or adapter != null or not SaveSchema.identifier(id):
+		return false
+	selected_profile_id = id
+	pending_new_profile = is_new
+	_require_existing_profile = not is_new
+	startup_error = ""
+	_clock().begin_session(Time.get_unix_time_from_system())
+	return true
 
 func _unbind_world() -> void:
+	_clock().set_process(false)
 	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:
 		adapter.world.tool_upgrades.profile_ready = false
 	if adapter != null and is_instance_valid(adapter.world) and adapter.world.pen_upgrades != null:
@@ -84,11 +114,14 @@ func save_game() -> Dictionary:
 	busy = true
 	_sync_upgrade_readiness()
 	var snapshot: Dictionary = adapter.capture(profile_id, revision + 1, _clock().now())
+	snapshot["wall_saved_at"] = Time.get_unix_time_from_system()
 	var result: Dictionary = SaveSchema.validate(snapshot, catalog)
 	if result.ok:
 		result = await repository.write_profile_async(profile_id, result.snapshot, revision, true)
 	if result.ok:
 		revision = int(snapshot.revision)
+		if _track_profile:
+			profile_store().mark_played(profile_id)
 		_elapsed = 0.0
 		_quit_failed = false
 	elif result.get("code") in ["conflict", "corrupt", "future_version"]:
@@ -106,7 +139,13 @@ func load_game() -> Dictionary:
 	_sync_upgrade_readiness()
 	var scene: Node = adapter.world
 	var old_mode: Node.ProcessMode = scene.process_mode
+	var clock_was_processing: bool = _clock().is_processing()
 	scene.process_mode = Node.PROCESS_MODE_DISABLED
+	# Clock signals also reach disabled nodes. Pause them while catch-up yields
+	# so wall-clock ticks cannot advance a half-restored world out of order.
+	_clock().set_process(false)
+	status_changed.emit(tr("Loading saved progress…"), true)
+	await get_tree().process_frame
 	var result: Dictionary = await repository.read_profile(profile_id)
 	var recovered: bool = bool(result.get("recovered", false))
 	if result.ok and result.get("found", false):
@@ -119,16 +158,33 @@ func load_game() -> Dictionary:
 		if result.ok:
 			result = adapter.preflight(snapshot)
 		if result.ok:
-			_clock().advance_floor(float(snapshot.saved_at))
-			result = adapter.restore(snapshot, _clock().now())
+			if bool(ProjectSettings.get_setting("gameplay/offline_progress_enabled", false)):
+				var target: float
+				if snapshot.has("wall_saved_at"):
+					target = float(snapshot.saved_at) + maxf(0.0, Time.get_unix_time_from_system() - float(snapshot.wall_saved_at))
+					_clock().begin_session(target, false)
+				else:
+					_clock().use_wall_clock(float(snapshot.saved_at))
+					target = _clock().now()
+				adapter.world.workers.catch_up_progress.connect(_loading_progress)
+				result = await adapter.restore_async(snapshot, target)
+				adapter.world.workers.catch_up_progress.disconnect(_loading_progress)
+			else:
+				_clock().begin_session(float(snapshot.saved_at))
+				result = adapter.restore_without_offline(snapshot)
 			if result.ok:
 				revision = int(snapshot.revision)
 				result.recovered = recovered
-	elif result.ok and revision != 0:
+	elif result.ok and (revision != 0 or _require_existing_profile):
 		# A file removed during play must not silently turn a load into "new game".
 		result = SaveSchema.failure("The save file was deleted outside the game.", "missing")
 	if is_instance_valid(scene):
 		scene.process_mode = old_mode
+	_clock().set_process(clock_was_processing)
+	if result.ok and revision == 0:
+		_clock().begin_session(_clock().now())
+	if result.ok and _track_profile and revision > 0:
+		profile_store().mark_played(profile_id)
 	writes_enabled = bool(result.ok)
 	busy = false
 	_sync_upgrade_readiness()
@@ -141,6 +197,9 @@ func load_game() -> Dictionary:
 	_report_status(message, result.ok, result)
 	operation_finished.emit()
 	return result
+
+func _loading_progress(fraction: float) -> void:
+	status_changed.emit(tr("Restoring offline progress: %d%%") % roundi(fraction * 100.0), true)
 
 func _sync_upgrade_readiness() -> void:
 	if adapter != null and is_instance_valid(adapter.world) and adapter.world.tool_upgrades != null:

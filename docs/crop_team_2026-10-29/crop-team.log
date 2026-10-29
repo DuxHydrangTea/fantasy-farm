@@ -1,0 +1,48 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-final-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_crop_team.gd
+* test_cap_per_worker_wages_rehire_and_bounded_records
+* test_all_five_receive_distinct_till_jobs_and_finish_planting
+* test_last_seed_is_reserved_and_other_seed_is_still_available
+* test_dismissal_and_team_toggle_release_assignments_and_wake_everyone
+* test_prepared_plots_are_independent_and_save_roundtrip_preserves_each_worker
+* test_v35_migration_keeps_id_prepared_plot_and_trial_without_mutating_input
+* test_insufficient_wages_pause_only_unpaid_workers_and_still_occupy_slots
+* test_offline_long_jump_matches_segmented_and_reload_preserves_slot_numbers
+* test_removed_supplies_and_player_work_do_not_duplicate_or_spend_extra_stock
+* test_schema_rejects_six_workers_duplicate_ids_slots_and_invalid_prepared_owners
+* test_only_one_worker_takes_last_fertilizer_and_each_crop_is_fertilized_once
+* test_player_replacing_a_claimed_plot_and_full_warehouse_preserve_yield
+* test_active_duplicate_assignments_are_rejected_and_stuck_worker_does_not_block_team
+* test_five_worker_online_events_match_offline_when_arrivals_are_unobstructed
+* test_team_size_comparison_shows_parallel_progress_on_the_same_field
+CROP_TEAM_COMPARISON [{"planted_in_15s":2,"simulation_ms":6.856,"workers":1},{"planted_in_15s":5,"simulation_ms":13.329,"workers":3},{"planted_in_15s":5,"simulation_ms":14.149,"workers":5}]
+* test_resuming_unpaid_worker_releases_prepared_plot_taken_by_a_colleague
+* test_worker_baskets_and_recovery_transfers_address_exact_id
+17/17 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                17
+Passing Tests        17
+Asserts             279
+Time              12.706s
+
+
+Ran Scripts matching "test_crop_team.gd"
+---- All tests passed! ----
+

@@ -2,6 +2,7 @@ class_name WorkerRole
 extends RefCounted
 ## Pure policy: deterministic priority, distance, then stable target ID.
 const ROLES: Array[String] = ["orchard", "ranch", "crop"]
+const LIMITS: Dictionary = {"orchard": 1, "ranch": 1, "crop": 5}
 const WAGES: Dictionary = {"orchard": 1800, "ranch": 2200, "crop": 2800}
 static func point(coordinates: Array) -> Vector2:
 	return Vector2(float(coordinates[0]), float(coordinates[1]))
@@ -18,3 +19,12 @@ static func choose(candidates: Array[Dictionary], origin: Vector2) -> Dictionary
 			best = task
 			distance = next_distance
 	return best.duplicate(true)
+
+static func target_key(job: Dictionary) -> String:
+	if job.is_empty() or job.get("kind", "") == "patrol":
+		return ""
+	if job.kind == "pickup":
+		return "pickup:" + String(job.get("id", ""))
+	if job.has("cell"):
+		return "cell:%d_%d" % [int(job.cell[0]), int(job.cell[1])]
+	return "station:" + String(job.get("id", ""))

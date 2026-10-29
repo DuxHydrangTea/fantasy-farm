@@ -267,6 +267,26 @@ func preflight(data: Dictionary) -> Dictionary:
 	return {"ok": true, "snapshot": data}
 
 func restore(data: Dictionary, now: float) -> Dictionary:
+	var result: Dictionary = _restore_checkpoint(data, now)
+	if not result.ok:
+		return result
+	world.workers.advance(maxf(now, data.saved_at))
+	return _finish_restore(maxf(now, data.saved_at), float(result.previous_simulation))
+
+func restore_async(data: Dictionary, now: float) -> Dictionary:
+	var result: Dictionary = _restore_checkpoint(data, now)
+	if not result.ok:
+		return result
+	await world.workers.advance_async(maxf(now, data.saved_at))
+	return _finish_restore(maxf(now, data.saved_at), float(result.previous_simulation))
+
+func restore_without_offline(data: Dictionary) -> Dictionary:
+	var result: Dictionary = _restore_checkpoint(data, float(data.saved_at))
+	if not result.ok:
+		return result
+	return _finish_restore(float(data.saved_at), float(result.previous_simulation))
+
+func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	var checked: Dictionary = preflight(data)
 	if not checked.ok:
 		return checked
@@ -349,7 +369,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	farm._refresh_crops(float(data.saved_at))
 	for garden: FlowerGarden in gardens.values():
 		garden.restore_legacy_flowers()
-		garden.refresh(maxf(now,data.saved_at))
+		garden.refresh(float(data.saved_at)) # Replay bees/crops with workers on one timeline.
 	for row: Dictionary in data.troughs:
 		var trough: AnimalTrough = troughs[row.id]
 		# Troughs are authored in the scene; old saved coordinates must not override layout edits.
@@ -404,9 +424,14 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	world.objectives.progress.restore(data.objectives)
 	world.objectives.progress.suspended = false
 	world.workers.restore(data.workers, catalog)
-	world.workers.advance(maxf(now, data.saved_at))
-	world.workers.bridge.sync(maxf(now, data.saved_at))
-	clock.simulation_timestamp = previous_simulation
+	return {"ok": true, "previous_simulation": previous_simulation}
+
+func _finish_restore(now: float, previous_simulation: float) -> Dictionary:
+	world.workers.bridge.sync(now)
+	world.weather.advance(now) # Publish final lighting/HUD once after offline replay.
+	for garden: FlowerGarden in world.apiary.gardens:
+		garden.refresh(now)
+	world.farming.time_manager.simulation_timestamp = previous_simulation
 	world.starter_content.finish_restore()
 	world.tool_upgrade_state.notify_restored()
 	world.objectives.progress.restored.emit()

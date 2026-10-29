@@ -1,0 +1,91 @@
+{
+  "bridge_metrics": {
+    "candidates_crop": {
+      "calls": 164,
+      "usec": 197393
+    },
+    "candidates_orchard": {
+      "calls": 174,
+      "usec": 42109
+    },
+    "candidates_ranch": {
+      "calls": 176,
+      "usec": 24085
+    },
+    "commit_crop": {
+      "calls": 52,
+      "usec": 284
+    },
+    "commit_orchard": {
+      "calls": 103,
+      "usec": 10266
+    },
+    "commit_ranch": {
+      "calls": 81,
+      "usec": 8152
+    },
+    "next_wake_crop": {
+      "calls": 164,
+      "usec": 53217
+    },
+    "next_wake_orchard": {
+      "calls": 174,
+      "usec": 88728
+    },
+    "next_wake_ranch": {
+      "calls": 176,
+      "usec": 33421
+    },
+    "sync": {
+      "calls": 232,
+      "usec": 732117
+    },
+    "sync_farming": {
+      "calls": 232,
+      "usec": 360249
+    },
+    "sync_pens": {
+      "calls": 232,
+      "usec": 353688
+    },
+    "sync_weather": {
+      "calls": 232,
+      "usec": 17419
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 1.785,
+  "checkpoint_ms": 266.202,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 164,
+    "planting_usec": 11616
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 2.614,
+  "first_process_frame_ms": 0.104,
+  "frame_gap_max_ms": 352.9,
+  "frame_gap_p95_ms": 43.84,
+  "gap_seconds": 3600.0,
+  "load_game_ms": 1545.506,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 1257.188,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 35,
+  "read_validate_ms": 19.502,
+  "renderer": "headless",
+  "sampled_frame_intervals": 36,
+  "scene_setup_ms": 657.573,
+  "exit_code": 0,
+  "process_wall_ms": 3447.650980997423
+}

@@ -1,0 +1,92 @@
+{
+  "project": "home-dungnguyen-Projects-test-js",
+  "signal": "best_effort",
+  "indexed_at": "2026-10-29T03:17:10Z",
+  "metadata": {
+    "generation": "2026-10-29T03:17:10Z",
+    "index_mode": "full",
+    "recorded_at": "2026-10-29T03:18:19Z",
+    "recording_status": "complete",
+    "ignored_files_stored": 1944,
+    "ignored_files_total": 1944,
+    "hash_records_complete": true,
+    "coverage_version": 3,
+    "generation_matches": true
+  },
+  "paths": [
+    {
+      "requested_path": "components/workers/worker_world_bridge.gd",
+      "path": "components/workers/worker_world_bridge.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "components/trees/tree_plantation.gd",
+      "path": "components/trees/tree_plantation.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/integration/test_workers.gd",
+      "path": "tests/integration/test_workers.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/integration/test_beehives.gd",
+      "path": "tests/integration/test_beehives.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/integration/test_world_persistence.gd",
+      "path": "tests/integration/test_world_persistence.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "tests/support/startup_load_probe.gd",
+      "path": "tests/support/startup_load_probe.gd",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "scripts/benchmark_offline_load.py",
+      "path": "scripts/benchmark_offline_load.py",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "scripts/benchmark_startup_load.py",
+      "path": "scripts/benchmark_startup_load.py",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    },
+    {
+      "requested_path": "scripts/compare_offline_states.py",
+      "path": "scripts/compare_offline_states.py",
+      "status": "no_recorded_issue",
+      "freshness": "metadata_match",
+      "recommended_action": "use_graph_with_best_effort_caveat",
+      "coverage": []
+    }
+  ],
+  "scopes": [],
+  "caveat": "Best-effort signal only. No recorded issue does not prove graph or source completeness; read flagged source and qualify claims when metadata is changed or unavailable."
+}

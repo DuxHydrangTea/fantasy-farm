@@ -47,7 +47,7 @@ func harvest(bag: InventoryComponent) -> bool:
 		bag.report_capacity_blocked(item, amount)
 		return false
 	_busy = true
-	var height: float = float(sprite.texture.get_image().get_used_rect().size.y) * 0.6 if sprite != null else 24.0
+	var height: float = float(visible_bounds(sprite.texture).size.y) * 0.6 if sprite != null else 24.0
 	fruit_work = 0.0
 	if pending_graft != Graft.NONE:
 		active_graft = pending_graft

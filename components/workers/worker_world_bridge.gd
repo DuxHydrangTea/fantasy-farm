@@ -3,6 +3,7 @@ extends RefCounted
 ## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
 var world: FarmWorld
 var storage_waiting: Dictionary = {}
+var _pen_cache: Dictionary = {}
 
 func _init(scene: FarmWorld) -> void:
 	world = scene
@@ -15,8 +16,13 @@ func pens() -> Array[AnimalPen]:
 	return result
 
 func pen_for(id: String) -> AnimalPen:
+	var cached_ref: WeakRef = _pen_cache.get(id) as WeakRef
+	var cached: AnimalPen = cached_ref.get_ref() as AnimalPen if cached_ref != null else null
+	if is_instance_valid(cached) and cached.get_parent() == world and String(cached.persistent_id) == id:
+		return cached
 	for pen: AnimalPen in pens():
 		if String(pen.persistent_id) == id:
+			_pen_cache[id] = weakref(pen)
 			return pen
 	return null
 
@@ -39,9 +45,9 @@ func zone_contains(row: Dictionary, point: Vector2, columns: int = -1) -> bool:
 	return LandExpansionState.REGION.has_point(cell) and LandExpansionState.cell_is_open(cell, world.land.state.unlocked_columns if columns < 0 else columns)
 
 func sync(timestamp: float, offline: bool = true) -> void:
-	world.weather.advance(timestamp)
-	world.apiary.advance(timestamp)
-	world.trees.advance(timestamp)
+	world.weather.advance(timestamp, not offline)
+	# Refreshing crops advances pollination, which advances the plantation too.
+	# Repeating those calls rebuilds the same flower assignments at this instant.
 	world.farming._refresh_crops(timestamp)
 	if offline:
 		for pen: AnimalPen in pens():
@@ -52,37 +58,46 @@ func _task(kind: String, id: String, point: Vector2, priority: int) -> Dictionar
 
 func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Dictionary]:
 	var output_inventory: InventoryComponent = world.workers.output_inventory()
+	# No inventory writes occur during this query. Share the slot scan across
+	# hundreds of trees/crops that yield the same item; discard it before commit.
+	var capacities: Dictionary = {}
 	storage_waiting[row.role] = false
 	var tasks: Array[Dictionary] = []
 	if row.role == "orchard":
 		for tree: PerennialTree in world.trees.trees.values():
 			if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
-				if output_inventory.capacity_for((tree as FruitTree).harvest_item()) < (tree as FruitTree).harvest_amount():
+				if _capacity(output_inventory, (tree as FruitTree).harvest_item(), capacities) < (tree as FruitTree).harvest_amount():
 					storage_waiting[row.role] = true
 					continue
 				var task: Dictionary = _task("fruit", "%d_%d" % [tree.cell.x, tree.cell.y], tree.global_position + Vector2(0, 12), 0)
 				task["cell"] = [tree.cell.x, tree.cell.y]
 				tasks.append(task)
 	elif row.role == "crop":
+		# The event already synchronized growth. Only fertilizer eligibility
+		# needs an extra sync after a same-event harvest/plant mutation.
+		var fertilizer_item: ItemDefinition = world.workers.crop_policy.first_item(true, row.id) if world.workers.crop_automation.auto_fertilize else null
+		if fertilizer_item != null:
+			world.apiary.sync()
 		for cell: Vector2i in world.farming.crop_cells():
 			var crop: Crop = world.farming.get_crop(cell)
-			if not world.land.state.is_unlocked(cell):
+			if not world.land.state.is_unlocked(cell) or not world.workers.target_available(row, world.workers.crop_policy.task("water_crop", cell, 1)):
 				continue
 			var kind: String = ""
 			if crop.is_mature():
-				if output_inventory.capacity_for(crop.definition.harvest_item) >= world.farming.harvest_amount(cell):
+				if _capacity(output_inventory, crop.definition.harvest_item, capacities) >= world.farming.harvest_amount(cell):
 					kind = "harvest"
 				else:
 					storage_waiting[row.role] = true
-			elif world.farming.can_water(cell) and not crop.is_mature():
+			elif not crop.is_mature() and world.farming.can_water(cell):
 				kind = "water_crop"
 			if not kind.is_empty():
 				var task: Dictionary = _task(kind, "%d_%d" % [cell.x, cell.y], world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell)), 0 if kind == "harvest" else 1)
 				task["cell"] = [cell.x, cell.y]
 				tasks.append(task)
-			var fertilizer: Dictionary = world.workers.crop_policy.fertilizer_task(cell, crop)
-			if not fertilizer.is_empty():
-				tasks.append(fertilizer)
+			if fertilizer_item != null:
+				var fertilizer: Dictionary = world.workers.crop_policy.fertilizer_task(cell, crop, fertilizer_item, false, row.id)
+				if not fertilizer.is_empty():
+					tasks.append(fertilizer)
 		var opening: Dictionary = world.workers.crop_policy.planting_task(row)
 		if not opening.is_empty():
 			tasks.append(opening)
@@ -107,13 +122,18 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 		var pile: ItemPickup = node as ItemPickup
 		if pile == null or not world.is_ancestor_of(pile) or pile.is_queued_for_deletion() or pile.is_attracting() or pile.item == null or pile.item.item_type != ItemDefinition.ItemType.PRODUCE or pile.amount <= 0 or not zone_contains(row, pile.global_position):
 			continue
-		if output_inventory.capacity_for(pile.item) <= 0:
+		if _capacity(output_inventory, pile.item, capacities) <= 0:
 			storage_waiting[row.role] = true
 			continue
 		if pile.persistent_id.is_empty():
 			pile.persistent_id = StringName("pile_" + Crypto.new().generate_random_bytes(12).hex_encode())
 		tasks.append(_task("pickup", String(pile.persistent_id), pile.global_position, 3 if row.role == "crop" and world.workers.crop_automation.auto_plant else 2))
 	return tasks
+
+func _capacity(inventory: InventoryComponent, item: ItemDefinition, cache: Dictionary) -> int:
+	if not cache.has(item):
+		cache[item] = inventory.capacity_for(item)
+	return int(cache[item])
 
 func commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Dictionary) -> bool:
 	if task.kind in ["till", "plant", "fertilize"]:
@@ -163,25 +183,28 @@ func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task:
 		"pickup":
 			for node: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
 				var pile: ItemPickup = node as ItemPickup
-				if pile != null and world.is_ancestor_of(pile) and String(pile.persistent_id) == task.id and not pile.is_attracting() and zone_contains(row, pile.global_position):
+				if pile != null and not pile.is_queued_for_deletion() and pile.amount > 0 and world.is_ancestor_of(pile) and String(pile.persistent_id) == task.id and not pile.is_attracting() and zone_contains(row, pile.global_position):
 					return pile.item != null and world.storages.definition("produce_warehouse").accepts(pile.item) and pile.collect(output_inventory) > 0
 	return false
 
 func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) -> float:
 	var next: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
 	if row.role == "orchard":
+		var capacities: Dictionary = {}
+		var inventory: InventoryComponent = world.workers.output_inventory()
 		for tree: PerennialTree in world.trees.trees.values():
-			if tree is FruitTree and tree.growth_started_at >= 0 and world.workers.output_inventory().capacity_for((tree as FruitTree).harvest_item()) >= (tree as FruitTree).harvest_amount():
+			if tree is FruitTree and tree.growth_started_at >= 0 and _capacity(inventory, (tree as FruitTree).harvest_item(), capacities) >= (tree as FruitTree).harvest_amount():
 				var remaining: float = maxf(0, tree.matures_at - now) + maxf(0, tree.definition.fruit_cycle_seconds - (tree as FruitTree).fruit_work) * 0.75
 				if remaining > 0.01:
 					next = minf(next, now + remaining)
 	elif row.role == "crop":
+		var evaporation: float = world.weather.schedule.evaporation_rate(now)
 		for cell: Vector2i in world.farming.crop_cells():
 			var crop: Crop = world.farming.get_crop(cell)
 			if crop.matures_at > now:
 				next = minf(next, crop.matures_at)
 			if world.farming._moisture.has(cell):
-				next = minf(next, now + maxf(1, float(world.farming._moisture[cell]) / world.weather.schedule.evaporation_rate(now)))
+				next = minf(next, now + maxf(1, float(world.farming._moisture[cell]) / evaporation))
 	else:
 		next = minf(next, _ranch_boundary(row, feed_inventory, now))
 	return maxf(now + 0.25, next)

@@ -1,0 +1,36 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-quality-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_crop_quality.gd
+* test_prewater_and_dry_afterwards_keep_silver_without_changing_deadline
+* test_rain_and_batch_water_mark_existing_crop_and_worker_plants_on_wet_soil
+* test_root_requires_water_only_once_and_never_changes_growth_time
+* test_worker_harvest_sends_gold_to_warehouse_and_transfers_preserve_tiers
+* test_v28_roundtrip_and_v26_migration_preserve_resources_and_grant_silver
+* test_batch_watering_marks_crop_and_full_warehouse_retains_gold
+6/6 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 6
+Passing Tests         6
+Asserts              61
+Time              3.908s
+
+
+Ran Scripts matching "test_crop_quality.gd"
+---- All tests passed! ----
+

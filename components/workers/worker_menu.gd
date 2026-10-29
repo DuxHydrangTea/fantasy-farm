@@ -2,7 +2,11 @@ class_name WorkerMenu
 extends TradeMenu
 ## Role-specific view over WorkerService; portraits and controls never mutate actors.
 var role: String = "orchard"
+var selected_worker_id: String = ""
 var world: FarmWorld
+@onready var team_list: VBoxContainer = %TeamList
+var _team_ids: Array[String] = []
+@onready var team_summary: Label = %TeamSummary
 @onready var panel: PanelContainer = %Panel
 @onready var info: Label = %Info
 @onready var status: Label = %Status
@@ -26,7 +30,7 @@ var _elapsed: float = 0.0
 var _compact: bool = false
 const TITLES: Dictionary = {"crop": "Crop worker", "orchard": "Orchard worker", "ranch": "Ranch worker"}
 const DESCRIPTIONS: Dictionary = {"crop": "Waters, harvests and tends crops.", "orchard": "Waters and harvests fruit trees.", "ranch": "Feeds and waters animals; collected products go to the warehouse."}
-const TASKS: Dictionary = {"till": "Tilling soil", "plant": "Planting crops", "fertilize": "Fertilizing crops", "water": "Watering", "feed": "Refilling feed", "harvest": "Harvesting", "pickup": "Collecting produce", "patrol": "Patrolling the work area"}
+const TASKS: Dictionary = {"till": "Tilling soil", "plant": "Planting crops", "fertilize": "Fertilizing crops", "water": "Watering", "water_crop": "Watering", "feed": "Refilling feed", "harvest": "Harvesting", "pickup": "Collecting produce", "patrol": "Patrolling the work area"}
 
 func _ready() -> void:
 	root = %Root
@@ -51,6 +55,14 @@ func _ready() -> void:
 	zones.add_theme_color_override("font_color", Color("401c0f"))
 	(%SeedIcon as TextureRect).texture = preload("res://items/seeds/carrot_seed.tres").icon
 	(%FertilizerIcon as TextureRect).texture = preload("res://items/boosters/crop_fertilizer.tres").icon
+	if role == "crop":
+		(%WorkerName as Label).reparent(%WorkContent)
+		(%WorkContent as VBoxContainer).move_child(%WorkerName, 0)
+		(%Employment as Label).reparent(%WorkContent)
+		(%WorkContent as VBoxContainer).move_child(%Employment, 1)
+		(%WorkerName as Label).horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		(%Employment as Label).horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		portrait.hide()
 	_set_portrait()
 	_fit()
 
@@ -84,7 +96,7 @@ func _fit() -> void:
 	(%Shell as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 12)
 	(%Page as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 8)
 	(%Main as HBoxContainer).add_theme_constant_override("separation", 8 if _compact else 12)
-	(%OverviewPanel as PanelContainer).custom_minimum_size.x = 176 if _compact else 240
+	(%OverviewPanel as PanelContainer).custom_minimum_size.x = (196 if role == "crop" else 176) if _compact else (272 if role == "crop" else 240)
 	(%SupplyPanel as PanelContainer).custom_minimum_size.x = 0 if _compact else 270
 	(%Heading as Label).add_theme_font_size_override("font_size", 20 if _compact else 26)
 	(%Balance as Label).add_theme_font_size_override("font_size", 14 if _compact else 18)
@@ -95,7 +107,12 @@ func _fit() -> void:
 	(%OverviewContent as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 12)
 	for button: Button in [hire_button, dismiss_button, pause_crop_button, confirm_button, cancel_button]:
 		button.add_theme_font_size_override("font_size", 14 if _compact else 18)
+	for button: Button in team_list.get_children():
+		button.add_theme_font_size_override("font_size", 14 if _compact else 16)
+		button.custom_minimum_size.y = 72 if _compact else 64
 	_place_portrait()
+	if is_open and world != null:
+		_refresh()
 
 func _visit() -> void:
 	world = customer.get_parent() as FarmWorld
@@ -125,18 +142,22 @@ func _refresh() -> void:
 	if not is_open or world == null:
 		return
 	var service: WorkerService = world.workers
-	var row: Dictionary = service.record(role)
+	var row: Dictionary = _selected_row()
 	var employed: bool = not row.is_empty() and bool(row.employed)
+	var rows: Array[Dictionary] = service.records_for(role, true)
+	var count: int = rows.size()
+	_refresh_team(rows)
+	var team_employed: bool = count > 0
 	var available: bool = service.available() and not service.busy
 	var wage: int = int(WorkerRole.WAGES[role])
 	var cost: int = wage if role in service.trial_used else 0
 	var title: String = tr(str(TITLES[role]))
-	(%Heading as Label).text = title
-	(%WorkerName as Label).text = title
+	(%Heading as Label).text = tr("Crop team {count}/5").format({"count": count}) if role == "crop" else title
+	(%WorkerName as Label).text = _worker_title(row) if employed else title
 	(%Balance as Label).text = _money(customer.wallet.balance)
 	(%Wage as Label).text = _money(wage)
-	(%HireCost as Label).text = tr("Today's hiring cost: {coins}").format({"coins": _money(cost)}) if not employed else ""
-	(%HireCost as Label).visible = not employed
+	(%HireCost as Label).text = tr("Today's hiring cost: {coins}").format({"coins": _money(cost)}) if count < int(WorkerRole.LIMITS[role]) else ""
+	(%HireCost as Label).visible = count < int(WorkerRole.LIMITS[role])
 	var paused: bool = role == "crop" and service.crop_automation.paused
 	var employment: String = "Not hired" if not employed else ("Resting" if not bool(row.active) else ("Paused" if paused else "Working"))
 	(%Employment as Label).text = tr(employment)
@@ -155,19 +176,19 @@ func _refresh() -> void:
 	auto_plant_button.text = tr("On" if state.auto_plant else "Off")
 	auto_fertilize_button.text = tr("On" if state.auto_fertilize else "Off")
 	for button: Button in [auto_plant_button, auto_fertilize_button]:
-		button.disabled = not employed or not available
-	pause_crop_button.visible = role == "crop" and employed
-	pause_crop_button.disabled = not employed or not available
+		button.disabled = not team_employed or not available
+	pause_crop_button.visible = role == "crop" and team_employed
+	pause_crop_button.disabled = not team_employed or not available
 	pause_crop_button.text = tr("Resume work") if paused else tr("Pause work")
 	(%PauseNote as Label).visible = role == "crop" and employed
 	(%PauseNote as Label).text = tr("Crop work is manually paused. Wages still apply.") if paused else tr("Pausing work does not stop wages.")
 	var task: String = _task_text(service, row, employed, paused)
 	(%Task as Label).text = task
-	var unlock: String = service.unlock_error(role) if not employed else ""
+	var unlock: String = service.unlock_error(role) if count < int(WorkerRole.LIMITS[role]) else ""
 	(%Unlock as Label).text = tr(unlock) if service.available() else tr("Load your farm before hiring workers.")
 	(%Unlock as Label).visible = not (%Unlock as Label).text.is_empty()
-	hire_button.disabled = employed or not available or not unlock.is_empty() or customer.wallet.balance < cost
-	hire_button.text = tr("Already hired") if employed else tr("Hire worker")
+	hire_button.disabled = count >= int(WorkerRole.LIMITS[role]) or not available or not unlock.is_empty() or customer.wallet.balance < cost
+	hire_button.text = tr("Team full") if role == "crop" and count >= 5 else tr("Hire another worker") if role == "crop" and count > 0 else tr("Already hired") if employed else tr("Hire worker")
 	dismiss_button.visible = employed
 	dismiss_button.disabled = not available
 	_refresh_supplies(service)
@@ -176,7 +197,76 @@ func _refresh() -> void:
 	status.visible = not status.text.is_empty()
 	if _confirm:
 		confirm_button.disabled = not available or not employed or str(row.get("id", "")) != _dismiss_id
-		(%ConfirmationText as Label).text = tr("Dismiss {worker}? The old basket is kept. Rehiring costs today's wage.").format({"worker": title}) + "\n\n" + tr("Today's hiring cost: {coins}").format({"coins": _money(wage)})
+		(%ConfirmationText as Label).text = tr("Dismiss {worker}? The old basket is kept. Rehiring costs today's wage.").format({"worker": _worker_title(row)}) + "\n\n" + tr("Today's hiring cost: {coins}").format({"coins": _money(wage)})
+
+func _selected_row() -> Dictionary:
+	var row: Dictionary = world.workers.record_for(selected_worker_id)
+	if row.is_empty() or row.role != role or not row.employed:
+		row = world.workers.record(role)
+		selected_worker_id = String(row.get("id", ""))
+	return row
+
+func _worker_title(row: Dictionary) -> String:
+	return tr("Crop worker #{number}").format({"number": world.workers.worker_number(row.id)}) if role == "crop" and not row.is_empty() else tr(str(TITLES[role]))
+
+func _select_worker(index: int) -> void:
+	if index >= 0 and index < _team_ids.size():
+		_select_worker_id(_team_ids[index])
+
+func _select_worker_id(id: String) -> void:
+	selected_worker_id = id
+	_cancel_dismiss()
+	_refresh()
+
+func _roster_task(row: Dictionary) -> String:
+	if not row.active:
+		return tr("Resting")
+	if world.workers.crop_automation.paused:
+		return tr("Paused")
+	if row.task.is_empty() or row.task.kind == "patrol":
+		return tr("Waiting for work")
+	return tr(str(TASKS.get(row.task.kind, "Working")))
+
+func _refresh_team(rows: Array[Dictionary]) -> void:
+	(%TeamNote as Label).visible = role == "crop"
+	(%TeamHeading as Label).visible = role == "crop"
+	(%TeamEmpty as Label).visible = role == "crop" and rows.is_empty()
+	team_list.visible = role == "crop"
+	team_summary.visible = role == "crop"
+	var ordered: Array[Dictionary] = rows.duplicate()
+	ordered.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.slot) < int(b.slot))
+	var ids: Array[String] = []
+	var active: int = 0
+	for row: Dictionary in ordered:
+		ids.append(row.id)
+		active += 1 if world.workers.running(row) else 0
+	if ids != _team_ids:
+		# Rebuild only when employment changes, preserving focus and scroll on refresh.
+		for child: Node in team_list.get_children():
+			child.free()
+		_team_ids = ids
+		for id: String in ids:
+			var button: Button = Button.new()
+			button.name = "Worker" + str(world.workers.worker_number(id))
+			button.set_meta(&"worker_id", id)
+			button.toggle_mode = true
+			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			button.clip_text = true
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			button.custom_minimum_size.y = 72 if _compact else 64
+			button.add_theme_font_size_override("font_size", 14 if _compact else 16)
+			button.add_theme_stylebox_override("pressed", auto_plant_button.get_theme_stylebox("pressed"))
+			button.pressed.connect(_select_worker_id.bind(id))
+			team_list.add_child(button)
+	for index: int in range(ordered.size()):
+		var row: Dictionary = ordered[index]
+		var button: Button = team_list.get_child(index) as Button
+		button.text = tr("Worker #{number}").format({"number": world.workers.worker_number(row.id)}) + "\n" + _roster_task(row)
+		button.tooltip_text = _worker_title(row) + "\n" + _task_text(world.workers, row, true, world.workers.crop_automation.paused)
+		button.set_pressed_no_signal(row.id == selected_worker_id)
+	var summary_text: String = "{active} working · {resting} resting\n{coins}/day" if _compact else "Working: {active} · Resting: {resting}\nTeam daily wage: {coins}"
+	team_summary.text = tr(summary_text).format({"active": active, "resting": rows.size() - active, "coins": _money(rows.size() * int(WorkerRole.WAGES[role]))})
 
 func _task_text(service: WorkerService, row: Dictionary, employed: bool, paused: bool) -> String:
 	if not employed:
@@ -234,7 +324,7 @@ func _refresh_legacy(service: WorkerService) -> void:
 	var products: int = 0
 	var feed: int = 0
 	var lines: PackedStringArray = []
-	var bag: InventoryComponent = service.bag_for(role)
+	var bag: InventoryComponent = service.bag_for(String(_selected_row().get("id", "")))
 	if bag != null:
 		for index: int in range(bag.slot_count):
 			var stack: Dictionary = bag.slot(index)
@@ -258,6 +348,10 @@ func _hire() -> void:
 		return
 	var zone: String = String(zones.get_item_metadata(zones.selected)) if role == "ranch" and zones.selected >= 0 else ""
 	var error: String = world.workers.hire(role, zone)
+	if error.is_empty():
+		for row: Dictionary in world.workers.records_for(role, true):
+			if int(row.hire_order) == world.workers.next_order - 1:
+				selected_worker_id = row.id
 	status.text = tr(error) if not error.is_empty() else tr("Worker hired.")
 	_refresh()
 	_save.call_deferred()
@@ -284,7 +378,7 @@ func _configure_crop(plant: bool, fertilizer: bool, pause: bool) -> void:
 func _dismiss() -> void:
 	if not is_open or world == null:
 		return
-	var row: Dictionary = world.workers.record(role)
+	var row: Dictionary = _selected_row()
 	if not _confirm:
 		if not row.get("employed", false):
 			return
@@ -297,7 +391,7 @@ func _dismiss() -> void:
 		return
 	if not row.get("employed", false) or str(row.get("id", "")) != _dismiss_id:
 		return
-	status.text = tr(world.workers.dismiss(role))
+	status.text = tr(world.workers.dismiss(_dismiss_id))
 	_cancel_dismiss()
 	_refresh()
 	_save.call_deferred()
@@ -323,7 +417,7 @@ func _collect() -> void:
 	_transfer(false, false)
 
 func _transfer(deposit: bool, supplies: bool) -> void:
-	var moved: int = world.workers.transfer(role, customer.selection.inventory, deposit, supplies)
+	var moved: int = world.workers.transfer(String(_selected_row().get("id", "")), customer.selection.inventory, deposit, supplies)
 	status.text = tr("Transferred: %d units. Anything that does not fit stays in the source basket.") % moved
 	_refresh()
 	_save.call_deferred()

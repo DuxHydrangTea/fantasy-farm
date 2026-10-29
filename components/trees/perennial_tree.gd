@@ -3,6 +3,7 @@ extends StaticBody2D
 ## Timestamp là nguồn sự thật; tween chỉ thay đổi hình ảnh.
 const TREE_WIND: ShaderMaterial = preload("res://resources/effects/tree_wind_48.tres")
 static var _wind_materials: Dictionary[Texture2D, ShaderMaterial] = {}
+static var _visible_bounds: Dictionary[Texture2D, Rect2i] = {}
 var definition: TreeDefinition
 var plantation: TreePlantation
 var cell: Vector2i
@@ -67,7 +68,7 @@ func set_texture(texture: Texture2D) -> void:
 		return
 	sprite.texture = texture
 	# Bỏ khoảng đệm trong suốt khi neo gốc, giữ collider và hình cây trùng nhau.
-	var bounds: Rect2i = texture.get_image().get_used_rect()
+	var bounds: Rect2i = visible_bounds(texture)
 	sprite.position = Vector2(0, texture.get_height() * 0.5 - bounds.end.y)
 	# Chia sẻ material theo texture; TIME và vị trí thế giới tạo nhịp riêng trên GPU.
 	# Không thêm _process/Tween lặp cho từng cây và không làm lệch collider.
@@ -82,6 +83,13 @@ func set_texture(texture: Texture2D) -> void:
 		wind.set_shader_parameter(&"amplitude", clampf(bounds.size.y * 0.04, 0.35, 2.4))
 		_wind_materials[texture] = wind
 	sprite.material = _wind_materials[texture]
+
+static func visible_bounds(texture: Texture2D) -> Rect2i:
+	# Textures are shared and immutable. A GPU readback at every tree refresh
+	# or offline harvest stalls the visible game even when simulation yields.
+	if not _visible_bounds.has(texture):
+		_visible_bounds[texture] = texture.get_image().get_used_rect()
+	return _visible_bounds[texture]
 
 func get_status_sprite() -> Node2D:
 	return sprite

@@ -1,0 +1,91 @@
+{
+  "bridge_metrics": {
+    "candidates_crop": {
+      "calls": 164,
+      "usec": 289933
+    },
+    "candidates_orchard": {
+      "calls": 174,
+      "usec": 70284
+    },
+    "candidates_ranch": {
+      "calls": 176,
+      "usec": 33874
+    },
+    "commit_crop": {
+      "calls": 52,
+      "usec": 409
+    },
+    "commit_orchard": {
+      "calls": 103,
+      "usec": 10451
+    },
+    "commit_ranch": {
+      "calls": 81,
+      "usec": 11841
+    },
+    "next_wake_crop": {
+      "calls": 164,
+      "usec": 77373
+    },
+    "next_wake_orchard": {
+      "calls": 174,
+      "usec": 124306
+    },
+    "next_wake_ranch": {
+      "calls": 176,
+      "usec": 47130
+    },
+    "sync": {
+      "calls": 232,
+      "usec": 3920698
+    },
+    "sync_farming": {
+      "calls": 232,
+      "usec": 3401972
+    },
+    "sync_pens": {
+      "calls": 232,
+      "usec": 493912
+    },
+    "sync_weather": {
+      "calls": 232,
+      "usec": 23850
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 1.925,
+  "checkpoint_ms": 294.263,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 164,
+    "planting_usec": 18008
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 9.711,
+  "first_process_frame_ms": 0.407,
+  "frame_gap_max_ms": 419.682,
+  "frame_gap_p95_ms": 58.609,
+  "gap_seconds": 3600.0,
+  "load_game_ms": 5064.668,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 4726.224,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 107,
+  "read_validate_ms": 34.47,
+  "renderer": "headless",
+  "sampled_frame_intervals": 108,
+  "scene_setup_ms": 1056.685,
+  "exit_code": 0,
+  "process_wall_ms": 7656.62844000326
+}

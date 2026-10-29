@@ -215,7 +215,7 @@ func test_worker_cannot_clear_stumps_and_full_bag_preserves_young_tree() -> void
 	var stump: TimberTree = _stump()
 	var key: Vector2i = world.farming.world_to_cell(stump.global_position)
 	assert_eq(service.hire("crop"), "")
-	var actor: WorkerActor = service.actors.crop as WorkerActor
+	var actor: WorkerActor = service.actor_for("crop")
 	assert_false(world.farming.can_tool(key, actor, world.player.selection.inventory))
 	assert_eq(world.farming.apply_area(&"tool", [key], world.player.selection.inventory, -1, null, actor).changed, 0)
 	assert_false(stump.removed)

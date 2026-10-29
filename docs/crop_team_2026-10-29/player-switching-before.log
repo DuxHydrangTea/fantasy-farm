@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[INFO]:  using [/tmp/crop-five-baseline-data/godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+
+
+res://tests/integration/test_crops.gd
+* test_switching_hotbar_mid_action_keeps_original_seed_and_target
+    --- Awaiting 0.9 seconds  ---
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+      at line 77
+    [Failed]:  [24] expected to equal [11]:  
+      at line 78
+0/1 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_crops.gd
+- test_switching_hotbar_mid_action_keeps_original_seed_and_target
+    [Failed]:  Expected [<null>] to be anything but NULL:  
+          at line 77
+    [Failed]:  [24] expected to equal [11]:  
+          at line 78
+
+Totals
+------
+Scripts               1
+Tests                 1
+Passing Tests      none
+Failing Tests         1
+Asserts             3/5
+Time              1.448s
+
+
+Ran Scripts matching "test_crops.gd"
+Ran Tests matching "test_switching_hotbar"
+---- 1 failing tests ----
+

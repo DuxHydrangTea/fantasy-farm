@@ -1,0 +1,61 @@
+extends "res://tests/support/hotbar_skin_probe.gd"
+## Uses an isolated child world and synthetic input, never the player's save.
+func _run() -> void:
+	print("CROP_TEAM_PROBE_BEGIN")
+	world = WORLD.instantiate() as FarmWorld
+	add_child(world)
+	print("CROP_TEAM_PROBE_WORLD_READY")
+	world.tool_upgrades.profile_ready = true
+	world.land.state.restore_columns(12, 4)
+	world.player.wallet.set_balance(100000)
+	world.weather.set_debug_hour(12)
+	var timestamp: float = world.farming.time_manager.now()
+	world.farming.time_manager.clock_source = func() -> float: return timestamp
+	var board: WorkerBoard = world.get_node("CropWorkers") as WorkerBoard
+	world.player.global_position = board.interaction_position() + Vector2(0, 24)
+	await _frames(10)
+	_check(board.open_shop(world.player), "Board opens")
+	var menu: WorkerMenu = board.menu as WorkerMenu
+	await _frames(8)
+	for index: int in range(5):
+		await _click(menu.hire_button)
+		_check(world.workers.records_for("crop", true).size() == index + 1, "Mouse hires worker %d" % (index + 1))
+	_check(menu.hire_button.disabled, "Sixth hire is blocked")
+	_check(menu.team_list.get_child_count() == 5, "Roster shows all five workers")
+	for button: Button in menu.team_list.get_children():
+		_check((menu.get_node("%OverviewScroll") as ScrollContainer).get_global_rect().grow(1).encloses(button.get_global_rect()), "Desktop roster row fits: " + button.name)
+	await _click(menu.team_list.get_child(1) as Button)
+	var selected: String = String(menu.team_list.get_child(1).get_meta("worker_id"))
+	_check(menu.selected_worker_id == selected, "Clicking a roster row selects that worker")
+	_check((menu.team_list.get_child(1) as Button).button_pressed, "Selected row is highlighted")
+	Language.set_language("en")
+	await _frames(8)
+	await _capture("crop-team-desktop-en")
+	Language.set_language("vi")
+	await _frames(8)
+	await _capture("crop-team-desktop-vi")
+	get_viewport().set_meta(&"touch_ui_override", true)
+	get_tree().root.size = Vector2i(667, 375)
+	await _frames(12)
+	_check(get_viewport().get_visible_rect().grow(1).encloses(_screen_rect(menu.panel)), "Five-worker panel fits compact viewport")
+	await _capture("crop-team-compact-vi")
+	var last_worker: Button = menu.team_list.get_child(4) as Button
+	(menu.get_node("%OverviewScroll") as ScrollContainer).ensure_control_visible(last_worker)
+	await _frames(8)
+	await _click(last_worker)
+	selected = String(last_worker.get_meta("worker_id"))
+	_check(menu.selected_worker_id == selected, "Compact roster scrolls and selects the fifth worker")
+	await _capture("crop-team-compact-selected-vi")
+	await _click(menu.dismiss_button)
+	await _frames(8)
+	_check(menu.confirmation.visible, "Dismissal asks about selected worker")
+	await _capture("crop-team-dismiss-vi")
+	await _click(menu.confirm_button)
+	_check(not world.workers.record_for(selected).employed, "Only selected worker is dismissed")
+	_check(world.workers.records_for("crop", true).size() == 4, "Other four workers stay employed")
+	await _click(menu.hire_button)
+	_check(world.workers.records_for("crop", true).size() == 5, "Mouse hires replacement")
+	var file: FileAccess = FileAccess.open(_output + "/result.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"checks": _checks, "failures": _failures}, "  "))
+	print("CROP_TEAM_NATIVE ", JSON.stringify({"checks": _checks, "failures": _failures}))
+	get_tree().quit(0 if _failures.is_empty() else 1)

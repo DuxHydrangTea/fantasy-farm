@@ -1,0 +1,91 @@
+{
+  "bridge_metrics": {
+    "candidates_crop": {
+      "calls": 164,
+      "usec": 170689
+    },
+    "candidates_orchard": {
+      "calls": 174,
+      "usec": 33382
+    },
+    "candidates_ranch": {
+      "calls": 176,
+      "usec": 20540
+    },
+    "commit_crop": {
+      "calls": 52,
+      "usec": 246
+    },
+    "commit_orchard": {
+      "calls": 103,
+      "usec": 7091
+    },
+    "commit_ranch": {
+      "calls": 81,
+      "usec": 7155
+    },
+    "next_wake_crop": {
+      "calls": 164,
+      "usec": 44953
+    },
+    "next_wake_orchard": {
+      "calls": 174,
+      "usec": 77989
+    },
+    "next_wake_ranch": {
+      "calls": 176,
+      "usec": 28445
+    },
+    "sync": {
+      "calls": 232,
+      "usec": 610547
+    },
+    "sync_farming": {
+      "calls": 232,
+      "usec": 300122
+    },
+    "sync_pens": {
+      "calls": 232,
+      "usec": 295094
+    },
+    "sync_weather": {
+      "calls": 232,
+      "usec": 14702
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 2.112,
+  "checkpoint_ms": 234.857,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 164,
+    "planting_usec": 10514
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 2.802,
+  "first_process_frame_ms": 0.273,
+  "frame_gap_max_ms": 315.459,
+  "frame_gap_p95_ms": 38.909,
+  "gap_seconds": 3600.0,
+  "load_game_ms": 1317.158,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 1061.405,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 30,
+  "read_validate_ms": 18.094,
+  "renderer": "headless",
+  "sampled_frame_intervals": 31,
+  "scene_setup_ms": 638.284,
+  "exit_code": 0,
+  "process_wall_ms": 3242.514764999214
+}

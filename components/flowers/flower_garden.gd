@@ -78,6 +78,8 @@ func _register_pots(parent: Node) -> void:
 
 func set_starter_content_locked(value: bool) -> void:
 	starter_content_locked = value
+	if apiary != null:
+		apiary.invalidate_sources()
 	if not is_node_ready() or Engine.is_editor_hint():
 		return
 	if _lock_notice == null:
@@ -134,6 +136,8 @@ func _schedule_pot(pot: FlowerPot) -> void:
 
 func _pot_changed(pot: FlowerPot) -> void:
 	_schedule_pot(pot)
+	if apiary != null:
+		apiary.invalidate_sources()
 	# Legacy migration runs during load/unlock only. Harvesting or clearing must
 	# leave this pot empty; pending legacy plants remain in capture().
 

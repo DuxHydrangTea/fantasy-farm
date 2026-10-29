@@ -126,7 +126,7 @@ func test_authored_board_and_worker_support_e_and_modal_lifecycle() -> void:
 	assert_false(service.record("orchard").is_empty())
 	menu.close(false)
 	assert_false(world.player.selection.is_menu_open())
-	var actor: WorkerActor = service.actors.orchard as WorkerActor
+	var actor: WorkerActor = service.actor_for("orchard")
 	var access: WorkerBoard = actor.get_node("ManagementSign") as WorkerBoard
 	world.player.global_position = actor.global_position + Vector2(0, 20)
 	assert_true(access.open_shop(world.player))
@@ -336,6 +336,38 @@ func test_finish_boundary_roundtrip_and_repeated_timestamp_collect_once() -> voi
 	service.advance(finish + 0.001)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 
+func test_budgeted_catch_up_yields_and_matches_synchronous_event_results() -> void:
+	assert_eq(service.hire("orchard"), "")
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	var until: float = now + 120.0
+	service.advance(until)
+	var expected: Dictionary = service.capture(until)
+	var warehouse: Dictionary = world.storages.capture()
+	var coins: int = world.player.wallet.balance
+	if not _restore_ok(adapter, checkpoint, now):
+		return
+	var clock_processing: bool = TimeManager.is_processing()
+	TimeManager.set_process(false)
+	var progress: Array[float] = []
+	var report: Callable = func(fraction: float) -> void:
+		progress.append(fraction)
+		assert_eq(TimeManager.now(), service.simulated_at, "Deferred notifications must see the current event time")
+	service.catch_up_progress.connect(report)
+	var frame: int = Engine.get_process_frames()
+	var simulation: float = TimeManager.simulation_timestamp
+	await service.advance_async(until, 1)
+	service.catch_up_progress.disconnect(report)
+	TimeManager.set_process(clock_processing)
+	assert_gt(Engine.get_process_frames(), frame, "Catch-up must allow frames to render")
+	assert_gt(progress.size(), 1)
+	assert_eq(progress.back(), 1.0)
+	assert_eq(TimeManager.simulation_timestamp, simulation)
+	assert_false(service.busy)
+	assert_eq(service.capture(until), expected, "Yielding must preserve event order and endpoint tasks")
+	assert_eq(world.storages.capture(), warehouse)
+	assert_eq(world.player.wallet.balance, coins)
+
 func test_dawn_boundary_and_repeated_timestamp_pay_once() -> void:
 	assert_eq(service.hire("orchard"), "")
 	var dawn: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
@@ -347,3 +379,226 @@ func test_dawn_boundary_and_repeated_timestamp_pay_once() -> void:
 	service.advance(dawn)
 	service.advance(dawn + 0.001)
 	assert_eq(world.player.wallet.balance, initial - int(WorkerRole.WAGES.orchard))
+
+func test_offline_async_empty_roster_finishes_a_long_gap_without_changing_economy() -> void:
+	var coins: int = world.player.wallet.balance
+	var warehouse: Dictionary = world.storages.capture()
+	var simulation: float = TimeManager.simulation_timestamp
+	var progress: Array[float] = []
+	var report: Callable = func(fraction: float) -> void: progress.append(fraction)
+	service.catch_up_progress.connect(report)
+	await service.advance_async(now + 365.0 * 86400.0, 1)
+	service.catch_up_progress.disconnect(report)
+	assert_eq(service.simulated_at, now + 365.0 * 86400.0)
+	assert_eq(progress, [1.0])
+	assert_eq(TimeManager.simulation_timestamp, simulation)
+	assert_eq(world.player.wallet.balance, coins)
+	assert_eq(world.storages.capture(), warehouse)
+	assert_false(service.busy)
+
+func test_offline_async_exact_finish_is_idempotent_and_restores_clock_scope() -> void:
+	assert_eq(service.hire("orchard"), "")
+	service.advance(now)
+	var finish: float = float(service.record("orchard").task.finish_at)
+	var processing: bool = TimeManager.is_processing()
+	TimeManager.set_process(false)
+	var simulation: float = TimeManager.simulation_timestamp
+	await service.advance_async(finish, 1)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
+	var task: Dictionary = service.record("orchard").task.duplicate(true)
+	await service.advance_async(finish, 1)
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
+	assert_eq(service.record("orchard").task, task)
+	assert_eq(TimeManager.simulation_timestamp, simulation)
+	assert_false(service.busy)
+	TimeManager.set_process(processing)
+
+func test_offline_async_full_warehouse_crosses_dawn_without_losing_yield_or_double_wages() -> void:
+	assert_eq(service.hire("orchard"), "")
+	var warehouse: InventoryComponent = service.output_inventory()
+	warehouse.add(APPLE, warehouse.capacity_for(APPLE) - 200)
+	world.player.wallet.set_balance(0)
+	var initial: int = warehouse.count_item(APPLE.item_id)
+	var dawn: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
+	var processing: bool = TimeManager.is_processing()
+	TimeManager.set_process(false)
+	await service.advance_async(dawn + 60.0, 1000)
+	assert_eq(warehouse.count_item(APPLE.item_id), initial, "A full batch must stay on its tree when storage cannot hold it")
+	assert_true((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit())
+	assert_false(service.record("orchard").active, "Insufficient wages pause the next shift")
+	assert_eq(world.player.wallet.balance, 0)
+	await service.advance_async(dawn + 60.0, 1)
+	assert_eq(warehouse.count_item(APPLE.item_id), initial)
+	assert_eq(world.player.wallet.balance, 0)
+	assert_false(service.busy)
+	TimeManager.set_process(processing)
+
+class PickupEventBridge extends WorkerWorldBridge:
+	var due: float = 0.0
+	var emitted: bool = false
+	var point: Vector2
+	func sync(timestamp: float, offline: bool = true) -> void:
+		super.sync(timestamp, offline)
+		if not emitted and timestamp >= due:
+			emitted = true
+			var pile: ItemPickup = preload("res://scenes/objects/item_pickup.tscn").instantiate() as ItemPickup
+			pile.item = APPLE
+			pile.amount = 7
+			pile.persistent_id = &"test_offline_event_pile"
+			world.add_child(pile)
+			pile.global_position = point
+
+func test_pickup_event_uses_logical_time_for_every_async_budget() -> void:
+	for tree: FruitTree in world.trees.trees.values():
+		tree.fruit_work = 0.0
+	assert_eq(service.hire("orchard"), "")
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	var expected: Dictionary = {}
+	var warehouse: Dictionary = {}
+	var old_processing: bool = TimeManager.is_processing()
+	TimeManager.set_process(false)
+	for budget: int in [0, 1, 1000, 32000]:
+		if not _restore_ok(adapter, checkpoint, now):
+			break
+		var probe: PickupEventBridge = PickupEventBridge.new(world)
+		probe.due = now + 30.0
+		probe.point = service.bridge.home("orchard") + Vector2(45, 30)
+		service.bridge = probe
+		if budget == 0:
+			service.advance(now + 180.0)
+			expected = service.capture(now + 180.0)
+			warehouse = world.storages.capture()
+		else:
+			await service.advance_async(now + 180.0, budget)
+			assert_eq(service.capture(now + 180.0), expected, "Pickup notifications must not depend on wall-clock chunk boundaries")
+			assert_eq(world.storages.capture(), warehouse)
+		assert_true(probe.emitted)
+		assert_eq(service.output_inventory().count_item(APPLE.item_id), 7)
+	TimeManager.set_process(old_processing)
+
+func test_deferred_soil_edges_preserve_moisture_state_and_final_terrain() -> void:
+	var farm: FarmingController = world.farming
+	var soil: Array = [
+		{"cell": [56, 22], "state": FarmingController.Soil.WET, "moisture": 10.0},
+		{"cell": [56, 23], "state": FarmingController.Soil.WET, "moisture": 20.0},
+		{"cell": [56, 24], "state": FarmingController.Soil.WET, "moisture": 30.0}]
+	farm.restore_soil(soil)
+	farm.evaporate_soil(15.0)
+	var expected: Array[Dictionary] = farm.capture_soil()
+	var tiles: Dictionary = {}
+	for cell: Vector2i in farm.wet_soil.get_used_cells():
+		tiles[cell] = farm.wet_soil.get_cell_atlas_coords(cell)
+	farm.restore_soil(soil)
+	farm.defer_soil_edges = true
+	farm.evaporate_soil(15.0)
+	assert_eq(farm.get_soil_state(Vector2i(56, 22)), FarmingController.Soil.DRY)
+	assert_eq(farm.get_soil_state(Vector2i(56, 23)), FarmingController.Soil.WET)
+	assert_eq(farm.capture_soil(), expected, "Only edge drawing may be deferred; moisture is committed at each event")
+	farm.defer_soil_edges = false
+	farm.flush_soil_edges()
+	for cell: Vector2i in farm.wet_soil.get_used_cells():
+		assert_eq(farm.wet_soil.get_cell_atlas_coords(cell), tiles[cell])
+
+func test_restoring_offline_replays_trees_with_workers_before_advancing_gardens_to_now() -> void:
+	assert_eq(service.hire("orchard"), "")
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var checkpoint: Dictionary = adapter.capture("worker_test", 1, now)
+	var until: float = now + 18000.0
+	service.advance(until)
+	var expected: Dictionary = world.storages.capture()
+	var workers: Dictionary = service.capture(until)
+	var trees: Array = world.trees.capture(until)
+	var old_processing: bool = TimeManager.is_processing()
+	TimeManager.set_process(false)
+	var restored: Dictionary = await adapter.restore_async(checkpoint, until)
+	TimeManager.set_process(old_processing)
+	assert_true(restored.ok, str(restored))
+	assert_eq(world.storages.capture(), expected)
+	assert_eq(service.capture(until), workers)
+	assert_eq(world.trees.capture(until), trees)
+
+func test_pollination_cache_rechecks_bloom_hive_moves_repairs_and_source_changes() -> void:
+	var apiary: ApiarySystem = world.apiary
+	apiary.begin_restore()
+	apiary.loading = false
+	var first: Beehive = apiary.create_hive(Vector2(5000, 5000), &"cache_a")
+	var second: Beehive = apiary.create_hive(Vector2(5008, 5000), &"cache_b")
+	var sources: Array[Dictionary] = [{"type": "sunflower", "name": "Sunflower", "point": Vector2(5001, 5000), "ready_at": now + 10.0}]
+	apiary._assign(sources, now)
+	assert_false(first.pollination.active())
+	apiary._assign(sources, now + 10.0)
+	assert_eq(first.pollination.source_id, "sunflower")
+	assert_false(second.pollination.active())
+	first.global_position += Vector2(1000, 0)
+	apiary._assign(sources, now + 10.0)
+	assert_false(first.pollination.active())
+	assert_true(second.pollination.active())
+	second.repaired = false
+	apiary._assign(sources, now + 10.0)
+	assert_false(second.pollination.active())
+	second.repaired = true
+	sources[0].point = first.global_position
+	apiary._assign(sources, now + 10.0)
+	assert_true(first.pollination.active())
+	assert_false(second.pollination.active())
+
+func test_flower_source_index_invalidates_on_restore_harvest_and_garden_lock() -> void:
+	var apiary: ApiarySystem = world.apiary
+	var farm: FarmingController = world.farming
+	var cell: Vector2i = Vector2i(56, 22)
+	var definition: CropDefinition = preload("res://crops/field/sunflower/sunflower.tres")
+	var garden: FlowerGarden = apiary.gardens[0]
+	garden.set_starter_content_locked(false)
+	var before: int = apiary._flowers().size()
+	farm.restore_crop(cell, definition, now - 1000.0, now - 1.0, 1.0, now)
+	assert_eq(apiary._flowers().size(), before + 1)
+	assert_true(farm.harvest(cell, service.output_inventory()))
+	assert_eq(apiary._flowers().size(), before)
+	garden.set_starter_content_locked(true)
+	assert_true(apiary._flowers().all(func(source: Dictionary) -> bool: return not source.has("garden")))
+	garden.set_starter_content_locked(false)
+	assert_eq(apiary._flowers().size(), before)
+
+
+func test_mature_timber_stump_still_crosses_offline_regrowth_boundary() -> void:
+	var rules: TreeDefinition
+	for definition: TreeDefinition in world.trees.definitions.values():
+		if definition.kind == TreeDefinition.Kind.TIMBER:
+			rules = definition
+			break
+	assert_not_null(rules)
+	var tree: TimberTree = world.trees.create_tree(Vector2i(68, 61), rules, now) as TimberTree
+	tree.growth_started_at = now - rules.growth_seconds - 1.0
+	tree.matures_at = now - 1.0
+	tree.last_at = now
+	tree.stump = true
+	tree.hits = rules.chop_hits
+	tree.regrow_at = now + 10.0
+	world.trees.advance(now + 11.0)
+	assert_false(tree.stump, "A mature stump still has a pending regrowth event")
+	assert_eq(tree.growth_started_at, now + 10.0)
+	assert_eq(tree.matures_at, now + 10.0 + rules.growth_seconds * 0.5)
+	assert_eq(tree.hits, 0)
+	world.trees.advance(tree.matures_at + 1.0)
+	assert_true(tree.is_mature())
+
+
+func test_pickup_commit_skips_a_queued_old_instance_of_the_restored_id() -> void:
+	var point: Vector2 = service.bridge.home("orchard") + Vector2(45, 30)
+	var old: ItemPickup = ItemPickup.create()
+	old.item = APPLE
+	old.amount = 0
+	old.persistent_id = &"restored_pickup_id"
+	world.add_child(old)
+	old.global_position = point
+	old.queue_free()
+	var fresh: ItemPickup = ItemPickup.create()
+	fresh.item = APPLE
+	fresh.amount = 7
+	fresh.persistent_id = &"restored_pickup_id"
+	world.add_child(fresh)
+	fresh.global_position = point
+	assert_true(service.bridge.commit({"role": "orchard", "zone": ""}, null, {"kind": "pickup", "id": "restored_pickup_id"}))
+	assert_eq(service.output_inventory().count_item(APPLE.item_id), 7)
+	assert_eq(fresh.amount, 0)

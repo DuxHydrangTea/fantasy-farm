@@ -43,7 +43,7 @@ func _run() -> void:
 	var menu: WorkerMenu = fixture.get("menu") as WorkerMenu
 	await _frames(12)
 	_layout(menu)
-	_check(menu.preview != (world.workers.actors.crop as WorkerActor).sprite and menu.preview.is_playing(), "Portrait animation is independent from actor")
+	_check(menu.preview != (world.workers.actor_for("crop")).sprite and menu.preview.is_playing(), "Portrait animation is independent from actor")
 	await _capture("crop-runtime-desktop-vi")
 	await _click(menu.auto_fertilize_button)
 	_check(not world.workers.crop_automation.auto_fertilize, "Mouse toggles fertilizer option")

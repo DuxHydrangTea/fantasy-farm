@@ -1,6 +1,20 @@
 # Crop worker v2 — tự cuốc, gieo lại và bón phân
 
-Đã triển khai ngày 25/10/2026, save **v26**. Đây là hướng dẫn hiện hành, thay thế phần giới hạn Crop v1 trong các tài liệu worker/kho cũ.
+Cơ chế tự cuốc/gieo/bón ra mắt ngày 25/10/2026 (save v26). Ngày 29/10/2026 đã mở rộng lên **5 nhân công trồng ruộng**, save **v36**. Đây là hướng dẫn hiện hành.
+
+## Đội trồng ruộng tối đa 5 người
+
+- Mở khóa ở 12 cột đất như trước. Nút **Thuê thêm** tuyển từng người tới 5/5; người nghỉ vì thiếu lương vẫn chiếm chỗ.
+- Mỗi người có số thứ tự ổn định, nhiệm vụ và ô vừa cuốc chờ gieo riêng. Cả đội tự chia việc trên ruộng đã mở, giữ chỗ theo ô/pickup và giữ phần hạt/phân đã nhận việc; trước khi làm vẫn kiểm tra vật tư thực tế.
+- Danh sách nhân công hiển thị trực tiếp ở cột trái, mỗi hàng có số thứ tự và việc đang làm. Người đang chọn được đánh dấu màu xanh; chọn một hàng để xem chi tiết ở cột giữa hoặc cho nghỉ đúng người. Trên cửa sổ nhỏ, danh sách cuộn riêng. Tương tác với NPC mở bảng đội và chọn sẵn NPC đó.
+- Cài đặt gieo, bón và tạm dừng áp dụng cho cả đội. Bảng hiển thị số đang làm/nghỉ, lương mỗi người và tổng lương hợp đồng.
+- Lương **2.800 xu/người/ngày**, tối đa **14.000 xu/ngày**. Chỉ ca đầu tiên của nghề trồng trọt được miễn phí một lần trong profile; người tiếp theo và người thuê lại trả lương ngày thuê.
+- Thiếu tiền tại bình minh: trả theo thứ tự thuê, chỉ người không được trả mới nghỉ. Tạm dừng đội vẫn trả lương.
+- Save v35 trở về trước được chuyển sang v36, giữ ID, người đang thuê, công việc, giỏ và cờ miễn phí. Không tự thuê thêm. Sau khi sa thải, chỗ đó được tái sử dụng khi thuê bù.
+
+Bản cập nhật danh sách hiển thị trực tiếp: [ảnh và kiểm chứng UI](worker_roster_2026-10-29/README.md).
+
+Báo cáo kiểm chứng và ảnh giao diện: [đội trồng ruộng 29/10/2026](crop_team_2026-10-29/README.md).
 
 ## Cách sử dụng
 
@@ -25,7 +39,7 @@ Worker làm một ô mỗi nhiệm vụ, độc lập nông cụ 6×6 của play
 
 Migration v25 → v26 thêm cấu hình tự động và lịch sử gieo hữu hạn theo ruộng, giữ nguyên kho và các hệ thống hiện có. Công việc cuốc/gieo/bón dùng chung timeline online/offline, tính cả di chuyển và thời gian làm; không cộng sản lượng trung bình hoặc bỏ qua vật tư. Không thêm node quản lý riêng cho mỗi ô. Giống G và túi player không bị đổi.
 
-## Kiểm chứng
+## Kiểm chứng bản tự động hóa ngày 25/10/2026
 
 - Hồi quy chọn lọc: **153/153 test, 2.430 assertions**, 19 script, bao gồm ba vai worker, kho, nông cụ, Chef, tutorial và save. Log: `.godot/crop-worker-regression-engine.log`.
 - Native trên **Compatibility và Forward+**: mỗi renderer **26/26 kiểm tra**, worker đi/làm thật trên map, gieo ba ô bằng hai giống, bón, thu và trồng lại. Kiểm tra nút tạm dừng/tiếp tục bằng cảm ứng ở 844×390. Dùng profile QA riêng, không sửa save cá nhân. Báo cáo và ảnh: `.godot/crop-worker-native/`.

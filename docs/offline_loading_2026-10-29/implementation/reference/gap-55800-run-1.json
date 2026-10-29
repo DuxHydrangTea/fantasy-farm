@@ -1,0 +1,91 @@
+{
+  "bridge_metrics": {
+    "candidates_crop": {
+      "calls": 3128,
+      "usec": 2643799
+    },
+    "candidates_orchard": {
+      "calls": 2844,
+      "usec": 620489
+    },
+    "candidates_ranch": {
+      "calls": 2989,
+      "usec": 398695
+    },
+    "commit_crop": {
+      "calls": 1603,
+      "usec": 1653452
+    },
+    "commit_orchard": {
+      "calls": 1340,
+      "usec": 95909
+    },
+    "commit_ranch": {
+      "calls": 1266,
+      "usec": 151059
+    },
+    "next_wake_crop": {
+      "calls": 3128,
+      "usec": 662629
+    },
+    "next_wake_orchard": {
+      "calls": 2844,
+      "usec": 1375825
+    },
+    "next_wake_ranch": {
+      "calls": 2989,
+      "usec": 506615
+    },
+    "sync": {
+      "calls": 4383,
+      "usec": 42024845
+    },
+    "sync_farming": {
+      "calls": 4383,
+      "usec": 35822032
+    },
+    "sync_pens": {
+      "calls": 4383,
+      "usec": 5773370
+    },
+    "sync_weather": {
+      "calls": 4383,
+      "usec": 415064
+    }
+  },
+  "budget_usec": 32000,
+  "catalog_ms": 2.444,
+  "checkpoint_ms": 735.188,
+  "clock_and_process_state_restored": true,
+  "counts": {
+    "animals": 48,
+    "crops": 396,
+    "trees": 306,
+    "workers": 3
+  },
+  "crop_policy_metrics": {
+    "fertilizer_calls": 0,
+    "fertilizer_usec": 0,
+    "planting_calls": 3128,
+    "planting_usec": 209977
+  },
+  "engine": "4.7.2-stable (official)",
+  "final_sync_ms": 1.907,
+  "first_process_frame_ms": 3.458,
+  "frame_gap_max_ms": 928.496,
+  "frame_gap_p95_ms": 45.79,
+  "gap_seconds": 55800.0,
+  "load_game_ms": 52243.483,
+  "note": "Headless process-frame timings are not native FPS or time to first visible frame. No profile is written.",
+  "ok": true,
+  "other_load_including_workers_and_yields_ms": 51414.396,
+  "progress_completed": true,
+  "progress_monotonic": true,
+  "progress_updates": 1325,
+  "read_validate_ms": 91.992,
+  "renderer": "headless",
+  "sampled_frame_intervals": 1326,
+  "scene_setup_ms": 1297.639,
+  "exit_code": 0,
+  "process_wall_ms": 55139.255303001846
+}

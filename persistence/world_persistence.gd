@@ -19,7 +19,11 @@ func _start() -> void:
 	_service = SaveManager
 	_build_notice()
 	_service.status_changed.connect(_notice)
-	await _service.bind_world(world)
+	TimeManager.set_process(true)
+	var result: Dictionary = await _service.bind_world(world)
+	if not result.ok:
+		_service.startup_error = GameText.error(result)
+		get_tree().call_deferred("change_scene_to_file", "res://world/start_menu.tscn")
 
 func _build_notice() -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
