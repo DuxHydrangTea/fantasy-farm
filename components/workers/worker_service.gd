@@ -564,3 +564,19 @@ func _crop_planted(cell: Vector2i, _crop: Crop) -> void:
 func _crop_harvested(cell: Vector2i) -> void:
 	crop_automation.forget_crop(cell)
 	request_scan("crop")
+
+func configure_wait_for_care(enabled: bool) -> bool:
+	if busy or not available():
+		return false
+	settle(world.farming.time_manager.now())
+	busy = true
+	crop_automation.wait_for_care = enabled
+	crop_automation.revision += 1
+	for row: Dictionary in records_for("crop"):
+		if not row.task.is_empty() and row.task.kind == "harvest":
+			row.task = {}
+		row.wake_at = world.farming.time_manager.now()
+	request_scan("crop")
+	changed.emit()
+	busy = false
+	return true

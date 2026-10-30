@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/support/farm_health_test_runner.gd" id="1"]
+
+[node name="FarmHealthRegressions" type="Node"]
+script = ExtResource("1")
+regressions = true

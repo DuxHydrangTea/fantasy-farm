@@ -153,7 +153,11 @@ func _refresh_feedback() -> void:
 	if not feedback.is_empty():
 		tooltip = tr(feedback)
 	elif item != null:
-		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else "Face an animal and right-click / Space to give tonic."
+		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind not in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else "Face an animal and right-click / Space to give tonic."
+		if item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE:
+			instruction = "Face a crop and right-click / Space to treat pests."
+		elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
+			instruction = "Face an animal and right-click / Space to cure disease."
 		tooltip = tr(item.description) + "\n" + tr(instruction)
 	if selected_name.tooltip_text != tooltip:
 		selected_name.tooltip_text = tooltip

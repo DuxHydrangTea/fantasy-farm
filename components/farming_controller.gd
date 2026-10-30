@@ -9,6 +9,7 @@ signal action_committed(condition: StringName, amount: int)
 signal crop_planted(cell: Vector2i, crop: Node2D)
 signal crop_harvested(cell: Vector2i)
 signal quality_harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, tier: int)
+signal crop_lost(inventory: InventoryComponent)
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent)
 
 enum Soil { UNTILLED, DRY, WET }
@@ -105,7 +106,7 @@ func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor
 
 func harvest_amount(cell: Vector2i) -> int:
 	var crop: Crop = get_crop(cell)
-	return fertility.amount(cell,crop.definition.harvest_amount) if crop != null else 0
+	return crop.conditions.amount(fertility.amount(cell,crop.definition.harvest_amount)) if crop != null else 0
 
 func can_harvest(cell: Vector2i) -> bool:
 	var crop: Crop = get_crop(cell)
@@ -133,16 +134,19 @@ func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 		return false
 	var origin: Vector2 = farmland.to_global(farmland.map_to_local(cell))
 	_harvesting = true
-	var accepted: int = inventory.add(produce, requested, crop.harvest_tier())
-	if accepted == 0:
+	var accepted: int = inventory.add(produce, requested, crop.harvest_tier()) if requested > 0 else 0
+	if accepted == 0 and requested > 0:
 		_harvesting = false
 		return false
 	_crops.erase(cell)
 	_growth.cancel(crop)
 	crop.retire_after_harvest()
 	crop_harvested.emit(cell)
-	harvest_yielded.emit(produce, accepted, origin, inventory)
-	quality_harvest_yielded.emit(produce, accepted, origin, inventory, crop.harvest_tier())
+	if requested == 0:
+		crop_lost.emit(inventory)
+	if accepted > 0:
+		harvest_yielded.emit(produce, accepted, origin, inventory)
+		quality_harvest_yielded.emit(produce, accepted, origin, inventory, crop.harvest_tier())
 	action_committed.emit(&"harvest", 1)
 	_harvesting = false
 	return true
@@ -227,13 +231,13 @@ func restore_soil(records: Array) -> void:
 	if not wet.is_empty():
 		wet_soil.set_cells_terrain_connect(wet, wet_terrain_set, wet_terrain, false)
 
-func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, deadline: float, progress: float, now: float, fertilized: bool = false, pollination_reduction: float = 0.0, watered: bool = false, root_boost: bool = false) -> void:
+func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, deadline: float, progress: float, now: float, fertilized: bool = false, pollination_reduction: float = 0.0, watered: bool = false, root_boost: bool = false, condition_data: Dictionary = {}) -> void:
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
 	crop.time_manager = time_manager
 	get_parent().add_child(crop)
 	var center: Vector2 = farmland.map_to_local(cell) + Vector2(0, farmland.tile_set.tile_size.y * 0.5)
 	crop.global_transform = farmland.global_transform * Transform2D(0.0, center)
-	crop.restore_progress(definition, planted, deadline, progress, now, fertilized, pollination_reduction, watered, root_boost)
+	crop.restore_progress(definition, planted, deadline, progress, now, fertilized, pollination_reduction, watered, root_boost, condition_data)
 	_schedule_crop(crop)
 	_crops[cell] = crop
 	if apiary != null:
@@ -514,3 +518,31 @@ func can_tool(cell: Vector2i, actor: PhysicsBody2D = null, inventory: InventoryC
 		var system: TreePlantation = (get_parent() as FarmWorld).trees
 		return system != null and system.can_dig(cell, inventory)
 	return false
+
+func care_error(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> String:
+	var crop: Crop = get_crop(cell)
+	if crop == null or time_manager == null or not _allowed(cell, &"can_plant", actor):
+		return "This plot is unavailable."
+	if actor != null:
+		var customer: FarmPlayer = actor as FarmPlayer
+		if customer == null or not InteractionTarget.new(crop, InteractionTarget.Kind.CROP, customer).reachable_from(actor.global_position):
+			return "Move closer to the crop."
+	crop.refresh(time_manager.now())
+	return "" if (crop.conditions.pests if pests else crop.conditions.weeds) else "This crop does not need that treatment."
+
+func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> bool:
+	if not care_error(cell, pests, actor).is_empty():
+		return false
+	var crop: Crop = get_crop(cell)
+	if pests:
+		crop.conditions.pests = false
+	else:
+		crop.conditions.weeds = false
+	crop._update_condition_visuals()
+	crop.conditions_changed.emit()
+	var world: FarmWorld = get_parent() as FarmWorld
+	if world != null and world.workers != null:
+		world.workers.request_scan("crop")
+	crop.react(7.0)
+	action_committed.emit(&"treat_pests" if pests else &"clear_weeds", 1)
+	return true

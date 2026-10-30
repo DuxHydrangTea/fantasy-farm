@@ -38,6 +38,10 @@ project/assembly_name="fantasy-farm"
 
 enabled=PackedStringArray("res://addons/godot_mcp_toolkit/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/scatter2d/plugin.cfg")
 
+[gameplay]
+
+offline_progress_enabled=false
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
@@ -185,7 +189,3 @@ locale/translations=PackedStringArray("res://localization/en.po", "res://localiz
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
-
-[gameplay]
-
-offline_progress_enabled=false

@@ -49,6 +49,8 @@
 [ext_resource type="Resource" path="res://items/trees/willow_sapling.tres" id="57_a1uk2"]
 [ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="78_2qwyu"]
 
+[ext_resource type="Resource" path="res://items/boosters/pesticide.tres" id="health_item"]
+
 [sub_resource type="Resource" id="Resource_6x1jo"]
 script = ExtResource("2_o2k04")
 item = ExtResource("3_iqk1g")
@@ -297,8 +299,14 @@ item = ExtResource("57_a1uk2")
 price = 25000
 category = 1
 
+[sub_resource type="Resource" id="health_offer"]
+script = ExtResource("2_o2k04")
+item = ExtResource("health_item")
+price = 120
+category = 1
+
 [resource]
 script = ExtResource("78_2qwyu")
 display_name = "Seed shop"
 category_ids = Array[int]([0, 1])
-offers = Array[ExtResource("2_o2k04")]([SubResource("Resource_6x1jo"), SubResource("Resource_5beii"), SubResource("Resource_sgrb8"), SubResource("Resource_s61nw"), SubResource("Resource_o8xeo"), SubResource("Resource_47mjr"), SubResource("Resource_tjh5r"), SubResource("Resource_p2rce"), SubResource("Resource_6sd6o"), SubResource("Resource_xckwf"), SubResource("Resource_mnk4a"), SubResource("Resource_4gbbk"), SubResource("Resource_5kb4u"), SubResource("Resource_1ii71"), SubResource("Resource_ox8jo"), SubResource("Resource_evtxl"), SubResource("Resource_rt4gc"), SubResource("Resource_p0d7f"), SubResource("Resource_la8hy"), SubResource("Resource_1fohw"), SubResource("Resource_rn706"), SubResource("Resource_8bu36"), SubResource("Resource_2vgl6"), SubResource("Resource_nojnk"), SubResource("Resource_k1erj"), SubResource("Resource_0i6wa"), SubResource("Resource_155aq"), SubResource("Resource_ofgex"), SubResource("Resource_o1wjd"), SubResource("Resource_j5nk4"), SubResource("Resource_qjf7j"), SubResource("Resource_ys0wb"), SubResource("Resource_dt8r0"), SubResource("Resource_82nq1"), SubResource("Resource_85xdg"), SubResource("Resource_mleay"), SubResource("Resource_6vni3"), SubResource("Resource_ouqtt"), SubResource("Resource_b8fma"), SubResource("Resource_ny67i"), SubResource("Resource_ldrqj"), SubResource("Resource_d8qsc"), SubResource("Resource_fk02m"), SubResource("Resource_usvbe"), SubResource("Resource_wv2k2")])
+offers = Array[ExtResource("2_o2k04")]([SubResource("health_offer"), SubResource("Resource_6x1jo"), SubResource("Resource_5beii"), SubResource("Resource_sgrb8"), SubResource("Resource_s61nw"), SubResource("Resource_o8xeo"), SubResource("Resource_47mjr"), SubResource("Resource_tjh5r"), SubResource("Resource_p2rce"), SubResource("Resource_6sd6o"), SubResource("Resource_xckwf"), SubResource("Resource_mnk4a"), SubResource("Resource_4gbbk"), SubResource("Resource_5kb4u"), SubResource("Resource_1ii71"), SubResource("Resource_ox8jo"), SubResource("Resource_evtxl"), SubResource("Resource_rt4gc"), SubResource("Resource_p0d7f"), SubResource("Resource_la8hy"), SubResource("Resource_1fohw"), SubResource("Resource_rn706"), SubResource("Resource_8bu36"), SubResource("Resource_2vgl6"), SubResource("Resource_nojnk"), SubResource("Resource_k1erj"), SubResource("Resource_0i6wa"), SubResource("Resource_155aq"), SubResource("Resource_ofgex"), SubResource("Resource_o1wjd"), SubResource("Resource_j5nk4"), SubResource("Resource_qjf7j"), SubResource("Resource_ys0wb"), SubResource("Resource_dt8r0"), SubResource("Resource_82nq1"), SubResource("Resource_85xdg"), SubResource("Resource_mleay"), SubResource("Resource_6vni3"), SubResource("Resource_ouqtt"), SubResource("Resource_b8fma"), SubResource("Resource_ny67i"), SubResource("Resource_ldrqj"), SubResource("Resource_d8qsc"), SubResource("Resource_fk02m"), SubResource("Resource_usvbe"), SubResource("Resource_wv2k2")])

@@ -1,7 +1,9 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 36
+const VERSION: int = 37
+const CropConditions = preload("res://components/crop_condition_state.gd")
+const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
@@ -65,7 +67,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -310,6 +312,23 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			if row.role == "crop" and row.get("employed", false) and not prepared.is_empty():
 				prepared_rows.append({"worker": row.get("id", ""), "cell": prepared.duplicate()})
 		data.workers.crop_automation.prepared = prepared_rows
+		data.version = 36
+	if data.get("version") == 36:
+		data = data.duplicate(true)
+		if not data.get("crops") is Array or not data.get("animals") is Array or not data.get("workers") is Dictionary or not data.workers.get("crop_automation") is Dictionary or not number(data.get("saved_at")):
+			return failure("Invalid legacy health state.")
+		for row: Variant in data.crops:
+			if not row is Dictionary:
+				return failure("Invalid crop.")
+			row["conditions"] = CropConditions.legacy()
+		for row: Variant in data.animals:
+			if not row is Dictionary or not row.get("id") is String:
+				return failure("Invalid animal.")
+			var health: AnimalHealth = AnimalHealth.new()
+			var juvenile: float = maxf(0.0, float(catalog.animals[row.animal].maturity_seconds) - float(row.age)) if catalog.animals.has(row.get("animal")) and number(row.get("age")) else 0.0
+			health.configure(float(data.saved_at), juvenile, int(hash(row.id)))
+			row["health"] = health.capture()
+		data.workers.crop_automation["wait_for_care"] = true
 		data.version = VERSION
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
@@ -423,6 +442,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	for row: Variant in data.crops:
 		if not row is Dictionary or not vector(row.get("cell"), true) or not catalog.crops.has(row.get("crop")) or not number(row.get("planted_at")) or not number(row.get("matures_at")) or not number(row.get("progress"), 0, 1):
 			return failure("Invalid crop.")
+		if not CropConditions.valid(row.get("conditions")):
+			return failure("Invalid crop condition state.")
 		if not number(row.get("pollination_reduction")):
 			return failure("Invalid crop pollination state.")
 		if not row.get("watered") is bool or not row.get("root_boost") is bool or (row.root_boost and not row.watered):
@@ -449,6 +470,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			return failure("Missing animal pen timestamp.")
 		if not ["left", "right", "up", "down"].has(row.get("facing")) or not number(row.get("age")) or not number(row.get("satiety"), 0, 100) or not number(row.get("hydration"), 0, 100) or not number(row.get("production_progress")) or not number(row.get("production_stock"), 0, 100000000, true) or not row.get("pickup") is String:
 			return failure("Invalid animal progress.")
+		if not AnimalHealth.valid(row.get("health")):
+			return failure("Invalid animal health state.")
 		if not row.get("juvenile_tonic_used") is bool or not row.get("tonic_pending") is bool:
 			return failure("Invalid animal tonic state.")
 		var maturity: float = catalog.animals[row.animal].maturity_seconds * (0.5 if row.juvenile_tonic_used else 1.0)

@@ -24,6 +24,7 @@ var _team_ids: Array[String] = []
 @onready var confirmation: VBoxContainer = %Confirmation
 @onready var confirm_button: Button = %ConfirmDismiss
 @onready var cancel_button: Button = %CancelDismiss
+var wait_care_button: Button
 var _confirm: bool = false
 var _dismiss_id: String = ""
 var _elapsed: float = 0.0
@@ -36,6 +37,13 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	wait_care_button = Button.new()
+	wait_care_button.name = "WaitForCare"
+	wait_care_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	wait_care_button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	wait_care_button.custom_minimum_size.y = 48
+	pause_crop_button.get_parent().add_child(wait_care_button)
+	wait_care_button.pressed.connect(_toggle_wait_for_care)
 	visit_started.connect(_visit)
 	models_changed.connect(_refresh)
 	root.resized.connect(_fit)
@@ -175,6 +183,10 @@ func _refresh() -> void:
 	auto_fertilize_button.set_pressed_no_signal(state.auto_fertilize)
 	auto_plant_button.text = tr("On" if state.auto_plant else "Off")
 	auto_fertilize_button.text = tr("On" if state.auto_fertilize else "Off")
+	wait_care_button.visible = role == "crop"
+	wait_care_button.disabled = not team_employed or not available
+	wait_care_button.text = tr("Wait for care: On" if state.wait_for_care else "Wait for care: Off")
+	wait_care_button.tooltip_text = tr("Affected crops wait for weeding or pesticide before workers harvest them.")
 	for button: Button in [auto_plant_button, auto_fertilize_button]:
 		button.disabled = not team_employed or not available
 	pause_crop_button.visible = role == "crop" and team_employed
@@ -277,6 +289,8 @@ func _task_text(service: WorkerService, row: Dictionary, employed: bool, paused:
 		return tr("Crop work is manually paused. Wages still apply.")
 	if bool(service.bridge.storage_waiting.get(role, false)):
 		return tr("Not enough warehouse space for harvest.")
+	if role == "crop" and service.crop_automation.wait_for_care and service.bridge.crop_care_waiting:
+		return tr("Waiting for weeding or pesticide.")
 	var task: Dictionary = row.get("task", {})
 	if role == "crop" and (task.is_empty() or task.get("kind", "") == "patrol"):
 		return tr(service.crop_policy.waiting) if not service.crop_policy.waiting.is_empty() else tr("Waiting for crop work.")
@@ -438,3 +452,8 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		status.text = ""
 		_refresh()
+
+func _toggle_wait_for_care() -> void:
+	if role == "crop" and world.workers.configure_wait_for_care(not world.workers.crop_automation.wait_for_care):
+		_refresh()
+		_save.call_deferred()

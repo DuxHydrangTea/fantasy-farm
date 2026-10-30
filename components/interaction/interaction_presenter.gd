@@ -106,9 +106,21 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		world_anchor = sprite.to_global(Vector2(local_rect.get_center().x,local_rect.position.y))
 		if target.kind in [InteractionTarget.Kind.CROP, InteractionTarget.Kind.FLOWER]:
 			_plant_anchor = target.node.to_local(world_anchor)
+	var popup: Node2D
+	if target.node is Crop:
+		popup = (target.node as Crop).condition_badges
+	elif target.node is AnimalActor:
+		popup = (target.node as AnimalActor).health_badges
+	var popup_rect: Rect2
+	if is_instance_valid(popup) and popup.is_visible_in_tree():
+		var local_popup: Rect2 = popup.visual_rect()
+		world_anchor = popup.to_global(Vector2(local_popup.get_center().x, local_popup.position.y))
+		var top_left: Vector2 = player.get_canvas_transform() * popup.to_global(local_popup.position) / scale - root.position
+		var bottom_right: Vector2 = player.get_canvas_transform() * popup.to_global(local_popup.end) / scale - root.position
+		popup_rect = Rect2(top_left, bottom_right - top_left).abs()
 	var screen: Vector2 = player.get_canvas_transform() * world_anchor / scale - root.position
 	var position: Vector2 = screen - Vector2(badge.size.x * 0.5,badge.size.y + 12)
-	badge.position = _place_badge(position,screen).round()
+	badge.position = _place_badge(position, screen, popup_rect).round()
 	badge.pivot_offset = Vector2(badge.size.x * 0.5, badge.size.y)
 	_shown_node = target.node
 	_shown_kind = target.kind
@@ -126,8 +138,10 @@ func _animate_entrance() -> void:
 	_entrance.tween_property(badge, "scale", Vector2(1.04, 1.04), 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	_entrance.chain().tween_property(badge, "scale", Vector2.ONE, 0.10).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-func _place_badge(preferred: Vector2, anchor: Vector2) -> Vector2:
+func _place_badge(preferred: Vector2, anchor: Vector2, popup_rect: Rect2 = Rect2()) -> Vector2:
 	var occupied: Array[Rect2] = []
+	if popup_rect.has_area():
+		occupied.append(popup_rect.grow(4.0))
 	if is_instance_valid(_hotbar) and _hotbar.root.visible:
 		occupied.append(_ui_rect(_hotbar.slots.get_parent() as Control,_hotbar).grow(8))
 	var world: FarmWorld = player.get_parent() as FarmWorld

@@ -41,7 +41,7 @@ func _crop_candidates(point: Vector2, hover: bool) -> Array[InteractionTarget]:
 				var crop: Crop = farm.get_crop(center + Vector2i(x,y))
 				if crop != null:
 					crop.refresh(farm.time_manager.now())
-					if crop.is_mature():
+					if crop.is_mature() or crop.conditions.affected():
 						result.append(InteractionTarget.new(crop, InteractionTarget.Kind.CROP, player))
 	for garden: Node in player.get_tree().get_nodes_in_group(&"flower_gardens"):
 		if not _same_world(garden):

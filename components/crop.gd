@@ -6,6 +6,11 @@ static var _quality_material: ParticleProcessMaterial
 static var _quality_texture: ImageTexture
 static var _silver_texture: ImageTexture
 
+const ConditionState = preload("res://components/crop_condition_state.gd")
+const Badges = preload("res://components/condition_badges.gd")
+var conditions: ConditionState = ConditionState.new()
+var condition_badges: Node2D
+signal conditions_changed
 signal matured
 var definition: CropDefinition
 var planted_at: float = 0.0
@@ -27,6 +32,9 @@ var _retiring: bool = false
 
 func _ready() -> void:
 	progress_frame.hide()
+	condition_badges = Badges.new()
+	add_child(condition_badges)
+	_update_condition_visuals()
 	_update_quality()
 	if is_instance_valid(motion):
 		motion.effect_finished.connect(_on_motion_finished)
@@ -54,6 +62,8 @@ func play_sprout() -> void:
 # The component reports completion; only the crop owns its lifetime.
 func retire_after_harvest() -> void:
 	_retiring = true
+	if condition_badges != null:
+		condition_badges.hide()
 	if quality_particles != null:
 		quality_particles.emitting = false
 		quality_particles.hide()
@@ -75,6 +85,7 @@ func get_status_sprite() -> Node2D:
 	return sprite
 
 func configure(crop: CropDefinition, timestamp: float) -> void:
+	conditions.configure()
 	progress = 0.0
 	stage = 0
 	watered = false
@@ -96,6 +107,7 @@ func refresh(timestamp: float) -> void:
 		return
 	var was_ready: bool = is_mature()
 	progress = maxf(progress, clampf((timestamp - planted_at) / (matures_at - planted_at), 0.0, 1.0))
+	conditions.advance(progress)
 	# Stage four is ready for harvest, reached exactly at the deadline.
 	stage = mini(3, int(floor(progress * 3.0)))
 	var texture: Texture2D = definition.stage_textures[stage]
@@ -109,6 +121,7 @@ func refresh(timestamp: float) -> void:
 		if _visible_tops.has(texture):
 			var visible_top: float = sprite.position.y - texture.get_height() * 0.5 + _visible_tops[texture]
 			progress_frame.position.y = visible_top - progress_frame.size.y - 2.0
+	_update_condition_visuals()
 	_update_quality()
 	progress_bar.value = progress
 	progress_bar.modulate = Color(1.0, 0.85, 0.35) if is_mature() else Color.WHITE
@@ -118,7 +131,8 @@ func refresh(timestamp: float) -> void:
 func is_mature() -> bool:
 	return progress >= 1.0
 
-func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float, was_fertilized: bool = false, bee_reduction: float = 0.0, was_watered: bool = false, was_root_boosted: bool = false) -> void:
+func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float, was_fertilized: bool = false, bee_reduction: float = 0.0, was_watered: bool = false, was_root_boosted: bool = false, condition_data: Dictionary = {}) -> void:
+	conditions.restore(condition_data if not condition_data.is_empty() else ConditionState.legacy())
 	definition = crop
 	planted_at = planted
 	matures_at = deadline
@@ -229,3 +243,21 @@ func _create_quality_particles() -> void:
 	quality_particles.texture = _quality_texture
 	quality_particles.process_material = _quality_material
 	add_child(quality_particles)
+
+func condition_summary() -> String:
+	var labels: PackedStringArray = []
+	if conditions.pests:
+		labels.append(tr("Pests"))
+	if conditions.weeds:
+		labels.append(tr("Weeds"))
+	if labels.is_empty():
+		return ""
+	return " · ".join(labels) + " · " + tr("Expected yield: {percent}%").format({"percent": roundi(conditions.multiplier() * 100.0)})
+
+func _update_condition_visuals() -> void:
+	if condition_badges == null:
+		return
+	# Leave room for the focused growth bar below the bubble's tail.
+	condition_badges.position = Vector2(0, progress_frame.position.y - 4)
+	condition_badges.set_statuses(conditions.pests, conditions.weeds, false)
+	condition_badges.visible = not _retiring and conditions.affected()

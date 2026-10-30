@@ -4,6 +4,9 @@ extends Node2D
 signal feedback_changed
 var player: FarmPlayer
 var service: BoosterService = BoosterService.new()
+var _crop: Crop
+var _weeding: bool = false
+var _weed_crop: Crop
 var _animal: AnimalActor
 var _cell: Vector2i
 var _item: ItemDefinition
@@ -42,19 +45,24 @@ func find_animal() -> AnimalActor:
 	return nearest
 
 func prepare_action() -> StringName:
+	_weeding = false
 	_pending = &""
 	_item = selected_booster()
 	if _item == null:
 		return &""
 	_slot = player.selection.selected_index
 	_cell = player.farming_actions.get_focused_cell()
-	_animal = find_animal() if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_TONIC else null
-	_pending = &"fertilize" if _item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else &"animal_tonic"
+	var farm: FarmingController = player.farming_actions.get_farming_controller()
+	_crop = farm.get_crop(_cell) if farm != null else null
+	_animal = find_animal() if _item.booster_kind in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else null
+	_pending = &"fertilize" if _item.booster_kind not in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else &"animal_tonic"
 	feedback_changed.emit()
 	return _pending
 
 func _state_changed(_old: StringName, current: StringName) -> void:
 	if current != &"tool":
+		_weeding = false
+		_weed_crop = null
 		_pending = &""
 		_animal = null
 
@@ -63,13 +71,28 @@ func _frame_changed() -> void:
 		return
 	var action: StringName = _pending
 	_pending = &""
+	if _weeding:
+		_weeding = false
+		if player.state.current_state == StateComponent.State.TOOL and player.state.active_action == &"fertilize" and not player.selection.is_menu_open() and is_instance_valid(_weed_crop):
+			var farm: FarmingController = player.farming_actions.get_farming_controller()
+			var target: InteractionTarget = InteractionTarget.new(_weed_crop, InteractionTarget.Kind.CROP, player)
+			var cell: Vector2i = farm.world_to_cell(target.point())
+			if farm.get_crop(cell) == _weed_crop and farm.treat_crop(cell, false, player):
+				_feedback = "Weeds cleared!"
+			else:
+				_feedback = "Move closer to the crop."
+			_feedback_until = Time.get_ticks_msec() + 1800
+		_weed_crop = null
+		return
 	if player.state.current_state != StateComponent.State.TOOL or player.state.active_action != action or player.selection.is_menu_open() or player.selection.selected_index != _slot or selected_booster() != _item:
 		return
+	if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE and (not is_instance_valid(_crop) or player.farming_actions.get_farming_controller().get_crop(_cell) != _crop):
+		return
 	if action == &"animal_tonic" and (not is_instance_valid(_animal) or find_animal() != _animal):
-		_feedback = "Face a nearby animal to use the tonic."
+		_feedback = "Face a nearby sick animal to use medicine." if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Face a nearby animal to use the tonic."
 	else:
 		var result: Dictionary = service.use(player.farming_actions.get_farming_controller(), _cell, _animal, player.selection.inventory, _slot, _item, player)
-		_feedback = "Booster applied!" if result.ok else String(result.error)
+		_feedback = ("Animal cured!" if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Pests removed!" if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE else "Booster applied!") if result.ok else String(result.error)
 	_feedback_until = Time.get_ticks_msec() + 1800
 
 func feedback_source() -> String:
@@ -79,3 +102,9 @@ func feedback_source() -> String:
 
 func feedback_expires_at() -> int:
 	return _feedback_until if player.selection.selected_index == _slot and not _feedback.is_empty() else 0
+
+func prepare_weeding(crop: Crop) -> void:
+	_weeding = true
+	_weed_crop = crop
+	_pending = &"fertilize"
+	_slot = player.selection.selected_index

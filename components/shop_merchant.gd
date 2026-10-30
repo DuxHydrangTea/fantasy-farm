@@ -70,12 +70,15 @@ func _process(_delta: float) -> void:
 			_refresh_prompt()
 
 func open_shop(customer: FarmPlayer) -> bool:
-	if customer.global_position.distance_to(interaction_position()) > 48.0 or customer.selection.is_menu_open():
+	if not is_within_interaction_range(customer) or customer.selection.is_menu_open():
 		return false
 	_player = customer
 	bubble.hide()
 	bubble_timer.stop()
 	return menu.open(self, customer)
+
+func is_within_interaction_range(customer: FarmPlayer) -> bool:
+	return customer.global_position.distance_to(interaction_position()) <= 48.0
 
 func thank_customer() -> void:
 	bubble_text.text = tr("Thank you!\nSee you again!")

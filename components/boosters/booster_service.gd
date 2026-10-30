@@ -19,16 +19,28 @@ func use(farm: FarmingController, cell: Vector2i, animal: AnimalActor, bag: Inve
 		error = farm.root_error(cell, actor) if is_instance_valid(farm) else "No crop to fertilize."
 		if error.is_empty():
 			applied = farm.apply_root(cell, actor)
+	elif item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE:
+		error = farm.care_error(cell, true, actor) if is_instance_valid(farm) else "This plot is unavailable."
+		if error.is_empty():
+			applied = farm.treat_crop(cell, true, actor)
 	else:
 		if is_instance_valid(animal) and not animal.is_queued_for_deletion():
 			# Never give an offline interval the benefit of a tonic applied afterward.
 			if animal.needs.time_manager != null:
 				animal.needs.update_at(animal.needs.time_manager.now())
-			error = animal.tonic_error()
-			if error.is_empty():
-				applied = animal.apply_tonic()
+			if item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE and (actor == null or actor.get_world_2d() != animal.get_world_2d() or actor.global_position.distance_to(animal.global_position) > 32.0):
+				error = "Move closer to the animal."
+			elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE and not actor.get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(actor.global_position, animal.global_position, 1, [actor.get_rid(), animal.get_rid()])).is_empty():
+				error = "Move closer to the animal."
+			elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
+				applied = animal.cure_disease()
+				error = "This animal is not sick." if not applied else ""
+			else:
+				error = animal.tonic_error()
+				if error.is_empty():
+					applied = animal.apply_tonic()
 		else:
-			error = "Face a nearby animal to use the tonic."
+			error = "Face a nearby sick animal to use medicine." if item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Face a nearby animal to use the tonic."
 	if applied:
 		bag.remove_from_slot(slot, 1)
 	_busy = false

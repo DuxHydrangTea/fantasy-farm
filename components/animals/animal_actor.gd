@@ -1,5 +1,9 @@
 class_name AnimalActor
 extends CharacterBody2D
+const HealthState = preload("res://components/animals/animal_health_state.gd")
+const HealthBadges = preload("res://components/condition_badges.gd")
+var health: HealthState = HealthState.new()
+var health_badges: Node2D
 signal died
 @export var collision: CollisionShape2D
 @export var needs_display: Node2D
@@ -51,11 +55,15 @@ func _ready() -> void:
 	wander.idle_seconds = definition.idle_seconds
 	wander.margin = maxf(definition.pen_margin, definition.footprint.length() * 0.5)
 	growth.configure(definition.maturity_seconds, initial_age_seconds, definition.lifespan_seconds)
+	health.configure(needs.updated_at(), growth.seconds_until_adult(), int(hash(String(persistent_id))))
+	health_badges = HealthBadges.new()
+	add_child(health_badges)
 	production.configure(definition.production)
 	growth.matured.connect(_on_matured)
 	production.produced.connect(_on_produced)
 	needs.time_advanced.connect(_advance_lifecycle)
 	_apply_stage_visuals()
+	_refresh_health_badges()
 	animation.play("idle")
 	foraging.configure(definition, needs, wander)
 	behaviour.configure(definition)
@@ -86,6 +94,8 @@ func _apply_stage_visuals() -> void:
 		var visible_rect: Rect2i = texture.get_image().get_used_rect()
 		sprite.position.y = texture.get_height() * 0.5 - visible_rect.end.y
 		needs_display.position.y = sprite.position.y - texture.get_height() * 0.5 + visible_rect.position.y - 18.0
+		if health_badges != null:
+			health_badges.position.y = needs_display.position.y + 14.0
 
 func _on_matured() -> void:
 	var frames: SpriteFrames = definition.get_frames_for_stage(true)
@@ -105,7 +115,10 @@ func _advance_lifecycle(timestamp: float, elapsed: float, supplied_seconds: floa
 	var rate: float = 1.0
 	if pen is PondPen and definition.eggs_on_land and needs.weather != null and needs.weather.weather_at(timestamp - elapsed) == WeatherSchedule.Weather.RAIN:
 		rate = 1.1
-	production.advance(maxf(0.0, minf(supplied_seconds, alive_seconds) - juvenile_seconds) * rate)
+	var start: float = timestamp - elapsed
+	var effective: float = health.advance(start, start + minf(elapsed, alive_seconds), start + juvenile_seconds, start + minf(supplied_seconds, alive_seconds))
+	production.advance(effective * rate)
+	_refresh_health_badges()
 	if growth.is_dead():
 		_die()
 
@@ -187,6 +200,11 @@ func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: Item
 	wander.movement.stop()
 	growth.configure(definition.maturity_seconds, float(data.age), definition.lifespan_seconds, bool(data.get("juvenile_tonic_used", false)))
 	production.restore_state(float(data.production_progress), int(data.production_stock), bool(data.get("tonic_pending", false)))
+	if data.has("health"):
+		health.restore(data.health)
+	else:
+		health.configure(saved_at, growth.seconds_until_adult(), int(hash(String(persistent_id))))
+	_refresh_health_badges()
 	needs.restore_state(float(data.satiety), float(data.hydration), saved_at)
 	_product_pickup = pile
 	if production.definition != null and production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.WORLD_DROP and production.stored_amount > 0:
@@ -201,6 +219,7 @@ func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: Item
 func _update_needs_display(food: float, water: float) -> void:
 	satiety_bar.value = food
 	hydration_bar.value = water
+	_refresh_health_badges()
 
 func set_status_focused(_value: bool) -> void:
 	# Legacy callers cannot expose world bars or stop behaviour.
@@ -224,3 +243,19 @@ func apply_tonic() -> bool:
 	if not tonic_error().is_empty():
 		return false
 	return production.apply_tonic() if growth.is_adult() else growth.apply_juvenile_tonic()
+
+func _refresh_health_badges() -> void:
+	if health_badges != null and definition != null:
+		# Warn at the same thresholds that make this species seek food/water.
+		# These presentation flags do not alter the production eligibility rules.
+		health_badges.set_statuses(false, false, health.sick, needs.satiety <= definition.food_seek_threshold, needs.hydration <= definition.water_seek_threshold)
+
+func cure_disease() -> bool:
+	if needs.time_manager != null:
+		needs.update_at(needs.time_manager.now())
+	if _retired or is_queued_for_deletion() or growth.is_dead():
+		return false
+	var timestamp: float = needs.updated_at()
+	var cured: bool = health.cure(timestamp)
+	_refresh_health_badges()
+	return cured

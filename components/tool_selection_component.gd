@@ -97,7 +97,7 @@ func get_selected_action() -> StringName:
 	if item != null and item.item_type == ItemDefinition.ItemType.PLACEABLE:
 		return &"place_beehive"
 	if item != null and item.item_type == ItemDefinition.ItemType.BOOSTER:
-		return &"fertilize" if item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_TONIC else &"animal_tonic"
+		return &"fertilize" if item.booster_kind not in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else &"animal_tonic"
 	if item != null and item.item_type == ItemDefinition.ItemType.SEED:
 		return &"plant"
 	if item != null and (item.item_type == ItemDefinition.ItemType.TOOL or item.item_type == ItemDefinition.ItemType.HOE):

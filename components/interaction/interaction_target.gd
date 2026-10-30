@@ -23,7 +23,7 @@ func valid() -> bool:
 			var animal: AnimalActor = node as AnimalActor
 			return not animal.is_dead() and animal.production.definition != null and animal.production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION and animal.production.stored_amount > 0
 		Kind.CROP:
-			return not (node as Crop).is_retiring() and (node as Crop).is_mature()
+			return not (node as Crop).is_retiring() and ((node as Crop).is_mature() or (node as Crop).conditions.affected())
 		Kind.FLOWER:
 			return (node as FlowerPot).is_mature()
 		Kind.TREE:
@@ -63,7 +63,11 @@ func sprite() -> Node2D:
 	return null
 
 func reachable_from(position: Vector2, facing: bool = false) -> bool:
-	if not valid() or position.distance_to(point()) > reach():
+	if not valid():
+		return false
+	if node is FarmStorageAccess:
+		return (node as FarmStorageAccess).can_reach(player)
+	if position.distance_to(point()) > reach():
 		return false
 	var offset: Vector2 = point() - position
 	if facing and not offset.is_zero_approx() and offset.normalized().dot(player.animation.facing_vector) < 0.35:
@@ -104,7 +108,14 @@ func action_text() -> String:
 		Kind.CROP:
 			var farm: FarmingController = player.farming_actions.get_farming_controller()
 			var cell: Vector2i = farm.world_to_cell(point())
-			return tr("Harvest crop") + (" · " + tr("Fertile soil: {amount} produce").format({"amount":farm.harvest_amount(cell)}) if farm.fertility.is_fertile(cell) else "")
+			var crop: Crop = node as Crop
+			var action: String = tr("Clear weeds") if crop.conditions.weeds else tr("Harvest crop") if crop.is_mature() else tr("Use pesticide")
+			if crop.is_mature() and crop.conditions.affected():
+				action += " · " + tr("Yield: {amount}").format({"amount": farm.harvest_amount(cell)})
+			var summary: String = crop.condition_summary()
+			if not summary.is_empty():
+				action += " · " + summary
+			return action + (" · " + tr("Fertile soil: {amount} produce").format({"amount":farm.harvest_amount(cell)}) if farm.fertility.is_fertile(cell) else "")
 		Kind.FLOWER: return tr("Harvest flowers")
 		Kind.TREE: return (node as PerennialTree).action_text(player.selection.get_selected_item())
 	return ""

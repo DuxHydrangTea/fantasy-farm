@@ -5,12 +5,13 @@ var revision: int = 0
 var auto_plant: bool = false
 var auto_fertilize: bool = false
 var paused: bool = false
+var wait_for_care: bool = true
 var prepared: Dictionary[String, Vector2i] = {}
 var sequence: int = 0
 var plots: Dictionary[Vector2i, Dictionary] = {}
 
 static func fresh() -> Dictionary:
-	return {"revision": 0, "auto_plant": false, "auto_fertilize": false, "paused": false, "prepared": [], "sequence": 0, "plots": []}
+	return {"revision": 0, "auto_plant": false, "auto_fertilize": false, "paused": false, "wait_for_care": true, "prepared": [], "sequence": 0, "plots": []}
 
 func capture() -> Dictionary:
 	var data: Dictionary = fresh()
@@ -18,6 +19,7 @@ func capture() -> Dictionary:
 	data.auto_plant = auto_plant
 	data.auto_fertilize = auto_fertilize
 	data.paused = paused
+	data.wait_for_care = wait_for_care
 	var ids: Array[String] = prepared.keys()
 	ids.sort()
 	for id: String in ids:
@@ -35,6 +37,7 @@ func restore(data: Dictionary) -> void:
 	auto_plant = data.auto_plant
 	auto_fertilize = data.auto_fertilize
 	paused = data.paused
+	wait_for_care = data.wait_for_care
 	sequence = int(data.sequence)
 	prepared.clear()
 	for row: Dictionary in data.prepared:
@@ -66,7 +69,7 @@ func clear_prepared(cell: Vector2i) -> void:
 			prepared.erase(id)
 
 static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
-	if not data is Dictionary or data.size() != 7 or not SaveSchema.number(data.get("revision"), 0, 1.0e12, true) or not data.get("auto_plant") is bool or not data.get("auto_fertilize") is bool or not data.get("paused") is bool or not SaveSchema.number(data.get("sequence"), 0, 1.0e12, true) or not data.get("prepared") is Array or not data.get("plots") is Array or data.plots.size() > LandExpansionState.REGION.get_area():
+	if not data is Dictionary or data.size() != 8 or not data.get("wait_for_care") is bool or not SaveSchema.number(data.get("revision"), 0, 1.0e12, true) or not data.get("auto_plant") is bool or not data.get("auto_fertilize") is bool or not data.get("paused") is bool or not SaveSchema.number(data.get("sequence"), 0, 1.0e12, true) or not data.get("prepared") is Array or not data.get("plots") is Array or data.plots.size() > LandExpansionState.REGION.get_area():
 		return false
 	if data.prepared.size() > 5:
 		return false

@@ -14,6 +14,8 @@
 [ext_resource type="Resource" uid="uid://btwdtqq0ewgad" path="res://items/boosters/animal_tonic.tres" id="12_ces6m"]
 [ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="13_o0s8t"]
 
+[ext_resource type="Resource" path="res://items/boosters/animal_medicine.tres" id="health_item"]
+
 [sub_resource type="Resource" id="Resource_hwc11"]
 script = ExtResource("9_w6m0o")
 item = ExtResource("10_frju6")
@@ -32,9 +34,15 @@ item = ExtResource("12_ces6m")
 price = 3
 category = 1
 
+[sub_resource type="Resource" id="health_offer"]
+script = ExtResource("9_w6m0o")
+item = ExtResource("health_item")
+price = 180
+category = 1
+
 [resource]
 script = ExtResource("13_o0s8t")
 display_name = "Animal shop"
 category_ids = Array[int]([3, 4, 1])
-offers = Array[ExtResource("9_w6m0o")]([SubResource("Resource_hwc11"), SubResource("Resource_idjwa"), SubResource("Resource_dq4je")])
+offers = Array[ExtResource("9_w6m0o")]([SubResource("health_offer"), SubResource("Resource_hwc11"), SubResource("Resource_idjwa"), SubResource("Resource_dq4je")])
 animal_offers = Array[ExtResource("1_nx1d4")]([ExtResource("2_wfh1r"), ExtResource("3_si7x6"), ExtResource("4_sd1yl"), ExtResource("5_fduly"), ExtResource("6_r622f"), ExtResource("7_ity3k"), ExtResource("8_3obol")])

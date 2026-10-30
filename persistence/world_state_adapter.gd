@@ -115,7 +115,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	for cell: Vector2i in farm.crop_cells():
 		var crop: Crop = farm.get_crop(cell)
 		crop.refresh(now)
-		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress, "watered": crop.watered, "root_boost": crop.root_boost, "fertilized": crop.fertilized,"pollination_reduction":crop.pollination_reduction})
+		data.crops.append({"cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "matures_at": crop.matures_at, "progress": crop.progress, "watered": crop.watered, "root_boost": crop.root_boost, "fertilized": crop.fertilized,"pollination_reduction":crop.pollination_reduction, "conditions": crop.conditions.capture()})
 	for animal: AnimalActor in animals:
 		if animal.is_dead() or animal.is_queued_for_deletion():
 			continue # Sync above may have reached the lifetime limit in this very capture.
@@ -123,7 +123,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 		data.animals.append({"id": _id(animal), "pen": _id(animal.pen), "position": _pair(animal.pen.to_local(animal.global_position)), "animal": String(animal.definition.animal_id),
 			"skin": catalog.skin_id(animal.skin_frames), "facing": String(animal.animation.facing_direction), "age": animal.growth.age_seconds,
 			"satiety": animal.needs.satiety, "hydration": animal.needs.hydration, "production_progress": animal.production.progress_seconds, "production_stock": animal.production.stored_amount,
-			"pickup": _id(pile) if pile != null else "", "juvenile_tonic_used": animal.growth.juvenile_tonic_used, "tonic_pending": animal.production.tonic_pending})
+			"pickup": _id(pile) if pile != null else "", "juvenile_tonic_used": animal.growth.juvenile_tonic_used, "tonic_pending": animal.production.tonic_pending, "health": animal.health.capture()})
 	for trough: AnimalTrough in entities.troughs:
 		data.troughs.append({"id": _id(trough), "pen": _id(trough.pen), "position": _pair(trough.pen.to_local(trough.global_position)), "stock": trough.stock, "feed_reserve": trough.feed_reserve, "consumed_fraction": trough.consumed_fraction})
 	for pile: ItemPickup in entities.pickups:
@@ -362,7 +362,7 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	farm.restore_soil(data.soil)
 	world.weather.advance(float(data.saved_at))
 	for row: Dictionary in data.crops:
-		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction), bool(row.watered), bool(row.root_boost))
+		farm.restore_crop(_cell(row.cell), catalog.crops[row.crop], row.planted_at, row.matures_at, row.progress, float(data.saved_at), bool(row.fertilized), float(row.pollination_reduction), bool(row.watered), bool(row.root_boost), row.conditions)
 	world.apiary.restore(data.beehives,float(data.saved_at),float(data.saved_at))
 	if world.trees != null:
 		world.trees.restore(data.trees, float(data.saved_at))

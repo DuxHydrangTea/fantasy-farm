@@ -1,6 +1,7 @@
 class_name WorkerWorldBridge
 extends RefCounted
 ## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
+var crop_care_waiting: bool = false
 var world: FarmWorld
 var storage_waiting: Dictionary = {}
 var _pen_cache: Dictionary = {}
@@ -63,6 +64,8 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 	var capacities: Dictionary = {}
 	storage_waiting[row.role] = false
 	var tasks: Array[Dictionary] = []
+	if row.role == "crop":
+		crop_care_waiting = false
 	if row.role == "orchard":
 		for tree: PerennialTree in world.trees.trees.values():
 			if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
@@ -83,6 +86,9 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 			if not world.land.state.is_unlocked(cell) or not world.workers.target_available(row, world.workers.crop_policy.task("water_crop", cell, 1)):
 				continue
 			var kind: String = ""
+			if crop.is_mature() and crop.conditions.affected() and world.workers.crop_automation.wait_for_care:
+				crop_care_waiting = true
+				continue
 			if crop.is_mature():
 				if _capacity(output_inventory, crop.definition.harvest_item, capacities) >= world.farming.harvest_amount(cell):
 					kind = "harvest"
@@ -179,6 +185,9 @@ func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task:
 			var tree: FruitTree = world.trees.trees.get(Vector2i(int(task.cell[0]), int(task.cell[1]))) as FruitTree
 			return tree != null and tree.harvest(output_inventory)
 		"harvest":
+			var crop: Crop = world.farming.get_crop(Vector2i(int(task.cell[0]), int(task.cell[1])))
+			if crop != null and crop.conditions.affected() and world.workers.crop_automation.wait_for_care:
+				return false
 			return world.farming.harvest(Vector2i(int(task.cell[0]), int(task.cell[1])), output_inventory)
 		"pickup":
 			for node: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):

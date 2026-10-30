@@ -16,6 +16,9 @@ var _feedback_until: int = 0:
 		feedback_changed.emit()
 
 func _ready() -> void:
+	var farm: FarmingController = player.farming_actions.get_farming_controller()
+	if farm != null:
+		farm.crop_lost.connect(_crop_lost)
 	resolver = InteractionResolver.new(player)
 	presenter = InteractionPresenter.new()
 	presenter.player = player
@@ -139,6 +142,16 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 			animal.collect_produce(player.selection.inventory)
 			return true
 		InteractionTarget.Kind.CROP:
+			var crop: Crop = target.node as Crop
+			if crop.conditions.weeds:
+				player.state.boosters.prepare_weeding(crop)
+				player.state.active_action = &"fertilize"
+				player.state.transition_to(StateComponent.State.TOOL)
+				return true
+			if not crop.is_mature():
+				_feedback = "Select pesticide and use it on this crop."
+				_feedback_until = Time.get_ticks_msec() + 1800
+				return true
 			player.state.active_action = &"harvest"
 			player.state.transition_to(StateComponent.State.TOOL)
 			return true
@@ -155,3 +168,8 @@ func feedback_source() -> String:
 
 func feedback_expires_at() -> int:
 	return _feedback_until if not _feedback.is_empty() else 0
+
+func _crop_lost(inventory: InventoryComponent) -> void:
+	if inventory == player.selection.inventory:
+		_feedback = "Crop lost to pests or weeds."
+		_feedback_until = Time.get_ticks_msec() + 1800

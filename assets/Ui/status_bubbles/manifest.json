@@ -1,0 +1,61 @@
+{
+  "status": "approved_and_integrated",
+  "generated_with": "PixelLab Pixen",
+  "generations_used": 5,
+  "hungry_alternate_job": "ca05bb36-8fa9-4c0b-a161-011da69a869c",
+  "grass_source": {
+    "path": "assets/Outdoor decoration/Outdoor_Decor.png",
+    "region": [
+      96,
+      32,
+      16,
+      16
+    ]
+  },
+  "icons": {
+    "worm": {
+      "job_id": "734a7bd3-59de-43d5-bb7f-a03393c2611a",
+      "seed": 1271,
+      "size": [
+        16,
+        16
+      ],
+      "path": "raw/worm_16.png"
+    },
+    "sick": {
+      "job_id": "2afc7383-cfcb-42da-8ee6-b88a1d3eddcf",
+      "seed": 1272,
+      "size": [
+        16,
+        16
+      ],
+      "path": "raw/sick_16.png"
+    },
+    "hungry": {
+      "job_id": "aea12ab1-2a1d-416e-bb35-37853aeed073",
+      "seed": 1283,
+      "size": [
+        16,
+        16
+      ],
+      "path": "raw/hungry_16.png"
+    },
+    "thirsty": {
+      "job_id": "029d5235-d426-4c0f-b385-dff670aded48",
+      "seed": 1274,
+      "size": [
+        16,
+        16
+      ],
+      "path": "raw/thirsty_16.png"
+    }
+  },
+  "bubble_native_single": [
+    28,
+    27
+  ],
+  "approved_on": "2026-10-30",
+  "production_assets": "assets/Ui/status_bubbles",
+  "additional_generations_used": 0,
+  "source_concept": "docs/status_bubble_concepts_2026-10-30"
+}

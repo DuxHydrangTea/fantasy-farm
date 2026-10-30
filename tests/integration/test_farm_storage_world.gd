@@ -41,6 +41,31 @@ func test_seed_storage_doorway_is_reachable() -> void:
 	assert_true(access.can_reach(world.player), "Seed storage must be reachable from in front of the door")
 	assert_true(access.open_shop(world.player), "Seed storage menu must open from its doorway")
 
+func test_storage_areas_replace_point_radius_for_both_warehouses() -> void:
+	for id: String in ["farm_supply_storage", "produce_warehouse"]:
+		var access: FarmStorageAccess = world.storage_accesses[id]
+		var target: InteractionTarget = InteractionTarget.new(access, InteractionTarget.Kind.MERCHANT, world.player)
+		assert_not_null(access.interaction_area)
+		world.player.global_position = access.global_position + Vector2(38, 36)
+		assert_gt(world.player.global_position.distance_to(access.interaction_position()), 48.0)
+		assert_true(access.can_reach(world.player), "Area corners must work beyond the old point radius")
+		assert_true(target.reachable_from(world.player.global_position, true), "E and click use the same area")
+		assert_eq(world.player.shop_interaction.nearest_merchant(), access)
+		assert_true(world.player.interactions.press())
+		assert_true(access.menu.is_open, "E opens the storage inside the area")
+		access.menu.close(false)
+		assert_true(world.player.interactions.click(access.interaction_sprite().global_position))
+		assert_true(access.menu.is_open, "Click opens the storage without approaching its old point radius")
+		world.player.global_position = access.global_position + Vector2(0, -24)
+		access.menu._process(0.3)
+		assert_false(access.menu.is_open, "Leaving the area closes the storage")
+		assert_false(access.can_reach(world.player), "Behind the entrance is outside the area")
+		assert_false(target.reachable_from(world.player.global_position))
+		assert_false(access.open_shop(world.player))
+		world.player.global_position = access.global_position + Vector2(0, 46)
+		assert_false(access.can_reach(world.player), "Being within the old radius cannot bypass the area")
+		assert_false(target.reachable_from(world.player.global_position))
+
 func test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var now: float = world.farming.time_manager.now()

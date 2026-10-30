@@ -43,7 +43,11 @@ func production_state(animal: AnimalActor) -> String:
 	if animal.needs.hydration <= 0.0:
 		reasons.append(tr("Needs water"))
 	if not reasons.is_empty():
+		if animal.health.sick:
+			reasons.append(tr("Sick"))
 		return tr("Paused: {reasons}").format({"reasons": tr(" · ").join(reasons)})
+	if animal.health.sick:
+		return tr("Sick · Production speed: {percent}%").format({"percent": roundi(float(animal.health.RULES.sick_production_rate) * 100.0)})
 	if animal.needs.weather != null and animal.needs.time_manager != null:
 		var weather: int = animal.needs.weather.weather_at(animal.needs.time_manager.now())
 		if weather == WeatherSchedule.Weather.RAIN and animal.pen is PondPen and animal.definition.eggs_on_land:

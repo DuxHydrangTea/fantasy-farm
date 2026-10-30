@@ -5,10 +5,12 @@ var active_shop: TradeMenu
 
 func nearest_merchant() -> ShopMerchant:
 	var nearest: ShopMerchant
-	var distance: float = 48.0 * 48.0
+	var distance: float = INF
 	for node: Node in get_tree().get_nodes_in_group(&"shop_merchants"):
 		var merchant: ShopMerchant = node as ShopMerchant
 		if merchant == null or merchant.is_queued_for_deletion() or not merchant.is_visible_in_tree():
+			continue
+		if not merchant.is_within_interaction_range(player):
 			continue
 		var squared: float = player.global_position.distance_squared_to(merchant.interaction_position())
 		if squared <= distance:
