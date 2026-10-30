@@ -311,7 +311,7 @@ func blocked(role: String, now: float) -> void:
 	if attempt <= 4:
 		var offsets: Array[Vector2] = [Vector2(20, 0), Vector2(-20, 0), Vector2(0, 20), Vector2(0, -20)]
 		var point: Vector2 = WorkerRole.point(task.base_point) + offsets[attempt - 1]
-		if bridge.zone_contains(row, point):
+		if String(task.get("kind", "")) == "patrol" or bridge.zone_contains(row, point):
 			task.point = WorkerRole.pair(point)
 			task.attempt = attempt
 			task.finish_at = now + WorkerRole.point(row.position).distance_to(point) / (actor_for(role) as WorkerActor).movement.speed + (actor_for(role) as WorkerActor).definition.work_seconds
@@ -380,8 +380,9 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 				var chosen: Dictionary = WorkerRole.choose(options, WorkerRole.point(row.position))
 				var wake: float = bridge.next_wake(row, feed_inventory(row.id), simulated_at)
 				if chosen.is_empty():
-					chosen = {"kind": "patrol", "id": "patrol", "point": WorkerRole.pair(bridge.patrol_point(row)), "priority": 9}
-				if not chosen.is_empty() and bridge.zone_contains(row, WorkerRole.point(chosen.point)):
+					var stroll: Vector2 = bridge.patrol_point(row)
+					chosen = {"kind": "patrol", "id": "patrol:%d_%d" % [roundi(stroll.x), roundi(stroll.y)], "point": WorkerRole.pair(stroll), "priority": 9}
+				if not chosen.is_empty() and (String(chosen.get("kind", "")) == "patrol" or bridge.zone_contains(row, WorkerRole.point(chosen.point))):
 					chosen["base_point"] = chosen.point.duplicate()
 					chosen["attempt"] = 0
 					chosen["work_at"] = simulated_at + WorkerRole.point(row.position).distance_to(WorkerRole.point(chosen.point)) / actor.movement.speed + actor.movement.speed / actor.movement.acceleration

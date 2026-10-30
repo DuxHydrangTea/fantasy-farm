@@ -25,7 +25,7 @@ func before_each() -> void:
 	service = world.workers
 	assert_eq(service.hire("crop"), "")
 	for pile: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
-		pile.queue_free()
+		pile.free()
 
 func after_each() -> void:
 	world.farming.time_manager.clock_source = original_clock
@@ -94,3 +94,11 @@ func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
 	service.bridge.stroll_rng.seed = 777
 	var point: Vector2 = service.bridge.patrol_point(row)
 	assert_true(service.bridge.zone_contains(row, point))
+
+func test_idle_worker_patrols_outside_their_zone() -> void:
+	_shrink_camera_to_village()
+	service.bridge.stroll_rng.seed = 999
+	service.advance(now + 0.5)
+	var task: Dictionary = service.record("crop").task
+	assert_eq(String(task.get("kind")), "patrol")
+	assert_false(service.bridge.zone_contains(service.record("crop"), WorkerRole.point(task.point)))
