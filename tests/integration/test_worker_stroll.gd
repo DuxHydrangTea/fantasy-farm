@@ -59,7 +59,6 @@ func test_stroll_point_stays_within_camera_bounds_and_outside_zone() -> void:
 	await _enable_physics()
 	await _freeze_physics()
 	var row: Dictionary = service.record("crop")
-	service.bridge.stroll_rng.seed = 12345
 	var point: Vector2 = service.bridge.patrol_point(row)
 	var camera: Camera2D = world.player.camera
 	assert_true(point.x >= float(camera.limit_left) and point.x <= float(camera.limit_right))
@@ -71,7 +70,6 @@ func test_stroll_avoids_recently_blocked_target() -> void:
 	await _enable_physics()
 	await _freeze_physics()
 	var row: Dictionary = service.record("crop")
-	service.bridge.stroll_rng.seed = 4242
 	var first: Vector2 = service.bridge.patrol_point(row)
 	var key: String = "%s:patrol:%d_%d" % [String(row.id), roundi(first.x), roundi(first.y)]
 	service.blocked_targets[key] = world.farming.time_manager.now() + 120.0
@@ -91,14 +89,38 @@ func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
 	var center: Vector2 = Vector2(camera.limit_left, camera.limit_top) + Vector2(30, 30)
 	actor.global_position = center
 	row.position = WorkerRole.pair(center)
-	service.bridge.stroll_rng.seed = 777
 	var point: Vector2 = service.bridge.patrol_point(row)
 	assert_true(service.bridge.zone_contains(row, point))
 
 func test_idle_worker_patrols_outside_their_zone() -> void:
 	_shrink_camera_to_village()
-	service.bridge.stroll_rng.seed = 999
 	service.advance(now + 0.5)
 	var task: Dictionary = service.record("crop").task
 	assert_eq(String(task.get("kind")), "patrol")
 	assert_false(service.bridge.zone_contains(service.record("crop"), WorkerRole.point(task.point)))
+
+func test_rest_between_strolls_is_one_to_three_seconds() -> void:
+	var rest: float = service.bridge.rest_seconds(service.record("crop"))
+	assert_true(rest >= 1.0 and rest <= 3.0)
+
+func test_worker_rests_between_strolls_after_commit() -> void:
+	_shrink_camera_to_village()
+	var t: float = now + 0.5
+	var found: bool = false
+	for step: int in range(400):
+		t += 1.0
+		service.advance(t)
+		var row: Dictionary = service.record("crop")
+		if row.task.is_empty() and float(row.wake_at) > t:
+			found = true
+			break
+	assert_true(found, "After a stroll commits, the worker rests with wake_at 1-3s ahead")
+
+func test_save_schema_accepts_out_of_zone_patrol_task() -> void:
+	_shrink_camera_to_village()
+	service.advance(now + 0.5)
+	clock[0] = now + 0.5
+	var catalog: SaveCatalog = SaveCatalog.new()
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, catalog)
+	var snapshot: Dictionary = adapter.capture("stroll_test", 1, world.farming.time_manager.now())
+	assert_true(SaveSchema.validate(snapshot, catalog).ok)

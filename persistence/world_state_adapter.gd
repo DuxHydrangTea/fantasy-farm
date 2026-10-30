@@ -180,9 +180,11 @@ func preflight(data: Dictionary) -> Dictionary:
 		var worker_position: Vector2 = WorkerRole.point(row.position)
 		var camera: Camera2D = world.player.camera
 		var world_bounds: Rect2 = Rect2(Vector2(camera.limit_left, camera.limit_top), Vector2(camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top))
-		if not (world_bounds.has_point(worker_position) if row.role == "ranch" else world.workers.bridge.zone_contains(row, worker_position, int(data.land_columns))):
+		# Strolling workers legitimately stand and target anywhere in the world;
+		# only work targets must stay inside the worker's own zone.
+		if not world_bounds.has_point(worker_position):
 			return SaveSchema.failure("Invalid worker position.")
-		if not row.task.is_empty() and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
+		if not row.task.is_empty() and String(row.task.get("kind", "")) != "patrol" and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
 			return SaveSchema.failure("Invalid worker target.")
 	if world.wood_market == null or world.wood_market.busy:
 		return SaveSchema.failure("A wood purchase is in progress.", "busy")

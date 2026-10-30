@@ -292,6 +292,8 @@ func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) ->
 
 ## An idle stroll target anywhere the worker fits, minus recently failed spots.
 ## A physics query per candidate at pick time; no map-wide scan or cache.
+## The rng is re-seeded per call from worker id + event time so the single-jump
+## and stepwise simulations propose identical candidates from the same state.
 func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
 	if actor == null:
 		return Vector2.INF
@@ -299,6 +301,7 @@ func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
 	var bounds: Rect2 = Rect2(float(camera.limit_left), float(camera.limit_top), float(camera.limit_right - camera.limit_left), float(camera.limit_bottom - camera.limit_top)).grow(-24.0)
 	if bounds.size.x <= 0.0 or bounds.size.y <= 0.0:
 		return Vector2.INF
+	stroll_rng.seed = hash("%s|%.9f" % [String(row.id), world.workers.simulated_at])
 	var now: float = world.farming.time_manager.now()
 	for attempt: int in range(STROLL_ATTEMPTS):
 		var point: Vector2 = Vector2(stroll_rng.randf_range(bounds.position.x, bounds.end.x), stroll_rng.randf_range(bounds.position.y, bounds.end.y))
@@ -324,7 +327,8 @@ func _stroll_clear(point: Vector2, actor: WorkerActor) -> bool:
 	query.margin = 0.25
 	return actor.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
-func rest_seconds() -> float:
+func rest_seconds(row: Dictionary) -> float:
+	stroll_rng.seed = hash("%s|rest|%.9f" % [String(row.id), world.workers.simulated_at])
 	return stroll_rng.randf_range(1.0, 3.0)
 
 func patrol_point(row: Dictionary) -> Vector2:
