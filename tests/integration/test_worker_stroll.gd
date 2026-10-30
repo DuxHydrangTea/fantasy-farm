@@ -1,0 +1,96 @@
+extends GutTest
+const WORLD: PackedScene = preload("res://world/main_world.tscn")
+var world: FarmWorld
+var service: WorkerService
+var clock: Array[float]
+var now: float
+var original_clock: Callable
+var original_clock_floor: float
+
+func before_each() -> void:
+	original_clock = TimeManager.clock_source
+	original_clock_floor = TimeManager._last_timestamp
+	world = WORLD.instantiate() as FarmWorld
+	world.process_mode = Node.PROCESS_MODE_DISABLED
+	add_child_autofree(world)
+	world.tool_upgrades.profile_ready = true
+	world.land.state.restore_columns(12, 4)
+	world.player.wallet.set_balance(1000000)
+	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
+	now = world.farming.time_manager.now()
+	clock = [now]
+	var manual_clock: Array[float] = clock
+	world.farming.time_manager.clock_source = func() -> float: return manual_clock[0]
+	world.farming.restore_soil([])
+	service = world.workers
+	assert_eq(service.hire("crop"), "")
+	for pile: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
+		pile.queue_free()
+
+func after_each() -> void:
+	world.farming.time_manager.clock_source = original_clock
+	world.farming.time_manager._last_timestamp = original_clock_floor
+
+## Physics queries only see bodies once the world has processed physics frames
+## (same pattern as test_crop_automation.gd). Bodies added while the world is
+## DISABLED never register, so keep this on until after any runtime bodies exist.
+func _enable_physics() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.state.set_physics_process(false)
+	var row: Dictionary = service.record("crop")
+	var actor: WorkerActor = service.actor_for(row.id)
+	actor.behaviour.set_physics_process(false)
+	await wait_physics_frames(2)
+
+func _freeze_physics() -> void:
+	world.process_mode = Node.PROCESS_MODE_DISABLED
+
+func _shrink_camera_to_village() -> void:
+	var ground: TileMapLayer = world.farming.farmland
+	var center: Vector2 = ground.to_global(ground.map_to_local(Vector2i(30, 5)))
+	var camera: Camera2D = world.player.camera
+	camera.limit_left = int(center.x) - 160
+	camera.limit_top = int(center.y) - 160
+	camera.limit_right = int(center.x) + 160
+	camera.limit_bottom = int(center.y) + 160
+
+func test_stroll_point_stays_within_camera_bounds_and_outside_zone() -> void:
+	_shrink_camera_to_village()
+	await _enable_physics()
+	await _freeze_physics()
+	var row: Dictionary = service.record("crop")
+	service.bridge.stroll_rng.seed = 12345
+	var point: Vector2 = service.bridge.patrol_point(row)
+	var camera: Camera2D = world.player.camera
+	assert_true(point.x >= float(camera.limit_left) and point.x <= float(camera.limit_right))
+	assert_true(point.y >= float(camera.limit_top) and point.y <= float(camera.limit_bottom))
+	assert_false(service.bridge.zone_contains(row, point))
+
+func test_stroll_avoids_recently_blocked_target() -> void:
+	_shrink_camera_to_village()
+	await _enable_physics()
+	await _freeze_physics()
+	var row: Dictionary = service.record("crop")
+	service.bridge.stroll_rng.seed = 4242
+	var first: Vector2 = service.bridge.patrol_point(row)
+	var key: String = "%s:patrol:%d_%d" % [String(row.id), roundi(first.x), roundi(first.y)]
+	service.blocked_targets[key] = world.farming.time_manager.now() + 120.0
+	var second: Vector2 = service.bridge.patrol_point(row)
+	assert_ne(second, first)
+
+func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
+	# 60x60 px of camera bounds: after the sampler's -24 grow and the 48 px
+	# minimum stroll distance every candidate is rejected, exhausting the
+	# sampler without depending on physics-space registration in tests.
+	_shrink_camera_to_village()
+	var camera: Camera2D = world.player.camera
+	camera.limit_right = int(camera.limit_left) + 60
+	camera.limit_bottom = int(camera.limit_top) + 60
+	var row: Dictionary = service.record("crop")
+	var actor: WorkerActor = service.actor_for(row.id)
+	var center: Vector2 = Vector2(camera.limit_left, camera.limit_top) + Vector2(30, 30)
+	actor.global_position = center
+	row.position = WorkerRole.pair(center)
+	service.bridge.stroll_rng.seed = 777
+	var point: Vector2 = service.bridge.patrol_point(row)
+	assert_true(service.bridge.zone_contains(row, point))

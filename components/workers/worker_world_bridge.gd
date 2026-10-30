@@ -1,13 +1,17 @@
 class_name WorkerWorldBridge
 extends RefCounted
 ## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
+const STROLL_ATTEMPTS: int = 8
+const STROLL_MIN_DISTANCE: float = 48.0
 var crop_care_waiting: bool = false
 var world: FarmWorld
 var storage_waiting: Dictionary = {}
 var _pen_cache: Dictionary = {}
+var stroll_rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _init(scene: FarmWorld) -> void:
 	world = scene
+	stroll_rng.randomize()
 
 func pens() -> Array[AnimalPen]:
 	var result: Array[AnimalPen] = []
@@ -286,7 +290,47 @@ func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) ->
 			next = minf(next, now + maxf(0.25, (float(supply.stock) - float(trough.capacity - units)) / rate))
 	return next
 
+## An idle stroll target anywhere the worker fits, minus recently failed spots.
+## A physics query per candidate at pick time; no map-wide scan or cache.
+func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
+	if actor == null:
+		return Vector2.INF
+	var camera: Camera2D = world.player.camera
+	var bounds: Rect2 = Rect2(float(camera.limit_left), float(camera.limit_top), float(camera.limit_right - camera.limit_left), float(camera.limit_bottom - camera.limit_top)).grow(-24.0)
+	if bounds.size.x <= 0.0 or bounds.size.y <= 0.0:
+		return Vector2.INF
+	var now: float = world.farming.time_manager.now()
+	for attempt: int in range(STROLL_ATTEMPTS):
+		var point: Vector2 = Vector2(stroll_rng.randf_range(bounds.position.x, bounds.end.x), stroll_rng.randf_range(bounds.position.y, bounds.end.y))
+		if actor.global_position.distance_to(point) < STROLL_MIN_DISTANCE:
+			continue
+		if float(world.workers.blocked_targets.get("%s:patrol:%d_%d" % [String(row.id), roundi(point.x), roundi(point.y)], 0.0)) > now:
+			continue
+		if not _stroll_clear(point, actor):
+			continue
+		return point
+	return Vector2.INF
+
+func _stroll_clear(point: Vector2, actor: WorkerActor) -> bool:
+	var shape: CollisionShape2D = actor.collision
+	if shape == null or shape.shape == null:
+		return true
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = shape.shape
+	query.transform = shape.global_transform
+	query.transform.origin += point - actor.global_position
+	query.collision_mask = actor.collision_mask
+	query.exclude = [actor.get_rid()]
+	query.margin = 0.25
+	return actor.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+func rest_seconds() -> float:
+	return stroll_rng.randf_range(1.0, 3.0)
+
 func patrol_point(row: Dictionary) -> Vector2:
+	var stroll: Vector2 = world_stroll_point(row, world.workers.actor_for(String(row.id)))
+	if stroll.is_finite():
+		return stroll
 	var rect: Rect2
 	if row.role == "ranch":
 		var pen: AnimalPen = pen_for(row.zone)
