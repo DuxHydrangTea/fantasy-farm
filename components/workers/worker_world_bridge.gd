@@ -38,8 +38,10 @@ func home(role: String, zone: String = "") -> Vector2:
 
 func zone_contains(row: Dictionary, point: Vector2, columns: int = -1) -> bool:
 	if row.role == "ranch":
-		var pen: AnimalPen = pen_for(row.zone)
-		return pen != null and pen.contains_world(point, 4)
+		for pen: AnimalPen in pens():
+			if pen.contains_world(point, 4):
+				return true
+		return false
 	var cell: Vector2i = world.farming.world_to_cell(point)
 	if row.role == "orchard":
 		return TreePlantation.FRUIT_REGION.has_point(cell)
@@ -56,6 +58,31 @@ func sync(timestamp: float, offline: bool = true) -> void:
 
 func _task(kind: String, id: String, point: Vector2, priority: int) -> Dictionary:
 	return {"kind": kind, "id": id, "point": WorkerRole.pair(point), "priority": priority}
+
+func _trough_point(row: Dictionary, pen: AnimalPen, trough: AnimalTrough) -> Variant:
+	var actor: WorkerActor = world.workers.actor_for(String(row.id))
+	if actor == null or actor.collision == null or actor.collision.shape == null:
+		return null
+	var best: Variant = null
+	var nearest: float = INF
+	for offset: Vector2 in trough.access_offsets:
+		var point: Vector2 = trough.to_global(offset)
+		if not pen.contains_world(point, 6) or (pen is PondPen and (pen as PondPen).is_water(point)):
+			continue
+		var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+		query.shape = actor.collision.shape
+		query.transform = actor.collision.global_transform
+		query.transform.origin += point - actor.global_position
+		query.collision_mask = actor.collision_mask
+		query.exclude = [actor.get_rid()]
+		query.margin = 0.25
+		if not actor.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty():
+			continue
+		var distance: float = actor.global_position.distance_squared_to(point)
+		if distance < nearest:
+			nearest = distance
+			best = point
+	return best
 
 func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Dictionary]:
 	var output_inventory: InventoryComponent = world.workers.output_inventory()
@@ -108,8 +135,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 		if not opening.is_empty():
 			tasks.append(opening)
 	else:
-		var pen: AnimalPen = pen_for(row.zone)
-		if pen != null:
+		for pen: AnimalPen in pens():
 			for node: Node in pen.get_children():
 				if not node is AnimalTrough:
 					continue
@@ -120,9 +146,12 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 				elif trough.kind == AnimalTrough.Kind.WATER and trough.stock <= trough.capacity - trough.water_per_use:
 					kind = "water_trough" if int(row.water_units) > 0 else "fetch_water"
 				if not kind.is_empty():
-					var point: Vector2 = pen.clamp_world(trough.global_position + Vector2(0, 16), 6)
+					var candidate: Variant = _trough_point(row, pen, trough)
+					if candidate == null:
+						continue
+					var point: Vector2 = candidate as Vector2
 					if kind == "fetch_water":
-						point = home("ranch", row.zone) # Explicit free source inside assigned pen.
+						point = home("ranch", String(pen.persistent_id)) # Source inside the pen being serviced.
 					tasks.append(_task(kind, String(trough.persistent_id), point, 0 if trough.stock == 0 else 1))
 	for node: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
 		var pile: ItemPickup = node as ItemPickup
@@ -161,22 +190,20 @@ func commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Dictiona
 			row.water_units = 30
 			return true
 		"feed", "water_trough":
-			var pen: AnimalPen = pen_for(row.zone)
-			if pen == null:
-				return false
-			for node: Node in pen.get_children():
-				if node is AnimalTrough and String(node.persistent_id) == task.id:
-					var trough: AnimalTrough = node as AnimalTrough
-					if task.kind == "feed":
-						var fed: int = world.storages.refill_feed(trough, true, true)
-						if fed > 0:
-							world.farming.action_committed.emit(&"refill_food", 1)
-						return fed > 0
-					var added: int = trough.refill(int(row.water_units))
-					row.water_units -= added
-					if added > 0:
-						world.farming.action_committed.emit(&"refill_water", 1)
-					return added > 0
+			for pen: AnimalPen in pens():
+				for node: Node in pen.get_children():
+					if node is AnimalTrough and String(node.persistent_id) == task.id:
+						var trough: AnimalTrough = node as AnimalTrough
+						if task.kind == "feed":
+							var fed: int = world.storages.refill_feed(trough, true, true)
+							if fed > 0:
+								world.farming.action_committed.emit(&"refill_food", 1)
+							return fed > 0
+						var added: int = trough.refill(int(row.water_units))
+						row.water_units -= added
+						if added > 0:
+							world.farming.action_committed.emit(&"refill_water", 1)
+						return added > 0
 	return false
 
 func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task: Dictionary) -> bool:
@@ -218,11 +245,14 @@ func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) 
 		next = minf(next, _ranch_boundary(row, feed_inventory, now))
 	return maxf(now + 0.25, next)
 
-func _ranch_boundary(record: Dictionary, bag: InventoryComponent, now: float) -> float:
-	var pen: AnimalPen = pen_for(record.zone)
+func _ranch_boundary(_record: Dictionary, bag: InventoryComponent, now: float) -> float:
 	var next: float = world.weather.schedule.next_boundary(now)
-	if pen == null:
-		return next
+	for pen: AnimalPen in pens():
+		next = minf(next, _ranch_pen_boundary(pen, bag, now))
+	return next
+
+func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) -> float:
+	var next: float = world.weather.schedule.next_boundary(now)
 	var herd: Array[Dictionary] = []
 	var supplies: Array[Dictionary] = []
 	var stations: Dictionary = {}

@@ -299,3 +299,27 @@ func test_full_1632_plot_field_has_no_daily_quota_and_consumes_only_supplied_sto
 	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 5350, "Layout v1: 48 carrot crops, including 11 fertile plots")
 	assert_eq(service.output_inventory().count_item((OTHER.crop as CropDefinition).harvest_item.item_id, -1), 12 * (OTHER.crop as CropDefinition).harvest_amount)
 	print("CROP_AUTOMATION_FIELD ", JSON.stringify({"elapsed_ms": elapsed, "indexed_cells": service.crop_policy.cells.size(), "plantings": service.crop_automation.sequence, "fertilizer_left": source.count_item(FERTILIZER.item_id)}))
+
+
+func test_restored_online_worker_walks_back_and_plants() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.state.set_physics_process(false)
+	_limit([cell])
+	var row: Dictionary = service.record("crop")
+	var actor: WorkerActor = service.actor_for(row.id)
+	actor.behaviour.set_physics_process(false)
+	await wait_physics_frames(2)
+	var goal: Vector2 = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
+	actor.global_position = goal + Vector2(160, 0)
+	row.position = WorkerRole.pair(actor.global_position)
+	service.advance(now, false)
+	source.add(SEED, 1)
+	for frame: int in range(1200):
+		clock[0] = now + float(frame + 1) / 60.0
+		service.advance(clock[0], false)
+		actor.behaviour._step(1.0 / 60.0)
+		if world.farming.get_crop(cell) != null:
+			break
+		await wait_physics_frames(1)
+	assert_not_null(world.farming.get_crop(cell), "Worker must actually arrive and plant, not just receive a task")
+	assert_eq(source.count_item(SEED.item_id), 0)

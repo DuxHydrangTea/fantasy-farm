@@ -62,7 +62,7 @@ func test_menu_pages_and_actions_fit_small_and_large_viewports_in_both_languages
 			Language.set_language(language)
 			for method: String in ["_main", "_new_game", "_saved_games"]:
 				menu.call(method)
-				await wait_process_frames(5)
+				await wait_seconds(0.4)
 				var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(size)).grow(1)
 				assert_true(bounds.encloses((menu.get_node("%Card") as Control).get_global_rect()), "%s %s %s" % [size, language, method])
 				for control: Control in menu.find_children("*", "Button", true, false):

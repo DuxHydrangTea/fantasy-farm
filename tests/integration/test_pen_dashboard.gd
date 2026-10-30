@@ -69,12 +69,14 @@ func test_each_pen_has_a_separate_reachable_nonblocking_board() -> void:
 		world.objective_ui.open()
 		assert_false(world.player.selection.objectives_open)
 		board.menu.close()
+		await wait_seconds(0.35)
 		var hit: InteractionTarget = world.player.interactions.resolver.clicked(board.sprite.global_position)
 		assert_not_null(hit)
 		if hit != null:
 			assert_eq(hit.node, board)
 			assert_true(world.player.interactions.execute(hit))
 		board.menu.close()
+		await wait_seconds(0.35)
 
 func test_cards_are_per_pen_and_portraits_are_independent_idle_animations() -> void:
 	var actor: AnimalActor = _cow()
@@ -96,6 +98,7 @@ func test_cards_are_per_pen_and_portraits_are_independent_idle_animations() -> v
 	actor.set_status_focused(true)
 	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
 	menu.close()
+	await wait_seconds(0.35)
 	var pond: PenDashboard = _open(world.pen_boards[2])
 	assert_eq(pond.cards.size(), PenStatus.members(world.pen_boards[2].pen).size())
 	assert_false(pond.cards.has(actor.get_instance_id()))
@@ -150,7 +153,7 @@ func test_cards_and_overview_fit_en_vi_phone_safe_areas_at_one_and_three_density
 				viewport.size_2d_override = Vector2i(roundi(float(points.x) * 1080 / points.y), 1080)
 				await wait_seconds(0.15)
 				var menu: PenDashboard = _open(board)
-				await wait_process_frames(3)
+				await wait_seconds(0.4)
 				var safe: Rect2 = Rect2(Vector2(44, 0) * density, (Vector2(points) - Vector2(88, 21)) * density)
 				var rect: Rect2 = viewport.get_stretch_transform() * menu.panel.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, menu.panel.size)
 				assert_true(safe.grow(1).encloses(rect), str(language, " density=", density, " points=", points, " safe=", safe, " actual=", rect, " root=", menu.root.size))
@@ -158,3 +161,4 @@ func test_cards_and_overview_fit_en_vi_phone_safe_areas_at_one_and_three_density
 				assert_gte(menu.grid.columns, 2)
 				assert_gt(menu.scroll.size.y, 48.0)
 				menu.close()
+				await wait_seconds(0.35)

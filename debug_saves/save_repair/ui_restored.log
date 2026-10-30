@@ -1,0 +1,70 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_shop.gd
+* test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory
+* test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit
+* test_failed_purchase_and_load_close_have_no_thanks
+* test_range_categories_and_checkout_revalidation
+* test_shop_panel_is_inside_full_hd_viewport
+* test_removing_merchant_releases_modal_lock
+* test_main_world_seed_merchant_stands_in_front_of_the_seed_shop
+* test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal
+* test_real_farm_can_buy_all_seven_species_into_configured_pens
+* test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell
+10/10 passed.
+
+
+res://tests/integration/test_inventory_ui.gd
+* test_inventory_opens_with_tab_or_i_and_closes_with_escape
+* test_balance_is_inside_inventory_and_updates_without_reopening
+* test_inventory_toggle_uses_remapped_action_without_hardcoded_i
+* test_inventory_does_not_consume_unrelated_shortcuts
+* test_modal_cancels_movement_and_blocks_world_input
+* test_opening_inventory_cancels_in_progress_tool_action
+    --- Awaiting 0.8 seconds  ---
+* test_drag_drop_updates_shared_inventory_and_hotbar
+* test_quantity_labels_refresh_in_bag_and_hotbar
+* test_assign_from_bag_to_hotbar_swaps_without_losing_items
+* test_close_cancels_hotbar_assignment_and_reenables_bag_slots
+* test_quality_is_inline_and_inspection_does_not_move_or_consume_produce
+* test_invalid_drag_payload_cannot_move_or_duplicate_items
+* test_font_theme_uses_configured_font
+* test_panel_fits_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+14/14 passed.
+
+
+res://tests/integration/test_start_menu.gd
+* test_first_launch_has_four_buttons_and_creates_named_profile_without_loading_world
+* test_menu_pages_and_actions_fit_small_and_large_viewports_in_both_languages
+2/2 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               3
+Tests                26
+Passing Tests        26
+Asserts             257
+Time              24.817s
+
+
+---- All tests passed! ----
+

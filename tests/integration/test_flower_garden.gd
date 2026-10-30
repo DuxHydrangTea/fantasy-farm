@@ -90,11 +90,22 @@ func test_hotbar_plant_water_and_e_harvest_at_impact_once() -> void:
 	clock.refresh()
 	assert_true(pot.is_mature())
 	var harvest_amount: int = pot.definition.harvest_amount
+	var harvested_item: ItemDefinition = pot.definition.harvest_item
+	var harvest_position: Vector2 = pot.global_position
 	assert_true(state.use_selected_tool(&"harvest"))
 	assert_eq(state.active_action, &"flower_harvest")
 	_impact()
 	assert_null(pot.definition)
 	assert_eq(selection.inventory.count_item(&"flower_01"), harvest_amount)
+	var popups: Array[Node] = get_tree().get_nodes_in_group(&"item_gain_popups")
+	assert_eq(popups.size(), 1)
+	if popups.size() == 1:
+		var popup: ItemGainPopup = popups[0] as ItemGainPopup
+		assert_eq(popup.item, harvested_item)
+		assert_eq(popup.amount, harvest_amount)
+		assert_eq(popup.global_position, harvest_position)
+		assert_eq(popup.icon.texture, harvested_item.icon)
+		assert_eq(popup.label.text, "+%d ×" % harvest_amount)
 
 func test_move_seed_or_cancel_action_before_impact_does_not_spend_seed() -> void:
 	state.use_selected_tool()
@@ -108,6 +119,21 @@ func test_move_seed_or_cancel_action_before_impact_does_not_spend_seed() -> void
 	state.reset_after_load()
 	_impact()
 	assert_null(pot.definition)
+
+func test_failed_flower_harvest_emits_no_reward() -> void:
+	var bag: InventoryComponent = InventoryComponent.new()
+	bag.starting_tools = false
+	bag.slot_count = 1
+	add_child_autofree(bag)
+	var seed: ItemDefinition = load("res://items/seeds/flower_01_seed.tres") as ItemDefinition
+	bag.add(seed, 1)
+	pot.definition = seed.crop as FlowerDefinition
+	pot.progress = 1.0
+	var rewards: Array[int] = []
+	pot.harvest_yielded.connect(func(_item: ItemDefinition, amount: int, _at: Vector2, _inventory: InventoryComponent) -> void: rewards.append(amount))
+	assert_false(pot.harvest(bag))
+	assert_true(rewards.is_empty())
+	assert_not_null(pot.definition)
 
 func test_inventory_open_blocks_actions_and_hides_focus() -> void:
 	selection.set_inventory_open(true)

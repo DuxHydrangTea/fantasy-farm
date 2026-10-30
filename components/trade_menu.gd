@@ -9,10 +9,15 @@ var merchant: ShopMerchant
 var customer: FarmPlayer
 var bought_this_visit: bool = false
 var is_open: bool = false
+var _closing: bool = false
+var _slide: Node
 
 func _ready() -> void:
 	root.hide()
 	UIScaleComponent.attach(self, root)
+	_slide = preload("res://components/modal_slide.gd").new()
+	add_child(_slide)
+	_slide.configure(self, ^"offset:y", root)
 	close_button.pressed.connect(close)
 
 func open(owner_npc: ShopMerchant, player: FarmPlayer) -> bool:
@@ -29,6 +34,8 @@ func open(owner_npc: ShopMerchant, player: FarmPlayer) -> bool:
 	show() # CanvasLayer có thể đã bị tắt Visible để soạn map trong editor.
 	root.show()
 	visit_started.emit()
+	_closing = false
+	_slide.enter()
 	return true
 
 func _wallet_changed(_balance: int) -> void:
@@ -40,6 +47,16 @@ func _inventory_changed() -> void:
 func close(show_thanks: bool = true) -> void:
 	if not is_open:
 		return
+	if show_thanks and is_inside_tree() and not is_queued_for_deletion():
+		if not _closing:
+			_closing = true
+			_slide.leave(_finish_close.bind(show_thanks))
+	else:
+		_finish_close(show_thanks)
+
+func _finish_close(show_thanks: bool) -> void:
+	_slide.stop()
+	_closing = false
 	is_open = false
 	root.hide()
 	if is_instance_valid(customer):

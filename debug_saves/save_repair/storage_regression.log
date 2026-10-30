@@ -1,0 +1,314 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_farm_storage_world.gd
+* test_doorways_range_readiness_and_filters
+    [Failed] 
+      at line 22
+    [Failed] 
+      at line 26
+    [Failed] 
+      at line 27
+    [Failed] 
+      at line 28
+* test_seed_storage_doorway_is_reachable
+* test_storage_areas_replace_point_radius_for_both_warehouses
+    [Failed]:  [38.118236541748] expected to be > than [48.0]:  
+      at line 58
+    [Failed]:  Being within the old radius cannot bypass the area
+      at line 74
+    [Failed] 
+      at line 75
+    [Failed]:  Area corners must work beyond the old point radius
+      at line 59
+    [Failed]:  E and click use the same area
+      at line 60
+    [Failed]:  [<null>] expected to equal [StorageAccess:<StaticBody2D#911204164765>(farm_storage_access.gd)]:  
+      at line 61
+    [Failed]:  E opens the storage inside the area
+      at line 63
+    [Failed]:  Click opens the storage without approaching its old point radius
+      at line 66
+    [Failed]:  Behind the entrance is outside the area
+      at line 70
+    [Failed] 
+      at line 71
+    [Failed] 
+      at line 72
+    512 Orphans
+        * [Slot3:<Button#1043056307117>(farm_storage_slot.gd)] + 3
+        * [Slot2:<Button#1042905312183>(farm_storage_slot.gd)] + 3
+        * [Slot1:<Button#1042754317248>(farm_storage_slot.gd)] + 3
+        * [Slot0:<Button#1042603322305>(farm_storage_slot.gd)] + 3
+        * [Slot4:<Button#1043207302093>(farm_storage_slot.gd)] + 3
+        * [Slot5:<Button#1043358297045>(farm_storage_slot.gd)] + 3
+        * [Slot6:<Button#1043509291998>(farm_storage_slot.gd)] + 3
+        * [Slot7:<Button#1043660286951>(farm_storage_slot.gd)] + 3
+        * [Slot8:<Button#1043811281904>(farm_storage_slot.gd)] + 3
+        * [Slot9:<Button#1043962276857>(farm_storage_slot.gd)] + 3
+        * [Slot10:<Button#1044113271810>(farm_storage_slot.gd)] + 3
+        * [Slot11:<Button#1044264266763>(farm_storage_slot.gd)] + 3
+        * [Slot12:<Button#1044415261716>(farm_storage_slot.gd)] + 3
+        * [Slot13:<Button#1044566256669>(farm_storage_slot.gd)] + 3
+        * [Slot14:<Button#1044717251622>(farm_storage_slot.gd)] + 3
+        * [Slot15:<Button#1044868246575>(farm_storage_slot.gd)] + 3
+        * [Slot16:<Button#1045019241528>(farm_storage_slot.gd)] + 3
+        * [Slot17:<Button#1045170236481>(farm_storage_slot.gd)] + 3
+        * [Slot18:<Button#1045321231434>(farm_storage_slot.gd)] + 3
+        * [Slot19:<Button#1045472226386>(farm_storage_slot.gd)] + 3
+        * [Slot20:<Button#1045623221340>(farm_storage_slot.gd)] + 3
+        * [Slot21:<Button#1045774216293>(farm_storage_slot.gd)] + 3
+        * [Slot22:<Button#1045925211246>(farm_storage_slot.gd)] + 3
+        * [Slot23:<Button#1046076206199>(farm_storage_slot.gd)] + 3
+        * [Slot24:<Button#1046227201155>(farm_storage_slot.gd)] + 3
+        * [Slot25:<Button#1046378196108>(farm_storage_slot.gd)] + 3
+        * [Slot26:<Button#1046529191061>(farm_storage_slot.gd)] + 3
+        * [Slot27:<Button#1046680186014>(farm_storage_slot.gd)] + 3
+        * [Slot28:<Button#1046831180967>(farm_storage_slot.gd)] + 3
+        * [Slot29:<Button#1046982175920>(farm_storage_slot.gd)] + 3
+        * [Slot30:<Button#1047133170873>(farm_storage_slot.gd)] + 3
+        * [Slot32:<Button#1047435160776>(farm_storage_slot.gd)] + 3
+        * [Slot33:<Button#1047586155729>(farm_storage_slot.gd)] + 3
+        * [Slot35:<Button#1047888145627>(farm_storage_slot.gd)] + 3
+        * [Slot36:<Button#1048039140580>(farm_storage_slot.gd)] + 3
+        * [Slot37:<Button#1048190135533>(farm_storage_slot.gd)] + 3
+        * [Slot38:<Button#1048341130486>(farm_storage_slot.gd)] + 3
+        * [Slot39:<Button#1048492125439>(farm_storage_slot.gd)] + 3
+        * [Slot40:<Button#1048643120392>(farm_storage_slot.gd)] + 3
+        * [Slot41:<Button#1048794115345>(farm_storage_slot.gd)] + 3
+        * [Slot46:<Button#1049549090072>(farm_storage_slot.gd)] + 3
+        * [Slot42:<Button#1048945110309>(farm_storage_slot.gd)] + 3
+        * [Slot58:<Button#1051361029422>(farm_storage_slot.gd)] + 3
+        * [Slot47:<Button#1049700085043>(farm_storage_slot.gd)] + 3
+        * [Slot48:<Button#1049851079996>(farm_storage_slot.gd)] + 3
+        * [Slot49:<Button#1050002074957>(farm_storage_slot.gd)] + 3
+        * [Slot50:<Button#1050153069904>(farm_storage_slot.gd)] + 3
+        * [Slot56:<Button#1051059039588>(farm_storage_slot.gd)] + 3
+        * [Slot57:<Button#1051210034541>(farm_storage_slot.gd)] + 3
+        * [Slot53:<Button#1050606054769>(farm_storage_slot.gd)] + 3
+        * [Slot51:<Button#1050304064890>(farm_storage_slot.gd)] + 3
+        * [Slot52:<Button#1050455059838>(farm_storage_slot.gd)] + 3
+        * [Slot44:<Button#1049247100303>(farm_storage_slot.gd)] + 3
+        * [Slot43:<Button#1049096105366>(farm_storage_slot.gd)] + 3
+        * [Slot54:<Button#1050757049758>(farm_storage_slot.gd)] + 3
+        * [Slot55:<Button#1050908044716>(farm_storage_slot.gd)] + 3
+        * [Slot45:<Button#1049398095303>(farm_storage_slot.gd)] + 3
+        * [Slot59:<Button#1051512024623>(farm_storage_slot.gd)] + 3
+        * [Slot60:<Button#1051663019576>(farm_storage_slot.gd)] + 3
+        * [Slot61:<Button#1051814014529>(farm_storage_slot.gd)] + 3
+        * [Slot62:<Button#1051965009482>(farm_storage_slot.gd)] + 3
+        * [Slot63:<Button#1052116004435>(farm_storage_slot.gd)] + 3
+        * [Slot0:<Button#1052266999388>(farm_storage_slot.gd)] + 3
+        * [Slot1:<Button#1052417994339>(farm_storage_slot.gd)] + 3
+        * [Slot2:<Button#1052568989291>(farm_storage_slot.gd)] + 3
+        * [Slot3:<Button#1052719984327>(farm_storage_slot.gd)] + 3
+        * [Slot4:<Button#1052870979280>(farm_storage_slot.gd)] + 3
+        * [Slot5:<Button#1053021974233>(farm_storage_slot.gd)] + 3
+        * [Slot34:<Button#1047737153269>(farm_storage_slot.gd)] + 3
+        * [Slot31:<Button#1047284168442>(farm_storage_slot.gd)] + 3
+        * [Slot6:<Button#1053172971410>(farm_storage_slot.gd)] + 3
+        * [Slot7:<Button#1053323966369>(farm_storage_slot.gd)] + 3
+        * [Slot8:<Button#1053474961322>(farm_storage_slot.gd)] + 3
+        * [Slot9:<Button#1053625956304>(farm_storage_slot.gd)] + 3
+        * [Slot10:<Button#1053776951257>(farm_storage_slot.gd)] + 3
+        * [Slot11:<Button#1053927946842>(farm_storage_slot.gd)] + 3
+        * [Slot12:<Button#1054078941795>(farm_storage_slot.gd)] + 3
+        * [Slot13:<Button#1054229936748>(farm_storage_slot.gd)] + 3
+        * [Slot14:<Button#1054380931701>(farm_storage_slot.gd)] + 3
+        * [Slot15:<Button#1054531926654>(farm_storage_slot.gd)] + 3
+        * [Slot16:<Button#1054682921607>(farm_storage_slot.gd)] + 3
+        * [Slot17:<Button#1054833916560>(farm_storage_slot.gd)] + 3
+        * [Slot18:<Button#1054984911513>(farm_storage_slot.gd)] + 3
+        * [Slot19:<Button#1055135906466>(farm_storage_slot.gd)] + 3
+        * [Slot20:<Button#1055286901422>(farm_storage_slot.gd)] + 3
+        * [Slot21:<Button#1055437896375>(farm_storage_slot.gd)] + 3
+        * [Slot22:<Button#1055588891328>(farm_storage_slot.gd)] + 3
+        * [Slot23:<Button#1055739886281>(farm_storage_slot.gd)] + 3
+        * [Slot24:<Button#1055890881234>(farm_storage_slot.gd)] + 3
+        * [Slot25:<Button#1056041876187>(farm_storage_slot.gd)] + 3
+        * [Slot26:<Button#1056192871140>(farm_storage_slot.gd)] + 3
+        * [Slot27:<Button#1056343866093>(farm_storage_slot.gd)] + 3
+        * [Slot28:<Button#1056494861046>(farm_storage_slot.gd)] + 3
+        * [Slot29:<Button#1056645855999>(farm_storage_slot.gd)] + 3
+        * [Slot30:<Button#1056796850952>(farm_storage_slot.gd)] + 3
+        * [Slot31:<Button#1056947845905>(farm_storage_slot.gd)] + 3
+        * [Slot32:<Button#1057098840858>(farm_storage_slot.gd)] + 3
+        * [Slot33:<Button#1057249835811>(farm_storage_slot.gd)] + 3
+        * [Slot34:<Button#1057400830764>(farm_storage_slot.gd)] + 3
+        * [Slot35:<Button#1057551825717>(farm_storage_slot.gd)] + 3
+        * [Slot36:<Button#1057702820670>(farm_storage_slot.gd)] + 3
+        * [Slot37:<Button#1057853815623>(farm_storage_slot.gd)] + 3
+        * [Slot38:<Button#1058004810583>(farm_storage_slot.gd)] + 3
+        * [Slot43:<Button#1058759785314>(farm_storage_slot.gd)] + 3
+        * [Slot44:<Button#1058910780268>(farm_storage_slot.gd)] + 3
+        * [Slot45:<Button#1059061775235>(farm_storage_slot.gd)] + 3
+        * [Slot42:<Button#1058608790460>(farm_storage_slot.gd)] + 3
+        * [Slot40:<Button#1058306800578>(farm_storage_slot.gd)] + 3
+        * [Slot39:<Button#1058155805642>(farm_storage_slot.gd)] + 3
+        * [Slot41:<Button#1058457795582>(farm_storage_slot.gd)] + 3
+        * [Slot46:<Button#1059212770483>(farm_storage_slot.gd)] + 3
+        * [Slot47:<Button#1059363765436>(farm_storage_slot.gd)] + 3
+        * [Slot48:<Button#1059514760389>(farm_storage_slot.gd)] + 3
+        * [Slot49:<Button#1059665755342>(farm_storage_slot.gd)] + 3
+        * [Slot50:<Button#1059816751313>(farm_storage_slot.gd)] + 3
+        * [Slot51:<Button#1059967746266>(farm_storage_slot.gd)] + 3
+        * [Slot52:<Button#1060118741750>(farm_storage_slot.gd)] + 3
+        * [Slot53:<Button#1060269737044>(farm_storage_slot.gd)] + 3
+        * [Slot54:<Button#1060420731997>(farm_storage_slot.gd)] + 3
+        * [Slot55:<Button#1060571726950>(farm_storage_slot.gd)] + 3
+        * [Slot56:<Button#1060722721903>(farm_storage_slot.gd)] + 3
+        * [Slot57:<Button#1060873716856>(farm_storage_slot.gd)] + 3
+        * [Slot58:<Button#1061024711809>(farm_storage_slot.gd)] + 3
+        * [Slot59:<Button#1061175706762>(farm_storage_slot.gd)] + 3
+        * [Slot60:<Button#1061326701715>(farm_storage_slot.gd)] + 3
+        * [Slot61:<Button#1061477696668>(farm_storage_slot.gd)] + 3
+        * [Slot62:<Button#1061628691621>(farm_storage_slot.gd)] + 3
+        * [Slot63:<Button#1061779686574>(farm_storage_slot.gd)] + 3
+* test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips
+* test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers
+    [Failed] 
+      at line 112
+SCRIPT ERROR: Invalid access to property or key 'selection' on a base object of type 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers (res://tests/integration/test_farm_storage_world.gd:114)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] before_each (res://tests/integration/test_farm_storage_world.gd:11)
+       [4] _end_wait (res://addons/gut/awaiter.gd:126)
+       [5] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed]:  [1.0] expected to equal [40.0]:  
+      at line 116
+    [Failed]:  [40] expected to equal [0]:  
+      at line 121
+    [Failed]:  Exhausted Silver cannot silently fall back to Normal
+      at line 122
+SCRIPT ERROR: Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers (res://tests/integration/test_farm_storage_world.gd:125)
+       [2] _end_wait (res://addons/gut/awaiter.gd:126)
+       [3] _on_tree_process_frame (res://addons/gut/awaiter.gd:68)
+    [Failed]:  [40] expected to equal [2]:  
+      at line 130
+    [Failed]:  [0] expected to equal [38]:  
+      at line 131
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+    [2] <engine-2>Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+      at line 133
+* test_full_storage_disables_the_selected_transfer
+    [Failed] 
+      at line 143
+SCRIPT ERROR: Invalid access to property or key 'selection' on a base object of type 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_full_storage_disables_the_selected_transfer (res://tests/integration/test_farm_storage_world.gd:145)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] before_each (res://tests/integration/test_farm_storage_world.gd:11)
+       [4] _end_wait (res://addons/gut/awaiter.gd:126)
+       [5] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+    [Failed] 
+      at line 146
+    [Failed] 
+      at line 147
+    [Failed] 
+      at line 148
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+      at line -1
+2/6 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+res://tests/integration/test_farm_storage_world.gd
+- test_doorways_range_readiness_and_filters
+    [Failed]:  
+          at line 22
+    [Failed]:  
+          at line 26
+    [Failed]:  
+          at line 27
+    [Failed]:  
+          at line 28
+- test_storage_areas_replace_point_radius_for_both_warehouses
+    [Failed]:  [38.118236541748] expected to be > than [48.0]:  
+          at line 58
+    [Failed]:  Being within the old radius cannot bypass the area
+          at line 74
+    [Failed]:  
+          at line 75
+    [Failed]:  Area corners must work beyond the old point radius
+          at line 59
+    [Failed]:  E and click use the same area
+          at line 60
+    [Failed]:  [<null>] expected to equal [StorageAccess:<StaticBody2D#911204164765>(farm_storage_access.gd)]:  
+          at line 61
+    [Failed]:  E opens the storage inside the area
+          at line 63
+    [Failed]:  Click opens the storage without approaching its old point radius
+          at line 66
+    [Failed]:  Behind the entrance is outside the area
+          at line 70
+    [Failed]:  
+          at line 71
+    [Failed]:  
+          at line 72
+- test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers
+    [Failed]:  
+          at line 112
+    [Failed]:  [1.0] expected to equal [40.0]:  
+          at line 116
+    [Failed]:  [40] expected to equal [0]:  
+          at line 121
+    [Failed]:  Exhausted Silver cannot silently fall back to Normal
+          at line 122
+    [Failed]:  [40] expected to equal [2]:  
+          at line 130
+    [Failed]:  [0] expected to equal [38]:  
+          at line 131
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+    [2] <engine-2>Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+          at line 133
+- test_full_storage_disables_the_selected_transfer
+    [Failed]:  
+          at line 143
+    [Failed]:  
+          at line 146
+    [Failed]:  
+          at line 147
+    [Failed]:  
+          at line 148
+    [Failed]:  Unexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+          at line -1
+
+Totals
+------
+Scripts               1
+Tests                 6
+Passing Tests         2
+Failing Tests         4
+Asserts           56/83
+Time              8.232s
+
+
+Ran Scripts matching "test_farm_storage_world.gd"
+---- 4 failing tests ----
+

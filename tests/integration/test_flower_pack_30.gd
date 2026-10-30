@@ -25,7 +25,7 @@ func test_catalog_has_exactly_thirty_species_with_seed_and_sell_links() -> void:
 		assert_true(offers.has(seed.item_id))
 		assert_not_null(prices.find(StringName(id)))
 		assert_true(seed.icon.resource_path.contains("flowers48/flower_%02d_" % index))
-		assert_eq(flower.harvest_item.icon.get_size(), Vector2(32, 32))
+		assert_eq(flower.harvest_item.icon.get_size(), Vector2(24, 24))
 	assert_false(catalog.flowers.has("flower_31"))
 	assert_false(catalog.flowers.has("flower_32"))
 
@@ -51,7 +51,7 @@ func test_all_thirty_can_plant_water_mature_and_harvest_new_art() -> void:
 			assert_eq(pot.sprite.position, Vector2(0, -14))
 			if stage >= 3:
 				assert_eq(texture.get_size(), Vector2(32, 32))
-				assert_eq(texture, flower.harvest_item.icon)
+				assert_ne(texture, flower.harvest_item.icon)
 		assert_true(pot.is_mature())
 		assert_true(pot.harvest(bag))
 		assert_eq(bag.count_item(flower.harvest_item.item_id), flower.harvest_amount)

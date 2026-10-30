@@ -177,7 +177,10 @@ func preflight(data: Dictionary) -> Dictionary:
 	for row: Dictionary in data.workers.rows:
 		if row.role == "ranch" and world.workers.bridge.pen_for(row.zone) == null:
 			return SaveSchema.failure("The worker pen was not found.")
-		if not world.workers.bridge.zone_contains(row, WorkerRole.point(row.position), int(data.land_columns)):
+		var worker_position: Vector2 = WorkerRole.point(row.position)
+		var camera: Camera2D = world.player.camera
+		var world_bounds: Rect2 = Rect2(Vector2(camera.limit_left, camera.limit_top), Vector2(camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top))
+		if not (world_bounds.has_point(worker_position) if row.role == "ranch" else world.workers.bridge.zone_contains(row, worker_position, int(data.land_columns))):
 			return SaveSchema.failure("Invalid worker position.")
 		if not row.task.is_empty() and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
 			return SaveSchema.failure("Invalid worker target.")

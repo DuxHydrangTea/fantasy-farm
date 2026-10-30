@@ -15,6 +15,31 @@ var waypoint_index: int = 0
 var _blocked_elapsed: float = 0.0
 var _wait_remaining: float = 0.0
 var _badge_elapsed: float = 1.0
+var _navigation: PlayerNavigationComponent
+
+func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
+	if _navigation == null:
+		_navigation = PlayerNavigationComponent.new()
+		_navigation.movement = movement
+		_navigation.animation = animation
+		_navigation.camera = actor.worker_service.world.player.camera
+		_navigation.collision_shape = actor.collision
+		_navigation.sampling_budget = 96
+		# Arbitrary world points can be up to 5.7 px from an 8 px grid node.
+		# Leave room for the movement arrival tolerance; the final approach below
+		# still brings the worker to within 2 px of the actual work point.
+		_navigation.interaction_distance = 12.0
+		_navigation.allow_focus_cell = true
+		add_child(_navigation)
+		_navigation.set_physics_process(false)
+		_navigation.focus_finished.connect(func(reached: bool) -> void:
+			if not reached:
+				actor.worker_service.blocked(String(actor.persistent_id), actor.worker_service.world.farming.time_manager.now()))
+	if not _navigation.has_focus or not _navigation.focus_position.is_equal_approx(goal):
+		_navigation.request_focus(goal)
+	var before: Vector2 = actor.global_position
+	_navigation.move(delta)
+	animation.play("walk" if actor.global_position.distance_squared_to(before) > 0.000001 else "idle")
 
 func _physics_process(delta: float) -> void:
 	_step(delta)
@@ -89,17 +114,26 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		_badge_elapsed = 0.0
 		_update_badge(actor, row)
 	if not actor.worker_service.running(row):
+		if _navigation != null:
+			_navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
 		animation.play("idle")
 		return
 	var task: Dictionary = row.task
 	if task.is_empty():
+		if _navigation != null:
+			_navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
 		animation.play("idle")
 		return
 	var goal: Vector2 = WorkerRole.point(task.point)
+	if actor.global_position.distance_to(goal) > 12.0:
+		_navigate(actor, goal, delta)
+		return
+	if _navigation != null and _navigation.has_focus:
+		_navigation.cancel()
 	if actor.global_position.distance_to(goal) <= movement.arrival_distance:
 		movement.cancel_target()
 		movement.stop()

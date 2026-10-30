@@ -1,0 +1,47 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_player.gd
+* test_click_focus_stays_correct_after_zoom
+    --- Awaiting 0.7 seconds  ---
+    --- Awaiting 0.9 seconds  ---
+* test_left_click_approaches_focus_then_faces_it_without_stepping_on_it
+    --- Awaiting 0.9 seconds  ---
+* test_click_focus_finds_a_path_around_collision
+* test_unreachable_focus_stops_without_walking_in_place
+* test_collidable_focus_is_approached_without_entering_it
+    --- Awaiting 1.5 seconds  ---
+* test_focus_route_fits_a_one_tile_wide_gate
+    --- Awaiting 2.0 seconds  ---
+* test_nearby_focus_only_turns_without_walking
+* test_inventory_cancels_focus_route
+8/8 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 8
+Passing Tests         8
+Asserts              43
+Time              18.661s
+
+
+Ran Scripts matching "test_player.gd"
+Ran Tests matching "focus"
+---- All tests passed! ----
+

@@ -1,0 +1,32 @@
+{
+  "group_id": "258962d1-a35e-439b-bd3b-6eabc6a5042a",
+  "states": [
+    {
+      "character": {
+        "id": "7119fe4e-35e8-4732-9722-294ac064f1f0",
+        "name": "Idle",
+        "prompt": "A friendly young adult farmer protagonist for a cozy fantasy farming game. Full-body human, taller and less chibi than a short NPC, wearing a broad golden straw hat, blue overalls over a pale shirt, brown work boots. Wholesome, charming and readable. Match classic warm 2D farming pixel-art sprites, compact silhouette with the whole body fitting inside 16 pixels wide by 32 pixels high including hat. No tools, no background, no text.",
+        "size": {
+          "width": 48,
+          "height": 48
+        },
+        "template_id": "mannequin",
+        "directions": 4,
+        "view": "low top-down",
+        "created_at": "2026-10-30T15:54:18.016414+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "west": "Idle/rotations/west.png",
+          "east": "Idle/rotations/east.png",
+          "north": "Idle/rotations/north.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-10-30T15:55:29.512251"
+}

@@ -230,3 +230,31 @@ func test_crop_roster_empty_hint_and_other_role_portrait_visibility() -> void:
 	assert_false(menu.team_list.is_visible_in_tree())
 	assert_true(menu.portrait.visible)
 	assert_eq((menu.get_node("%WorkerName") as Label).get_parent(), menu.get_node("%OverviewContent"))
+
+
+func test_restored_slide_and_stable_worker_buttons() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.set_physics_process(false)
+	menu = _open("crop")
+	assert_eq(menu.offset.y, menu.get_viewport().get_visible_rect().size.y)
+	assert_eq((menu.root.get_node("Dim") as ColorRect).color.a, 0.0)
+	await wait_seconds(0.4)
+	assert_eq(menu.offset.y, 0.0)
+	menu._hire()
+	world.workers.busy = true
+	world.storages.busy = true
+	world.storages.changed.emit("produce_warehouse")
+	world.workers.changed.emit()
+	for button: Button in [menu.hire_button, menu.dismiss_button, menu.pause_crop_button]:
+		assert_false(button.disabled)
+	world.workers.busy = false
+	world.storages.busy = false
+	await wait_process_frames(2)
+	menu.close()
+	assert_true(menu.is_open)
+	await wait_seconds(0.35)
+	assert_false(menu.is_open)
+	assert_false(menu.root.visible)
+	assert_eq(menu.offset.y, 0.0)
+	assert_eq(ProjectSettings.get_setting("display/window/size/window_width_override"), 1920)
+	assert_eq(ProjectSettings.get_setting("display/window/size/window_height_override"), 1080)

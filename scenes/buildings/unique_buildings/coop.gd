@@ -3,6 +3,10 @@ class_name CoopAppearance
 extends StaticBody2D
 
 @export var sprite: Sprite2D
+@export var appearance_override: Texture2D:
+	set(value):
+		appearance_override = value
+		_update_sprite()
 
 enum Variant {
 	BASE_BLACK_FRAME_1,
@@ -75,6 +79,14 @@ func _ready() -> void:
 
 
 func _update_sprite() -> void:
-	if sprite != null:
-		sprite.texture = VARIANTS[variant]["texture"]
-		sprite.frame = VARIANTS[variant]["frame"]
+	var target: Sprite2D = sprite if sprite != null else get_node_or_null("Sprite2D") as Sprite2D
+	if target == null:
+		return
+	if appearance_override != null:
+		target.frame = 0
+		target.hframes = 1
+		target.texture = appearance_override
+	else:
+		target.hframes = 3
+		target.texture = VARIANTS[variant]["texture"]
+		target.frame = VARIANTS[variant]["frame"]

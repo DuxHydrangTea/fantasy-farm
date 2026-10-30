@@ -25,6 +25,8 @@ var _ready_id: String = ""
 var _message: String = ""
 var _reward: int = 0
 var _completion: Timer
+var _slide: Node
+var _closing: bool = false
 
 func _ready() -> void:
 	layer = 24
@@ -52,6 +54,9 @@ func _ready() -> void:
 	root.add_child(overlay)
 	_build_page()
 	overlay.hide()
+	_slide = preload("res://components/modal_slide.gd").new()
+	add_child(_slide)
+	_slide.configure(overlay, ^"position:y", overlay)
 	_completion = Timer.new()
 	_completion.one_shot = true
 	_completion.wait_time = 4
@@ -167,10 +172,17 @@ func open() -> void:
 	list_scroll.call_deferred("ensure_control_visible", rows[inspected])
 
 func close() -> void:
-	selection.set_objectives_open(false)
+	if selection.objectives_open and not _closing:
+		_closing = true
+		_slide.leave(func() -> void: selection.set_objectives_open(false))
 
 func _visibility(value: bool) -> void:
+	_closing = false
 	overlay.visible = value
+	if value:
+		_slide.enter()
+	else:
+		_slide.stop()
 	hud.visible = not selection.is_menu_open()
 	if not value:
 		get_viewport().gui_release_focus()
@@ -199,7 +211,7 @@ func _restored() -> void:
 	_ready_id = String(model.active().objective_id) if model.ready_to_claim() else ""
 	_message = ""
 	_completion.stop()
-	close()
+	selection.set_objectives_open(false)
 
 func _status(index: int, data: Dictionary) -> String:
 	if data.steps[index].claimed:

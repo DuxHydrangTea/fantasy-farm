@@ -48,8 +48,13 @@
 [ext_resource type="Resource" path="res://items/trees/red_maple_sapling.tres" id="56_qiux3"]
 [ext_resource type="Resource" path="res://items/trees/willow_sapling.tres" id="57_a1uk2"]
 [ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="78_2qwyu"]
-
 [ext_resource type="Resource" path="res://items/boosters/pesticide.tres" id="health_item"]
+
+[sub_resource type="Resource" id="health_offer"]
+script = ExtResource("2_o2k04")
+item = ExtResource("health_item")
+price = 120
+category = 1
 
 [sub_resource type="Resource" id="Resource_6x1jo"]
 script = ExtResource("2_o2k04")
@@ -297,12 +302,6 @@ category = 1
 script = ExtResource("2_o2k04")
 item = ExtResource("57_a1uk2")
 price = 25000
-category = 1
-
-[sub_resource type="Resource" id="health_offer"]
-script = ExtResource("2_o2k04")
-item = ExtResource("health_item")
-price = 120
 category = 1
 
 [resource]

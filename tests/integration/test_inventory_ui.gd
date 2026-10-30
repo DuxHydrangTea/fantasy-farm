@@ -36,6 +36,7 @@ func _key(code: int) -> void:
 	viewport.push_input(event, true)
 	event.pressed = false
 	viewport.push_input(event, true)
+	await wait_seconds(0.35)
 
 func _mouse(position: Vector2, button: MouseButton, pressed: bool) -> void:
 	var event: InputEventMouseButton = InputEventMouseButton.new()
@@ -48,15 +49,15 @@ func _mouse(position: Vector2, button: MouseButton, pressed: bool) -> void:
 
 func test_inventory_opens_with_tab_or_i_and_closes_with_escape() -> void:
 	assert_false(ui.root.visible)
-	_key(KEY_TAB)
+	await _key(KEY_TAB)
 	assert_true(ui.root.visible)
 	assert_true(state.tool_selection.inventory_open)
 	assert_eq(ui.buttons.size(), InventoryComponent.DEFAULT_SLOT_COUNT)
-	_key(KEY_ESCAPE)
+	await _key(KEY_ESCAPE)
 	assert_false(ui.root.visible)
-	_key(KEY_I)
+	await _key(KEY_I)
 	assert_true(ui.root.visible)
-	_key(KEY_I)
+	await _key(KEY_I)
 	assert_false(ui.root.visible)
 
 func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
@@ -67,11 +68,13 @@ func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
 	actor.wallet.set_balance(1000) # Fixed baseline for this formatting/update test.
 	actor.wallet.credit(98051604)
 	ui.open()
+	await wait_seconds(0.35)
 	assert_false(hud.panel.visible, "The inventory balance replaces the HUD balance while open")
 	assert_eq(ui.wallet_label.text, "98,052,604 coins")
 	actor.wallet.credit(1)
 	assert_eq(ui.wallet_label.text, "98,052,605 coins")
 	ui.close()
+	await wait_seconds(0.35)
 	assert_false(ui.wallet_label.is_visible_in_tree())
 
 func test_inventory_toggle_uses_remapped_action_without_hardcoded_i() -> void:
@@ -80,11 +83,11 @@ func test_inventory_toggle_uses_remapped_action_without_hardcoded_i() -> void:
 	var replacement: InputEventKey = InputEventKey.new()
 	replacement.physical_keycode = KEY_P
 	InputMap.action_add_event(&"toggle_inventory", replacement)
-	_key(KEY_I)
+	await _key(KEY_I)
 	assert_false(ui.root.visible)
-	_key(KEY_P)
+	await _key(KEY_P)
 	assert_true(ui.root.visible)
-	_key(KEY_P)
+	await _key(KEY_P)
 	assert_false(ui.root.visible)
 	InputMap.action_erase_events(&"toggle_inventory")
 	for event: InputEvent in original:
@@ -94,39 +97,42 @@ func test_inventory_does_not_consume_unrelated_shortcuts() -> void:
 	var probe: ShortcutProbe = ShortcutProbe.new()
 	viewport.add_child(probe)
 	ui.open()
-	_key(KEY_F5)
+	await wait_seconds(0.35)
+	await _key(KEY_F5)
 	assert_true(probe.received, "An open inventory must not swallow save/debug shortcuts")
 
 func test_modal_cancels_movement_and_blocks_world_input() -> void:
 	state.movement.set_target(player.position + Vector2(100, 0))
 	await wait_physics_frames(4)
-	_key(KEY_TAB)
+	await _key(KEY_TAB)
 	var before: Vector2 = player.position
 	assert_false(state.movement.has_target)
 	Input.action_press(&"move_right")
 	_mouse(Vector2(100, 100), MOUSE_BUTTON_LEFT, true)
 	_mouse(Vector2(100, 100), MOUSE_BUTTON_LEFT, false)
 	_mouse(Vector2(100, 100), MOUSE_BUTTON_RIGHT, true)
-	_key(KEY_SPACE)
-	_key(KEY_2)
+	await _key(KEY_SPACE)
+	await _key(KEY_2)
 	await wait_physics_frames(10)
 	assert_eq(player.position, before)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_eq(state.tool_selection.selected_index, 0)
 	assert_false(state.use_selected_tool())
 	Input.action_release(&"move_right")
-	_key(KEY_ESCAPE)
+	await _key(KEY_ESCAPE)
 	assert_true(state.use_selected_tool())
 
 func test_opening_inventory_cancels_in_progress_tool_action() -> void:
 	assert_true(state.use_selected_tool())
 	ui.open()
+	await wait_seconds(0.35)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	await wait_seconds(0.8)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 
 func test_drag_drop_updates_shared_inventory_and_hotbar() -> void:
 	ui.open()
+	await wait_seconds(0.35)
 	await wait_physics_frames(3)
 	var source: Vector2 = ui.buttons[0].get_global_rect().get_center()
 	var target: Vector2 = ui.buttons[6].get_global_rect().get_center()
@@ -164,12 +170,13 @@ func test_assign_from_bag_to_hotbar_swaps_without_losing_items() -> void:
 	var target_item: ItemDefinition = bag.get_slot_item(1)
 	assert_true(bag.move_slot(0, 8))
 	ui.open()
+	await wait_seconds(0.35)
 	ui._inspect_slot(8)
 	ui.assign_button.pressed.emit()
 	assert_true(ui._assigning_hotbar)
 	ui._inspect_slot(9)
 	assert_eq(bag.get_slot_item(8), source_item, "Only a hotbar cell can complete assignment")
-	_key(KEY_2)
+	await _key(KEY_2)
 	assert_eq(bag.get_slot_item(1), source_item)
 	assert_eq(bag.get_slot_item(8), target_item, "Occupied target is swapped back into the bag")
 	assert_eq(state.tool_selection.selected_index, 1)
@@ -180,11 +187,14 @@ func test_assign_from_bag_to_hotbar_swaps_without_losing_items() -> void:
 func test_close_cancels_hotbar_assignment_and_reenables_bag_slots() -> void:
 	assert_true(bag.move_slot(0, 8))
 	ui.open()
+	await wait_seconds(0.35)
 	ui._inspect_slot(8)
 	ui.assign_button.pressed.emit()
 	assert_true(ui.buttons[8].disabled)
 	ui.close()
+	await wait_seconds(0.35)
 	ui.open()
+	await wait_seconds(0.35)
 	assert_false(ui._assigning_hotbar)
 	assert_false(ui.buttons[8].disabled)
 	assert_null(bag.get_slot_item(0))
@@ -195,6 +205,7 @@ func test_quality_is_inline_and_inspection_does_not_move_or_consume_produce() ->
 	bag.add(produce, 80, 0)
 	bag.add(produce, 40, 1)
 	ui.open()
+	await wait_seconds(0.35)
 	for index: int in range(bag.slot_count):
 		if bag.get_slot_item(index) == produce:
 			ui._inspect_slot(index)
@@ -224,6 +235,7 @@ func test_font_theme_uses_configured_font() -> void:
 func test_panel_fits_viewport(size = use_parameters([Vector2i(1920, 1080), Vector2i(1280, 720), Vector2i(640, 360)])) -> void:
 	viewport.size = size
 	ui.open()
+	await wait_seconds(0.35)
 	await wait_physics_frames(4)
 	var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(size))
 	assert_true(bounds.encloses(ui.panel.get_global_rect()))

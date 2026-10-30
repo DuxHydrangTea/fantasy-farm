@@ -1,6 +1,11 @@
 @tool
 extends StaticBody2D
 
+@export var appearance_override: Texture2D:
+	set(value):
+		appearance_override = value
+		_update_sprite()
+
 enum Variant {
 	BASE_BLACK,
 	BASE_BLUE,
@@ -38,5 +43,9 @@ func _ready() -> void:
 func _update_sprite() -> void:
 	var sprite := get_node_or_null("Sprite2D") as Sprite2D
 	if sprite != null:
-		sprite.texture = VARIANTS[variant]["texture"]
-		sprite.frame = VARIANTS[variant]["frame"]
+		if appearance_override != null:
+			sprite.frame = 0
+			sprite.texture = appearance_override
+		else:
+			sprite.texture = VARIANTS[variant]["texture"]
+			sprite.frame = VARIANTS[variant]["frame"]

@@ -1,9 +1,9 @@
-[gd_resource type="TileSet" format=3]
+[gd_resource type="TileSet" format=3 uid="uid://coe4hu76jd1vh"]
 
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Fences.png" id="1_nvj7p"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Fence_Big.png" id="2_fnl65"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Stone_Fence_Small.png" id="3_vba6w"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Stone_Fence_Big.png" id="4_3krgk"]
+[ext_resource type="Texture2D" uid="uid://bfnoey4v2agle" path="res://assets/Outdoor decoration/Fences.png" id="1_nvj7p"]
+[ext_resource type="Texture2D" uid="uid://dovicbutscwmu" path="res://assets/Outdoor decoration/Fence_Big.png" id="2_fnl65"]
+[ext_resource type="Texture2D" uid="uid://dawi1nhr67to8" path="res://assets/Outdoor decoration/Stone_Fence_Small.png" id="3_vba6w"]
+[ext_resource type="Texture2D" uid="uid://cc141m0gjtkld" path="res://assets/Outdoor decoration/Stone_Fence_Big.png" id="4_3krgk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlm2m"]
 texture = ExtResource("1_nvj7p")

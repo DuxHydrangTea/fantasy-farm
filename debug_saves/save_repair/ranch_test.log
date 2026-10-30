@@ -1,0 +1,36 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_workers.gd
+* test_ranch_feed_and_water_use_apis_and_separate_transfer_commands
+* test_ranch_two_hour_jump_matches_minute_steps
+2/2 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               1
+Tests                 2
+Passing Tests         2
+Asserts              37
+Time              5.006s
+
+
+Ran Scripts matching "test_workers.gd"
+Ran Tests matching "test_ranch"
+---- All tests passed! ----
+

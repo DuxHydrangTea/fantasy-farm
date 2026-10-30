@@ -44,7 +44,6 @@
 [ext_resource type="PackedScene" uid="uid://chbh767240ioq" path="res://scenes/buildings/houses/house_2.tscn" id="45_il0i8"]
 [ext_resource type="PackedScene" uid="uid://b71frx6xvr86y" path="res://scenes/buildings/houses/house_1.tscn" id="51_fhqb0"]
 [ext_resource type="SpriteFrames" uid="uid://d2boolbmmw2pl" path="res://sprite_frames/character/chef_chloe_frames.tres" id="52_slg8a"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/fisherman_house.tscn" id="57_myam0"]
 [ext_resource type="PackedScene" uid="uid://c1vdsb5iy067i" path="res://scenes/characters/produce_buyer.tscn" id="64_i4q3u"]
 [ext_resource type="Script" uid="uid://3ml3jshpyxgx" path="res://persistence/world_persistence.gd" id="65_ptedk"]
 [ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
@@ -4912,7 +4911,7 @@ tile_set = SubResource("TileSet_6x4i3")
 [node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1502539275]
 
 [node name="Player" parent="." unique_id=1882155096 instance=ExtResource("20_farmer_bob")]
-position = Vector2(1752, 1008)
+position = Vector2(1639, 1002)
 
 [node name="FarmingController" type="Node" parent="." unique_id=2051324060 node_paths=PackedStringArray("ground", "farmland", "dry_soil", "wet_soil")]
 script = ExtResource("13_2bho7")
@@ -4922,7 +4921,7 @@ dry_soil = NodePath("../DrySoil")
 wet_soil = NodePath("../WetSoil")
 
 [node name="Coop" parent="." unique_id=2135014781 instance=ExtResource("16_t6m8u")]
-position = Vector2(1350, 330)
+position = Vector2(1325, 342)
 
 [node name="CoopPen" parent="." unique_id=1747236029 instance=ExtResource("18_c45uy")]
 position = Vector2(1008, 288)
@@ -4961,7 +4960,7 @@ empty_texture = SubResource("AtlasTexture_vlh6x")
 position = Vector2(-15, 96)
 
 [node name="Barn" parent="." unique_id=59029216 instance=ExtResource("31_fdd8g")]
-position = Vector2(1202, 648)
+position = Vector2(1198, 640)
 variant = 4
 
 [node name="BarnPen" parent="." unique_id=765373330 instance=ExtResource("18_c45uy")]
@@ -4994,7 +4993,7 @@ item = ExtResource("42_xgmr7")
 amount = 5
 
 [node name="ManagementSign" parent="BarnPen" unique_id=972005229 instance=ExtResource("pen_management_sign")]
-position = Vector2(-22, 110)
+position = Vector2(-19, 108)
 
 [node name="FeedTrough2" parent="BarnPen" unique_id=1564523007 instance=ExtResource("41_ykqd1")]
 position = Vector2(13, 162)
@@ -5019,24 +5018,23 @@ world = NodePath("..")
 [node name="FlowerGarden" parent="." unique_id=1957728385 instance=ExtResource("66_8jlaq")]
 position = Vector2(1424, 288)
 
-[node name="Fisherman_House" parent="." unique_id=1246946814 instance=ExtResource("57_myam0")]
-position = Vector2(1666, 647)
-variant = 5
-
 [node name="PondPen" parent="." unique_id=1195389997 node_paths=PackedStringArray("water_layer") instance=ExtResource("71_b3fbx")]
 position = Vector2(1424, 592)
 water_layer = NodePath("../FarmLand")
 accepted_species = Array[int]([1, 5])
 capacity = 20
 
-[node name="FeedTrough" parent="PondPen" index="0" unique_id=624608384]
+[node name="Sprite2D" parent="PondPen/DuckShelter" index="0"]
+position = Vector2(52, -111)
+
+[node name="FeedTrough" parent="PondPen" index="1" unique_id=624608384]
 position = Vector2(24, 31)
 
-[node name="WaterTrough" parent="PondPen" index="1" unique_id=684452871]
+[node name="WaterTrough" parent="PondPen" index="2" unique_id=684452871]
 position = Vector2(85, 111)
 
 [node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
-position = Vector2(89, -5)
+position = Vector2(126, -10)
 
 [node name="FeedTrough2" parent="PondPen" unique_id=1633519694 instance=ExtResource("32_feed_trough")]
 position = Vector2(24, 71)
@@ -5105,7 +5103,7 @@ position = Vector2(537, 288)
 position = Vector2(1312, 139)
 
 [node name="House1" parent="." unique_id=2025994540 instance=ExtResource("51_fhqb0")]
-position = Vector2(1907, 304)
+position = Vector2(1957, 315)
 variant = 21
 
 [node name="Chef" type="CharacterBody2D" parent="." unique_id=352844601]

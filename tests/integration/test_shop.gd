@@ -33,9 +33,10 @@ func _key(code: int) -> void:
 	viewport.push_input(event, true)
 	event.pressed = false
 	viewport.push_input(event, true)
+	await wait_seconds(0.35)
 
 func test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory() -> void:
-	_key(KEY_E)
+	await _key(KEY_E)
 	assert_true(shop.is_open)
 	assert_true(shop.balance_label.visible, "Balance is visible at checkout")
 	assert_true(player.selection.shop_open)
@@ -44,11 +45,11 @@ func test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory() -> 
 	assert_eq(shop.grid.get_child_count(), 22)
 	var start: Vector2 = player.position
 	Input.action_press(&"move_right")
-	_key(KEY_SPACE)
+	await _key(KEY_SPACE)
 	await wait_physics_frames(4)
 	assert_eq(player.position, start)
 	assert_eq(player.state.current_state, StateComponent.State.IDLE)
-	_key(KEY_TAB)
+	await _key(KEY_TAB)
 	assert_false(shop.is_open)
 	assert_false(player.selection.inventory_open)
 	assert_false(player.selection.shop_open)
@@ -60,12 +61,13 @@ func test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit()
 	assert_true(shop.bought_this_visit)
 	assert_false(merchant.bubble.visible)
 	assert_eq(player.wallet.balance, 1000000 - 2 * shop.selected.price)
-	_key(KEY_ESCAPE)
+	await _key(KEY_ESCAPE)
 	assert_true(merchant.bubble.visible)
 	assert_true(merchant.bubble_text.text.contains("Thank you"))
 	assert_true(merchant.open_shop(player))
 	assert_false(merchant.bubble.visible)
 	shop.close()
+	await wait_seconds(0.35)
 	assert_false(merchant.bubble.visible)
 
 func test_failed_purchase_and_load_close_have_no_thanks() -> void:
@@ -75,6 +77,7 @@ func test_failed_purchase_and_load_close_have_no_thanks() -> void:
 	shop.purchase()
 	assert_false(shop.bought_this_visit)
 	shop.close()
+	await wait_seconds(0.35)
 	assert_false(merchant.bubble.visible)
 	player.wallet.set_balance(1000000)
 	merchant.open_shop(player)
@@ -132,11 +135,11 @@ func test_main_world_seed_merchant_stands_in_front_of_the_seed_shop() -> void:
 	player.position = merchant.interaction_position() + Vector2(0, 24)
 	player.animation.face(merchant.interaction_position() - player.global_position)
 	shop = merchant.shop_ui
-	_key(KEY_E)
+	await _key(KEY_E)
 	assert_true(shop.is_open)
 	shop.purchase()
 	assert_false(merchant.bubble.visible)
-	_key(KEY_ESCAPE)
+	await _key(KEY_ESCAPE)
 	assert_true(merchant.bubble.visible)
 
 func test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal() -> void:
@@ -168,6 +171,7 @@ func test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal() ->
 	shop.purchase()
 	assert_eq(player.wallet.balance, 1000000 - merchant.catalog.animal_offers[0].price + floori(merchant.catalog.animal_offers[0].price * 0.5), "Another click cannot sell again")
 	shop.close()
+	await wait_seconds(0.35)
 	assert_true(merchant.bubble.visible)
 
 func test_real_farm_can_buy_all_seven_species_into_configured_pens() -> void:

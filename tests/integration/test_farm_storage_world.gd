@@ -36,10 +36,18 @@ func test_seed_storage_doorway_is_reachable() -> void:
 	world.process_mode = Node.PROCESS_MODE_INHERIT
 	world.player.set_physics_process(false)
 	var access: FarmStorageAccess = world.storage_accesses["farm_supply_storage"]
-	world.player.global_position = access.global_position + Vector2(0, 24)
+	var building: Node2D = access.get_parent() as Node2D
+	for x: float in [-45.0, -20.0, 10.0, 45.0]:
+		world.player.global_position = building.to_global(Vector2(x, 10))
+		await wait_physics_frames(2)
+		assert_true(access.can_reach(world.player), "Seed storage must be reachable across its configured area")
+		assert_true(world.player.interactions.press())
+		assert_true(access.menu.is_open, "E must open seed storage in front of the building")
+		access.menu.close(false)
+		await wait_process_frames(2)
+	world.player.global_position = building.to_global(Vector2(-34, -22))
 	await wait_physics_frames(2)
-	assert_true(access.can_reach(world.player), "Seed storage must be reachable from in front of the door")
-	assert_true(access.open_shop(world.player), "Seed storage menu must open from its doorway")
+	assert_false(access.can_reach(world.player), "The building must block interaction through its back wall")
 
 func test_storage_areas_replace_point_radius_for_both_warehouses() -> void:
 	for id: String in ["farm_supply_storage", "produce_warehouse"]:

@@ -14,6 +14,7 @@ var _interaction_reach: float = 20.0
 @export var farming_actions: FarmingActionComponent
 @export_range(4.0, 16.0, 1.0) var cell_size: float = 8.0
 @export_range(8.0, 32.0, 1.0) var interaction_distance: float = 20.0
+@export var allow_focus_cell: bool = false
 
 var has_focus: bool = false
 var is_navigating: bool = false
@@ -155,6 +156,16 @@ func move(delta: float) -> void:
 			_finish()
 		return
 	var waypoint: Vector2 = _path[_path_index]
+	# Recheck shortcuts while walking so old grid turns do not cause zigzags.
+	var checks: int = 0
+	for index: int in range(_path.size() - 1, _path_index, -1):
+		if checks >= 8:
+			break
+		checks += 1
+		if _segment_clear(movement.body.global_position, _path[index]):
+			_path_index = index
+			waypoint = _path[index]
+			break
 	if not _segment_clear(movement.body.global_position, waypoint):
 		if not _point_clear(waypoint):
 			_blocked_cells[_cell(waypoint)] = true
@@ -334,7 +345,7 @@ func _try_direct_path(origin: Vector2) -> bool:
 	for y: int in range(focus_cell.y - reach, focus_cell.y + reach + 1):
 		for x: int in range(focus_cell.x - reach, focus_cell.x + reach + 1):
 			var goal: Vector2i = Vector2i(x, y)
-			if goal != focus_cell and _grid.region.has_point(goal) and _goal_valid(_point(goal)):
+			if (allow_focus_cell or goal != focus_cell) and _grid.region.has_point(goal) and _goal_valid(_point(goal)):
 				candidates.append(_point(goal))
 	candidates.sort_custom(func(a: Vector2, b: Vector2) -> bool: return origin.distance_squared_to(a) < origin.distance_squared_to(b))
 	for goal: Vector2 in candidates:
@@ -391,7 +402,7 @@ func _build_path_in_region(region: Rect2i) -> bool:
 	for y: int in range(focus_cell.y - reach, focus_cell.y + reach + 1):
 		for x: int in range(focus_cell.x - reach, focus_cell.x + reach + 1):
 			var goal: Vector2i = Vector2i(x, y)
-			if goal == focus_cell or not _grid.region.has_point(goal) or _grid.is_point_solid(goal):
+			if (goal == focus_cell and not allow_focus_cell) or not _grid.region.has_point(goal) or _grid.is_point_solid(goal):
 				continue
 			if not _goal_valid(_point(goal)):
 				continue

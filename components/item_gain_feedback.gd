@@ -12,6 +12,8 @@ var _last_capacity_notice: int = -1500
 func _ready() -> void:
 	collector.item_acquired.connect(_on_pickup)
 	player.selection.inventory.capacity_blocked.connect(_on_capacity_blocked)
+	if player.state.flower_interaction != null:
+		player.state.flower_interaction.harvest_yielded.connect(_on_flower_harvest)
 	var farming: FarmingController = player.farming_actions.get_farming_controller()
 	if farming != null:
 		farming.quality_harvest_yielded.connect(_on_quality_harvest)
@@ -46,6 +48,12 @@ func _on_pickup(item: ItemDefinition, amount: int) -> void:
 	var popup: ItemGainPopup = _spawn(item, amount, self, Vector2((_lane % 3 - 1) * 8, -34 - (_lane % 3) * 9))
 	_recent[item.item_id] = weakref(popup)
 	_lane += 1
+
+func _on_flower_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D) -> void:
+	if inventory != player.selection.inventory or item == null or amount <= 0 or not is_instance_valid(host):
+		return
+	var popup: ItemGainPopup = _spawn(item, amount, host, Vector2.ZERO)
+	popup.place_world(at)
 
 func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0, tier: int = 0) -> void:
 	if inventory != player.selection.inventory or item == null or amount <= 0:

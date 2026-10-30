@@ -6,6 +6,10 @@
 [ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="5_g1m05"]
 [ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="6_kff10"]
 [ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="23_8e3lu"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/AnimalShelters/duck_shelter.png" id="duck_shelter_texture"]
+
+[sub_resource type="RectangleShape2D" id="DuckShelterShape"]
+size = Vector2(104, 18)
 
 [sub_resource type="AtlasTexture" id="Full"]
 atlas = ExtResource("4_dkfll")
@@ -28,6 +32,18 @@ y_sort_enabled = true
 script = ExtResource("1_gvknp")
 persistent_id = &"waterfowl_pen_01"
 bounds = Rect2(0, 0, 384, 272)
+
+[node name="DuckShelter" type="StaticBody2D" parent="."]
+position = Vector2(152, 112)
+
+[node name="Sprite2D" type="Sprite2D" parent="DuckShelter"]
+texture_filter = 1
+position = Vector2(0, -67)
+texture = ExtResource("duck_shelter_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DuckShelter"]
+position = Vector2(0, -9)
+shape = SubResource("DuckShelterShape")
 
 [node name="FeedTrough" parent="." unique_id=624608384 instance=ExtResource("2_b5n8e")]
 position = Vector2(16, 30)

@@ -1,0 +1,143 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+SCRIPT ERROR: Compile Error: Identifier not found: TimeManager
+   at: GDScript::reload (res://components/farming_controller.gd:52)
+SCRIPT ERROR: Compile Error: Identifier not found: TimeManager
+   at: GDScript::reload (res://components/flowers/flower_garden.gd:37)
+SCRIPT ERROR: Compile Error: Identifier not found: TimeManager
+   at: GDScript::reload (res://components/animals/animal_needs_component.gd:29)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/animals/animal_actor.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/animals/pen_offline_simulation.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/animals/animal_pen.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/animals/animal_trough.gd:0)
+SCRIPT ERROR: Compile Error: Identifier not found: TimeManager
+   at: GDScript::reload (res://components/shop_ui.gd:73)
+ERROR: Failed to load script "res://components/shop_ui.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Compile Error: Identifier not found: SaveManager
+   at: GDScript::reload (res://components/storage/farm_storage_menu.gd:260)
+ERROR: Failed to load script "res://components/storage/farm_storage_menu.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Compile Error: Identifier not found: TimeManager
+   at: GDScript::reload (res://persistence/save_manager.gd:218)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/workers/worker_menu.gd:0)
+ERROR: Failed to load script "res://components/workers/worker_menu.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/storage/farm_storage_service.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/tool_selection_component.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/farm_player.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/bees/apiary_system.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/bees/beehive.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/bees/honey_garden_system.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://persistence/save_schema.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://components/trees/wood_market.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://scripts/tool_upgrade_catalog.gd:0)
+ERROR: Failed to load script "res://scripts/tool_upgrade_catalog.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Compile Error: Identifier not found: SaveManager
+   at: GDScript::reload (res://components/storage/farm_seed_picker.gd:150)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://world/main_world.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://debug_saves/save_repair/repair.gd:0)
+ERROR: Failed to load script "res://debug_saves/save_repair/repair.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+SCRIPT ERROR: Assertion failed: Assign MainWorld player and farming references
+   at: FarmWorld._enter_tree (res://world/main_world.gd:42)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://world/main_world.gd:42)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: WorkerBoard._enter_tree (res://components/shop_merchant.gd:30)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/shop_merchant.gd:30)
+       [1] _enter_tree (res://components/workers/worker_board.gd:9)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: WorkerBoard._enter_tree (res://components/shop_merchant.gd:30)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/shop_merchant.gd:30)
+       [1] _enter_tree (res://components/workers/worker_board.gd:9)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: WorkerBoard._enter_tree (res://components/shop_merchant.gd:30)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/shop_merchant.gd:30)
+       [1] _enter_tree (res://components/workers/worker_board.gd:9)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: FarmStorageAccess._enter_tree (res://components/shop_merchant.gd:30)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/shop_merchant.gd:30)
+       [1] _enter_tree (res://components/storage/farm_storage_access.gd:11)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid assignment of property or key 'storage_id' with value of type 'String' on a base object of type 'Nil'.
+   at: FarmStorageAccess._enter_tree (res://components/storage/farm_storage_access.gd:14)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/storage/farm_storage_access.gd:14)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: FarmStorageAccess._enter_tree (res://components/shop_merchant.gd:30)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/shop_merchant.gd:30)
+       [1] _enter_tree (res://components/storage/farm_storage_access.gd:11)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid assignment of property or key 'storage_id' with value of type 'String' on a base object of type 'Nil'.
+   at: FarmStorageAccess._enter_tree (res://components/storage/farm_storage_access.gd:14)
+   GDScript backtrace (most recent call first):
+       [0] _enter_tree (res://components/storage/farm_storage_access.gd:14)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Cannot call method 'hide' on a null value.
+   at: WorkerBoard._ready (res://components/shop_merchant.gd:45)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://components/shop_merchant.gd:45)
+       [1] _ready (res://components/workers/worker_board.gd:18)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Cannot call method 'hide' on a null value.
+   at: WorkerBoard._ready (res://components/shop_merchant.gd:45)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://components/shop_merchant.gd:45)
+       [1] _ready (res://components/workers/worker_board.gd:18)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Cannot call method 'hide' on a null value.
+   at: WorkerBoard._ready (res://components/shop_merchant.gd:45)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://components/shop_merchant.gd:45)
+       [1] _ready (res://components/workers/worker_board.gd:18)
+       [2] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Cannot call method 'hide' on a null value.
+   at: FarmStorageAccess._ready (res://components/shop_merchant.gd:45)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://components/shop_merchant.gd:45)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Cannot call method 'hide' on a null value.
+   at: FarmStorageAccess._ready (res://components/shop_merchant.gd:45)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://components/shop_merchant.gd:45)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid access to property or key 'state' on a base object of type 'Nil'.
+   at: FarmWorld._ready (res://world/main_world.gd:79)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://world/main_world.gd:79)
+       [1] run (res://debug_saves/save_repair/repair.gd:16)
+SCRIPT ERROR: Invalid access to property or key 'bridge' on a base object of type 'Nil'.
+   at: run (res://debug_saves/save_repair/repair.gd:18)
+   GDScript backtrace (most recent call first):
+       [0] run (res://debug_saves/save_repair/repair.gd:18)

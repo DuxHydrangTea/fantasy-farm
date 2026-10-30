@@ -53,6 +53,7 @@ func test_board_is_separate_reachable_and_uses_shared_interaction_modal() -> voi
 	world.player.selection.set_inventory_open(true)
 	assert_false(world.player.selection.inventory_open)
 	ui.close()
+	await wait_seconds(0.35)
 	assert_false(world.player.selection.is_menu_open())
 
 func test_all_authored_templates_have_real_world_sources_and_missing_source_is_skipped() -> void:
@@ -148,6 +149,7 @@ func test_sell_all_warns_but_does_not_fulfill_orders() -> void:
 	assert_eq(orders.capture(), before)
 	assert_false(orders.quote(_serial()).ok)
 	sales.close()
+	await wait_seconds(0.35)
 
 func test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three() -> void:
 	var viewport: SubViewport = SubViewport.new()
@@ -174,13 +176,14 @@ func test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three() -
 				viewport.size_2d_override = Vector2i(roundi(float(points.x) * 1080 / points.y), 1080)
 				await wait_seconds(0.15)
 				assert_true(farm.orders.open_board(farm.player))
-				await wait_process_frames(3)
+				await wait_seconds(0.4)
 				var safe: Rect2 = Rect2(Vector2(44, 0) * density, (Vector2(points) - Vector2(88, 21)) * density)
 				_assert_layout(viewport, page, safe, density, [page.deliver_button, page.abandon_button, page.close_button, page.rows[0], page.refill_button])
 				page.abandon_button.pressed.emit()
-				await wait_process_frames(3)
+				await wait_seconds(0.4)
 				_assert_layout(viewport, page, safe, density, [page.confirm_button, page.cancel_button])
 				page.close()
+				await wait_seconds(0.35)
 
 func _assert_layout(viewport: SubViewport, page: OrderUI, safe: Rect2, density: int, buttons: Array) -> void:
 	var pixels: Rect2 = viewport.get_stretch_transform() * page.panel.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, page.panel.size)

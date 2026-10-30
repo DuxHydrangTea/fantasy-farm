@@ -269,6 +269,7 @@ func test_inventory_blocks_wheel_zoom() -> void:
 	await wait_seconds(0.6)
 	assert_eq(camera.zoom, Vector2(4.0, 4.0))
 	inventory_ui.close()
+	await wait_seconds(0.35)
 	_wheel(MOUSE_BUTTON_WHEEL_UP)
 	await wait_seconds(0.6)
 	assert_gt(camera.zoom.x, 4.0)
@@ -580,3 +581,25 @@ func test_movement_dust_particles_emit_while_walking_and_stop_when_idle() -> voi
 	await wait_physics_frames(15)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_false(dust.emitting, "Dust particles should stop emitting when idle")
+
+
+func test_restored_shortcuts_and_worker_work_cell() -> void:
+	state.set_physics_process(false)
+	navigation.set_physics_process(false)
+	var origin: Vector2 = player.global_position
+	var goal: Vector2 = origin + Vector2(160, 64)
+	navigation.request_focus(goal + Vector2(16, 0))
+	navigation._needs_path = false
+	navigation._path = PackedVector2Array([origin + Vector2(8, 0), origin + Vector2(8, 32), origin + Vector2(80, 32), goal])
+	navigation.move(1.0 / 60.0)
+	assert_eq(state.movement.target_position, goal)
+	navigation.cancel()
+	navigation.farming_actions = null
+	navigation.allow_focus_cell = true
+	navigation.interaction_distance = 8.0
+	navigation._prepare_grid()
+	goal = navigation._point(navigation._cell(player.global_position) + Vector2i(16, 0))
+	navigation.request_focus(goal)
+	navigation.move(1.0 / 60.0)
+	assert_false(navigation._planning)
+	assert_false(navigation._path.is_empty())

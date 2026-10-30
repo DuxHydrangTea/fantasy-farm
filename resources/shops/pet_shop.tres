@@ -13,8 +13,13 @@
 [ext_resource type="Resource" uid="uid://cgtfrgb0o2mup" path="res://items/feeds/poultry_feed.tres" id="11_w3l5q"]
 [ext_resource type="Resource" uid="uid://btwdtqq0ewgad" path="res://items/boosters/animal_tonic.tres" id="12_ces6m"]
 [ext_resource type="Script" uid="uid://dh18g246cfad5" path="res://scripts/shop_catalog.gd" id="13_o0s8t"]
-
 [ext_resource type="Resource" path="res://items/boosters/animal_medicine.tres" id="health_item"]
+
+[sub_resource type="Resource" id="health_offer"]
+script = ExtResource("9_w6m0o")
+item = ExtResource("health_item")
+price = 180
+category = 1
 
 [sub_resource type="Resource" id="Resource_hwc11"]
 script = ExtResource("9_w6m0o")
@@ -32,12 +37,6 @@ category = 1
 script = ExtResource("9_w6m0o")
 item = ExtResource("12_ces6m")
 price = 3
-category = 1
-
-[sub_resource type="Resource" id="health_offer"]
-script = ExtResource("9_w6m0o")
-item = ExtResource("health_item")
-price = 180
 category = 1
 
 [resource]

@@ -29,10 +29,15 @@ var inspected_index: int = 0
 var _wallet: WalletComponent
 var _moving_from: int = -1
 var _assigning_hotbar: bool = false
+var _slide: Node
+var _closing: bool = false
 
 func _ready() -> void:
 	root.hide()
 	UIScaleComponent.attach(self, root)
+	_slide = preload("res://components/modal_slide.gd").new()
+	add_child(_slide)
+	_slide.configure(self, ^"offset:y", root)
 	var player: FarmPlayer = get_parent() as FarmPlayer
 	_wallet = player.wallet if player != null else null
 	if _wallet != null:
@@ -119,12 +124,19 @@ func _refresh_wallet(balance: int) -> void:
 	wallet_label.text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
 
 func open() -> void:
+	if _closing:
+		_slide.stop()
+		_on_visibility_changed(true)
+		return
 	selection.set_inventory_open(true)
 
 func close() -> void:
-	selection.set_inventory_open(false)
+	if selection.inventory_open and not _closing:
+		_closing = true
+		_slide.leave(func() -> void: selection.set_inventory_open(false))
 
 func _on_visibility_changed(value: bool) -> void:
+	_closing = false
 	_moving_from = -1
 	_assigning_hotbar = false
 	if value:
@@ -132,6 +144,9 @@ func _on_visibility_changed(value: bool) -> void:
 	root.visible = value
 	if value:
 		_fit_panel()
+		_slide.enter()
+	else:
+		_slide.stop()
 	_refresh()
 
 func _inspect_slot(index: int) -> void:
@@ -218,7 +233,10 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 	if event.is_action_pressed(&"toggle_inventory"):
-		selection.set_inventory_open(not selection.inventory_open)
+		if selection.inventory_open:
+			close()
+		else:
+			open()
 		get_viewport().set_input_as_handled()
 	elif selection.inventory_open and event.is_action_pressed(&"ui_cancel"):
 		close()

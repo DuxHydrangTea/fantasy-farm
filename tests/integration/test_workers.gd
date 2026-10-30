@@ -132,6 +132,80 @@ func test_authored_board_and_worker_support_e_and_modal_lifecycle() -> void:
 	assert_true(access.open_shop(world.player))
 	assert_false((access.menu as WorkerMenu).collect_button.visible, "No recovery action is shown for an empty old basket")
 
+func test_single_ranch_worker_services_food_and_water_in_every_pen() -> void:
+	var pens: Array[AnimalPen] = service.bridge.pens()
+	assert_gte(pens.size(), 3)
+	assert_eq(service.hire("ranch", String(pens[0].persistent_id)), "")
+	var bag: InventoryComponent = service.feed_inventory("ranch")
+	bag.add(preload("res://items/feeds/livestock_feed.tres"), 100)
+	bag.add(preload("res://items/feeds/poultry_feed.tres"), 100)
+	var row: Dictionary = service.record("ranch")
+	for pen: AnimalPen in pens:
+		var food: AnimalTrough
+		var water: AnimalTrough
+		for child: Node in pen.get_children():
+			if child is AnimalTrough:
+				if child.kind == AnimalTrough.Kind.FOOD:
+					food = child as AnimalTrough
+				else:
+					water = child as AnimalTrough
+		assert_not_null(food)
+		assert_not_null(water)
+		if food == null or water == null:
+			continue
+		food.stock = 0
+		water.stock = 0
+		row.water_units = 30
+		var tasks: Array[Dictionary] = service.bridge.candidates(row, bag)
+		var found_food: bool = false
+		var found_water: bool = false
+		service.busy = true
+		for task: Dictionary in tasks:
+			if task.id == String(food.persistent_id) and task.kind == "feed":
+				found_food = service.bridge.commit(row, bag, task)
+			if task.id == String(water.persistent_id) and task.kind == "water_trough":
+				found_water = service.bridge.commit(row, bag, task)
+		service.busy = false
+		assert_true(found_food, "Worker should feed " + String(pen.persistent_id))
+		assert_true(found_water, "Worker should water " + String(pen.persistent_id))
+		assert_gt(food.stock, 0)
+		assert_gt(water.stock, 0)
+
+func test_ranch_worker_physically_travels_between_pens_to_feed() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.state.set_physics_process(false)
+	var pens: Array[AnimalPen] = service.bridge.pens()
+	assert_eq(service.hire("ranch", String(pens[0].persistent_id)), "")
+	var row: Dictionary = service.record("ranch")
+	var actor: WorkerActor = service.actor_for(row.id)
+	actor.behaviour.set_physics_process(false)
+	var food: AnimalTrough
+	for pen: AnimalPen in pens:
+		for node: Node in pen.get_children():
+			if node is AnimalTrough:
+				node.stock = node.capacity
+				if pen == pens[1] and node.kind == AnimalTrough.Kind.FOOD:
+					food = node as AnimalTrough
+	assert_not_null(food)
+	if food == null:
+		return
+	food.stock = 0
+	service.feed_inventory("ranch").add(food.feed_item, 10)
+	var time: Array[float] = [now]
+	world.farming.time_manager.clock_source = func() -> float: return time[0]
+	await wait_physics_frames(2)
+	for frame: int in range(900):
+		time[0] = now + float(frame + 1) / 60.0
+		if frame % 15 == 0:
+			service.advance(time[0], false)
+		actor.behaviour._step(1.0 / 60.0)
+		if frame % 300 == 0:
+			print("RANCH_ROUTE frame=", frame, " position=", actor.global_position, " task=", row.task, " nav=", actor.behaviour._navigation.is_navigating if actor.behaviour._navigation != null else false)
+		if food.stock > 0:
+			break
+		await wait_physics_frames(1)
+	assert_gt(food.stock, 0, "Worker must physically reach the other pen; position=%s task=%s" % [actor.global_position, row.task])
+
 func test_ranch_feed_and_water_use_apis_and_separate_transfer_commands() -> void:
 	var pen: AnimalPen = service.bridge.pens()[0]
 	assert_eq(service.hire("ranch", String(pen.persistent_id)), "")

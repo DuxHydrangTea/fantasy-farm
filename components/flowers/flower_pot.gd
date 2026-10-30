@@ -4,6 +4,7 @@ extends StaticBody2D
 var garden: FlowerGarden
 ## Timestamp-based growth in a permanent pot. Water starts the growth clock once.
 signal changed
+signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent)
 @export var pot_definition: PotDefinition = preload("res://resources/pots/clay_pot.tres"):
 	set(value):
 		pot_definition = value
@@ -110,9 +111,12 @@ func harvest(bag: InventoryComponent) -> bool:
 		return false
 	_sync_bees()
 	_harvesting = true
-	var count: int = bag.add(definition.harvest_item, definition.harvest_amount)
+	var item: ItemDefinition = definition.harvest_item
+	var count: int = bag.add(item, definition.harvest_amount)
 	if count == definition.harvest_amount:
 		clear()
+	if count > 0:
+		harvest_yielded.emit(item, count, global_position, bag)
 	_harvesting = false
 	return count > 0
 

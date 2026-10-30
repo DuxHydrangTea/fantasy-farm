@@ -29,6 +29,11 @@ var _confirm: bool = false
 var _dismiss_id: String = ""
 var _elapsed: float = 0.0
 var _compact: bool = false
+var _refresh_queued: bool = false
+
+func _flush_refresh() -> void:
+	_refresh_queued = false
+	_refresh()
 const TITLES: Dictionary = {"crop": "Crop worker", "orchard": "Orchard worker", "ranch": "Ranch worker"}
 const DESCRIPTIONS: Dictionary = {"crop": "Waters, harvests and tends crops.", "orchard": "Waters and harvests fruit trees.", "ranch": "Feeds and waters animals; collected products go to the warehouse."}
 const TASKS: Dictionary = {"till": "Tilling soil", "plant": "Planting crops", "fertilize": "Fertilizing crops", "water": "Watering", "water_crop": "Watering", "feed": "Refilling feed", "harvest": "Harvesting", "pickup": "Collecting produce", "patrol": "Patrolling the work area"}
@@ -148,6 +153,11 @@ func _money(value: int) -> String:
 
 func _refresh() -> void:
 	if not is_open or world == null:
+		return
+	if world.workers.busy or world.storages.busy:
+		if not _refresh_queued:
+			_refresh_queued = true
+			get_tree().process_frame.connect(_flush_refresh, CONNECT_ONE_SHOT)
 		return
 	var service: WorkerService = world.workers
 	var row: Dictionary = _selected_row()

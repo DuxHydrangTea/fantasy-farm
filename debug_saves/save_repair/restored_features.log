@@ -1,0 +1,45 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[INFO]:  using [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+
+
+res://tests/integration/test_restored_crop.gd
+* test_restored_online_worker_walks_back_and_plants
+1/1 passed.
+
+
+res://tests/integration/test_restored_navigation.gd
+* test_restored_shortcuts_and_worker_work_cell
+1/1 passed.
+
+
+res://tests/integration/test_restored_ui.gd
+* test_restored_slide_and_stable_worker_buttons
+1/1 passed.
+
+
+
+
+==============================================
+= Run Summary
+==============================================
+
+Totals
+------
+Scripts               3
+Tests                 3
+Passing Tests         3
+Asserts              19
+Time              13.58s
+
+
+Ran Scripts matching "test_restored_"
+Ran Tests matching "test_restored_"
+---- All tests passed! ----
+

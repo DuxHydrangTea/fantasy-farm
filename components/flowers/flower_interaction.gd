@@ -1,5 +1,6 @@
 class_name FlowerInteraction
 extends Node2D
+signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D)
 ## One locked target and one impact per action, sharing the player's tool states.
 @export var selection: ToolSelectionComponent
 @export var animation: AnimationComponent
@@ -96,10 +97,17 @@ func _on_frame_changed() -> void:
 	elif action == &"flower_water" and selection.get_selected_action() == &"water":
 		_pending.water(now)
 	elif action == &"flower_harvest":
-		_pending.refresh(now)
-		_pending.harvest(selection.inventory)
+		var pot: FlowerPot = _pending
+		pot.refresh(now)
+		var notify: Callable = _on_pot_harvested.bind(garden)
+		pot.harvest_yielded.connect(notify)
+		pot.harvest(selection.inventory)
+		pot.harvest_yielded.disconnect(notify)
 	_pending = null
 	refresh()
+
+func _on_pot_harvested(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D) -> void:
+	harvest_yielded.emit(item, amount, at, inventory, host)
 
 func prepare_target(pot: FlowerPot) -> StringName:
 	_action = &""

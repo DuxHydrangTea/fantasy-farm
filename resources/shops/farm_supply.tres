@@ -46,6 +46,8 @@
 [ext_resource type="Resource" path="res://items/seeds/flower_28_seed.tres" id="flower_pack_28"]
 [ext_resource type="Resource" path="res://items/seeds/flower_29_seed.tres" id="flower_pack_29"]
 [ext_resource type="Resource" path="res://items/seeds/flower_30_seed.tres" id="flower_pack_30"]
+[ext_resource type="Resource" path="res://items/boosters/animal_medicine.tres" id="health_animal_medicine"]
+[ext_resource type="Resource" path="res://items/boosters/pesticide.tres" id="health_pesticide"]
 [ext_resource type="Resource" uid="uid://rfy2n3kr233" path="res://items/placeables/beehive.tres" id="hive_item"]
 [ext_resource type="Resource" uid="uid://d3u31scn2lmn7" path="res://items/seeds/beetroot_seed.tres" id="item_0"]
 [ext_resource type="Resource" uid="uid://bnuneadnyl63o" path="res://items/seeds/bell_pepper_seed.tres" id="item_1"]
@@ -91,9 +93,17 @@
 [ext_resource type="Resource" uid="uid://t4ko7gyg4qmx" path="res://items/tools/axe.tres" id="tree_offer_item_7"]
 [ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="wood_item"]
 
-[ext_resource type="Resource" path="res://items/boosters/pesticide.tres" id="health_pesticide"]
+[sub_resource type="Resource" id="offer_animal_medicine"]
+script = ExtResource("2_offer")
+item = ExtResource("health_animal_medicine")
+price = 180
+category = 1
 
-[ext_resource type="Resource" path="res://items/boosters/animal_medicine.tres" id="health_animal_medicine"]
+[sub_resource type="Resource" id="offer_pesticide"]
+script = ExtResource("2_offer")
+item = ExtResource("health_pesticide")
+price = 120
+category = 1
 
 [sub_resource type="Resource" id="Offer_0"]
 script = ExtResource("2_offer")
@@ -552,18 +562,6 @@ script = ExtResource("2_offer")
 item = ExtResource("flower_pack_30")
 price = 100000
 category = 2
-
-[sub_resource type="Resource" id="offer_pesticide"]
-script = ExtResource("2_offer")
-item = ExtResource("health_pesticide")
-price = 120
-category = 1
-
-[sub_resource type="Resource" id="offer_animal_medicine"]
-script = ExtResource("2_offer")
-item = ExtResource("health_animal_medicine")
-price = 180
-category = 1
 
 [resource]
 script = ExtResource("1_catalog")

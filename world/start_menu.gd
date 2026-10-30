@@ -12,6 +12,7 @@ signal profile_requested(id: String, is_new: bool)
 @onready var status: Label = %Status
 var _latest: String = ""
 var _launching: bool = false
+var _slide: Node
 
 func _ready() -> void:
 	continue_button.pressed.connect(_continue)
@@ -28,6 +29,10 @@ func _ready() -> void:
 		status.text = SaveManager.startup_error
 		SaveManager.startup_error = ""
 	_fit()
+	_slide = preload("res://components/modal_slide.gd").new()
+	add_child(_slide)
+	_slide.configure(get_node("Center"), ^"position:y", get_node("Center") as Control)
+	_slide.enter()
 
 func _fit() -> void:
 	var compact: bool = size.x < 900 or size.y < 560
@@ -41,6 +46,8 @@ func _fit() -> void:
 		button.add_theme_font_size_override("font_size", 18 if compact else 24)
 
 func _show(page: String) -> void:
+	if _slide != null:
+		_slide.enter()
 	for child: Control in (%Pages as VBoxContainer).get_children():
 		child.visible = child.name == page
 	status.text = ""
