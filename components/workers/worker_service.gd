@@ -368,8 +368,8 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 					if offline:
 						actor.global_position = target
 					bridge.commit(row, feed_inventory(row.id), task)
-				row.task = {}
-				row.wake_at = simulated_at + (bridge.rest_seconds(row) if String(task.get("kind", "")) == "patrol" else 0.0)
+					row.task = {}
+					row.wake_at = simulated_at + (bridge.rest_seconds(row) if String(task.get("kind", "")) == "patrol" else 0.0)
 			if row.task.is_empty() and float(row.wake_at) <= simulated_at:
 				if not offline:
 					row.position = WorkerRole.pair(actor.global_position)

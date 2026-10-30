@@ -6,6 +6,7 @@ var clock: Array[float]
 var now: float
 var original_clock: Callable
 var original_clock_floor: float
+var _full_limits: Rect2i
 
 func before_each() -> void:
 	original_clock = TimeManager.clock_source
@@ -24,6 +25,8 @@ func before_each() -> void:
 	world.farming.restore_soil([])
 	service = world.workers
 	assert_eq(service.hire("crop"), "")
+	var camera: Camera2D = world.player.camera
+	_full_limits = Rect2i(camera.limit_left, camera.limit_top, camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top)
 	for pile: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
 		pile.free()
 
@@ -116,11 +119,36 @@ func test_worker_rests_between_strolls_after_commit() -> void:
 			break
 	assert_true(found, "After a stroll commits, the worker rests with wake_at 1-3s ahead")
 
+func test_online_arrival_deferral_keeps_task() -> void:
+	# Online ticks while the actor is still walking must keep extending the
+	# same task (finish_at +0.25s), never drop and re-roll it.
+	_shrink_camera_to_village()
+	service.advance(now + 0.5)
+	var row: Dictionary = service.record("crop")
+	var start_id: String = String(row.task.get("id"))
+	var t: float = now + 0.5
+	for i: int in range(300):
+		t += 0.25
+		service.advance(t, false)
+	var after: Dictionary = service.record("crop").task
+	assert_false(after.is_empty(), "A walking worker keeps its task online")
+	assert_eq(String(after.get("id")), start_id, "Online deferral must extend the same task, not re-roll it")
+
 func test_save_schema_accepts_out_of_zone_patrol_task() -> void:
 	_shrink_camera_to_village()
 	service.advance(now + 0.5)
+	# Preflight validates against the production camera bounds, so restore the
+	# full world view before capturing: the strolling worker itself is at the
+	# farm spawn while its stroll target sits in the village.
+	var camera: Camera2D = world.player.camera
+	camera.limit_left = _full_limits.position.x
+	camera.limit_top = _full_limits.position.y
+	camera.limit_right = _full_limits.end.x
+	camera.limit_bottom = _full_limits.end.y
 	clock[0] = now + 0.5
 	var catalog: SaveCatalog = SaveCatalog.new()
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, catalog)
 	var snapshot: Dictionary = adapter.capture("stroll_test", 1, world.farming.time_manager.now())
 	assert_true(SaveSchema.validate(snapshot, catalog).ok)
+	var preflight: Dictionary = adapter.preflight(snapshot)
+	assert_true(bool(preflight.ok), "Preflight: " + str(preflight))
