@@ -41,15 +41,9 @@ func home(role: String, zone: String = "") -> Vector2:
 	return world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
 
 func zone_contains(row: Dictionary, point: Vector2, columns: int = -1) -> bool:
-	if row.role == "ranch":
-		for pen: AnimalPen in pens():
-			if pen.contains_world(point, 4):
-				return true
-		return false
-	var cell: Vector2i = world.farming.world_to_cell(point)
-	if row.role == "orchard":
-		return TreePlantation.FRUIT_REGION.has_point(cell)
-	return LandExpansionState.REGION.has_point(cell) and LandExpansionState.cell_is_open(cell, world.land.state.unlocked_columns if columns < 0 else columns)
+	# One worker type works everywhere: farm, plantation and pens. Kept as a
+	# hook so save preflight and target checks share a single call site.
+	return true
 
 func sync(timestamp: float, offline: bool = true) -> void:
 	world.weather.advance(timestamp, not offline)
@@ -95,78 +89,74 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 	var capacities: Dictionary = {}
 	storage_waiting[row.role] = false
 	var tasks: Array[Dictionary] = []
-	if row.role == "crop":
-		crop_care_waiting = false
-	if row.role == "orchard":
-		for tree: PerennialTree in world.trees.trees.values():
-			if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
-				if _capacity(output_inventory, (tree as FruitTree).harvest_item(), capacities) < (tree as FruitTree).harvest_amount():
-					storage_waiting[row.role] = true
-					continue
-				var task: Dictionary = _task("fruit", "%d_%d" % [tree.cell.x, tree.cell.y], tree.global_position + Vector2(0, 12), 0)
-				task["cell"] = [tree.cell.x, tree.cell.y]
-				tasks.append(task)
-	elif row.role == "crop":
-		# The event already synchronized growth. Only fertilizer eligibility
-		# needs an extra sync after a same-event harvest/plant mutation.
-		var fertilizer_item: ItemDefinition = world.workers.crop_policy.first_item(true, row.id) if world.workers.crop_automation.auto_fertilize else null
+	crop_care_waiting = false
+	for tree: PerennialTree in world.trees.trees.values():
+		if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
+			if _capacity(output_inventory, (tree as FruitTree).harvest_item(), capacities) < (tree as FruitTree).harvest_amount():
+				storage_waiting[row.role] = true
+				continue
+			var task: Dictionary = _task("fruit", "%d_%d" % [tree.cell.x, tree.cell.y], tree.global_position + Vector2(0, 12), 0)
+			task["cell"] = [tree.cell.x, tree.cell.y]
+			tasks.append(task)
+	# The event already synchronized growth. Only fertilizer eligibility
+	# needs an extra sync after a same-event harvest/plant mutation.
+	var fertilizer_item: ItemDefinition = world.workers.crop_policy.first_item(true, row.id) if world.workers.crop_automation.auto_fertilize else null
+	if fertilizer_item != null:
+		world.apiary.sync()
+	for cell: Vector2i in world.farming.crop_cells():
+		var crop: Crop = world.farming.get_crop(cell)
+		if not world.land.state.is_unlocked(cell) or not world.workers.target_available(row, world.workers.crop_policy.task("water_crop", cell, 1)):
+			continue
+		var kind: String = ""
+		if crop.is_mature() and crop.conditions.affected() and world.workers.crop_automation.wait_for_care:
+			crop_care_waiting = true
+			continue
+		if crop.is_mature():
+			if _capacity(output_inventory, crop.definition.harvest_item, capacities) >= world.farming.harvest_amount(cell):
+				kind = "harvest"
+			else:
+				storage_waiting[row.role] = true
+		elif not crop.is_mature() and world.farming.can_water(cell):
+			kind = "water_crop"
+		if not kind.is_empty():
+			var task: Dictionary = _task(kind, "%d_%d" % [cell.x, cell.y], world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell)), 0 if kind == "harvest" else 1)
+			task["cell"] = [cell.x, cell.y]
+			tasks.append(task)
 		if fertilizer_item != null:
-			world.apiary.sync()
-		for cell: Vector2i in world.farming.crop_cells():
-			var crop: Crop = world.farming.get_crop(cell)
-			if not world.land.state.is_unlocked(cell) or not world.workers.target_available(row, world.workers.crop_policy.task("water_crop", cell, 1)):
+			var fertilizer: Dictionary = world.workers.crop_policy.fertilizer_task(cell, crop, fertilizer_item, false, row.id)
+			if not fertilizer.is_empty():
+				tasks.append(fertilizer)
+	var opening: Dictionary = world.workers.crop_policy.planting_task(row)
+	if not opening.is_empty():
+		tasks.append(opening)
+	for pen: AnimalPen in pens():
+		for node: Node in pen.get_children():
+			if not node is AnimalTrough:
 				continue
+			var trough: AnimalTrough = node as AnimalTrough
 			var kind: String = ""
-			if crop.is_mature() and crop.conditions.affected() and world.workers.crop_automation.wait_for_care:
-				crop_care_waiting = true
-				continue
-			if crop.is_mature():
-				if _capacity(output_inventory, crop.definition.harvest_item, capacities) >= world.farming.harvest_amount(cell):
-					kind = "harvest"
-				else:
-					storage_waiting[row.role] = true
-			elif not crop.is_mature() and world.farming.can_water(cell):
-				kind = "water_crop"
+			if trough.kind == AnimalTrough.Kind.FOOD and (trough.feed_items_needed(feed_inventory) > 0 or (trough.feed_reserve > 0 and trough.stock < trough.capacity)):
+				kind = "feed"
+			elif trough.kind == AnimalTrough.Kind.WATER and trough.stock <= trough.capacity - trough.water_per_use:
+				kind = "water_trough" if int(row.water_units) > 0 else "fetch_water"
 			if not kind.is_empty():
-				var task: Dictionary = _task(kind, "%d_%d" % [cell.x, cell.y], world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell)), 0 if kind == "harvest" else 1)
-				task["cell"] = [cell.x, cell.y]
-				tasks.append(task)
-			if fertilizer_item != null:
-				var fertilizer: Dictionary = world.workers.crop_policy.fertilizer_task(cell, crop, fertilizer_item, false, row.id)
-				if not fertilizer.is_empty():
-					tasks.append(fertilizer)
-		var opening: Dictionary = world.workers.crop_policy.planting_task(row)
-		if not opening.is_empty():
-			tasks.append(opening)
-	else:
-		for pen: AnimalPen in pens():
-			for node: Node in pen.get_children():
-				if not node is AnimalTrough:
+				var candidate: Variant = _trough_point(row, pen, trough)
+				if candidate == null:
 					continue
-				var trough: AnimalTrough = node as AnimalTrough
-				var kind: String = ""
-				if trough.kind == AnimalTrough.Kind.FOOD and (trough.feed_items_needed(feed_inventory) > 0 or (trough.feed_reserve > 0 and trough.stock < trough.capacity)):
-					kind = "feed"
-				elif trough.kind == AnimalTrough.Kind.WATER and trough.stock <= trough.capacity - trough.water_per_use:
-					kind = "water_trough" if int(row.water_units) > 0 else "fetch_water"
-				if not kind.is_empty():
-					var candidate: Variant = _trough_point(row, pen, trough)
-					if candidate == null:
-						continue
-					var point: Vector2 = candidate as Vector2
-					if kind == "fetch_water":
-						point = home("ranch", String(pen.persistent_id)) # Source inside the pen being serviced.
-					tasks.append(_task(kind, String(trough.persistent_id), point, 0 if trough.stock == 0 else 1))
+				var point: Vector2 = candidate as Vector2
+				if kind == "fetch_water":
+					point = home("ranch", String(pen.persistent_id)) # Source inside the pen being serviced.
+				tasks.append(_task(kind, String(trough.persistent_id), point, 0 if trough.stock == 0 else 1))
 	for node: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
 		var pile: ItemPickup = node as ItemPickup
-		if pile == null or not world.is_ancestor_of(pile) or pile.is_queued_for_deletion() or pile.is_attracting() or pile.item == null or pile.item.item_type != ItemDefinition.ItemType.PRODUCE or pile.amount <= 0 or not zone_contains(row, pile.global_position):
+		if pile == null or not world.is_ancestor_of(pile) or pile.is_queued_for_deletion() or pile.is_attracting() or pile.item == null or pile.item.item_type != ItemDefinition.ItemType.PRODUCE or pile.amount <= 0:
 			continue
 		if _capacity(output_inventory, pile.item, capacities) <= 0:
 			storage_waiting[row.role] = true
 			continue
 		if pile.persistent_id.is_empty():
 			pile.persistent_id = StringName("pile_" + Crypto.new().generate_random_bytes(12).hex_encode())
-		tasks.append(_task("pickup", String(pile.persistent_id), pile.global_position, 3 if row.role == "crop" and world.workers.crop_automation.auto_plant else 2))
+		tasks.append(_task("pickup", String(pile.persistent_id), pile.global_position, 3 if world.workers.crop_automation.auto_plant else 2))
 	return tasks
 
 func _capacity(inventory: InventoryComponent, item: ItemDefinition, cache: Dictionary) -> int:
@@ -229,24 +219,21 @@ func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task:
 
 func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) -> float:
 	var next: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(now) + 1)
-	if row.role == "orchard":
-		var capacities: Dictionary = {}
-		var inventory: InventoryComponent = world.workers.output_inventory()
-		for tree: PerennialTree in world.trees.trees.values():
-			if tree is FruitTree and tree.growth_started_at >= 0 and _capacity(inventory, (tree as FruitTree).harvest_item(), capacities) >= (tree as FruitTree).harvest_amount():
-				var remaining: float = maxf(0, tree.matures_at - now) + maxf(0, tree.definition.fruit_cycle_seconds - (tree as FruitTree).fruit_work) * 0.75
-				if remaining > 0.01:
-					next = minf(next, now + remaining)
-	elif row.role == "crop":
-		var evaporation: float = world.weather.schedule.evaporation_rate(now)
-		for cell: Vector2i in world.farming.crop_cells():
-			var crop: Crop = world.farming.get_crop(cell)
-			if crop.matures_at > now:
-				next = minf(next, crop.matures_at)
-			if world.farming._moisture.has(cell):
-				next = minf(next, now + maxf(1, float(world.farming._moisture[cell]) / evaporation))
-	else:
-		next = minf(next, _ranch_boundary(row, feed_inventory, now))
+	var capacities: Dictionary = {}
+	var inventory: InventoryComponent = world.workers.output_inventory()
+	for tree: PerennialTree in world.trees.trees.values():
+		if tree is FruitTree and tree.growth_started_at >= 0 and _capacity(inventory, (tree as FruitTree).harvest_item(), capacities) >= (tree as FruitTree).harvest_amount():
+			var remaining: float = maxf(0, tree.matures_at - now) + maxf(0, tree.definition.fruit_cycle_seconds - (tree as FruitTree).fruit_work) * 0.75
+			if remaining > 0.01:
+				next = minf(next, now + remaining)
+	var evaporation: float = world.weather.schedule.evaporation_rate(now)
+	for cell: Vector2i in world.farming.crop_cells():
+		var crop: Crop = world.farming.get_crop(cell)
+		if crop.matures_at > now:
+			next = minf(next, crop.matures_at)
+		if world.farming._moisture.has(cell):
+			next = minf(next, now + maxf(1, float(world.farming._moisture[cell]) / evaporation))
+	next = minf(next, _ranch_boundary(row, feed_inventory, now))
 	return maxf(now + 0.25, next)
 
 func _ranch_boundary(_record: Dictionary, bag: InventoryComponent, now: float) -> float:
@@ -335,20 +322,12 @@ func patrol_point(row: Dictionary) -> Vector2:
 	var stroll: Vector2 = world_stroll_point(row, world.workers.actor_for(String(row.id)))
 	if stroll.is_finite():
 		return stroll
-	var rect: Rect2
-	if row.role == "ranch":
-		var pen: AnimalPen = pen_for(row.zone)
-		rect = pen.allowed_bounds(20)
-		var local: Array[Vector2] = [rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]
-		var point: Vector2 = pen.to_global(local[int(row.patrol_index)])
-		return (pen as PondPen).closest_land(point) if pen is PondPen else point
-	var region: Rect2i = TreePlantation.FRUIT_REGION if row.role == "orchard" else LandExpansionState.REGION
-	if row.role == "crop":
-		region.position.x = region.end.x - world.land.state.unlocked_columns
-		region.size.x = world.land.state.unlocked_columns
+	var region: Rect2i = LandExpansionState.REGION
+	region.position.x = region.end.x - world.land.state.unlocked_columns
+	region.size.x = world.land.state.unlocked_columns
 	var ground: TileMapLayer = world.farming.farmland
 	var a: Vector2 = ground.to_global(ground.map_to_local(region.position))
 	var b: Vector2 = ground.to_global(ground.map_to_local(region.end))
-	rect = Rect2(a, b - a).grow(-12)
+	var rect: Rect2 = Rect2(a, b - a).grow(-12)
 	var points: Array[Vector2] = [rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]
 	return points[int(row.patrol_index)]

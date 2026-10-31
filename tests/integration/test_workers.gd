@@ -140,6 +140,19 @@ func test_unified_unlock_and_spawn() -> void:
 	var second: Vector2 = service.spawn_point("crop", "pen_x")
 	assert_true(first.distance_to(second) < 0.01, "Zone no longer moves the spawn")
 
+func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
+	world.land.state.restore_columns(12, 4)
+	for pen: AnimalPen in service.bridge.pens():
+		for child: Node in pen.get_children():
+			if child is AnimalTrough:
+				(child as AnimalTrough).stock = 0
+	assert_eq(service.hire("crop"), "")
+	service.advance(now + 0.5)
+	var row: Dictionary = service.record("crop")
+	assert_false(row.task.is_empty())
+	assert_true(String(row.task.get("kind")) in ["feed", "fetch_water", "water_trough", "fruit"],
+		"Unified worker takes trough or orchard work, got " + String(row.task.get("kind")))
+
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
@@ -279,6 +292,11 @@ func test_ranch_feed_and_water_use_apis_and_separate_transfer_commands() -> void
 	assert_eq(service.transfer("ranch", world.player.selection.inventory, false, false), 0)
 
 func test_crop_waters_then_harvests_without_tilling_or_planting() -> void:
+	# The unified worker harvests priority-0 fruit first; this test is about
+	# crop care, so clear the orchard backlog before_starting the window.
+	for tree: PerennialTree in world.trees.trees.values():
+		if tree is FruitTree and not tree.removed:
+			(tree as FruitTree).fruit_work = 0.0
 	world.land.state.restore_columns(12, 4)
 	var cell: Vector2i = Vector2i(54, 25)
 	world.farming.restore_soil([{"cell": [cell.x, cell.y], "state": 1}])
