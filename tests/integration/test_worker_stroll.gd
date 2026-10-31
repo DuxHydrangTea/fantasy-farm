@@ -57,7 +57,7 @@ func _shrink_camera_to_village() -> void:
 	camera.limit_right = int(center.x) + 160
 	camera.limit_bottom = int(center.y) + 160
 
-func test_stroll_point_stays_within_camera_bounds_and_outside_zone() -> void:
+func test_stroll_point_stays_within_camera_bounds() -> void:
 	_shrink_camera_to_village()
 	await _enable_physics()
 	await _freeze_physics()
@@ -66,7 +66,6 @@ func test_stroll_point_stays_within_camera_bounds_and_outside_zone() -> void:
 	var camera: Camera2D = world.player.camera
 	assert_true(point.x >= float(camera.limit_left) and point.x <= float(camera.limit_right))
 	assert_true(point.y >= float(camera.limit_top) and point.y <= float(camera.limit_bottom))
-	assert_false(service.bridge.zone_contains(row, point))
 
 func test_stroll_avoids_recently_blocked_target() -> void:
 	_shrink_camera_to_village()
@@ -95,19 +94,28 @@ func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
 	var point: Vector2 = service.bridge.patrol_point(row)
 	assert_true(service.bridge.zone_contains(row, point))
 
-func test_idle_worker_patrols_outside_their_zone() -> void:
+func test_idle_worker_patrols_the_world() -> void:
+	# Free the pens so no trough work competes: this pins the idle stroll path.
+	for pen: AnimalPen in service.bridge.pens():
+		pen.free()
 	_shrink_camera_to_village()
 	service.advance(now + 0.5)
 	var task: Dictionary = service.record("crop").task
 	assert_eq(String(task.get("kind")), "patrol")
-	assert_false(service.bridge.zone_contains(service.record("crop"), WorkerRole.point(task.point)))
+	var camera: Camera2D = world.player.camera
+	var point: Vector2 = WorkerRole.point(task.point)
+	assert_true(point.x >= float(camera.limit_left) and point.x <= float(camera.limit_right))
+	assert_true(point.y >= float(camera.limit_top) and point.y <= float(camera.limit_bottom))
 
 func test_rest_between_strolls_is_one_to_three_seconds() -> void:
 	var rest: float = service.bridge.rest_seconds(service.record("crop"))
 	assert_true(rest >= 1.0 and rest <= 3.0)
 
 func test_worker_rests_between_strolls_after_commit() -> void:
-	_shrink_camera_to_village()
+	# Animals would keep the unified worker busy with trough work forever;
+	# the rest mechanism needs a genuinely idle world to be observable.
+	for pen: AnimalPen in service.bridge.pens():
+		pen.free()
 	var t: float = now + 0.5
 	var found: bool = false
 	for step: int in range(400):

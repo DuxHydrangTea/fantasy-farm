@@ -32,10 +32,21 @@ func after_each() -> void:
 	Language.set_language("en")
 
 func _open(role: String) -> WorkerMenu:
-	var board: WorkerBoard = world.get_node({"crop":"CropWorkers", "orchard":"OrchardWorkers", "ranch":"RanchWorkers"}[role]) as WorkerBoard
+	var board: WorkerBoard = world.get_node("CropWorkers") as WorkerBoard
 	world.player.global_position = board.interaction_position() + Vector2(0, 24)
 	assert_true(board.open_shop(world.player))
 	return board.menu as WorkerMenu
+
+func test_unified_menu_shows_one_team_with_all_controls() -> void:
+	menu = _open("crop")
+	assert_null(world.get_node_or_null("OrchardWorkers"), "Orchard board removed")
+	assert_null(world.get_node_or_null("RanchWorkers"), "Ranch board removed")
+	assert_true((menu.get_node("%CropOptions") as VBoxContainer).visible)
+	assert_null(menu.get_node_or_null("%ZoneBox"), "Zone box removed from the scene")
+	menu._hire()
+	assert_true(world.workers.record("crop").employed)
+	var heading: Label = menu.get_node("%Heading") as Label
+	assert_true("15" in heading.text, "Heading shows the 15 cap: " + heading.text)
 
 func test_crop_settings_pause_and_shared_supply_counts_use_real_models() -> void:
 	var source: InventoryComponent = world.storages.inventory("farm_supply_storage")
@@ -80,25 +91,6 @@ func test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial() -> void:
 	assert_false(menu._confirm)
 	assert_false(world.player.selection.shop_open)
 
-func test_other_roles_show_only_appropriate_controls_and_lock_assigned_pen() -> void:
-	menu = _open("ranch")
-	assert_true((menu.get_node("%ZoneBox") as VBoxContainer).visible)
-	assert_false(menu.zones.disabled)
-	assert_false((menu.get_node("%CropOptions") as VBoxContainer).visible)
-	menu.zones.select(1)
-	var pen_id: String = String(menu.zones.get_item_metadata(1))
-	menu._hire()
-	assert_eq(world.workers.record("ranch").zone, pen_id)
-	assert_true(menu.zones.disabled)
-	assert_false(menu.pause_crop_button.visible)
-	menu.close(false)
-	menu = _open("orchard")
-	assert_false((menu.get_node("%ZoneBox") as VBoxContainer).visible)
-	assert_false((menu.get_node("%CropOptions") as VBoxContainer).visible)
-	assert_false(menu.collect_button.visible)
-	menu._hire()
-	assert_true(world.workers.record("orchard").employed)
-
 func test_locked_hiring_and_insufficient_rehire_funds_disable_action() -> void:
 	world.land.state.restore_columns(4, 4)
 	menu = _open("crop")
@@ -135,10 +127,10 @@ func test_compact_and_confirmation_keep_actions_in_safe_area_and_restore_columns
 	assert_eq(menu.get_node("%SupplyPanel").get_parent(), menu.get_node("%Main"))
 
 func test_recovery_actions_only_appear_for_remaining_old_basket_contents() -> void:
-	menu = _open("ranch")
+	menu = _open("crop")
 	menu._hire()
 	assert_false((menu.get_node("%LegacyBox") as VBoxContainer).visible)
-	var bag: InventoryComponent = world.workers.bag_for("ranch")
+	var bag: InventoryComponent = world.workers.bag_for("crop")
 	var feed: ItemDefinition = preload("res://items/feeds/poultry_feed.tres")
 	bag.add(feed, 3)
 	menu._refresh()
@@ -152,13 +144,13 @@ func test_recovery_actions_only_appear_for_remaining_old_basket_contents() -> vo
 
 func test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker() -> void:
 	menu = _open("crop")
-	for index: int in range(5):
+	for index: int in range(15):
 		assert_false(menu.hire_button.disabled)
 		menu._hire()
 	assert_true(menu.hire_button.disabled)
-	assert_eq(menu.team_list.get_child_count(), 5)
-	assert_eq(world.workers.records_for("crop", true).size(), 5)
-	assert_string_contains(menu.team_summary.text, "14,000")
+	assert_eq(menu.team_list.get_child_count(), 15)
+	assert_eq(world.workers.records_for("crop", true).size(), 15)
+	assert_string_contains(menu.team_summary.text, "42,000")
 	menu._select_worker(2)
 	var selected_id: String = menu.selected_worker_id
 	var other_id: String = String(menu.team_list.get_child(0).get_meta("worker_id"))
@@ -169,7 +161,7 @@ func test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker() -
 	assert_false(menu.hire_button.disabled)
 	menu._hire()
 	assert_eq(menu.selected_worker_id, selected_id)
-	assert_eq(menu.team_list.get_child_count(), 5)
+	assert_eq(menu.team_list.get_child_count(), 15)
 
 func test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view() -> void:
 	menu = _open("crop")
@@ -226,10 +218,10 @@ func test_crop_roster_empty_hint_and_other_role_portrait_visibility() -> void:
 	menu._hire()
 	assert_false((menu.get_node("%TeamEmpty") as Label).visible)
 	menu.close(false)
-	menu = _open("ranch")
-	assert_false(menu.team_list.is_visible_in_tree())
-	assert_true(menu.portrait.visible)
-	assert_eq((menu.get_node("%WorkerName") as Label).get_parent(), menu.get_node("%OverviewContent"))
+	menu = _open("crop")
+	assert_true(menu.team_list.is_visible_in_tree())
+	assert_false(menu.portrait.visible, "The hired worker is auto-selected and hides the preview")
+	assert_eq((menu.get_node("%WorkerName") as Label).get_parent(), menu.get_node("%WorkContent"))
 
 
 func test_restored_slide_and_stable_worker_buttons() -> void:

@@ -1,6 +1,6 @@
 class_name WorkerBoard
 extends ShopMerchant
-@export_enum("orchard", "ranch", "crop") var role: String = "orchard"
+@export_enum("crop") var role: String = "crop"
 @export var worker_access: bool = false
 var worker_id: String = ""
 

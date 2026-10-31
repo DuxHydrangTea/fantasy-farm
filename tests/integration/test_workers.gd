@@ -449,8 +449,8 @@ func test_unpaid_shift_preserves_remaining_task_and_uses_hire_order() -> void:
 func test_hiring_boards_do_not_occupy_existing_crop_or_tree_cells() -> void:
 	var crop_board: WorkerBoard = world.get_node("CropWorkers") as WorkerBoard
 	assert_false(LandExpansionState.REGION.has_point(world.farming.world_to_cell(crop_board.global_position)))
-	var orchard_board: WorkerBoard = world.get_node("OrchardWorkers") as WorkerBoard
-	assert_false(TreePlantation.valid_cell(world.farming.world_to_cell(orchard_board.global_position), TreeDefinition.Kind.FRUIT))
+	assert_null(world.get_node_or_null("OrchardWorkers"), "Orchard board removed")
+	assert_null(world.get_node_or_null("RanchWorkers"), "Ranch board removed")
 
 func test_finish_boundary_roundtrip_and_repeated_timestamp_collect_once() -> void:
 	assert_eq(service.hire("orchard"), "")
