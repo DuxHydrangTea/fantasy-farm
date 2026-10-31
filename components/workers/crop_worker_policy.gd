@@ -69,7 +69,9 @@ func planting_task(row: Dictionary) -> Dictionary:
 		prepared = settings.prepared_for(row.id)
 	var excluded: Dictionary = {}
 	var timestamp: float = world.farming.time_manager.now()
-	for attempt: int in range(32):
+	# Reduced from 32 to 16 attempts to halve worst-case physics queries
+	var max_attempts: int = 16
+	for attempt: int in range(max_attempts):
 		var best: Vector2i = Vector2i(-1, -1)
 		var best_rank: int = 0x7FFFFFFFFFFFFFFF
 		var best_soil: int = 2

@@ -371,6 +371,8 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 			if row.task.is_empty() and float(row.wake_at) <= simulated_at:
 				if not offline:
 					row.position = WorkerRole.pair(actor.global_position)
+				# Lazy evaluation: only scan candidates when worker actually needs a new task
+				# This avoids ~7500-15000 ops per tick when workers are busy
 				var options: Array[Dictionary] = []
 				for option: Dictionary in bridge.candidates(row, feed_inventory(row.id)):
 					if target_available(row, option) and float(blocked_targets.get(String(row.id) + ":" + String(option.id), 0)) <= simulated_at and bridge.zone_contains(row, WorkerRole.point(option.point)):

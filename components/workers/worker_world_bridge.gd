@@ -3,10 +3,16 @@ extends RefCounted
 ## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
 const STROLL_ATTEMPTS: int = 8
 const STROLL_MIN_DISTANCE: float = 48.0
+const TROUGH_CACHE_LIFETIME: float = 10.0
+const CROP_CACHE_LIFETIME: float = 5.0
 var crop_care_waiting: bool = false
 var world: FarmWorld
 var storage_waiting: Dictionary = {}
 var _pen_cache: Dictionary = {}
+var _trough_point_cache: Dictionary = {}
+var _trough_cache_time: float = 0.0
+var _cached_crop_cells: Array[Vector2i] = []
+var _crop_cache_time: float = 0.0
 var stroll_rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _init(scene: FarmWorld) -> void:
@@ -53,6 +59,8 @@ func sync(timestamp: float, offline: bool = true) -> void:
 	if offline:
 		for pen: AnimalPen in pens():
 			pen.advance_offline(timestamp, true)
+	# Invalidate crop cache after crop refresh to catch new/removed crops
+	_cached_crop_cells.clear()
 
 func _task(kind: String, id: String, point: Vector2, priority: int) -> Dictionary:
 	return {"kind": kind, "id": id, "point": WorkerRole.pair(point), "priority": priority}
@@ -61,10 +69,29 @@ func _trough_point(row: Dictionary, pen: AnimalPen, trough: AnimalTrough) -> Var
 	var actor: WorkerActor = world.workers.actor_for(String(row.id))
 	if actor == null or actor.collision == null or actor.collision.shape == null:
 		return null
+	
+	# Check cache first - invalidate every 10s to handle dynamic obstacles
+	var now: float = world.farming.time_manager.now()
+	var cache_key: String = String(trough.persistent_id)
+	if now - _trough_cache_time > TROUGH_CACHE_LIFETIME:
+		_trough_point_cache.clear()
+		_trough_cache_time = now
+	
+	var cached: Variant = _trough_point_cache.get(cache_key)
+	if cached != null:
+		var cached_point: Vector2 = cached as Vector2
+		# Quick validation: still in pen and not water
+		if pen.contains_world(cached_point, 6) and not (pen is PondPen and (pen as PondPen).is_water(cached_point)):
+			var distance: float = actor.global_position.distance_squared_to(cached_point)
+			if distance < 10000.0:  # Within ~100px, skip expensive check
+				return cached_point
+	
 	var best: Variant = null
 	var nearest: float = INF
-	for offset: Vector2 in trough.access_offsets:
-		var point: Vector2 = trough.to_global(offset)
+	# Reduce physics checks: only test first 3 offsets, then cache winner
+	var max_checks: int = mini(3, trough.access_offsets.size())
+	for i: int in range(max_checks):
+		var point: Vector2 = trough.to_global(trough.access_offsets[i])
 		if not pen.contains_world(point, 6) or (pen is PondPen and (pen as PondPen).is_water(point)):
 			continue
 		var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
@@ -80,6 +107,9 @@ func _trough_point(row: Dictionary, pen: AnimalPen, trough: AnimalTrough) -> Var
 		if distance < nearest:
 			nearest = distance
 			best = point
+	
+	if best != null:
+		_trough_point_cache[cache_key] = best
 	return best
 
 func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Dictionary]:
@@ -90,6 +120,13 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 	storage_waiting[row.role] = false
 	var tasks: Array[Dictionary] = []
 	crop_care_waiting = false
+	
+	# Cache crop cells to reduce repeated farming.crop_cells() calls
+	var now: float = world.farming.time_manager.now()
+	if now - _crop_cache_time > CROP_CACHE_LIFETIME or _cached_crop_cells.is_empty():
+		_cached_crop_cells = world.farming.crop_cells()
+		_crop_cache_time = now
+	
 	for tree: PerennialTree in world.trees.trees.values():
 		if tree is FruitTree and not tree.removed and (tree as FruitTree).has_fruit():
 			if _capacity(output_inventory, (tree as FruitTree).harvest_item(), capacities) < (tree as FruitTree).harvest_amount():
@@ -103,7 +140,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 	var fertilizer_item: ItemDefinition = world.workers.crop_policy.first_item(true, row.id) if world.workers.crop_automation.auto_fertilize else null
 	if fertilizer_item != null:
 		world.apiary.sync()
-	for cell: Vector2i in world.farming.crop_cells():
+	for cell: Vector2i in _cached_crop_cells:
 		var crop: Crop = world.farming.get_crop(cell)
 		if not world.land.state.is_unlocked(cell) or not world.workers.target_available(row, world.workers.crop_policy.task("water_crop", cell, 1)):
 			continue
@@ -284,6 +321,7 @@ func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) ->
 ## The rng is re-seeded per call from worker id + position so the single-jump
 ## and stepwise simulations propose identical candidates from the same state,
 ## regardless of when the scan lands on the timeline.
+## Reduced to max 2 attempts (from 8) to minimize physics queries.
 func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
 	if actor == null:
 		return Vector2.INF
@@ -294,7 +332,9 @@ func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
 	var origin: Vector2 = WorkerRole.point(row.position)
 	stroll_rng.seed = hash("%s|%.3f|%.3f" % [String(row.id), origin.x, origin.y])
 	var now: float = world.farming.time_manager.now()
-	for attempt: int in range(STROLL_ATTEMPTS):
+	# Reduced from STROLL_ATTEMPTS (8) to 2 for performance
+	var max_attempts: int = 2
+	for attempt: int in range(max_attempts):
 		var point: Vector2 = Vector2(stroll_rng.randf_range(bounds.position.x, bounds.end.x), stroll_rng.randf_range(bounds.position.y, bounds.end.y))
 		if actor.global_position.distance_to(point) < STROLL_MIN_DISTANCE:
 			continue
