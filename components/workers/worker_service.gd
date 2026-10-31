@@ -3,8 +3,8 @@ extends Node
 ## One ordered event timeline for all roles. No background per-tile nodes.
 signal changed
 signal catch_up_progress(fraction: float)
-const SCENES: Dictionary = {"orchard": preload("res://scenes/workers/orchard_worker.tscn"), "ranch": preload("res://scenes/workers/ranch_worker.tscn"), "crop": preload("res://scenes/workers/crop_worker.tscn")}
-const DEFINITIONS: Dictionary = {"orchard": preload("res://resources/workers/orchard_hand.tres"), "ranch": preload("res://resources/workers/ranch_hand.tres"), "crop": preload("res://resources/workers/crop_hand.tres")}
+const SCENES: Dictionary = {"crop": preload("res://scenes/workers/crop_worker.tscn")}
+const DEFINITIONS: Dictionary = {"crop": preload("res://resources/workers/crop_hand.tres")}
 var world: FarmWorld
 var bridge: WorkerWorldBridge
 var records: Array[Dictionary] = []
@@ -141,15 +141,13 @@ func output_inventory() -> InventoryComponent:
 	return world.storages.inventory("produce_warehouse")
 
 func feed_inventory(key: String) -> InventoryComponent:
-	var row: Dictionary = record(key)
-	return world.storages.inventory("farm_supply_storage") if row.get("role", "") == "ranch" else bag_for(key)
+	return world.storages.inventory("farm_supply_storage")
 
 func _warehouse_changed(id: String) -> void:
 	if not busy:
 		legacy_pending = true
 	for row: Dictionary in records:
-		if id != "farm_supply_storage" or row.role in ["ranch", "crop"]:
-			request_scan(row.role)
+		request_scan(row.role)
 
 func _drain_legacy_products() -> void:
 	legacy_pending = false
@@ -161,14 +159,6 @@ func available() -> bool:
 	return world.tool_upgrades != null and world.tool_upgrades.profile_ready and not world.storages.busy
 
 func unlock_error(role: String) -> String:
-	if role == "orchard":
-		var count: int = 0
-		for tree: PerennialTree in world.trees.trees.values():
-			if tree is FruitTree and not tree.removed:
-				count += 1
-		return "Plant at least 10 fruit trees." if count < 10 else ""
-	if role == "ranch":
-		return "At least 2 animal pens are required." if bridge.pens().size() < 2 else ""
 	return "Unlock at least 12 farmland columns." if world.land.state.unlocked_columns < 12 else ""
 
 func hire(role: String, zone: String = "") -> String:

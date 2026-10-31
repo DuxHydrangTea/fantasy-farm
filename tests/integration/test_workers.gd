@@ -131,6 +131,15 @@ func test_worker_limit_fifteen_enforced_everywhere() -> void:
 		assert_eq(service.hire("crop"), "")
 	assert_ne(service.hire("crop"), "", "16th hire must be rejected")
 
+func test_unified_unlock_and_spawn() -> void:
+	world.land.state.restore_columns(4, 4)
+	assert_true(not service.unlock_error("crop").is_empty(), "12-column gate still gates")
+	world.land.state.restore_columns(12, 4)
+	assert_eq(service.unlock_error("crop"), "")
+	var first: Vector2 = service.spawn_point("crop", "")
+	var second: Vector2 = service.spawn_point("crop", "pen_x")
+	assert_true(first.distance_to(second) < 0.01, "Zone no longer moves the spawn")
+
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
