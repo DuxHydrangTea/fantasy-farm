@@ -94,6 +94,43 @@ func test_warehouse_full_preserves_entire_tree_yield_and_task_budget() -> void:
 	assert_true((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit())
 	assert_true(bool(service.bridge.storage_waiting.get("orchard", false)))
 
+func test_v37_migration_unifies_roles_without_loss() -> void:
+	world.land.state.restore_columns(12, 4)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	assert_eq(service.hire("crop"), "")
+	assert_eq(service.hire("crop"), "")
+	var old: Dictionary = adapter.capture("worker_test", 1, now)
+	var rows: Array = old.workers.rows
+	rows[0].role = "ranch"
+	rows[0].zone = "pen_x"
+	rows[0].task = {"kind": "feed", "id": "trough_1", "point": [776.0, 488.0], "base_point": [776.0, 488.0], "attempt": 0, "work_at": now, "finish_at": now + 2.0}
+	if rows.size() > 1:
+		rows[1].role = "orchard"
+	old.workers.trial_used = ["ranch"]
+	old.version = 37
+	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
+	assert_true(migrated.ok, str(migrated))
+	assert_eq(int(migrated.snapshot.version), SaveSchema.VERSION)
+	var unified: Array = migrated.snapshot.workers.rows
+	assert_eq(unified.size(), rows.size(), "No worker lost")
+	for row: Dictionary in unified:
+		assert_eq(String(row.role), "crop")
+		assert_eq(String(row.zone), "")
+	var slots: Dictionary = {}
+	for row: Dictionary in unified:
+		slots[int(row.slot)] = true
+	assert_eq(slots.size(), unified.size(), "Slots unique 1..N")
+	assert_true("crop" in migrated.snapshot.workers.trial_used)
+	assert_eq(String(unified[0].task.kind), "feed", "Active ranch task survives")
+	var preflight: Dictionary = adapter.preflight(migrated.snapshot)
+	assert_true(bool(preflight.ok), "Preflight accepts unified rows without pens: " + str(preflight))
+
+func test_worker_limit_fifteen_enforced_everywhere() -> void:
+	world.land.state.restore_columns(12, 4)
+	for i: int in range(15):
+		assert_eq(service.hire("crop"), "")
+	assert_ne(service.hire("crop"), "", "16th hire must be rejected")
+
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var old: Dictionary = adapter.capture("worker_test", 1, now)

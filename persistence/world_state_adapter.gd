@@ -175,8 +175,6 @@ func preflight(data: Dictionary) -> Dictionary:
 	if world.workers == null or world.workers.busy:
 		return SaveSchema.failure("A worker transaction is in progress.", "busy")
 	for row: Dictionary in data.workers.rows:
-		if row.role == "ranch" and world.workers.bridge.pen_for(row.zone) == null:
-			return SaveSchema.failure("The worker pen was not found.")
 		var worker_position: Vector2 = WorkerRole.point(row.position)
 		var camera: Camera2D = world.player.camera
 		var world_bounds: Rect2 = Rect2(Vector2(camera.limit_left, camera.limit_top), Vector2(camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top))

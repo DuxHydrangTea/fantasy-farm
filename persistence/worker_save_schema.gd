@@ -4,7 +4,7 @@ static func fresh() -> Dictionary:
 	return {"rows": [], "trial_used": [], "next_order": 1, "simulated_at": 0.0, "crop_automation": CropAutomationState.fresh()}
 
 static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
-	if not data is Dictionary or data.size() != 5 or not data.get("rows") is Array or data.rows.size() > 7 or not data.get("trial_used") is Array or data.trial_used.size() > 3 or not SaveSchema.number(data.get("next_order"), 1, 1000000000, true) or not SaveSchema.number(data.get("simulated_at"), 0, saved_at):
+	if not data is Dictionary or data.size() != 5 or not data.get("rows") is Array or data.rows.size() > 15 or not data.get("trial_used") is Array or data.trial_used.size() > 3 or not SaveSchema.number(data.get("next_order"), 1, 1000000000, true) or not SaveSchema.number(data.get("simulated_at"), 0, saved_at):
 		return false
 	if not CropAutomationState.valid(data.get("crop_automation"), catalog, saved_at):
 		return false
@@ -48,7 +48,7 @@ static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 		if not task.is_empty():
 			if not task.get("kind") is String or not task.kind in ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize"] or not task.get("id") is String or not SaveSchema.vector(task.get("point")) or not SaveSchema.vector(task.get("base_point")) or not SaveSchema.number(task.get("attempt"), 0, 4, true) or not SaveSchema.number(task.get("work_at")) or not SaveSchema.number(task.get("finish_at"), float(task.work_at)):
 				return false
-			var allowed: Array = ["fruit", "pickup", "patrol"] if row.role == "orchard" else ["harvest", "water_crop", "pickup", "patrol", "till", "plant", "fertilize"] if row.role == "crop" else ["feed", "fetch_water", "water_trough", "pickup", "patrol"]
+			var allowed: Array = ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize"]
 			if not task.kind in allowed:
 				return false
 			if task.kind in ["fruit", "harvest", "water_crop", "till", "plant", "fertilize"] and not SaveSchema.vector(task.get("cell"), true):

@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 37
+const VERSION: int = 38
 const CropConditions = preload("res://components/crop_condition_state.gd")
 const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
@@ -329,7 +329,26 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			health.configure(float(data.saved_at), juvenile, int(hash(row.id)))
 			row["health"] = health.capture()
 		data.workers.crop_automation["wait_for_care"] = true
-		data.version = VERSION
+		data.version = 37
+	if data.get("version") == 37:
+		data = data.duplicate(true)
+		if not data.get("workers") is Dictionary or not data.workers.get("rows") is Array:
+			return failure("Invalid legacy workers.")
+		# Gộp ba vai trò cũ về một loại worker: role về "crop", zone bỏ,
+		# slot đánh lại 1..N theo hire_order để không chạm trần LIMITS mới.
+		var unified: Array = data.workers.rows.duplicate()
+		unified.sort_custom(func(a: Variant, b: Variant) -> bool: return int(a.get("hire_order", 0)) < int(b.get("hire_order", 0)))
+		for index: int in range(unified.size()):
+			var row: Variant = unified[index]
+			if not row is Dictionary:
+				return failure("Invalid legacy worker.")
+			row["role"] = "crop"
+			row["zone"] = ""
+			row["slot"] = index + 1
+		data.workers["rows"] = unified
+		var trials: Array = data.workers.get("trial_used") if data.workers.get("trial_used") is Array else []
+		data.workers["trial_used"] = ["crop"] if not trials.is_empty() else []
+		data.version = 38
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if data.has("wall_saved_at") and not number(data.wall_saved_at):

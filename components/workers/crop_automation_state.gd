@@ -71,7 +71,7 @@ func clear_prepared(cell: Vector2i) -> void:
 static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 	if not data is Dictionary or data.size() != 8 or not data.get("wait_for_care") is bool or not SaveSchema.number(data.get("revision"), 0, 1.0e12, true) or not data.get("auto_plant") is bool or not data.get("auto_fertilize") is bool or not data.get("paused") is bool or not SaveSchema.number(data.get("sequence"), 0, 1.0e12, true) or not data.get("prepared") is Array or not data.get("plots") is Array or data.plots.size() > LandExpansionState.REGION.get_area():
 		return false
-	if data.prepared.size() > 5:
+	if data.prepared.size() > 15:
 		return false
 	var owners: Dictionary = {}
 	var prepared_cells: Dictionary = {}
