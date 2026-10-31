@@ -2,8 +2,8 @@ extends GutTest
 ## M0: worker body + waypoint patrol on the real world. No roles, no basket,
 ## no save — those arrive in M1+ per docs/hired_workers.md.
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
-const WORKER: WorkerDefinition = preload("res://resources/workers/orchard_hand.tres")
-const WORKER_SCENES: Array[PackedScene] = [preload("res://scenes/workers/crop_worker.tscn"), preload("res://scenes/workers/ranch_worker.tscn"), preload("res://scenes/workers/orchard_worker.tscn")]
+const WORKER: WorkerDefinition = preload("res://resources/workers/crop_hand.tres")
+const WORKER_SCENES: Array[PackedScene] = [preload("res://scenes/workers/crop_worker.tscn"), preload("res://scenes/workers/crop_worker.tscn"), preload("res://scenes/workers/crop_worker.tscn")]
 
 func test_each_worker_scene_keeps_edited_collision_and_sprite_position() -> void:
 	for scene: PackedScene in WORKER_SCENES:
@@ -29,7 +29,7 @@ func test_definition_is_valid_and_paced() -> void:
 		assert_true(WORKER.frames.has_animation(action), String(action))
 
 func test_actor_composes_components_and_reissues_goal_when_cancelled() -> void:
-	var actor: WorkerActor = (load("res://scenes/workers/orchard_worker.tscn") as PackedScene).instantiate() as WorkerActor
+	var actor: WorkerActor = (load("res://scenes/workers/crop_worker.tscn") as PackedScene).instantiate() as WorkerActor
 	add_child(actor)
 	assert_not_null(actor.movement)
 	assert_not_null(actor.animation)
@@ -51,7 +51,7 @@ func test_actor_composes_components_and_reissues_goal_when_cancelled() -> void:
 	await get_tree().process_frame
 
 func test_actor_without_definition_stands_idle_safely() -> void:
-	var actor: WorkerActor = (load("res://scenes/workers/orchard_worker.tscn") as PackedScene).instantiate() as WorkerActor
+	var actor: WorkerActor = (load("res://scenes/workers/crop_worker.tscn") as PackedScene).instantiate() as WorkerActor
 	actor.definition = null
 	add_child(actor)
 	assert_false(actor.behaviour.is_physics_processing())
@@ -68,7 +68,7 @@ func test_debug_world_spawns_patrolling_orchard_worker() -> void:
 	var worker: WorkerActor = scene.debug_worker
 	assert_not_null(worker)
 	assert_eq(worker.get_parent(), scene, "worker sorts as a world-root sibling")
-	assert_eq(worker.definition.worker_id, &"orchard_hand")
+	assert_eq(worker.definition.worker_id, &"crop_hand")
 	assert_gte(worker.behaviour.patrol_points.size(), 3)
 	var region: Rect2i = TreePlantation.FRUIT_REGION
 	var ground: TileMapLayer = scene.farming.ground

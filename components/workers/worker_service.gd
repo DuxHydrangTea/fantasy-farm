@@ -175,8 +175,6 @@ func hire(role: String, zone: String = "") -> String:
 		if not previous.employed:
 			row = previous
 			break
-	if role == "ranch" and bridge.pen_for(zone) == null:
-		return "Choose an animal pen."
 	var wage: int = int(WorkerRole.WAGES[role]) if role in trial_used else 0
 	if world.player.wallet.balance < wage:
 		return "Not enough coins for today's wage."
@@ -444,6 +442,13 @@ func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 		actor.free()
 	actors.clear()
 	blocked_targets.clear()
+	# Re-sync trough tracking to live stocks so a restored timeline fires the
+	# same rescans as a single-jump run from the same checkpoint.
+	trough_levels.clear()
+	for pen: AnimalPen in bridge.pens():
+		for child: Node in pen.get_children():
+			if child is AnimalTrough:
+				trough_levels[child.get_instance_id()] = int(child.stock)
 	bridge.storage_waiting.clear()
 	records.clear()
 	trial_used.assign(data.trial_used)
@@ -474,7 +479,7 @@ func _node_added(node: Node) -> void:
 	if not world.is_ancestor_of(node):
 		return
 	if node is PerennialTree:
-		request_scan("orchard")
+		request_scan("crop")
 	elif node is ItemPickup:
 		_pending_pickups.append(weakref(node))
 		_flush_pickups.call_deferred()
@@ -502,7 +507,7 @@ func _trough_changed(stock: int, trough: AnimalTrough) -> void:
 	var key: int = trough.get_instance_id()
 	if int(trough_levels.get(key, stock)) != stock:
 		trough_levels[key] = stock
-		request_scan("ranch")
+		request_scan("crop")
 
 func running(row: Dictionary) -> bool:
 	return bool(row.employed) and bool(row.active) and not (row.role == "crop" and crop_automation.paused)

@@ -15,6 +15,13 @@ func before_each() -> void:
 	world.farming.time_manager.clock_source = func() -> float: return fixed_now
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(12, 4)
+	# The unified worker services troughs at higher priority than produce
+	# work; these tests are about warehouse flows, so keep every trough full.
+	for pen: AnimalPen in service.bridge.pens():
+		for node: Node in pen.get_children():
+			if node is AnimalTrough:
+				(node as AnimalTrough).stock = (node as AnimalTrough).capacity
 	world.trees.reset()
 	assert_true(world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1}))
 	for index: int in range(10):
@@ -52,23 +59,23 @@ func _pile(item: ItemDefinition, amount: int, at: Vector2) -> ItemPickup:
 	return pile
 
 func test_filled_basket_does_not_limit_new_harvest() -> void:
-	service.hire("orchard")
-	service.bag_for("orchard").add(APPLE, 1600)
+	service.hire("crop")
+	service.bag_for("crop").add(APPLE, 1600)
 	service.advance(now + 20)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
-	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 1600)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 1600)
 
 func test_capacity_is_rechecked_when_arriving_after_warehouse_fills() -> void:
 	_limit(300)
-	service.hire("orchard")
+	service.hire("crop")
 	service.advance(now)
-	assert_eq(service.record("orchard").task.kind, "fruit")
+	assert_eq(service.record("crop").task.kind, "fruit")
 	service.output_inventory().add(APPLE, 1)
 	service.advance(now + 20)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 1)
 	assert_true((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit())
 	service.output_inventory().remove(APPLE.item_id, 1)
-	assert_true(service.record("orchard").task.is_empty(), "Freeing storage interrupts only idle patrol")
+	assert_true(service.record("crop").task.is_empty(), "Freeing storage interrupts only idle patrol")
 	service.advance(now + 40)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
 	assert_false((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit())
@@ -76,11 +83,16 @@ func test_capacity_is_rechecked_when_arriving_after_warehouse_fills() -> void:
 func test_crop_and_orchard_share_last_slot_and_preserve_unaccepted_crop() -> void:
 	_limit(300)
 	var crop: CropDefinition = _mature_crop()
-	service.hire("orchard")
 	service.hire("crop")
-	var orchard_task: Dictionary = service.bridge.candidates(service.record("orchard"), service.feed_inventory("orchard"))[0]
-	var crop_task: Dictionary = service.bridge.candidates(service.record("crop"), service.feed_inventory("crop"))[0]
-	assert_true(service.bridge.commit(service.record("orchard"), service.feed_inventory("orchard"), orchard_task))
+	service.hire("crop")
+	var fruit_task: Dictionary = {}
+	var crop_task: Dictionary = {}
+	for candidate: Dictionary in service.bridge.candidates(service.record("crop"), service.feed_inventory("crop")):
+		if String(candidate.kind) == "fruit":
+			fruit_task = candidate
+		elif String(candidate.kind) == "harvest":
+			crop_task = candidate
+	assert_true(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), fruit_task))
 	assert_false(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), crop_task))
 	assert_not_null(world.farming.get_crop(Vector2i(54, 25)))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 300)
@@ -93,22 +105,22 @@ func test_crop_and_orchard_share_last_slot_and_preserve_unaccepted_crop() -> voi
 func test_ranch_pickup_uses_warehouse_and_preserves_partial_pile_and_feed() -> void:
 	_limit(100, 95)
 	var pen: AnimalPen = service.bridge.pens()[0]
-	service.hire("ranch", String(pen.persistent_id))
+	service.hire("crop")
 	var feed: ItemDefinition = load("res://items/feeds/poultry_feed.tres") as ItemDefinition
-	service.feed_inventory("ranch").add(feed, 8)
+	service.feed_inventory("crop").add(feed, 8)
 	var pile: ItemPickup = _pile(APPLE, 20, service.bridge.home("ranch", String(pen.persistent_id)))
 	var task: Dictionary = {"kind": "pickup", "id": String(pile.persistent_id)}
-	assert_true(service.bridge.commit(service.record("ranch"), service.feed_inventory("ranch"), task))
+	assert_true(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), task))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
 	assert_eq(pile.amount, 15)
-	assert_eq(service.feed_inventory("ranch").count_item(feed.item_id), 8)
-	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 0)
-	assert_false(service.bridge.commit(service.record("ranch"), service.feed_inventory("ranch"), task))
+	assert_eq(service.feed_inventory("crop").count_item(feed.item_id), 8)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 0)
+	assert_false(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), task))
 	assert_eq(pile.amount, 15)
 
 func test_each_role_pickup_candidate_uses_output_not_basket_capacity() -> void:
-	service.hire("orchard")
-	service.hire("ranch", String(service.bridge.pens()[0].persistent_id))
+	service.hire("crop")
+	service.hire("crop")
 	world.land.state.restore_columns(12, 4)
 	service.hire("crop")
 	for row: Dictionary in service.records:
@@ -125,44 +137,44 @@ func test_each_role_pickup_candidate_uses_output_not_basket_capacity() -> void:
 
 func test_legacy_save_import_is_partial_idempotent_and_keeps_feed_after_dismissal() -> void:
 	_limit(100, 95)
-	service.hire("ranch", String(service.bridge.pens()[0].persistent_id))
+	service.hire("crop")
 	var feed: ItemDefinition = load("res://items/feeds/poultry_feed.tres") as ItemDefinition
-	service.bag_for("ranch").add(APPLE, 200)
-	service.bag_for("ranch").add(feed, 8)
-	service.dismiss("ranch")
+	service.bag_for("crop").add(APPLE, 200)
+	service.bag_for("crop").add(feed, 8)
+	service.dismiss("crop")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("warehouse_test", 1, now)
 	var restored: Dictionary = adapter.restore(saved, now)
 	assert_true(restored.ok, str(restored))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
-	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 195)
-	assert_eq(service.feed_inventory("ranch").count_item(feed.item_id), 8)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 195)
+	assert_eq(service.feed_inventory("crop").count_item(feed.item_id), 8)
 	var migrated: Dictionary = adapter.capture("warehouse_test", 2, now)
 	assert_true(adapter.restore(migrated, now).ok, str(SaveSchema.validate(migrated, adapter.catalog)))
 	assert_true(adapter.restore(migrated, now).ok, str(SaveSchema.validate(migrated, adapter.catalog)))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
-	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 195)
-	assert_eq(service.transfer("ranch", world.player.selection.inventory, false, false), 195)
-	assert_eq(service.feed_inventory("ranch").count_item(feed.item_id), 8)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 195)
+	assert_eq(service.transfer("crop", world.player.selection.inventory, false, false), 195)
+	assert_eq(service.feed_inventory("crop").count_item(feed.item_id), 8)
 	assert_eq(world.player.selection.inventory.count_item(APPLE.item_id), 195)
 
 func test_legacy_remainder_drains_after_capacity_is_freed() -> void:
 	_limit(100, 100)
-	service.hire("orchard")
-	service.bag_for("orchard").add(APPLE, 20)
+	service.hire("crop")
+	service.bag_for("crop").add(APPLE, 20)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("warehouse_test", 1, now)
 	var restored: Dictionary = adapter.restore(saved, now)
 	assert_true(restored.ok, str(restored))
-	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 20)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 20)
 	service.output_inventory().remove(APPLE.item_id, 10)
 	service.advance(now)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 100)
-	assert_eq(service.bag_for("orchard").count_item(APPLE.item_id), 10)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 10)
 
 func test_v23_profile_imports_old_products_into_new_empty_warehouse_once() -> void:
-	service.hire("ranch", String(service.bridge.pens()[0].persistent_id))
-	service.dismiss("ranch")
+	service.hire("crop")
+	service.dismiss("crop")
 	var feed: ItemDefinition = load("res://items/feeds/poultry_feed.tres") as ItemDefinition
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var legacy: Dictionary = adapter.capture("warehouse_test", 1, now)
@@ -174,8 +186,8 @@ func test_v23_profile_imports_old_products_into_new_empty_warehouse_once() -> vo
 	assert_true(adapter.restore(legacy, now).ok)
 	assert_false(legacy.has("storages"))
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 150)
-	assert_eq(service.bag_for("ranch").count_item(APPLE.item_id), 0)
-	assert_eq(service.feed_inventory("ranch").count_item(feed.item_id), 8)
+	assert_eq(service.bag_for("crop").count_item(APPLE.item_id), 0)
+	assert_eq(service.feed_inventory("crop").count_item(feed.item_id), 8)
 	var current: Dictionary = adapter.capture("warehouse_test", 2, now)
 	assert_true(adapter.restore(current, now).ok)
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 150)
@@ -190,20 +202,20 @@ func test_full_warehouse_still_allows_crop_watering_and_ranch_feeding() -> void:
 	service.hire("crop")
 	assert_true(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), {"kind": "water_crop", "cell": [54, 25]}))
 	var pen: AnimalPen = service.bridge.pens()[0]
-	service.hire("ranch", String(pen.persistent_id))
+	service.hire("crop")
 	for node: Node in pen.get_children():
 		if node is AnimalTrough and node.kind == AnimalTrough.Kind.FOOD:
 			node.stock = 0
-			service.feed_inventory("ranch").add(node.feed_item, 1)
+			service.feed_inventory("crop").add(node.feed_item, 1)
 			service.busy = true
-			assert_true(service.bridge.commit(service.record("ranch"), service.feed_inventory("ranch"), {"kind": "feed", "id": String(node.persistent_id)}))
+			assert_true(service.bridge.commit(service.record("crop"), service.feed_inventory("crop"), {"kind": "feed", "id": String(node.persistent_id)}))
 			service.busy = false
 			assert_gt(node.stock, 0)
 			break
 	assert_eq(service.output_inventory().count_item(APPLE.item_id), 1)
 
 func test_warehouse_notifications_hold_transaction_lock_and_refresh_open_panel() -> void:
-	service.hire("orchard")
+	service.hire("crop")
 	var access: FarmStorageAccess = world.storage_accesses.produce_warehouse
 	world.player.global_position = access.global_position + Vector2(0, 24)
 	assert_true(access.open_shop(world.player))
@@ -212,7 +224,7 @@ func test_warehouse_notifications_hold_transaction_lock_and_refresh_open_panel()
 		if id == "produce_warehouse":
 			observed.append(world.storages.busy)
 			assert_false(service.available())
-			assert_ne(service.dismiss("orchard"), "")
+			assert_ne(service.dismiss("crop"), "")
 	)
 	service.advance(now + 20)
 	await wait_process_frames(4)

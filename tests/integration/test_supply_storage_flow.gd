@@ -188,16 +188,16 @@ func test_old_basket_feed_migrates_partially_and_remainder_can_be_recovered() ->
 	var data: Dictionary = world.storages.capture()
 	data.farm_supply_storage = {"slot_count": 1, "stack_cap": 2, "slots": [{"item": "poultry_feed", "count": 1, "tiers": [1, 0, 0]}]}
 	world.storages.restore(data, SaveCatalog.new())
-	world.workers.hire("ranch", String(world.workers.bridge.pens()[0].persistent_id))
-	world.workers.dismiss("ranch")
+	world.workers.hire("crop")
+	world.workers.dismiss("crop")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("supply_test", 1, now)
 	saved.workers.rows[0].basket[0] = {"item": "poultry_feed", "count": 5, "tiers": [5, 0, 0]}
 	assert_true(adapter.restore(saved, now).ok)
 	assert_eq(world.storages.inventory("farm_supply_storage").count_item(FEED.item_id), 2)
-	assert_eq(world.workers.bag_for("ranch").count_item(FEED.item_id), 4)
-	assert_eq(world.workers.transfer("ranch", world.player.selection.inventory, false, true), 4)
-	assert_eq(world.workers.bag_for("ranch").count_item(FEED.item_id), 0)
+	assert_eq(world.workers.bag_for("crop").count_item(FEED.item_id), 4)
+	assert_eq(world.workers.transfer("crop", world.player.selection.inventory, false, true), 4)
+	assert_eq(world.workers.bag_for("crop").count_item(FEED.item_id), 0)
 
 func test_support_checks_seeds_and_produce_in_both_warehouses() -> void:
 	var bag: InventoryComponent = world.player.selection.inventory

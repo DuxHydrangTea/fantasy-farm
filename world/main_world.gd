@@ -155,7 +155,7 @@ func _ready() -> void:
 ## Waypoints hug the authored plantation border so the body, movement and
 ## stuck-skip behaviour are verifiable on the real map before any role logic.
 func _spawn_debug_orchard_worker() -> WorkerActor:
-	var worker: WorkerActor = (preload("res://scenes/workers/orchard_worker.tscn") as PackedScene).instantiate() as WorkerActor
+	var worker: WorkerActor = (preload("res://scenes/workers/crop_worker.tscn") as PackedScene).instantiate() as WorkerActor
 	worker.name = "OrchardWorkerM0"
 	add_child(worker)
 	var region: Rect2i = TreePlantation.FRUIT_REGION

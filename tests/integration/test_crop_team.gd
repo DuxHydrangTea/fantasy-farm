@@ -29,6 +29,12 @@ func before_each() -> void:
 	world.farming.restore_soil([])
 	service = world.workers
 	source = world.storages.inventory("farm_supply_storage")
+	# The unified worker services troughs at higher priority than planting;
+	# these tests are about crop work, so keep every trough full.
+	for pen: AnimalPen in service.bridge.pens():
+		for node: Node in pen.get_children():
+			if node is AnimalTrough:
+				(node as AnimalTrough).stock = (node as AnimalTrough).capacity
 	cells.clear()
 	for index: int in range(5):
 		cells.append(Vector2i(48 + index, 30))
@@ -48,7 +54,7 @@ func _hire(count: int = 5) -> void:
 		assert_eq(service.hire("crop"), "")
 	for row: Dictionary in service.records_for("crop"):
 		var actor: WorkerActor = service.actor_for(row.id)
-		actor.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cells[int(row.slot) - 1] + Vector2i.UP))
+		actor.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cells[(int(row.slot) - 1) % cells.size()] + Vector2i.UP))
 		row.position = WorkerRole.pair(actor.global_position)
 
 func _assert_distinct_work(expected: int) -> void:
@@ -64,8 +70,8 @@ func _assert_distinct_work(expected: int) -> void:
 	assert_eq(count, expected)
 
 func test_cap_per_worker_wages_rehire_and_bounded_records() -> void:
-	_hire()
-	assert_eq(world.player.wallet.balance, 1000000 - 4 * 2800)
+	_hire(15)
+	assert_eq(world.player.wallet.balance, 1000000 - 14 * 2800)
 	assert_ne(service.hire("crop"), "")
 	var rows: Array[Dictionary] = service.records_for("crop")
 	var chosen: Dictionary = rows[2]
@@ -76,11 +82,11 @@ func test_cap_per_worker_wages_rehire_and_bounded_records() -> void:
 		assert_false(chosen.employed)
 		assert_true(rows[0].employed)
 		assert_eq(service.hire("crop"), "")
-		assert_eq(service.records_for("crop").size(), 5)
+		assert_eq(service.records_for("crop").size(), 15)
 		assert_true(chosen.employed)
 		assert_eq(service.worker_number(kept_id), number)
-	assert_eq(world.player.wallet.balance, 1000000 - 12 * 2800)
-	assert_eq(service.actors.size(), 5)
+	assert_eq(world.player.wallet.balance, 1000000 - 22 * 2800)
+	assert_eq(service.actors.size(), 15)
 
 func test_all_five_receive_distinct_till_jobs_and_finish_planting() -> void:
 	_hire()
@@ -179,13 +185,13 @@ func test_v35_migration_keeps_id_prepared_plot_and_trial_without_mutating_input(
 	assert_eq(world.player.wallet.balance, balance - 2800)
 
 func test_insufficient_wages_pause_only_unpaid_workers_and_still_occupy_slots() -> void:
-	_hire()
+	_hire(15)
 	service.configure_crop(false, false, true)
 	world.player.wallet.set_balance(2 * 2800)
 	var dawn: float = world.weather.schedule.dawn_at(world.weather.schedule.day_at(FIXED_TIME) + 1)
 	service.advance(dawn)
 	var rows: Array[Dictionary] = service.records_for("crop")
-	for index: int in range(5):
+	for index: int in range(15):
 		assert_eq(bool(rows[index].active), index < 2)
 	assert_eq(world.player.wallet.balance, 0)
 	world.player.wallet.set_balance(100000)

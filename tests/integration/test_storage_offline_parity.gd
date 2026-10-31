@@ -60,8 +60,8 @@ func before_each() -> void:
 	var data: Dictionary = world.storages.capture()
 	data.produce_warehouse = {"slot_count": 3, "stack_cap": 1000, "slots": [{"item": "", "count": 0, "tiers": [0, 0, 0]}, {"item": "", "count": 0, "tiers": [0, 0, 0]}, {"item": "", "count": 0, "tiers": [0, 0, 0]}]}
 	world.storages.restore(data, SaveCatalog.new())
-	assert_eq(world.workers.hire("orchard"), "")
-	assert_eq(world.workers.hire("ranch", String(world.workers.bridge.pens()[0].persistent_id)), "")
+	assert_eq(world.workers.hire("crop"), "")
+	assert_eq(world.workers.hire("crop"), "")
 	assert_eq(world.workers.hire("crop"), "")
 
 

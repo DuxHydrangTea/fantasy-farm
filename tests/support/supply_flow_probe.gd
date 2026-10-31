@@ -144,12 +144,12 @@ func _run() -> void:
 		if node is AnimalTrough and node.kind == AnimalTrough.Kind.FOOD:
 			node.stock = 0
 	supplies.add(FEED, 8)
-	_check(world.workers.hire("ranch", String(pen.persistent_id)).is_empty(), "Ranch hires with shared supplies")
+	_check(world.workers.hire("crop").is_empty(), "Ranch hires with shared supplies")
 	_check(world.workers.hire("crop").is_empty(), "Crop worker hires")
 	var until: float = clock[0] + 600
 	world.workers.advance(until)
 	clock[0] = until
-	_check(world.workers.bag_for("ranch").count_item(FEED.item_id) == 0, "Ranch uses no basket feed")
+	_check(world.workers.bag_for("crop").count_item(FEED.item_id) == 0, "Ranch uses no basket feed")
 	_check(world.workers.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id) > 0, "Sown crops reach produce warehouse through worker")
 	get_tree().root.size = Vector2i(844, 390)
 	get_viewport().set_meta("touch_ui_override", true)

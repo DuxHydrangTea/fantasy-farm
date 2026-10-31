@@ -71,7 +71,7 @@ func _wax(amount: int = 1) -> void:
 func _orchard() -> void:
 	for i: int in range(1, 10):
 		_fruit(&"apple", false, Vector2i(12 + i * 3, 61))
-	assert_eq(service.hire("orchard"), "")
+	assert_eq(service.hire("crop"), "")
 
 func test_first_choice_free_preserves_ready_crop_and_applies_only_after_harvest() -> void:
 	var tree: FruitTree = _fruit()
@@ -151,18 +151,18 @@ func test_worker_uses_dynamic_amount_and_keeps_pending_graft_when_warehouse_too_
 	var data: Dictionary = world.storages.capture()
 	data.produce_warehouse = {"slot_count": 1, "stack_cap": 400, "slots": [{"item": "", "count": 0, "tiers": [0, 0, 0]}]}
 	world.storages.restore(data, SaveCatalog.new())
-	var row: Dictionary = service.record("orchard")
-	var candidates: Array[Dictionary] = service.bridge.candidates(row, service.feed_inventory("orchard"))
+	var row: Dictionary = service.record("crop")
+	var candidates: Array[Dictionary] = service.bridge.candidates(row, service.feed_inventory("crop"))
 	assert_true(candidates.is_empty())
 	assert_true(service.bridge.storage_waiting.orchard)
 	var job: Dictionary = {"kind": "fruit", "id": "12_61", "cell": [12, 61]}
-	assert_false(service.bridge.commit(row, service.feed_inventory("orchard"), job))
+	assert_false(service.bridge.commit(row, service.feed_inventory("crop"), job))
 	assert_true(tree.has_fruit())
 	assert_eq(tree.pending_graft, FruitTree.Graft.QUALITY)
 	data.produce_warehouse.slots.append({"item": "", "count": 0, "tiers": [0, 0, 0]})
 	data.produce_warehouse.slot_count = 2
 	world.storages.restore(data, SaveCatalog.new())
-	assert_true(service.bridge.commit(row, service.feed_inventory("orchard"), job))
+	assert_true(service.bridge.commit(row, service.feed_inventory("crop"), job))
 	assert_eq(service.output_inventory().count_item(&"apple"), 600)
 	assert_eq(tree.active_graft, FruitTree.Graft.QUALITY)
 
@@ -171,8 +171,8 @@ func test_worker_delivers_star_to_warehouse_and_transport_never_turns_it_into_or
 	tree.active_graft = FruitTree.Graft.QUALITY
 	tree.graft_revision = 2
 	_orchard()
-	var row: Dictionary = service.record("orchard")
-	assert_true(service.bridge.commit(row, service.feed_inventory("orchard"), {"kind": "fruit", "id": "12_61", "cell": [12, 61]}))
+	var row: Dictionary = service.record("crop")
+	assert_true(service.bridge.commit(row, service.feed_inventory("crop"), {"kind": "fruit", "id": "12_61", "cell": [12, 61]}))
 	assert_eq(service.output_inventory().count_item(&"apple_star"), 300)
 	assert_eq(service.output_inventory().count_item(&"apple"), 0)
 	var access: FarmStorageAccess = world.storage_accesses.produce_warehouse

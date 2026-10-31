@@ -2,7 +2,7 @@ extends Node2D
 ## Isolated farm child for all three worker role previews; no personal save binding.
 var world: FarmWorld
 var menu: WorkerMenu
-@export_enum("crop", "orchard", "ranch") var role: String = "crop"
+@export_enum("crop") var role: String = "crop"
 @export var employed: bool = true
 @export var show_confirmation: bool = false
 
@@ -25,10 +25,10 @@ func _ready() -> void:
 	source.add(preload("res://items/feeds/poultry_feed.tres"), 80)
 	var pen: AnimalPen = world.workers.bridge.pens()[0]
 	if employed:
-		world.workers.hire(role, String(pen.persistent_id) if role == "ranch" else "")
+		world.workers.hire(role)
 		if role == "crop":
 			world.workers.configure_crop(true, true, false)
-	var board: WorkerBoard = world.get_node({"crop":"CropWorkers", "orchard":"OrchardWorkers", "ranch":"RanchWorkers"}[role]) as WorkerBoard
+	var board: WorkerBoard = world.get_node("CropWorkers") as WorkerBoard
 	world.player.global_position = board.interaction_position() + Vector2(0, 24)
 	menu = board.menu as WorkerMenu
 	board.open_shop(world.player)

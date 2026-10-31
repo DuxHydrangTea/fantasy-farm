@@ -161,7 +161,7 @@ func _run() -> void:
 	_check(adapter.restore(pending, clock[0]).ok, "Pending graft reloads")
 	tree = world.trees.trees[Vector2i(12, 61)] as FruitTree
 	_check(tree.pending_graft == FruitTree.Graft.QUALITY and tree.active_graft == FruitTree.Graft.YIELD, "Reload retains both directions")
-	_check(world.workers.hire("orchard").is_empty(), "Orchard worker hired")
+	_check(world.workers.hire("crop").is_empty(), "Orchard worker hired")
 	var until: float = clock[0] + 2 * definition.fruit_cycle_seconds + 120
 	world.workers.advance(until)
 	clock[0] = until

@@ -99,9 +99,9 @@ func _run() -> void:
 	var menu: WorkerMenu = board.menu as WorkerMenu
 	await _capture("orchard-board")
 	await _click(menu.hire_button)
-	_check(world.workers.actor_for("orchard") != null, "GUI hires orchard worker")
+	_check(world.workers.actor_for("crop") != null, "GUI hires orchard worker")
 	menu.close(false)
-	var worker: WorkerActor = world.workers.actor_for("orchard")
+	var worker: WorkerActor = world.workers.actor_for("crop")
 	world.player.global_position = worker.global_position + Vector2(0, 70)
 	var start: Vector2 = worker.global_position
 	await _frames(360)
@@ -134,12 +134,12 @@ func _run() -> void:
 	_check(Rect2(Vector2.ZERO, basket_menu.root.size).encloses(basket_menu.panel.get_rect()), "Worker menu fits touch landscape")
 	await _capture("touch-worker-basket")
 	await _tap(basket_menu.dismiss_button)
-	_check(world.workers.record("orchard").employed, "First touch asks dismissal confirmation")
+	_check(world.workers.record("crop").employed, "First touch asks dismissal confirmation")
 	await _tap(basket_menu.confirm_button)
-	_check(not world.workers.record("orchard").employed, "Second touch dismisses while keeping basket")
+	_check(not world.workers.record("crop").employed, "Second touch dismisses while keeping basket")
 	await _frames(5)
 	await _tap(basket_menu.hire_button)
-	_check(world.workers.record("orchard").employed, "Touch rehires the same role")
+	_check(world.workers.record("crop").employed, "Touch rehires the same role")
 	basket_menu.close(false)
 	_check(not world.player.selection.is_menu_open(), "Close releases player input")
 	var before_coins: int = world.player.wallet.balance
