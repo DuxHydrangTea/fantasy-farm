@@ -1,7 +1,7 @@
 class_name WorkerMenu
 extends TradeMenu
 ## Role-specific view over WorkerService; portraits and controls never mutate actors.
-var role: String = "orchard"
+var role: String = "crop"
 var selected_worker_id: String = ""
 var world: FarmWorld
 @onready var team_list: VBoxContainer = %TeamList

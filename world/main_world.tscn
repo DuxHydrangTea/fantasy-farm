@@ -1,66 +1,90 @@
-[gd_scene format=4 uid="uid://dnt5cb3jjnq6w"]
+[gd_scene format=4]
 
-[ext_resource type="Texture2D" uid="uid://dgq3cmvxodn3h" path="res://assets/Tiles/Grass/Grass_1_Middle.png" id="1_7kqnc"]
-[ext_resource type="Script" uid="uid://cvv3qqciiby74" path="res://world/main_world.gd" id="1_hvhku"]
-[ext_resource type="Texture2D" uid="uid://ds8jtul5pvs76" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="2_njfbw"]
-[ext_resource type="Texture2D" uid="uid://ceilwcld58q26" path="res://assets/Tiles/Grass/Path_Decoration.png" id="3_1wpd2"]
-[ext_resource type="Texture2D" uid="uid://co7k8qn7eoawk" path="res://assets/Tiles/Water/Water_Stone_Tile_1.png" id="3_61two"]
-[ext_resource type="Texture2D" uid="uid://b3that1pxt6sg" path="res://assets/Tiles/Grass/Grass_2_Middle.png" id="3_cissw"]
-[ext_resource type="Texture2D" uid="uid://cn7d48l36uyne" path="res://assets/Tiles/FarmLand/FarmLand_Tile.png" id="3_xguvr"]
-[ext_resource type="Texture2D" uid="uid://d0cp5mkn6ge8q" path="res://assets/Tiles/FarmLand/FarmLand_Wet_Tile.png" id="4_o0hhk"]
-[ext_resource type="Texture2D" uid="uid://c7ge0lc1cjim3" path="res://assets/Tiles/Grass/Grass_Tiles_2.png" id="5_gtd7t"]
-[ext_resource type="Texture2D" uid="uid://msianvh7lglu" path="res://assets/Tiles/Pavement_Tiles.png" id="5_ootrp"]
-[ext_resource type="TileSet" uid="uid://coe4hu76jd1vh" path="res://resources/tilesets/fence.tres" id="6_yae5m"]
-[ext_resource type="Texture2D" uid="uid://cxnj82bf4xcs8" path="res://assets/Outdoor decoration/Cave_Decorations.png" id="7_4nnau"]
-[ext_resource type="Texture2D" uid="uid://bc3f4o374qvrv" path="res://assets/Outdoor decoration/Flowers.png" id="8_7ubxh"]
-[ext_resource type="Texture2D" uid="uid://cvgy7nrhn4pqu" path="res://assets/Outdoor decoration/barrels.png" id="8_sb31h"]
-[ext_resource type="Texture2D" uid="uid://dlu4dm28ohw57" path="res://assets/Outdoor decoration/Benches.png" id="9_doklq"]
-[ext_resource type="Texture2D" uid="uid://ykk85rxyjr6l" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="9_u1taw"]
-[ext_resource type="Texture2D" uid="uid://bfrmwd6olbgsx" path="res://assets/Trees/Big_Birch_Tree.png" id="10_qqiv8"]
-[ext_resource type="Texture2D" uid="uid://cwyqrqjfeb25f" path="res://assets/Trees/Big_Fruit_Tree.png" id="11_gtd7t"]
-[ext_resource type="Texture2D" uid="uid://clttn46wffs47" path="res://assets/Outdoor decoration/Hay_Bales.png" id="11_u1taw"]
-[ext_resource type="Texture2D" uid="uid://b4lvfo1kgnncc" path="res://assets/Trees/Big_Oak_Tree.png" id="12_cissw"]
-[ext_resource type="Script" uid="uid://bqaw8s8ismxrn" path="res://components/farming_controller.gd" id="13_2bho7"]
-[ext_resource type="Texture2D" uid="uid://0fdqt3egkt00" path="res://assets/Tiles/Hedge_Tiles.png" id="13_3x1dl"]
-[ext_resource type="Texture2D" uid="uid://cl3ge23c2nmwx" path="res://assets/Trees/Big_Spruce_tree.png" id="13_lu7uo"]
-[ext_resource type="Texture2D" uid="uid://64yefqolm203" path="res://assets/Outdoor decoration/Lanter_Posts.png" id="14_ehwp3"]
-[ext_resource type="Texture2D" uid="uid://bkew0oqqhrcmk" path="res://assets/Outdoor decoration/Scarecrows.png" id="15_fhqb0"]
-[ext_resource type="PackedScene" uid="uid://dipp05a6ivsjr" path="res://scenes/buildings/unique_buildings/coop.tscn" id="16_t6m8u"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_1_Middle.png" id="1_7kqnc"]
+[ext_resource type="Script" path="res://world/main_world.gd" id="1_hvhku"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="2_njfbw"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Path_Decoration.png" id="3_1wpd2"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Water/Water_Stone_Tile_1.png" id="3_61two"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_2_Middle.png" id="3_cissw"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/FarmLand/FarmLand_Tile.png" id="3_xguvr"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/FarmLand/FarmLand_Wet_Tile.png" id="4_o0hhk"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_2.png" id="5_gtd7t"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Pavement_Tiles.png" id="5_ootrp"]
+[ext_resource type="TileSet" path="res://resources/tilesets/fence.tres" id="6_yae5m"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Cave_Decorations.png" id="7_4nnau"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="8_7ubxh"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/barrels.png" id="8_sb31h"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="9_doklq"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="9_u1taw"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Big_Birch_Tree.png" id="10_qqiv8"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Big_Fruit_Tree.png" id="11_gtd7t"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="11_u1taw"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Big_Oak_Tree.png" id="12_cissw"]
+[ext_resource type="Script" path="res://components/farming_controller.gd" id="13_2bho7"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Hedge_Tiles.png" id="13_3x1dl"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Big_Spruce_tree.png" id="13_lu7uo"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Lanter_Posts.png" id="14_ehwp3"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Scarecrows.png" id="15_fhqb0"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/coop.tscn" id="16_t6m8u"]
 [ext_resource type="PackedScene" path="res://scenes/animals/animal_pen.tscn" id="18_c45uy"]
-[ext_resource type="PackedScene" uid="uid://p617o0sl32sc" path="res://scenes/characters/player.tscn" id="20_farmer_bob"]
-[ext_resource type="Texture2D" uid="uid://bcx41qmi6oedp" path="res://assets/Outdoor decoration/Water_Troughs.png" id="23_7ubxh"]
-[ext_resource type="Texture2D" uid="uid://dbtgur5ntvtye" path="res://assets/Trees/Variants64x80/autumn_maple.png" id="25_myam0"]
-[ext_resource type="Texture2D" uid="uid://com5ff07tr8ox" path="res://assets/Trees/Variants64x80/magic_blue.png" id="26_6x4i3"]
-[ext_resource type="PackedScene" uid="uid://txxcpr315y8n" path="res://scenes/buildings/unique_buildings/barn.tscn" id="31_fdd8g"]
-[ext_resource type="PackedScene" uid="uid://cn2ms4ioidlvh" path="res://scenes/animals/feed_trough.tscn" id="32_feed_trough"]
-[ext_resource type="PackedScene" uid="uid://drlyjllanxony" path="res://scenes/animals/water_trough.tscn" id="33_water_trough"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player.tscn" id="20_farmer_bob"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="23_7ubxh"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Variants64x80/autumn_maple.png" id="25_myam0"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Variants64x80/magic_blue.png" id="26_6x4i3"]
+[ext_resource type="Script" path="res://components/farm_player.gd" id="28_b3fbx"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/barn.tscn" id="31_fdd8g"]
+[ext_resource type="Script" path="res://scenes/buildings/unique_buildings/coop.gd" id="31_h5rfb"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/AnimalShelters/chicken_shelter.png" id="32_4ab4e"]
+[ext_resource type="PackedScene" path="res://scenes/animals/feed_trough.tscn" id="32_feed_trough"]
+[ext_resource type="PackedScene" path="res://scenes/animals/water_trough.tscn" id="33_water_trough"]
+[ext_resource type="Script" path="res://components/animals/animal_pen.gd" id="34_kui3o"]
+[ext_resource type="Script" path="res://components/animals/animal_trough.gd" id="36_xio4k"]
+[ext_resource type="Resource" path="res://items/feeds/poultry_feed.tres" id="38_h0yb0"]
 [ext_resource type="PackedScene" path="res://world/butterfly_swarm.tscn" id="40_w4es6"]
-[ext_resource type="PackedScene" uid="uid://bi5564pooiobm" path="res://scenes/objects/outdoor_decor/horizontal_gate_left_hinge.tscn" id="41_qju2h"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/horizontal_gate_left_hinge.tscn" id="41_qju2h"]
+[ext_resource type="Script" path="res://components/animals/management/pen_board.gd" id="41_v2gse"]
 [ext_resource type="PackedScene" path="res://scenes/animals/livestock_feed_trough.tscn" id="41_ykqd1"]
-[ext_resource type="PackedScene" uid="uid://dv3m4jy7rj8rq" path="res://scenes/objects/outdoor_decor/vertical_gate.tscn" id="42_bb2dq"]
-[ext_resource type="Resource" uid="uid://c2ii5df2nr7md" path="res://items/feeds/livestock_feed.tres" id="42_xgmr7"]
-[ext_resource type="PackedScene" uid="uid://qpocghqmf0oy" path="res://scenes/objects/item_pickup.tscn" id="43_632h0"]
-[ext_resource type="PackedScene" uid="uid://vgjyw7vjrd6w" path="res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn" id="43_toecx"]
-[ext_resource type="PackedScene" uid="uid://chbh767240ioq" path="res://scenes/buildings/houses/house_2.tscn" id="45_il0i8"]
-[ext_resource type="PackedScene" uid="uid://b71frx6xvr86y" path="res://scenes/buildings/houses/house_1.tscn" id="51_fhqb0"]
-[ext_resource type="SpriteFrames" uid="uid://d2boolbmmw2pl" path="res://sprite_frames/character/chef_chloe_frames.tres" id="52_slg8a"]
-[ext_resource type="PackedScene" uid="uid://c1vdsb5iy067i" path="res://scenes/characters/produce_buyer.tscn" id="64_i4q3u"]
-[ext_resource type="Script" uid="uid://3ml3jshpyxgx" path="res://persistence/world_persistence.gd" id="65_ptedk"]
-[ext_resource type="PackedScene" uid="uid://bt6yijivg2evt" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
-[ext_resource type="PackedScene" uid="uid://dt652hcc7i8t1" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
-[ext_resource type="PackedScene" uid="uid://b0muna0l66yqi" path="res://scenes/characters/blacksmith_merchant.tscn" id="blacksmith_merchant"]
-[ext_resource type="PackedScene" uid="uid://cxk50akhu73dt" path="res://scenes/buildings/unique_buildings/blacksmith_house.tscn" id="blacksmith_shop"]
-[ext_resource type="Script" uid="uid://c07b3nhwkyscm" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
-[ext_resource type="PackedScene" uid="uid://equgvrbt737b" path="res://scenes/characters/flower_merchant.tscn" id="flower_merchant"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/vertical_gate.tscn" id="42_bb2dq"]
+[ext_resource type="Resource" path="res://items/feeds/livestock_feed.tres" id="42_xgmr7"]
+[ext_resource type="Script" path="res://scenes/buildings/unique_buildings/barn.gd" id="43_4jawo"]
+[ext_resource type="PackedScene" path="res://scenes/objects/item_pickup.tscn" id="43_632h0"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn" id="43_toecx"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/AnimalShelters/cattle_shelter.png" id="44_labkd"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/houses/house_2.tscn" id="45_il0i8"]
+[ext_resource type="Script" path="res://components/item_pickup.gd" id="48_ygtcd"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/houses/house_1.tscn" id="51_fhqb0"]
+[ext_resource type="Script" path="res://components/flowers/flower_garden.gd" id="51_owu34"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/character/chef_chloe_frames.tres" id="52_slg8a"]
+[ext_resource type="Script" path="res://components/animals/pond_pen.gd" id="53_hrcex"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/AnimalShelters/duck_shelter.png" id="54_3iaxv"]
+[ext_resource type="Script" path="res://scenes/buildings/unique_buildings/blacksmith_house.gd" id="56_uqeqp"]
+[ext_resource type="Script" path="res://components/shop_merchant.gd" id="60_evt51"]
+[ext_resource type="Resource" path="res://resources/shops/seed_flower_shop.tres" id="61_4qylm"]
+[ext_resource type="Resource" path="res://resources/shops/pet_shop.tres" id="63_a6oen"]
+[ext_resource type="PackedScene" path="res://scenes/characters/produce_buyer.tscn" id="64_i4q3u"]
+[ext_resource type="Script" path="res://persistence/world_persistence.gd" id="65_ptedk"]
+[ext_resource type="Resource" path="res://resources/shops/blacksmith.tres" id="65_v4c33"]
+[ext_resource type="PackedScene" path="res://scenes/flowers/flower_garden.tscn" id="66_8jlaq"]
+[ext_resource type="Resource" path="res://resources/shops/flower_shop.tres" id="68_wgdft"]
+[ext_resource type="Script" path="res://components/landscape/butterfly_swarm.gd" id="71_7cjgt"]
+[ext_resource type="PackedScene" path="res://scenes/animals/pond_pen.tscn" id="71_b3fbx"]
+[ext_resource type="Script" path="res://components/automatic_gate.gd" id="73_k0hid"]
+[ext_resource type="Script" path="res://scenes/buildings/houses/house_2.gd" id="77_vlh6x"]
+[ext_resource type="Script" path="res://scenes/buildings/houses/house_1.gd" id="79_x8fc7"]
+[ext_resource type="Script" path="res://components/workers/worker_board.gd" id="83_kx1u3"]
+[ext_resource type="PackedScene" path="res://scenes/characters/blacksmith_merchant.tscn" id="blacksmith_merchant"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/blacksmith_house.tscn" id="blacksmith_shop"]
+[ext_resource type="Script" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
+[ext_resource type="PackedScene" path="res://scenes/characters/flower_merchant.tscn" id="flower_merchant"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/shops/flower_shop.tscn" id="flower_shop"]
-[ext_resource type="PackedScene" uid="uid://dvko44wangl3w" path="res://scenes/animals/pen_board.tscn" id="pen_management_sign"]
-[ext_resource type="PackedScene" uid="uid://b7fji0q3pty0p" path="res://scenes/characters/pet_merchant.tscn" id="pet_merchant"]
-[ext_resource type="PackedScene" uid="uid://ds6dh8xf4ggwm" path="res://scenes/buildings/shops/pet_shop.tscn" id="pet_shop"]
-[ext_resource type="PackedScene" uid="uid://cpxjmv1xssqv" path="res://scenes/buildings/unique_buildings/produce_warehouse.tscn" id="produce_warehouse_building"]
-[ext_resource type="PackedScene" uid="uid://cehqa3uyf6lhi" path="res://scenes/characters/seed_flower_merchant.tscn" id="seed_flower_merchant"]
+[ext_resource type="PackedScene" path="res://scenes/animals/pen_board.tscn" id="pen_management_sign"]
+[ext_resource type="PackedScene" path="res://scenes/characters/pet_merchant.tscn" id="pet_merchant"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/shops/pet_shop.tscn" id="pet_shop"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/produce_warehouse.tscn" id="produce_warehouse_building"]
+[ext_resource type="PackedScene" path="res://scenes/characters/seed_flower_merchant.tscn" id="seed_flower_merchant"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/shops/seed_flower_shop.tscn" id="seed_flower_shop"]
-[ext_resource type="PackedScene" uid="uid://d1ugktlqqd83e" path="res://scenes/buildings/unique_buildings/seed_storage.tscn" id="seed_storage_building"]
-[ext_resource type="PackedScene" uid="uid://b0cp5dnid4umt" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/unique_buildings/seed_storage.tscn" id="seed_storage_building"]
+[ext_resource type="PackedScene" path="res://scenes/workers/worker_board.tscn" id="worker_board"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t6m8u"]
 texture = ExtResource("1_7kqnc")
@@ -4831,11 +4855,14 @@ region = Rect2(16, 0, 32, 16)
 atlas = ExtResource("23_7ubxh")
 region = Rect2(64, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7c4vb"]
+[sub_resource type="RectangleShape2D" id="DuckShelterShape"]
+size = Vector2(104, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylm75"]
 atlas = ExtResource("23_7ubxh")
 region = Rect2(96, 0, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e688v"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr8go"]
 atlas = ExtResource("23_7ubxh")
 region = Rect2(144, 0, 16, 32)
 
@@ -4844,6 +4871,22 @@ atlas = ExtResource("23_7ubxh")
 region = Rect2(16, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qanod"]
+atlas = ExtResource("23_7ubxh")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7c4vb"]
+atlas = ExtResource("23_7ubxh")
+region = Rect2(96, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e688v"]
+atlas = ExtResource("23_7ubxh")
+region = Rect2(144, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80vnx"]
+atlas = ExtResource("23_7ubxh")
+region = Rect2(16, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb0q1"]
 atlas = ExtResource("23_7ubxh")
 region = Rect2(64, 0, 32, 16)
 
@@ -4910,8 +4953,18 @@ tile_set = SubResource("TileSet_6x4i3")
 
 [node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1502539275]
 
-[node name="Player" parent="." unique_id=1882155096 instance=ExtResource("20_farmer_bob")]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1882155096 node_paths=PackedStringArray("animation", "state", "selection", "camera", "farming_actions", "context_bars") instance=ExtResource("20_farmer_bob")]
+texture_filter = 1
 position = Vector2(1639, 1002)
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("28_b3fbx")
+animation = NodePath("AnimationComponent")
+state = NodePath("StateComponent")
+selection = NodePath("ToolSelection")
+camera = NodePath("Camera2D")
+farming_actions = NodePath("FarmingActionComponent")
+context_bars = NodePath("ContextBars")
 
 [node name="FarmingController" type="Node" parent="." unique_id=2051324060 node_paths=PackedStringArray("ground", "farmland", "dry_soil", "wet_soil")]
 script = ExtResource("13_2bho7")
@@ -4920,65 +4973,106 @@ farmland = NodePath("../FarmLand")
 dry_soil = NodePath("../DrySoil")
 wet_soil = NodePath("../WetSoil")
 
-[node name="Coop" parent="." unique_id=2135014781 instance=ExtResource("16_t6m8u")]
+[node name="Coop" type="StaticBody2D" parent="." unique_id=2135014781 instance=ExtResource("16_t6m8u")]
+texture_filter = 1
 position = Vector2(1325, 342)
+script = ExtResource("31_h5rfb")
+appearance_override = ExtResource("32_4ab4e")
 
-[node name="CoopPen" parent="." unique_id=1747236029 instance=ExtResource("18_c45uy")]
+[node name="CoopPen" type="Node2D" parent="." unique_id=1747236029 instance=ExtResource("18_c45uy")]
+y_sort_enabled = true
 position = Vector2(1008, 288)
+script = ExtResource("34_kui3o")
 persistent_id = &"placed_d2d638f2f4f64f5ca773aba052d29f5a"
 accepted_species = Array[int]([0])
 
-[node name="FeedTrough" parent="CoopPen" unique_id=2042315591 instance=ExtResource("32_feed_trough")]
+[node name="FeedTrough" type="StaticBody2D" parent="CoopPen" unique_id=2042315591 node_paths=PackedStringArray("sprite") instance=ExtResource("32_feed_trough")]
+texture_filter = 1
 position = Vector2(13, 165)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_2042315591"
+kind = 0
 capacity = 1200
+access_offsets = Array[Vector2]([Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)])
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
+feed_item = ExtResource("38_h0yb0")
 
-[node name="FeedTrough2" parent="CoopPen" unique_id=144181841 instance=ExtResource("32_feed_trough")]
+[node name="FeedTrough2" type="StaticBody2D" parent="CoopPen" unique_id=144181841 node_paths=PackedStringArray("sprite") instance=ExtResource("32_feed_trough")]
+texture_filter = 1
 position = Vector2(13, 79)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_144181841"
+kind = 0
 capacity = 1200
+access_offsets = Array[Vector2]([Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)])
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
+feed_item = ExtResource("38_h0yb0")
 
-[node name="WaterTrough" parent="CoopPen" unique_id=2041273187 instance=ExtResource("33_water_trough")]
+[node name="WaterTrough" type="StaticBody2D" parent="CoopPen" unique_id=2041273187 node_paths=PackedStringArray("sprite") instance=ExtResource("33_water_trough")]
+texture_filter = 1
 position = Vector2(38, 26)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_2041273187"
 capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
-[node name="WaterTrough2" parent="CoopPen" unique_id=1891560272 instance=ExtResource("33_water_trough")]
+[node name="WaterTrough2" type="StaticBody2D" parent="CoopPen" unique_id=1891560272 node_paths=PackedStringArray("sprite") instance=ExtResource("33_water_trough")]
+texture_filter = 1
 position = Vector2(95, 27)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_1891560272"
 capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
-[node name="ManagementSign" parent="CoopPen" unique_id=792168507 instance=ExtResource("pen_management_sign")]
+[node name="ManagementSign" type="StaticBody2D" parent="CoopPen" unique_id=792168507 node_paths=PackedStringArray("sprite") instance=ExtResource("pen_management_sign")]
 position = Vector2(-15, 96)
+script = ExtResource("41_v2gse")
+sprite = NodePath("Sprite2D")
 
-[node name="Barn" parent="." unique_id=59029216 instance=ExtResource("31_fdd8g")]
+[node name="Barn" type="StaticBody2D" parent="." unique_id=59029216 instance=ExtResource("31_fdd8g")]
+texture_filter = 1
 position = Vector2(1198, 640)
+script = ExtResource("43_4jawo")
+appearance_override = ExtResource("44_labkd")
 variant = 4
 
-[node name="BarnPen" parent="." unique_id=765373330 instance=ExtResource("18_c45uy")]
+[node name="BarnPen" type="Node2D" parent="." unique_id=765373330 instance=ExtResource("18_c45uy")]
+y_sort_enabled = true
 position = Vector2(1008, 592)
+script = ExtResource("34_kui3o")
 persistent_id = &"placed_bcb6d434c48b4f9fbac1620421e64390"
 accepted_species = Array[int]([2, 3, 4, 6])
 capacity = 36
 bounds = Rect2(0, 0, 384, 272)
 
-[node name="FeedTrough" parent="BarnPen" unique_id=1563140842 instance=ExtResource("41_ykqd1")]
+[node name="FeedTrough" type="StaticBody2D" parent="BarnPen" unique_id=1563140842 node_paths=PackedStringArray("sprite") instance=ExtResource("41_ykqd1")]
+texture_filter = 1
 position = Vector2(13, 217)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_1563140842"
+kind = 0
 capacity = 1200
+stock = 600
+allowed_species = Array[int]([2, 3, 4, 6])
+access_offsets = Array[Vector2]([Vector2(-18, -8), Vector2(-18, 8), Vector2(18, -8), Vector2(18, 8), Vector2(0, -22), Vector2(0, 26)])
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
+feed_item = ExtResource("42_xgmr7")
 
-[node name="WaterTrough" parent="BarnPen" unique_id=203535476 instance=ExtResource("33_water_trough")]
+[node name="WaterTrough" type="StaticBody2D" parent="BarnPen" unique_id=203535476 node_paths=PackedStringArray("sprite") instance=ExtResource("33_water_trough")]
+texture_filter = 1
 position = Vector2(86, 265)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"placed_203535476"
 capacity = 1200
 stock = 600
@@ -4986,24 +5080,44 @@ allowed_species = Array[int]([2, 3])
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
-[node name="LivestockFeed" parent="BarnPen" unique_id=1413852409 instance=ExtResource("43_632h0")]
+[node name="LivestockFeed" type="Area2D" parent="BarnPen" unique_id=1413852409 node_paths=PackedStringArray("sprite", "quantity_label") instance=ExtResource("43_632h0")]
+texture_filter = 1
 position = Vector2(40, 120)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("48_ygtcd")
+sprite = NodePath("Sprite2D")
+quantity_label = NodePath("Quantity")
 persistent_id = &"placed_1413852409"
 item = ExtResource("42_xgmr7")
 amount = 5
 
-[node name="ManagementSign" parent="BarnPen" unique_id=972005229 instance=ExtResource("pen_management_sign")]
+[node name="ManagementSign" type="StaticBody2D" parent="BarnPen" unique_id=972005229 node_paths=PackedStringArray("sprite") instance=ExtResource("pen_management_sign")]
 position = Vector2(-19, 108)
+script = ExtResource("41_v2gse")
+sprite = NodePath("Sprite2D")
 
-[node name="FeedTrough2" parent="BarnPen" unique_id=1564523007 instance=ExtResource("41_ykqd1")]
+[node name="FeedTrough2" type="StaticBody2D" parent="BarnPen" unique_id=1564523007 node_paths=PackedStringArray("sprite") instance=ExtResource("41_ykqd1")]
+texture_filter = 1
 position = Vector2(13, 162)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"barn_feedtrough_02"
+kind = 0
 capacity = 1200
+stock = 600
+allowed_species = Array[int]([2, 3, 4, 6])
+access_offsets = Array[Vector2]([Vector2(-18, -8), Vector2(-18, 8), Vector2(18, -8), Vector2(18, 8), Vector2(0, -22), Vector2(0, 26)])
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
+feed_item = ExtResource("42_xgmr7")
 
-[node name="WaterTrough2" parent="BarnPen" unique_id=450736599 instance=ExtResource("33_water_trough")]
+[node name="WaterTrough2" type="StaticBody2D" parent="BarnPen" unique_id=450736599 node_paths=PackedStringArray("sprite") instance=ExtResource("33_water_trough")]
+texture_filter = 1
 position = Vector2(143, 264)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
 persistent_id = &"barn_watertrough_02"
 capacity = 1200
 stock = 600
@@ -5015,95 +5129,235 @@ empty_texture = SubResource("AtlasTexture_vlh6x")
 script = ExtResource("65_ptedk")
 world = NodePath("..")
 
-[node name="FlowerGarden" parent="." unique_id=1957728385 instance=ExtResource("66_8jlaq")]
+[node name="FlowerGarden" type="Node2D" parent="." unique_id=1957728385 node_paths=PackedStringArray("pot_container") instance=ExtResource("66_8jlaq")]
+y_sort_enabled = true
+texture_filter = 1
 position = Vector2(1424, 288)
+script = ExtResource("51_owu34")
+pot_container = NodePath("Pots")
 
 [node name="PondPen" parent="." unique_id=1195389997 node_paths=PackedStringArray("water_layer") instance=ExtResource("71_b3fbx")]
+y_sort_enabled = true
 position = Vector2(1424, 592)
+script = ExtResource("53_hrcex")
 water_layer = NodePath("../FarmLand")
+persistent_id = &"waterfowl_pen_01"
 accepted_species = Array[int]([1, 5])
 capacity = 20
+bounds = Rect2(0, 0, 384, 272)
+
+[node name="DuckShelter" parent="PondPen" index="0"]
+position = Vector2(152, 112)
 
 [node name="Sprite2D" parent="PondPen/DuckShelter" index="0"]
+texture_filter = 1
 position = Vector2(52, -111)
+texture = ExtResource("54_3iaxv")
 
-[node name="FeedTrough" parent="PondPen" index="1" unique_id=624608384]
+[node name="CollisionShape2D" parent="PondPen/DuckShelter" index="1"]
+position = Vector2(0, -9)
+shape = SubResource("DuckShelterShape")
+
+[node name="FeedTrough" parent="PondPen" index="1" unique_id=624608384 node_paths=PackedStringArray("sprite")]
+texture_filter = 1
 position = Vector2(24, 31)
-
-[node name="WaterTrough" parent="PondPen" index="2" unique_id=684452871]
-position = Vector2(85, 111)
-
-[node name="ManagementSign" parent="PondPen" unique_id=354647873 instance=ExtResource("pen_management_sign")]
-position = Vector2(126, -10)
-
-[node name="FeedTrough2" parent="PondPen" unique_id=1633519694 instance=ExtResource("32_feed_trough")]
-position = Vector2(24, 71)
-persistent_id = &"pond_feedtrough_02"
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
+persistent_id = &"pond_feedtrough"
+kind = 0
 capacity = 1200
 stock = 600
 allowed_species = Array[int]([1, 5])
-full_texture = SubResource("AtlasTexture_7c4vb")
-empty_texture = SubResource("AtlasTexture_e688v")
+access_offsets = Array[Vector2]([Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)])
+full_texture = SubResource("AtlasTexture_ylm75")
+empty_texture = SubResource("AtlasTexture_tr8go")
+feed_item = ExtResource("38_h0yb0")
 
-[node name="WaterTrough2" parent="PondPen" unique_id=276141886 instance=ExtResource("33_water_trough")]
-position = Vector2(129, 111)
-persistent_id = &"pond_watertrough_02"
+[node name="WaterTrough" parent="PondPen" index="2" unique_id=684452871 node_paths=PackedStringArray("sprite")]
+texture_filter = 1
+position = Vector2(85, 111)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
+persistent_id = &"pond_watertrough"
 capacity = 1200
 stock = 600
 allowed_species = Array[int]([1, 5])
 full_texture = SubResource("AtlasTexture_no06q")
 empty_texture = SubResource("AtlasTexture_qanod")
 
-[node name="BlacksmithShop" parent="." unique_id=1008030250 instance=ExtResource("blacksmith_shop")]
-position = Vector2(1809, 189)
+[node name="PoultryFeed" parent="PondPen" index="3" unique_id=1466488313 node_paths=PackedStringArray("sprite", "quantity_label")]
+texture_filter = 1
+position = Vector2(24, 40)
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("48_ygtcd")
+sprite = NodePath("Sprite2D")
+quantity_label = NodePath("Quantity")
+persistent_id = &"pond_feed_supply"
+item = ExtResource("38_h0yb0")
+amount = 5
 
-[node name="SeedFlowerShop" parent="." unique_id=1381961398 instance=ExtResource("seed_flower_shop")]
+[node name="ManagementSign" type="StaticBody2D" parent="PondPen" unique_id=354647873 node_paths=PackedStringArray("sprite") instance=ExtResource("pen_management_sign")]
+position = Vector2(126, -10)
+script = ExtResource("41_v2gse")
+sprite = NodePath("Sprite2D")
+
+[node name="FeedTrough2" type="StaticBody2D" parent="PondPen" unique_id=1633519694 node_paths=PackedStringArray("sprite") instance=ExtResource("32_feed_trough")]
+texture_filter = 1
+position = Vector2(24, 71)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
+persistent_id = &"pond_feedtrough_02"
+kind = 0
+capacity = 1200
+stock = 600
+allowed_species = Array[int]([1, 5])
+access_offsets = Array[Vector2]([Vector2(-12, -8), Vector2(-12, 8), Vector2(12, -8), Vector2(12, 8), Vector2(0, -20), Vector2(0, 24)])
+full_texture = SubResource("AtlasTexture_7c4vb")
+empty_texture = SubResource("AtlasTexture_e688v")
+feed_item = ExtResource("38_h0yb0")
+
+[node name="WaterTrough2" type="StaticBody2D" parent="PondPen" unique_id=276141886 node_paths=PackedStringArray("sprite") instance=ExtResource("33_water_trough")]
+texture_filter = 1
+position = Vector2(129, 111)
+script = ExtResource("36_xio4k")
+sprite = NodePath("Sprite2D")
+persistent_id = &"pond_watertrough_02"
+capacity = 1200
+stock = 600
+allowed_species = Array[int]([1, 5])
+full_texture = SubResource("AtlasTexture_80vnx")
+empty_texture = SubResource("AtlasTexture_gb0q1")
+
+[node name="BlacksmithShop" type="StaticBody2D" parent="." unique_id=1008030250 instance=ExtResource("blacksmith_shop")]
+texture_filter = 1
+position = Vector2(1809, 189)
+script = ExtResource("56_uqeqp")
+
+[node name="SeedFlowerShop" type="StaticBody2D" parent="." unique_id=1381961398 instance=ExtResource("seed_flower_shop")]
+texture_filter = 1
 position = Vector2(1937, 475)
 
-[node name="PetShop" parent="." unique_id=1683204981 instance=ExtResource("pet_shop")]
+[node name="PetShop" type="StaticBody2D" parent="." unique_id=1683204981 instance=ExtResource("pet_shop")]
+texture_filter = 1
 position = Vector2(1601, 190)
 
-[node name="LaiBuon" parent="." unique_id=1899029390 instance=ExtResource("seed_flower_merchant")]
+[node name="LaiBuon" type="StaticBody2D" parent="." unique_id=1899029390 node_paths=PackedStringArray("shop_ui", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("seed_flower_merchant")]
+texture_filter = 1
 position = Vector2(1878, 481)
+collision_mask = 0
+script = ExtResource("60_evt51")
+catalog = ExtResource("61_4qylm")
+shop_ui = NodePath("ShopUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
 
-[node name="PetMerchant" parent="." unique_id=1466579551 instance=ExtResource("pet_merchant")]
+[node name="PetMerchant" type="StaticBody2D" parent="." unique_id=1466579551 node_paths=PackedStringArray("shop_ui", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("pet_merchant")]
+texture_filter = 1
 position = Vector2(1663, 214)
+collision_mask = 0
+script = ExtResource("60_evt51")
+catalog = ExtResource("63_a6oen")
+shop_ui = NodePath("ShopUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
 
-[node name="BlacksmithMerchant" parent="." unique_id=1986941493 instance=ExtResource("blacksmith_merchant")]
+[node name="BlacksmithMerchant" type="StaticBody2D" parent="." unique_id=1986941493 node_paths=PackedStringArray("shop_ui", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("blacksmith_merchant")]
+texture_filter = 1
 position = Vector2(1841, 212)
+collision_mask = 0
+script = ExtResource("60_evt51")
+interaction_label = "Tool shop"
+catalog = ExtResource("65_v4c33")
+shop_ui = NodePath("ShopUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
 
-[node name="FlowerShop" parent="." unique_id=1589919028 instance=ExtResource("flower_shop")]
+[node name="FlowerShop" type="StaticBody2D" parent="." unique_id=1589919028 instance=ExtResource("flower_shop")]
+texture_filter = 1
 position = Vector2(1943, 659)
 
-[node name="FlowerMerchant" parent="." unique_id=982529890 instance=ExtResource("flower_merchant")]
+[node name="FlowerMerchant" type="StaticBody2D" parent="." unique_id=982529890 node_paths=PackedStringArray("shop_ui", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("flower_merchant")]
+texture_filter = 1
 position = Vector2(1909, 680)
+collision_mask = 0
+script = ExtResource("60_evt51")
+catalog = ExtResource("68_wgdft")
+shop_ui = NodePath("ShopUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
 
-[node name="ProduceBuyer" parent="." unique_id=1281232383 instance=ExtResource("64_i4q3u")]
+[node name="ProduceBuyer" type="StaticBody2D" parent="." unique_id=1281232383 node_paths=PackedStringArray("menu", "bubble", "bubble_text", "prompt", "bubble_timer") instance=ExtResource("64_i4q3u")]
+texture_filter = 1
 position = Vector2(1445, 206)
+collision_mask = 0
+script = ExtResource("60_evt51")
+menu = NodePath("ProduceSalesUI")
+bubble = NodePath("Bubble")
+bubble_text = NodePath("Bubble/Text")
+prompt = NodePath("Prompt")
+bubble_timer = NodePath("BubbleTimer")
 
 [node name="Trees" type="TileMapLayer" parent="." unique_id=1875929668]
 tile_set = SubResource("TileSet_vgjnj")
 
-[node name="ButterflySwarm" parent="." unique_id=216791168 instance=ExtResource("40_w4es6")]
+[node name="ButterflySwarm" type="Node2D" parent="." unique_id=216791168 instance=ExtResource("40_w4es6")]
+z_index = 2
+texture_filter = 1
+script = ExtResource("71_7cjgt")
 population = 128
 
-[node name="HorizontalGateLeftHinge" parent="." unique_id=936776351 instance=ExtResource("41_qju2h")]
+[node name="HorizontalGateLeftHinge" type="StaticBody2D" parent="." unique_id=936776351 instance=ExtResource("41_qju2h")]
+texture_filter = 1
 position = Vector2(1192, 288)
+script = ExtResource("73_k0hid")
+metadata/object_id = "horizontal_gate_left_hinge"
+metadata/object_kind = "horizontal_gate_left_hinge"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/horizontal_gate_01_frames.tres"
 
-[node name="VerticalGate" parent="." unique_id=1438618353 instance=ExtResource("42_bb2dq")]
+[node name="VerticalGate" type="StaticBody2D" parent="." unique_id=1438618353 instance=ExtResource("42_bb2dq")]
+y_sort_enabled = true
+texture_filter = 1
 position = Vector2(1008, 432)
+script = ExtResource("73_k0hid")
+metadata/object_id = "vertical_gate"
+metadata/object_kind = "vertical_gate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/vertical_gate_frames.tres"
 
-[node name="VerticalGate2" parent="." unique_id=1237949234 instance=ExtResource("42_bb2dq")]
+[node name="VerticalGate2" type="StaticBody2D" parent="." unique_id=1237949234 instance=ExtResource("42_bb2dq")]
+y_sort_enabled = true
+texture_filter = 1
 position = Vector2(1408, 432)
+script = ExtResource("73_k0hid")
+metadata/object_id = "vertical_gate"
+metadata/object_kind = "vertical_gate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/vertical_gate_frames.tres"
 
-[node name="HorizontalGateRightHinge" parent="." unique_id=536039094 instance=ExtResource("43_toecx")]
+[node name="HorizontalGateRightHinge" type="StaticBody2D" parent="." unique_id=536039094 instance=ExtResource("43_toecx")]
+texture_filter = 1
 position = Vector2(537, 288)
+script = ExtResource("73_k0hid")
+metadata/object_id = "horizontal_gate_right_hinge"
+metadata/object_kind = "horizontal_gate_right_hinge"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/horizontal_gate_02_frames.tres"
 
-[node name="House2" parent="." unique_id=1545690736 instance=ExtResource("45_il0i8")]
+[node name="House2" type="StaticBody2D" parent="." unique_id=1545690736 instance=ExtResource("45_il0i8")]
+texture_filter = 1
 position = Vector2(1312, 139)
+script = ExtResource("77_vlh6x")
 
-[node name="House1" parent="." unique_id=2025994540 instance=ExtResource("51_fhqb0")]
+[node name="House1" type="StaticBody2D" parent="." unique_id=2025994540 instance=ExtResource("51_fhqb0")]
 position = Vector2(1957, 315)
+script = ExtResource("79_x8fc7")
 variant = 21
 
 [node name="Chef" type="CharacterBody2D" parent="." unique_id=352844601]
@@ -5120,21 +5374,17 @@ animation = &"idle_down"
 position = Vector2(-26, 5)
 shape = SubResource("RectangleShape2D_ei2gk")
 
-[node name="OrchardWorkers" parent="." unique_id=1751593836 instance=ExtResource("worker_board")]
-position = Vector2(170, 940)
-
-[node name="RanchWorkers" parent="." unique_id=237183216 instance=ExtResource("worker_board")]
-position = Vector2(1320, 540)
-role = "ranch"
-
-[node name="CropWorkers" parent="." unique_id=1042322091 instance=ExtResource("worker_board")]
+[node name="CropWorkers" type="StaticBody2D" parent="." unique_id=1042322091 instance=ExtResource("worker_board")]
 position = Vector2(945, 253)
+script = ExtResource("83_kx1u3")
 role = "crop"
 
-[node name="Warehouse" parent="." unique_id=1790325500 instance=ExtResource("produce_warehouse_building")]
+[node name="Warehouse" type="StaticBody2D" parent="." unique_id=1790325500 instance=ExtResource("produce_warehouse_building")]
+texture_filter = 1
 position = Vector2(709, 195)
 
-[node name="SeedInventory" parent="." unique_id=701774952 instance=ExtResource("seed_storage_building")]
+[node name="SeedInventory" type="StaticBody2D" parent="." unique_id=701774952 instance=ExtResource("seed_storage_building")]
+texture_filter = 1
 position = Vector2(1056, 208)
 
 [editable path="PondPen"]
