@@ -3,10 +3,12 @@ extends RefCounted
 ## resource.* command handlers — load, write (create/update upsert), delete for .tres/.res files.
 
 const Modules := preload("res://addons/godot_mcp_toolkit/core/modules.gd")
+const BarePathCheck = Modules.BarePathCheck
 const Coerce = Modules.Coerce
 const FileGuard = Modules.FileGuard
 const Untrusted = Modules.Untrusted
 const Helpers = Modules.CommandHelpers
+const DeclaredTypeFitter = Modules.DeclaredTypeFitter
 
 const RESOURCE_SKIP_PROPERTIES: Array[String] = [
 	"image", "mesh_arrays", "surface_arrays", "_data",
@@ -28,20 +30,10 @@ static func register(registry: MCPToolkitCommandRegistry, _server: Node) -> void
 # -- Helpers ------------------------------------------------------------------
 
 
-static func _property_names_of(object: Object) -> Dictionary:
-	var names := {}
-	for property in object.get_property_list():
-		var property_name := str(property.get("name", ""))
-		if not property_name.is_empty():
-			names[property_name] = true
-	return names
-
-
 static func _apply_resource_properties(
 	resource: Resource, properties: Dictionary, resource_class: String,
 ) -> Array[String]:
 	var warnings: Array[String] = []
-	var valid := _property_names_of(resource)
 	for key in properties.keys():
 		var key_string := str(key)
 		var raw_value = properties[key]
@@ -72,11 +64,29 @@ static func _apply_resource_properties(
 				else:
 					warnings.append(
 						"property '%s' on %s: set() had no effect (may need a different API)" % [key_string, resource_class])
-		elif not valid.has(key_string):
-			warnings.append(
-				"property '%s' unknown on %s; value ignored" % [key_string, resource_class])
 		else:
-			resource.set(key_string, coerced)
+			# An inspector group, subgroup or category header is not a property:
+			# set() would store nothing for a key that names only a header.
+			var entry := DeclaredTypeFitter.property_entry(resource, key_string)
+			if entry.is_empty():
+				warnings.append(
+					"property '%s' unknown on %s; value ignored" % [key_string, resource_class])
+				continue
+			# A bare path on a Resource property: a live instance drops it and a
+			# placeholder saves it as a String. Warn with the same hint
+			# node_set_property gives, and save the rest.
+			var declared_type := int(entry.get("type", TYPE_NIL))
+			var bare_path := BarePathCheck.bare_path_message(key_string, raw_value, declared_type)
+			if not bare_path.is_empty():
+				warnings.append("%s; value left unchanged" % bare_path)
+				continue
+			var fit := DeclaredTypeFitter.fit(resource, key_string, coerced)
+			if not str(fit["error"]).is_empty():
+				warnings.append("%s; value left unchanged" % str(fit["error"]))
+				continue
+			resource.set(key_string, fit["value"])
+			if not str(fit["warning"]).is_empty():
+				warnings.append(str(fit["warning"]))
 	return warnings
 
 
@@ -216,7 +226,7 @@ static func _cmd_resource_delete(parameters: Dictionary) -> Dictionary:
 	if err != null:
 		return err
 	var file_path := str(parameters.get("file_path", ""))
-	var guard := FileGuard.resolve_safe(file_path)
+	var guard := FileGuard.resolve_safe_delete(file_path)
 	if guard["error"] != null:
 		return MCPToolkitError.fail("PATH_DENIED", str(guard["reason"]))
 	var extension := file_path.get_extension().to_lower()

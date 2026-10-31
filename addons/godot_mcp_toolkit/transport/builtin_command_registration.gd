@@ -18,7 +18,7 @@ const FileCommands := preload("res://addons/godot_mcp_toolkit/commands/file_comm
 const SignalCommands := preload("res://addons/godot_mcp_toolkit/commands/signal_commands.gd")
 const PlaytestCommands := preload("res://addons/godot_mcp_toolkit/commands/playtest/playtest_commands.gd")
 const ProjectCommands := preload("res://addons/godot_mcp_toolkit/commands/project_commands.gd")
-const InputMapCommands := preload("res://addons/godot_mcp_toolkit/commands/input_map_commands.gd")
+const InputMapCommands := preload("res://addons/godot_mcp_toolkit/commands/input_map/input_map_commands.gd")
 const AnimationCommands := preload("res://addons/godot_mcp_toolkit/commands/animation_commands.gd")
 const TilemapCommands := preload("res://addons/godot_mcp_toolkit/commands/tilemap_commands.gd")
 const TilesetCommands := preload("res://addons/godot_mcp_toolkit/commands/tileset/tileset_commands.gd")
@@ -38,13 +38,19 @@ const DebugCommands := preload("res://addons/godot_mcp_toolkit/commands/debug_co
 const SpatialCommands := preload("res://addons/godot_mcp_toolkit/commands/spatial_commands.gd")
 const TextureCommands := preload("res://addons/godot_mcp_toolkit/commands/texture_commands.gd")
 const SoundCommands := preload("res://addons/godot_mcp_toolkit/commands/sound_commands.gd")
+const Modules := preload("res://addons/godot_mcp_toolkit/core/modules.gd")
+const DebugSessionTracker = Modules.DebugSessionTracker
+# Modules cannot list it: it preloads Modules.
+const DebugBridge := preload("res://addons/godot_mcp_toolkit/transport/debug_bridge.gd")
 
 
 ## Registers the entire built-in command surface onto the registry. The one
-## place every commands/*.register(...) call is enumerated. The debug bridge is
-## constructed by the composer and passed in (the playtest/debug commands need
-## it); extensions are loaded separately by the composer.
-static func register_all(registry: MCPToolkitCommandRegistry, server: Node, debug_bridge: RefCounted) -> void:
+## place every commands/*.register(...) call is enumerated. The debug bridge and the
+## debug-session tracker are constructed by the composer and passed in (the debug
+## commands need the bridge, the playtest commands' log reader the tracker);
+## extensions are loaded separately by the composer.
+static func register_all(registry: MCPToolkitCommandRegistry, server: Node,
+		debug_bridge: DebugBridge, session_tracker: DebugSessionTracker) -> void:
 	SceneCommands.register(registry, server)
 	NodeCommands.register(registry, server)
 	ScriptCommands.register(registry, server)
@@ -53,7 +59,7 @@ static func register_all(registry: MCPToolkitCommandRegistry, server: Node, debu
 	FolderCommands.register(registry, server)
 	FileCommands.register(registry, server)
 	SignalCommands.register(registry, server)
-	PlaytestCommands.register(registry, server, debug_bridge)
+	PlaytestCommands.register(registry, server, session_tracker)
 	ProjectCommands.register(registry, server)
 	InputMapCommands.register(registry, server)
 	AnimationCommands.register(registry, server)

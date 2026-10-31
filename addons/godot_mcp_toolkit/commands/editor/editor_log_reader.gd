@@ -107,8 +107,10 @@ static func _godot_error_name(code: int) -> String:
 static func _read_buffer_log(limit: int, level_filter: Array, since_id: int, text_filter: String = "", text_regex: RegEx = null) -> Dictionary:
 	var buf_result: Dictionary = Modules.LogBuffer.get_entries(limit, level_filter, since_id, text_filter, text_regex)
 	var entries: Array = buf_result["entries"]
+	# A script_check probe's errors name its renamed class; the agent sees the real name.
 	for entry in entries:
-		var scrubbed := Scrubber.scrub(str(entry["message"]), "console")
+		var message := Modules.GDScriptSource.strip_probe_suffix(str(entry["message"]))
+		var scrubbed := Scrubber.scrub(message, "console")
 		entry["message"] = scrubbed["text"]
 	var has_more: bool = buf_result["has_more"]
 	# Capped-tail line paging: the resume cursor is next_id (fed back via since_id),
@@ -262,9 +264,10 @@ static func _read_console_log(
 				warnings.append("fallback to stale log — no post-boot log found")
 
 	# Windows 4.4.0 get_modified_time self-collision. The engine's logger opens the
-	# live session log GENERIC_WRITE with a deny-nothing share (FileAccess WRITE never
-	# sets backup_save -> _SH_DENYNO on every version), so a reader's open always
-	# succeeds and the log is never truly locked. But on 4.4.0 get_modified_time makes
+	# live session log GENERIC_WRITE with a deny-nothing share (the game process never
+	# sets backup_save -> _SH_DENYNO on every version), so the directory listing and any
+	# open that shares writing see the live log; only an open that denies writing fails,
+	# as the safe-save READ open below does while a game runs. On 4.4.0 get_modified_time makes
 	# its own CreateFileW(GENERIC_READ, FILE_SHARE_READ) probe, which denies the live
 	# writer -> sharing violation -> mtime reads 0. So the mtime>best_mtime loops above
 	# never pick the live log even though the directory enumeration (attribute-level,
@@ -365,8 +368,10 @@ static func _read_console_log(
 	if entries.size() > 0:
 		next_id = entries[-1]["id"]
 
+	# A script_check probe's errors name its renamed class; the agent sees the real name.
 	for entry in entries:
-		var scrubbed := Scrubber.scrub(str(entry["message"]), "console")
+		var message := Modules.GDScriptSource.strip_probe_suffix(str(entry["message"]))
+		var scrubbed := Scrubber.scrub(message, "console")
 		entry["message"] = scrubbed["text"]
 
 	# Capped-tail line paging (resume via next_id → since_id, cursor-less for the builder).

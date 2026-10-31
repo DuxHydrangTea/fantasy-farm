@@ -1218,18 +1218,26 @@ C# architecture.
 changing descriptions, updating annotations, fixing handler logic) is
 detected automatically. The watcher re-probes each known extension on
 every scan and compares both method lists and metadata (description,
-annotations, schema, timeout). If anything differs, old tools are
-unregistered and the extension is re-loaded fresh.
+annotations, schema, timeout), and the GDScript source it loads. If anything
+differs, a body-only edit included, old tools are unregistered and the
+extension is re-loaded fresh, so no registered tool keeps running code from
+before the edit.
 
-> **Godot 4.2 only — editing an existing extension needs an editor restart.** On
+> **Godot 4.2 only — an edit made outside the toolkit needs an editor restart.** On
 > Godot 4.2, re-loading a freshly-edited `@tool` script fresh while the editor is
 > still reimporting it natively crashes the editor (a `CACHE_MODE_IGNORE`
 > reimport reentrancy — see `COMPATIBILITY.md`). To stay crash-safe, the 4.2
-> loader reads through the editor cache, so an in-session **edit** to an existing
-> extension is **not** applied until you restart the editor. `extensions_refresh`
-> returns a `hint` naming the changed extension, and a `push_warning` appears in
-> the editor's Output panel. **Adding** and **removing** extensions still apply
-> live on 4.2. Godot 4.3+ applies all changes (add / edit / remove) live.
+> loader reads through the editor cache. On 4.2.2, an extension edit made with
+> `script_write` or `script_edit` (or their undo/redo) applies live when it
+> compiles. An edit made outside the toolkit, or to a C# extension, needs an
+> editor restart, and so does every extension edit on 4.2.0 and 4.2.1, where
+> the toolkit never reloads a script in place (an engine bug there crashes the
+> editor when a reloaded script's lambdas are still registered as tools; fixed
+> in 4.2.2). `extensions_refresh` names it in its `hint`, and a
+> `push_warning` also appears in the editor's Output panel. When the file does
+> not compile, the `hint` says to fix it instead. **Adding** and **removing**
+> extensions still apply live on 4.2. Godot 4.3+ applies all changes (add / edit /
+> remove) live.
 
 **Editor focus required:** Godot's `EditorFileSystem` only scans for external
 file changes when the editor window regains focus. If you create or modify
@@ -1257,35 +1265,31 @@ them. This is a platform-side limitation, not actionable server-side.
 When you export your game, the MCP Toolkit must not ship in the build. The addon
 registers an export plugin that handles this automatically.
 
-**GDScript extensions — automatic (text export mode).** At export time the
-plugin removes `.gd` extension files (direct subclasses of
+**GDScript extensions — automatic, in every Script Export Mode.** At export time
+the plugin removes `.gd` extension files (direct subclasses of
 `MCPToolkitExtension`, wherever they live), the entire
-`addons/godot_mcp_toolkit/` folder, and `res://.mcp.json`.
+`addons/godot_mcp_toolkit/` folder, and `res://.mcp.json`. This holds in Text and
+in both binary-token modes, including Godot's 4.3+ default "Binary tokens
+(compressed)": Godot hands each file to its export plugins in name order, and the
+strip's name sorts before the built-in GDScript plugin that compiles `.gd` to
+`.gdc`. Names remain, but no code: the build still lists the addon's class names
+and paths and the plugin's enabled entry, which are safe to ship. See
+[What an export still carries](compatibility.md#what-an-export-still-carries).
 
-**Binary-token script export (Godot 4.3+ default) — scripts ship as inert
-`.gdc`, and the plugin warns.** Godot's default Script Export Mode is "Binary
-tokens (compressed)". In any binary-token mode the engine compiles each `.gd` to
-`.gdc` **before** the addon's strip can run, so addon and extension **scripts
-ship** in the build as compiled `.gdc`. They are orphaned and never executed (the
-loader that references them is editor-only, and GDScript loads lazily), so there
-is **no runtime effect** — they are dead weight only. Non-script files and
-`.mcp.json` are stripped in every mode.
+**If scripts never reach the strip, the plugin warns.** An export plugin that
+sorts before the strip and skips or remaps `.gd` files (an obfuscator, for
+example) can consume addon and extension scripts before the strip sees them.
+At the end of the export the plugin emits a **warning** (in the export dialog
+on Godot 4.4+, or the Output log on 4.2 and 4.3) naming the addon and each
+affected extension. Unless the preset already excludes them, those scripts may
+ship, as `.gdc` if that plugin compiles scripts. To remove them, add
+`res://addons/godot_mcp_toolkit/*` **and each named extension `.gd` path** to the
+preset's **Resources → exclude filter**.
 
-At the end of such an export the plugin emits a **warning** — in the export
-dialog on Godot 4.4+, or the Output log on 4.3 — naming the addon and any leaked
-extensions, because there is no safe way for a GDScript addon to remove an
-already-compiled `.gdc` (the engine's export-preset exclude-filter setter is not
-scriptable — a long-standing engine limitation, godotengine/godot#4054). **For a
-fully clean build, either:**
-- set the preset's **Script Export Mode to "Text"** — the plugin then strips all
-  addon and extension scripts, or
-- add `res://addons/godot_mcp_toolkit/*` **and each extension `.gd` path** to the
-  preset's **Resources → exclude filter**.
-
-**Godot 4.2** has no binary-token mode — scripts always ship as text there, so the
-plugin strips them and **no warning is shown**. Caveat: if you manually exclude a
-*single* extension via the filter (but not the whole addon), that extension may
-still be named by the warning — it is excluded correctly; the mention is cosmetic.
+Caveat: if you exclude a *single* extension through the filter (but not the
+whole addon), the warning may still name that extension, because it never
+reached the strip either. The extension is excluded correctly; the warning's
+"unless this preset already excludes them" covers this case.
 
 **C# extensions — NOT auto-stripped, author action required.** C# compiles into
 a .NET assembly (DLL); individual classes cannot be removed from it at export.
@@ -1329,7 +1333,7 @@ non-blocking; each has a practical workaround:
 | No persistent configuration API | Extensions store settings ad-hoc | Use `ProjectSettings.set_setting()` for project-level or `ConfigFile` for user-level config |
 | No progress/streaming for long operations | Long-running operations can't report intermediate status | Use a polling pattern: register a companion `_status` tool the LLM calls to check progress |
 | No inter-extension communication | Extension A can't directly call Extension B's tools | Call `registry.call_command("other_ext.tool", params)` directly (works, but undocumented contract) |
-| In-session **edit** of an existing extension not applied (**Godot 4.2 only**) | A `@tool`-script edit isn't reflected until restart — engine reimport-crash avoidance (`CACHE_MODE_REUSE`). Adding/removing extensions still apply live | Restart the editor to load the edit (4.3+ applies edits live); `extensions_refresh` returns a restart `hint` |
+| In-session **edit** made outside the toolkit not applied (**Godot 4.2 only**) | An edit made outside the toolkit, or to a C# extension, isn't reflected until restart — engine reimport-crash avoidance (`CACHE_MODE_REUSE`). On 4.2.2, an edit made with `script_write` or `script_edit` (or their undo/redo) applies live when it compiles; on 4.2.0 and 4.2.1 every edit waits for a restart; adding/removing extensions still apply live | Make the edit with `script_write` or `script_edit` on 4.2.2, or restart the editor to load it (4.3+ applies edits live); `extensions_refresh` names it in its `hint` |
 
 Each gap is tracked as a post-1.0 improvement candidate. None prevent an
 extension from being built and shipped — they affect convenience, not

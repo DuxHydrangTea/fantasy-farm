@@ -1,23 +1,91 @@
 @tool
 extends EditorDebuggerPlugin
-## EditorDebuggerPlugin subclass — tracks debugger session state and
-## provides continue-execution via send_message.
+## The editor's debugger plugin: forwards the debugger session's events, and the
+## editor debugger's reason text and stack dump for an error break, to the
+## debug-session tracker, and sends debug.continue to a game the debugger stopped.
 ##
-## Registered/unregistered by plugin.gd via add_debugger_plugin /
-## remove_debugger_plugin (I12 symmetry). Session signals feed the
-## debug.state command; send_message("continue") feeds debug.continue.
+## The plugin's composition root builds the tracker, registers this plugin, and its
+## dispose() removes it. The tracker holds the session state, so it stays testable
+## headless; this plugin holds only the live EditorDebuggerSession and the editor's
+## debugger node behind it.
 
-## Shared error-entry shape (timestamp + type vary by source; rest pass-through).
-const PlaytestLogReader := preload("res://addons/godot_mcp_toolkit/commands/playtest_log_reader.gd")
+const Modules := preload("res://addons/godot_mcp_toolkit/core/modules.gd")
+const DebugSessionTracker = Modules.DebugSessionTracker
 
-const _ERROR_BUFFER_MAX := 50
+const _DEBUGGER_NODE_CLASS := "ScriptEditorDebugger"
+const _BREAKED := &"breaked"
+# reallydid, can_debug, reason, has_stackdump: the same on 4.2 to 4.7.
+const _REASON_BREAKED_ARG_COUNT := 4
+const _STACK_DUMP := &"stack_dump"
+# The frames of the break, one Dictionary each: the same on 4.2 to 4.7.
+const _STACK_DUMP_ARG_COUNT := 1
 
+var _session_tracker: DebugSessionTracker = null
 var _session: EditorDebuggerSession = null
-var _session_id: int = -1
-var _active: bool = false
-var _breaked: bool = false
-var _can_debug: bool = false
-var _error_buffer: Array = []
+# The editor's debugger node behind _session. Its own breaked signal carries the
+# reason text for a break, which the session's breaked drops, and its stack_dump
+# the frames the break stopped in.
+var _debugger_node: Object = null
+
+
+## Returns the node among [param candidates] that [param session] belongs to: the one
+## whose four-argument [code]breaked[/code] signal has a connection to
+## [param session]. The editor builds one session per debugger node and connects it to
+## that node's [code]breaked[/code], so the match holds whatever the tabs' order.
+## Returns null when no candidate matches or its [code]breaked[/code] has another
+## signature.
+static func find_session_debugger_node(candidates: Array, session: Object) -> Object:
+	for candidate: Object in candidates:
+		if candidate == null or not _has_signal_with_arg_count(
+				candidate, _BREAKED, _REASON_BREAKED_ARG_COUNT):
+			continue
+		for connection: Dictionary in candidate.get_signal_connection_list(_BREAKED):
+			var target: Callable = connection.get("callable", Callable())
+			if target.get_object() == session:
+				return candidate
+	return null
+
+
+## Connects [param session_tracker] to [param debugger_node], the editor's debugger
+## node [method find_session_debugger_node] returned: its [code]breaked[/code], for
+## an error break's reason text, and its [code]stack_dump[/code], for where the break
+## stopped, when that signal carries the frames as its one argument. A node without
+## such a [code]stack_dump[/code] leaves an error break's entry without a file and
+## line. [method disconnect_debugger_node] undoes it.
+static func connect_debugger_node(debugger_node: Object,
+		session_tracker: DebugSessionTracker) -> void:
+	debugger_node.connect(_BREAKED, session_tracker.on_debugger_node_breaked)
+	if _has_signal_with_arg_count(debugger_node, _STACK_DUMP, _STACK_DUMP_ARG_COUNT):
+		debugger_node.connect(_STACK_DUMP, session_tracker.on_debugger_node_stack_dump)
+
+
+## Disconnects what [method connect_debugger_node] connected from
+## [param debugger_node] to [param session_tracker].
+static func disconnect_debugger_node(debugger_node: Object,
+		session_tracker: DebugSessionTracker) -> void:
+	if debugger_node.is_connected(_BREAKED, session_tracker.on_debugger_node_breaked):
+		debugger_node.disconnect(_BREAKED, session_tracker.on_debugger_node_breaked)
+	if debugger_node.has_signal(_STACK_DUMP) \
+			and debugger_node.is_connected(_STACK_DUMP, session_tracker.on_debugger_node_stack_dump):
+		debugger_node.disconnect(_STACK_DUMP, session_tracker.on_debugger_node_stack_dump)
+
+
+## Returns whether [param candidate] has a signal named [param signal_name] with
+## [param arg_count] arguments.
+static func _has_signal_with_arg_count(candidate: Object, signal_name: StringName,
+		arg_count: int) -> bool:
+	if not candidate.has_signal(signal_name):
+		return false
+	for signal_info: Dictionary in candidate.get_signal_list():
+		if str(signal_info.get("name", "")) == String(signal_name):
+			var arguments: Array = signal_info.get("args", [])
+			return arguments.size() == arg_count
+	return false
+
+
+## [param session_tracker] is the debug-session tracker this plugin feeds.
+func _init(session_tracker: DebugSessionTracker) -> void:
+	_session_tracker = session_tracker
 
 
 func _setup_session(session_id: int) -> void:
@@ -27,142 +95,67 @@ func _setup_session(session_id: int) -> void:
 	# Disconnect previous session signals (game restart scenario).
 	_disconnect_session()
 	_session = session
-	_session_id = session_id
-	session.started.connect(_on_started)
-	session.stopped.connect(_on_stopped)
-	session.breaked.connect(_on_breaked)
-	session.continued.connect(_on_continued)
-
-
-func _disconnect_session() -> void:
-	if _session == null:
-		return
-	if _session.started.is_connected(_on_started):
-		_session.started.disconnect(_on_started)
-	if _session.stopped.is_connected(_on_stopped):
-		_session.stopped.disconnect(_on_stopped)
-	if _session.breaked.is_connected(_on_breaked):
-		_session.breaked.disconnect(_on_breaked)
-	if _session.continued.is_connected(_on_continued):
-		_session.continued.disconnect(_on_continued)
+	session.started.connect(_session_tracker.on_session_started)
+	session.stopped.connect(_session_tracker.on_session_stopped)
+	session.breaked.connect(_session_tracker.on_session_breaked)
+	session.continued.connect(_session_tracker.on_session_continued)
+	var candidates: Array = EditorInterface.get_base_control().find_children(
+			"*", _DEBUGGER_NODE_CLASS, true, false)
+	var debugger_node := find_session_debugger_node(candidates, session)
+	# Without the node, an error break's entry goes without the reason text, file
+	# and line.
+	if debugger_node != null:
+		_debugger_node = debugger_node
+		connect_debugger_node(_debugger_node, _session_tracker)
 
 
 func _has_capture(capture: String) -> bool:
 	return capture == "error"
 
 
-func _capture(message: String, data: Array, session_id: int) -> bool:
-	# Only process error messages (not error:clear_execution etc.).
-	# message may be "error:error" (full) or "error" (prefix stripped).
-	if not (message == "error" or message == "error:error"):
-		return false
-	_parse_and_buffer_error(data)
-	return false  # Don't suppress built-in handling
+func _capture(message: String, data: Array, _session_id: int) -> bool:
+	# Only the error message itself, not error:clear_execution and the like. The
+	# message arrives as "error:error" or, with its prefix stripped, "error".
+	if message == "error" or message == "error:error":
+		_session_tracker.buffer_debugger_error(data)
+	return false  # Leave the built-in handling in place.
 
 
-func _on_started() -> void:
-	_active = true
-	_breaked = false
-	_can_debug = false
-	_error_buffer.clear()
-
-
-func _on_stopped() -> void:
-	_active = false
-	_breaked = false
-	_can_debug = false
-
-
-func _on_breaked(can_debug: bool) -> void:
-	_breaked = true
-	_can_debug = can_debug
-	# Fallback: if _capture didn't fire for this break (built-in debugger
-	# may intercept error messages before plugins), record a generic entry.
-	if can_debug and _error_buffer.is_empty():
-		_buffer_error(PlaytestLogReader.make_error_entry(
-				Time.get_ticks_msec(),
-				"Game paused at error (details in editor Errors tab or log)",
-				"", "", 0, "break"))
-
-
-func _on_continued() -> void:
-	_breaked = false
-	_can_debug = false
-
-
-## Return current debugger state for debug.state.
+## Returns the debug.state payload of the latest session.
 func get_debug_state() -> Dictionary:
-	return {
-		"active": _active,
-		"breaked": _breaked,
-		"can_debug": _can_debug,
-	}
+	return _session_tracker.get_debug_state()
 
 
-## Attempt to continue execution. Returns {success:true} or
-## {error: "GAME_NOT_RUNNING"|"NOT_BREAKED"}.
+## Continues a game the debugger stopped. Returns [code]{success: true}[/code], or
+## [code]{error: "GAME_NOT_RUNNING"}[/code] with no session attached, or
+## [code]{error: "NOT_BREAKED"}[/code] when the debugger has not stopped the game.
 func try_continue() -> Dictionary:
-	if _session == null or not _active:
+	if _session == null or not _session_tracker.is_active():
 		return {"error": "GAME_NOT_RUNNING"}
-	if not _breaked:
+	if not _session_tracker.is_breaked():
 		return {"error": "NOT_BREAKED"}
 	_session.send_message("continue", [])
 	return {"success": true}
 
 
-## Return the error buffer (copy) for the current/most-recent game session.
-func get_error_buffer() -> Array:
-	return _error_buffer.duplicate()
-
-
-## Cleanup — called from plugin._exit_tree before remove_debugger_plugin.
+## Disconnects the session. Called from the composition root's dispose() before
+## remove_debugger_plugin.
 func cleanup() -> void:
 	_disconnect_session()
 	_session = null
-	_session_id = -1
-	_active = false
-	_breaked = false
-	_can_debug = false
-	_error_buffer.clear()
 
 
-## Parse error data from the debugger protocol and append to the ring buffer.
-##
-## DEFENSIVE / forward-looking — currently unreachable on the live path: the
-## engine routes the bare "error" message to the registered _msg_error handler
-## (script_editor_debugger.cpp), so it never reaches plugins_capture / _capture.
-## The _on_breaked and log-scan fallbacks are what actually populate the buffer
-## today. Kept (and decoded correctly) in case a future engine version surfaces
-## "error" to capture plugins.
-##
-## Data layout — DebuggerMarshalls::OutputError::serialize(), fields-first /
-## stack-LAST, verified unchanged across Godot 4.0–4.7:
-##   [0]=hr  [1]=min  [2]=sec  [3]=msec  [4]=source_file  [5]=source_func
-##   [6]=source_line  [7]=error  [8]=error_descr  [9]=warning
-##   [10]=callstack.size()*3   [11+]=(file, func, line) triples
-func _parse_and_buffer_error(data: Array) -> void:
-	if data.size() < 10:
-		return  # Malformed — not enough fields for the fixed header
-
-	var source_file := str(data[4])
-	var source_func := str(data[5])
-	var source_line: int = int(data[6])
-	var error := str(data[7])
-	var error_descr := str(data[8])
-	var is_warning: bool = bool(data[9])
-
-	if is_warning:
-		return  # Only capture errors, not warnings
-
-	# Prefer the human-readable description; fall back to the bare error text.
-	var msg := error_descr if not error_descr.is_empty() else error
-
-	_buffer_error(PlaytestLogReader.make_error_entry(
-			Time.get_ticks_msec(), msg, source_file, source_func,
-			source_line, "error"))
-
-
-func _buffer_error(entry: Dictionary) -> void:
-	_error_buffer.append(entry)
-	if _error_buffer.size() > _ERROR_BUFFER_MAX:
-		_error_buffer.pop_front()
+func _disconnect_session() -> void:
+	if is_instance_valid(_debugger_node):
+		disconnect_debugger_node(_debugger_node, _session_tracker)
+	_debugger_node = null
+	if _session == null:
+		return
+	if _session.started.is_connected(_session_tracker.on_session_started):
+		_session.started.disconnect(_session_tracker.on_session_started)
+	if _session.stopped.is_connected(_session_tracker.on_session_stopped):
+		_session.stopped.disconnect(_session_tracker.on_session_stopped)
+	if _session.breaked.is_connected(_session_tracker.on_session_breaked):
+		_session.breaked.disconnect(_session_tracker.on_session_breaked)
+	if _session.continued.is_connected(_session_tracker.on_session_continued):
+		_session.continued.disconnect(_session_tracker.on_session_continued)

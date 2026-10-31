@@ -16,6 +16,8 @@ const Modules := preload("res://addons/godot_mcp_toolkit/core/modules.gd")
 const FileGuard = Modules.FileGuard
 const RegistryClient = Modules.RegistryClient
 const Helpers = Modules.CommandHelpers
+const RuntimeOptOut = Modules.RuntimeOptOut
+const DebugSessionTracker = Modules.DebugSessionTracker
 const MCPAuth := preload("res://addons/godot_mcp_toolkit/security/auth.gd")
 const _LogReader := preload("res://addons/godot_mcp_toolkit/commands/playtest_log_reader.gd")
 
@@ -156,7 +158,10 @@ static func cmd_game_start(parameters: Dictionary) -> Dictionary:
 		response["runtime_failure"] = runtime_failure
 		match runtime_failure:
 			"registry_timeout":
-				if not EditorInterface.is_playing_scene():
+				var debugger_hint := _registry_timeout_hint(EditorInterface.is_playing_scene(),
+						_LogReader.get_debug_state(), _LogReader.get_break_reason(),
+						_LogReader.get_break_location())
+				if debugger_hint.is_empty():
 					# The game was playing when the poll began but has stopped — a
 					# ran-then-died soft path, framed as a runtime crash (it began
 					# running, so a compile error is unlikely). runtime_ready:false +
@@ -167,7 +172,7 @@ static func cmd_game_start(parameters: Dictionary) -> Dictionary:
 					if not (diag["errors"] as Array).is_empty():
 						response["compilation_errors"] = diag["errors"]
 				else:
-					response["hint"] = "Runtime port never appeared in registry within the timeout. The game may need more time to start. Try game_start with runtime_poll:true to re-probe, or check editor_get_console for startup errors."
+					response["hint"] = debugger_hint
 			"token_read_failed":
 				response["hint"] = "Could not read auth token — the token file may be missing or empty. Re-enable the plugin in Project Settings > Plugins."
 			"ws_connect_timeout":
@@ -189,7 +194,26 @@ static func cmd_game_start(parameters: Dictionary) -> Dictionary:
 			+ "or use runtime_poll:true to re-probe. "
 			+ "Check debugger_get_log or editor_get_console for startup errors."
 		)
+	var opt_out_hint := _runtime_opt_out_hint()
+	if not opt_out_hint.is_empty():
+		response["hint"] = opt_out_hint if not response.has("hint") \
+			else "%s %s" % [opt_out_hint, response["hint"]]
 	return response
+
+
+## Returns a hint naming the runtime opt-out when this editor's environment sets
+## [code]GODOT_MCP_RUNTIME[/code] to an off value, else an empty string. A game the
+## editor launches inherits the editor's environment, so that game never opens the
+## runtime channel and every runtime readiness check fails.
+static func _runtime_opt_out_hint() -> String:
+	var value := OS.get_environment(RuntimeOptOut.ENV_RUNTIME)
+	if not RuntimeOptOut.is_opted_out(value):
+		return ""
+	return (
+		"The game won't open the runtime channel: %s=%s is set in the editor's "
+		+ "environment, and games the editor launches inherit it. Unset it and "
+		+ "restart the editor to use runtime tools."
+	) % [RuntimeOptOut.ENV_RUNTIME, value]
 
 
 ## True when no main scene is configured (application/run/main_scene unset or blank).
@@ -289,8 +313,9 @@ static func _poll_runtime_ready(
 static func _scan_compilation_errors() -> Dictionary:
 	var buf := Modules.LogBuffer.get_entries(10, ["error"])
 	var errors: Array = []
+	# A script_check probe's errors name its renamed class; the agent sees the real name.
 	for entry in buf.get("entries", []):
-		errors.append(str(entry.get("message", "")))
+		errors.append(Modules.GDScriptSource.strip_probe_suffix(str(entry.get("message", ""))))
 	return {
 		"found": errors.size() > 0,
 		"errors": errors,
@@ -363,3 +388,39 @@ static func _diagnose_startup(
 		),
 		"errors": errors,
 	}
+
+
+## The game_start hint when a runtime probe timed out waiting for the runtime's
+## registry entry while the editor still plays the game.
+##
+## Pure over its inputs so the decision is headless-unit-testable. [param is_playing]
+## is whether the editor plays the game, [param debug_state] the debug.state payload
+## ([code]{"active", "breaked", "can_debug"}[/code]) and [param break_reason] the
+## editor debugger's text for an error break, empty when it gave none, and
+## [param break_location] where that break stopped ([code]source[/code],
+## [code]line[/code]), empty when the debugger gave no location; a caller without a
+## location passes nothing. A game the debugger stopped registers no runtime while
+## stopped, so waiting is no help: an error break (not [code]can_debug[/code]) needs a
+## fix and a restart, never debug_continue, which resumes a game whose script failed
+## to load; a breakpoint pause needs debug_continue. Returns that hint, the plain
+## timeout hint when the debugger has not stopped the game, or an empty String when
+## the editor no longer plays it, for the caller's startup diagnosis.
+static func _registry_timeout_hint(
+	is_playing: bool, debug_state: Dictionary, break_reason: String,
+	break_location: Dictionary = {},
+) -> String:
+	if not is_playing:
+		return ""
+	# debug_state values are Variant at the payload boundary → coerce, never infer.
+	if bool(debug_state.get("breaked", false)):
+		if bool(debug_state.get("can_debug", false)):
+			return "The game is paused at a breakpoint; call debug_continue to resume."
+		var reason_clause := "" if break_reason.is_empty() else ": " + break_reason
+		var location_text := DebugSessionTracker.error_break_location_text(
+				break_reason, break_location)
+		if location_text.is_empty():
+			location_text = "."
+		return ("The game is paused at a script error and cannot continue, so waiting "
+				+ "won't help%s%s Fix it, then game_stop and game_start.") % [
+					reason_clause, location_text]
+	return "Runtime port never appeared in registry within the timeout. The game may need more time to start. Try game_start with runtime_poll:true to re-probe, or check editor_get_console for startup errors."
