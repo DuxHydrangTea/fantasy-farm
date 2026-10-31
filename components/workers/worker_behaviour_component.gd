@@ -162,7 +162,7 @@ func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
 	var used: int = 0
 	for i: int in range(actor.basket.slot_count):
 		used += 0 if actor.basket.is_empty_slot(i) else 1
-	actor.badge.text = (tr("Crop worker #{number}").format({"number": actor.worker_service.worker_number(String(actor.persistent_id))}) + "\n" if actor.worker_role == "crop" else "") + tr("Products → Warehouse")
+	actor.badge.text = tr("Worker #{number}").format({"number": actor.worker_service.worker_number(String(actor.persistent_id))}) + "\n" + tr("Products → Warehouse")
 	if actor.worker_role == "crop" and (row.task.is_empty() or row.task.kind == "patrol"):
 		actor.badge.text += "\n" + tr(actor.worker_service.crop_policy.waiting)
 	if used > 0:

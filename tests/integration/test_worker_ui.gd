@@ -48,6 +48,20 @@ func test_unified_menu_shows_one_team_with_all_controls() -> void:
 	var heading: Label = menu.get_node("%Heading") as Label
 	assert_true("15" in heading.text, "Heading shows the 15 cap: " + heading.text)
 
+func test_unified_badge_and_pause_text_in_both_languages() -> void:
+	menu = _open("crop")
+	menu._hire()
+	menu._toggle_crop_pause()
+	var actor: WorkerActor = world.workers.actor_for("crop")
+	var behaviour: WorkerBehaviourComponent = actor.behaviour
+	for language: String in ["en", "vi"]:
+		Language.set_language(language)
+		menu._refresh()
+		behaviour._update_badge(actor, world.workers.record("crop"))
+		assert_string_contains(actor.badge.text, "Nhân công #1" if language == "vi" else "Worker #1")
+		assert_eq((menu.get_node("%PauseNote") as Label).text, "Công việc đã tạm dừng thủ công. Vẫn tính lương." if language == "vi" else "Work is manually paused. Wages still apply.")
+		assert_eq((menu.get_node("%Task") as Label).text, (menu.get_node("%PauseNote") as Label).text)
+
 func test_crop_settings_pause_and_shared_supply_counts_use_real_models() -> void:
 	var source: InventoryComponent = world.storages.inventory("farm_supply_storage")
 	source.add(preload("res://items/seeds/carrot_seed.tres"), 12)

@@ -100,37 +100,81 @@ func test_v37_migration_unifies_roles_without_loss() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_eq(service.hire("crop"), "")
 	assert_eq(service.hire("crop"), "")
+	for index: int in range(5):
+		assert_eq(service.hire("crop"), "")
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
 	var rows: Array = old.workers.rows
+	var food: AnimalTrough = world.get_node("BarnPen/FeedTrough") as AnimalTrough
+	assert_not_null(food)
+	if food == null:
+		return
+	for row: Dictionary in rows:
+		row.task = {}
+		row.slot = int(row.hire_order) - 2
 	rows[0].role = "ranch"
 	rows[0].zone = "pen_x"
-	rows[0].task = {"kind": "feed", "id": "trough_1", "point": [776.0, 488.0], "base_point": [776.0, 488.0], "attempt": 0, "work_at": now, "finish_at": now + 2.0}
-	if rows.size() > 1:
-		rows[1].role = "orchard"
+	rows[0].slot = 1
+	rows[0].position = WorkerRole.pair(service.bridge.home("ranch", String(food.pen.persistent_id)))
+	rows[0].task = {"kind": "feed", "id": String(food.persistent_id), "point": rows[0].position.duplicate(), "base_point": rows[0].position.duplicate(), "attempt": 0, "work_at": now + 1.0, "finish_at": now + 2.0}
+	rows[0].basket[0] = {"item": "livestock_feed", "count": 2, "tiers": [2, 0, 0]}
+	rows[1].role = "orchard"
+	rows[1].slot = 1
+	rows[1].task = {"kind": "fruit", "id": "12_61", "cell": [12, 61], "point": [400.0, 980.0], "base_point": [400.0, 980.0], "attempt": 0, "work_at": now + 1.0, "finish_at": now + 2.0}
+	var feed_task: Dictionary = rows[0].task.duplicate(true)
+	var fruit_task: Dictionary = rows[1].task.duplicate(true)
+	var feed_id: String = rows[0].id
+	var fruit_id: String = rows[1].id
+	for trough: Dictionary in old.troughs:
+		if trough.id == String(food.persistent_id):
+			trough.stock = 0
+			trough.feed_reserve = 100
+	rows.reverse()
 	old.workers.trial_used = ["ranch"]
 	old.version = 37
 	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
 	assert_true(migrated.ok, str(migrated))
 	assert_eq(int(migrated.snapshot.version), SaveSchema.VERSION)
 	var unified: Array = migrated.snapshot.workers.rows
-	assert_eq(unified.size(), rows.size(), "No worker lost")
+	assert_eq(unified.size(), 7, "All seven legacy workers survive")
 	for row: Dictionary in unified:
 		assert_eq(String(row.role), "crop")
 		assert_eq(String(row.zone), "")
 	var slots: Dictionary = {}
 	for row: Dictionary in unified:
 		slots[int(row.slot)] = true
+		assert_eq(int(row.slot), int(row.hire_order), "Slots follow hire order despite reversed input")
 	assert_eq(slots.size(), unified.size(), "Slots unique 1..N")
 	assert_true("crop" in migrated.snapshot.workers.trial_used)
 	assert_eq(String(unified[0].task.kind), "feed", "Active ranch task survives")
+	assert_eq(int(unified[0].basket[0].count), 2, "Migration preserves the legacy basket")
 	var preflight: Dictionary = adapter.preflight(migrated.snapshot)
 	assert_true(bool(preflight.ok), "Preflight accepts unified rows without pens: " + str(preflight))
+	assert_eq(rows[0].role, "crop", "Migration does not mutate the reversed legacy input")
+	assert_eq(rows[6].role, "ranch")
+	assert_true(adapter.restore(old, now).ok)
+	assert_eq(service.record_for(feed_id).task, feed_task)
+	assert_eq(service.record_for(fruit_id).task, fruit_task)
+	assert_gte(service.feed_inventory(feed_id).count_item(&"livestock_feed"), 2, "Legacy feed is recovered to supply storage on restore")
+	service.advance(now + 2.0)
+	assert_gt(food.stock, 0, "Migrated feed task continues")
+	assert_false((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit(), "Migrated fruit task continues")
+	assert_eq(service.records.size(), 7)
+
+func test_v37_migration_rejects_malformed_rows_before_sorting() -> void:
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	assert_eq(service.hire("crop"), "")
+	var old: Dictionary = adapter.capture("worker_test", 1, now)
+	old.version = 37
+	old.workers.rows.append(42)
+	assert_false(SaveSchema.validate(old, adapter.catalog).ok)
 
 func test_worker_limit_fifteen_enforced_everywhere() -> void:
 	world.land.state.restore_columns(12, 4)
 	for i: int in range(15):
 		assert_eq(service.hire("crop"), "")
-	assert_ne(service.hire("crop"), "", "16th hire must be rejected")
+	assert_eq(service.hire("crop"), "The worker team is full (15/15).", "16th hire must explain the actual cap")
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	assert_true(SaveSchema.validate(adapter.capture("worker_test", 1, now), adapter.catalog).ok)
 
 func test_unified_unlock_and_spawn() -> void:
 	world.land.state.restore_columns(4, 4)
@@ -140,6 +184,30 @@ func test_unified_unlock_and_spawn() -> void:
 	var first: Vector2 = service.spawn_point("crop", "")
 	var second: Vector2 = service.spawn_point("crop", "pen_x")
 	assert_true(first.distance_to(second) < 0.01, "Zone no longer moves the spawn")
+	assert_eq(service.hire("crop", "pen_x"), "")
+	assert_eq(service.record("crop").zone, "", "Hiring ignores legacy zone arguments")
+
+func test_unified_worker_refills_retained_feed_without_warehouse_packages() -> void:
+	assert_eq(service.hire("crop"), "")
+	var row: Dictionary = service.record("crop")
+	var source: InventoryComponent = service.feed_inventory("crop")
+	for pen: AnimalPen in service.bridge.pens():
+		for child: Node in pen.get_children():
+			if not child is AnimalTrough or child.kind != AnimalTrough.Kind.FOOD:
+				continue
+			var trough: AnimalTrough = child as AnimalTrough
+			source.remove(trough.feed_item.item_id, source.count_item(trough.feed_item.item_id))
+			trough.stock = 0
+			trough.feed_reserve = 100
+			var found: bool = false
+			service.busy = true
+			for task: Dictionary in service.bridge.candidates(row, source):
+				if task.kind == "feed" and task.id == String(trough.persistent_id):
+					found = service.bridge.commit(row, source, task)
+			service.busy = false
+			assert_true(found, "Retained feed is usable in " + String(pen.persistent_id))
+			assert_eq(trough.stock, 100)
+			assert_eq(trough.feed_reserve, 0)
 
 func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
 	world.land.state.restore_columns(12, 4)
@@ -153,6 +221,100 @@ func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
 	assert_false(row.task.is_empty())
 	assert_true(String(row.task.get("kind")) in ["feed", "fetch_water", "water_trough", "fruit"],
 		"Unified worker takes trough or orchard work, got " + String(row.task.get("kind")))
+
+func _long_crop_task() -> Dictionary:
+	world.trees.reset()
+	for pen: AnimalPen in service.bridge.pens():
+		for child: Node in pen.get_children():
+			if child is AnimalTrough:
+				child.stock = child.capacity
+	assert_eq(service.hire("crop"), "")
+	var seed: ItemDefinition = preload("res://items/seeds/carrot_seed.tres")
+	service.feed_inventory("crop").add(seed, 1)
+	var row: Dictionary = service.record("crop")
+	row.water_units = 30
+	row.task = service.crop_policy.task("till", Vector2i(48, 30), 5, seed)
+	row.task.merge({"base_point": row.task.point.duplicate(), "attempt": 0, "work_at": now + 59998.0, "finish_at": now + 60000.0})
+	return row
+
+func test_unified_urgent_trough_notification_interrupts_crop_work() -> void:
+	var row: Dictionary = _long_crop_task()
+	var water: AnimalTrough = world.get_node("BarnPen/WaterTrough") as AnimalTrough
+	water.stock = 0
+	service.advance(now + 0.25, false)
+	assert_eq(row.task.get("kind"), "water_trough")
+	assert_eq(row.task.get("id"), String(water.persistent_id))
+	assert_eq(service.crop_automation.sequence, 0, "Interrupted crop task does not spend seeds")
+
+func test_unified_trough_boundary_interrupts_crop_work_after_reload() -> void:
+	var row: Dictionary = _long_crop_task()
+	var water: AnimalTrough = world.get_node("BarnPen/WaterTrough") as AnimalTrough
+	var animal: AnimalActor = (preload("res://scenes/animals/animal.tscn") as PackedScene).instantiate() as AnimalActor
+	animal.definition = preload("res://animals/definitions/cow.tres")
+	animal.persistent_id = &"worker_wake_cow"
+	animal.pen = water.pen
+	animal.position = water.pen.bounds.get_center()
+	animal.needs.time_manager = world.farming.time_manager
+	water.pen.add_child(animal)
+	animal.needs.restore_state(100, 100, now)
+	await wait_process_frames(2)
+	for child: Node in water.pen.get_children():
+		if child is AnimalTrough and child.kind == AnimalTrough.Kind.WATER:
+			child.stock = child.capacity - child.water_per_use + 1
+	var boundary: float = service.bridge.next_wake(row, service.feed_inventory("crop"), now)
+	assert_lt(boundary, float(row.task.finish_at))
+	assert_gt(boundary, now)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var saved: Dictionary = adapter.capture("worker_test", 1, now)
+	assert_true(adapter.restore(saved, now).ok)
+	await wait_physics_frames(2)
+	service.advance(boundary + 0.5)
+	row = service.record("crop")
+	assert_true(String(row.task.get("kind")) in ["water_trough", "fetch_water"], "Offline wake interrupts lower priority crop work: " + str(row.task) + " boundary=" + str(boundary - now) + " stock=" + str(water.stock))
+	assert_eq(service.crop_automation.sequence, 0)
+
+func test_unified_feed_wake_matches_segmented_replay_with_full_trough() -> void:
+	_long_crop_task()
+	var pen: AnimalPen = world.get_node("BarnPen") as AnimalPen
+	var animal: AnimalActor = (preload("res://scenes/animals/animal.tscn") as PackedScene).instantiate() as AnimalActor
+	animal.definition = preload("res://animals/definitions/cow.tres")
+	animal.persistent_id = &"worker_feed_wake_cow"
+	animal.pen = pen
+	animal.position = pen.bounds.get_center()
+	animal.needs.time_manager = world.farming.time_manager
+	pen.add_child(animal)
+	animal.needs.restore_state(100, 100, now)
+	var source: InventoryComponent = service.feed_inventory("crop")
+	source.remove(&"carrot_seed", 1)
+	source.add(preload("res://items/feeds/livestock_feed.tres"), 1)
+	await wait_process_frames(2)
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var saved: Dictionary = adapter.capture("worker_test", 1, now)
+	service.advance(now + 1800.0)
+	var single: Dictionary = adapter.capture("worker_test", 2, now + 1800.0)
+	assert_eq(service.feed_inventory("crop").count_item(&"livestock_feed"), 0, "Single jump wakes at the first missing food unit")
+	assert_true(adapter.restore(saved, now).ok)
+	await wait_physics_frames(2)
+	for step: int in range(1, 19):
+		service.advance(now + step * 100.0)
+	var stepped: Dictionary = adapter.capture("worker_test", 2, now + 1800.0)
+	assert_eq(stepped.storages, single.storages)
+	for index: int in range(single.troughs.size()):
+		assert_eq(stepped.troughs[index].stock, single.troughs[index].stock)
+		assert_eq(stepped.troughs[index].feed_reserve, single.troughs[index].feed_reserve)
+		assert_almost_eq(float(stepped.troughs[index].consumed_fraction), float(single.troughs[index].consumed_fraction), 0.000001)
+	var first: Dictionary = single.workers.rows[0].duplicate(true)
+	var replay: Dictionary = stepped.workers.rows[0].duplicate(true)
+	# Idle rest/stroll completion can be quantized by one 0.25s wake; the
+	# assignment, arrival, position and all working state must still match.
+	if first.task.get("kind") == "patrol" and replay.task.get("kind") == "patrol":
+		assert_almost_eq(float(replay.task.finish_at), float(first.task.finish_at), 0.251)
+		assert_almost_eq(float(replay.wake_at), float(first.wake_at), 0.251)
+		first.task.erase("finish_at")
+		replay.task.erase("finish_at")
+		first.erase("wake_at")
+		replay.erase("wake_at")
+	assert_eq(replay, first)
 
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())

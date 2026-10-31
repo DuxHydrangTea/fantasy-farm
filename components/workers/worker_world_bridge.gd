@@ -135,7 +135,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 				continue
 			var trough: AnimalTrough = node as AnimalTrough
 			var kind: String = ""
-			if trough.kind == AnimalTrough.Kind.FOOD and trough.feed_items_needed(feed_inventory) > 0:
+			if trough.can_refill_to_full(feed_inventory):
 				kind = "feed"
 			elif trough.kind == AnimalTrough.Kind.WATER and trough.stock <= trough.capacity - trough.water_per_use:
 				kind = "water_trough" if int(row.water_units) > 0 else "fetch_water"
@@ -272,7 +272,9 @@ func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) ->
 			continue
 		next = minf(next, now + maxf(0.25, float(supply.stock) / rate))
 		var trough: AnimalTrough = stations[supply.id] as AnimalTrough
-		var units: int = trough.water_per_use if trough.kind == AnimalTrough.Kind.WATER else 1 if trough.feed_reserve > 0 else maxi(1, trough.feed_item.food_units_per_item) if trough.feed_item != null else 1
+		# refill_to_full can retain a partial package. Food therefore becomes
+		# eligible at the first missing visible unit, including with no reserve.
+		var units: int = trough.water_per_use if trough.kind == AnimalTrough.Kind.WATER else 1
 		if trough.kind == AnimalTrough.Kind.WATER or trough.feed_reserve > 0 or (trough.feed_item != null and bag.count_item(trough.feed_item.item_id) > 0):
 			next = minf(next, now + maxf(0.25, (float(supply.stock) - float(trough.capacity - units)) / rate))
 	return next

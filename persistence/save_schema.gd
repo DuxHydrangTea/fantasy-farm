@@ -337,6 +337,9 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		# Gộp ba vai trò cũ về một loại worker: role về "crop", zone bỏ,
 		# slot đánh lại 1..N theo hire_order để không chạm trần LIMITS mới.
 		var unified: Array = data.workers.rows.duplicate()
+		for row: Variant in unified:
+			if not row is Dictionary or not number(row.get("hire_order"), 1, 1000000000, true) or not row.get("role") in ["crop", "orchard", "ranch"]:
+				return failure("Invalid legacy worker.")
 		unified.sort_custom(func(a: Variant, b: Variant) -> bool: return int(a.get("hire_order", 0)) < int(b.get("hire_order", 0)))
 		for index: int in range(unified.size()):
 			var row: Variant = unified[index]

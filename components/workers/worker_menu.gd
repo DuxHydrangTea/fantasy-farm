@@ -186,7 +186,7 @@ func _refresh() -> void:
 	pause_crop_button.disabled = not team_employed or not available
 	pause_crop_button.text = tr("Resume work") if paused else tr("Pause work")
 	(%PauseNote as Label).visible = employed
-	(%PauseNote as Label).text = tr("Crop work is manually paused. Wages still apply.") if paused else tr("Pausing work does not stop wages.")
+	(%PauseNote as Label).text = tr("Work is manually paused. Wages still apply.") if paused else tr("Pausing work does not stop wages.")
 	var task: String = _task_text(service, row, employed, paused)
 	(%Task as Label).text = task
 	var unlock: String = service.unlock_error(role) if count < int(WorkerRole.LIMITS[role]) else ""
@@ -279,7 +279,7 @@ func _task_text(service: WorkerService, row: Dictionary, employed: bool, paused:
 	if not bool(row.active):
 		return tr("Awaiting wage payment at dawn.")
 	if paused:
-		return tr("Crop work is manually paused. Wages still apply.")
+		return tr("Work is manually paused. Wages still apply.")
 	if bool(service.bridge.storage_waiting.get(role, false)):
 		return tr("Not enough warehouse space for harvest.")
 	if service.crop_automation.wait_for_care and service.bridge.crop_care_waiting:

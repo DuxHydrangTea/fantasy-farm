@@ -10,6 +10,20 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-31-unified-worker-design.md`
 
+## Trạng thái thực thi — 2026-10-31
+
+Đã triển khai 5 task trong các commit `4b17994d` → `b3758f5e`, rồi hoàn tất review và sửa các điểm còn thiếu:
+
+- Dùng được feed dư (`feed_reserve`); query và commit cùng điều kiện refill. Mốc đánh thức theo đơn vị thức ăn bị thiếu đầu tiên, nhất quán giữa single jump và segmented replay.
+- Việc chuồng có ưu tiên cao ngắt được till/plant/fertilize, kể cả sau reload; giữ ô đã chuẩn bị và không tiêu vật tư trước commit.
+- Migration kiểm tra row trước khi sort; regression test bao phủ 7 worker lẫn loại, hire order đảo, basket và hai task feed/fruit tiếp tục sau restore.
+- Bỏ ý nghĩa tham số zone khi tuyển, sửa thông báo 15/15 và nhãn badge/tạm dừng Anh–Việt.
+- Sửa fixture parity: cố định roll sâu bệnh khi trồng lại, mở đủ ô vườn cây cho fixture, lấy lại inventory sau restore.
+
+Kiểm chứng cuối: workers **40/40**, UI **12/12**, crop team **17/17**, grafting **12/12**, stroll **8/8**, M0 **5/5**, supply storage **11/11**. Worker warehouse **9/10**, bằng baseline. Lint: **0 lỗi, 0 cảnh báo**; không còn references tới 4 resource/scene bị xóa hoặc 2 bảng tuyển cũ trong world.
+
+**Giới hạn kiểm chứng rộng:** full suite treo hơn 130 giây tại `test_context_bars.test_hover_focuses_fruit_and_timber_trees`, trùng hiện tượng đã ghi ở phiên trước. Đã dừng riêng tiến trình test và chạy tiếp toàn bộ integration files phía sau; Hai phần đã hoàn tất **118 file / 1.032 test: 893 pass, 136 fail, 3 pending**; không có parse error hoặc "Nothing was run". Hai lỗi hiệu ứng xuất hiện thêm đã pass khi chạy riêng; lỗi fractional-consumption còn lại tái hiện nguyên trạng trên HEAD trước các sửa đổi của phiên này. Suite rộng vẫn có lỗi nền ngoài worker, không phải một lượt full-suite xanh. Log và đối chiếu nằm trong `.superpowers/sdd/2026-10-31-unified-worker/` (`resume-full-suite.log`, `resume-suite-remainder.log`, `progress.md`). Tiêu chí baseline per-file ở Global Constraints vẫn áp dụng.
+
 ## Global Constraints
 
 - Id role thống nhất: `"crop"` — hiển thị "Nhân công"/"Worker"; KHÔNG cosmetic rename hệ thống.
@@ -47,7 +61,7 @@
 - Consumes: `SaveSchema.VERSION = 37` hiện tại; khổ mẫu migration tuần tự (`if data.get("version") == N: ...; data.version = N + 1`).
 - Produces: `WorkerRole.ROLES == ["crop"]`, `WorkerRole.LIMITS == {"crop": 15}`, `WorkerRole.WAGES == {"crop": 2800}`; schema nhận rows ≤ 15; preflight không đòi pen. Task 2-5 phụ thuộc.
 
-- [ ] **Step 1: Viết test migration + hạn mức trong `test_workers.gd`** (khổ mẫu `test_v22_migration...` dòng 97):
+- [x] **Step 1: Viết test migration + hạn mức trong `test_workers.gd`** (khổ mẫu `test_v22_migration...` dòng 97):
 
 ```gdscript
 func test_v37_migration_unifies_roles_without_loss() -> void:
@@ -86,13 +100,13 @@ func test_worker_limit_fifteen_enforced_everywhere() -> void:
 
 (Chỉnh `adapter`/`now` theo tên biến cục bộ của file — đọc `before_each` + `test_v22_migration...` trước khi viết.)
 
-- [ ] **Step 2: Chạy xác nhận FAIL** — migration chưa có → save v37 báo lỗi/future hoặc role "ranch" bị từ chối. Run: GUT với `-gtest=res://tests/integration/test_workers.gd -gexit`. Expected: 2 test mới FAIL.
+- [x] **Step 2: Chạy xác nhận FAIL** — migration chưa có → save v37 báo lỗi/future hoặc role "ranch" bị từ chối. Run: GUT với `-gtest=res://tests/integration/test_workers.gd -gexit`. Expected: 2 test mới FAIL.
 
-- [ ] **Step 3: Implement.** (a) `save_schema.gd`: thêm block `if data.get("version") == 37:` chuyển `data.workers.rows` (role → "crop", zone → "", slot = index + 1 theo thứ tự hire_order tăng dần, giữ task/basket), `data.workers.trial_used = ["crop"] if not data.workers.trial_used.is_empty() else []`, rồi `data.version = 38`; cập nhật `VERSION` = 38. (b) `worker_role.gd`: `ROLES = ["crop"]`, `LIMITS = {"crop": 15}`, `WAGES = {"crop": 2800}`. (c) `worker_save_schema.gd`: `data.rows.size() > 15`; dòng `allowed` cho role "crop" là union đầy đủ (bỏ 3 nhánh else vì không còn role khác); slot cap theo `LIMITS["crop"]`. (d) `crop_automation_state.gd` valid: `prepared.size() > 15`. (e) `world_state_adapter.gd`: xóa dòng `if row.role == "ranch" and world.workers.bridge.pen_for(row.zone) == null:`.
+- [x] **Step 3: Implement.** (a) `save_schema.gd`: thêm block `if data.get("version") == 37:` chuyển `data.workers.rows` (role → "crop", zone → "", slot = index + 1 theo thứ tự hire_order tăng dần, giữ task/basket), `data.workers.trial_used = ["crop"] if not data.workers.trial_used.is_empty() else []`, rồi `data.version = 38`; cập nhật `VERSION` = 38. (b) `worker_role.gd`: `ROLES = ["crop"]`, `LIMITS = {"crop": 15}`, `WAGES = {"crop": 2800}`. (c) `worker_save_schema.gd`: `data.rows.size() > 15`; dòng `allowed` cho role "crop" là union đầy đủ (bỏ 3 nhánh else vì không còn role khác); slot cap theo `LIMITS["crop"]`. (d) `crop_automation_state.gd` valid: `prepared.size() > 15`. (e) `world_state_adapter.gd`: xóa dòng `if row.role == "ranch" and world.workers.bridge.pen_for(row.zone) == null:`.
 
-- [ ] **Step 4: Chạy lại `test_workers.gd`.** Expected: test mới PASS, các test cũ của file PASS (riêng những test fail baseline sẵn — đối chiếu danh sách baseline nếu lệch).
+- [x] **Step 4: Chạy lại `test_workers.gd`.** Expected: test mới PASS, các test cũ của file PASS (riêng những test fail baseline sẵn — đối chiếu danh sách baseline nếu lệch).
 
-- [ ] **Step 5: Commit** `git add -A persistence components/workers/worker_role.gd components/workers/crop_automation_state.gd tests/integration/test_workers.gd && git commit -m "feat(workers): unify save schema to single role, limit 15 (migration v38)"`
+- [x] **Step 5: Commit** `git add -A persistence components/workers/worker_role.gd components/workers/crop_automation_state.gd tests/integration/test_workers.gd && git commit -m "feat(workers): unify save schema to single role, limit 15 (migration v38)"`
 
 ### Task 2: Service — một role, một scene, một definition
 
@@ -104,7 +118,7 @@ func test_worker_limit_fifteen_enforced_everywhere() -> void:
 - Consumes: `WorkerRole.LIMITS/WAGES` (Task 1).
 - Produces: `WorkerService.DEFINITIONS == {"crop": crop_hand}`; `SCENES == {"crop": crop_worker.tscn}`; `feed_inventory(key) -> farm_supply_storage` (mọi worker); `spawn_point(role, zone, except_id)` bỏ qua `zone`; `unlock_error` chỉ gate 12 cột. Task 3-4 phụ thuộc.
 
-- [ ] **Step 1: Test:**
+- [x] **Step 1: Test:**
 
 ```gdscript
 func test_unified_unlock_and_spawn() -> void:
@@ -117,13 +131,13 @@ func test_unified_unlock_and_spawn() -> void:
 	assert_true(first.distance_to(second) < 0.01, "Zone no longer moves the spawn")
 ```
 
-- [ ] **Step 2: Chạy xác nhận FAIL hoặc PASS-sẵn** (nếu spawn_point nhánh crop vốn không phụ thuộc zone thì test spawn pass sẵn — chấp nhận, vẫn giữ làm pin; test gate phải FAIL trước Task 1? KHÔNG — gate thuộc Task 1 constants, ở đây chỉ pin lại).
+- [x] **Step 2: Chạy xác nhận FAIL hoặc PASS-sẵn** (nếu spawn_point nhánh crop vốn không phụ thuộc zone thì test spawn pass sẵn — chấp nhận, vẫn giữ làm pin; test gate phải FAIL trước Task 1? KHÔNG — gate thuộc Task 1 constants, ở đây chỉ pin lại).
 
-- [ ] **Step 3: Implement:** `SCENES = {"crop": preload("res://scenes/workers/crop_worker.tscn")}`; `DEFINITIONS = {"crop": preload("res://resources/workers/crop_hand.tres")}`; `feed_inventory(key)` → `return world.storages.inventory("farm_supply_storage")`; `spawn_point` bỏ nhánh ranch/zone (spawn theo bảng CropWorkers — giữ công thức hiện có của nhánh crop); `unlock_error` chỉ còn gate 12 cột; `_warehouse_changed` bỏ điều kiện role; `hire()` bỏ ý nghĩa `zone` (giữ tham số để không vỡ callers).
+- [x] **Step 3: Implement:** `SCENES = {"crop": preload("res://scenes/workers/crop_worker.tscn")}`; `DEFINITIONS = {"crop": preload("res://resources/workers/crop_hand.tres")}`; `feed_inventory(key)` → `return world.storages.inventory("farm_supply_storage")`; `spawn_point` bỏ nhánh ranch/zone (spawn theo bảng CropWorkers — giữ công thức hiện có của nhánh crop); `unlock_error` chỉ còn gate 12 cột; `_warehouse_changed` bỏ điều kiện role; `hire()` bỏ ý nghĩa `zone` (giữ tham số để không vỡ callers).
 
-- [ ] **Step 4: PASS** + chạy `test_crop_automation.gd`, `test_worker_warehouse.gd` đối chiếu baseline.
+- [x] **Step 4: PASS** + chạy `test_crop_automation.gd`, `test_worker_warehouse.gd` đối chiếu baseline.
 
-- [ ] **Step 5: Commit** `git commit -m "feat(workers): single scene/definition/spawn for unified worker"`
+- [x] **Step 5: Commit** `git commit -m "feat(workers): single scene/definition/spawn for unified worker"`
 
 ### Task 3: Bridge — pipeline việc hợp nhất
 
@@ -135,7 +149,7 @@ func test_unified_unlock_and_spawn() -> void:
 - Consumes: role thống nhất `"crop"` (Task 1-2).
 - Produces: `candidates(row, feed_inventory)` trả union việc fruit + troughs + crops + pickups cho mọi row; `next_wake(row, feed, now)` = min(dawn, fruit-wake, crop-wake, ranch-boundary); `zone_contains(row, point, columns=-1) -> true` (worker đi mọi nơi; preflight đã nới từ stroll).
 
-- [ ] **Step 1: Test wake + việc liên vùng:**
+- [x] **Step 1: Test wake + việc liên vùng:**
 
 ```gdscript
 func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
@@ -148,13 +162,13 @@ func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
 
 (Viết theo fixture có sẵn của `test_animals.gd` trước_each — tái dùng pen/trough tại chỗ; 2 khẳng định: task feed xuất hiện cho worker crop; task fruit xuất hiện khi cây chín.)
 
-- [ ] **Step 2: FAIL** (candidates crop hiện không trả việc feed/fruit).
+- [x] **Step 2: FAIL** (candidates crop hiện không trả việc feed/fruit).
 
-- [ ] **Step 3: Implement:** trong `candidates()`: gộp nhánh orchard (fruit loop) + ranch (trough loop) vào nhánh "crop" — chạy cả 3 vòng cho mọi row; `next_wake`: bỏ 3 nhánh role, tính `next = min(dawn, fruit-min, crop-min, _ranch_boundary(...))`; `zone_contains` → `return true` (tham số giữ nguyên cho callers); `patrol_point` fallback: bỏ nhánh ranch pen + orchard region, chỉ còn fallback góc vùng ruộng; `_warehouse_changed`/`_trough_changed` → `request_scan("crop")` (đã từ Task 2 nếu trùng).
+- [x] **Step 3: Implement:** trong `candidates()`: gộp nhánh orchard (fruit loop) + ranch (trough loop) vào nhánh "crop" — chạy cả 3 vòng cho mọi row; `next_wake`: bỏ 3 nhánh role, tính `next = min(dawn, fruit-min, crop-min, _ranch_boundary(...))`; `zone_contains` → `return true` (tham số giữ nguyên cho callers); `patrol_point` fallback: bỏ nhánh ranch pen + orchard region, chỉ còn fallback góc vùng ruộng; `_warehouse_changed`/`_trough_changed` → `request_scan("crop")` (đã từ Task 2 nếu trùng).
 
-- [ ] **Step 4: PASS** — chạy `test_workers.gd`, `test_animals.gd`, `test_grafting.gd`, `test_tree_plantation.gd` đối chiếu baseline từng file.
+- [x] **Step 4: PASS** — chạy `test_workers.gd`, `test_animals.gd`, `test_grafting.gd`, `test_tree_plantation.gd` đối chiếu baseline từng file.
 
-- [ ] **Step 5: Commit** `git commit -m "feat(workers): merged task pipeline feeds waters and harvests everywhere"`
+- [x] **Step 5: Commit** `git commit -m "feat(workers): merged task pipeline feeds waters and harvests everywhere"`
 
 ### Task 4: Menu + Board + World scene + localization
 
@@ -170,15 +184,15 @@ func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
 - Consumes: Task 1-3.
 - Produces: menu thống nhất; 1 bảng trong world.
 
-- [ ] **Step 1: Test UI** trong `test_worker_ui.gd` (khổ mẫu hiện có): mở board CropWorkers → menu có hire button; `%CropOptions` visible; team list chiều dài = số worker đã thuê; heading text chứa "/15". KHÔNG mở được board tại vị trí 2 bảng cũ (node không tồn tại → `world.get_node_or_null("OrchardWorkers") == null`).
+- [x] **Step 1: Test UI** trong `test_worker_ui.gd` (khổ mẫu hiện có): mở board CropWorkers → menu có hire button; `%CropOptions` visible; team list chiều dài = số worker đã thuê; heading text chứa "/15". KHÔNG mở được board tại vị trí 2 bảng cũ (node không tồn tại → `world.get_node_or_null("OrchardWorkers") == null`).
 
-- [ ] **Step 2: FAIL** (menu cũ vẫn hiện ZoneBox cho ranch; heading "/5").
+- [x] **Step 2: FAIL** (menu cũ vẫn hiện ZoneBox cho ranch; heading "/5").
 
-- [ ] **Step 3: Implement** theo Interfaces trên; localization: thêm/sửa key `"Worker team {count}/15"`, `"Worker"`, mô tả hợp nhất ("Waters, harvests, tends crops, orchards and animal pens.") trong cả vi.po (msgstr "Đội làm việc {count}/15", "Nhân công", mô tả tiếng Việt) và en.po.
+- [x] **Step 3: Implement** theo Interfaces trên; localization: thêm/sửa key `"Worker team {count}/15"`, `"Worker"`, mô tả hợp nhất ("Waters, harvests, tends crops, orchards and animal pens.") trong cả vi.po (msgstr "Đội làm việc {count}/15", "Nhân công", mô tả tiếng Việt) và en.po.
 
-- [ ] **Step 4: PASS** — chạy `test_worker_ui.gd`, `test_worker_stroll.gd`, `test_component_wiring.gd` đối chiếu baseline.
+- [x] **Step 4: PASS** — chạy `test_worker_ui.gd`, `test_worker_stroll.gd`, `test_component_wiring.gd` đối chiếu baseline.
 
-- [ ] **Step 5: Commit** `git commit -m "feat(workers): unified hiring board menu and world scene"`
+- [x] **Step 5: Commit** `git commit -m "feat(workers): unified hiring board menu and world scene"`
 
 ### Task 5: Dọn dẹp references + full suite
 
@@ -189,12 +203,12 @@ func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
 **Interfaces:**
 - Consumes: tất cả task trước.
 
-- [ ] **Step 1: Grep còn sót** `grep -rn '"orchard"\|"ranch"' --include="*.gd" components/ persistence/ tests/support/ | grep -v "test_"` — sửa từng dòng còn lại sang "crop" hoặc bỏ nhánh; chạy `lint_project.py` (godot skill) → `counts.errors == 0`.
+- [x] **Step 1: Grep còn sót** `grep -rn '"orchard"\|"ranch"' --include="*.gd" components/ persistence/ tests/support/ | grep -v "test_"` — sửa từng dòng còn lại sang "crop" hoặc bỏ nhánh; chạy `lint_project.py` (godot skill) → `counts.errors == 0`.
 
-- [ ] **Step 2: Xóa 4 file** sau khi `grep -rln "orchard_hand\|ranch_hand\|orchard_worker.tscn\|ranch_worker.tscn"` trả về rỗng (ngoài .godot/); dùng remove chuẩn của OS + `--import` một lần sau xóa (godot skill) để dọn sidecars.
+- [x] **Step 2: Xóa 4 file** sau khi `grep -rln "orchard_hand\|ranch_hand\|orchard_worker.tscn\|ranch_worker.tscn"` trả về rỗng (ngoài .godot/); dùng remove chuẩn của OS + `--import` một lần sau xóa (godot skill) để dọn sidecars.
 
-- [ ] **Step 3: Sửa supports** theo Interfaces (thay hire("ranch")→hire("crop"), board map 1 phần tử).
+- [x] **Step 3: Sửa supports** theo Interfaces (thay hire("ranch")→hire("crop"), board map 1 phần tử).
 
-- [ ] **Step 4: Chạy full suite GUT headless** (không -gtest). Expected: không test mới vỡ so với baseline; đối chiếu per-file với danh sách baseline đã lưu (lưu ý flaky world-gen — chạy lại file riêng nếu nghi).
+- [x] **Step 4: Chạy full suite GUT headless** (không -gtest). Expected: không test mới vỡ so với baseline; đối chiếu per-file với danh sách baseline đã lưu (lưu ý flaky world-gen — chạy lại file riêng nếu nghi).
 
-- [ ] **Step 5: Commit** `git commit -m "chore(workers): remove orchard ranch variants and refresh test probes"`
+- [x] **Step 5: Commit** `git commit -m "chore(workers): remove orchard ranch variants and refresh test probes"`

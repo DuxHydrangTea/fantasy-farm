@@ -27,6 +27,12 @@ func before_each() -> void:
 	world.player.wallet.set_balance(1000000)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	world.farming.restore_soil([])
+	# Replays plant new crops, so supply identical health rolls on both runs.
+	# Random pests otherwise change harvests and wait-for-care scheduling.
+	world.farming.crop_planted.connect(func(_cell: Vector2i, crop: Crop) -> void:
+		crop.conditions.pest_roll = 1.0
+		crop.conditions.weed_roll = 1.0
+		crop.conditions.yield_roll = 0.5)
 	service = world.workers
 	source = world.storages.inventory("farm_supply_storage")
 	# The unified worker services troughs at higher priority than planting;
@@ -50,6 +56,8 @@ func after_each() -> void:
 	TimeManager._last_timestamp = old_floor
 
 func _hire(count: int = 5) -> void:
+	# Storage restore replaces inventories; never keep the freed previous bag.
+	source = world.storages.inventory("farm_supply_storage")
 	for index: int in range(count):
 		assert_eq(service.hire("crop"), "")
 	for row: Dictionary in service.records_for("crop"):

@@ -169,7 +169,8 @@ func hire(role: String, zone: String = "") -> String:
 	if not error.is_empty():
 		return error
 	if records_for(role, true).size() >= int(WorkerRole.LIMITS[role]):
-		return "The crop team is full (5/5)." if role == "crop" else "This role is already hired."
+		return "The worker team is full (15/15)."
+	zone = ""
 	var row: Dictionary = {}
 	for previous: Dictionary in records_for(role):
 		if not previous.employed:
@@ -346,6 +347,15 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 			if not running(row):
 				continue
 			var actor: WorkerActor = actors[row.id] as WorkerActor
+			# Animal demand can arise while travelling to a lower-priority plot.
+			# Keep prepared soil; an interrupted job has not spent its supplies.
+			if not row.task.is_empty() and row.task.kind in ["till", "plant", "fertilize"] and float(row.task.finish_at) > simulated_at:
+				for option: Dictionary in bridge.candidates(row, feed_inventory(row.id)):
+					if option.kind in ["feed", "fetch_water", "water_trough"] and target_available(row, option) and float(blocked_targets.get(String(row.id) + ":" + String(option.id), 0)) <= simulated_at:
+						row.position = WorkerRole.pair(actor.global_position)
+						row.task = {}
+						row.wake_at = simulated_at
+						break
 			var task: Dictionary = row.task
 			if not task.is_empty() and float(task.finish_at) <= simulated_at + 0.00001:
 				var target: Vector2 = WorkerRole.point(task.point)
@@ -386,6 +396,8 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 		for row: Dictionary in records:
 			if running(row):
 				next = minf(next, float(row.task.finish_at) if not row.task.is_empty() else float(row.wake_at))
+				if not row.task.is_empty() and row.task.kind in ["till", "plant", "fertilize"]:
+					next = minf(next, bridge.next_wake(row, feed_inventory(row.id), simulated_at))
 		simulated_at = minf(until, maxf(simulated_at + 0.00001, next))
 		if budget_usec > 0 and Time.get_ticks_usec() - started >= budget_usec:
 			clock.simulation_timestamp = previous

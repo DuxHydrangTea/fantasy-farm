@@ -144,9 +144,14 @@ func _update_visual() -> void:
 	if sprite != null:
 		sprite.texture = full_texture if stock > 0 else empty_texture
 
+func can_refill_to_full(inventory: InventoryComponent) -> bool:
+	if _refilling or kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != ItemDefinition.ItemType.FEED or stock >= capacity:
+		return false
+	return feed_reserve > 0 or inventory.count_item(feed_item.item_id) > 0
+
 func refill_to_full(inventory: InventoryComponent) -> int:
 	_sync_pen()
-	if _refilling or kind != Kind.FOOD or inventory == null or feed_item == null or feed_item.item_type != ItemDefinition.ItemType.FEED or stock >= capacity:
+	if not can_refill_to_full(inventory):
 		return 0
 	var units: int = maxi(1, feed_item.food_units_per_item)
 	var needed: int = ceili(float(maxi(0, capacity - stock - feed_reserve)) / units)

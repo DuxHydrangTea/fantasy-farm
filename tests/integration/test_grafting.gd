@@ -69,6 +69,7 @@ func _wax(amount: int = 1) -> void:
 	world.player.selection.inventory.add(load("res://items/boosters/grafting_wax.tres") as ItemDefinition, amount)
 
 func _orchard() -> void:
+	assert_true(world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1}))
 	for i: int in range(1, 10):
 		_fruit(&"apple", false, Vector2i(12 + i * 3, 61))
 	assert_eq(service.hire("crop"), "")
@@ -153,8 +154,8 @@ func test_worker_uses_dynamic_amount_and_keeps_pending_graft_when_warehouse_too_
 	world.storages.restore(data, SaveCatalog.new())
 	var row: Dictionary = service.record("crop")
 	var candidates: Array[Dictionary] = service.bridge.candidates(row, service.feed_inventory("crop"))
-	assert_true(candidates.is_empty())
-	assert_true(service.bridge.storage_waiting.orchard)
+	assert_true(candidates.filter(func(task: Dictionary) -> bool: return task.kind == "fruit").is_empty())
+	assert_true(service.bridge.storage_waiting.crop)
 	var job: Dictionary = {"kind": "fruit", "id": "12_61", "cell": [12, 61]}
 	assert_false(service.bridge.commit(row, service.feed_inventory("crop"), job))
 	assert_true(tree.has_fruit())
@@ -294,6 +295,10 @@ func test_orchard_48h_pending_graft_single_and_hourly_steps_match() -> void:
 	_orchard()
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("graft_offline", 1, now)
+	var checked: Dictionary = SaveSchema.validate(saved, adapter.catalog)
+	assert_true(checked.ok, "Initial graft fixture: " + str(checked.get("message", checked.get("error", ""))))
+	if not checked.ok:
+		return
 	service.advance(now + 172800)
 	var single: Dictionary = adapter.capture("graft_offline", 2, now + 172800)
 	assert_gt(service.output_inventory().count_item(&"apple_star"), 0)
