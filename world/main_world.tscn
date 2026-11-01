@@ -4948,28 +4948,28 @@ persistent_id = &"placed_d2d638f2f4f64f5ca773aba052d29f5a"
 accepted_species = Array[int]([0])
 
 [node name="FeedTrough" parent="CoopPen" unique_id=2042315591 instance=ExtResource("32_feed_trough")]
-position = Vector2(13, 165)
+position = Vector2(31, 166)
 persistent_id = &"placed_2042315591"
 capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="FeedTrough2" parent="CoopPen" unique_id=144181841 instance=ExtResource("32_feed_trough")]
-position = Vector2(13, 79)
+position = Vector2(32, 77)
 persistent_id = &"placed_144181841"
 capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough" parent="CoopPen" unique_id=2041273187 instance=ExtResource("33_water_trough")]
-position = Vector2(38, 26)
+position = Vector2(317, 95)
 persistent_id = &"placed_2041273187"
 capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
 empty_texture = SubResource("AtlasTexture_vlh6x")
 
 [node name="WaterTrough2" parent="CoopPen" unique_id=1891560272 instance=ExtResource("33_water_trough")]
-position = Vector2(95, 27)
+position = Vector2(263, 95)
 persistent_id = &"placed_1891560272"
 capacity = 1200
 full_texture = SubResource("AtlasTexture_k0hid")
@@ -4990,14 +4990,14 @@ capacity = 36
 bounds = Rect2(0, 0, 384, 272)
 
 [node name="FeedTrough" parent="BarnPen" unique_id=1563140842 instance=ExtResource("41_ykqd1")]
-position = Vector2(13, 217)
+position = Vector2(25, 217)
 persistent_id = &"placed_1563140842"
 capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough" parent="BarnPen" unique_id=203535476 instance=ExtResource("33_water_trough")]
-position = Vector2(86, 265)
+position = Vector2(87, 253)
 persistent_id = &"placed_203535476"
 capacity = 1200
 stock = 600
@@ -5015,14 +5015,14 @@ amount = 5
 position = Vector2(-19, 108)
 
 [node name="FeedTrough2" parent="BarnPen" unique_id=1564523007 instance=ExtResource("41_ykqd1")]
-position = Vector2(13, 162)
+position = Vector2(25, 162)
 persistent_id = &"barn_feedtrough_02"
 capacity = 1200
 full_texture = SubResource("Full")
 empty_texture = SubResource("Empty")
 
 [node name="WaterTrough2" parent="BarnPen" unique_id=450736599 instance=ExtResource("33_water_trough")]
-position = Vector2(143, 264)
+position = Vector2(146, 253)
 persistent_id = &"barn_watertrough_02"
 capacity = 1200
 stock = 600
@@ -5047,16 +5047,17 @@ capacity = 20
 position = Vector2(52, -111)
 
 [node name="CollisionShape2D" parent="PondPen/DuckShelter" index="1"]
+position = Vector2(59, -57)
 shape = SubResource("DuckShelterShape")
 
 [node name="FeedTrough" parent="PondPen" index="1" unique_id=624608384]
-position = Vector2(24, 31)
+position = Vector2(36, 22)
 capacity = 1200
 full_texture = SubResource("AtlasTexture_ylm75")
 empty_texture = SubResource("AtlasTexture_tr8go")
 
 [node name="WaterTrough" parent="PondPen" index="2" unique_id=684452871]
-position = Vector2(85, 111)
+position = Vector2(87, 102)
 capacity = 1200
 full_texture = SubResource("AtlasTexture_no06q")
 empty_texture = SubResource("AtlasTexture_qanod")
@@ -5065,7 +5066,7 @@ empty_texture = SubResource("AtlasTexture_qanod")
 position = Vector2(126, -10)
 
 [node name="FeedTrough2" parent="PondPen" unique_id=1633519694 instance=ExtResource("32_feed_trough")]
-position = Vector2(24, 71)
+position = Vector2(36, 71)
 persistent_id = &"pond_feedtrough_02"
 capacity = 1200
 stock = 600
@@ -5074,7 +5075,7 @@ full_texture = SubResource("AtlasTexture_7c4vb")
 empty_texture = SubResource("AtlasTexture_e688v")
 
 [node name="WaterTrough2" parent="PondPen" unique_id=276141886 instance=ExtResource("33_water_trough")]
-position = Vector2(129, 111)
+position = Vector2(159, 100)
 persistent_id = &"pond_watertrough_02"
 capacity = 1200
 stock = 600

@@ -12,6 +12,7 @@ func _ready() -> void:
 	toggle_mode = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_icon = TextureRect.new()
+	_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_icon.name = "Icon"
 	_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -35,6 +36,7 @@ func _ready() -> void:
 	_count.offset_top = -24
 	_count.offset_bottom = -4
 	_badge = TextureRect.new()
+	_badge.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_badge.name = "QualityBadge"
 	_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_badge.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -50,6 +52,4 @@ func refresh() -> void:
 	var highest: int = 2 if int(tiers[2]) > 0 else (1 if int(tiers[1]) > 0 else 0)
 	_badge.visible = item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit and highest > 0
 	_badge.texture = InventorySlot.BADGE_GOLD if highest == 2 else InventorySlot.BADGE_SILVER
-	tooltip_text = tr(item.display_name) if item != null else tr("Empty slot")
-	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
-		tooltip_text += "\n" + ItemQuality.summary(tiers)
+	tooltip_text = ItemQuality.item_name(item, tiers)

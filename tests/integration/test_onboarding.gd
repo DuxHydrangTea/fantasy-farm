@@ -43,9 +43,12 @@ func test_help_and_skip_do_not_complete_or_reward_goals_and_modal_excludes_bag()
 
 func test_context_follows_real_success_and_hint_timer_never_completes_gameplay() -> void:
 	var hint: TutorialHints = world.tutorial_hints
+	await wait_process_frames(4)
+	hint.refresh()
+	assert_true(hint.button.visible, "Hint must fit below the objective before it can count as viewed: " + str(hint.button.get_rect()))
 	hint._timer.wait_time = 0.01
 	hint._timer.start()
-	await wait_seconds(0.05)
+	assert_true(await wait_for_signal(hint._timer.timeout, 0.5))
 	assert_true(world.tutorial.seen("first_soil"))
 	assert_eq(world.objectives.progress.progress(), 0)
 	world.objectives.progress.state_query = func(_condition: StringName) -> int: return 1

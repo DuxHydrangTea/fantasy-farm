@@ -96,7 +96,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = ""
 toggle_mode = true
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,128)
 
 [node name="Margin0" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0"]
@@ -116,6 +115,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="OrderIcon0" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order0/Margin0/OrderRow0"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(48,48)
@@ -159,7 +159,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = ""
 toggle_mode = true
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,128)
 
 [node name="Margin1" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1"]
@@ -179,6 +178,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="OrderIcon1" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order1/Margin1/OrderRow1"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(48,48)
@@ -222,7 +222,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = ""
 toggle_mode = true
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,128)
 
 [node name="Margin2" type="MarginContainer" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2"]
@@ -242,6 +241,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="OrderIcon2" type="TextureRect" parent="Root/Center/Panel/Shell/Page/Main/OrderColumn/Order2/Margin2/OrderRow2"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(48,48)

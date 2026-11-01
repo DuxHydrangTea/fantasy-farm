@@ -5,21 +5,24 @@ var produce: ItemDefinition
 func before_each() -> void:
 	bag = InventoryComponent.new()
 	bag.starting_tools = false
-	bag.slot_count = 2
+	bag.slot_count = 3
 	add_child_autofree(bag)
 	produce = ItemDefinition.new()
 	produce.item_id = &"quality_test"
 	produce.item_type = ItemDefinition.ItemType.PRODUCE
 	produce.max_stack = 5
 
-func test_tiers_share_stack_capacity_and_spill_without_loss() -> void:
+func test_each_tier_uses_its_own_slot_and_capacity() -> void:
 	assert_eq(bag.add(produce, 3, 1), 3)
 	assert_eq(bag.add(produce, 4, 2), 4)
-	assert_eq(bag.slot(0).tiers, [0, 3, 2])
-	assert_eq(bag.slot(1).tiers, [0, 0, 2])
-	assert_eq(bag.capacity_for(produce), 3)
-	assert_eq(bag.add(produce, 9), 3)
-	assert_eq(bag.count_item(produce.item_id, -1), 10)
+	assert_eq(bag.slot(0).tiers, [0, 3, 0])
+	assert_eq(bag.slot(1).tiers, [0, 0, 4])
+	assert_eq(bag.capacity_for(produce), 5)
+	assert_eq(bag.add(produce, 9), 5)
+	assert_eq(bag.capacity_for(produce), 0)
+	assert_eq(bag.capacity_for(produce, 1), 2)
+	assert_eq(bag.capacity_for(produce, 2), 1)
+	assert_eq(bag.count_item(produce.item_id, -1), 12)
 
 func test_default_consumption_never_spends_silver_or_gold() -> void:
 	bag.add(produce, 2)
@@ -50,9 +53,12 @@ func test_move_and_partial_transfer_preserve_every_tier() -> void:
 	target.slot_count = 1
 	add_child_autofree(target)
 	target.add(produce, 3)
+	assert_eq(bag.transfer_slot_to(1, target, 5), 0, "Normal capacity cannot receive Silver")
+	target.remove(produce.item_id, 3)
+	target.add(produce, 3, 1)
 	assert_eq(bag.transfer_slot_to(1, target, 5), 2)
 	assert_eq(target.count_item(produce.item_id, -1), 5)
-	assert_eq(target.count_item(produce.item_id, 1), 2)
+	assert_eq(target.count_item(produce.item_id, 1), 5)
 	assert_eq(bag.count_item(produce.item_id, 1), 1)
 	assert_eq(bag.count_item(produce.item_id, 2), 4)
 
@@ -61,7 +67,7 @@ func test_snapshots_are_deep_and_corrupt_tiers_rejected_atomically() -> void:
 	var copy: Dictionary = bag.slot(0)
 	copy.tiers[1] = 99
 	assert_eq(bag.slot(0).tiers, [0, 3, 0])
-	assert_false(bag.replace_slots([copy, bag.slot(1)]))
+	assert_false(bag.replace_slots([copy, bag.slot(1), bag.slot(2)]))
 	assert_eq(bag.count_item(produce.item_id, 1), 3)
 	assert_false(ItemQuality.valid_tiers([0, -1, 4], produce, 3))
 	assert_false(ItemQuality.valid_tiers([0, 1.5, 1.5], produce, 3))
@@ -96,3 +102,14 @@ func test_chef_does_not_substitute_quality_and_can_craft_root_tonic() -> void:
 	assert_eq(chef.start("root_tonic", 1, bag, 100), "")
 	assert_eq(chef.collect(bag, 160), 1)
 	assert_eq(bag.count_item(&"root_tonic"), 1)
+
+func test_different_quality_swaps_and_same_quality_merges_without_mixing() -> void:
+	bag.add(produce, 3, 0)
+	bag.add(produce, 2, 1)
+	assert_true(bag.move_slot(0, 1))
+	assert_eq(bag.slot(0).tiers, [0, 2, 0])
+	assert_eq(bag.slot(1).tiers, [3, 0, 0])
+	bag.add(produce, 4, 1)
+	assert_true(bag.move_slot(0, 2))
+	assert_eq(bag.slot(2).tiers, [0, 5, 0])
+	assert_eq(bag.slot(0).tiers, [0, 1, 0])

@@ -217,7 +217,8 @@ func test_full_warehouse_still_allows_crop_watering_and_ranch_feeding() -> void:
 func test_warehouse_notifications_hold_transaction_lock_and_refresh_open_panel() -> void:
 	service.hire("crop")
 	var access: FarmStorageAccess = world.storage_accesses.produce_warehouse
-	world.player.global_position = access.global_position + Vector2(0, 24)
+	# The authored doorway shape is offset from the building's access origin.
+	world.player.global_position = access.interaction_shape.global_position + Vector2(0, 1)
 	assert_true(access.open_shop(world.player))
 	var observed: Array[bool] = []
 	world.storages.changed.connect(func(id: String) -> void:

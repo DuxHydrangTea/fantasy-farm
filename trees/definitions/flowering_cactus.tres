@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="TreeDefinition" format=3]
+[gd_resource type="Resource" script_class="TreeDefinition" format=3 uid="uid://bbpagka1h1q1v"]
 
-[ext_resource type="Script" path="res://scripts/tree_definition.gd" id="script"]
-[ext_resource type="Resource" path="res://items/trees/wood.tres" id="wood"]
-[ext_resource type="Resource" path="res://items/trees/root_wood.tres" id="root"]
-[ext_resource type="Texture2D" path="res://trees/textures/oak_stage1.tres" id="stage1"]
-[ext_resource type="Texture2D" path="res://trees/textures/oak_stage2.tres" id="stage2"]
-[ext_resource type="Texture2D" path="res://trees/textures/oak_stump.tres" id="stump"]
-[ext_resource type="Texture2D" path="res://assets/Trees/Variants64x80/flowering_cactus.png" id="mature"]
+[ext_resource type="Texture2D" path="res://trees/textures/variant_flowering_cactus.tres" id="mature"]
+[ext_resource type="Resource" uid="uid://ds0v0j538alt6" path="res://items/trees/root_wood.tres" id="root"]
+[ext_resource type="Script" uid="uid://dexpywdsy1ft0" path="res://scripts/tree_definition.gd" id="script"]
+[ext_resource type="Texture2D" uid="uid://bpfx1ly3lnloi" path="res://trees/textures/oak_stage1.tres" id="stage1"]
+[ext_resource type="Texture2D" uid="uid://bgo875htapmke" path="res://trees/textures/oak_stage2.tres" id="stage2"]
+[ext_resource type="Texture2D" uid="uid://5hea1yi7jef" path="res://trees/textures/oak_stump.tres" id="stump"]
+[ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="wood"]
 
 [resource]
 script = ExtResource("script")

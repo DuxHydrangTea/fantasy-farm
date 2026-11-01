@@ -2,6 +2,8 @@ class_name BoosterInteractionComponent
 extends Node2D
 ## Player-side input/presentation adapter. StateComponent owns the tool animation.
 signal feedback_changed
+const HealingEffect = preload("res://components/animals/animal_healing_effect.gd")
+const CareBubble = preload("res://components/animals/animal_care_bubble.gd")
 var player: FarmPlayer
 var service: BoosterService = BoosterService.new()
 var _crop: Crop
@@ -55,9 +57,46 @@ func prepare_action() -> StringName:
 	var farm: FarmingController = player.farming_actions.get_farming_controller()
 	_crop = farm.get_crop(_cell) if farm != null else null
 	_animal = find_animal() if _item.booster_kind in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else null
+	if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
+		_use_medicine(_animal)
+		return &"medicine_used"
 	_pending = &"fertilize" if _item.booster_kind not in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else &"animal_tonic"
 	feedback_changed.emit()
 	return _pending
+
+func click_medicine(point: Vector2) -> bool:
+	var item: ItemDefinition = selected_booster()
+	if item == null or item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_MEDICINE or player.interactions == null:
+		return false
+	var nearest: AnimalActor
+	var distance: float = INF
+	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
+		var animal: AnimalActor = node as AnimalActor
+		if not is_instance_valid(animal) or animal.is_queued_for_deletion() or not animal.is_visible_in_tree() or animal.get_viewport() != player.get_viewport() or animal.get_world_2d() != player.get_world_2d():
+			continue
+		var target: InteractionTarget = InteractionTarget.new(animal, InteractionTarget.Kind.ANIMAL, player)
+		var score: float = point.distance_squared_to(animal.global_position)
+		if score < distance and player.interactions.resolver.hit(target, point):
+			nearest = animal
+			distance = score
+	if nearest == null:
+		return false
+	_slot = player.selection.selected_index
+	_item = item
+	_cell = player.farming_actions.get_focused_cell()
+	player.animation.face(nearest.global_position - player.global_position)
+	_use_medicine(nearest)
+	return true
+
+func _use_medicine(animal: AnimalActor) -> void:
+	var result: Dictionary = service.use(player.farming_actions.get_farming_controller(), _cell, animal, player.selection.inventory, _slot, _item, player)
+	_feedback = "Animal cured!" if result.ok else String(result.error)
+	_feedback_until = Time.get_ticks_msec() + 1800
+	if result.ok and is_instance_valid(animal):
+		var effect: Node2D = HealingEffect.new()
+		effect.name = "AnimalHealingEffect"
+		animal.add_child(effect)
+		animal.add_child(CareBubble.new())
 
 func _state_changed(_old: StringName, current: StringName) -> void:
 	if current != &"tool":
@@ -86,7 +125,7 @@ func _frame_changed() -> void:
 		return
 	if player.state.current_state != StateComponent.State.TOOL or player.state.active_action != action or player.selection.is_menu_open() or player.selection.selected_index != _slot or selected_booster() != _item:
 		return
-	if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE and (not is_instance_valid(_crop) or player.farming_actions.get_farming_controller().get_crop(_cell) != _crop):
+	if _item.booster_kind in [ItemDefinition.BoosterKind.PESTICIDE, ItemDefinition.BoosterKind.HERBICIDE] and (not is_instance_valid(_crop) or player.farming_actions.get_farming_controller().get_crop(_cell) != _crop):
 		return
 	if action == &"animal_tonic" and (not is_instance_valid(_animal) or find_animal() != _animal):
 		_feedback = "Face a nearby sick animal to use medicine." if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Face a nearby animal to use the tonic."

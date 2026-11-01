@@ -2,6 +2,7 @@ extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
 const PESTICIDE: ItemDefinition = preload("res://items/boosters/pesticide.tres")
 const MEDICINE: ItemDefinition = preload("res://items/boosters/animal_medicine.tres")
+const HERBICIDE: ItemDefinition = preload("res://items/boosters/herbicide.tres")
 var world: FarmWorld
 var farm: FarmingController
 var animal: AnimalActor
@@ -82,6 +83,144 @@ func test_treating_each_crop_condition_preserves_other_flags_and_quality() -> vo
 	assert_true(farm.treat_crop(cell, false, world.player))
 	assert_false(crop.conditions.affected())
 
+func test_worker_care_uses_supplies_once_and_shows_animal_bubble() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	var row: Dictionary = world.workers.record("crop")
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(MEDICINE, 1)
+	animal.health.sick = true
+	row.position = WorkerRole.pair(animal.global_position + Vector2(0, 20))
+	var choices: Array[Dictionary] = world.workers.bridge.ranch_candidates(row, bag)
+	var job: Dictionary = {}
+	for candidate: Dictionary in choices:
+		if candidate.kind == "cure_animal" and candidate.id == String(animal.persistent_id):
+			job = candidate
+	assert_false(job.is_empty())
+	if job.is_empty():
+		return
+	assert_true(world.workers.bridge.commit(row, bag, job))
+	assert_false(animal.health.sick)
+	assert_eq(bag.count_item(MEDICINE.item_id), 0)
+	assert_not_null(animal.get_node_or_null("CareBubble"))
+	var bubble: Node = animal.get_node("CareBubble")
+	assert_true((bubble.get_node("BubbleVisual/BubblePanel") as Sprite2D).texture in [preload("res://assets/Ui/status_bubbles/bubble_4.png"), preload("res://assets/Ui/status_bubbles/bubble_5.png")])
+	assert_eq((bubble.get_node("BubbleVisual/Text") as Label).text, tr("Feeling healthy!"))
+	var label: Label = bubble.get_node("BubbleVisual/Text") as Label
+	assert_almost_eq(label.position.x + label.size.x * 0.5, 0.0, 0.01)
+	assert_eq(label.size.y, 20.0)
+	assert_eq(label.horizontal_alignment, HORIZONTAL_ALIGNMENT_CENTER)
+	assert_true(label.clip_text)
+	assert_false(world.workers.bridge.commit(row, bag, job))
+
+func test_worker_care_crop_conditions_use_correct_supplies() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	var row: Dictionary = world.workers.record("crop")
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(PESTICIDE, 1)
+	bag.add(HERBICIDE, 1)
+	var crop: Crop = _crop()
+	for kind: String in ["treat_pests", "treat_weeds"]:
+		var job: Dictionary = {"kind": kind, "id": "%d_%d" % [cell.x, cell.y], "cell": [cell.x, cell.y], "crop": String(crop.definition.crop_id), "planted_at": crop.planted_at, "item": "pesticide" if kind == "treat_pests" else "herbicide"}
+		assert_true(world.workers.bridge.commit(row, bag, job))
+		var effect: Node = crop.get_child(-1)
+		assert_eq((effect.get_node("Icon") as Sprite2D).texture, preload("res://assets/Ui/status_bubbles/worm.png") if kind == "treat_pests" else preload("res://assets/Ui/status_bubbles/weeds.png"))
+		assert_false(world.workers.bridge.commit(row, bag, job))
+	assert_false(crop.conditions.affected())
+	assert_eq(bag.count_item(PESTICIDE.item_id), 0)
+	assert_eq(bag.count_item(HERBICIDE.item_id), 0)
+
+func test_crop_care_icon_rises_fades_and_cleans_up() -> void:
+	var effect: Node2D = preload("res://components/interaction/crop_care_effect.gd").new()
+	add_child_autofree(effect)
+	var initial_y: float = effect.position.y
+	await wait_seconds(0.65)
+	assert_lt(effect.position.y, initial_y)
+	assert_lt(effect.modulate.a, 1.0)
+	await wait_seconds(1.1)
+	assert_false(is_instance_valid(effect))
+
+func test_worker_care_candidates_reserve_supplies_and_targets() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	assert_eq(world.workers.hire("crop"), "")
+	var first: Dictionary = world.workers.records[0]
+	var second: Dictionary = world.workers.records[1]
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(MEDICINE, 1)
+	animal.health.sick = true
+	var choices: Array[Dictionary] = world.workers.bridge.ranch_candidates(first, bag)
+	var chosen: Dictionary = {}
+	for candidate: Dictionary in choices:
+		if candidate.kind == "cure_animal":
+			chosen = candidate
+	assert_false(chosen.is_empty())
+	if chosen.is_empty():
+		return
+	first.task = chosen
+	var held: Dictionary = world.workers.reservations(String(second.id))
+	assert_true(held.targets.has("animal:" + String(animal.persistent_id)))
+	assert_eq(int(held.items.get("animal_medicine", 0)), 1)
+	for candidate: Dictionary in world.workers.bridge.ranch_candidates(second, bag, held):
+		assert_ne(candidate.kind, "cure_animal")
+
+func test_worker_cures_animal_during_offline_simulation() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	var row: Dictionary = world.workers.record("crop")
+	var worker: WorkerActor = world.workers.actor_for(String(row.id))
+	worker.global_position = animal.global_position + Vector2(0, 25)
+	row.position = WorkerRole.pair(worker.global_position)
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(MEDICINE, 1)
+	animal.health.sick = true
+	world.workers.advance(now + 90.0, true)
+	assert_false(animal.health.sick)
+	assert_eq(bag.count_item(MEDICINE.item_id), 0)
+	assert_null(animal.get_node_or_null("CareBubble"))
+
+func test_worker_crop_care_runs_in_offline_scheduler() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	var crop: Crop = _crop(false)
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(PESTICIDE, 1)
+	bag.add(HERBICIDE, 1)
+	var row: Dictionary = world.workers.record("crop")
+	var worker: WorkerActor = world.workers.actor_for(String(row.id))
+	worker.global_position = farm.farmland.to_global(farm.farmland.map_to_local(cell))
+	row.position = WorkerRole.pair(worker.global_position)
+	world.workers.advance(now + 45.0, true)
+	assert_false(crop.conditions.affected())
+	assert_eq(bag.count_item(PESTICIDE.item_id), 0)
+	assert_eq(bag.count_item(HERBICIDE.item_id), 0)
+
+func test_worker_care_task_survives_save_validation() -> void:
+	world.player.wallet.set_balance(1000000)
+	world.land.state.restore_columns(16, 8)
+	assert_eq(world.workers.hire("crop"), "")
+	var row: Dictionary = world.workers.record("crop")
+	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	bag.add(MEDICINE, 1)
+	animal.health.sick = true
+	var jobs: Array[Dictionary] = world.workers.bridge.ranch_candidates(row, bag)
+	for candidate: Dictionary in jobs:
+		if candidate.kind == "cure_animal":
+			row.task = candidate
+			break
+	assert_false(row.task.is_empty())
+	if row.task.is_empty():
+		return
+	row.task.merge({"base_point": row.task.point.duplicate(), "attempt": 0, "work_at": now + 1.0, "finish_at": now + 2.0})
+	var snapshot: Dictionary = world.workers.capture(now)
+	assert_true(WorkerSaveSchema.valid(snapshot, SaveCatalog.new(), now))
+
 func test_crop_treatment_out_of_range_does_not_consume_stock() -> void:
 	_crop()
 	var bag: InventoryComponent = world.player.selection.inventory
@@ -157,6 +296,46 @@ func test_medicine_consumed_once_only_for_a_nearby_sick_animal() -> void:
 	assert_false(world.player.boosters.service.use(farm, cell, animal, bag, _slot(MEDICINE), MEDICINE, world.player).ok)
 	assert_eq(bag.count_item(MEDICINE.item_id), 1)
 
+func test_click_medicine_cures_immediately_without_tool_animation_and_shows_effect() -> void:
+	var bag: InventoryComponent = world.player.selection.inventory
+	bag.add(MEDICINE, 2)
+	world.player.selection.select_slot(_slot(MEDICINE))
+	animal.health.sick = true
+	world.player.global_position = animal.global_position + Vector2(0, 20)
+	var target: InteractionTarget = InteractionTarget.new(animal, InteractionTarget.Kind.ANIMAL, world.player)
+	var point: Vector2 = animal.sprite.to_global(world.player.interactions.resolver.visual_rect(target).get_center())
+	world.player.state.click_world(point)
+	assert_false(animal.health.sick)
+	assert_eq(bag.count_item(MEDICINE.item_id), 1)
+	assert_ne(world.player.state.current_state, StateComponent.State.TOOL)
+	var effect: Node = animal.get_node_or_null("AnimalHealingEffect")
+	assert_not_null(effect)
+	var particles: GPUParticles2D = effect.get_node("HealingParticles") as GPUParticles2D
+	assert_true(particles.emitting)
+	assert_eq(particles.amount, 3)
+	assert_almost_eq(particles.lifetime, 1.5, 0.001)
+	world.player.state.click_world(point)
+	assert_eq(bag.count_item(MEDICINE.item_id), 1)
+	assert_eq(animal.find_children("AnimalHealingEffect*", "", false, false).size(), 1)
+	if effect != null:
+		effect._process(1.5)
+		assert_false(particles.emitting)
+		effect._process(1.5)
+		assert_true(effect.is_queued_for_deletion())
+
+func test_use_medicine_in_facing_direction_skips_tool_animation() -> void:
+	var bag: InventoryComponent = world.player.selection.inventory
+	bag.add(MEDICINE, 1)
+	world.player.selection.select_slot(_slot(MEDICINE))
+	animal.health.sick = true
+	world.player.global_position = animal.global_position + Vector2(0, 20)
+	world.player.animation.face(Vector2.UP)
+	assert_true(world.player.state.use_selected_tool())
+	assert_false(animal.health.sick)
+	assert_eq(bag.count_item(MEDICINE.item_id), 0)
+	assert_ne(world.player.state.current_state, StateComponent.State.TOOL)
+	assert_not_null(animal.get_node_or_null("AnimalHealingEffect"))
+
 func test_save_migration_roundtrip_and_invalid_health_preflight() -> void:
 	var crop: Crop = _crop()
 	animal.health.sick = true
@@ -196,7 +375,27 @@ func test_catalog_storage_and_shop_include_both_medicines() -> void:
 	var seeds: ShopCatalog = preload("res://resources/shops/seed_flower_shop.tres")
 	var pets: ShopCatalog = preload("res://resources/shops/pet_shop.tres")
 	assert_true(seeds.offers.any(func(offer: ShopOffer) -> bool: return offer.item == PESTICIDE and offer.category in seeds.category_ids))
+	assert_true(seeds.offers.any(func(offer: ShopOffer) -> bool: return offer.item == HERBICIDE and offer.category in seeds.category_ids))
 	assert_true(pets.offers.any(func(offer: ShopOffer) -> bool: return offer.item == MEDICINE and offer.category in pets.category_ids))
+
+func test_world_seed_merchant_sells_herbicide_in_supplies() -> void:
+	var merchant: ShopMerchant = world.get_node("LaiBuon") as ShopMerchant
+	var offer: ShopOffer
+	for entry: ShopOffer in merchant.catalog.offers:
+		if entry.item == HERBICIDE:
+			offer = entry
+			break
+	assert_not_null(offer)
+	if offer == null:
+		return
+	assert_eq(offer.category, ShopOffer.Category.FEED)
+	assert_true(offer.category in merchant.catalog.category_ids)
+	world.player.wallet.set_balance(1000)
+	var bag: InventoryComponent = world.player.selection.inventory
+	var before: int = bag.count_item(HERBICIDE.item_id)
+	assert_true(ShopService.new(merchant.catalog, world.player.wallet, bag).buy(offer, 2).ok)
+	assert_eq(bag.count_item(HERBICIDE.item_id), before + 2)
+	assert_eq(world.player.wallet.balance, 760)
 
 func _impact() -> void:
 	var sprite: AnimatedSprite2D = world.player.animation.animated_sprite

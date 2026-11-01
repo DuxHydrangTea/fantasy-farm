@@ -116,6 +116,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="TreeIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0,160)
@@ -130,6 +131,7 @@ text = "Current crop"
 autowrap_mode = 3
 
 [node name="CurrentIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/CurrentPanel/CurrentBody/CurrentScroll/CurrentContent"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0,40)
@@ -219,6 +221,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="YieldIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/YieldCard/YieldBody/YieldRow"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(32,32)
@@ -260,7 +263,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Review this direction"
 toggle_mode = true
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,48)
 
 [node name="QualityCard" type="PanelContainer" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content"]
@@ -278,6 +280,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="QualityIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ChoicesPanel/ChoiceBody/Browse/Content/QualityCard/QualityBody/QualityRow"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(32,32)
@@ -319,7 +322,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Review this direction"
 toggle_mode = true
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,48)
 
 [node name="ReviewPanel" type="PanelContainer" parent="Root/Center/Panel/Body/Main"]
@@ -361,6 +363,7 @@ text = "Choose a graft direction to review."
 autowrap_mode = 3
 
 [node name="FutureIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(0,48)
@@ -389,6 +392,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="WaxIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/ReviewPanel/ReviewBody/ReviewScroll/ReviewContent/CostCard/CostBody/WaxRow"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(32,32)

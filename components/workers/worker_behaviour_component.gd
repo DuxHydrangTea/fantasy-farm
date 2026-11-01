@@ -19,7 +19,9 @@ var _navigation: PlayerNavigationComponent
 
 func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
 	if _navigation == null:
-		_navigation = PlayerNavigationComponent.new()
+		var worker_navigation: WorkerNavigation = WorkerNavigation.new()
+		worker_navigation.system = actor.worker_service.navigation
+		_navigation = worker_navigation
 		_navigation.movement = movement
 		_navigation.animation = animation
 		_navigation.camera = actor.worker_service.world.player.camera
@@ -106,6 +108,8 @@ func begin_patrol(at: Vector2) -> void:
 	movement.set_target(current_goal)
 
 func _step_work(actor: WorkerActor, delta: float) -> void:
+	if actor.care_action != null:
+		actor.care_action.show_action("", Vector2.ZERO)
 	var row: Dictionary = actor.worker_service.record_for(String(actor.persistent_id))
 	if row.is_empty():
 		return
@@ -114,7 +118,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		_badge_elapsed = 0.0
 		_update_badge(actor, row)
 	if not actor.worker_service.running(row):
-		if _navigation != null:
+		if _navigation != null and _navigation.has_focus:
 			_navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
@@ -122,7 +126,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		return
 	var task: Dictionary = row.task
 	if task.is_empty():
-		if _navigation != null:
+		if _navigation != null and _navigation.has_focus:
 			_navigation.cancel()
 		movement.cancel_target()
 		movement.stop()
@@ -143,6 +147,14 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 			task["arrived_at"] = now
 			task.work_at = maxf(float(task.work_at), now)
 			task.finish_at = maxf(float(task.finish_at), float(task.work_at) + actor.definition.work_seconds)
+		if task.kind in ["treat_pests", "treat_weeds", "cure_animal"] and actor.care_action != null:
+			var direction: Vector2 = animation.facing_vector
+			if task.kind == "cure_animal":
+				var animal: AnimalActor = actor.worker_service.bridge.animal_for(String(task.id))
+				if animal != null:
+					direction = animal.global_position - actor.global_position
+					animation.face(direction)
+			actor.care_action.show_action(String(task.kind), direction)
 		_blocked_elapsed = 0.0
 		return
 	if not movement.has_target or not movement.target_position.is_equal_approx(goal):
@@ -159,17 +171,18 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		_blocked_elapsed = 0.0
 
 func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
-	var used: int = 0
-	for i: int in range(actor.basket.slot_count):
-		used += 0 if actor.basket.is_empty_slot(i) else 1
-	actor.badge.text = tr("Worker #{number}").format({"number": actor.worker_service.worker_number(String(actor.persistent_id))}) + "\n" + tr("Products → Warehouse")
-	if actor.worker_role == "crop" and (row.task.is_empty() or row.task.kind == "patrol"):
-		actor.badge.text += "\n" + tr(actor.worker_service.crop_policy.waiting)
-	if used > 0:
-		actor.badge.text += "\n" + tr("Basket %d/16") % used
-	if bool(actor.worker_service.bridge.storage_waiting.get(actor.worker_role, false)):
-		actor.badge.text += "\n" + tr("Warehouse needs space")
-	if not actor.worker_service.running(row):
-		actor.badge.text += "\n" + tr("Resting")
-	elif not row.task.is_empty():
-		actor.badge.text += "\n" + tr(String(row.task.kind))
+	var kind: String = String(row.task.get("kind", ""))
+	var icon: Texture2D
+	if actor.worker_service.running(row):
+		match kind:
+			"treat_weeds": icon = preload("res://items/boosters/herbicide.tres").icon
+			"treat_pests": icon = preload("res://items/boosters/pesticide.tres").icon
+			"cure_animal": icon = preload("res://items/boosters/animal_medicine.tres").icon
+			"water_crop", "water_trough", "fetch_water": icon = preload("res://items/tools/watering_can.tres").icon
+			"till": icon = preload("res://items/tools/hoe.tres").icon
+			"plant": icon = preload("res://items/seeds/carrot_seed.tres").icon
+			"fertilize": icon = preload("res://items/boosters/crop_fertilizer.tres").icon
+			"feed": icon = preload("res://items/feeds/livestock_feed.tres").icon
+			"harvest", "fruit", "pickup": icon = preload("res://crops/field/wheat/wheat.tres").harvest_item.icon
+	var attention: bool = not actor.worker_service.running(row) or ((kind.is_empty() or kind == "patrol") and actor.worker_service.waiting_reasons.has(String(row.id)))
+	actor.show_status(actor.worker_service.worker_number(String(actor.persistent_id)), icon, attention)

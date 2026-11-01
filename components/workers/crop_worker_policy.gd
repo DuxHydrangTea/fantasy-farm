@@ -4,27 +4,57 @@ extends RefCounted
 var world: FarmWorld
 var cells: Array[Vector2i] = []
 var soils: Dictionary[Vector2i, int] = {}
+var points: Dictionary[Vector2i, Vector2] = {}
 var cached_columns: int = -1
 var waiting: String = ""
+var deadline_usec: int = 0
+var query_pending: bool = false
+var _searches: Dictionary = {}
+
+func cancel_searches() -> void:
+	_searches.clear()
+
+func _keep_best(ranked: Array, entry: Array) -> void:
+	var first: int = 0
+	var last: int = ranked.size()
+	while first < last:
+		var middle: int = (first + last) / 2
+		if _rank_before(entry, ranked[middle]):
+			last = middle
+		else:
+			first = middle + 1
+	if first < 16:
+		ranked.insert(first, entry)
+		if ranked.size() > 16:
+			ranked.pop_back()
+
+func _rank_before(a: Array, b: Array) -> bool:
+	for index: int in range(5):
+		if a[index] != b[index]:
+			return a[index] < b[index]
+	return false
 
 func _init(scene: FarmWorld) -> void:
 	world = scene
 
 func invalidate() -> void:
 	cached_columns = -1
+	cancel_searches()
 
 func soil_changed(cell: Vector2i, state: int) -> void:
 	soils[cell] = state
+	cancel_searches()
 
 func first_item(fertilizer: bool = false, worker_id: String = "") -> ItemDefinition:
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
+	var held: Dictionary = world.workers.reservations(worker_id)
 	for i: int in range(bag.slot_count):
 		var slot: Dictionary = bag.slot(i)
 		var item: ItemDefinition = slot.item as ItemDefinition
 		if item == null or int(slot.count) <= 0:
 			continue
 		var suitable: bool = item.item_type == ItemDefinition.ItemType.BOOSTER and item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER if fertilizer else item.item_type == ItemDefinition.ItemType.SEED and item.crop is CropDefinition and item.crop.is_valid()
-		if suitable and bag.count_item(item.item_id) > world.workers.reserved_items(String(item.item_id), worker_id):
+		if suitable and bag.count_item(item.item_id) > int(held.items.get(String(item.item_id), 0)):
 			return item
 	return null
 
@@ -34,6 +64,7 @@ func _cache() -> void:
 	cached_columns = world.land.state.unlocked_columns
 	cells.clear()
 	soils.clear()
+	points.clear()
 	var layer: TileMapLayer = world.farming.farmland
 	for cell: Vector2i in layer.get_used_cells():
 		if not LandExpansionState.REGION.has_point(cell) or not world.land.state.is_unlocked(cell):
@@ -42,6 +73,7 @@ func _cache() -> void:
 		if data != null and data.has_custom_data(&"can_plant") and data.get_custom_data(&"can_plant") == true:
 			cells.append(cell)
 			soils[cell] = int(world.farming.get_soil_state(cell))
+			points[cell] = layer.to_global(layer.map_to_local(cell))
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
 
 func task(kind: String, cell: Vector2i, priority: int, item: ItemDefinition = null) -> Dictionary:
@@ -53,6 +85,7 @@ func task(kind: String, cell: Vector2i, priority: int, item: ItemDefinition = nu
 
 func planting_task(row: Dictionary) -> Dictionary:
 	waiting = ""
+	query_pending = false
 	var settings: CropAutomationState = world.workers.crop_automation
 	if not settings.auto_plant:
 		return {}
@@ -67,39 +100,43 @@ func planting_task(row: Dictionary) -> Dictionary:
 	if LandExpansionState.REGION.has_point(prepared) and (world.farming.get_crop(prepared) != null or int(soils.get(prepared, 0)) == FarmingController.Soil.UNTILLED or not world.farming.can_plant(prepared, actor)):
 		settings.prepared.erase(row.id)
 		prepared = settings.prepared_for(row.id)
-	var excluded: Dictionary = {}
+	var held: Dictionary = world.workers.reservations(String(row.id))
 	var timestamp: float = world.farming.time_manager.now()
-	# Reduced from 32 to 16 attempts to halve worst-case physics queries
-	var max_attempts: int = 16
-	for attempt: int in range(max_attempts):
-		var best: Vector2i = Vector2i(-1, -1)
-		var best_rank: int = 0x7FFFFFFFFFFFFFFF
-		var best_soil: int = 2
-		var distance: float = INF
-		for cell: Vector2i in cells:
-			if excluded.has(cell) or world.farming._occupied.has(cell) or world.farming.get_crop(cell) != null or not world.workers.target_available(row, task("plant", cell, 4)):
-				continue
-			var id: String = "%s:%d_%d" % [row.id, cell.x, cell.y]
-			if float(world.workers.blocked_targets.get(id, 0)) > timestamp:
-				continue
-			var soil: int = int(soils.get(cell, 0))
-			if soil == FarmingController.Soil.UNTILLED and LandExpansionState.REGION.has_point(prepared):
-				continue # At most one worker-created plot waiting for its seed.
-			var rank: int = -1 if cell == prepared else int(settings.plots.get(cell, {}).get("last", 0))
-			var unprepared: int = 1 if soil == FarmingController.Soil.UNTILLED else 0
-			var point: Vector2 = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
-			var next_distance: float = origin.distance_squared_to(point)
-			if rank < best_rank or (rank == best_rank and (unprepared < best_soil or (unprepared == best_soil and next_distance < distance))):
-				best = cell
-				best_rank = rank
-				best_soil = unprepared
-				distance = next_distance
-		if best.x < 0:
-			break
+	# Rank once, then test up to sixteen candidates. No per-cell task allocation,
+	# worker scan, coordinate conversion, or full-field rescan after rejection.
+	var key: Array = [origin, prepared, settings.revision, settings.sequence, cached_columns, item.item_id]
+	var search: Dictionary = _searches.get(row.id, {})
+	if search.is_empty() or search.key != key:
+		search = {"key": key, "cursor": 0, "ranked": []}
+		_searches[row.id] = search
+	var ranked: Array = search.ranked
+	var initial_cursor: int = int(search.cursor)
+	while int(search.cursor) < cells.size():
+		if deadline_usec > 0 and int(search.cursor) > initial_cursor and int(search.cursor) % 16 == 0 and Time.get_ticks_usec() >= deadline_usec:
+			query_pending = true
+			return {}
+		var cell: Vector2i = cells[int(search.cursor)]
+		search.cursor = int(search.cursor) + 1
+		if held.cells.has(cell) or world.farming._occupied.has(cell) or world.farming.get_crop(cell) != null:
+			continue
+		if float(world.workers.blocked_targets.get("%s:%d_%d" % [row.id, cell.x, cell.y], 0)) > timestamp:
+			continue
+		var soil: int = int(soils.get(cell, 0))
+		if soil == FarmingController.Soil.UNTILLED and LandExpansionState.REGION.has_point(prepared):
+			continue
+		var rank: int = -1 if cell == prepared else int(settings.plots.get(cell, {}).get("last", 0))
+		# Fixtures and restored indexes may provide cells before their projections.
+		if not points.has(cell):
+			points[cell] = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
+		_keep_best(ranked, [rank, int(soil == FarmingController.Soil.UNTILLED), origin.distance_squared_to(points[cell]), cell.y, cell.x])
+	_searches.erase(row.id)
+	for attempt: int in range(mini(16, ranked.size())):
+		var best: Vector2i = Vector2i(int(ranked[attempt][4]), int(ranked[attempt][3]))
+		if held.cells.has(best) or world.farming.get_crop(best) != null:
+			continue
 		var untilled: bool = int(soils[best]) == FarmingController.Soil.UNTILLED
 		if world.farming.can_till(best, actor) if untilled else world.farming.can_plant(best, actor):
 			return task("till" if untilled else "plant", best, 5 if untilled else 4, item)
-		excluded[best] = true
 		world.workers.blocked_targets["%s:%d_%d" % [row.id, best.x, best.y]] = timestamp + 120.0
 	waiting = "No reachable empty plot is available."
 	return {}

@@ -141,6 +141,7 @@ layout_mode = 2
 theme_type_variation = &"DetailCard"
 
 [node name="ItemIcon" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/ItemHeader/IconFrame"]
+texture_filter = 1
 layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72,72)
@@ -203,6 +204,7 @@ size_flags_horizontal = 3
 text = "Silver"
 
 [node name="Badge" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Silver"]
+texture_filter = 1
 layout_mode = 2
 custom_minimum_size = Vector2(16,16)
 texture = ExtResource("silver")
@@ -230,6 +232,7 @@ size_flags_horizontal = 3
 text = "Gold"
 
 [node name="Badge" type="TextureRect" parent="Root/Center/Panel/Body/Content/Sidebar/InfoScroll/ItemInfo/QualityPanel/Rows/Gold"]
+texture_filter = 1
 layout_mode = 2
 custom_minimum_size = Vector2(16,16)
 texture = ExtResource("gold")

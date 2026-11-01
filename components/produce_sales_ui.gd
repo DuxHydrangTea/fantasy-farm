@@ -182,7 +182,11 @@ func _fit_layout() -> void:
 	body.add_theme_constant_override("separation", 4 if _compact else 12)
 	(%Main as HBoxContainer).add_theme_constant_override("separation", 8 if _compact else 16)
 	(%Sidebar as VBoxContainer).add_theme_constant_override("separation", 4 if _compact else 8)
-	(%BrowsePanel as PanelContainer).custom_minimum_size.x = 240 if _compact else 400
+	(%BrowsePanel as PanelContainer).custom_minimum_size.x = 200 if _compact else 400
+	var frame: StyleBox = root.theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBox
+	for edge: int in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
+		frame.set_content_margin(edge, 6 if _compact else 12)
+	panel.add_theme_stylebox_override("panel", frame)
 	(%Sidebar as VBoxContainer).custom_minimum_size.x = 0 if _compact else 320
 	heading.add_theme_font_size_override("font_size", 20 if _compact else 26)
 	balance_label.add_theme_font_size_override("font_size", 14 if _compact else 18)

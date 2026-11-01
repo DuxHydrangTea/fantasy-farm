@@ -109,6 +109,7 @@ func _build_requirements(entry: OrderDefinition) -> void:
 		row.add_theme_constant_override("separation", 8)
 		card.add_child(row)
 		var icon: TextureRect = TextureRect.new()
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		icon.texture = item.icon
 		icon.custom_minimum_size = Vector2(36, 36)
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

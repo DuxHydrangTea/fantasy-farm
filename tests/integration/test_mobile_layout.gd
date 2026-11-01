@@ -3,6 +3,7 @@ extends GutTest
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
 const MERCHANT: PackedScene = preload("res://scenes/characters/shop_merchant.tscn")
 const SALES: PackedScene = preload("res://scenes/ui/produce_sales.tscn")
+const STARTING_BALANCE: int = 1000000
 var viewport: SubViewport
 var player: FarmPlayer
 var merchant: ShopMerchant
@@ -16,6 +17,7 @@ func before_each() -> void:
 	add_child_autofree(viewport)
 	player = PLAYER.instantiate() as FarmPlayer
 	viewport.add_child(player)
+	player.wallet.set_balance(STARTING_BALANCE)
 	merchant = MERCHANT.instantiate() as ShopMerchant
 	viewport.add_child(merchant)
 	await wait_process_frames(5)
@@ -71,6 +73,7 @@ func test_safe_area_and_touch_targets_survive_high_density_and_resize_in_both_la
 				assert_eq(inventory.inspected_index, 2)
 				assert_false(inventory.details.text.is_empty())
 				_click(inventory.close_button as Control)
+				await wait_seconds(0.2)
 				assert_false(player.selection.is_menu_open())
 
 func test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize() -> void:
@@ -84,7 +87,7 @@ func test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize() -
 	var selected: ShopOffer = shop.selected
 	_click(controls.increase)
 	assert_eq(shop.quantity.value, 2.0)
-	assert_eq(player.wallet.balance, 1000)
+	assert_eq(player.wallet.balance, STARTING_BALANCE)
 	_resize(Vector2i(667, 375), Vector4.ZERO)
 	Language.set_language("vi")
 	await wait_process_frames(5)
@@ -94,8 +97,9 @@ func test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize() -
 	assert_gte(_pixels(controls.increase).size.y, 47.9)
 	assert_gte(_pixels(shop.buy_button).size.y, 47.9)
 	_click(shop.buy_button)
-	assert_eq(player.wallet.balance, 1000 - selected.price * 2)
+	assert_eq(player.wallet.balance, STARTING_BALANCE - selected.price * 2)
 	_click(shop.close_button)
+	await wait_seconds(0.2)
 	assert_false(player.selection.is_menu_open())
 
 func test_touch_bag_moves_to_last_slot_without_drag_or_spending_items() -> void:
@@ -114,9 +118,10 @@ func test_touch_bag_moves_to_last_slot_without_drag_or_spending_items() -> void:
 	assert_null(player.selection.inventory.get_slot_item(0))
 	assert_eq(player.selection.inventory.get_slot_item(63), item)
 	assert_eq(player.selection.inventory.count_item(item.item_id), 1)
-	assert_eq(player.wallet.balance, 1000)
+	assert_eq(player.wallet.balance, STARTING_BALANCE)
 	_click(inventory.move_button)
 	inventory.close()
+	await wait_seconds(0.2)
 	inventory.open()
 	await wait_process_frames(4)
 	scroll.scroll_vertical = 0

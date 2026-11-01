@@ -6,7 +6,7 @@ const SELECTED: Texture2D = preload("res://resources/ui/hotbar_selected.tres")
 const FOCUS: Texture2D = preload("res://resources/ui/soil_focus.tres")
 const HOTBAR_NORMAL: Texture2D = preload("res://assets/Ui/CozyHUD/slot_normal.png")
 const HOTBAR_SELECTED: Texture2D = preload("res://assets/Ui/CozyHUD/slot_selected.png")
-var _hotbar_frame: NinePatchRect
+var _hotbar_frame: Panel
 var hotbar_skin: bool = false
 var cozy_skin: bool = false
 var inventory: InventoryComponent
@@ -33,14 +33,10 @@ func _ready() -> void:
 	toggle_mode = true
 	focus_mode = Control.FOCUS_NONE
 	if framed:
-		_hotbar_frame = NinePatchRect.new()
+		_hotbar_frame = Panel.new()
 		_hotbar_frame.name = "HotbarFrame"
 		_hotbar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_hotbar_frame.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		_hotbar_frame.patch_margin_left = 8
-		_hotbar_frame.patch_margin_top = 8
-		_hotbar_frame.patch_margin_right = 8
-		_hotbar_frame.patch_margin_bottom = 8
 		add_child(_hotbar_frame)
 		_hotbar_frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		mouse_entered.connect(_refresh_hotbar_frame)
@@ -48,7 +44,9 @@ func _ready() -> void:
 		toggled.connect(_refresh_hotbar_frame.unbind(1))
 		_refresh_hotbar_frame()
 	_icon = TextureRect.new()
+	_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_icon.name = "Icon"
+	_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -60,6 +58,7 @@ func _ready() -> void:
 	_icon.offset_right = -margin
 	_icon.offset_bottom = -12.0 if compact else -18.0
 	_selection_frame = TextureRect.new()
+	_selection_frame.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_selection_frame.name = "SelectionFrame"
 	_selection_frame.texture = FOCUS
 	_selection_frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -91,6 +90,11 @@ func _ready() -> void:
 	_count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_count.add_theme_font_size_override("font_size", 18 if cozy_skin else 16 if compact else 20)
 	style_count(_count)
+	if framed:
+		_count.add_theme_color_override("font_color", FarmUI.INK)
+		_count.add_theme_constant_override("outline_size", 0)
+		_count.add_theme_constant_override("shadow_offset_x", 0)
+		_count.add_theme_constant_override("shadow_offset_y", 0)
 	var count_style: StyleBoxFlat = StyleBoxFlat.new()
 	count_style.bg_color = Color.TRANSPARENT
 	count_style.content_margin_left = 3
@@ -98,6 +102,7 @@ func _ready() -> void:
 	_count.add_theme_stylebox_override("normal", count_style)
 	add_child(_count)
 	_quality_badge = TextureRect.new()
+	_quality_badge.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_quality_badge.name = "QualityBadge"
 	_quality_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_quality_badge.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -137,11 +142,9 @@ func refresh() -> void:
 		else:
 			_quality_badge.hide()
 	_place_count()
-	tooltip_text = tr(item.display_name) if item != null else tr("Empty slot")
+	tooltip_text = ItemQuality.item_name(item, inventory.slot(slot_index).tiers)
 	if item != null and item.star_fruit:
 		tooltip_text += "\n" + tr("Star fruit: a separate Chef ingredient, not Gold quality.")
-	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
-		tooltip_text += "\n" + ItemQuality.summary(inventory.slot(slot_index).tiers)
 	if item != null and not item.description.is_empty():
 		tooltip_text += "\n" + tr(item.description)
 
@@ -180,13 +183,13 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	preview.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	set_drag_preview(preview)
-	return {"inventory": inventory, "slot": slot_index, "item_id": item.item_id}
+	return {"inventory": inventory, "slot": slot_index, "item_id": item.item_id, "tier": ItemQuality.stack_tier(inventory.slot(slot_index).tiers)}
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not data is Dictionary or data.get("inventory") != inventory or not data.get("slot") is int:
 		return false
 	var item: ItemDefinition = inventory.get_slot_item(data.slot)
-	return data.slot != slot_index and item != null and item.item_id == data.get("item_id")
+	return data.slot != slot_index and item != null and item.item_id == data.get("item_id") and data.get("tier", ItemQuality.stack_tier(inventory.slot(data.slot).tiers)) == ItemQuality.stack_tier(inventory.slot(data.slot).tiers)
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if _can_drop_data(_at_position, data):
@@ -200,7 +203,7 @@ func set_selected(value: bool) -> void:
 
 func _refresh_hotbar_frame() -> void:
 	if _hotbar_frame != null:
-		_hotbar_frame.texture = HOTBAR_SELECTED if button_pressed or is_hovered() else HOTBAR_NORMAL
+		_hotbar_frame.add_theme_stylebox_override("panel", FarmUI.box(Color("e6edd9") if button_pressed or is_hovered() else Color("f2e9d6"), 8, 0, FarmUI.GOOD if button_pressed else Color("dccba9")))
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():

@@ -1,0 +1,90 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_hotbar.gd
+[0m* test_feedback_changes_expire_without_input_and_keep_source_priority
+UI_CLOCK 5138 5193
+[31m    [Failed]:  [0m["Không thể tìm đường đến mục tiêu."] expected to equal ["Đã đặt tổ ong!"]:  Lower priority feedback remains until its own deadline
+      at line 84
+UI_CLOCK 5163 5193
+UI_CLOCK 5168 5193
+UI_CLOCK 5172 5193
+UI_CLOCK 5172 5193
+UI_CLOCK 5194 5193
+UI_CLOCK 5212 5393
+UI_CLOCK 5213 5393
+UI_CLOCK 5224 5393
+UI_CLOCK 5225 5393
+UI_CLOCK 5239 5393
+UI_CLOCK 5239 5393
+UI_CLOCK 5255 5393
+UI_CLOCK 5255 5393
+UI_CLOCK 5267 5393
+UI_CLOCK 5271 5393
+UI_CLOCK 5283 5393
+UI_CLOCK 5283 5393
+UI_CLOCK 5304 5393
+UI_CLOCK 5304 5393
+UI_CLOCK 5308 5393
+UI_CLOCK 5313 5393
+UI_CLOCK 5329 5393
+UI_CLOCK 5333 5393
+UI_CLOCK 5345 5393
+UI_CLOCK 5349 5393
+UI_CLOCK 5361 5393
+UI_CLOCK 5361 5393
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal ["Cuốc"]:  
+      at line 86
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal [""]:  
+      at line 87
+[31m    [Failed] [0m
+      at line 88
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal ["Cuốc"]:  
+      at line 92
+[31m    [Failed] [0m
+      at line 93
+[1m0/1 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_hotbar.gd
+[0m- test_feedback_changes_expire_without_input_and_keep_source_priority
+[31m    [Failed]:  [0m["Không thể tìm đường đến mục tiêu."] expected to equal ["Đã đặt tổ ong!"]:  Lower priority feedback remains until its own deadline
+          at line 84
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal ["Cuốc"]:  
+          at line 86
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal [""]:  
+          at line 87
+[31m    [Failed]:  [0m
+          at line 88
+[31m    [Failed]:  [0m["Đã đặt tổ ong!"] expected to equal ["Cuốc"]:  
+          at line 92
+[31m    [Failed]:  [0m
+          at line 93
+
+Totals
+------
+Scripts               1
+Tests                 1
+Passing Tests      none
+Failing Tests         1
+Asserts            4/10
+Time              1.099s
+
+
+Ran Tests matching "test_feedback_changes_expire_without_input_and_keep_source_priority"
+[31m---- 1 failing tests ----
+[0m

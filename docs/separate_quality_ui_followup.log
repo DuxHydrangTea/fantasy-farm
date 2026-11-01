@@ -1,0 +1,101 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+tests/integration/test_inventory_ui.gd
+[0m* test_inventory_opens_with_tab_or_i_and_closes_with_escape
+* test_balance_is_inside_inventory_and_updates_without_reopening
+* test_inventory_toggle_uses_remapped_action_without_hardcoded_i
+* test_inventory_does_not_consume_unrelated_shortcuts
+* test_modal_cancels_movement_and_blocks_world_input
+* test_opening_inventory_cancels_in_progress_tool_action
+[33m    --- Awaiting 0.8 seconds  ---
+[0m* test_drag_drop_updates_shared_inventory_and_hotbar
+* test_quantity_labels_refresh_in_bag_and_hotbar
+* test_assign_from_bag_to_hotbar_swaps_without_losing_items
+* test_close_cancels_hotbar_assignment_and_reenables_bag_slots
+* test_quality_items_are_separate_and_inspection_does_not_move_or_consume_produce
+* test_invalid_drag_payload_cannot_move_or_duplicate_items
+* test_font_theme_uses_configured_font
+* test_panel_fits_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+[1m14/14 passed.
+[0m[4m
+
+tests/integration/test_hotbar.gd
+[0m* test_hotbar_uses_vector_skin_and_real_tool_icons
+* test_click_selects_tool_without_movement_or_using_it
+* test_feedback_changes_expire_without_input_and_keep_source_priority
+* test_right_click_uses_selected_watering_can
+* test_booster_feedback_tracks_slot_and_live_translation_while_idle
+* test_space_after_hotbar_click_uses_selected_tool
+* test_number_keys_select_slots_without_using_tools
+* test_number_shortcut_then_space_uses_selected_tool
+* test_empty_slot_does_not_use_any_tool
+* test_wheel_keeps_selected_slot_and_does_not_move
+* test_wheel_over_hotbar_zooms_without_selecting_tool
+[33m    --- Awaiting 0.6 seconds  ---
+[0m* test_changing_selection_during_action_keeps_current_animation
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_busy_clicks_do_not_queue_another_action
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_hotbar_is_centered_and_inside_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+* test_deselected_hotbar_has_no_highlight_and_space_does_not_use_tools
+* test_escape_clears_selection_and_number_key_can_select_again
+[1m16/16 passed.
+[0m[4m
+
+tests/integration/test_separate_quality_items.gd
+[0m* test_all_catalog_produce_have_three_independent_quality_stacks
+* test_full_legacy_containers_split_without_loss_and_save_roundtrip
+* test_migration_reuses_empty_slots_and_rejects_corrupt_counts_atomically
+* test_storage_does_not_spend_another_quality_or_remove_units_that_do_not_fit
+* test_warehouse_card_click_selects_that_quality_and_only_matching_cards
+[1m5/5 passed.
+[0m[4m
+
+tests/unit/test_worker_compile.gd
+[0m* test_worker_world_bridge_compiles_and_instantiates
+* test_candidates_method_signature
+* test_crop_policy_accessible_from_bridge
+[1m3/3 passed.
+[0m[4m
+
+tests/integration/test_mobile_layout.gd
+[0m* test_safe_area_and_touch_targets_survive_high_density_and_resize_in_both_languages
+* test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize
+* test_touch_bag_moves_to_last_slot_without_drag_or_spending_items
+* test_sales_checkout_and_land_confirmation_fit_safe_landscape_height
+* test_pen_dashboard_fits_short_vietnamese_screen
+[1m5/5 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               5
+Tests                43
+Passing Tests        43
+Asserts            1612
+Time              41.365s
+
+
+[32m---- All tests passed! ----
+[0m

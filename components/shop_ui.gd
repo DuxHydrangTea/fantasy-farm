@@ -173,6 +173,7 @@ func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback:
 	card_body.offset_right = -8
 	card_body.offset_bottom = -10
 	var icon: TextureRect = TextureRect.new()
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.custom_minimum_size = Vector2(32, 32) if _compact else Vector2(56, 56)
 	icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -369,6 +370,7 @@ func present_product(texture: Texture2D, title: String, subtitle: String) -> voi
 
 func _fit_layout() -> void:
 	var view: Vector2 = root.size
+	var short: bool = view.y < 330 and not MobileLayout.is_touch(get_viewport())
 	_compact = view.x < 800.0 or view.y < 500.0 or MobileLayout.is_touch(get_viewport())
 	panel.custom_minimum_size = Vector2(minf(1100.0, maxf(0.0, view.x - 32.0)), minf(620.0, maxf(0.0, view.y - (16.0 if _compact else 24.0))))
 	body.add_theme_constant_override("separation", 4 if _compact else 12)
@@ -378,7 +380,17 @@ func _fit_layout() -> void:
 	balance_label.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	quantity_label.visible = not _compact and category != UPGRADES
 	quantity_label.text = "Quantity"
-	quantity.custom_minimum_size = Vector2(60, 48)
+	quantity.custom_minimum_size = Vector2(60, 36 if short else 48)
+	buy_button.custom_minimum_size.y = 36 if short else 48
+	close_button.custom_minimum_size.y = 36 if short else 48
+	if short:
+		var style: StyleBox = panel.get_theme_stylebox("panel").duplicate() as StyleBox
+		for side: int in [SIDE_LEFT, SIDE_RIGHT, SIDE_TOP, SIDE_BOTTOM]:
+			style.set_content_margin(side, 8)
+		panel.add_theme_stylebox_override("panel", style)
+	else:
+		panel.remove_theme_stylebox_override("panel")
+	(categories.get_parent() as ScrollContainer).custom_minimum_size.y = 48 if short else 62
 	product_icon.custom_minimum_size = Vector2(32, 32) if _compact else Vector2(64, 64)
 	product_name.add_theme_font_size_override("font_size", 18 if _compact else 22)
 	product_type.add_theme_font_size_override("font_size", 16 if _compact else 18)
@@ -391,6 +403,7 @@ func _fit_layout() -> void:
 	var full_titles: Array[String] = ["Crop seeds", "Farm supplies", "Flower seeds", "Animals", "Sell animals", "Tool upgrades", "Buy tools"]
 	for index: int in range(categories.get_child_count()):
 		var tab: Button = categories.get_child(index) as Button
+		tab.custom_minimum_size.y = 36 if short else 48
 		var id: int = int(tab.get_meta("category_id", index))
 		tab.text = tr(short_titles[id] if _compact else full_titles[id])
 		tab.tooltip_text = tr(full_titles[id])

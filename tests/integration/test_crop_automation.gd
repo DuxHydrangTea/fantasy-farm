@@ -3,6 +3,7 @@ const WORLD: PackedScene = preload("res://world/main_world.tscn")
 const SEED: ItemDefinition = preload("res://items/seeds/carrot_seed.tres")
 const OTHER: ItemDefinition = preload("res://items/seeds/radish_seed.tres")
 const FERTILIZER: ItemDefinition = preload("res://items/boosters/crop_fertilizer.tres")
+const FIXED_TIME: float = 1793155000.0
 var world: FarmWorld
 var service: WorkerService
 var source: InventoryComponent
@@ -15,6 +16,8 @@ var cell: Vector2i = Vector2i(48, 30)
 func before_each() -> void:
 	original_clock = TimeManager.clock_source
 	original_clock_floor = TimeManager._last_timestamp
+	TimeManager._last_timestamp = FIXED_TIME
+	TimeManager.clock_source = func() -> float: return FIXED_TIME
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
@@ -27,7 +30,17 @@ func before_each() -> void:
 	var manual_clock: Array[float] = clock
 	world.farming.time_manager.clock_source = func() -> float: return manual_clock[0]
 	world.farming.restore_soil([])
+	# Crop automation assertions must not race random pest rolls or unrelated
+	# higher-priority ranch tasks. Care/animal integration has dedicated suites.
+	world.farming.crop_planted.connect(func(_cell: Vector2i, crop: Crop) -> void:
+		crop.conditions.pest_roll = 1.0
+		crop.conditions.weed_roll = 1.0
+		crop.conditions.yield_roll = 0.5)
 	service = world.workers
+	for pen: AnimalPen in service.bridge.pens():
+		for child: Node in pen.get_children():
+			if child is AnimalTrough:
+				child.stock = child.capacity
 	source = world.storages.inventory("farm_supply_storage")
 	assert_eq(service.hire("crop"), "")
 	_limit([cell, cell + Vector2i.RIGHT])

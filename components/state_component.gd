@@ -120,6 +120,8 @@ func click_world(point: Vector2) -> void:
 		return
 	if hive_placement != null and hive_placement.click(point):
 		return
+	if boosters != null and boosters.click_medicine(point):
+		return
 	if interactions != null and interactions.click(point):
 		return
 	if navigation != null:
@@ -161,6 +163,8 @@ func use_selected_tool(requested_action: StringName = &"") -> bool:
 	if boosters != null and requested_action.is_empty():
 		var booster_action: StringName = boosters.prepare_action()
 		if not booster_action.is_empty():
+			if booster_action == &"medicine_used":
+				return true
 			active_action = booster_action
 			transition_to(State.TOOL)
 			return true

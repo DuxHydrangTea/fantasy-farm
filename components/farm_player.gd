@@ -66,3 +66,7 @@ func _enter_tree() -> void:
 	mobile_controls.name = "MobileControls"
 	mobile_controls.player = self
 	add_child(mobile_controls)
+	var settings: Node = preload("res://components/farm_settings.gd").new()
+	settings.name = "FarmSettings"
+	settings.player = self
+	add_child(settings)

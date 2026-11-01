@@ -52,10 +52,12 @@ func refresh() -> void:
 		return
 	var goal: ObjectiveDefinition = world.objectives.progress.active()
 	var id: String = String(goal.objective_id) if goal != null else ""
-	var hud: HBoxContainer = world.objective_ui.hud
-	button.position = hud.position + Vector2(0, hud.size.y + 4)
-	button.size = Vector2(hud.size.x, 74)
+	var card: PanelContainer = world.objective_ui.hud_card
+	button.position = card.position + Vector2(0, card.size.y + 8)
 	var free_bottom: float = world.objective_ui.root.size.y - 128
+	var height: float = minf(74, maxf(48, free_bottom - button.position.y))
+	button.size = Vector2(card.size.x, height)
+	label.max_lines_visible = 2 if height < 74 else 3
 	var portrait: bool = MobileLayout.is_touch(get_viewport()) and world.objective_ui.root.size.y > world.objective_ui.root.size.x
 	button.visible = not portrait and not id.is_empty() and world.tutorial.capture().enabled and not world.tutorial.seen(id) and not world.player.selection.is_menu_open() and button.position.y + button.size.y <= free_bottom
 	if not button.visible:

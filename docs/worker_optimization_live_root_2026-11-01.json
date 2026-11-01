@@ -1,0 +1,125 @@
+{
+	"display": "Windows",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"live_seconds_per_case": 18,
+	"manual_frames_per_case": 180,
+	"max_fps": 0,
+	"save_bound": false,
+	"scenarios": [
+		{
+			"completed_paths": 26,
+			"displaced_workers": 15,
+			"failed_paths": 0,
+			"fps": 140.40236575488,
+			"frames_over_33ms": 3,
+			"frames_over_50ms": 3,
+			"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+			"mode": "live",
+			"pending_paths": 0,
+			"planted_crops": 18,
+			"planting": true,
+			"renderer": "forward_plus",
+			"seconds": 18.012515,
+			"shared_caches": 1,
+			"stats": {
+				"frame_ms": {
+					"max": 177.376,
+					"mean": 7.12020482404111,
+					"p50": 6.9,
+					"p95": 9.788,
+					"p99": 11.415
+				},
+				"gpu_ms": {
+					"max": 3.83400011062622,
+					"mean": 0.530880189704395,
+					"p50": 0.423000007867813,
+					"p95": 1.40900003910065,
+					"p99": 1.86699998378754
+				},
+				"physics_ms": {
+					"max": 2147.221,
+					"mean": 4.40844642151045,
+					"p50": 3.879,
+					"p95": 6.055,
+					"p99": 6.055
+				},
+				"process_ms": {
+					"max": 71.437,
+					"mean": 14.1151308817716,
+					"p50": 9.772,
+					"p95": 71.437,
+					"p99": 71.437
+				}
+			},
+			"tasks_at_end": {
+				"fetch_water": 6,
+				"plant": 9
+			},
+			"vsync": 1,
+			"workers": 15
+		},
+		{
+			"completed_paths": 34,
+			"displaced_workers": 15,
+			"failed_paths": 0,
+			"fps": 142.129484014432,
+			"frames_over_33ms": 1,
+			"frames_over_50ms": 1,
+			"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+			"mode": "live",
+			"pending_paths": 0,
+			"planted_crops": 0,
+			"planting": false,
+			"renderer": "forward_plus",
+			"seconds": 18.004708,
+			"shared_caches": 1,
+			"stats": {
+				"frame_ms": {
+					"max": 211.496,
+					"mean": 7.03513169206721,
+					"p50": 6.704,
+					"p95": 9.72,
+					"p99": 10.923
+				},
+				"gpu_ms": {
+					"max": 4.12900018692017,
+					"mean": 0.568508011334069,
+					"p50": 0.44200000166893,
+					"p95": 1.57400000095367,
+					"p99": 2.00300002098084
+				},
+				"physics_ms": {
+					"max": 7.517,
+					"mean": 3.49617975771787,
+					"p50": 3.997,
+					"p95": 5.779,
+					"p99": 5.779
+				},
+				"process_ms": {
+					"max": 1139.242,
+					"mean": 8.95498749511507,
+					"p50": 7.873,
+					"p95": 10.178,
+					"p99": 10.178
+				}
+			},
+			"tasks_at_end": {
+				"fetch_water": 5,
+				"patrol": 9,
+				"water_trough": 1
+			},
+			"vsync": 1,
+			"workers": 15
+		}
+	]
+}

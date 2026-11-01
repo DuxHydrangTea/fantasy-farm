@@ -10,6 +10,7 @@ var _debug_title: Label
 var _time_title: Label
 var _weather_title: Label
 var _last_timestamp: float = 0.0
+var _debug_visible: bool = false
 
 func _ready() -> void:
 	layer = 11
@@ -31,13 +32,22 @@ func _ready() -> void:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.theme = preload("res://resources/ui/cozy_hud/theme.tres")
 	panel.theme_type_variation = &"WeatherPanel"
+	FarmUI.apply(panel)
 	column.add_child(panel)
 	label = Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_size_override("font_size", 20)
-	panel.add_child(label)
+	var clock_row: HBoxContainer = HBoxContainer.new()
+	panel.add_child(clock_row)
+	var sun: Label = Label.new()
+	sun.text = "\u2600"
+	sun.add_theme_font_size_override("font_size", 30)
+	sun.add_theme_color_override("font_color", Color("b78537"))
+	clock_row.add_child(sun)
+	clock_row.add_child(label)
 	if OS.is_debug_build() and not MobileLayout.is_touch(get_viewport()):
 		_build_debug_bar(column, panel.theme)
+		debug_toggle.hide()
 
 func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
 	debug_toggle = Button.new()
@@ -54,7 +64,7 @@ func _build_debug_bar(column: VBoxContainer, theme: Theme) -> void:
 	debug_bar.theme = theme
 	debug_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	debug_bar.hide()
-	var style: StyleBoxTexture = theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBoxTexture
+	var style: StyleBox = theme.get_stylebox("panel", "PanelContainer").duplicate() as StyleBox
 	style.content_margin_left = 8
 	style.content_margin_right = 8
 	style.content_margin_top = 6
@@ -118,7 +128,7 @@ func _debug_button(row: HBoxContainer) -> Button:
 func _refresh_debug_bar() -> void:
 	if debug_bar == null:
 		return
-	debug_toggle.visible = not MobileLayout.is_touch(get_viewport())
+	debug_toggle.visible = _debug_visible and not MobileLayout.is_touch(get_viewport())
 	debug_bar.visible = debug_toggle.visible and debug_toggle.button_pressed
 	debug_toggle.text = tr("Debug tools")
 	_debug_title.text = tr("Debug tools")
@@ -138,9 +148,18 @@ func refresh(timestamp: float) -> void:
 	_last_timestamp = timestamp
 	var minutes: int = floori(fposmod(timestamp + WeatherSchedule.UTC_OFFSET, 86400.0) / 60.0)
 	var titles: Array[String] = [tr("Sunny"), tr("Rainy"), tr("Cloudy"), tr("Windy")]
-	label.text = "%02d:%02d · %s" % [minutes / 60, minutes % 60, titles[manager.current_weather]]
+	label.text = "%02d:%02d\n%s" % [minutes / 60, minutes % 60, titles[manager.current_weather]]
 	_refresh_debug_bar()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		refresh(_last_timestamp)
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if debug_toggle != null and event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_F3:
+		_debug_visible = not _debug_visible
+		_refresh_debug_bar()
+		if not debug_toggle.visible:
+			debug_toggle.set_pressed_no_signal(false)
+			_toggle_debug_panel(false)
+		get_viewport().set_input_as_handled()

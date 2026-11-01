@@ -1,0 +1,83 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+tests/integration/test_small_window_ui.gd
+[0m* test_small_window_has_readable_scale_contained_menu_and_working_transformed_clicks
+[31m    [Failed]:  [0m[P: (16.01423, 0.531379), S: (467.9715, 281.0)]
+      at line 50
+* test_inventory_button_and_balance_fit_and_click_in_both_languages
+* test_resize_and_language_keep_checkout_and_inventory_scrolls_inside_small_window
+* test_hover_inspector_never_overlaps_weather_or_hotbar_after_resize_or_translation
+[1m3/4 passed.
+[0m[4m
+
+tests/integration/test_onboarding.gd
+[0m* test_help_and_skip_do_not_complete_or_reward_goals_and_modal_excludes_bag
+* test_context_follows_real_success_and_hint_timer_never_completes_gameplay
+[31m    [Failed]:  [0mHint must fit below the objective before it can count as viewed: [P: (16.0, 259.0), S: (340.0, 48.0)]
+      at line 48
+[31m    [Failed] [0m
+      at line 52
+[31m    [Failed] [0m
+      at line 57
+[31m    [Failed] [0m
+      at line 58
+* test_supply_audit_and_one_time_recovery_with_save_load
+* test_migration_seen_preferences_and_corrupt_preflight
+* test_recovery_blocked_by_planted_crops_or_a_full_bag
+* test_help_safe_area_targets_and_long_status_in_en_vi_at_densities_one_and_three
+[1m5/6 passed.
+[0m[4m
+
+tests/integration/test_ui_completion.gd
+[0m* test_hud_groups_fit_and_tutorial_does_not_cover_objective_in_both_languages
+* test_wallet_is_compact_but_tooltip_keeps_exact_value_and_locale
+* test_inventory_filters_do_not_move_or_spend_items_and_empty_result_recovers
+* test_dialogue_stays_inside_view_at_left_and_right_edges
+* test_settings_persist_real_options_and_share_modal_lock
+* test_save_status_uses_a_single_bounded_panel_and_sleeps_when_idle
+[1m6/6 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+tests/integration/test_small_window_ui.gd
+[0m- test_small_window_has_readable_scale_contained_menu_and_working_transformed_clicks
+[31m    [Failed]:  [0m[P: (16.01423, 0.531379), S: (467.9715, 281.0)]
+          at line 50
+[4m
+tests/integration/test_onboarding.gd
+[0m- test_context_follows_real_success_and_hint_timer_never_completes_gameplay
+[31m    [Failed]:  [0mHint must fit below the objective before it can count as viewed: [P: (16.0, 259.0), S: (340.0, 48.0)]
+          at line 48
+[31m    [Failed]:  [0m
+          at line 52
+[31m    [Failed]:  [0m
+          at line 57
+[31m    [Failed]:  [0m
+          at line 58
+
+Totals
+------
+Scripts               3
+Tests                16
+Passing Tests        14
+Failing Tests         2
+Asserts           551/556
+Time              11.725s
+
+
+[31m---- 2 failing tests ----
+[0m

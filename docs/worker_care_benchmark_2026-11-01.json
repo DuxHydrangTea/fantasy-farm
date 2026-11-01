@@ -1,0 +1,67 @@
+{
+	"display": "Windows",
+	"engine": {
+		"build": "official",
+		"hash": "a13da4feb8d8aefc283c3763d33a2f170a18d541",
+		"hex": 263937,
+		"major": 4,
+		"minor": 7,
+		"patch": 1,
+		"status": "stable",
+		"string": "4.7.1-stable (official)",
+		"timestamp": 0
+	},
+	"save_bound": false,
+	"scenarios": [
+		{
+			"actions_seen": [],
+			"crop_count": 64,
+			"cured": 0,
+			"fps": 141.96830557578,
+			"frames": 2840,
+			"moved": 0,
+			"p95_ms": 8.722,
+			"scenario": "baseline",
+			"treated": {
+				"clear_weeds": 0,
+				"treat_pests": 0
+			},
+			"worst_ms": 188.336
+		},
+		{
+			"actions_seen": [],
+			"crop_count": 64,
+			"cured": 0,
+			"fps": 134.952429268683,
+			"frames": 2700,
+			"moved": 15,
+			"p95_ms": 10.538,
+			"scenario": "missing_supplies",
+			"treated": {
+				"clear_weeds": 0,
+				"treat_pests": 0
+			},
+			"worst_ms": 165.964
+		},
+		{
+			"actions_seen": [
+				"treat_pests",
+				"cure_animal",
+				"treat_weeds"
+			],
+			"crop_count": 64,
+			"cured": 3,
+			"fps": 101.288534137936,
+			"frames": 2026,
+			"moved": 15,
+			"p95_ms": 14.074,
+			"scenario": "care_supplied",
+			"treated": {
+				"clear_weeds": 48,
+				"treat_pests": 48
+			},
+			"worst_ms": 177.605
+		}
+	],
+	"seconds_per_case": 20
+}

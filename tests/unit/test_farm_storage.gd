@@ -76,6 +76,7 @@ func test_dto_roundtrip_capacity_and_reject_bad_items_counts_or_missing_storage(
 	assert_eq(service.inventory(PRODUCE).count_item(APPLE.item_id), 6)
 
 func test_selected_quality_moves_only_that_tier_and_clamps_to_available() -> void:
+	bag.restore_slots([bag.slot(0), bag.slot(1), {"item": null, "count": 0, "tiers": [0, 0, 0]}])
 	bag.add(APPLE, 8, 0)
 	bag.add(APPLE, 5, 1)
 	bag.add(APPLE, 3, 2)
@@ -94,11 +95,11 @@ func test_selected_quality_moves_only_that_tier_and_clamps_to_available() -> voi
 func test_quality_transfer_with_full_target_preserves_other_tiers() -> void:
 	var target: InventoryComponent = service.inventory(PRODUCE)
 	target.slot_count = 1
-	target.add(APPLE, APPLE.get_stack_limit() - 2)
+	target.add(APPLE, APPLE.get_stack_limit() - 2, 2)
 	bag.add(APPLE, 4, 0)
 	bag.add(APPLE, 7, 2)
 	assert_eq(service.transfer(PRODUCE, bag, APPLE.item_id, 7, true, 2).moved, 2)
-	assert_eq(target.count_item(APPLE.item_id, 2), 2)
+	assert_eq(target.count_item(APPLE.item_id, 2), APPLE.get_stack_limit())
 	assert_eq(bag.count_item(APPLE.item_id, 0), 4)
 	assert_eq(bag.count_item(APPLE.item_id, 2), 5)
 	assert_false(service.transfer(PRODUCE, bag, APPLE.item_id, 1, true, 2).ok)

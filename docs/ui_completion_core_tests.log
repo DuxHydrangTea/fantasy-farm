@@ -1,0 +1,87 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_hotbar.gd
+[0m* test_hotbar_uses_nine_patch_skin_and_real_tool_icons
+* test_click_selects_tool_without_movement_or_using_it
+* test_feedback_changes_expire_without_input_and_keep_source_priority
+* test_right_click_uses_selected_watering_can
+* test_booster_feedback_tracks_slot_and_live_translation_while_idle
+* test_space_after_hotbar_click_uses_selected_tool
+* test_number_keys_select_slots_without_using_tools
+* test_number_shortcut_then_space_uses_selected_tool
+* test_empty_slot_does_not_use_any_tool
+* test_wheel_keeps_selected_slot_and_does_not_move
+* test_wheel_over_hotbar_zooms_without_selecting_tool
+[33m    --- Awaiting 0.6 seconds  ---
+[0m* test_changing_selection_during_action_keeps_current_animation
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_busy_clicks_do_not_queue_another_action
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_hotbar_is_centered_and_inside_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+[1m14/14 passed.
+[0m[4m
+
+res://tests/integration/test_worker_ui.gd
+[0m* test_care_priority_low_stock_and_per_worker_reason
+* test_unified_menu_shows_one_team_with_all_controls
+* test_unified_badge_and_pause_text_in_both_languages
+* test_world_badge_stays_compact_and_task_detail_only_on_interaction
+* test_crop_settings_pause_and_shared_supply_counts_use_real_models
+* test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial
+* test_locked_hiring_and_insufficient_rehire_funds_disable_action
+* test_compact_and_confirmation_keep_actions_in_safe_area_and_restore_columns
+* test_recovery_actions_only_appear_for_remaining_old_basket_contents
+* test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker
+* test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view
+* test_crop_roster_displays_five_rows_and_selection_updates_details_without_rebuilding
+* test_crop_roster_empty_hint_and_other_role_portrait_visibility
+* test_restored_slide_and_stable_worker_buttons
+[31m    [Failed]:  [0m[12.0] expected to equal [720.0]:  
+      at line 288
+[1m13/14 passed.
+[0m[4m
+
+res://tests/integration/test_objective_ui.gd
+[0m* test_modal_exclusion_claim_once_and_load_closes_page
+* test_tracking_collapse_language_and_menu_exclusion
+* test_v12_migrates_preferences_and_preserves_progress
+* test_preferences_and_ready_state_restore_without_completion_replay
+* test_phone_safe_area_and_targets_in_both_languages_and_densities
+[1m5/5 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_worker_ui.gd
+[0m- test_restored_slide_and_stable_worker_buttons
+[31m    [Failed]:  [0m[12.0] expected to equal [720.0]:  
+          at line 288
+
+Totals
+------
+Scripts               3
+Tests                33
+Passing Tests        32
+Failing Tests         1
+Asserts           412/413
+Time              37.857s
+
+
+[31m---- 1 failing tests ----
+[0m

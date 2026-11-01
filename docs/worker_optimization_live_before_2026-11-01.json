@@ -1,0 +1,175 @@
+{
+	"display": "Windows",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"live_seconds_per_case": 18,
+	"manual_frames_per_case": 180,
+	"max_fps": 0,
+	"save_bound": false,
+	"scenarios": [
+		{
+			"completed_paths": -1,
+			"displaced_workers": 0,
+			"failed_paths": -1,
+			"fps": 142.362543909235,
+			"frames_over_33ms": 2,
+			"frames_over_50ms": 2,
+			"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+			"mode": "live",
+			"pending_paths": -1,
+			"planted_crops": 0,
+			"planting": true,
+			"renderer": "forward_plus",
+			"seconds": 18.003329,
+			"shared_caches": 0,
+			"stats": {
+				"frame_ms": {
+					"max": 166.559,
+					"mean": 7.02380374561061,
+					"p50": 6.988,
+					"p95": 8.795,
+					"p99": 9.374
+				},
+				"gpu_ms": {
+					"max": 4.41200017929077,
+					"mean": 0.521779555857902,
+					"p50": 0.41100001335144,
+					"p95": 1.42799997329712,
+					"p99": 2.07699990272522
+				},
+				"physics_ms": {
+					"max": 1517.305,
+					"mean": 2.25714163090125,
+					"p50": 1.332,
+					"p95": 3.837,
+					"p99": 3.837
+				},
+				"process_ms": {
+					"max": 39.435,
+					"mean": 8.741676160749,
+					"p50": 7.578,
+					"p95": 19.313,
+					"p99": 19.313
+				}
+			},
+			"tasks_at_end": {},
+			"vsync": 1,
+			"workers": 0
+		},
+		{
+			"completed_paths": -1,
+			"displaced_workers": 0,
+			"failed_paths": -1,
+			"fps": 0.201807867528149,
+			"frames_over_33ms": 5,
+			"frames_over_50ms": 5,
+			"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+			"mode": "live",
+			"pending_paths": -1,
+			"planted_crops": 9,
+			"planting": true,
+			"renderer": "forward_plus",
+			"seconds": 24.77604,
+			"shared_caches": 0,
+			"stats": {
+				"frame_ms": {
+					"max": 16798.55,
+					"mean": 4953.9464,
+					"p50": 2128.546,
+					"p95": 16798.55,
+					"p99": 16798.55
+				},
+				"gpu_ms": {
+					"max": 3.04500007629395,
+					"mean": 1.02520000301301,
+					"p50": 0.695999979972839,
+					"p95": 3.04500007629395,
+					"p99": 3.04500007629395
+				},
+				"physics_ms": {
+					"max": 39.733,
+					"mean": 12.7346,
+					"p50": 6.476,
+					"p95": 39.733,
+					"p99": 39.733
+				},
+				"process_ms": {
+					"max": 16733.125,
+					"mean": 5437.781,
+					"p50": 4098.543,
+					"p95": 16733.125,
+					"p99": 16733.125
+				}
+			},
+			"tasks_at_end": {
+				"fetch_water": 6,
+				"till": 6,
+				"water_crop": 3
+			},
+			"vsync": 1,
+			"workers": 15
+		},
+		{
+			"completed_paths": -1,
+			"displaced_workers": 15,
+			"failed_paths": -1,
+			"fps": 125.51183125259,
+			"frames_over_33ms": 4,
+			"frames_over_50ms": 3,
+			"gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+			"mode": "live",
+			"pending_paths": -1,
+			"planted_crops": 0,
+			"planting": false,
+			"renderer": "forward_plus",
+			"seconds": 18.014237,
+			"shared_caches": 0,
+			"stats": {
+				"frame_ms": {
+					"max": 284.018,
+					"mean": 7.96680185758515,
+					"p50": 6.361,
+					"p95": 13.924,
+					"p99": 18.602
+				},
+				"gpu_ms": {
+					"max": 4.13399982452393,
+					"mean": 0.521460858106528,
+					"p50": 0.41100001335144,
+					"p95": 1.42599999904633,
+					"p99": 2.05599999427795
+				},
+				"physics_ms": {
+					"max": 61.242,
+					"mean": 11.5593246351172,
+					"p50": 8.276,
+					"p95": 33.395,
+					"p99": 61.242
+				},
+				"process_ms": {
+					"max": 3418.296,
+					"mean": 71.6609960194606,
+					"p50": 7.775,
+					"p95": 17.624,
+					"p99": 3418.296
+				}
+			},
+			"tasks_at_end": {
+				"fetch_water": 2,
+				"patrol": 9,
+				"water_trough": 4
+			},
+			"vsync": 1,
+			"workers": 15
+		}
+	]
+}

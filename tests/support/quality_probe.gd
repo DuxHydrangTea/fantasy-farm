@@ -149,8 +149,8 @@ func _run() -> void:
 			produce_slot = i
 	_check(produce_slot >= 0, "Produce has a bag slot")
 	await _touch_click(bag_ui.buttons[produce_slot])
-	_check(bag_ui.quality_panel.is_visible_in_tree(), "Touch shows inline three-tier breakdown")
-	_check(bag_ui._quality_rows[2].text.contains(str(amount)), "Gold count shown in breakdown")
+	_check(not bag_ui.quality_panel.is_visible_in_tree(), "Separate quality item does not show mixed-tier breakdown")
+	_check(bag_ui.item_name.text.contains(ItemQuality.label(2)), "Gold quality shown in item name")
 	await _capture("quality-bag-touch")
 	bag_ui.close()
 	var buyer: ShopMerchant = world.get_node("ProduceBuyer") as ShopMerchant

@@ -1,0 +1,34 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_specialized_shops.gd
+[0m* test_every_live_shop_offer_has_a_visible_card_and_can_be_purchased
+[1m1/1 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               1
+Tests                 1
+Passing Tests         1
+Asserts             259
+Time              1.195s
+
+
+Ran Tests matching "test_every_live_shop_offer"
+[32m---- All tests passed! ----
+[0m

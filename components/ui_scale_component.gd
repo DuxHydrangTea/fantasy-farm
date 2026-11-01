@@ -3,9 +3,9 @@ extends Node
 ## Canvas-only scale: preserve desktop layout proportions and keep touch UI readable.
 ## Roots use virtual coordinates; engine input follows the same CanvasLayer transform.
 signal layout_changed(virtual_size: Vector2)
-const MINIMUM_VIEW: Vector2 = Vector2(640, 360)
+const MINIMUM_VIEW: Vector2 = Vector2(480, 270)
 # At the original 1280x720 window, the 1920x1080 viewport scales by 2/3.
-const MAX_DESKTOP_COMPENSATION: float = 1.5
+const MAX_DESKTOP_COMPENSATION: float = 4.0
 var canvas: CanvasLayer
 var root: Control
 var _last_view_size: Vector2
@@ -15,6 +15,7 @@ var _last_point_scale: float = 1.0
 var _last_touch: bool = false
 
 static func attach(layer: CanvasLayer, control: Control) -> UIScaleComponent:
+	FarmUI.apply(control)
 	var component: UIScaleComponent = UIScaleComponent.new()
 	component.canvas = layer
 	component.root = control
@@ -23,6 +24,7 @@ static func attach(layer: CanvasLayer, control: Control) -> UIScaleComponent:
 	return component
 
 func _ready() -> void:
+	add_to_group(&"ui_scales")
 	root.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 	get_viewport().size_changed.connect(refresh)
 	refresh()
@@ -56,6 +58,8 @@ func refresh() -> void:
 	var factor: float = maxf(1.0, minf(MAX_DESKTOP_COMPENSATION, minf(1.0 / stretch, minf(view.x / MINIMUM_VIEW.x, view.y / MINIMUM_VIEW.y))))
 	if _last_touch:
 		factor = _last_point_scale / stretch
+	else:
+		factor = minf(factor * FarmUI.ui_scale, minf(view.x / MINIMUM_VIEW.x, view.y / MINIMUM_VIEW.y))
 	var virtual_size: Vector2 = view / factor
 	var origin: Vector2 = Vector2(_last_insets.x, _last_insets.y)
 	virtual_size -= origin + Vector2(_last_insets.z, _last_insets.w)

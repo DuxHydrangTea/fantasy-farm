@@ -24,6 +24,7 @@ var _team_ids: Array[String] = []
 @onready var confirm_button: Button = %ConfirmDismiss
 @onready var cancel_button: Button = %CancelDismiss
 var wait_care_button: Button
+var priority_choice: OptionButton
 var _confirm: bool = false
 var _dismiss_id: String = ""
 var _elapsed: float = 0.0
@@ -35,7 +36,7 @@ func _flush_refresh() -> void:
 	_refresh()
 const TITLES: Dictionary = {"crop": "Worker"}
 const DESCRIPTIONS: Dictionary = {"crop": "Waters, harvests and tends crops, orchards and animal pens."}
-const TASKS: Dictionary = {"till": "Tilling soil", "plant": "Planting crops", "fertilize": "Fertilizing crops", "water": "Watering", "water_crop": "Watering", "feed": "Refilling feed", "harvest": "Harvesting", "pickup": "Collecting produce", "patrol": "Patrolling the work area"}
+const TASKS: Dictionary = WorkerRole.TASK_CAPTIONS
 
 func _ready() -> void:
 	root = %Root
@@ -48,6 +49,14 @@ func _ready() -> void:
 	wait_care_button.custom_minimum_size.y = 48
 	pause_crop_button.get_parent().add_child(wait_care_button)
 	wait_care_button.pressed.connect(_toggle_wait_for_care)
+	priority_choice = OptionButton.new()
+	priority_choice.name = "WorkPriority"
+	priority_choice.custom_minimum_size.y = 48
+	priority_choice.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for caption: String in ["Balanced priorities", "Care first", "Harvest first"]:
+		priority_choice.add_item(tr(caption))
+	pause_crop_button.get_parent().add_child(priority_choice)
+	priority_choice.item_selected.connect(_priority_selected)
 	visit_started.connect(_visit)
 	models_changed.connect(_refresh)
 	root.resized.connect(_fit)
@@ -173,6 +182,11 @@ func _refresh() -> void:
 	(%Employment as Label).add_theme_color_override("font_color", Color("49663a") if employed and bool(row.active) and not paused else Color("91602b"))
 	(%RoleDescription as Label).text = tr(str(DESCRIPTIONS[role]))
 	var state: CropAutomationState = service.crop_automation
+	var priority_captions: Array[String] = ["Balanced priorities", "Care first", "Harvest first"]
+	for index: int in range(priority_captions.size()):
+		priority_choice.set_item_text(index, tr(priority_captions[index]))
+	priority_choice.select(WorkerRole.PRIORITY_MODES.find(state.priority_mode))
+	priority_choice.disabled = not team_employed or not available
 	auto_plant_button.set_pressed_no_signal(state.auto_plant)
 	auto_fertilize_button.set_pressed_no_signal(state.auto_fertilize)
 	auto_plant_button.text = tr("On" if state.auto_plant else "Off")
@@ -228,9 +242,8 @@ func _roster_task(row: Dictionary) -> String:
 		return tr("Resting")
 	if world.workers.crop_automation.paused:
 		return tr("Paused")
-	if row.task.is_empty() or row.task.kind == "patrol":
-		return tr("Waiting for work")
-	return tr(str(TASKS.get(row.task.kind, "Working")))
+	var actor: WorkerActor = world.workers.actor_for(String(row.id))
+	return tr(WorkerRole.task_caption(row.task, actor.global_position if actor != null else WorkerRole.point(row.position)))
 
 func _refresh_team(rows: Array[Dictionary]) -> void:
 	(%TeamNote as Label).visible = true
@@ -242,9 +255,17 @@ func _refresh_team(rows: Array[Dictionary]) -> void:
 	ordered.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.slot) < int(b.slot))
 	var ids: Array[String] = []
 	var active: int = 0
+	var waiting: int = 0
+	var attention: int = 0
 	for row: Dictionary in ordered:
 		ids.append(row.id)
-		active += 1 if world.workers.running(row) else 0
+		if world.workers.running(row):
+			if row.task.is_empty() or row.task.get("kind", "") == "patrol":
+				waiting += 1
+			else:
+				active += 1
+			if world.workers.waiting_reasons.has(String(row.id)):
+				attention += 1
 	if ids != _team_ids:
 		# Rebuild only when employment changes, preserving focus and scroll on refresh.
 		for child: Node in team_list.get_children():
@@ -270,8 +291,8 @@ func _refresh_team(rows: Array[Dictionary]) -> void:
 		button.text = tr("Worker #{number}").format({"number": world.workers.worker_number(row.id)}) + "\n" + _roster_task(row)
 		button.tooltip_text = _worker_title(row) + "\n" + _task_text(world.workers, row, true, world.workers.crop_automation.paused)
 		button.set_pressed_no_signal(row.id == selected_worker_id)
-	var summary_text: String = "{active} working · {resting} resting\n{coins}/day" if _compact else "Working: {active} · Resting: {resting}\nTeam daily wage: {coins}"
-	team_summary.text = tr(summary_text).format({"active": active, "resting": rows.size() - active, "coins": _money(rows.size() * int(WorkerRole.WAGES[role]))})
+	team_summary.add_theme_font_size_override("font_size", 14)
+	team_summary.text = tr("Busy {active} · Idle {waiting} · Rest {resting}\nAlerts {attention} · {coins}/day").format({"active": active, "waiting": waiting, "resting": rows.size() - active - waiting, "attention": attention, "coins": _money(rows.size() * int(WorkerRole.WAGES[role]))})
 
 func _task_text(service: WorkerService, row: Dictionary, employed: bool, paused: bool) -> String:
 	if not employed:
@@ -280,12 +301,16 @@ func _task_text(service: WorkerService, row: Dictionary, employed: bool, paused:
 		return tr("Awaiting wage payment at dawn.")
 	if paused:
 		return tr("Work is manually paused. Wages still apply.")
-	if bool(service.bridge.storage_waiting.get(role, false)):
-		return tr("Not enough warehouse space for harvest.")
-	if service.crop_automation.wait_for_care and service.bridge.crop_care_waiting:
-		return tr("Waiting for weeding or pesticide.")
 	var task: Dictionary = row.get("task", {})
 	if task.is_empty() or task.get("kind", "") == "patrol":
+		var reason: String = String(service.waiting_reasons.get(String(row.get("id", "")), ""))
+		if not reason.is_empty():
+			var reasons: PackedStringArray = []
+			for line: String in reason.split("\n"):
+				reasons.append(tr(line))
+			return "\n".join(reasons)
+		if bool(service.bridge.storage_waiting.get(role, false)):
+			return tr("Not enough warehouse space for harvest.")
 		return tr(service.crop_policy.waiting) if not service.crop_policy.waiting.is_empty() else tr("Waiting for crop work.")
 	return tr(str(TASKS.get(task.get("kind", ""), "Working")))
 
@@ -293,6 +318,9 @@ func _refresh_supplies(service: WorkerService) -> void:
 	var source: InventoryComponent = world.storages.inventory("farm_supply_storage")
 	var seeds: int = 0
 	var fertilizer: int = 0
+	var herbicide: int = 0
+	var pesticide: int = 0
+	var medicine: int = 0
 	var feed: Dictionary = {}
 	for index: int in range(source.slot_count):
 		var stack: Dictionary = source.slot(index)
@@ -303,6 +331,12 @@ func _refresh_supplies(service: WorkerService) -> void:
 			seeds += int(stack.count)
 		elif item.item_type == ItemDefinition.ItemType.BOOSTER and item.booster_kind == ItemDefinition.BoosterKind.FERTILIZER:
 			fertilizer += int(stack.count)
+		elif item.item_type == ItemDefinition.ItemType.BOOSTER and item.booster_kind == ItemDefinition.BoosterKind.HERBICIDE:
+			herbicide += int(stack.count)
+		elif item.item_type == ItemDefinition.ItemType.BOOSTER and item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE:
+			pesticide += int(stack.count)
+		elif item.item_type == ItemDefinition.ItemType.BOOSTER and item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
+			medicine += int(stack.count)
 		elif item.item_type == ItemDefinition.ItemType.FEED:
 			var caption: String = tr(item.display_name)
 			feed[caption] = int(feed.get(caption, 0)) + int(stack.count)
@@ -310,6 +344,12 @@ func _refresh_supplies(service: WorkerService) -> void:
 	var lines: PackedStringArray = []
 	lines.append(tr("Crop seeds: {count}").format({"count": GameText.grouped_integer(seeds)}))
 	lines.append(tr("Fertilizer: {count}").format({"count": GameText.grouped_integer(fertilizer)}))
+	lines.append(tr("Herbicide: {count}").format({"count": GameText.grouped_integer(herbicide)}))
+	lines.append(tr("Pesticide: {count}").format({"count": GameText.grouped_integer(pesticide)}))
+	lines.append(tr("Animal medicine: {count}").format({"count": GameText.grouped_integer(medicine)}))
+	for supply: Array in [["Herbicide", herbicide], ["Pesticide", pesticide], ["Animal Medicine", medicine]]:
+		if int(supply[1]) < 5:
+			lines.append(tr("Low stock: {item} ({count}).").format({"item": tr(String(supply[0])), "count": int(supply[1])}))
 	for caption: String in feed:
 		lines.append("%s × %d" % [caption, feed[caption]])
 	if feed.is_empty():
@@ -319,7 +359,7 @@ func _refresh_supplies(service: WorkerService) -> void:
 	(%CropSupplyRows as VBoxContainer).visible = true
 	(%SeedCount as Label).text = GameText.grouped_integer(seeds)
 	(%FertilizerCount as Label).text = GameText.grouped_integer(fertilizer)
-	(%SupplyHint as Label).text = tr("Automatically uses any crop seed in supply storage. One seed per successful plot.") + "\n" + tr("Feed comes from farm supply storage. Deposit feed at that building.")
+	(%SupplyHint as Label).text = tr("Automatically uses any crop seed in supply storage. One seed per successful plot.") + "\n" + tr("Feed comes from farm supply storage. Deposit feed at that building.") + "\n" + tr("Buy herbicide and pesticide at the seed shop, Supplies tab. Buy animal medicine at the animal shop. Deposit them here for workers.")
 	(%SupplyHint as Label).visible = not (%SupplyHint as Label).text.is_empty()
 	(%Destination as Label).text = tr("Harvested products go directly to the produce warehouse.")
 	if bool(service.bridge.storage_waiting.get(role, false)):
@@ -445,5 +485,11 @@ func _notification(what: int) -> void:
 
 func _toggle_wait_for_care() -> void:
 	if world.workers.configure_wait_for_care(not world.workers.crop_automation.wait_for_care):
+		_refresh()
+		_save.call_deferred()
+
+func _priority_selected(index: int) -> void:
+	if index >= 0 and index < WorkerRole.PRIORITY_MODES.size():
+		world.workers.configure_priority(WorkerRole.PRIORITY_MODES[index])
 		_refresh()
 		_save.call_deferred()

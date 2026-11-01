@@ -1,0 +1,431 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+tests/unit/test_tool_selection.gd
+[0m* test_default_selection_is_empty_hands
+* test_selection_changes_tool_and_emits_once
+* test_invalid_slot_does_not_change_selection
+* test_empty_slot_has_no_action
+[31m    [Failed]:  [0m["Ô trống"] expected to equal ["Empty slot"]:  
+      at line 30
+* test_cycle_selection_wraps_indices
+* test_toggle_clears_item_action_and_emits_once
+[1m5/6 passed.
+[0m[4m
+
+tests/integration/test_hotbar.gd
+[0m* test_hotbar_uses_vector_skin_and_real_tool_icons
+* test_click_selects_tool_without_movement_or_using_it
+* test_feedback_changes_expire_without_input_and_keep_source_priority
+* test_right_click_uses_selected_watering_can
+* test_booster_feedback_tracks_slot_and_live_translation_while_idle
+* test_space_after_hotbar_click_uses_selected_tool
+* test_number_keys_select_slots_without_using_tools
+* test_number_shortcut_then_space_uses_selected_tool
+* test_empty_slot_does_not_use_any_tool
+* test_wheel_keeps_selected_slot_and_does_not_move
+* test_wheel_over_hotbar_zooms_without_selecting_tool
+[33m    --- Awaiting 0.6 seconds  ---
+[0m* test_changing_selection_during_action_keeps_current_animation
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_busy_clicks_do_not_queue_another_action
+[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_hotbar_is_centered_and_inside_viewport<parameterized>
+    - params[0]((1920, 1080))
+    - params[1]((1280, 720))
+    - params[2]((640, 360))
+* test_deselected_hotbar_has_no_highlight_and_space_does_not_use_tools
+* test_escape_clears_selection_and_number_key_can_select_again
+[1m16/16 passed.
+[0m[4m
+
+tests/integration/test_world_persistence.gd
+[0m* test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip
+[31m    [Failed]:  [0m[9460] expected to equal [970]:  
+      at line 77
+[31m    [Failed]:  [0m[9460] expected to equal [970]:  
+      at line 85
+* test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold
+[31m    [Failed] [0m
+      at line 96
+SCRIPT ERROR: Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+   at: test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold (res://tests/integration/test_world_persistence.gd:97)
+   GDScript backtrace (most recent call first):
+       [0] test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold (res://tests/integration/test_world_persistence.gd:97)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+      at line -1
+* test_saving_mid_attraction_keeps_ground_quantity_and_position_until_arrival
+* test_player_inventory_soil_and_crop_roundtrip_through_file
+[31m    [Failed]:  [0m[21] expected to equal [9]:  
+      at line 176
+* test_offline_production_stacks_into_same_saved_pile_once
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:187)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+   at: test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:189)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_production_stacks_into_same_saved_pile_once (res://tests/integration/test_world_persistence.gd:189)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_long_offline_interval_stops_production_when_needs_run_out
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:203)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+   at: test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:205)
+   GDScript backtrace (most recent call first):
+       [0] test_long_offline_interval_stops_production_when_needs_run_out (res://tests/integration/test_world_persistence.gd:205)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_collected_default_pickup_and_removed_animal_do_not_respawn
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:216)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid call. Nonexistent function 'free' in base 'Nil'.
+   at: test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:217)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_default_pickup_and_removed_animal_do_not_respawn (res://tests/integration/test_world_persistence.gd:217)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid call. Nonexistent function 'free' in base 'Nil'.
+      at line -1
+* test_capture_sync_excludes_animals_that_die_before_the_same_frame_save
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+   at: test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+   GDScript backtrace (most recent call first):
+       [0] test_capture_sync_excludes_animals_that_die_before_the_same_frame_save (res://tests/integration/test_world_persistence.gd:225)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:237)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+   at: test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:238)
+   GDScript backtrace (most recent call first):
+       [0] test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload (res://tests/integration/test_world_persistence.gd:238)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_trough_stock_and_entity_ids_survive_renaming
+* test_invalid_load_does_not_mutate_world
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+   at: test_invalid_load_does_not_mutate_world (res://tests/integration/test_world_persistence.gd:280)
+   GDScript backtrace (most recent call first):
+       [0] test_invalid_load_does_not_mutate_world (res://tests/integration/test_world_persistence.gd:280)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access of index '0' on a base object of type: 'Array'.
+      at line -1
+* test_progress_does_not_go_back_when_system_clock_moves_back
+ERROR: Node not found: "BarnPen/Cow_1" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:286)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+   at: test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:289)
+   GDScript backtrace (most recent call first):
+       [0] test_progress_does_not_go_back_when_system_clock_moves_back (res://tests/integration/test_world_persistence.gd:289)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+      at line -1
+* test_test_world_does_not_bind_real_profile
+* test_inventory_replace_is_atomic_and_emits_once
+* test_service_supports_async_backend_and_blocks_overlapping_operations
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_service_supports_async_backend_and_blocks_overlapping_operations (res://tests/integration/test_world_persistence.gd:335)
+* test_service_autosaves_and_loads_through_injected_repository
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_service_autosaves_and_loads_through_injected_repository (res://tests/integration/test_world_persistence.gd:347)
+       [4] load_game (res://persistence/save_manager.gd:199)
+* test_loading_pauses_clock_signals_and_restores_processing_on_success_and_failure
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_loading_pauses_clock_signals_and_restores_processing_on_success_and_failure (res://tests/integration/test_world_persistence.gd:364)
+       [4] load_game (res://persistence/save_manager.gd:199)
+* test_failed_read_disables_autosave_and_keeps_live_world_intact
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_failed_read_disables_autosave_and_keeps_live_world_intact (res://tests/integration/test_world_persistence.gd:375)
+       [4] _service (res://tests/integration/test_world_persistence.gd:320)
+       [5] bind_world (res://persistence/save_manager.gd:56)
+       [6] load_game (res://persistence/save_manager.gd:199)
+* test_failed_write_keeps_revision_and_can_be_retried
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_failed_write_keeps_revision_and_can_be_retried (res://tests/integration/test_world_persistence.gd:386)
+       [4] _service (res://tests/integration/test_world_persistence.gd:320)
+       [5] bind_world (res://persistence/save_manager.gd:56)
+       [6] load_game (res://persistence/save_manager.gd:199)
+* test_remote_invalid_snapshot_is_rejected_before_mutation
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_remote_invalid_snapshot_is_rejected_before_mutation (res://tests/integration/test_world_persistence.gd:395)
+       [4] _service (res://tests/integration/test_world_persistence.gd:320)
+       [5] bind_world (res://persistence/save_manager.gd:56)
+       [6] load_game (res://persistence/save_manager.gd:199)
+* test_binding_existing_profile_restores_it_automatically
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_binding_existing_profile_restores_it_automatically (res://tests/integration/test_world_persistence.gd:405)
+       [4] _service (res://tests/integration/test_world_persistence.gd:320)
+       [5] bind_world (res://persistence/save_manager.gd:56)
+       [6] load_game (res://persistence/save_manager.gd:199)
+* test_revision_conflict_disables_writes_until_successful_reload
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_revision_conflict_disables_writes_until_successful_reload (res://tests/integration/test_world_persistence.gd:418)
+       [4] load_game (res://persistence/save_manager.gd:199)
+* test_quit_write_failure_leaves_game_running_for_retry
+SCRIPT ERROR: Cannot call method 'set_process' on a previously freed instance.
+   at: ServiceHarness._unbind_world (res://persistence/save_manager.gd:72)
+   GDScript backtrace (most recent call first):
+       [0] _unbind_world (res://persistence/save_manager.gd:72)
+       [1] free_all (res://addons/gut/autofree.gd:70)
+       [2] _run_test (res://addons/gut/gut.gd:642)
+       [3] test_quit_write_failure_leaves_game_running_for_retry (res://tests/integration/test_world_persistence.gd:430)
+       [4] _service (res://tests/integration/test_world_persistence.gd:320)
+       [5] bind_world (res://persistence/save_manager.gd:56)
+       [6] load_game (res://persistence/save_manager.gd:199)
+* test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [0.5] +/- [0.001]:  
+      at line 446
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+      at line 447
+[31m    [Failed] [0m
+      at line 454
+* test_version_one_migration_keeps_progress_and_initializes_new_garden
+[31m    [Failed]:  [0m[0] expected to equal [36]:  
+      at line 468
+* test_invalid_flower_cell_rejects_whole_load_before_mutation
+* test_version_two_garden_migration_preserves_flowers_in_reduced_layout
+* test_collected_flower_seed_supply_stays_collected_after_reload
+ERROR: Node not found: "FlowerGarden/FlowerSeedSupply_01" (relative to "/root/GutRunner/@Node@2739/MainWorld").
+   at: get_node (scene/main/node.cpp:1975)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+SCRIPT ERROR: Attempt to call function 'free' in base 'null instance' on a null instance.
+   at: test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+   GDScript backtrace (most recent call first):
+       [0] test_collected_flower_seed_supply_stays_collected_after_reload (res://tests/integration/test_world_persistence.gd:509)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Attempt to call function 'free' in base 'null instance' on a null instance.
+      at line -1
+* test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning
+SCRIPT ERROR: Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+   at: test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning (res://tests/integration/test_world_persistence.gd:526)
+   GDScript backtrace (most recent call first):
+       [0] test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning (res://tests/integration/test_world_persistence.gd:526)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+      at line -1
+* test_produce_sale_wallet_inventory_and_open_menu_roundtrip
+[31m    [Failed]:  [0m[13675] expected to equal [1525]:  
+      at line 539
+[31m    [Failed]:  [0m[13675] expected to equal [1525]:  
+      at line 554
+* test_retained_feed_survives_disk_roundtrip_and_invalid_reserve_is_atomic
+* test_v7_trough_migration_starts_with_no_retained_feed_without_mutating_input
+[1m17/32 passed.
+[0m[4m
+
+tests/integration/test_mobile_layout.gd
+[0m* test_safe_area_and_touch_targets_survive_high_density_and_resize_in_both_languages
+* test_quantity_buttons_buy_exact_amount_and_preserve_selection_on_resize
+* test_touch_bag_moves_to_last_slot_without_drag_or_spending_items
+* test_sales_checkout_and_land_confirmation_fit_safe_landscape_height
+* test_pen_dashboard_fits_short_vietnamese_screen
+[1m5/5 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+tests/unit/test_tool_selection.gd
+[0m- test_empty_slot_has_no_action
+[31m    [Failed]:  [0m["Ô trống"] expected to equal ["Empty slot"]:  
+          at line 30
+[4m
+tests/integration/test_world_persistence.gd
+[0m- test_wallet_restores_exact_balance_after_purchase_and_disk_roundtrip
+[31m    [Failed]:  [0m[9460] expected to equal [970]:  
+          at line 77
+[31m    [Failed]:  [0m[9460] expected to equal [970]:  
+          at line 85
+- test_bought_animals_age_and_wallet_roundtrip_and_sold_animals_stay_sold
+[31m    [Failed]:  [0m
+          at line 96
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'animals' on a base object of type 'Dictionary'.
+          at line -1
+- test_player_inventory_soil_and_crop_roundtrip_through_file
+[31m    [Failed]:  [0m[21] expected to equal [9]:  
+          at line 176
+- test_offline_production_stacks_into_same_saved_pile_once
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_long_offline_interval_stops_production_when_needs_run_out
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_collected_default_pickup_and_removed_animal_do_not_respawn
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid call. Nonexistent function 'free' in base 'Nil'.
+          at line -1
+- test_capture_sync_excludes_animals_that_die_before_the_same_frame_save
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_offline_death_preserves_final_output_and_stays_dead_after_repeated_reload
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_invalid_load_does_not_mutate_world
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access of index '0' on a base object of type: 'Array'.
+          at line -1
+- test_progress_does_not_go_back_when_system_clock_moves_back
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Invalid access to property or key 'persistent_id' on a base object of type 'Nil'.
+          at line -1
+- test_flower_state_roundtrip_and_offline_growth_without_duplicate_supplies
+[31m    [Failed]:  [0m[0.00000000000000000000] expected to equal [0.5] +/- [0.001]:  
+          at line 446
+[31m    [Failed]:  [0m[0] expected to equal [2]:  
+          at line 447
+[31m    [Failed]:  [0m
+          at line 454
+- test_version_one_migration_keeps_progress_and_initializes_new_garden
+[31m    [Failed]:  [0m[0] expected to equal [36]:  
+          at line 468
+- test_collected_flower_seed_supply_stays_collected_after_reload
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-0>Method/function failed. Returning: nullptr
+    [2] <engine-2>Attempt to call function 'free' in base 'null instance' on a null instance.
+          at line -1
+- test_starting_flowers_upgrade_existing_save_without_overwriting_or_respawning
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key '(12, 0)' on a base object of type 'Dictionary[Vector2i, FlowerPot]'.
+          at line -1
+- test_produce_sale_wallet_inventory_and_open_menu_roundtrip
+[31m    [Failed]:  [0m[13675] expected to equal [1525]:  
+          at line 539
+[31m    [Failed]:  [0m[13675] expected to equal [1525]:  
+          at line 554
+
+Totals
+------
+Scripts               4
+Tests                59
+Passing Tests        43
+Failing Tests        16
+Asserts           570/591
+Time              45.808s
+
+
+[31m---- 16 failing tests ----
+[0m

@@ -1,0 +1,150 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_farm_health_world.gd
+[0m* test_treating_each_crop_condition_preserves_other_flags_and_quality
+* test_worker_care_uses_supplies_once_and_shows_animal_bubble
+* test_worker_care_crop_conditions_use_correct_supplies
+* test_crop_care_icon_rises_fades_and_cleans_up
+[33m    --- Awaiting 0.65 seconds  ---
+[0m[33m    --- Awaiting 1.1 seconds  ---
+[0m* test_worker_care_candidates_reserve_supplies_and_targets
+* test_worker_cures_animal_during_offline_simulation
+* test_worker_crop_care_runs_in_offline_scheduler
+* test_worker_care_task_survives_save_validation
+* test_crop_treatment_out_of_range_does_not_consume_stock
+* test_zero_harvest_finishes_once_and_produces_no_reward
+* test_worker_wait_policy_and_shared_harvest_amount
+* test_disease_reduces_progress_only_after_onset_and_cure_is_not_food
+* test_sick_hungry_thirsty_animal_reports_all_reasons_and_stops_production
+* test_medicine_consumed_once_only_for_a_nearby_sick_animal
+* test_click_medicine_cures_immediately_without_tool_animation_and_shows_effect
+* test_use_medicine_in_facing_direction_skips_tool_animation
+* test_save_migration_roundtrip_and_invalid_health_preflight
+* test_catalog_storage_and_shop_include_both_medicines
+* test_world_seed_merchant_sells_herbicide_in_supplies
+* test_weeding_uses_animation_impact_and_preserves_pests
+* test_pesticide_impact_consumes_once_and_cancellation_keeps_stock
+* test_changed_crop_during_pesticide_animation_keeps_stock
+* test_pen_offline_and_online_production_match_across_disease_onset
+* test_no_offline_restore_preserves_health_schedule_and_crop_rolls
+* test_animal_popups_follow_needs_signals_and_all_eight_combinations
+* test_crop_popup_survives_focus_refresh_and_disappears_after_care
+[1m26/26 passed.
+[0m[4m
+
+res://tests/integration/test_worker_care_improvements.gd
+[0m* test_missing_medicines_report_exact_type_and_deposit_clears_reason
+* test_priority_modes_and_legacy_save_defaults
+* test_animal_commit_rejects_wall_and_keeps_medicine
+* test_moving_target_replans_and_removed_target_cancels
+* test_online_worker_moves_sprays_and_consumes_once
+* test_bubble_fits_both_languages_and_preserves_center_under_zoom
+[1m6/6 passed.
+[0m[4m
+
+res://tests/integration/test_boosters.gd
+[0m* test_fertilizer_action_consumes_at_impact_only_and_reschedules_growth
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce
+* test_juvenile_once_only_and_dead_animal_never_consume_tonic
+* test_tonic_action_requires_facing_range_and_unobstructed_target
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline
+* test_legacy_migration_and_bad_flags_reject_before_world_changes
+* test_merchant_sells_canonical_booster_items_with_working_inventory_identity
+[1m8/8 passed.
+[0m[4m
+
+res://tests/integration/test_worker_ui.gd
+[0m* test_care_priority_low_stock_and_per_worker_reason
+* test_unified_menu_shows_one_team_with_all_controls
+* test_unified_badge_and_pause_text_in_both_languages
+* test_crop_settings_pause_and_shared_supply_counts_use_real_models
+* test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial
+* test_locked_hiring_and_insufficient_rehire_funds_disable_action
+* test_compact_and_confirmation_keep_actions_in_safe_area_and_restore_columns
+* test_recovery_actions_only_appear_for_remaining_old_basket_contents
+* test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker
+* test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view
+* test_crop_roster_displays_five_rows_and_selection_updates_details_without_rebuilding
+* test_crop_roster_empty_hint_and_other_role_portrait_visibility
+* test_restored_slide_and_stable_worker_buttons
+[1m13/13 passed.
+[0m[4m
+
+res://tests/integration/test_specialized_shops.gd
+[0m* test_seed_shop_displays_and_sells_herbicide
+* test_every_live_shop_offer_has_a_visible_card_and_can_be_purchased
+* test_stock_is_split_without_losing_or_duplicating_existing_items
+* test_each_npc_opens_its_own_tabs_and_rejects_other_shop_categories
+* test_seed_purchase_animal_purchase_sale_and_tool_purchase_use_separate_vendors
+* test_npcs_have_distinct_visuals_are_nearby_and_can_be_reached_from_the_path
+* test_shop_titles_translate_and_compact_tabs_stay_restricted
+* test_interaction_prompts_name_each_shop_and_update_language
+* test_flowers_can_only_be_bought_from_the_new_flower_merchant
+[1m9/9 passed.
+[0m[4m
+
+res://tests/integration/test_worker_optimization.gd
+[0m* test_busy_crop_worker_checks_urgent_ranch_without_searching_for_another_plot
+* test_reservation_snapshot_tracks_prepared_cells_items_pause_and_dismissal
+* test_online_row_budget_resumes_without_duplicate_assignments_or_checkpoint_changes
+* test_idle_stroll_is_local_and_falls_back_to_rest_instead_of_distant_path
+* test_static_body_addition_and_removal_invalidate_only_affected_cached_cells
+* test_trough_access_cache_is_shared_at_distance_and_revalidated_after_geometry_changes
+* test_shared_navigation_round_robin_finishes_direct_requests_without_private_grids
+* test_navigation_routes_around_wall_and_invalidates_changed_geometry
+[1m8/8 passed.
+[0m[4m
+
+res://tests/integration/test_crop_automation.gd
+[0m* test_hires_with_auto_plant_and_uses_any_seed_without_player_selection
+* test_tilling_does_not_spend_seed_and_failed_plant_preserves_prepared_plot
+* test_replants_after_harvest_and_prefers_never_planted_plot_before_old_one
+* test_does_not_use_bag_or_feed_flowers_and_saplings_as_seeds
+* test_fertilizes_own_crop_once_and_spends_exactly_one_from_storage
+* test_missing_late_or_replaced_crop_never_spends_fertilizer
+* test_toggle_cancels_old_seed_task_and_pause_resume_preserves_remaining_work
+* test_schema_v25_migrates_care_only_and_v26_roundtrips_work_and_fertilizer
+* test_blocked_or_player_planted_plot_is_not_destroyed_or_used_twice
+* test_plant_notification_blocks_reentry_and_exposes_complete_crop_batch
+* test_manual_pause_overlapping_unpaid_days_does_not_double_delay_task
+* test_full_field_48h_single_and_segmented_loops_match_with_fertilizer_and_no_quota
+CROP_AUTOMATION_48H {"elapsed_ms":1803.077,"history_cells":2,"plantings":12}
+* test_full_1632_plot_field_has_no_daily_quota_and_consumes_only_supplied_stock
+CROP_AUTOMATION_FIELD {"elapsed_ms":3447.418,"fertilizer_left":0,"indexed_cells":1632,"plantings":60}
+* test_restored_online_worker_walks_back_and_plants
+[1m14/14 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               7
+Tests                84
+Passing Tests        84
+Asserts            1425
+Time              76.482s
+
+
+[32m---- All tests passed! ----
+[0m

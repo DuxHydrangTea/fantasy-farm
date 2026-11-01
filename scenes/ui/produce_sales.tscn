@@ -83,7 +83,6 @@ layout_mode = 2
 text = "Normal"
 toggle_mode = true
 size_flags_horizontal = 3
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,48)
 
 [node name="Silver" type="Button" parent="Root/Center/Panel/Body/QualityTabs"]
@@ -92,7 +91,6 @@ layout_mode = 2
 text = "Silver"
 toggle_mode = true
 size_flags_horizontal = 3
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,48)
 
 [node name="Gold" type="Button" parent="Root/Center/Panel/Body/QualityTabs"]
@@ -101,7 +99,6 @@ layout_mode = 2
 text = "Gold"
 toggle_mode = true
 size_flags_horizontal = 3
-theme_override_styles/pressed = ExtResource("selected")
 custom_minimum_size = Vector2(0,48)
 
 [node name="Main" type="HBoxContainer" parent="Root/Center/Panel/Body"]
@@ -201,6 +198,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="ProductIcon" type="TextureRect" parent="Root/Center/Panel/Body/Main/Sidebar/InfoScroll/InfoContent/Hero"]
+texture_filter = 1
 unique_name_in_owner = true
 layout_mode = 2
 custom_minimum_size = Vector2(64,64)

@@ -173,3 +173,20 @@ func test_batch_watering_marks_crop_and_full_warehouse_retains_gold() -> void:
 	assert_false(world.farming.harvest(cell, output))
 	assert_same(world.farming.get_crop(cell), crop)
 	assert_eq(crop.harvest_tier(), 2)
+
+func test_gold_harvest_cannot_use_room_in_a_normal_stack() -> void:
+	_plant()
+	var crop: Crop = world.farming.get_crop(cell)
+	crop.mark_watered()
+	crop.apply_root()
+	var output: InventoryComponent = InventoryComponent.new()
+	output.starting_tools = false
+	output.slot_count = 1
+	add_child_autofree(output)
+	var item: ItemDefinition = crop.definition.harvest_item
+	output.add(item, 1, 0)
+	clock[0] = now + 100
+	assert_false(world.farming.harvest(cell, output))
+	assert_same(world.farming.get_crop(cell), crop)
+	assert_eq(output.count_item(item.item_id, 0), 1)
+	assert_eq(output.count_item(item.item_id, 2), 0)

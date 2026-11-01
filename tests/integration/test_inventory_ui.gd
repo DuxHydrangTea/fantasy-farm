@@ -24,6 +24,7 @@ func before_each() -> void:
 	ui = player.get_node("InventoryUI")
 	state = player.get_node("StateComponent")
 	bag = state.tool_selection.inventory
+	state.tool_selection.select_slot(0)
 	await wait_physics_frames(3)
 
 func after_each() -> void:
@@ -200,7 +201,7 @@ func test_close_cancels_hotbar_assignment_and_reenables_bag_slots() -> void:
 	assert_null(bag.get_slot_item(0))
 	assert_not_null(bag.get_slot_item(8))
 
-func test_quality_is_inline_and_inspection_does_not_move_or_consume_produce() -> void:
+func test_quality_items_are_separate_and_inspection_does_not_move_or_consume_produce() -> void:
 	var produce: ItemDefinition = load("res://items/harvest_produces/carrot_produces.tres") as ItemDefinition
 	bag.add(produce, 80, 0)
 	bag.add(produce, 40, 1)
@@ -210,10 +211,22 @@ func test_quality_is_inline_and_inspection_does_not_move_or_consume_produce() ->
 		if bag.get_slot_item(index) == produce:
 			ui._inspect_slot(index)
 			break
-	assert_true(ui.quality_panel.visible)
-	assert_eq(ui._quality_rows[0].text, "80")
-	assert_eq(ui._quality_rows[1].text, "40")
-	assert_eq(ui._quality_rows[2].text, "0")
+	assert_false(ui.quality_panel.visible)
+	assert_string_contains(ui.item_name.text, ItemQuality.label(0))
+	var silver_slot: int = -1
+	for index: int in range(bag.slot_count):
+		if bag.get_slot_item(index) == produce and bag.slot(index).tiers[1] > 0:
+			silver_slot = index
+	assert_ne(silver_slot, ui.inspected_index)
+	ui._inspect_slot(silver_slot)
+	assert_string_contains(ui.item_name.text, ItemQuality.label(1))
+	assert_eq(bag.get_slot_count(silver_slot), 40)
+	ui.search.text = ItemQuality.label(1)
+	ui._apply_filter()
+	for button: InventorySlot in ui.buttons:
+		if button.visible:
+			assert_eq(bag.get_slot_item(button.slot_index), produce)
+			assert_eq(ItemQuality.stack_tier(bag.slot(button.slot_index).tiers), 1)
 	assert_eq(bag.count_item(produce.item_id, -1), 120)
 	assert_eq(ui.item_icon.texture, produce.icon)
 
@@ -227,7 +240,7 @@ func test_invalid_drag_payload_cannot_move_or_duplicate_items() -> void:
 func test_font_theme_uses_configured_font() -> void:
 	var font: FontVariation = ui.root.theme.default_font as FontVariation
 	assert_not_null(font)
-	assert_eq(font.base_font.resource_path, "res://assets/Fonts/SVN-Determination Sans.ttf")
+	assert_eq(font, preload("res://resources/ui/game_font.tres"))
 	for character: String in ["T", "ú", "đ", "ồ", "ư", "ớ"]:
 		var code: int = character.unicode_at(0)
 		assert_true(font.base_font.has_char(code) or font.fallbacks[0].has_char(code), "Vietnamese glyph in the configured font chain: " + character)
@@ -242,3 +255,17 @@ func test_panel_fits_viewport(size = use_parameters([Vector2i(1920, 1080), Vecto
 	assert_true(bounds.encloses(ui.details.get_global_rect()))
 	var close_button: Control = ui.get_node("Root/Center/Panel/Body/Header/Close")
 	assert_true(bounds.encloses(close_button.get_global_rect()))
+
+func test_drag_from_a_replaced_quality_stack_is_rejected() -> void:
+	var produce: ItemDefinition = preload("res://items/harvest_produces/carrot_produces.tres")
+	bag.add(produce, 2, 1)
+	var source: int = -1
+	for index: int in range(bag.slot_count):
+		if bag.get_slot_item(index) == produce:
+			source = index
+	var payload: Dictionary = {"inventory": bag, "slot": source, "item_id": produce.item_id, "tier": 1}
+	assert_true(ui.buttons[10]._can_drop_data(Vector2.ZERO, payload))
+	bag.consume(produce.item_id, 2, ItemQuality.exact(1))
+	bag.add(produce, 2, 2)
+	assert_false(ui.buttons[10]._can_drop_data(Vector2.ZERO, payload))
+	assert_eq(bag.count_item(produce.item_id, 2), 2)

@@ -129,8 +129,8 @@ func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 	var crop: Crop = get_crop(cell)
 	var produce: ItemDefinition = crop.definition.harvest_item as ItemDefinition
 	var requested: int = harvest_amount(cell)
-	if inventory.capacity_for(produce) < requested:
-		inventory.report_capacity_blocked(produce, requested)
+	if inventory.capacity_for(produce, crop.harvest_tier()) < requested:
+		inventory.report_capacity_blocked(produce, requested, crop.harvest_tier())
 		return false
 	var origin: Vector2 = farmland.to_global(farmland.map_to_local(cell))
 	_harvesting = true
@@ -534,13 +534,23 @@ func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> boo
 	if not care_error(cell, pests, actor).is_empty():
 		return false
 	var crop: Crop = get_crop(cell)
+	var world: FarmWorld = get_parent() as FarmWorld
+	var show_effect: bool = world == null or world.workers == null or not world.workers.busy or world.workers.bridge.present_care_effects
+	if show_effect and crop.condition_badges != null:
+		var statuses: Array[StringName] = crop.condition_badges.active_statuses
+		var index: int = statuses.find(&"pests" if pests else &"weeds")
+		if index >= 0:
+			var effect: Node2D = preload("res://components/interaction/crop_care_effect.gd").new()
+			effect.pests = pests
+			var width: float = 12.0 + statuses.size() * 16.0 + (statuses.size() - 1) * 4.0
+			effect.start_position = crop.condition_badges.position + Vector2(-width * 0.5 + 14.0 + index * 20.0, -16.0)
+			crop.add_child(effect)
 	if pests:
 		crop.conditions.pests = false
 	else:
 		crop.conditions.weeds = false
 	crop._update_condition_visuals()
 	crop.conditions_changed.emit()
-	var world: FarmWorld = get_parent() as FarmWorld
 	if world != null and world.workers != null:
 		world.workers.request_scan("crop")
 	crop.react(7.0)

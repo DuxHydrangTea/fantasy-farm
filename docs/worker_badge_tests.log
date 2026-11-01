@@ -1,0 +1,46 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_worker_ui.gd
+[0m* test_care_priority_low_stock_and_per_worker_reason
+* test_unified_menu_shows_one_team_with_all_controls
+* test_unified_badge_and_pause_text_in_both_languages
+* test_world_badge_stays_compact_and_task_detail_only_on_interaction
+* test_crop_settings_pause_and_shared_supply_counts_use_real_models
+* test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial
+* test_locked_hiring_and_insufficient_rehire_funds_disable_action
+* test_compact_and_confirmation_keep_actions_in_safe_area_and_restore_columns
+* test_recovery_actions_only_appear_for_remaining_old_basket_contents
+* test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker
+* test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view
+* test_crop_roster_displays_five_rows_and_selection_updates_details_without_rebuilding
+* test_crop_roster_empty_hint_and_other_role_portrait_visibility
+* test_restored_slide_and_stable_worker_buttons
+[1m14/14 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               1
+Tests                14
+Passing Tests        14
+Asserts             155
+Time              16.415s
+
+
+[32m---- All tests passed! ----
+[0m

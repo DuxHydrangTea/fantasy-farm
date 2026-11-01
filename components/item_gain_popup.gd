@@ -29,6 +29,7 @@ func _ready() -> void:
 	label.add_theme_constant_override("outline_size", 3)
 	row.add_child(label)
 	icon = TextureRect.new()
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.custom_minimum_size = Vector2(16, 16)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED

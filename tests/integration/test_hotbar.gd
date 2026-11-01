@@ -18,6 +18,7 @@ func before_each() -> void:
 	state = player.get_node("StateComponent")
 	selection = player.get_node("ToolSelection")
 	hotbar = player.get_node("Hotbar")
+	selection.select_slot(0)
 	await wait_physics_frames(3)
 
 func _mouse(position: Vector2, button: MouseButton, pressed: bool) -> void:
@@ -40,11 +41,11 @@ func _space(pressed: bool, echo: bool = false) -> void:
 	event.echo = echo
 	viewport.push_input(event, true)
 
-func test_hotbar_uses_nine_patch_skin_and_real_tool_icons() -> void:
+func test_hotbar_uses_vector_skin_and_real_tool_icons() -> void:
 	assert_eq(hotbar.buttons.size(), 6)
-	var frame: NinePatchRect = hotbar.buttons[0].get_node("HotbarFrame") as NinePatchRect
-	assert_eq(frame.texture.resource_path, "res://assets/Ui/CozyHUD/slot_selected.png")
-	assert_eq(frame.patch_margin_left, 8, "Corners retain their native pixel size")
+	var frame: Panel = hotbar.buttons[0].get_node("HotbarFrame") as Panel
+	assert_eq((frame.get_theme_stylebox("panel") as StyleBoxFlat).border_color, FarmUI.GOOD)
+	assert_eq((frame.get_theme_stylebox("panel") as StyleBoxFlat).corner_radius_top_left, 8)
 	assert_null(hotbar.buttons[0].texture_normal, "No stretched background underneath the nine-patch")
 	assert_eq((hotbar.root.get_node("Bottom/Tray") as PanelContainer).theme_type_variation, &"HotbarPanel")
 	assert_false(hotbar.buttons[0]._selection_frame.visible)
@@ -63,12 +64,13 @@ func test_click_selects_tool_without_movement_or_using_it() -> void:
 	assert_eq(hotbar.selected_name.text, tr("Watering Can"))
 	assert_true(hotbar.buttons[1].button_pressed)
 	assert_false(hotbar.buttons[0].button_pressed)
-	assert_eq(hotbar.buttons[1].get_node("HotbarFrame").texture, InventorySlot.HOTBAR_SELECTED)
+	assert_eq((hotbar.buttons[1]._hotbar_frame.get_theme_stylebox("panel") as StyleBoxFlat).border_color, FarmUI.GOOD)
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 	assert_eq(player.position, before)
 	assert_false(state.movement.has_target)
 	_click_slot(1)
-	assert_true(hotbar.buttons[1].button_pressed, "Active slot remains selected after re-click")
+	assert_false(hotbar.buttons[1].button_pressed, "Clicking the active slot clears selection")
+	assert_eq(selection.selected_index, -1)
 
 func test_feedback_changes_expire_without_input_and_keep_source_priority() -> void:
 	var actor: FarmPlayer = player as FarmPlayer
@@ -80,9 +82,9 @@ func test_feedback_changes_expire_without_input_and_keep_source_priority() -> vo
 	assert_eq(hotbar.selected_name.text, tr("Cannot reach that target."))
 	assert_eq(hotbar.selected_name.tooltip_text, tr("Cannot reach that target."))
 	assert_true(hotbar.is_processing())
-	await wait_seconds(0.15)
+	await _wait_real_seconds(0.15)
 	assert_eq(hotbar.selected_name.text, tr("Hive placed!"), "Lower priority feedback remains until its own deadline")
-	await wait_seconds(0.2)
+	await _wait_real_seconds(0.2)
 	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
 	assert_eq(hotbar.selected_name.tooltip_text, "")
 	assert_false(hotbar.is_processing())
@@ -91,6 +93,13 @@ func test_feedback_changes_expire_without_input_and_keep_source_priority() -> vo
 	actor.interactions._cancelled()
 	assert_eq(hotbar.selected_name.text, selection.get_selected_name())
 	assert_false(hotbar.is_processing())
+
+func _wait_real_seconds(seconds: float) -> void:
+	# Feedback uses monotonic wall time; headless frame delta may run faster.
+	var until: int = Time.get_ticks_msec() + roundi(seconds * 1000)
+	while Time.get_ticks_msec() < until:
+		await get_tree().process_frame
+	await get_tree().process_frame
 
 func test_right_click_uses_selected_watering_can() -> void:
 	_click_slot(1)
@@ -128,6 +137,7 @@ func test_space_after_hotbar_click_uses_selected_tool() -> void:
 	assert_eq(state.current_state, StateComponent.State.WATER)
 
 func test_number_keys_select_slots_without_using_tools() -> void:
+	selection.select_slot(-1)
 	for code: int in [KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6]:
 		var event: InputEventKey = InputEventKey.new()
 		event.physical_keycode = code
@@ -219,3 +229,25 @@ func test_hotbar_is_centered_and_inside_viewport(size = use_parameters([
 		assert_false(hotbar.buttons[index].get_global_rect().intersects(hotbar.buttons[index + 1].get_global_rect()))
 	assert_almost_eq(hotbar.slots.get_global_rect().get_center().x, float(size.x) / 2.0, 1.0)
 	assert_true(bounds.encloses(hotbar.selected_name.get_global_rect()))
+
+func test_deselected_hotbar_has_no_highlight_and_space_does_not_use_tools() -> void:
+	_click_slot(0)
+	assert_eq(selection.selected_index, -1)
+	for button: InventorySlot in hotbar.buttons:
+		assert_false(button.button_pressed)
+	assert_eq(hotbar.selected_name.text, tr("Empty hands"))
+	_space(true)
+	_space(false)
+	await wait_physics_frames(2)
+	assert_eq(state.current_state, StateComponent.State.IDLE)
+
+func test_escape_clears_selection_and_number_key_can_select_again() -> void:
+	for code: int in [KEY_ESCAPE, KEY_2, KEY_2]:
+		var event: InputEventKey = InputEventKey.new()
+		event.physical_keycode = code
+		event.pressed = true
+		viewport.push_input(event, true)
+		event.pressed = false
+		viewport.push_input(event, true)
+	assert_eq(selection.selected_index, -1)
+	assert_null(selection.get_selected_item())

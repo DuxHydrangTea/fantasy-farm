@@ -56,6 +56,10 @@ func _shrink_camera_to_village() -> void:
 	camera.limit_top = int(center.y) - 160
 	camera.limit_right = int(center.x) + 160
 	camera.limit_bottom = int(center.y) + 160
+	# Keep the actor in the test viewport; a failed stroll now rests in place.
+	var row: Dictionary = service.record("crop")
+	service.actor_for(String(row.id)).global_position = center
+	row.position = WorkerRole.pair(center)
 
 func test_stroll_point_stays_within_camera_bounds() -> void:
 	_shrink_camera_to_village()
@@ -76,9 +80,12 @@ func test_stroll_avoids_recently_blocked_target() -> void:
 	var key: String = "%s:patrol:%d_%d" % [String(row.id), roundi(first.x), roundi(first.y)]
 	service.blocked_targets[key] = world.farming.time_manager.now() + 120.0
 	var second: Vector2 = service.bridge.patrol_point(row)
-	assert_ne(second, first)
+	if first == WorkerRole.point(row.position):
+		assert_eq(second, first, "No safe idle walk means rest in place, without pathfinding")
+	else:
+		assert_ne(second, first, "A blocked walk must not be selected again")
 
-func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
+func test_stroll_rests_in_place_when_no_walkable_point() -> void:
 	# 60x60 px of camera bounds: after the sampler's -24 grow and the 48 px
 	# minimum stroll distance every candidate is rejected, exhausting the
 	# sampler without depending on physics-space registration in tests.
@@ -92,7 +99,7 @@ func test_stroll_falls_back_to_zone_corner_when_no_walkable_point() -> void:
 	actor.global_position = center
 	row.position = WorkerRole.pair(center)
 	var point: Vector2 = service.bridge.patrol_point(row)
-	assert_true(service.bridge.zone_contains(row, point))
+	assert_eq(point, center, "Failed idle sampling must not trigger a distant fallback path")
 
 func test_idle_worker_patrols_the_world() -> void:
 	# Free the pens so no trough work competes: this pins the idle stroll path.

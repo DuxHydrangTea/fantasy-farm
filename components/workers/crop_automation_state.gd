@@ -6,6 +6,7 @@ var auto_plant: bool = false
 var auto_fertilize: bool = false
 var paused: bool = false
 var wait_for_care: bool = true
+var priority_mode: String = "balanced"
 var prepared: Dictionary[String, Vector2i] = {}
 var sequence: int = 0
 var plots: Dictionary[Vector2i, Dictionary] = {}
@@ -20,6 +21,7 @@ func capture() -> Dictionary:
 	data.auto_fertilize = auto_fertilize
 	data.paused = paused
 	data.wait_for_care = wait_for_care
+	data["priority_mode"] = priority_mode
 	var ids: Array[String] = prepared.keys()
 	ids.sort()
 	for id: String in ids:
@@ -38,6 +40,7 @@ func restore(data: Dictionary) -> void:
 	auto_fertilize = data.auto_fertilize
 	paused = data.paused
 	wait_for_care = data.wait_for_care
+	priority_mode = String(data.get("priority_mode", "balanced"))
 	sequence = int(data.sequence)
 	prepared.clear()
 	for row: Dictionary in data.prepared:
@@ -69,9 +72,11 @@ func clear_prepared(cell: Vector2i) -> void:
 			prepared.erase(id)
 
 static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
-	if not data is Dictionary or data.size() != 8 or not data.get("wait_for_care") is bool or not SaveSchema.number(data.get("revision"), 0, 1.0e12, true) or not data.get("auto_plant") is bool or not data.get("auto_fertilize") is bool or not data.get("paused") is bool or not SaveSchema.number(data.get("sequence"), 0, 1.0e12, true) or not data.get("prepared") is Array or not data.get("plots") is Array or data.plots.size() > LandExpansionState.REGION.get_area():
+	if not data is Dictionary or data.size() not in [8, 9] or not data.get("priority_mode", "balanced") in ["balanced", "care_first", "harvest_first"] or not data.get("wait_for_care") is bool or not SaveSchema.number(data.get("revision"), 0, 1.0e12, true) or not data.get("auto_plant") is bool or not data.get("auto_fertilize") is bool or not data.get("paused") is bool or not SaveSchema.number(data.get("sequence"), 0, 1.0e12, true) or not data.get("prepared") is Array or not data.get("plots") is Array or data.plots.size() > LandExpansionState.REGION.get_area():
 		return false
 	if data.prepared.size() > 15:
+		return false
+	if data.size() == 9 and not data.has("priority_mode"):
 		return false
 	var owners: Dictionary = {}
 	var prepared_cells: Dictionary = {}

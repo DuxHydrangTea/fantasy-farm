@@ -63,7 +63,7 @@ func test_hungry_chicken_walks_to_food_and_eats_without_refilling_water() -> voi
 	assert_eq(station.stock, 119)
 	assert_true(station.slot_available(0))
 
-func test_focus_preserves_resource_trip_and_meal(state = use_parameters([
+func test_focus_interrupts_resource_trip_and_meal(state = use_parameters([
 	AnimalBehaviourComponent.State.SEEK_RESOURCE, AnimalBehaviourComponent.State.EAT,
 	AnimalBehaviourComponent.State.DRINK
 ])) -> void:
@@ -78,11 +78,11 @@ func test_focus_preserves_resource_trip_and_meal(state = use_parameters([
 	var slot: int = animal.foraging.target_slot
 	assert_false(station.slot_available(slot))
 	animal.set_status_focused(true)
-	assert_eq(animal.behaviour.current_state, state)
-	assert_not_null(animal.foraging.target)
-	assert_false(station.slot_available(slot), "UI attention must preserve the serving reservation")
-	assert_true(await _wait_for(AnimalBehaviourComponent.State.IDLE))
-	assert_eq(station.stock, 119)
+	assert_eq(animal.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_null(animal.foraging.target)
+	assert_true(station.slot_available(slot), "Focus releases the feeding reservation")
+	assert_eq(station.stock, 120)
+	animal.set_status_focused(false)
 
 func test_late_meal_sync_that_reaches_death_releases_slot_without_spending_stock() -> void:
 	var station: AnimalTrough = _trough(AnimalTrough.Kind.FOOD, Vector2(160, 70))

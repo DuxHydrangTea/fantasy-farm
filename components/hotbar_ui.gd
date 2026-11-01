@@ -25,6 +25,18 @@ func _ready() -> void:
 	selected_name.clip_text = true
 	selected_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	UIScaleComponent.attach(self, root)
+	var tray: PanelContainer = root.get_node("Bottom/Tray") as PanelContainer
+	tray.add_theme_stylebox_override("panel", FarmUI.box(Color.TRANSPARENT, 0, 0, Color.TRANSPARENT))
+	var column: VBoxContainer = tray.get_child(0) as VBoxContainer
+	var tool_tray: PanelContainer = PanelContainer.new()
+	tool_tray.name = "ToolTray"
+	column.add_child(tool_tray)
+	column.move_child(tool_tray, 1)
+	slots.reparent(tool_tray)
+	selected_name.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	selected_name.add_theme_stylebox_override("normal", FarmUI.box(Color("56452e"), 18, 6, Color.TRANSPARENT))
+	selected_name.add_theme_color_override("font_color", Color("fff8e9"))
+	hint.add_theme_color_override("font_color", Color("fff8e9"))
 	root.resized.connect(_fit_layout)
 	_fit_layout()
 	assert(selection != null, "Hotbar requires ToolSelection")
@@ -62,7 +74,7 @@ func _ready() -> void:
 	_on_selection_changed(selection.selected_index, &"")
 
 func _select_slot(index: int) -> void:
-	selection.select_slot(index)
+	selection.toggle_slot(index)
 	_on_selection_changed(selection.selected_index, &"")
 
 func _open_inventory() -> void:
@@ -72,6 +84,7 @@ func _menu_changed(_open: bool) -> void:
 	root.visible = not selection.is_menu_open()
 	if wallet_hud != null:
 		wallet_hud.panel.visible = root.visible
+		wallet_hud.visible = root.visible
 
 func _on_selection_changed(index: int, _tool: StringName) -> void:
 	for i: int in range(buttons.size()):
@@ -84,15 +97,10 @@ func _refresh_controls() -> void:
 		return
 	inventory_button.text = tr("Bag") if MobileLayout.is_touch(get_viewport()) else tr("Bag") + "\n[" + GameText.action_key(&"toggle_inventory") + "]"
 	inventory_button.tooltip_text = tr("Open inventory")
-	var instructions: Dictionary = {
-		&"tool": "Space / Right-click: till soil",
-		&"water": "Space / Right-click: water",
-		&"plant": "Space / Right-click: plant",
-		&"fertilize": "Space / Right-click: fertilize",
-		&"animal_tonic": "Space / Right-click: give tonic",
-		&"place_beehive": "Space / Right-click: place hive",
-	}
-	hint.text = tr(String(instructions.get(selection.get_selected_action(), "Select a tool to use it")))
+	var player: FarmPlayer = get_parent() as FarmPlayer
+	var use_action: StringName = player.state.action_use_item if player != null else &"use_item"
+	var interact_action: StringName = player.state.action_harvest if player != null else &"harvest"
+	hint.text = tr("Use [{key}] / right-click · Interact [{interact}]").format({"key": GameText.action_key(use_action), "interact": GameText.action_key(interact_action)})
 
 func _unhandled_input(event: InputEvent) -> void:
 	if selection.is_menu_open():
@@ -100,9 +108,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if not event.is_pressed() or event.is_echo():
 			return
+		if event.physical_keycode == KEY_ESCAPE:
+			selection.select_slot(-1)
+			get_viewport().set_input_as_handled()
+			return
 		for index: int in range(SLOT_ACTIONS.size()):
 			if event.is_action_pressed(SLOT_ACTIONS[index]):
-				selection.select_slot(index)
+				selection.toggle_slot(index)
 				get_viewport().set_input_as_handled()
 				return
 
@@ -112,10 +124,13 @@ func _notification(what: int) -> void:
 
 func _fit_layout() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
-	hint.hide()
-	selected_name.hide()
+	var compact: bool = touch or root.size.x < 760
+	hint.visible = not touch and root.size.x >= 760 and root.size.y >= 500
+	selected_name.visible = not touch
+	selected_name.add_theme_font_size_override("font_size", 18)
+	selected_name.custom_minimum_size.x = minf(260, root.size.x - 32)
 	var bottom: MarginContainer = root.get_node("Bottom") as MarginContainer
-	bottom.offset_top = -104
+	bottom.offset_top = -154 if hint.visible else -132
 	bottom.offset_bottom = -16
 	bottom.offset_left = 88 if touch else 0
 	bottom.offset_right = -88 if touch else 0
@@ -123,10 +138,10 @@ func _fit_layout() -> void:
 		bottom.offset_top = -80
 		bottom.offset_bottom = -8
 	for button: InventorySlot in buttons:
-		button.custom_minimum_size = Vector2(48, 48) if touch else Vector2(64, 64)
+		button.custom_minimum_size = Vector2(48, 48) if compact else Vector2(64, 64)
 		button.refresh()
 	if inventory_button != null:
-		inventory_button.custom_minimum_size = Vector2(64, 48) if touch else Vector2(92, 64)
+		inventory_button.custom_minimum_size = Vector2(64, 48) if compact else Vector2(92, 64)
 		inventory_button.clip_text = touch
 		inventory_button.add_theme_font_size_override("font_size", 16 if touch else 18)
 		_refresh_controls()
@@ -156,11 +171,14 @@ func _refresh_feedback() -> void:
 		var instruction: String = "Face a crop and right-click / Space to fertilize." if item.booster_kind not in [ItemDefinition.BoosterKind.ANIMAL_TONIC, ItemDefinition.BoosterKind.ANIMAL_MEDICINE] else "Face an animal and right-click / Space to give tonic."
 		if item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE:
 			instruction = "Face a crop and right-click / Space to treat pests."
+		elif item.booster_kind == ItemDefinition.BoosterKind.HERBICIDE:
+			instruction = "Face a crop and right-click / Space to remove weeds."
 		elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
-			instruction = "Face an animal and right-click / Space to cure disease."
+			instruction = "Click a nearby animal, or face it and right-click / Space to cure disease."
 		tooltip = tr(item.description) + "\n" + tr(instruction)
 	if selected_name.tooltip_text != tooltip:
 		selected_name.tooltip_text = tooltip
+	selected_name.mouse_filter = Control.MOUSE_FILTER_PASS
 	# Only keep the inexpensive clock check alive while feedback can expire.
 	_feedback_deadline = 0
 	var now: int = Time.get_ticks_msec()

@@ -235,3 +235,34 @@ func test_animal_purchase_uses_valid_scene_and_current_prices_with_atomic_notifi
 		assert_eq(animal.definition, offer.animal)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_true(SaveSchema.validate(adapter.capture("supply_test", 1, now), adapter.catalog).ok)
+
+func test_empty_hands_can_leave_stored_seed_mode_and_roundtrip_to_disk() -> void:
+	var selection: ToolSelectionComponent = world.player.selection
+	assert_eq(selection.selected_index, -1)
+	assert_true(selection.select_storage_seed(SEED.item_id))
+	assert_not_null(selection.get_selected_item())
+	assert_true(selection.select_slot(-1))
+	assert_true(selection.storage_seed_id.is_empty())
+	assert_null(selection.get_selected_item())
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var saved: Dictionary = adapter.capture("empty_hands", 1, now)
+	assert_eq(saved.player.selected_slot, -1)
+	var directory: String = "res://.godot/empty_hands_" + Crypto.new().generate_random_bytes(8).hex_encode()
+	var repository: LocalSaveRepository = LocalSaveRepository.new(directory, SaveCatalog.new())
+	assert_true(repository.write_profile("empty_hands", saved, 0).ok)
+	var loaded: Dictionary = repository.read_profile("empty_hands")
+	assert_true(loaded.ok)
+	selection.select_slot(1)
+	assert_true(adapter.restore(loaded.snapshot, now).ok)
+	assert_eq(selection.selected_index, -1)
+	assert_null(selection.get_selected_item())
+	var legacy: Dictionary = saved.duplicate(true)
+	legacy.player.selected_slot = 0
+	assert_true(adapter.restore(legacy, now).ok)
+	assert_eq(selection.selected_index, 0)
+	for invalid: int in [-2, 6]:
+		legacy.player.selected_slot = invalid
+		assert_false(adapter.restore(legacy, now).ok)
+		assert_eq(selection.selected_index, 0)
+	DirAccess.remove_absolute(repository.path("empty_hands"))
+	DirAccess.remove_absolute(directory)

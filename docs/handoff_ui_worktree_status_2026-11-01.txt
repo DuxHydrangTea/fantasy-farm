@@ -1,0 +1,216 @@
+ M .mcp.json
+ M assets/Buildings/Extracted/VillageSet/produce_warehouse.png
+ M components/animals/animal_actor.gd
+ M components/animals/animal_behaviour_component.gd
+ M components/boosters/booster_interaction_component.gd
+ M components/boosters/booster_service.gd
+ M components/context_bars_component.gd
+ M components/farm_player.gd
+ M components/farming_controller.gd
+ M components/hotbar_ui.gd
+ M components/interaction/plant_focus_effect.gd
+ M components/inventory_ui.gd
+ M components/language_settings.gd
+ M components/modal_slide.gd
+ M components/objectives/objective_ui.gd
+ M components/onboarding/help_ui.gd
+ M components/onboarding/tutorial_hints.gd
+ M components/shop_merchant.gd
+ M components/shop_ui.gd
+ M components/soil_focus_component.gd
+ M components/state_component.gd
+ M components/storage/farm_seed_picker.gd
+ M components/ui_scale_component.gd
+ M components/wallet_hud.gd
+ M components/weather/weather_hud.gd
+ M components/workers/crop_automation_state.gd
+ M components/workers/crop_worker_policy.gd
+ M components/workers/worker_actor.gd
+ M components/workers/worker_behaviour_component.gd
+ M components/workers/worker_board.gd
+ M components/workers/worker_menu.gd
+ M components/workers/worker_role.gd
+ M components/workers/worker_service.gd
+ M components/workers/worker_world_bridge.gd
+ M localization/en.po
+ M localization/vi.po
+ M persistence/worker_save_schema.gd
+ M persistence/world_persistence.gd
+ M resources/shops/farm_supply.tres
+ M resources/shops/seed_flower_shop.tres
+ M scripts/farm_storage_definition.gd
+ M scripts/item_definition.gd
+ M tests/integration/test_animal_behaviour.gd
+ M tests/integration/test_animal_feeding.gd
+ M tests/integration/test_boosters.gd
+ M tests/integration/test_context_bars.gd
+ M tests/integration/test_crop_automation.gd
+ M tests/integration/test_farm_health_world.gd
+ M tests/integration/test_hotbar.gd
+ M tests/integration/test_mobile_layout.gd
+ M tests/integration/test_objective_ui.gd
+ M tests/integration/test_onboarding.gd
+ M tests/integration/test_shop.gd
+ M tests/integration/test_small_window_ui.gd
+ M tests/integration/test_specialized_shops.gd
+ M tests/integration/test_weather.gd
+ M tests/integration/test_worker_stroll.gd
+ M tests/integration/test_worker_ui.gd
+ M tests/integration/test_worker_warehouse.gd
+ M tests/integration/test_workers.gd
+ M tests/unit/test_worker_compile.gd
+ M tests/unit/test_worker_performance.gd
+ M trees/definitions/autumn_maple.tres
+ M trees/definitions/blue_conifer.tres
+ M trees/definitions/brown_palm.tres
+ M trees/definitions/evergreen_spruce.tres
+ M trees/definitions/flowering_cactus.tres
+ M trees/definitions/golden_aspen.tres
+ M trees/definitions/golden_birch.tres
+ M trees/definitions/magic_blue.tres
+ M trees/definitions/orange_oak.tres
+ M trees/definitions/palm.tres
+ M trees/definitions/pink_blossom.tres
+ M trees/definitions/purple_blossom.tres
+ M trees/definitions/red_maple.tres
+ M trees/definitions/willow.tres
+ M world/main_world.tscn
+?? .ai-memory.toml
+?? assets/Trees/Variants64x80/timber_variants_sheet.png
+?? assets/Trees/Variants64x80/timber_variants_sheet.png.import
+?? components/animals/animal_care_bubble.gd
+?? components/animals/animal_care_bubble.gd.uid
+?? components/animals/animal_healing_effect.gd
+?? components/animals/animal_healing_effect.gd.uid
+?? components/farm_settings.gd
+?? components/farm_settings.gd.uid
+?? components/farm_ui.gd
+?? components/farm_ui.gd.uid
+?? components/interaction/crop_care_effect.gd
+?? components/interaction/crop_care_effect.gd.uid
+?? components/workers/worker_care_action.gd
+?? components/workers/worker_care_action.gd.uid
+?? components/workers/worker_navigation.gd
+?? components/workers/worker_navigation.gd.uid
+?? components/workers/worker_navigation_system.gd
+?? components/workers/worker_navigation_system.gd.uid
+?? docs/concepts/
+?? docs/handoff_ui_concepts_2026-11-01.md
+?? docs/handoff_ui_worktree_status_2026-11-01.txt
+?? docs/npc_bubble_center_lint.json
+?? docs/npc_bubble_center_lint_before.json
+?? docs/npc_bubble_center_tests.log
+?? docs/npc_bubble_lint.json
+?? docs/npc_bubble_lint_before.json
+?? docs/npc_bubble_preview.log
+?? docs/npc_bubble_preview.png
+?? docs/npc_bubble_tests.log
+?? docs/p0_p1_care_checks.log
+?? docs/p0_p1_lint.json
+?? docs/p0_p1_shop_audit.log
+?? docs/p0_p1_tests.log
+?? docs/p0_p1_tests_followup.log
+?? docs/p0_p1_validation.log
+?? docs/ui_after_hud_en_1280.png
+?? docs/ui_after_hud_en_1920.png
+?? docs/ui_after_hud_vi_1280.png
+?? docs/ui_after_hud_vi_1920.png
+?? docs/ui_after_inventory.png
+?? docs/ui_after_objective_ready.png
+?? docs/ui_after_settings.png
+?? docs/ui_after_shop.png
+?? docs/ui_after_worker.png
+?? docs/ui_asset_consistency_lint.json
+?? docs/ui_asset_consistency_lint_before.json
+?? docs/ui_asset_consistency_preview.log
+?? docs/ui_asset_consistency_tests.log
+?? docs/ui_before_hud_en_1280.png
+?? docs/ui_before_hud_en_1920.png
+?? docs/ui_before_hud_vi_1280.png
+?? docs/ui_before_hud_vi_1920.png
+?? docs/ui_clock_probe.log
+?? docs/ui_completion_after.log
+?? docs/ui_completion_before.log
+?? docs/ui_completion_core_tests.log
+?? docs/ui_completion_dossier_2026-11-01.md
+?? docs/ui_completion_edge_checks.log
+?? docs/ui_completion_final_tests.log
+?? docs/ui_completion_focus_tests.log
+?? docs/ui_completion_implementation_2026-11-01.md
+?? docs/ui_completion_import.log
+?? docs/ui_completion_keyboard_checks.log
+?? docs/ui_completion_layout_tests.log
+?? docs/ui_completion_layout_validation.log
+?? docs/ui_completion_lint.json
+?? docs/ui_completion_lint_before.json
+?? docs/ui_completion_management_tests.log
+?? docs/ui_completion_onboarding_checks.log
+?? docs/ui_completion_skin_checks.log
+?? docs/ui_completion_tests_first.log
+?? docs/ui_completion_tests_second.log
+?? docs/ui_completion_validation.log
+?? docs/ui_completion_worker_benchmark.json
+?? docs/ui_completion_worker_benchmark.log
+?? docs/ui_completion_worker_missing_supplies.png
+?? docs/ui_concept_background.jpg
+?? docs/ui_concept_background.log
+?? docs/ui_concept_cozy.png
+?? docs/ui_concept_icons.json
+?? docs/ui_concept_lint.json
+?? docs/ui_concept_minimal.png
+?? docs/ui_concept_settings.png
+?? docs/ui_feedback_focus.log
+?? docs/ui_small_followup.log
+?? docs/worker_badge_lint.json
+?? docs/worker_badge_lint_before.json
+?? docs/worker_badge_preview.json
+?? docs/worker_badge_preview.log
+?? docs/worker_badge_tests.log
+?? docs/worker_care_baseline.png
+?? docs/worker_care_benchmark.log
+?? docs/worker_care_benchmark_2026-11-01.json
+?? docs/worker_care_care_supplied.png
+?? docs/worker_care_missing_supplies.png
+?? docs/worker_investigation_2026-11-01.json
+?? docs/worker_investigation_2026-11-01.md
+?? docs/worker_investigation_ablation_2026-11-01.json
+?? docs/worker_investigation_deep_2026-11-01.json
+?? docs/worker_optimization_2026-11-01.md
+?? docs/worker_optimization_live_after_2026-11-01-15-workers.png
+?? docs/worker_optimization_live_after_2026-11-01.json
+?? docs/worker_optimization_live_before_2026-11-01-15-workers.png
+?? docs/worker_optimization_live_before_2026-11-01.json
+?? docs/worker_optimization_live_root_2026-11-01-15-workers.png
+?? docs/worker_optimization_live_root_2026-11-01.json
+?? docs/worker_p0_p1_2026-11-01.md
+?? items/boosters/herbicide.tres
+?? scripts/prepare_worker_baseline.py
+?? tests/integration/test_ui_completion.gd
+?? tests/integration/test_ui_completion.gd.uid
+?? tests/integration/test_worker_care_improvements.gd
+?? tests/integration/test_worker_care_improvements.gd.uid
+?? tests/integration/test_worker_optimization.gd
+?? tests/integration/test_worker_optimization.gd.uid
+?? tests/performance/investigate_workers.gd
+?? tests/performance/investigate_workers.gd.uid
+?? tests/performance/investigate_workers.tscn
+?? tests/performance/worker_care_benchmark.gd
+?? tests/performance/worker_care_benchmark.gd.uid
+?? tests/performance/worker_care_benchmark.tscn
+?? tests/support/ui_completion_preview.gd
+?? tests/support/ui_completion_preview.gd.uid
+?? tests/support/ui_completion_preview.tscn
+?? trees/textures/variant_autumn_maple.tres
+?? trees/textures/variant_blue_conifer.tres
+?? trees/textures/variant_brown_palm.tres
+?? trees/textures/variant_flowering_cactus.tres
+?? trees/textures/variant_golden_aspen.tres
+?? trees/textures/variant_golden_birch.tres
+?? trees/textures/variant_magic_blue.tres
+?? trees/textures/variant_orange_oak.tres
+?? trees/textures/variant_palm.tres
+?? trees/textures/variant_pink_blossom.tres
+?? trees/textures/variant_purple_blossom.tres
+?? trees/textures/variant_red_maple.tres
+?? trees/textures/variant_spruce.tres
+?? trees/textures/variant_willow.tres

@@ -37,6 +37,26 @@ func _open(role: String) -> WorkerMenu:
 	assert_true(board.open_shop(world.player))
 	return board.menu as WorkerMenu
 
+func test_care_priority_low_stock_and_per_worker_reason() -> void:
+	assert_eq(world.workers.hire("crop"), "")
+	menu = _open("crop")
+	assert_not_null(menu.priority_choice)
+	menu._priority_selected(1)
+	assert_eq(world.workers.crop_automation.priority_mode, "care_first")
+	var row: Dictionary = world.workers.record("crop")
+	world.workers.waiting_reasons[String(row.id)] = "No herbicide in supply storage. Buy it at the seed shop, Supplies tab."
+	row.task = {}
+	assert_string_contains(menu._task_text(world.workers, row, true, false), tr("No herbicide in supply storage. Buy it at the seed shop, Supplies tab."))
+	row.task = {"kind": "cure_animal"}
+	world.workers.bridge.crop_care_waiting = true
+	assert_eq(menu._task_text(world.workers, row, true, false), tr("Treating an animal"))
+	row.task = {}
+	for language: String in ["en", "vi"]:
+		Language.set_language(language)
+		menu._refresh()
+		assert_eq(menu.priority_choice.get_item_text(1), tr("Care first"))
+		assert_string_contains((menu.get_node("%Supplies") as Label).text, tr("Low stock: {item} ({count}).").format({"item": tr("Herbicide"), "count": 0}))
+
 func test_unified_menu_shows_one_team_with_all_controls() -> void:
 	menu = _open("crop")
 	assert_null(world.get_node_or_null("OrchardWorkers"), "Orchard board removed")
@@ -58,9 +78,32 @@ func test_unified_badge_and_pause_text_in_both_languages() -> void:
 		Language.set_language(language)
 		menu._refresh()
 		behaviour._update_badge(actor, world.workers.record("crop"))
-		assert_string_contains(actor.badge.text, "Nhân công #1" if language == "vi" else "Worker #1")
+		assert_eq(actor.badge.text, "#1")
+		assert_false(actor.badge.text.contains("\n"))
 		assert_eq((menu.get_node("%PauseNote") as Label).text, "Công việc đã tạm dừng thủ công. Vẫn tính lương." if language == "vi" else "Work is manually paused. Wages still apply.")
 		assert_eq((menu.get_node("%Task") as Label).text, (menu.get_node("%PauseNote") as Label).text)
+
+func test_world_badge_stays_compact_and_task_detail_only_on_interaction() -> void:
+	assert_eq(world.workers.hire("crop"), "")
+	var row: Dictionary = world.workers.record("crop")
+	var actor: WorkerActor = world.workers.actor_for("crop")
+	row.task = {"kind": "treat_weeds"}
+	actor.behaviour._update_badge(actor, row)
+	assert_eq(actor.badge.text, "#1")
+	assert_true(actor.task_icon.visible)
+	assert_lte(actor.badge.size.x * actor.badge.scale.x, 24.0)
+	assert_eq(actor.task_icon.texture, preload("res://items/boosters/herbicide.tres").icon)
+	var board: WorkerBoard
+	for child: Node in actor.get_children():
+		if child is WorkerBoard:
+			board = child as WorkerBoard
+	assert_not_null(board)
+	if board != null:
+		assert_string_contains(board.interaction_action_text(), tr("Treating weeds"))
+	row.task = {"kind": "patrol"}
+	actor.behaviour._update_badge(actor, row)
+	assert_false(actor.task_icon.visible)
+	assert_eq(actor.badge.text, "#1")
 
 func test_crop_settings_pause_and_shared_supply_counts_use_real_models() -> void:
 	var source: InventoryComponent = world.storages.inventory("farm_supply_storage")
@@ -242,7 +285,8 @@ func test_restored_slide_and_stable_worker_buttons() -> void:
 	world.process_mode = Node.PROCESS_MODE_INHERIT
 	world.player.set_physics_process(false)
 	menu = _open("crop")
-	assert_eq(menu.offset.y, menu.get_viewport().get_visible_rect().size.y)
+	assert_gt(menu.offset.y, 0.0)
+	assert_lte(menu.offset.y, 16.0, "Opening motion stays short and keeps the menu in view")
 	assert_eq((menu.root.get_node("Dim") as ColorRect).color.a, 0.0)
 	await wait_seconds(0.4)
 	assert_eq(menu.offset.y, 0.0)

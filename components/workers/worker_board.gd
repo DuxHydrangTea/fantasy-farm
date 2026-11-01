@@ -31,3 +31,13 @@ func interaction_sprite() -> Node2D:
 	if worker_access and get_parent() is WorkerActor:
 		return (get_parent() as WorkerActor).sprite
 	return super.interaction_sprite()
+
+func interaction_action_text() -> String:
+	if worker_access and get_parent() is WorkerActor:
+		var actor: WorkerActor = get_parent() as WorkerActor
+		var row: Dictionary = actor.worker_service.record_for(worker_id)
+		if not row.is_empty():
+			var title: String = tr("Worker #{number}").format({"number": actor.worker_service.worker_number(worker_id)})
+			var state: String = tr("Resting") if not actor.worker_service.running(row) else tr(WorkerRole.task_caption(row.task, actor.global_position))
+			return title + " · " + state
+	return super.interaction_action_text()

@@ -17,6 +17,8 @@ var collision: CollisionShape2D
 var movement: MovementComponent
 var animation: AnimationComponent
 var behaviour: WorkerBehaviourComponent
+var care_action: Node2D
+var task_icon: Sprite2D
 
 func _enter_tree() -> void:
 	basket = get_node("Basket") as InventoryComponent
@@ -39,6 +41,24 @@ func _ready() -> void:
 		behaviour.set_physics_process(false)
 		return
 	_apply_definition()
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	badge.scale = Vector2(0.45, 0.45)
+	var plate: StyleBoxFlat = StyleBoxFlat.new()
+	plate.bg_color = Color(0.12, 0.15, 0.12, 0.78)
+	plate.content_margin_left = 3
+	plate.content_margin_right = 3
+	badge.add_theme_stylebox_override("normal", plate)
+	task_icon = Sprite2D.new()
+	task_icon.name = "TaskIcon"
+	task_icon.z_index = 20
+	task_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	task_icon.hide()
+	add_child(task_icon)
+	care_action = preload("res://components/workers/worker_care_action.gd").new()
+	care_action.name = "CareAction"
+	care_action.z_index = 2
+	care_action.hide()
+	add_child(care_action)
 	animation.play("idle")
 
 func _apply_definition() -> void:
@@ -50,4 +70,19 @@ func configure_patrol(points: Array[Vector2]) -> void:
 	behaviour.begin_patrol(global_position)
 
 func _place_badge() -> void:
-	badge.position = Vector2(-badge.size.x * badge.scale.x * 0.5, -25.0 - badge.size.y * badge.scale.y)
+	var width: float = badge.size.x * badge.scale.x
+	var icon_width: float = 10.0 if is_instance_valid(task_icon) and task_icon.visible else 0.0
+	badge.position = Vector2(-(width + icon_width) * 0.5, -25.0 - badge.size.y * badge.scale.y)
+	if is_instance_valid(task_icon):
+		task_icon.position = badge.position + Vector2(width + 5.0, badge.size.y * badge.scale.y * 0.5)
+
+func show_status(number: int, texture: Texture2D, attention: bool) -> void:
+	badge.text = "#%d" % number
+	badge.modulate = Color("ffd580") if attention else Color.WHITE
+	badge.reset_size()
+	if task_icon != null:
+		task_icon.texture = texture
+		task_icon.visible = texture != null
+		if texture != null:
+			task_icon.scale = Vector2.ONE * (8.0 / maxf(texture.get_width(), texture.get_height()))
+	_place_badge()

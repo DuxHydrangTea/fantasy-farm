@@ -1,6 +1,6 @@
 class_name ContextBarsComponent
 extends Node2D
-## Plant focus. Animals are managed explicitly at pen boards.
+## Plant hover and facing focus for plants and animals.
 ## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
 @export var mouse_padding: float = 5.0
 @export var refresh_interval: float = 0.05
@@ -14,6 +14,7 @@ const PlantFocusEffect = preload("res://components/interaction/plant_focus_effec
 var _visible: Array[Node2D] = []
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 var _elapsed: float = 0.0
+var _focused_animal: AnimalActor
 
 func _physics_process(delta: float) -> void:
 	_elapsed += delta
@@ -23,6 +24,12 @@ func _physics_process(delta: float) -> void:
 	refresh_at(get_global_mouse_position(), get_viewport().get_visible_rect().has_point(get_viewport().get_mouse_position()))
 
 func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
+	var animal: AnimalActor
+	if not selection.is_menu_open() and player.boosters != null:
+		var interaction: InteractionTarget = player.interactions.focused if player.interactions != null else null
+		if interaction == null or not interaction.valid() or interaction.priority() >= 2:
+			animal = interaction.node as AnimalActor if interaction != null and interaction.valid() and interaction.kind == InteractionTarget.Kind.ANIMAL else player.boosters.find_animal()
+	_set_animal_focus(animal)
 	var next: Array[Node2D] = []
 	if not selection.is_menu_open():
 		var focused: Node2D = _focused_target()
@@ -39,15 +46,25 @@ func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
 	_visible = next
 
 func _exit_tree() -> void:
+	_set_animal_focus(null)
 	for target: Node2D in _visible:
 		if is_instance_valid(target) and not target.is_queued_for_deletion():
 			_set_plant_focused(target, false)
+
+func _set_animal_focus(animal: AnimalActor) -> void:
+	if _focused_animal == animal:
+		return
+	if is_instance_valid(_focused_animal) and not _focused_animal.is_queued_for_deletion():
+		_set_plant_focused(_focused_animal, false)
+	_focused_animal = animal
+	if is_instance_valid(_focused_animal) and not _focused_animal.is_queued_for_deletion():
+		_set_plant_focused(_focused_animal, true)
 
 func _set_plant_focused(target: Node2D, value: bool) -> void:
 	target.set_status_focused(value)
 	if target is FlowerPot and (target as FlowerPot).definition == null:
 		value = false
-	var sprite: Sprite2D = target.get_status_sprite() as Sprite2D
+	var sprite: Node2D = target.get_status_sprite()
 	if sprite == null:
 		return
 	var effect: Node = target.get_node_or_null("PlantFocusEffect")

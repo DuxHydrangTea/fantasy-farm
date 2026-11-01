@@ -1,0 +1,55 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_shop.gd
+[0m* test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory
+* test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit
+* test_failed_purchase_and_load_close_have_no_thanks
+* test_range_categories_and_checkout_revalidation
+* test_shop_panel_is_inside_full_hd_viewport
+* test_removing_merchant_releases_modal_lock
+* test_main_world_seed_merchant_stands_in_front_of_the_seed_shop
+* test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal
+* test_real_farm_can_buy_all_seven_species_into_configured_pens
+* test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell
+[1m10/10 passed.
+[0m[4m
+
+res://tests/integration/test_specialized_shops.gd
+[0m* test_seed_shop_displays_and_sells_herbicide
+* test_every_live_shop_offer_has_a_visible_card_and_can_be_purchased
+* test_stock_is_split_without_losing_or_duplicating_existing_items
+* test_each_npc_opens_its_own_tabs_and_rejects_other_shop_categories
+* test_seed_purchase_animal_purchase_sale_and_tool_purchase_use_separate_vendors
+* test_npcs_have_distinct_visuals_are_nearby_and_can_be_reached_from_the_path
+* test_shop_titles_translate_and_compact_tabs_stay_restricted
+* test_interaction_prompts_name_each_shop_and_update_language
+* test_flowers_can_only_be_bought_from_the_new_flower_merchant
+[1m9/9 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               2
+Tests                19
+Passing Tests        19
+Asserts             746
+Time              16.418s
+
+
+[32m---- All tests passed! ----
+[0m

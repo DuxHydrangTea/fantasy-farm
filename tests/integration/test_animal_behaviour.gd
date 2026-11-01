@@ -150,13 +150,15 @@ func test_all_chicken_and_rooster_assets_support_the_transition_chain() -> void:
 			assert_true(frames.has_animation(action))
 			assert_true(frames.get_animation_loop(action))
 
-func test_legacy_focus_never_cancels_walk_or_wakes_sleeping_animal() -> void:
+func test_focus_stops_walk_and_releases_animal_afterwards() -> void:
 	assert_true(behaviour.request_behaviour(&"walk"))
 	animal.set_status_focused(true)
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.WALK)
-	assert_true(animal.movement.has_target)
+	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_false(animal.movement.has_target)
 	assert_false(animal.needs_display.visible)
+	assert_false(behaviour.request_behaviour(&"walk"))
+	animal.set_status_focused(false)
 	assert_true(behaviour.request_behaviour(&"sleep"))
 	assert_true(await _wait_for(AnimalBehaviourComponent.State.SLEEP))
 	animal.set_status_focused(true)
-	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.SLEEP)
+	assert_eq(behaviour.current_state, AnimalBehaviourComponent.State.IDLE)

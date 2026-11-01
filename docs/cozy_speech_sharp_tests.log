@@ -1,0 +1,66 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+tests/integration/test_shop.gd
+[0m* test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory
+* test_dialogue_panel_stays_centered_above_npc_in_both_languages
+* test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit
+* test_failed_purchase_and_load_close_have_no_thanks
+* test_range_categories_and_checkout_revalidation
+* test_shop_panel_is_inside_full_hd_viewport
+* test_removing_merchant_releases_modal_lock
+* test_main_world_seed_merchant_stands_in_front_of_the_seed_shop
+* test_animal_tabs_buy_newborn_then_sell_only_explicitly_selected_animal
+* test_real_farm_can_buy_all_seven_species_into_configured_pens
+* test_removed_sale_animal_clears_inspection_and_stale_card_cannot_sell
+[1m11/11 passed.
+[0m[4m
+
+tests/integration/test_ui_completion.gd
+[0m* test_hud_groups_fit_and_tutorial_does_not_cover_objective_in_both_languages
+* test_wallet_is_compact_but_tooltip_keeps_exact_value_and_locale
+* test_inventory_filters_do_not_move_or_spend_items_and_empty_result_recovers
+* test_dialogue_stays_inside_view_at_left_and_right_edges
+* test_settings_persist_real_options_and_share_modal_lock
+* test_save_status_uses_a_single_bounded_panel_and_sleeps_when_idle
+* test_cozy_hud_claims_ready_reward_once_without_opening_a_modal
+* test_animal_speech_uses_shared_font_and_contains_vietnamese_text
+[1m8/8 passed.
+[0m[4m
+
+tests/integration/test_worker_care_improvements.gd
+[0m* test_missing_medicines_report_exact_type_and_deposit_clears_reason
+* test_priority_modes_and_legacy_save_defaults
+* test_animal_commit_rejects_wall_and_keeps_medicine
+* test_moving_target_replans_and_removed_target_cancels
+* test_unreachable_patient_times_out_without_spending_medicine
+* test_online_worker_moves_sprays_and_consumes_once
+* test_bubble_fits_both_languages_and_preserves_center_under_zoom
+[1m7/7 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               3
+Tests                26
+Passing Tests        26
+Asserts             311
+Time              20.686s
+
+
+[32m---- All tests passed! ----
+[0m

@@ -1,0 +1,46 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+tests/integration/test_separate_quality_items.gd
+[0m* test_all_catalog_produce_have_three_independent_quality_stacks
+* test_full_legacy_containers_split_without_loss_and_save_roundtrip
+* test_migration_reuses_empty_slots_and_rejects_corrupt_counts_atomically
+* test_storage_does_not_spend_another_quality_or_remove_units_that_do_not_fit
+[1m4/4 passed.
+[0m[4m
+
+tests/unit/test_farm_storage.gd
+[0m* test_filters_and_transfers_across_both_storages
+* test_full_destination_moves_only_what_fits_and_preserves_remainder
+* test_observers_see_atomic_state_and_cannot_reenter
+* test_dto_roundtrip_capacity_and_reject_bad_items_counts_or_missing_storage
+* test_selected_quality_moves_only_that_tier_and_clamps_to_available
+* test_quality_transfer_with_full_target_preserves_other_tiers
+[1m6/6 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               2
+Tests                10
+Passing Tests        10
+Asserts            1140
+Time              11.705s
+
+
+[32m---- All tests passed! ----
+[0m

@@ -31,10 +31,16 @@ var _moving_from: int = -1
 var _assigning_hotbar: bool = false
 var _slide: Node
 var _closing: bool = false
+var search: LineEdit
+var item_filter: OptionButton
+var empty_results: Label
+const FILTER_TYPES: Array[int] = [-1, ItemDefinition.ItemType.TOOL, ItemDefinition.ItemType.SEED, ItemDefinition.ItemType.PRODUCE, ItemDefinition.ItemType.FEED, ItemDefinition.ItemType.BOOSTER, ItemDefinition.ItemType.PLACEABLE, ItemDefinition.ItemType.MATERIAL]
+const FILTER_TITLES: Array[String] = ["All items", "Tool", "Seed", "Produce", "Feed", "Booster", "Placeable", "Material"]
 
 func _ready() -> void:
 	root.hide()
 	UIScaleComponent.attach(self, root)
+	_build_filters()
 	_slide = preload("res://components/modal_slide.gd").new()
 	add_child(_slide)
 	_slide.configure(self, ^"offset:y", root)
@@ -43,17 +49,7 @@ func _ready() -> void:
 	if _wallet != null:
 		_wallet.changed.connect(_refresh_wallet)
 		_refresh_wallet(_wallet.balance)
-	for index: int in range(selection.inventory.slot_count):
-		var button: InventorySlot = InventorySlot.new()
-		button.name = "Slot" + str(index)
-		button.inventory = selection.inventory
-		button.slot_index = index
-		button.compact = true
-		button.cozy_skin = true
-		button.show_shortcut = index < selection.HOTBAR_SIZE
-		button.pressed.connect(_inspect_slot.bind(index))
-		grid.add_child(button)
-		buttons.append(button)
+	_sync_slots()
 	close_button.pressed.connect(close)
 	move_button.pressed.connect(_toggle_move)
 	assign_button.pressed.connect(_assign_hotbar)
@@ -94,6 +90,8 @@ func _fit_panel() -> void:
 	if touch:
 		MobileLayout.prepare_buttons(root)
 	_refresh_actions(compact)
+	if _wallet != null:
+		_refresh_wallet(_wallet.balance)
 
 func _cycle_touch_mode() -> void:
 	var player: FarmPlayer = get_parent() as FarmPlayer
@@ -121,7 +119,8 @@ func _assign_hotbar() -> void:
 	_refresh()
 
 func _refresh_wallet(balance: int) -> void:
-	wallet_label.text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
+	wallet_label.text = tr("{coins} coins").format({"coins": FarmUI.compact_number(balance) if root.size.x < 640 else GameText.grouped_integer(balance)})
+	wallet_label.tooltip_text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
 
 func open() -> void:
 	if _closing:
@@ -163,6 +162,7 @@ func _inspect_slot(index: int) -> void:
 	_refresh()
 
 func _refresh() -> void:
+	_sync_slots()
 	var used: int = 0
 	for button: InventorySlot in buttons:
 		button.set_selected(button.slot_index == inspected_index)
@@ -179,6 +179,64 @@ func _refresh() -> void:
 	touch_mode_button.text = player.mobile_controls.mode_text() if player != null and player.mobile_controls != null else tr("Touch controls: {mode}").format({"mode": tr("Auto")})
 	capacity.text = tr("{used} / {total} slots").format({"used": used, "total": buttons.size()})
 	_hint.text = tr("Choose a hotbar slot (1–6).") if _assigning_hotbar else tr("Tap a destination slot.") if _moving_from >= 0 else tr("Drag to swap or stack")
+	_apply_filter()
+
+func _build_filters() -> void:
+	var parent: Node = _scroll.get_parent()
+	var row: HBoxContainer = HBoxContainer.new()
+	row.name = "ItemFilters"
+	parent.add_child(row)
+	parent.move_child(row, _scroll.get_index())
+	search = LineEdit.new()
+	search.name = "ItemSearch"
+	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	search.custom_minimum_size.y = 40
+	search.clear_button_enabled = true
+	search.text_changed.connect(func(_query: String) -> void: _apply_filter())
+	row.add_child(search)
+	item_filter = OptionButton.new()
+	item_filter.name = "ItemTypeFilter"
+	item_filter.fit_to_longest_item = false
+	item_filter.clip_text = true
+	item_filter.custom_minimum_size = Vector2(112, 40)
+	for caption: String in FILTER_TITLES:
+		item_filter.add_item(tr(caption))
+	item_filter.item_selected.connect(func(_index: int) -> void: _apply_filter())
+	row.add_child(item_filter)
+	empty_results = Label.new()
+	empty_results.name = "EmptyResults"
+	empty_results.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	parent.add_child(empty_results)
+
+func _apply_filter() -> void:
+	if search == null:
+		return
+	search.placeholder_text = tr("Search items…")
+	for index: int in range(FILTER_TITLES.size()):
+		item_filter.set_item_text(index, tr(FILTER_TITLES[index]))
+	search.editable = _moving_from < 0
+	item_filter.disabled = _moving_from >= 0
+	var query: String = search.text.strip_edges().to_lower() if _moving_from < 0 else ""
+	var type: int = FILTER_TYPES[maxi(0, item_filter.selected)] if _moving_from < 0 else -1
+	item_filter.tooltip_text = tr(FILTER_TITLES[maxi(0, item_filter.selected)])
+	var any: bool = false
+	for button: InventorySlot in buttons:
+		var item: ItemDefinition = selection.inventory.get_slot_item(button.slot_index)
+		var matches_type: bool = item != null and (type == -1 or item.item_type == type or (type == ItemDefinition.ItemType.TOOL and item.item_type == ItemDefinition.ItemType.HOE))
+		button.visible = (query.is_empty() and type == -1) or (matches_type and (query.is_empty() or ItemQuality.item_name(item, selection.inventory.slot(button.slot_index).tiers).to_lower().contains(query)))
+		any = any or button.visible
+	empty_results.text = tr("No matching items. Clear the search or choose another category.")
+	empty_results.visible = not any
+	_sidebar.visible = any
+	if any and inspected_index >= 0 and not buttons[inspected_index].visible:
+		for button: InventorySlot in buttons:
+			if button.visible:
+				inspected_index = button.slot_index
+				break
+		for button: InventorySlot in buttons:
+			button.set_selected(button.slot_index == inspected_index)
+		_refresh_details()
+		_refresh_actions(MobileLayout.is_touch(get_viewport()) or root.size.x < 800.0 or root.size.y < 500.0)
 
 func _refresh_actions(compact: bool) -> void:
 	move_button.text = tr("Cancel" if compact else "Cancel move") if _moving_from >= 0 else tr("Move" if compact else "Move item")
@@ -195,14 +253,18 @@ func _slot_before(a: InventorySlot, b: InventorySlot) -> bool:
 	var right: ItemDefinition = selection.inventory.get_slot_item(b.slot_index)
 	var left_id: String = String(left.item_id) if left != null else "~"
 	var right_id: String = String(right.item_id) if right != null else "~"
-	return left_id < right_id or (left_id == right_id and a.slot_index < b.slot_index)
+	if left_id == right_id:
+		var left_tier: int = ItemQuality.stack_tier(selection.inventory.slot(a.slot_index).tiers)
+		var right_tier: int = ItemQuality.stack_tier(selection.inventory.slot(b.slot_index).tiers)
+		return left_tier < right_tier if left_tier != right_tier else a.slot_index < b.slot_index
+	return left_id < right_id
 
 func _refresh_details() -> void:
 	var item: ItemDefinition = selection.inventory.get_slot_item(inspected_index)
 	item_icon.texture = item.icon if item != null else null
-	item_name.text = tr(item.display_name) if item != null else tr("Empty slot")
+	item_name.text = ItemQuality.item_name(item, selection.inventory.slot(inspected_index).tiers)
 	item_type.text = _type_label(item) if item != null else ""
-	quality_panel.visible = item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit
+	quality_panel.visible = false # Quality is part of this separate item name, not a mixed-stack breakdown.
 	if quality_panel.visible:
 		var tiers: Array = selection.inventory.slot(inspected_index).tiers
 		for tier: int in range(3):
@@ -226,6 +288,10 @@ func _input(event: InputEvent) -> void:
 		return
 	if not event.is_pressed() or event.is_echo():
 		return
+	if selection.inventory_open and search.has_focus() and event is InputEventKey:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if code >= KEY_SPACE and code <= KEY_ASCIITILDE:
+			return # Printable keys belong to the search field, including I and 1–6.
 	if selection.inventory_open and _assigning_hotbar and event is InputEventKey:
 		var index: int = event.physical_keycode - KEY_1
 		if index >= 0 and index < selection.HOTBAR_SIZE:
@@ -247,3 +313,21 @@ func _notification(what: int) -> void:
 		_refresh()
 		if _wallet != null:
 			_refresh_wallet(_wallet.balance)
+
+func _sync_slots() -> void:
+	inspected_index = mini(inspected_index, selection.inventory.slot_count - 1)
+	while buttons.size() > selection.inventory.slot_count:
+		var removed: InventorySlot = buttons.pop_back()
+		grid.remove_child(removed)
+		removed.queue_free()
+	for index: int in range(buttons.size(), selection.inventory.slot_count):
+		var button: InventorySlot = InventorySlot.new()
+		button.name = "Slot" + str(index)
+		button.inventory = selection.inventory
+		button.slot_index = index
+		button.compact = true
+		button.cozy_skin = true
+		button.show_shortcut = index < selection.HOTBAR_SIZE
+		button.pressed.connect(_inspect_slot.bind(index))
+		grid.add_child(button)
+		buttons.append(button)

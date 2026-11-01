@@ -144,7 +144,7 @@ func _refresh() -> void:
 			grids[side].add_child(card)
 			if card.item != null:
 				used += 1
-				card.pressed.connect(_select.bind(card.item.item_id, side == 0))
+				card.pressed.connect(_select.bind(card.item.item_id, side == 0, ItemQuality.stack_tier(slot.tiers)))
 				if card.disabled:
 					card.tooltip_text += "\n" + tr("This item does not belong in this storage.")
 			if side == focus_side and index == focus_index and not card.disabled:
@@ -155,14 +155,14 @@ func _refresh() -> void:
 		scrolls[side].set_deferred("scroll_vertical", scroll_position)
 	_fit()
 
-func _select(id: StringName, deposit: bool) -> void:
+func _select(id: StringName, deposit: bool, quality: int = -1) -> void:
 	selected_id = id
 	depositing = deposit
 	_set_quantity(1)
 	var entry: Dictionary = _totals(customer.selection.inventory if depositing else service.inventory(storage_id)).get(id, {})
 	var item: ItemDefinition = entry.get("item") as ItemDefinition
-	selected_tier = -1
-	if item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
+	selected_tier = quality
+	if quality < 0 and item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
 		for tier: int in range(3):
 			if int(entry.tiers[tier]) > 0:
 				selected_tier = tier
@@ -208,13 +208,13 @@ func _update_command() -> void:
 		if selected_tier >= 0:
 			count = int(entry.tiers[selected_tier])
 	var allowed: bool = item != null and service.definition(storage_id).accepts(item)
-	var capacity: int = target.capacity_for(item) if allowed else 0
+	var capacity: int = target.capacity_for(item, maxi(0, selected_tier)) if allowed else 0
 	quantity.max_value = maxi(1, mini(count, capacity))
 	quantity.editable = count > 0 and capacity > 0 and allowed
 	maximum_button.disabled = not quantity.editable
 	item_icon.texture = item.icon if item != null else null
 	(%IconFrame as PanelContainer).visible = item != null
-	item_name.text = tr(item.display_name) if item != null else tr("Select an item")
+	item_name.text = (tr(item.display_name) + " · " + ItemQuality.label(selected_tier) if has_quality else tr(item.display_name)) if item != null else tr("Select an item")
 	source_label.text = tr("Selected from bag") if depositing else tr("Selected from storage")
 	source_label.visible = item != null
 	deposit_button.disabled = not depositing or not quantity.editable
@@ -235,7 +235,7 @@ func _update_command() -> void:
 	move_button = deposit_button if depositing else withdraw_button
 	for side: int in range(2):
 		for card: FarmStorageSlot in grids[side].get_children():
-			card.set_pressed_no_signal(item != null and card.get_meta("storage_item") == selected_id and depositing == (side == 0))
+			card.set_pressed_no_signal(item != null and card.get_meta("storage_item") == selected_id and depositing == (side == 0) and (selected_tier < 0 or ItemQuality.stack_tier(card.tiers) == selected_tier))
 	TouchQuantityComponent.refresh_for(quantity)
 	_syncing = false
 

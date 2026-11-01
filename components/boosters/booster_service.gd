@@ -19,10 +19,11 @@ func use(farm: FarmingController, cell: Vector2i, animal: AnimalActor, bag: Inve
 		error = farm.root_error(cell, actor) if is_instance_valid(farm) else "No crop to fertilize."
 		if error.is_empty():
 			applied = farm.apply_root(cell, actor)
-	elif item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE:
-		error = farm.care_error(cell, true, actor) if is_instance_valid(farm) else "This plot is unavailable."
+	elif item.booster_kind in [ItemDefinition.BoosterKind.PESTICIDE, ItemDefinition.BoosterKind.HERBICIDE]:
+		var pests: bool = item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE
+		error = farm.care_error(cell, pests, actor) if is_instance_valid(farm) else "This plot is unavailable."
 		if error.is_empty():
-			applied = farm.treat_crop(cell, true, actor)
+			applied = farm.treat_crop(cell, pests, actor)
 	else:
 		if is_instance_valid(animal) and not animal.is_queued_for_deletion():
 			# Never give an offline interval the benefit of a tonic applied afterward.

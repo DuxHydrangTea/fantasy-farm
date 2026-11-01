@@ -1,0 +1,413 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6571
+[MCPRegistry] runtime port 6571 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_orders.gd
+[0m* test_board_is_separate_reachable_and_uses_shared_interaction_modal
+* test_all_authored_templates_have_real_world_sources_and_missing_source_is_skipped
+* test_confirmation_cancel_inventory_change_double_click_and_localization
+* test_save_load_preserves_orders_and_closes_pending_confirmation
+* test_legacy_v13_migration_and_corrupt_order_preflight_are_pure
+* test_sell_all_warns_but_does_not_fulfill_orders
+* test_order_and_confirmation_safe_area_in_en_vi_at_density_one_and_three
+* test_scene_cards_and_quotes_show_normal_and_perfect_rewards
+* test_empty_slots_disable_delivery_and_find_orders_repopulates_available_slots
+* test_switching_cards_and_language_preserves_confirmation_exact_plan
+[1m10/10 passed.
+[0m[4m
+
+res://tests/integration/test_cooking_ui.gd
+[0m* test_filter_and_maximum_track_actual_ingredients_and_shared_capacity
+* test_ready_collection_refreshes_queue_and_does_not_duplicate
+* test_paid_recipe_maximum_obeys_quality_wallet_and_live_model_updates
+* test_compact_layout_keeps_actions_visible_and_restores_desktop_columns
+* test_switching_recipes_after_changing_quantity_rebuilds_ingredient_rows
+[1m5/5 passed.
+[0m[4m
+
+res://tests/integration/test_graft_ui.gd
+[0m* test_review_is_free_and_explicit_confirmation_preserves_current_crop
+* test_missing_wax_direction_is_reviewable_and_paid_change_uses_one_wax
+* test_external_revision_change_disables_old_review_until_reselected
+* test_full_bag_keeps_entire_ripe_crop_and_distance_closes_modal
+* test_compact_review_actions_fit_and_language_switch_keeps_plan
+[1m5/5 passed.
+[0m[4m
+
+res://tests/integration/test_pen_upgrades.gd
+[0m* test_prices_and_all_five_levels_are_independent
+* test_failed_stale_reentrant_and_rollback_purchases_do_not_double_spend
+* test_legacy_population_migration_and_invalid_progress
+* test_capture_reload_keeps_paid_capacity_even_after_animals_are_removed
+* test_buying_animals_obeys_paid_capacity_and_distinguishes_physical_space
+* test_all_seven_species_have_thirty_arrival_positions_on_the_current_map
+* test_full_legacy_schema_preserves_thirty_six_animals_without_charging
+* test_upgrade_requests_save_and_failed_io_can_be_retried_without_spending_again
+* test_current_profile_copy_migrates_without_losing_animals_or_perennial_trees
+[31m    [Failed]:  [0mARRAY([{ "age": 579359.659713268, "animal": "chicken", "facing": "left", "hydration": 0.0,...0082 } }]) != ARRAY([{ "age": 579359.659713268, "animal": "chicken", "facing": "left", "hydration": 0.0,... false }]).
+    [{ "age": 579359.659713268, "animal": "c...40082 } }] != [{ "age": 579359.659713268, "animal": "c...: false }]  48 of 48 indexes do not match.  
+      at line 226
+[1m8/9 passed.
+[0m[4m
+
+res://tests/integration/test_honey_garden.gd
+[0m* test_layout_keeps_all_80_pots_and_places_hives_outside_flower_beds
+* test_center_flower_stays_in_its_pot_when_hives_move_outside
+* test_full_garden_migrates_without_moving_or_losing_flowers
+* test_uncollected_legacy_batch_drains_without_restarting_before_migration
+* test_saved_dense_grid_hives_move_to_new_positions_without_mutating_snapshot
+* test_empty_legacy_hive_pauses_but_field_hive_keeps_producing
+* test_surplus_hives_refund_whole_items_and_retained_hives_stay_repaired
+* test_refund_capacity_defers_all_movement
+* test_hybrid_requires_opposite_pairs_and_beats_mono_deterministically
+* test_fixed_neighbors_snapshot_and_live_rate_fallback
+* test_rain_keeps_recipe_and_wind_only_boosts_garden_speed
+* test_repair_consumes_warehouse_then_bag_and_cannot_charge_twice
+* test_save_roundtrip_carries_recipe_repair_discovery_and_is_idempotent
+* test_migration_from_v30_is_primitive_only_and_no_batch_is_reclassified
+* test_five_chef_recipes_reveal_jars_only_after_successful_collection
+* test_waiting_save_load_offline_marks_hives_before_any_catchup
+* test_invalid_garden_batch_or_position_rejects_before_changing_world
+* test_failed_repair_is_free_and_damaged_hives_produce_nothing
+* test_repair_blocks_reentrant_commands_and_snapshot_during_notifications
+* test_pending_legacy_hive_can_load_before_overlapping_pots_are_relocated
+[1m20/20 passed.
+[0m[4m
+
+res://tests/integration/test_supply_storage_flow.gd
+[0m* test_all_six_sizes_and_four_directions_spend_shared_seeds_without_any_in_bag
+* test_five_seeds_preview_and_impact_match_and_do_not_use_extra_bag_seeds
+* test_source_reduction_before_impact_limits_planting_to_remaining_stock
+* test_switching_seed_away_and_back_or_opening_menu_cancels_frozen_action
+* test_hotbar_crop_seed_also_uses_warehouse_and_never_falls_back_to_bag
+* test_selection_save_migration_validation_and_save_before_impact
+* test_only_correct_feed_from_storage_is_consumed_and_two_troughs_cannot_share_last_pack
+* test_reserve_and_observers_preserve_whole_feed_packs_and_hold_storage_lock
+* test_old_basket_feed_migrates_partially_and_remainder_can_be_recovered
+* test_support_checks_seeds_and_produce_in_both_warehouses
+* test_animal_purchase_uses_valid_scene_and_current_prices_with_atomic_notifications
+[1m11/11 passed.
+[0m[4m
+
+res://tests/integration/test_farm_storage_world.gd
+[0m* test_doorways_range_readiness_and_filters
+[31m    [Failed] [0m
+      at line 22
+[31m    [Failed] [0m
+      at line 26
+[31m    [Failed] [0m
+      at line 27
+[31m    [Failed] [0m
+      at line 28
+* test_seed_storage_doorway_is_reachable
+* test_storage_areas_replace_point_radius_for_both_warehouses
+[31m    [Failed]:  [0m[38.118236541748] expected to be > than [48.0]:  
+      at line 58
+[31m    [Failed]:  [0mBeing within the old radius cannot bypass the area
+      at line 74
+[31m    [Failed] [0m
+      at line 75
+[31m    [Failed]:  [0mArea corners must work beyond the old point radius
+      at line 59
+[31m    [Failed]:  [0mE and click use the same area
+      at line 60
+[31m    [Failed]:  [0m[<null>] expected to equal [StorageAccess:<StaticBody2D#10880259466730>(farm_storage_access.gd)]:  
+      at line 61
+[31m    [Failed]:  [0mE opens the storage inside the area
+      at line 63
+[31m    [Failed]:  [0mClick opens the storage without approaching its old point radius
+      at line 66
+[31m    [Failed]:  [0mBehind the entrance is outside the area
+      at line 70
+[31m    [Failed] [0m
+      at line 71
+[31m    [Failed] [0m
+      at line 72
+[33m    512 Orphans[0m
+[33m        * [Slot52:<Button#11019090928290>(farm_storage_slot.gd)] + 3
+        * [Slot17:<Button#11004142429355>(farm_storage_slot.gd)] + 3
+        * [Slot43:<Button#11008068297950>(farm_storage_slot.gd)] + 3
+        * [Slot53:<Button#11019241923985>(farm_storage_slot.gd)] + 3
+        * [Slot36:<Button#11007011333874>(farm_storage_slot.gd)] + 3
+        * [Slot48:<Button#11008823273342>(farm_storage_slot.gd)] + 3
+        * [Slot61:<Button#11010786207702>(farm_storage_slot.gd)] + 3
+        * [Slot55:<Button#11009880238295>(farm_storage_slot.gd)] + 3
+        * [Slot52:<Button#11009427253671>(farm_storage_slot.gd)] + 3
+        * [Slot15:<Button#11013504117186>(farm_storage_slot.gd)] + 3
+        * [Slot43:<Button#11017731975737>(farm_storage_slot.gd)] + 3
+        * [Slot20:<Button#11004595415714>(farm_storage_slot.gd)] + 3
+        * [Slot63:<Button#11020751874724>(farm_storage_slot.gd)] + 3
+        * [Slot36:<Button#11016675011269>(farm_storage_slot.gd)] + 3
+        * [Slot34:<Button#11016373021382>(farm_storage_slot.gd)] + 3
+        * [Slot34:<Button#11006709345041>(farm_storage_slot.gd)] + 3
+        * [Slot35:<Button#11006860339986>(farm_storage_slot.gd)] + 3
+        * [Slot48:<Button#11018486951015>(farm_storage_slot.gd)] + 3
+        * [Slot59:<Button#11010484219448>(farm_storage_slot.gd)] + 3
+        * [Slot62:<Button#11010937204355>(farm_storage_slot.gd)] + 3
+        * [Slot15:<Button#11003840442027>(farm_storage_slot.gd)] + 3
+        * [Slot26:<Button#11005501386462>(farm_storage_slot.gd)] + 3
+        * [Slot47:<Button#11008672280482>(farm_storage_slot.gd)] + 3
+        * [Slot9:<Button#11012598149034>(farm_storage_slot.gd)] + 3
+        * [Slot57:<Button#11010182230456>(farm_storage_slot.gd)] + 3
+        * [Slot32:<Button#11016071033530>(farm_storage_slot.gd)] + 3
+        * [Slot16:<Button#11003991438371>(farm_storage_slot.gd)] + 3
+        * [Slot37:<Button#11007162332255>(farm_storage_slot.gd)] + 3
+        * [Slot40:<Button#11017278993801>(farm_storage_slot.gd)] + 3
+        * [Slot50:<Button#11009125266826>(farm_storage_slot.gd)] + 3
+        * [Slot18:<Button#11013957105315>(farm_storage_slot.gd)] + 3
+        * [Slot54:<Button#11009729246950>(farm_storage_slot.gd)] + 3
+        * [Slot6:<Button#11002481489644>(farm_storage_slot.gd)] + 3
+        * [Slot40:<Button#11007615317837>(farm_storage_slot.gd)] + 3
+        * [Slot21:<Button#11004746413954>(farm_storage_slot.gd)] + 3
+        * [Slot45:<Button#11018033969345>(farm_storage_slot.gd)] + 3
+        * [Slot47:<Button#11018335959576>(farm_storage_slot.gd)] + 3
+        * [Slot13:<Button#11013202131747>(farm_storage_slot.gd)] + 3
+        * [Slot26:<Button#11015165066228>(farm_storage_slot.gd)] + 3
+        * [Slot1:<Button#11001726516273>(farm_storage_slot.gd)] + 3
+        * [Slot21:<Button#11014410091580>(farm_storage_slot.gd)] + 3
+        * [Slot8:<Button#11002783480898>(farm_storage_slot.gd)] + 3
+        * [Slot41:<Button#11017429991411>(farm_storage_slot.gd)] + 3
+        * [Slot4:<Button#11011843178525>(farm_storage_slot.gd)] + 3
+        * [Slot3:<Button#11002028507580>(farm_storage_slot.gd)] + 3
+        * [Slot7:<Button#11012296163817>(farm_storage_slot.gd)] + 3
+        * [Slot19:<Button#11014108103593>(farm_storage_slot.gd)] + 3
+        * [Slot46:<Button#11008521290775>(farm_storage_slot.gd)] + 3
+        * [Slot39:<Button#11007464326327>(farm_storage_slot.gd)] + 3
+        * [Slot20:<Button#11014259098817>(farm_storage_slot.gd)] + 3
+        * [Slot25:<Button#11015014073629>(farm_storage_slot.gd)] + 3
+        * [Slot44:<Button#11008219301377>(farm_storage_slot.gd)] + 3
+        * [Slot10:<Button#11012749149712>(farm_storage_slot.gd)] + 3
+        * [Slot24:<Button#11005199402669>(farm_storage_slot.gd)] + 3
+        * [Slot4:<Button#11002179503907>(farm_storage_slot.gd)] + 3
+        * [Slot22:<Button#11004897412904>(farm_storage_slot.gd)] + 3
+        * [Slot31:<Button#11015920043843>(farm_storage_slot.gd)] + 3
+        * [Slot35:<Button#11016524023676>(farm_storage_slot.gd)] + 3
+        * [Slot37:<Button#11016826013808>(farm_storage_slot.gd)] + 3
+        * [Slot30:<Button#11015769049290>(farm_storage_slot.gd)] + 3
+        * [Slot27:<Button#11015316064502>(farm_storage_slot.gd)] + 3
+        * [Slot13:<Button#11003538459089>(farm_storage_slot.gd)] + 3
+        * [Slot29:<Button#11005954378261>(farm_storage_slot.gd)] + 3
+        * [Slot7:<Button#11002632489592>(farm_storage_slot.gd)] + 3
+        * [Slot0:<Button#11001575525116>(farm_storage_slot.gd)] + 3
+        * [Slot61:<Button#11020449893189>(farm_storage_slot.gd)] + 3
+        * [Slot5:<Button#11002330500188>(farm_storage_slot.gd)] + 3
+        * [Slot9:<Button#11002934480063>(farm_storage_slot.gd)] + 3
+        * [Slot55:<Button#11019543924056>(farm_storage_slot.gd)] + 3
+        * [Slot39:<Button#11017128004995>(farm_storage_slot.gd)] + 3
+        * [Slot33:<Button#11006558359253>(farm_storage_slot.gd)] + 3
+        * [Slot12:<Button#11003387465453>(farm_storage_slot.gd)] + 3
+        * [Slot33:<Button#11016222035790>(farm_storage_slot.gd)] + 3
+        * [Slot63:<Button#11011088207867>(farm_storage_slot.gd)] + 3
+        * [Slot60:<Button#11020298899526>(farm_storage_slot.gd)] + 3
+        * [Slot60:<Button#11010635223167>(farm_storage_slot.gd)] + 3
+        * [Slot28:<Button#11015467061426>(farm_storage_slot.gd)] + 3
+        * [Slot28:<Button#11005803385144>(farm_storage_slot.gd)] + 3
+        * [Slot42:<Button#11017580991127>(farm_storage_slot.gd)] + 3
+        * [Slot31:<Button#11006256370538>(farm_storage_slot.gd)] + 3
+        * [Slot14:<Button#11013353132990>(farm_storage_slot.gd)] + 3
+        * [Slot57:<Button#11019845915586>(farm_storage_slot.gd)] + 3
+        * [Slot42:<Button#11007917315030>(farm_storage_slot.gd)] + 3
+        * [Slot49:<Button#11008974279802>(farm_storage_slot.gd)] + 3
+        * [Slot12:<Button#11013051143417>(farm_storage_slot.gd)] + 3
+        * [Slot58:<Button#11019996910853>(farm_storage_slot.gd)] + 3
+        * [Slot49:<Button#11018637956506>(farm_storage_slot.gd)] + 3
+        * [Slot8:<Button#11012447163803>(farm_storage_slot.gd)] + 3
+        * [Slot54:<Button#11019392931382>(farm_storage_slot.gd)] + 3
+        * [Slot16:<Button#11013655123603>(farm_storage_slot.gd)] + 3
+        * [Slot2:<Button#11011541194388>(farm_storage_slot.gd)] + 3
+        * [Slot18:<Button#11004293437159>(farm_storage_slot.gd)] + 3
+        * [Slot41:<Button#11007766321088>(farm_storage_slot.gd)] + 3
+        * [Slot25:<Button#11005350402062>(farm_storage_slot.gd)] + 3
+        * [Slot51:<Button#11018939947023>(farm_storage_slot.gd)] + 3
+        * [Slot32:<Button#11006407366735>(farm_storage_slot.gd)] + 3
+        * [Slot24:<Button#11014863083668>(farm_storage_slot.gd)] + 3
+        * [Slot50:<Button#11018788952340>(farm_storage_slot.gd)] + 3
+        * [Slot10:<Button#11003085478697>(farm_storage_slot.gd)] + 3
+        * [Slot53:<Button#11009578261296>(farm_storage_slot.gd)] + 3
+        * [Slot11:<Button#11003236473724>(farm_storage_slot.gd)] + 3
+        * [Slot30:<Button#11006105377678>(farm_storage_slot.gd)] + 3
+        * [Slot56:<Button#11010031246380>(farm_storage_slot.gd)] + 3
+        * [Slot59:<Button#11020147907656>(farm_storage_slot.gd)] + 3
+        * [Slot38:<Button#11007313337584>(farm_storage_slot.gd)] + 3
+        * [Slot22:<Button#11014561094910>(farm_storage_slot.gd)] + 3
+        * [Slot19:<Button#11004444433663>(farm_storage_slot.gd)] + 3
+        * [Slot5:<Button#11011994180882>(farm_storage_slot.gd)] + 3
+        * [Slot38:<Button#11016977014078>(farm_storage_slot.gd)] + 3
+        * [Slot23:<Button#11014712089937>(farm_storage_slot.gd)] + 3
+        * [Slot58:<Button#11010333236565>(farm_storage_slot.gd)] + 3
+        * [Slot11:<Button#11012900150675>(farm_storage_slot.gd)] + 3
+        * [Slot29:<Button#11015618059719>(farm_storage_slot.gd)] + 3
+        * [Slot46:<Button#11018184974475>(farm_storage_slot.gd)] + 3
+        * [Slot62:<Button#11020600893804>(farm_storage_slot.gd)] + 3
+        * [Slot14:<Button#11003689460204>(farm_storage_slot.gd)] + 3
+        * [Slot0:<Button#11011239207531>(farm_storage_slot.gd)] + 3
+        * [Slot51:<Button#11009276273468>(farm_storage_slot.gd)] + 3
+        * [Slot3:<Button#11011692192631>(farm_storage_slot.gd)] + 3
+        * [Slot6:<Button#11012145177589>(farm_storage_slot.gd)] + 3
+        * [Slot45:<Button#11008370304079>(farm_storage_slot.gd)] + 3
+        * [Slot17:<Button#11013806122220>(farm_storage_slot.gd)] + 3
+        * [Slot56:<Button#11019694925082>(farm_storage_slot.gd)] + 3
+        * [Slot2:<Button#11001877521749>(farm_storage_slot.gd)] + 3
+        * [Slot27:<Button#11005652395353>(farm_storage_slot.gd)] + 3
+        * [Slot44:<Button#11017882985906>(farm_storage_slot.gd)] + 3
+        * [Slot23:<Button#11005048415707>(farm_storage_slot.gd)] + 3
+        * [Slot1:<Button#11011390203375>(farm_storage_slot.gd)] + 3[0m
+* test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips
+[31m    [Failed]:  [0mDICTIONARY({ "rows": [], "trial_used": [], "next_order": 1, "simulated_at": 1793527212.309...": [] } }) != DICTIONARY({ "rows": [], "trial_used": [], "next_order": 1, "simulated_at": 1793527212.309...nced" } }).
+    { "rows": [], "trial_used": [], "next_or...s": [] } } != { "rows": [], "trial_used": [], "next_or...anced" } }  1 of 5 keys do not match.  
+      at line 91
+* test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers
+[31m    [Failed] [0m
+      at line 112
+SCRIPT ERROR: Invalid access to property or key 'selection' on a base object of type 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers (res://tests/integration/test_farm_storage_world.gd:114)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] before_each (res://tests/integration/test_farm_storage_world.gd:11)
+       [4] _end_wait (res://addons/gut/awaiter.gd:126)
+       [5] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed]:  [0m[1.0] expected to equal [40.0]:  
+      at line 116
+[31m    [Failed]:  [0m[40] expected to equal [0]:  
+      at line 121
+[31m    [Failed]:  [0mExhausted Silver cannot silently fall back to Normal
+      at line 122
+SCRIPT ERROR: Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers (res://tests/integration/test_farm_storage_world.gd:125)
+       [2] _end_wait (res://addons/gut/awaiter.gd:126)
+       [3] _on_tree_process_frame (res://addons/gut/awaiter.gd:68)
+[31m    [Failed]:  [0m[40] expected to equal [2]:  
+      at line 130
+[31m    [Failed]:  [0m[0] expected to equal [38]:  
+      at line 131
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+    [2] <engine-2>Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+      at line 133
+* test_full_storage_disables_the_selected_transfer
+[31m    [Failed] [0m
+      at line 143
+SCRIPT ERROR: Invalid access to property or key 'selection' on a base object of type 'Nil'.
+   at: FarmStorageMenu._select (res://components/storage/farm_storage_menu.gd:162)
+   GDScript backtrace (most recent call first):
+       [0] _select (res://components/storage/farm_storage_menu.gd:162)
+       [1] test_full_storage_disables_the_selected_transfer (res://tests/integration/test_farm_storage_world.gd:145)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] before_each (res://tests/integration/test_farm_storage_world.gd:11)
+       [4] _end_wait (res://addons/gut/awaiter.gd:126)
+       [5] _on_tree_physics_frame (res://addons/gut/awaiter.gd:78)
+[31m    [Failed] [0m
+      at line 146
+[31m    [Failed] [0m
+      at line 147
+[31m    [Failed] [0m
+      at line 148
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+      at line -1
+[1m1/6 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_pen_upgrades.gd
+[0m- test_current_profile_copy_migrates_without_losing_animals_or_perennial_trees
+[31m    [Failed]:  [0mARRAY([{ "age": 579359.659713268, "animal": "chicken", "facing": "left", "hydration": 0.0,...0082 } }]) != ARRAY([{ "age": 579359.659713268, "animal": "chicken", "facing": "left", "hydration": 0.0,... false }]).
+    [{ "age": 579359.659713268, "animal": "c...40082 } }] != [{ "age": 579359.659713268, "animal": "c...: false }]  48 of 48 indexes do not match.  
+          at line 226
+[4m
+res://tests/integration/test_farm_storage_world.gd
+[0m- test_doorways_range_readiness_and_filters
+[31m    [Failed]:  [0m
+          at line 22
+[31m    [Failed]:  [0m
+          at line 26
+[31m    [Failed]:  [0m
+          at line 27
+[31m    [Failed]:  [0m
+          at line 28
+- test_storage_areas_replace_point_radius_for_both_warehouses
+[31m    [Failed]:  [0m[38.118236541748] expected to be > than [48.0]:  
+          at line 58
+[31m    [Failed]:  [0mBeing within the old radius cannot bypass the area
+          at line 74
+[31m    [Failed]:  [0m
+          at line 75
+[31m    [Failed]:  [0mArea corners must work beyond the old point radius
+          at line 59
+[31m    [Failed]:  [0mE and click use the same area
+          at line 60
+[31m    [Failed]:  [0m[<null>] expected to equal [StorageAccess:<StaticBody2D#10880259466730>(farm_storage_access.gd)]:  
+          at line 61
+[31m    [Failed]:  [0mE opens the storage inside the area
+          at line 63
+[31m    [Failed]:  [0mClick opens the storage without approaching its old point radius
+          at line 66
+[31m    [Failed]:  [0mBehind the entrance is outside the area
+          at line 70
+[31m    [Failed]:  [0m
+          at line 71
+[31m    [Failed]:  [0m
+          at line 72
+- test_v23_migrates_empty_storages_preserving_existing_progress_then_v24_roundtrips
+[31m    [Failed]:  [0mDICTIONARY({ "rows": [], "trial_used": [], "next_order": 1, "simulated_at": 1793527212.309...": [] } }) != DICTIONARY({ "rows": [], "trial_used": [], "next_order": 1, "simulated_at": 1793527212.309...nced" } }).
+    { "rows": [], "trial_used": [], "next_or...s": [] } } != { "rows": [], "trial_used": [], "next_or...anced" } }  1 of 5 keys do not match.  
+          at line 91
+- test_menu_quality_selection_exhaustion_and_withdrawal_preserve_tiers
+[31m    [Failed]:  [0m
+          at line 112
+[31m    [Failed]:  [0m[1.0] expected to equal [40.0]:  
+          at line 116
+[31m    [Failed]:  [0m[40] expected to equal [0]:  
+          at line 121
+[31m    [Failed]:  [0mExhausted Silver cannot silently fall back to Normal
+          at line 122
+[31m    [Failed]:  [0m[40] expected to equal [2]:  
+          at line 130
+[31m    [Failed]:  [0m[0] expected to equal [38]:  
+          at line 131
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+    [2] <engine-2>Invalid call. Nonexistent function 'inventory' in base 'Nil'.
+          at line 133
+- test_full_storage_disables_the_selected_transfer
+[31m    [Failed]:  [0m
+          at line 143
+[31m    [Failed]:  [0m
+          at line 146
+[31m    [Failed]:  [0m
+          at line 147
+[31m    [Failed]:  [0m
+          at line 148
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid access to property or key 'selection' on a base object of type 'Nil'.
+          at line -1
+
+Totals
+------
+Scripts               7
+Tests                66
+Passing Tests        60
+Failing Tests         6
+Asserts           990/1019
+Time              82.142s
+
+
+[31m---- 6 failing tests ----
+[0m

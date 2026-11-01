@@ -17,6 +17,7 @@ var _lie_down_action: StringName = &""
 var _expected_action: StringName = &""
 var _sleep_after_lying: bool = false
 var _first_decision: bool = true
+var _focused: bool = false
 
 func _ready() -> void:
 	wander.animation.action_finished.connect(_on_animation_finished)
@@ -42,6 +43,9 @@ func _physics_process(delta: float) -> void:
 		_stop()
 		if current_state != State.IDLE:
 			_enter(State.IDLE)
+		return
+	if _focused:
+		_stop()
 		return
 	# Boundary enforcement remains active while sitting or sleeping.
 	wander._keep_inside()
@@ -96,13 +100,17 @@ func _physics_process(delta: float) -> void:
 		State.REST, State.SLEEP:
 			wake()
 
-## Compatibility for callers from older scenes: UI attention never interrupts AI.
-func set_focused(_value: bool) -> void:
-	pass
+func set_focused(value: bool) -> void:
+	if _focused == value:
+		return
+	_focused = value
+	if value and definition != null:
+		foraging.cancel()
+		_enter(State.IDLE)
 
 ## Upright behaviours can be interrupted. A lying animal must wake() first.
 func request_behaviour(action: StringName) -> bool:
-	if definition == null or not is_instance_valid(wander.pen):
+	if _focused or definition == null or not is_instance_valid(wander.pen):
 		return false
 	if current_state != State.IDLE and current_state != State.WALK and current_state != State.FORAGE:
 		return false

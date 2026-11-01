@@ -77,6 +77,7 @@ func _build() -> void:
 		row.add_theme_constant_override("separation",12)
 		content.add_child(row)
 		var icon: TextureRect = TextureRect.new()
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		icon.texture = HoneyComboCatalog.item(id).icon
 		icon.custom_minimum_size = Vector2(48,48)
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

@@ -207,7 +207,7 @@ func preflight(data: Dictionary) -> Dictionary:
 	if pens.is_empty() or player == null or farm == null or farm.farmland == null or farm.farmland.tile_set == null or not farm.can_restore_soil():
 		return SaveSchema.failure("This world layout does not support loading.")
 	var selection: ToolSelectionComponent = player.selection
-	if data.inventory.size() != selection.inventory.slot_count or data.troughs.size() > troughs.size():
+	if data.inventory.size() < InventoryComponent.DEFAULT_SLOT_COUNT or data.troughs.size() > troughs.size():
 		return SaveSchema.failure("Inventory or trough layout changed; the save needs migration.")
 	var initialized: Dictionary = _saved_pens(data)
 	for id: String in initialized:
@@ -391,7 +391,7 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	var slots: Array[Dictionary] = []
 	for stack: Dictionary in data.inventory:
 		slots.append({"item": catalog.items.get(stack.item), "count": int(stack.count), "tiers": stack.tiers.duplicate()})
-	selection.inventory.replace_slots(slots)
+	selection.inventory.restore_slots(slots)
 	selection.select_slot(int(data.player.selected_slot))
 	selection.select_storage_seed(StringName(data.storage_seed))
 	var piles: Dictionary = {}

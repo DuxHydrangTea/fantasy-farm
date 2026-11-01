@@ -305,15 +305,23 @@ func test_unified_feed_wake_matches_segmented_replay_with_full_trough() -> void:
 		assert_almost_eq(float(stepped.troughs[index].consumed_fraction), float(single.troughs[index].consumed_fraction), 0.000001)
 	var first: Dictionary = single.workers.rows[0].duplicate(true)
 	var replay: Dictionary = stepped.workers.rows[0].duplicate(true)
-	# Idle rest/stroll completion can be quantized by one 0.25s wake; the
-	# assignment, arrival, position and all working state must still match.
+	# Idle rest/stroll timing can be quantized by one 0.25s trough wake.
+	# Both arrival and departure share that tolerance; destination, supplies,
+	# production, wages and all non-idle tasks must still match exactly.
 	if first.task.get("kind") == "patrol" and replay.task.get("kind") == "patrol":
+		assert_almost_eq(float(replay.task.work_at), float(first.task.work_at), 0.251)
 		assert_almost_eq(float(replay.task.finish_at), float(first.task.finish_at), 0.251)
 		assert_almost_eq(float(replay.wake_at), float(first.wake_at), 0.251)
 		first.task.erase("finish_at")
 		replay.task.erase("finish_at")
+		first.task.erase("work_at")
+		replay.task.erase("work_at")
 		first.erase("wake_at")
 		replay.erase("wake_at")
+	if replay != first:
+		for key: String in first:
+			if replay.get(key) != first[key]:
+				print("WORKER_REPLAY_DIFF ", key, " single=", first[key], " stepped=", replay.get(key))
 	assert_eq(replay, first)
 
 func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:

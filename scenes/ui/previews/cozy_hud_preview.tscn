@@ -146,6 +146,7 @@ button_group = SubResource("slots")
 tooltip_text = "Cuốc"
 
 [node name="Icon" type="TextureRect" parent="Margin/Column/CenterHotbar/Tray/Slots/Slot1"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -167,6 +168,7 @@ button_group = SubResource("slots")
 tooltip_text = "Bình tưới"
 
 [node name="Icon" type="TextureRect" parent="Margin/Column/CenterHotbar/Tray/Slots/Slot2"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,6 +190,7 @@ button_group = SubResource("slots")
 tooltip_text = "Hạt cà rốt · 999"
 
 [node name="Icon" type="TextureRect" parent="Margin/Column/CenterHotbar/Tray/Slots/Slot3"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -224,6 +227,7 @@ button_group = SubResource("slots")
 tooltip_text = "Phân bón"
 
 [node name="Icon" type="TextureRect" parent="Margin/Column/CenterHotbar/Tray/Slots/Slot4"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

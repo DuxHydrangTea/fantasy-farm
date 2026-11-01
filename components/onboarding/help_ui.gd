@@ -158,6 +158,8 @@ func _refresh() -> void:
 	_fit()
 
 func _input(event: InputEvent) -> void:
+	if world.player.selection.is_menu_open() and not is_open:
+		return
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_H:
 		if is_open:
 			close()

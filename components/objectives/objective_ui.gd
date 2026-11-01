@@ -27,27 +27,61 @@ var _reward: int = 0
 var _completion: Timer
 var _slide: Node
 var _closing: bool = false
+var hud_card: PanelContainer
+var hud_reward: Label
+var hud_claim: Button
+var hud_caption: Label
+var hud_progress: ProgressBar
 
 func _ready() -> void:
 	layer = 24
 	root = Control.new()
 	root.name = "ObjectiveRoot"
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.theme = preload("res://resources/ui/game_theme.tres")
+	root.theme = preload("res://resources/ui/cozy_hud/inventory_theme.tres")
 	add_child(root)
+	hud_card = PanelContainer.new()
+	hud_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(hud_card)
+	var hud_column: VBoxContainer = VBoxContainer.new()
+	hud_column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud_card.add_child(hud_column)
+	hud_caption = Label.new()
+	hud_caption.text = tr("Objectives")
+	hud_caption.add_theme_font_size_override("font_size", 13)
+	hud_caption.add_theme_color_override("font_color", FarmUI.MUTED)
+	hud_column.add_child(hud_caption)
 	hud = HBoxContainer.new()
-	hud.position = Vector2(8, 64)
-	root.add_child(hud)
+	hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud_column.add_child(hud)
 	hud_button = _button(hud, open)
 	hud_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	hud_button.clip_text = true
-	hud_button.add_theme_font_size_override("font_size", 14)
+	hud_button.add_theme_font_size_override("font_size", 16)
+	hud_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	hud_button.add_theme_stylebox_override("normal", FarmUI.box(Color.TRANSPARENT, 0, 0, Color.TRANSPARENT))
 	collapse_button = _button(hud, _collapse)
 	collapse_button.custom_minimum_size.x = 48
 	help_button = _button(hud, func() -> void: help_requested.emit())
 	help_button.custom_minimum_size.x = 48
 	help_button.text = "?"
 	help_button.tooltip_text = tr("Help") + " [H]"
+	hud_progress = ProgressBar.new()
+	hud_progress.custom_minimum_size.y = 6
+	hud_progress.show_percentage = false
+	hud_progress.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var progress_bg: StyleBoxFlat = StyleBoxFlat.new()
+	progress_bg.bg_color = Color("d6bf95")
+	hud_progress.add_theme_stylebox_override("background", progress_bg)
+	var progress_fill: StyleBoxFlat = StyleBoxFlat.new()
+	progress_fill.bg_color = Color("6d914b")
+	hud_progress.add_theme_stylebox_override("fill", progress_fill)
+	hud_column.add_child(hud_progress)
+	hud_reward = Label.new()
+	hud_reward.add_theme_font_size_override("font_size", 14)
+	hud_column.add_child(hud_reward)
+	hud_claim = _button(hud_column, _claim_tracked)
+	hud_claim.theme_type_variation = &"PrimaryAction"
 	overlay = ColorRect.new()
 	overlay.color = Color(0.03, 0.04, 0.06, 0.8)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -131,6 +165,7 @@ func _build_page() -> void:
 	detail_scroll.add_child(detail)
 	track_button = _button(right, _track)
 	claim_button = _button(right, _claim)
+	claim_button.theme_type_variation = &"PrimaryAction"
 	notice = Label.new()
 	notice.add_theme_font_size_override("font_size", 14)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -143,14 +178,21 @@ func _fit() -> void:
 	panel.position = Vector2(8, 8)
 	panel.size = root.size - Vector2(16, 16)
 	list_scroll.custom_minimum_size.x = floorf((root.size.x - 64) * 0.42)
-	hud.size.x = minf(300, maxf(180, root.size.x - 344))
-	hud.position.y = 210 if OS.is_debug_build() and not MobileLayout.is_touch(get_viewport()) else 64
+	var compact_hud: bool = root.size.y < 500
+	hud_caption.visible = not compact_hud
+	hud_reward.visible = not compact_hud and not model.hud_collapsed and model.tracked_index() >= 0
+	hud_card.position = Vector2(16, 88 if compact_hud else 110)
+	hud_card.custom_minimum_size.x = minf(340, maxf(260, root.size.x - 32))
+	hud_card.size = Vector2(hud_card.custom_minimum_size.x, 0)
+	hud_card.visible = hud.visible
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_instance_valid(detail):
 		refresh()
 
 func _input(event: InputEvent) -> void:
+	if selection.is_menu_open() and not selection.objectives_open:
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.physical_keycode == KEY_J:
 			if selection.objectives_open:
@@ -184,11 +226,13 @@ func _visibility(value: bool) -> void:
 	else:
 		_slide.stop()
 	hud.visible = not selection.is_menu_open()
+	hud_card.visible = hud.visible
 	if not value:
 		get_viewport().gui_release_focus()
 
 func _other_menu(_value: bool) -> void:
 	hud.visible = not selection.is_menu_open()
+	hud_card.visible = hud.visible
 
 func inspect(index: int) -> void:
 	inspected = clampi(index, 0, rows.size() - 1)
@@ -199,6 +243,11 @@ func _track() -> void:
 
 func _collapse() -> void:
 	model.set_collapsed(not model.hud_collapsed)
+
+func _claim_tracked() -> void:
+	inspected = model.active_index()
+	if inspected >= 0:
+		_claim()
 
 func _claim() -> void:
 	var result: Dictionary = model.claim(model.catalog.steps[inspected].objective_id)
@@ -229,15 +278,24 @@ func refresh() -> void:
 	_ready_id = ready_id
 	heading.text = tr("Objectives") + "   %d / %d" % [model.active_index() if model.active_index() >= 0 else rows.size(), rows.size()]
 	close_button.text = tr("Close")
-	collapse_button.text = "+" if model.hud_collapsed else "−"
+	collapse_button.text = tr("Show") if model.hud_collapsed else tr("Hide")
 	collapse_button.tooltip_text = tr("Expand objectives") if model.hud_collapsed else tr("Collapse objectives")
+	hud_caption.text = tr("Objectives").to_upper()
 	var tracked: int = model.tracked_index()
+	hud_reward.visible = tracked >= 0 and not model.hud_collapsed
+	hud_reward.text = tr("Reward: %d coins") % model.catalog.steps[tracked].reward_coins if tracked >= 0 else ""
+	hud_claim.text = tr("Claim reward")
+	hud_claim.visible = model.ready_to_claim() and not model.hud_collapsed
+	hud_claim.disabled = not model.ready_to_claim()
 	hud_button.text = tr("Objectives") if model.hud_collapsed or tracked < 0 else tr(model.catalog.steps[tracked].title) + "\n" + _status(tracked, data) + "  %d/%d" % [data.steps[tracked].progress, model.catalog.steps[tracked].required]
 	hud_button.tooltip_text = tr("Objectives") + " [J]"
 	if not ready_id.is_empty():
-		hud_button.text = tr("Ready to claim") if model.hud_collapsed else hud_button.text + "\n" + tr("Open to claim reward")
-		if not model.hud_collapsed and not _completion.is_stopped():
-			hud_button.text = tr("Objective complete!") + "\n" + tr("Open to claim reward")
+		hud_button.text = tr("Claim reward") + " [J]" if model.hud_collapsed else hud_button.text + "\n" + tr("Reward: %d coins") % model.active().reward_coins
+	if tracked >= 0:
+		hud_button.tooltip_text = tr(model.catalog.steps[tracked].title) + "\n" + tr(model.catalog.steps[tracked].description) + "\n[J] " + tr("Objectives")
+		hud_progress.max_value = model.catalog.steps[tracked].required
+		hud_progress.value = data.steps[tracked].progress
+	hud_progress.visible = tracked >= 0 and not model.hud_collapsed
 	for index: int in range(rows.size()):
 		rows[index].text = "%d. %s\n%s" % [index + 1, tr(model.catalog.steps[index].title), _status(index, data)]
 		rows[index].set_pressed_no_signal(index == inspected)

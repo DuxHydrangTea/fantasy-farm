@@ -193,17 +193,20 @@ func test_hover_never_interrupts_either_animal() -> void:
 	assert_eq(other.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
 	assert_false(actor.needs_display.visible)
 
-func test_focus_hover_and_menu_do_not_cancel_animal_targets() -> void:
+func test_facing_focus_stops_animal_and_menu_releases_it() -> void:
 	var actor: Actor = _animal()
 	player.position = actor.global_position + Vector2(0, 24)
 	player.get_node("AnimationComponent").face(Vector2.UP)
 	assert_true(actor.behaviour.request_behaviour(&"walk"))
 	context.refresh_at(_hover_point(actor))
-	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
-	assert_true(actor.movement.has_target)
+	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.IDLE)
+	assert_false(actor.movement.has_target)
+	assert_not_null(actor.get_node_or_null("PlantFocusEffect"))
+	var glow: Sprite2D = actor.sprite.get_node("PlantFocusGlow") as Sprite2D
+	assert_eq(glow.texture, actor.sprite.sprite_frames.get_frame_texture(actor.sprite.animation, actor.sprite.frame))
 	player.get_node("ToolSelection").set_inventory_open(true)
 	context.refresh_at(_hover_point(actor))
-	assert_eq(actor.behaviour.current_state, AnimalBehaviourComponent.State.WALK)
+	assert_true(actor.behaviour.request_behaviour(&"walk"))
 
 func test_hiding_needs_bars_does_not_disable_animal_idle_response() -> void:
 	var actor: Actor = _animal()

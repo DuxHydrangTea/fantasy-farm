@@ -39,6 +39,28 @@ func test_modal_exclusion_claim_once_and_load_closes_page() -> void:
 	assert_false(world.player.selection.is_menu_open())
 	assert_eq(ui.notice.text, "")
 
+func test_search_keeps_letter_shortcuts_for_text_instead_of_opening_other_menus() -> void:
+	var inventory: InventoryUI = world.player.get_node("InventoryUI") as InventoryUI
+	inventory.open()
+	inventory.search.grab_focus()
+	await wait_process_frames(3)
+	var before: Vector2 = world.player.global_position
+	for code: int in [KEY_I, KEY_J, KEY_H, KEY_1]:
+		var event: InputEventKey = InputEventKey.new()
+		event.physical_keycode = code
+		event.keycode = code
+		event.unicode = code + 32 if code >= KEY_A and code <= KEY_Z else code
+		event.pressed = true
+		get_viewport().push_input(event, true)
+		event.pressed = false
+		get_viewport().push_input(event, true)
+		await wait_process_frames(1)
+	assert_eq(inventory.search.text, "ijh1")
+	assert_true(world.player.selection.inventory_open)
+	assert_false(world.player.selection.objectives_open)
+	assert_false(world.help_ui.is_open)
+	assert_eq(world.player.global_position, before)
+
 func test_tracking_collapse_language_and_menu_exclusion() -> void:
 	ui.inspect(8)
 	ui.track_button.pressed.emit()

@@ -7,8 +7,12 @@ var world: FarmWorld
 var service: WorkerService
 var now: float
 const FIXED_TIME: float = 1793155000.0
+var _old_source: Callable
+var _old_floor: float
 
 func before_each() -> void:
+	_old_source = TimeManager.clock_source
+	_old_floor = TimeManager._last_timestamp
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
@@ -43,6 +47,10 @@ func before_each() -> void:
 				world.farming.apply_area(&"tool", [cell], null, -1, null, null)
 	
 	await wait_process_frames(2)
+
+func after_each() -> void:
+	TimeManager.clock_source = _old_source
+	TimeManager._last_timestamp = _old_floor
 
 func test_fifteen_workers_can_be_hired_and_operate() -> void:
 	for i: int in range(15):

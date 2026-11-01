@@ -1,6 +1,7 @@
 extends GutTest
 const PLAYER: PackedScene = preload("res://scenes/characters/player.tscn")
 const MERCHANT: PackedScene = preload("res://scenes/characters/shop_merchant.tscn")
+const STARTING_BALANCE: int = 1000000
 var viewport: SubViewport
 var player: FarmPlayer
 var merchant: ShopMerchant
@@ -14,6 +15,7 @@ func before_each() -> void:
 	add_child_autofree(viewport)
 	player = PLAYER.instantiate() as FarmPlayer
 	viewport.add_child(player)
+	player.wallet.set_balance(STARTING_BALANCE)
 	merchant = MERCHANT.instantiate() as ShopMerchant
 	merchant.position = Vector2(24, 0)
 	viewport.add_child(merchant)
@@ -53,9 +55,10 @@ func test_small_window_has_readable_scale_contained_menu_and_working_transformed
 	assert_true(bounds.encloses(_pixels(shop.close_button)))
 	var chosen: ShopOffer = shop.selected
 	_click(shop.buy_button)
-	assert_eq(player.wallet.balance, 1000 - chosen.price)
+	assert_eq(player.wallet.balance, STARTING_BALANCE - chosen.price)
 	assert_eq(player.camera.zoom, camera_zoom, "Scaling menu UI never changes world zoom")
 	_click(shop.close_button)
+	await wait_seconds(0.2)
 	assert_false(shop.is_open)
 	assert_false(player.selection.is_menu_open())
 
@@ -80,7 +83,7 @@ func test_inventory_button_and_balance_fit_and_click_in_both_languages() -> void
 			await wait_process_frames(4)
 			assert_true(inventory.root.visible)
 			assert_false(hotbar.root.visible)
-			assert_true(bounds.encloses(_pixels(inventory.panel)))
+			assert_true(bounds.encloses(_pixels(inventory.panel)), "%s %s %s" % [language, size, _pixels(inventory.panel)])
 			assert_true(bounds.encloses(_pixels(inventory.wallet_label)))
 			assert_false(_pixels(inventory.wallet_label).intersects(_pixels(inventory.capacity)))
 			assert_true(bounds.encloses(_pixels(inventory.close_button as Control)))
@@ -89,7 +92,7 @@ func test_inventory_button_and_balance_fit_and_click_in_both_languages() -> void
 				if count.visible:
 					assert_true(_pixels(slot).encloses(_pixels(count)), "Inventory quantity stays inside its slot")
 			_click(inventory.close_button as Control)
-			await wait_process_frames(2)
+			await wait_seconds(0.2)
 			assert_false(inventory.root.visible)
 			assert_true(hotbar.root.visible)
 	assert_false(player.state.movement.has_target, "Bag clicks never move the player")
@@ -108,7 +111,7 @@ func test_resize_and_language_keep_checkout_and_inventory_scrolls_inside_small_w
 		assert_eq(shop.quantity.value, 3.0)
 		assert_true(Rect2(Vector2.ZERO, Vector2(size)).encloses(_pixels(shop.panel)))
 		assert_true(Rect2(Vector2.ZERO, Vector2(size)).encloses(_pixels(shop.buy_button)))
-	assert_eq(player.wallet.balance, 1000)
+	assert_eq(player.wallet.balance, STARTING_BALANCE)
 	shop.close()
 	var inventory: InventoryUI = player.get_node("InventoryUI") as InventoryUI
 	inventory.open()

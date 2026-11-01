@@ -2,13 +2,13 @@ extends Node
 ## A single translucent overlay follows the plant's texture and wind deformation.
 const SHADER: Shader = preload("res://shaders/plant_focus.gdshader")
 const PARAMETERS: Array[StringName] = [&"plant_height", &"amplitude", &"speed", &"anchor_visible_root", &"ground_y"]
-var source: Sprite2D
+var source: Node2D
 var overlay: Sprite2D
 var material: ShaderMaterial
 var _focused: bool = false
 var _fade: Tween
 
-func setup(plant: Sprite2D) -> void:
+func setup(plant: Node2D) -> void:
 	source = plant
 	material = ShaderMaterial.new()
 	material.shader = SHADER
@@ -46,16 +46,30 @@ func _process(_delta: float) -> void:
 func _sync() -> void:
 	if not is_instance_valid(source) or not is_instance_valid(overlay):
 		return
-	overlay.texture = source.texture
-	overlay.centered = source.centered
-	overlay.offset = source.offset
-	overlay.flip_h = source.flip_h
-	overlay.flip_v = source.flip_v
-	overlay.region_enabled = source.region_enabled
-	overlay.region_rect = source.region_rect
-	overlay.hframes = source.hframes
-	overlay.vframes = source.vframes
-	overlay.frame = source.frame
+	if source is AnimatedSprite2D:
+		var animated: AnimatedSprite2D = source as AnimatedSprite2D
+		if animated.sprite_frames == null or not animated.sprite_frames.has_animation(animated.animation) or animated.sprite_frames.get_frame_count(animated.animation) <= animated.frame:
+			overlay.texture = null
+			return
+		overlay.texture = animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+		overlay.centered = animated.centered
+		overlay.offset = animated.offset
+		overlay.flip_h = animated.flip_h
+		overlay.flip_v = animated.flip_v
+	else:
+		var sprite: Sprite2D = source as Sprite2D
+		if sprite == null:
+			return
+		overlay.texture = sprite.texture
+		overlay.centered = sprite.centered
+		overlay.offset = sprite.offset
+		overlay.flip_h = sprite.flip_h
+		overlay.flip_v = sprite.flip_v
+		overlay.region_enabled = sprite.region_enabled
+		overlay.region_rect = sprite.region_rect
+		overlay.hframes = sprite.hframes
+		overlay.vframes = sprite.vframes
+		overlay.frame = sprite.frame
 	var wind: ShaderMaterial = source.material as ShaderMaterial
 	if wind != null and wind.shader != null and wind.shader.resource_path == "res://shaders/plant_wind.gdshader":
 		for parameter: StringName in PARAMETERS:

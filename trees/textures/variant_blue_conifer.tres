@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Trees/Variants64x80/timber_variants_sheet.png" id="sheet"]
+
+[resource]
+atlas = ExtResource("sheet")
+region = Rect2(64, 0, 64, 80)
+filter_clip = true

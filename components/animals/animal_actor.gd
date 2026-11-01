@@ -221,8 +221,8 @@ func _update_needs_display(food: float, water: float) -> void:
 	hydration_bar.value = water
 	_refresh_health_badges()
 
-func set_status_focused(_value: bool) -> void:
-	# Legacy callers cannot expose world bars or stop behaviour.
+func set_status_focused(value: bool) -> void:
+	behaviour.set_focused(value)
 	needs_display.hide()
 
 func get_status_sprite() -> Node2D:

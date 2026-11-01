@@ -20,7 +20,7 @@ static func valid(data: Variant, catalog: SaveCatalog) -> bool:
 		return false
 	for id: String in DEFINITIONS:
 		var row: Variant = data.get(id)
-		if not row is Dictionary or row.size() != 3 or not SaveSchema.number(row.get("slot_count"), 1, 512, true) or not SaveSchema.number(row.get("stack_cap"), 0, 32000, true) or not row.get("slots") is Array or row.slots.size() != int(row.slot_count):
+		if not row is Dictionary or row.size() != 3 or not SaveSchema.number(row.get("slot_count"), 1, 1536, true) or not SaveSchema.number(row.get("stack_cap"), 0, 32000, true) or not row.get("slots") is Array or row.slots.size() != int(row.slot_count):
 			return false
 		var definition: FarmStorageDefinition = DEFINITIONS[id]
 		for slot: Variant in row.slots:

@@ -29,6 +29,46 @@ func _open(npc: ShopMerchant) -> ShopUI:
 	assert_true(npc.open_shop(world.player))
 	return npc.shop_ui
 
+func test_seed_shop_displays_and_sells_herbicide() -> void:
+	var shop: ShopUI = _open(seeds)
+	shop.show_category(ShopOffer.Category.FEED)
+	var offer: ShopOffer
+	for candidate: ShopOffer in seeds.catalog.offers:
+		if candidate.item.item_id == &"herbicide":
+			offer = candidate
+			break
+	assert_not_null(offer)
+	if offer == null:
+		return
+	assert_true(shop._buttons.has(offer))
+	var before: int = world.player.selection.inventory.count_item(&"herbicide")
+	shop.select_offer(offer)
+	shop.purchase()
+	assert_eq(world.player.selection.inventory.count_item(&"herbicide"), before + 1)
+
+func test_every_live_shop_offer_has_a_visible_card_and_can_be_purchased() -> void:
+	for merchant: ShopMerchant in [seeds, pets, smith, flowers]:
+		var shop: ShopUI = _open(merchant)
+		for category: int in merchant.catalog.category_ids:
+			if category in [ShopOffer.Category.ANIMAL, ShopOffer.Category.SELL_ANIMAL, ShopOffer.Category.UPGRADES]:
+				continue
+			shop.show_category(category)
+			for offer: ShopOffer in merchant.catalog.offers:
+				if offer.category != category:
+					continue
+				assert_true(shop._buttons.has(offer), String(offer.item.item_id))
+				var bag: InventoryComponent = InventoryComponent.new()
+				bag.starting_tools = false
+				bag.slot_count = 2
+				add_child_autofree(bag)
+				world.player.wallet.set_balance(WalletComponent.MAX_COINS)
+				var purchase: ShopService = ShopService.new(merchant.catalog, world.player.wallet, bag)
+				purchase.world = world
+				var result: Dictionary = purchase.buy(offer, 1)
+				assert_true(result.ok, String(offer.item.item_id) + ": " + str(result))
+				assert_eq(bag.count_item(offer.item.item_id), 1)
+		shop.close(false)
+
 func test_stock_is_split_without_losing_or_duplicating_existing_items() -> void:
 	var offered: Dictionary = {}
 	for npc: ShopMerchant in [seeds, flowers, pets, smith]:
@@ -162,3 +202,18 @@ func test_flowers_can_only_be_bought_from_the_new_flower_merchant() -> void:
 	shop.show_category(ShopOffer.Category.FLOWER)
 	assert_eq(shop.category, ShopOffer.Category.CROP)
 	shop.close(false)
+
+func test_all_shop_categories_keep_pixel_icons_sharp_in_cards_and_details() -> void:
+	for merchant: ShopMerchant in [seeds, flowers, pets, smith]:
+		var shop: ShopUI = _open(merchant)
+		for category: int in merchant.catalog.category_ids:
+			shop.show_category(category)
+			await wait_process_frames(2)
+			var icons: Array[Node] = [shop.product_icon]
+			for card: Button in shop._buttons.values():
+				icons.append_array(card.find_children("*", "TextureRect", true, false))
+			for node: Node in icons:
+				var icon: TextureRect = node as TextureRect
+				if icon.texture != null:
+					assert_eq(icon.texture_filter, CanvasItem.TEXTURE_FILTER_NEAREST, "%s / %d / %s" % [merchant.name, category, shop.root.get_path_to(icon)])
+		shop.close(false)

@@ -5,6 +5,9 @@ extends Node
 var _service: GameSaveManager
 var _label: Label
 var _hide_at: int = 0
+var _notice_panel: PanelContainer
+var _notice_timer: Timer
+var _notice_success: bool = true
 
 func _ready() -> void:
 	# A signal connection is removed if this preview is freed before the frame.
@@ -26,33 +29,57 @@ func _start() -> void:
 		get_tree().call_deferred("change_scene_to_file", "res://world/start_menu.tscn")
 
 func _build_notice() -> void:
+	if _label != null:
+		return
 	var layer: CanvasLayer = CanvasLayer.new()
 	layer.layer = 50
 	add_child(layer)
+	var root: Control = Control.new()
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(root)
+	UIScaleComponent.attach(layer, root)
 	var margin: MarginContainer = MarginContainer.new()
 	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	margin.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	margin.add_theme_constant_override("margin_top", 16)
-	margin.add_theme_constant_override("margin_left", 16)
+	root.add_child(margin)
+	margin.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	margin.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	margin.add_theme_constant_override("margin_top", 68)
 	margin.add_theme_constant_override("margin_right", 16)
-	layer.add_child(margin)
+	_notice_panel = PanelContainer.new()
+	_notice_panel.theme = preload("res://resources/ui/cozy_hud/theme.tres")
+	FarmUI.apply(_notice_panel)
+	_notice_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	margin.add_child(_notice_panel)
 	_label = Label.new()
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_label.custom_minimum_size.x = 240
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_label.add_theme_color_override("font_color", Color.WHITE)
-	_label.add_theme_color_override("font_outline_color", Color(0.08, 0.06, 0.05))
-	_label.add_theme_constant_override("outline_size", 4)
-	_label.add_theme_color_override("font_shadow_color", Color.BLACK)
-	_label.add_theme_constant_override("shadow_offset_x", 2)
-	_label.add_theme_constant_override("shadow_offset_y", 2)
-	margin.add_child(_label)
+	_label.add_theme_font_size_override("font_size", 16)
+	_notice_panel.add_child(_label)
+	_notice_panel.hide()
+	_notice_timer = Timer.new()
+	_notice_timer.one_shot = true
+	_notice_timer.timeout.connect(_notice_panel.hide)
+	add_child(_notice_timer)
+	world.player.selection.inventory_visibility_changed.connect(_menu_changed)
+	world.player.selection.shop_visibility_changed.connect(_menu_changed)
+	world.player.selection.objectives_visibility_changed.connect(_menu_changed)
+	set_process(false)
 
 func _notice(message: String, success: bool) -> void:
+	_notice_success = success
 	_label.text = message
-	_label.modulate = Color.WHITE if success else Color(1, 0.55, 0.4)
+	_label.add_theme_color_override("font_color", FarmUI.GOOD if success else FarmUI.WARNING)
 	_label.show()
+	_notice_panel.show()
+	if success and world.player.selection.is_menu_open():
+		_notice_panel.hide()
 	_hide_at = Time.get_ticks_msec() + (4000 if success else 15000)
+	_notice_timer.start(4.0 if success else 15.0)
+
+func _menu_changed(open: bool) -> void:
+	if open and _notice_success:
+		_notice_panel.hide()
 
 func _process(_delta: float) -> void:
 	if _label != null and Time.get_ticks_msec() > _hide_at:

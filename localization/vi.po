@@ -3401,6 +3401,15 @@ msgstr "Đã dọn cỏ dại!"
 msgid "Pesticide"
 msgstr "Thuốc trừ sâu"
 
+msgid "Herbicide"
+msgstr "Thuốc diệt cỏ"
+
+msgid "Removes weeds from one field crop."
+msgstr "Diệt cỏ dại cho một cây trên ruộng."
+
+msgid "Face a crop and right-click / Space to remove weeds."
+msgstr "Hướng về cây, nhấn chuột phải / Space để diệt cỏ."
+
 msgid "Animal Medicine"
 msgstr "Thuốc thú y"
 
@@ -3451,3 +3460,105 @@ msgstr "Đã chữa bệnh cho vật nuôi!"
 
 msgid "Pests removed!"
 msgstr "Đã trị sâu!"
+
+msgid "Feeling healthy!"
+msgstr "Khoẻ quá!"
+
+msgid "Balanced priorities"
+msgstr "Ưu tiên cân bằng"
+
+msgid "Care first"
+msgstr "Ưu tiên chăm sóc"
+
+msgid "Harvest first"
+msgstr "Ưu tiên thu hoạch"
+
+msgid "Cannot reach the target. Will try another job."
+msgstr "Không đến được mục tiêu. Sẽ thử công việc khác."
+
+msgid "Cannot reach the sick animal. Clear a path to its pen."
+msgstr "Không đến được vật nuôi bị bệnh. Hãy dọn đường tới chuồng."
+
+msgid "No herbicide in supply storage. Buy it at the seed shop, Supplies tab."
+msgstr "Kho vật tư hết thuốc diệt cỏ. Mua tại cửa hàng hạt giống, mục Vật tư."
+
+msgid "No pesticide in supply storage. Buy it at the seed shop, Supplies tab."
+msgstr "Kho vật tư hết thuốc trừ sâu. Mua tại cửa hàng hạt giống, mục Vật tư."
+
+msgid "No animal medicine in supply storage. Buy it at the animal shop."
+msgstr "Kho vật tư hết thuốc thú y. Mua tại cửa hàng vật nuôi."
+
+msgid "Low stock: {item} ({count})."
+msgstr "Sắp hết: {item} (còn {count})."
+
+msgid "Buy herbicide and pesticide at the seed shop, Supplies tab. Buy animal medicine at the animal shop. Deposit them here for workers."
+msgstr "Mua thuốc diệt cỏ và trừ sâu tại cửa hàng hạt giống, mục Vật tư; thuốc thú y tại cửa hàng vật nuôi. Gửi thuốc vào kho này để nhân công sử dụng."
+
+msgid "Herbicide: {count}"
+msgstr "Thuốc diệt cỏ: {count}"
+
+msgid "Pesticide: {count}"
+msgstr "Thuốc trừ sâu: {count}"
+
+msgid "Animal medicine: {count}"
+msgstr "Thuốc thú y: {count}"
+
+msgid "Treating pests"
+msgstr "Đang phun thuốc trừ sâu"
+
+msgid "Treating weeds"
+msgstr "Đang phun thuốc diệt cỏ"
+
+msgid "Treating an animal"
+msgstr "Đang tiêm thuốc thú y"
+
+msgid "No compatible feed in supply storage. Buy feed at the animal shop."
+msgstr "Kho vật tư hết thức ăn phù hợp. Mua thức ăn tại cửa hàng vật nuôi."
+
+msgid "Work targets are reserved or blocked. Waiting for another opportunity."
+msgstr "Mục tiêu đang được nhân công khác nhận hoặc bị chặn. Đang chờ việc khác."
+
+msgid "Refilling water"
+msgstr "Đang bổ sung nước"
+
+msgid "Fetching water"
+msgstr "Đang lấy nước"
+
+msgid "Show"
+msgstr "Hiện"
+
+msgid "Hide"
+msgstr "Ẩn"
+
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgid "Interface size"
+msgstr "Cỡ giao diện"
+
+msgid "Master volume: {value}%"
+msgstr "Âm lượng: {value}%"
+
+msgid "Could not save settings."
+msgstr "Không thể lưu cài đặt."
+
+msgid "All items"
+msgstr "Tất cả"
+
+msgid "Search items…"
+msgstr "Tìm vật phẩm…"
+
+msgid "Use [{key}] / right-click · Interact [{interact}]"
+msgstr "Dùng [{key}] / Chuột phải · Tương tác [{interact}]"
+
+msgid "No matching items. Clear the search or choose another category."
+msgstr "Không tìm thấy vật phẩm. Hãy xóa từ khóa hoặc chọn loại khác."
+
+msgid "Busy {active} · Idle {waiting} · Rest {resting}\nAlerts {attention} · {coins}/day"
+msgstr "Làm {active} · Chờ {waiting} · Nghỉ {resting}\nLưu ý {attention} · {coins}/ngày"
+
+msgid "Empty hands"
+msgstr "Tay không"

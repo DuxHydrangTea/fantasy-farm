@@ -1,0 +1,51 @@
+{
+	"display": "headless",
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"frames_per_case": 180,
+	"save_bound": false,
+	"scenarios": [
+		{
+			"component_probe": {
+				"candidates_ms": 33.348,
+				"next_wake_ms": 0.157,
+				"planting_task_ms": 33.129,
+				"policy_cells": 544,
+				"task": "plant"
+			},
+			"movement_step_ms": {
+				"max": 24.498,
+				"mean": 4.79892222222222,
+				"p95": 7.668
+			},
+			"navigation_queries_per_step": {
+				"max": 636.0,
+				"mean": 576.733333333333,
+				"p95": 576.0
+			},
+			"navigation_queries_total": 103812,
+			"planting": true,
+			"private_grids": 6,
+			"sampled_cells": 103680,
+			"scheduler_tick_ms": {
+				"max": 905.495,
+				"mean": 613.474166666667,
+				"p95": 905.495
+			},
+			"tasks_at_end": {
+				"fetch_water": 6,
+				"plant": 9
+			},
+			"workers": 15
+		}
+	]
+}

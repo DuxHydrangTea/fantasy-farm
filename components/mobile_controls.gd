@@ -151,7 +151,7 @@ func _press_hotbar(point: Vector2) -> bool:
 		return false
 	for index: int in range(_hotbar.buttons.size()):
 		if _hits(_hotbar.buttons[index], point):
-			player.selection.select_slot(index)
+			player.selection.toggle_slot(index)
 			return true
 	if _hits(_hotbar.inventory_button, point):
 		player.selection.set_inventory_open(true)

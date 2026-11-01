@@ -13,6 +13,7 @@ extends PhysicsBody2D
 ## Specialized merchant panels can reuse prompts without retaining an unused shop.
 var create_shop_ui: bool = true
 var _player: FarmPlayer
+var _bubble_entrance: Tween
 
 func _enter_tree() -> void:
 	if menu != null:
@@ -42,6 +43,7 @@ func interaction_position() -> Vector2:
 
 func _ready() -> void:
 	add_to_group(&"shop_merchants")
+	_configure_bubble()
 	bubble.hide()
 	prompt.hide()
 	_refresh_prompt()
@@ -52,13 +54,33 @@ func _ready() -> void:
 		if child is AnimatedSprite2D:
 			(child as AnimatedSprite2D).play(&"idle_down")
 
+func _configure_bubble() -> void:
+	FarmUI.speech(bubble)
+	bubble.material = null
+	bubble.scale = Vector2.ONE
+	bubble.custom_minimum_size = Vector2(88, 27)
+	bubble.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bubble_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bubble_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bubble_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	bubble_text.add_theme_color_override("font_color", FarmUI.INK)
+	bubble_text.add_theme_font_size_override("font_size", 11)
+	bubble.reset_size()
+
 func _place_bubble() -> void:
-	# The mirrored atlas keeps its tail in the fixed left/bottom borders.
-	# Anchor its tip to the NPC body, including presentations offset for interaction.
+	# Center the panel above the NPC; the artwork's tail is off-center.
 	var anchor: Vector2 = (bubble.get_parent() as Node2D).to_local(global_position)
-	bubble.position = anchor + Vector2(-5.5 * bubble.scale.x, -36.0 - bubble.size.y * bubble.scale.y)
+	bubble.pivot_offset = Vector2(bubble.size.x * 0.5, bubble.size.y)
+	bubble.position = anchor - bubble.pivot_offset + Vector2(0, -36)
+	var parent_canvas: Transform2D = (bubble.get_parent() as Node2D).get_global_transform_with_canvas()
+	var projected: Rect2 = bubble.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, bubble.size)
+	var view: Rect2 = get_viewport().get_visible_rect().grow(-8)
+	var corrected: Vector2 = Vector2(clampf(projected.position.x, view.position.x, maxf(view.position.x, view.end.x - projected.size.x)), clampf(projected.position.y, view.position.y, maxf(view.position.y, view.end.y - projected.size.y)))
+	bubble.position += parent_canvas.affine_inverse().basis_xform(corrected - projected.position)
 
 func _process(_delta: float) -> void:
+	if bubble.visible:
+		_place_bubble()
 	if not is_instance_valid(_player):
 		# Resolve only until the local player exists, not every frame.
 		var players: Array[Node] = get_tree().get_nodes_in_group(&"farm_players")
@@ -82,12 +104,22 @@ func is_within_interaction_range(customer: FarmPlayer) -> bool:
 
 func thank_customer() -> void:
 	bubble_text.text = tr("Thank you!\nSee you again!")
+	bubble.reset_size()
+	_place_bubble()
+	if _bubble_entrance != null and _bubble_entrance.is_valid():
+		_bubble_entrance.kill()
+	bubble.scale = Vector2(0.85, 0.85)
 	bubble.show()
+	_bubble_entrance = create_tween()
+	_bubble_entrance.tween_property(bubble, "scale", Vector2(1.06, 1.06), 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_bubble_entrance.tween_property(bubble, "scale", Vector2.ONE, 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	bubble_timer.start(3.5)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
 		bubble_text.text = tr("Thank you!\nSee you again!")
+		bubble.reset_size()
+		_place_bubble()
 		_refresh_prompt()
 
 func _refresh_prompt() -> void:

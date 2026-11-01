@@ -23,13 +23,13 @@ func stop() -> void:
 
 func enter() -> void:
 	stop()
-	target.set_indexed(property, baseline + get_viewport().get_visible_rect().size.y)
+	target.set_indexed(property, baseline + 12.0)
 	motion = create_tween()
-	motion.tween_property(target, property, baseline, 0.32).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	motion.tween_property(target, property, baseline, 0.16).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func leave(done: Callable) -> void:
 	if motion != null:
 		motion.kill()
 	motion = create_tween()
-	motion.tween_property(target, property, baseline + get_viewport().get_visible_rect().size.y, 0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	motion.tween_property(target, property, baseline + 12.0, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	motion.tween_callback(done)

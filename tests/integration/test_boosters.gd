@@ -32,15 +32,20 @@ func before_each() -> void:
 			child.free()
 	world.farming.time_manager = clock
 	_set_clocks(world)
+	var fixture_animal: AnimalActor = preload("res://scenes/animals/chicken.tscn").instantiate() as AnimalActor
+	(fixture_animal.get_node("NeedsComponent") as AnimalNeedsComponent).time_manager = clock
+	world.get_node("CoopPen").add_child(fixture_animal)
 	add_child_autofree(world)
+	world.tool_upgrades.profile_ready = true
 	player = world.player
 	farm = world.farming
 	bag = player.selection.inventory
 	service = player.boosters.service
-	animal = world.get_node("CoopPen").get_children().filter(func(node: Node) -> bool: return node is AnimalActor)[0]
+	animal = fixture_animal
 	animal.needs.configure(10000000.0, 10000000.0)
 	animal.production.definition = animal.production.definition.duplicate() as AnimalProductionDefinition
 	animal.production.definition.production_seconds = 10.0
+	animal.production.definition.production_amount = 1
 	animal.production.bonus_roll = func() -> float: return 0.0
 	player.position = farm.farmland.map_to_local(cell + Vector2i.UP)
 	player.animation.face(Vector2.DOWN)
@@ -97,8 +102,10 @@ func test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items() -> vo
 	assert_true(service.use(farm, cell, null, bag, _slot(FERTILIZER), FERTILIZER, player).ok)
 	assert_eq(bag.count_item(FERTILIZER.item_id), 4)
 	assert_false(attempts[0].ok)
-	farm.restore_crop(Vector2i(55, 22), crop.definition, now, now + 100, 0, now)
-	assert_false(service.use(farm, Vector2i(55, 22), null, bag, _slot(FERTILIZER), FERTILIZER, player).ok)
+	var locked: Vector2i = LandExpansionState.REGION.position
+	assert_false(world.land.state.is_unlocked(locked))
+	farm.restore_crop(locked, crop.definition, now, now + 100, 0, now)
+	assert_false(service.use(farm, locked, null, bag, _slot(FERTILIZER), FERTILIZER, player).ok)
 	assert_eq(bag.count_item(FERTILIZER.item_id), 4)
 
 func test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce() -> void:
@@ -195,7 +202,7 @@ func test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_of
 		if node.persistent_id == &"boosted_animal":
 			restored = node as AnimalActor
 	assert_true(restored.production.tonic_pending)
-	assert_eq(restored.growth.maturity_seconds, 43200.0)
+	assert_eq(restored.growth.maturity_seconds, restored.definition.maturity_seconds * 0.5)
 	assert_eq(restored.growth.lifespan_seconds, 1209600.0)
 	restored.production.bonus_roll = func() -> float: return 0.0
 	var duration: float = restored.production.definition.production_seconds
@@ -203,7 +210,7 @@ func test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_of
 	now += duration * 3
 	restored.needs.update_at(now)
 	assert_false(restored.production.tonic_pending)
-	assert_eq(restored.product_pickup().amount, 4)
+	assert_eq(restored.product_pickup().amount, restored.production.definition.production_amount * 3 + 1)
 	var after: Dictionary = adapter.capture("booster_test", 2, now)
 	assert_true(adapter.restore(after, now).ok)
 	var pile_total: int = 0

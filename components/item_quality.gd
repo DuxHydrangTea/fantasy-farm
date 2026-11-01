@@ -1,6 +1,6 @@
 class_name ItemQuality
 extends RefCounted
-## Quality belongs to quantities, never to shared ItemDefinition resources.
+## Each stack has one quality. Base definitions stay shared for recipes and pricing.
 enum Tier { NORMAL, SILVER, GOLD }
 
 static func exact(tier: int = 0) -> Dictionary:
@@ -47,3 +47,24 @@ static func color(tier: int) -> Color:
 
 static func unit_price(price: int, tier: int) -> int:
 	return roundi(price * [1.0, 1.8, 3.5][clampi(tier, 0, 2)])
+
+static func stack_tier(tiers: Array) -> int:
+	for tier: int in range(3):
+		if int(tiers[tier]) > 0:
+			return tier
+	return 0
+
+static func homogeneous(tiers: Array) -> bool:
+	var kinds: int = 0
+	for value: Variant in tiers:
+		if int(value) > 0:
+			kinds += 1
+	return kinds <= 1
+
+static func item_name(item: ItemDefinition, tiers: Array) -> String:
+	if item == null:
+		return TranslationServer.translate("Empty slot")
+	var name: String = TranslationServer.translate(item.display_name)
+	if item.item_type == ItemDefinition.ItemType.PRODUCE and not item.star_fruit:
+		name += " · " + label(stack_tier(tiers))
+	return name

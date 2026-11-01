@@ -59,7 +59,7 @@ func replace_slots(stacks: Array[Dictionary], notify: bool = true) -> bool:
 		if (item == null and amount != 0) or (item != null and (amount < 1 or amount > stack_limit_for(item))):
 			return false
 		var tiers: Array = stack.get("tiers", [amount, 0, 0])
-		if not ItemQuality.valid_tiers(tiers, item, amount):
+		if not ItemQuality.valid_tiers(tiers, item, amount) or not ItemQuality.homogeneous(tiers):
 			return false
 		replacement.append({"item": item, "count": amount, "tiers": tiers.duplicate()})
 	_slots = replacement
@@ -67,7 +67,7 @@ func replace_slots(stacks: Array[Dictionary], notify: bool = true) -> bool:
 		changed.emit()
 	return true
 
-# Gộp vào stack cùng item trước, rồi mới lấp ô trống. Giá trị trả về là số THỰC NHẬN.
+# Gộp vào stack cùng item VÀ chất lượng trước, rồi mới lấp ô trống. Giá trị trả về là số THỰC NHẬN.
 # Không được giả định luôn nhận đủ amount: caller nhặt đồ phải giữ phần dư trên đất,
 # caller giao dịch/thu hoạch toàn bộ phải kiểm tra capacity trước khi thay đổi nguồn đồ.
 # Nếu dùng amount thay vì kết quả trả về để xóa nguồn hoặc hiện +N, sẽ mất đồ/báo quá số nhận.
@@ -77,7 +77,7 @@ func add(item: ItemDefinition, amount: int = 1, tier: int = 0, notify: bool = tr
 		return 0
 	var left: int = amount
 	for stack: Dictionary in _slots:
-		if stack.item != null and item.matches(stack.item):
+		if stack.item != null and item.matches(stack.item) and int(stack.tiers[tier]) == int(stack.count):
 			var moved: int = mini(left, stack_limit_for(item) - int(stack.count))
 			stack.count += moved
 			stack.tiers[tier] += moved
@@ -141,13 +141,14 @@ func transfer_slot_to(index: int, target: InventoryComponent, amount: int, notif
 	var item: ItemDefinition = source.item
 	if item == null:
 		return 0
-	var left: int = mini(amount, target.capacity_for(item))
+	var left: int = amount
 	var total: int = 0
 	for tier: int in range(3):
-		var moved: int = mini(left, int(source.tiers[tier]))
+		var moved: int = mini(mini(left, int(source.tiers[tier])), target.capacity_for(item, tier))
 		if moved > 0:
-			remove_from_slot(index, moved, false, tier)
-			target.add(item, moved, tier, false)
+			var accepted: int = target.add(item, moved, tier, false)
+			remove_from_slot(index, accepted, false, tier)
+			moved = accepted
 			total += moved
 			left -= moved
 	if total > 0 and notify:
@@ -161,26 +162,26 @@ func count(item_id: StringName, tier: int = 0) -> int:
 func has(item_id: StringName, amount: int, tier: int = 0) -> bool:
 	return amount >= 0 and count_item(item_id, tier) >= amount
 
-# Sức chứa tính theo từng loại: tổng chỗ còn trong stack cùng item + sức chứa các ô rỗng.
+# Sức chứa tính theo item và chất lượng: chỗ còn trong stack tương ứng + các ô rỗng.
 # Túi kín vẫn có thể nhận trứng nếu stack trứng chưa đầy, nhưng không nhận sữa chưa có stack.
 # Không thể chỉ đếm ô trống hoặc chỉ nhìn tổng số lượng. Đây là lý do các loại vật phẩm
 # có vẻ nhặt khác nhau dù dùng cùng thuật toán; số 64 ô là cấu hình có thể đổi, quy tắc gộp phải đúng.
-func capacity_for(item: ItemDefinition) -> int:
+func capacity_for(item: ItemDefinition, tier: int = 0) -> int:
 	_ensure_slots()
-	if item == null:
+	if item == null or not ItemQuality.supported(item, tier):
 		return 0
 	var available: int = 0
 	for stack: Dictionary in _slots:
 		if stack.item == null:
 			available += stack_limit_for(item)
-		elif item.matches(stack.item):
+		elif item.matches(stack.item) and int(stack.tiers[tier]) == int(stack.count):
 			available += maxi(0, stack_limit_for(item) - int(stack.count))
 	return available
 
-func report_capacity_blocked(item: ItemDefinition, requested: int) -> void:
+func report_capacity_blocked(item: ItemDefinition, requested: int, tier: int = 0) -> void:
 	if item == null or requested <= 0:
 		return
-	var available: int = capacity_for(item)
+	var available: int = capacity_for(item, tier)
 	if available < requested:
 		capacity_blocked.emit(item, requested, available)
 
@@ -201,7 +202,7 @@ func move_slot(source: int, target: int) -> bool:
 	var item: ItemDefinition = from.item
 	if item == null:
 		return false
-	if to.item != null and item.matches(to.item):
+	if to.item != null and item.matches(to.item) and ItemQuality.stack_tier(from.tiers) == ItemQuality.stack_tier(to.tiers):
 		var moved: int = mini(int(from.count), stack_limit_for(item) - int(to.count))
 		if moved <= 0:
 			return false
@@ -219,4 +220,13 @@ func move_slot(source: int, target: int) -> bool:
 		_slots[source] = to
 		_slots[target] = from
 	changed.emit()
+	return true
+
+## Only load paths may resize for legacy quality stacks; normal moves keep capacity fixed.
+func restore_slots(stacks: Array[Dictionary], notify: bool = true) -> bool:
+	var previous: int = slot_count
+	slot_count = stacks.size()
+	if not replace_slots(stacks, notify):
+		slot_count = previous
+		return false
 	return true

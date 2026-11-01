@@ -12,7 +12,7 @@ const HOTBAR_SIZE: int = 6
 @export var starting_feed: ItemDefinition
 @export_range(0, 99) var starting_feed_amount: int = 5
 @export_range(1, 99) var starting_seed_amount: int = 24
-var selected_index: int = 0
+var selected_index: int = -1
 var inventory_open: bool = false
 var shop_open: bool = false
 var objectives_open: bool = false
@@ -80,7 +80,7 @@ func _on_inventory_changed() -> void:
 	selection_changed.emit(selected_index, item.item_id if item != null else &"")
 
 func select_slot(index: int) -> bool:
-	if index < 0 or index >= HOTBAR_SIZE:
+	if index < -1 or index >= HOTBAR_SIZE:
 		return false
 	if index != selected_index or not storage_seed_id.is_empty():
 		storage_seed_id = &""
@@ -89,8 +89,17 @@ func select_slot(index: int) -> bool:
 		_on_inventory_changed()
 	return true
 
+## User input toggles a slot; programmatic select_slot remains idempotent.
+func toggle_slot(index: int) -> bool:
+	if index < 0 or index >= HOTBAR_SIZE:
+		return false
+	return select_slot(-1 if index == selected_index and storage_seed_id.is_empty() else index)
+
 func cycle_selection(step: int) -> void:
-	select_slot(posmod(selected_index + step, HOTBAR_SIZE))
+	if selected_index < 0:
+		select_slot(0 if step >= 0 else HOTBAR_SIZE - 1)
+	else:
+		select_slot(posmod(selected_index + step, HOTBAR_SIZE))
 
 func get_selected_action() -> StringName:
 	var item: ItemDefinition = get_selected_item()
@@ -106,4 +115,4 @@ func get_selected_action() -> StringName:
 
 func get_selected_name() -> String:
 	var item: ItemDefinition = get_selected_item()
-	return tr(item.display_name) if item != null else tr("Empty slot")
+	return ItemQuality.item_name(item, inventory.slot(selected_index).tiers) if item != null else tr("Empty hands") if selected_index < 0 else tr("Empty slot")

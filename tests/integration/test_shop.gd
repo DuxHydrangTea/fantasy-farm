@@ -54,6 +54,18 @@ func test_e_opens_shop_instead_of_tool_and_menu_blocks_world_and_inventory() -> 
 	assert_false(player.selection.inventory_open)
 	assert_false(player.selection.shop_open)
 
+func test_dialogue_panel_stays_centered_above_npc_in_both_languages() -> void:
+	for language: String in ["en", "vi"]:
+		Language.set_language(language)
+		merchant.thank_customer()
+		await wait_physics_frames(2)
+		for popup_scale: float in [0.85, 1.0, 1.06]:
+			merchant.bubble.scale = Vector2.ONE * popup_scale
+			var center: Vector2 = merchant.bubble.get_global_transform() * (merchant.bubble.size * 0.5)
+			assert_almost_eq(center.x, merchant.global_position.x, 0.01, "Panel stays centered during entrance: " + language)
+			assert_lt(center.y, merchant.global_position.y)
+	Language.set_language("en")
+
 func test_thanks_only_after_successful_purchase_and_close_and_resets_per_visit() -> void:
 	assert_true(merchant.open_shop(player))
 	shop.quantity.value = 2

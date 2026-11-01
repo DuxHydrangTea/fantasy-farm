@@ -21,7 +21,7 @@ static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 	var orders: Dictionary = {}
 	var targets: Dictionary = {}
 	for row: Variant in data.rows:
-		if not row is Dictionary or not SaveSchema.identifier(row.get("id")) or not row.get("role") is String or not row.role in WorkerRole.ROLES or ids.has(row.id) or not row.get("zone") is String or not row.get("employed") is bool or not row.get("active") is bool or not SaveSchema.vector(row.get("position")) or not SaveSchema.number(row.get("hire_order"), 1, int(data.next_order) - 1, true) or orders.has(row.hire_order) or not SaveSchema.number(row.get("paid_through_day"), -100000000, 100000000, true) or not SaveSchema.number(row.get("last_wage_day"), -100000000, 100000000, true) or row.paid_through_day > row.last_wage_day or not SaveSchema.number(row.get("wake_at")) or not SaveSchema.number(row.get("paused_at"), 0, saved_at) or not SaveSchema.number(row.get("patrol_index"), 0, 3, true) or not SaveSchema.number(row.get("water_units"), 0, 30, true) or not row.get("basket") is Array or row.basket.size() != 16 or not row.get("task") is Dictionary or not trials.has(row.role):
+		if not row is Dictionary or not SaveSchema.identifier(row.get("id")) or not row.get("role") is String or not row.role in WorkerRole.ROLES or ids.has(row.id) or not row.get("zone") is String or not row.get("employed") is bool or not row.get("active") is bool or not SaveSchema.vector(row.get("position")) or not SaveSchema.number(row.get("hire_order"), 1, int(data.next_order) - 1, true) or orders.has(row.hire_order) or not SaveSchema.number(row.get("paid_through_day"), -100000000, 100000000, true) or not SaveSchema.number(row.get("last_wage_day"), -100000000, 100000000, true) or row.paid_through_day > row.last_wage_day or not SaveSchema.number(row.get("wake_at")) or not SaveSchema.number(row.get("paused_at"), 0, saved_at) or not SaveSchema.number(row.get("patrol_index"), 0, 3, true) or not SaveSchema.number(row.get("water_units"), 0, 30, true) or not row.get("basket") is Array or (row.basket.size() < 16 or row.basket.size() > 48) or not row.get("task") is Dictionary or not trials.has(row.role):
 			return false
 		if row.active and not row.employed:
 			return false
@@ -46,13 +46,21 @@ static func valid(data: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 				return false
 		var task: Dictionary = row.task
 		if not task.is_empty():
-			if not task.get("kind") is String or not task.kind in ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize"] or not task.get("id") is String or not SaveSchema.vector(task.get("point")) or not SaveSchema.vector(task.get("base_point")) or not SaveSchema.number(task.get("attempt"), 0, 4, true) or not SaveSchema.number(task.get("work_at")) or not SaveSchema.number(task.get("finish_at"), float(task.work_at)):
+			if task.has("tracking_started_at") and not SaveSchema.number(task.tracking_started_at, 0, saved_at):
 				return false
-			var allowed: Array = ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize"]
+			if not task.get("kind") is String or not task.kind in ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"] or not task.get("id") is String or not SaveSchema.vector(task.get("point")) or not SaveSchema.vector(task.get("base_point")) or not SaveSchema.number(task.get("attempt"), 0, 4, true) or not SaveSchema.number(task.get("work_at")) or not SaveSchema.number(task.get("finish_at"), float(task.work_at)):
+				return false
+			var allowed: Array = ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"]
 			if not task.kind in allowed:
 				return false
-			if task.kind in ["fruit", "harvest", "water_crop", "till", "plant", "fertilize"] and not SaveSchema.vector(task.get("cell"), true):
+			if task.kind in ["fruit", "harvest", "water_crop", "till", "plant", "fertilize", "treat_pests", "treat_weeds"] and not SaveSchema.vector(task.get("cell"), true):
 				return false
+			if task.kind in ["treat_pests", "treat_weeds", "cure_animal"]:
+				var expected: String = "pesticide" if task.kind == "treat_pests" else "herbicide" if task.kind == "treat_weeds" else "animal_medicine"
+				if task.get("item") != expected or not catalog.items.has(expected):
+					return false
+				if task.kind != "cure_animal" and (not task.get("crop") is String or not catalog.crops.has(task.crop) or not SaveSchema.number(task.get("planted_at"), 0, saved_at)):
+					return false
 			if row.role == "crop" and row.employed and row.active and not data.crop_automation.paused and task.kind != "patrol":
 				var key: String = WorkerRole.target_key(task)
 				if targets.has(key):

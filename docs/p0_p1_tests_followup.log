@@ -1,0 +1,88 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/faker/AppData/Roaming/Godot/app_userdata/fantasy-farm] for temporary output.
+Godot version:  4.7.1
+GUT version:  9.7.1
+[4m
+
+res://tests/integration/test_worker_care_improvements.gd
+[0m* test_missing_medicines_report_exact_type_and_deposit_clears_reason
+* test_priority_modes_and_legacy_save_defaults
+* test_animal_commit_rejects_wall_and_keeps_medicine
+[31m    [Failed] [0m
+      at line 105
+[31m    [Failed] [0m
+      at line 106
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+      at line 107
+* test_moving_target_replans_and_removed_target_cancels
+* test_online_worker_moves_sprays_and_consumes_once
+[31m    [Failed] [0m
+      at line 145
+[31m    [Failed] [0m
+      at line 146
+[31m    [Failed] [0m
+      at line 147
+[31m    [Failed]:  [0m[2] expected to equal [1]:  
+      at line 148
+[1m3/5 passed.
+[0m[4m
+
+res://tests/integration/test_boosters.gd
+[0m* test_fertilizer_action_consumes_at_impact_only_and_reschedules_growth
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_cancel_change_slot_reentry_and_locked_plots_do_not_spend_items
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produce
+* test_juvenile_once_only_and_dead_animal_never_consume_tonic
+* test_tonic_action_requires_facing_range_and_unobstructed_target
+[33m    --- Awaiting 0.9 seconds  ---
+[0m[33m    --- Awaiting 0.9 seconds  ---
+[0m* test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_offline
+* test_legacy_migration_and_bad_flags_reject_before_world_changes
+* test_merchant_sells_canonical_booster_items_with_working_inventory_identity
+[1m8/8 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/integration/test_worker_care_improvements.gd
+[0m- test_animal_commit_rejects_wall_and_keeps_medicine
+[31m    [Failed]:  [0m
+          at line 105
+[31m    [Failed]:  [0m
+          at line 106
+[31m    [Failed]:  [0m[0] expected to equal [1]:  
+          at line 107
+- test_online_worker_moves_sprays_and_consumes_once
+[31m    [Failed]:  [0m
+          at line 145
+[31m    [Failed]:  [0m
+          at line 146
+[31m    [Failed]:  [0m
+          at line 147
+[31m    [Failed]:  [0m[2] expected to equal [1]:  
+          at line 148
+
+Totals
+------
+Scripts               2
+Tests                13
+Passing Tests        11
+Failing Tests         2
+Asserts           91/98
+Time              35.021s
+
+
+[31m---- 2 failing tests ----
+[0m

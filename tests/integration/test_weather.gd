@@ -203,6 +203,12 @@ func test_debug_panel_lists_groups_and_can_be_opened_and_closed() -> void:
 	Language.set_language("en")
 	var hud: WeatherHUD = world.weather.hud
 	assert_not_null(hud.debug_toggle)
+	assert_false(hud.debug_toggle.visible, "Debug tools stay out of the normal HUD")
+	var toggle_event: InputEventKey = InputEventKey.new()
+	toggle_event.physical_keycode = KEY_F3
+	toggle_event.pressed = true
+	hud._unhandled_key_input(toggle_event)
+	assert_true(hud.debug_toggle.visible)
 	assert_false(hud.debug_bar.visible)
 	hud.debug_toggle.button_pressed = true
 	assert_true(hud.debug_bar.visible)

@@ -49,14 +49,14 @@ func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	var original: Array[Dictionary] = stacks.duplicate(true)
 	var left: int = quantity
 	for stack: Dictionary in stacks:
-		if stack.item != null and offer.item.matches(stack.item):
-			var moved: int = mini(left, offer.item.get_stack_limit() - int(stack.count))
+		if stack.item != null and offer.item.matches(stack.item) and int(stack.tiers[0]) == int(stack.count):
+			var moved: int = mini(left, inventory.stack_limit_for(offer.item) - int(stack.count))
 			stack.count += moved
 			stack.tiers[0] += moved
 			left -= moved
 	for stack: Dictionary in stacks:
 		if stack.item == null and left > 0:
-			var moved: int = mini(left, offer.item.get_stack_limit())
+			var moved: int = mini(left, inventory.stack_limit_for(offer.item))
 			stack.item = offer.item
 			stack.count = moved
 			stack.tiers[0] += moved

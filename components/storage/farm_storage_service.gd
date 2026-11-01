@@ -40,10 +40,9 @@ func import_worker_products(source: InventoryComponent, supplies: bool = false) 
 		var item: ItemDefinition = slot.item as ItemDefinition
 		if item == null or (item.item_type != ItemDefinition.ItemType.FEED if supplies else not definition("produce_warehouse").accepts(item)):
 			continue
-		var amount: int = mini(int(slot.count), _capacity(target_slots, item, target))
+		var amount: int = int(slot.count)
 		if amount > 0:
-			_move_tiers(source_slots, target_slots, item, amount, target)
-			moved += amount
+			moved += _move_tiers(source_slots, target_slots, item, amount, target)
 	if moved == 0:
 		return 0
 	busy = true
@@ -111,16 +110,16 @@ func _snapshot(bag: InventoryComponent) -> Array[Dictionary]:
 		slots.append(bag.slot(i))
 	return slots
 
-func _capacity(slots: Array[Dictionary], item: ItemDefinition, bag: InventoryComponent) -> int:
+func _capacity(slots: Array[Dictionary], item: ItemDefinition, bag: InventoryComponent, tier: int = 0) -> int:
 	var result: int = 0
 	for slot: Dictionary in slots:
 		if slot.item == null:
 			result += bag.stack_limit_for(item)
-		elif item.matches(slot.item):
+		elif item.matches(slot.item) and int(slot.tiers[tier]) == int(slot.count):
 			result += maxi(0, bag.stack_limit_for(item) - int(slot.count))
 	return result
 
-func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: ItemDefinition, amount: int, bag: InventoryComponent, quality: int = -1) -> void:
+func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: ItemDefinition, amount: int, bag: InventoryComponent, quality: int = -1) -> int:
 	var left: int = amount
 	for stack: Dictionary in source:
 		if stack.item == null or not item.matches(stack.item):
@@ -128,7 +127,7 @@ func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: Ite
 		for tier: int in range(3):
 			if quality >= 0 and tier != quality:
 				continue
-			var moved: int = mini(left, int(stack.tiers[tier]))
+			var moved: int = mini(mini(left, int(stack.tiers[tier])), _capacity(target, item, bag, tier))
 			if moved > 0:
 				stack.tiers[tier] -= moved
 				stack.count -= moved
@@ -136,11 +135,12 @@ func _move_tiers(source: Array[Dictionary], target: Array[Dictionary], item: Ite
 				left -= moved
 		if stack.count == 0:
 			stack.item = null
+	return amount - left
 
 func _add(slots: Array[Dictionary], item: ItemDefinition, amount: int, bag: InventoryComponent, tier: int = 0) -> void:
 	var left: int = amount
 	for stack: Dictionary in slots:
-		if stack.item != null and item.matches(stack.item):
+		if stack.item != null and item.matches(stack.item) and int(stack.tiers[tier]) == int(stack.count):
 			var moved: int = mini(left, bag.stack_limit_for(item) - int(stack.count))
 			stack.count += moved
 			stack.tiers[tier] += moved
@@ -200,10 +200,9 @@ func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount:
 		if not definition(id).accepts(candidate):
 			continue
 		var requested: int = int(totals[key]) if all_items else mini(amount, int(totals[key]))
-		var accepted: int = mini(requested, _capacity(target_slots, candidate, target))
+		var accepted: int = requested
 		if accepted > 0:
-			_move_tiers(source_slots, target_slots, candidate, accepted, target, quality)
-			moved += accepted
+			moved += _move_tiers(source_slots, target_slots, candidate, accepted, target, quality)
 	if moved == 0:
 		busy = false
 		return _failure("Nothing can be moved. Check the source and destination capacity.")

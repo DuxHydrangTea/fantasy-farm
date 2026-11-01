@@ -5,7 +5,8 @@ const DEFAULT_LANGUAGE: String = "vi"
 const SUPPORTED_LANGUAGES: PackedStringArray = ["en", "vi"]
 
 func _enter_tree() -> void:
-	set_language(DEFAULT_LANGUAGE)
+	FarmUI.load_preferences()
+	set_language(FarmUI.language)
 
 func set_language(language: String) -> bool:
 	if not SUPPORTED_LANGUAGES.has(language):

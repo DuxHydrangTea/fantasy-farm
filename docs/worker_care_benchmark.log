@@ -1,0 +1,9 @@
+Godot Engine v4.7.1.stable.mono.official.a13da4feb - https://godotengine.org
+D3D12 12_0 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 3050 Ti Laptop GPU
+
+[MCPRuntimeServer] port: scanning 6570-6585 (default)
+[MCPRuntimeServer] listening on 127.0.0.1:6570
+[MCPRegistry] runtime port 6570 registered for c:/projects/fantasy-farm
+CARE_BENCHMARK {"actions_seen":[],"crop_count":64,"cured":0,"fps":141.96830557578,"frames":2840,"moved":0,"p95_ms":8.722,"scenario":"baseline","treated":{"clear_weeds":0,"treat_pests":0},"worst_ms":188.336}
+CARE_BENCHMARK {"actions_seen":[],"crop_count":64,"cured":0,"fps":134.952429268683,"frames":2700,"moved":15,"p95_ms":10.538,"scenario":"missing_supplies","treated":{"clear_weeds":0,"treat_pests":0},"worst_ms":165.964}
+CARE_BENCHMARK {"actions_seen":["treat_pests","cure_animal","treat_weeds"],"crop_count":64,"cured":3,"fps":101.288534137936,"frames":2026,"moved":15,"p95_ms":14.074,"scenario":"care_supplied","treated":{"clear_weeds":48,"treat_pests":48},"worst_ms":177.605}

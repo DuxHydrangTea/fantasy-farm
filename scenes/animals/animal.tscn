@@ -74,6 +74,7 @@ z_index = 2
 position = Vector2(0, -35)
 
 [node name="SatietyFrame" type="TextureRect" parent="NeedsDisplay" unique_id=543953675]
+texture_filter = 1
 offset_left = -7.5
 offset_right = 7.5
 offset_bottom = 7.0
@@ -93,6 +94,7 @@ value = 100.0
 show_percentage = false
 
 [node name="HydrationFrame" type="TextureRect" parent="NeedsDisplay" unique_id=1323004160]
+texture_filter = 1
 offset_left = -7.5
 offset_top = 8.0
 offset_right = 7.5

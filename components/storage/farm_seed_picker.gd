@@ -160,12 +160,25 @@ func _process(_delta: float) -> void:
 		return
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	hud.visible = not world.player.selection.is_menu_open() and not (touch and hud.size.y > hud.size.x)
-	launcher.size = Vector2(144, 48) if touch else Vector2(220, 48)
-	launcher.position = Vector2(hud.size.x - 152, hud.size.y - 228) if touch else Vector2(hud.size.x - 232, 128)
+	var hotbar: HotbarUI = world.player.get_node("Hotbar") as HotbarUI
+	var narrow: bool = hotbar.root.size.x < 760
+	var destination: Node = hud if touch or narrow else hotbar.slots
+	if launcher.get_parent() != destination:
+		launcher.reparent(destination)
+	launcher.custom_minimum_size = Vector2(144, 48) if touch else Vector2(144, 64)
+	launcher.text = tr("Stored seeds") if touch else tr("Stored seeds") + "\n[" + GameText.action_key(&"choose_stored_seed") + "]"
+	launcher.tooltip_text = tr("Sow from farm supply storage")
+	if touch:
+		launcher.size = Vector2(144, 48)
+		launcher.position = Vector2(hud.size.x - 152, hud.size.y - 228)
+	elif narrow:
+		launcher.size = Vector2(144, 48)
+		launcher.custom_minimum_size.y = 48
+		launcher.position = Vector2(hud.size.x - 160, hud.size.y - 184)
 	launcher.disabled = not world.storages.available() or world.storages.busy
 	var selection: ToolSelectionComponent = world.player.selection
 	var chosen_seed: ItemDefinition = selection.get_selected_item() if selection.uses_storage_seeds() else null
-	launcher.text = tr("Stored seeds") if touch else tr("Stored seeds · G")
+	launcher.text = tr("Stored seeds") if touch else tr("Stored seeds") + "\n[" + GameText.action_key(&"choose_stored_seed") + "]"
 	if chosen_seed != null:
-		launcher.text += "\n%s × %d" % [tr(chosen_seed.display_name), selection.planting_inventory().count_item(chosen_seed.item_id)]
+		launcher.tooltip_text += "\n%s × %d" % [tr(chosen_seed.display_name), selection.planting_inventory().count_item(chosen_seed.item_id)]
 	launcher.clip_text = true
