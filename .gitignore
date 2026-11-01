@@ -6,3 +6,14 @@
 **/bin/
 **/obj/
 .env
+
+# Generated caches and disposable QA reports
+__pycache__/
+*.py[cod]
+docs/**/*.log
+docs/*lint*.json
+docs/*validation*.json
+docs/*benchmark*.json
+docs/worker_investigation*.json
+docs/worker_optimization_live*.json
+docs/worker_badge_preview.json
