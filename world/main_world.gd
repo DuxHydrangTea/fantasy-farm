@@ -150,6 +150,11 @@ func _ready() -> void:
 	add_child(grass)
 	if OS.is_debug_build() and debug_worker_enabled:
 		debug_worker = _spawn_debug_orchard_worker()
+	if OS.is_debug_build():
+		var console: Node = load("res://components/debug/debug_console.gd").new()
+		console.set("world", self)
+		console.name = "DebugConsole"
+		add_child(console)
 
 ## M0 patrol demo: one orchard hand walking the fruit region ring.
 ## Waypoints hug the authored plantation border so the body, movement and

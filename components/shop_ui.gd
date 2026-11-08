@@ -283,6 +283,7 @@ func _refresh_animal_purchase() -> void:
 	unit_price.text = _coins(offer.price)
 	total_price.text = _coins(offer.price * amount)
 	details.text = tr("{animal} · {price} coins / animal · Young, placed in a pen\nMatures in {maturity} · Lifespan {lifespan}").format({"animal": tr(offer.animal.display_name), "price": offer.price, "maturity": _duration(offer.animal.maturity_seconds), "lifespan": _duration(offer.animal.lifespan_seconds)})
+	details.text = _animal_text.recipe(offer.animal.production) + "\n" + details.text
 	buy_button.text = tr("Buy ×{count}").format({"count": amount})
 	buy_button.disabled = not checked.ok
 	status.text = tr("New animals start at age 0. Resale: 50% when young, 75% when adult.") if checked.ok else GameText.error(checked)

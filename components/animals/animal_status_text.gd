@@ -19,6 +19,11 @@ func maturity(animal: AnimalActor) -> String:
 	var result: String = tr("Adult") if animal.growth.is_adult() else tr("Matures in {time}").format({"time": remaining(animal.growth.seconds_until_adult())})
 	return result
 
+func recipe(definition: AnimalProductionDefinition) -> String:
+	if definition == null or not definition.is_valid():
+		return tr("No produce configured")
+	return tr("Yield: {amount} {item} / {time}").format({"amount": GameText.grouped_integer(definition.production_amount), "item": tr(definition.production_item.display_name), "time": remaining(definition.production_seconds)})
+
 func lifetime(animal: AnimalActor) -> String:
 	return tr("Life left: {time}").format({"time": remaining(animal.growth.seconds_until_death())})
 

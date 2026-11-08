@@ -82,7 +82,7 @@ func test_stock_is_split_without_losing_or_duplicating_existing_items() -> void:
 	assert_true(offered.has(&"watering_can"))
 	assert_true(seeds.catalog.animal_offers.is_empty())
 	assert_true(smith.catalog.animal_offers.is_empty())
-	assert_eq(pets.catalog.animal_offers.size(), 7)
+	assert_eq(pets.catalog.animal_offers.size(), 24)
 
 func test_each_npc_opens_its_own_tabs_and_rejects_other_shop_categories() -> void:
 	for npc: ShopMerchant in [seeds, flowers, pets, smith]:

@@ -296,6 +296,21 @@ func dismiss(role: String) -> String:
 	busy = false
 	return ""
 
+func set_active(id: String, active: bool) -> String:
+	if busy or not available(): return "Workers are unavailable."
+	settle(world.farming.time_manager.now())
+	var row: Dictionary = record_for(id)
+	if row.is_empty() or not row.employed: return "No worker hired."
+	if active and row.paid_through_day < row.last_wage_day: return "Pay the worker's next shift before resuming."
+	if bool(row.active) == active: return ""
+	row.active = active
+	if active:
+		_resume_task(row, world.farming.time_manager.now())
+	else:
+		row.paused_at = world.farming.time_manager.now()
+	changed.emit()
+	return ""
+
 func transfer(role: String, customer: InventoryComponent, deposit: bool, supplies: bool) -> int:
 	if busy or not available() or (deposit and supplies):
 		return 0

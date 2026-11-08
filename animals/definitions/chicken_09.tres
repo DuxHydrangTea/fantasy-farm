@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/chicken_09_frames.tres" id="1_cbj3w"]
+[ext_resource type="Resource" path="res://animals/productions/chicken_09_egg_production.tres" id="2_iq4a0"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_su2d2"]
+
+[resource]
+script = ExtResource("3_su2d2")
+animal_id = &"chicken_09"
+display_name = "Chicken 09"
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_cbj3w")
+maturity_seconds = 3600.0
+production = ExtResource("2_iq4a0")

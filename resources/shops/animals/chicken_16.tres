@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+
+[ext_resource type="Resource" path="res://animals/definitions/chicken_16.tres" id="1_3clud"]
+[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_5moau"]
+
+[resource]
+script = ExtResource("2_5moau")
+animal = ExtResource("1_3clud")
+price = 76000

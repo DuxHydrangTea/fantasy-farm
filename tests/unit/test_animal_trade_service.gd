@@ -23,13 +23,20 @@ func before_each() -> void:
 	clock.set_process(false)
 	wallet = WalletComponent.new()
 	add_child_autofree(wallet)
-	catalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
-	offer = catalog.animal_offers[0]
+	wallet.set_balance(1000)
+	catalog = (load("res://resources/shops/farm_supply.tres") as ShopCatalog).duplicate() as ShopCatalog
+	catalog.animal_offers = catalog.animal_offers.duplicate()
+	offer = catalog.animal_offers[0].duplicate() as AnimalShopOffer
+	offer.animal = offer.animal.duplicate() as AnimalDefinition
+	# Pin the original transaction fixture independently of live economy prices.
+	offer.price = 160
+	offer.animal.maturity_seconds = 86400.0
+	catalog.animal_offers[0] = offer
 	service = AnimalTradeService.new(catalog, wallet, farm, clock)
 	await wait_physics_frames(2)
 
 func test_catalog_has_seven_species_and_resale_never_exceeds_purchase() -> void:
-	assert_eq(catalog.animal_offers.size(), 7)
+	assert_eq(catalog.animal_offers.size(), 24)
 	var ids: Dictionary = {}
 	for entry: AnimalShopOffer in catalog.animal_offers:
 		assert_true(entry.is_valid())

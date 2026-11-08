@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+
+[ext_resource type="Resource" path="res://items/animal_produces/chicken_egg.tres" id="1_fvngo"]
+[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="2_aitb3"]
+
+[resource]
+script = ExtResource("2_aitb3")
+production_item = ExtResource("1_fvngo")
+production_amount = 300
+production_seconds = 900.0
