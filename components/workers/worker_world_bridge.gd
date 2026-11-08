@@ -322,7 +322,7 @@ func refresh_animal_task(row: Dictionary, offline: bool) -> bool:
 	job.base_point = job.point.duplicate()
 	job.erase("arrived_at")
 	job.work_at = now + worker.global_position.distance_to(point) / worker.movement.speed
-	job.finish_at = float(job.work_at) + worker.definition.work_seconds
+	job.finish_at = float(job.work_at) + world.workers.task_duration(job, worker)
 	return true
 
 func _capacity(inventory: InventoryComponent, item: ItemDefinition, cache: Dictionary, tier: int = 0) -> int:
@@ -348,10 +348,13 @@ func commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Dictiona
 		return result
 	match String(task.kind):
 		"patrol":
-			row.patrol_index = (int(row.patrol_index) + 1) % 4
+			# Legacy corner-waypoint cursor is kept for save compatibility only.
+			# Free strolls use ID + position, and extra checkpoint scans may
+			# interrupt idle walks. They must not mutate this unused cursor.
 			return true
 		"water_crop":
-			return world.farming.water(Vector2i(int(task.cell[0]), int(task.cell[1])))
+			var cell: Vector2i = Vector2i(int(task.cell[0]), int(task.cell[1]))
+			return world.farming.apply_area(&"water", [cell], null, -1, null, world.workers.actor_for(row.id)).changed == 1
 		"fetch_water":
 			row.water_units = 30
 			return true

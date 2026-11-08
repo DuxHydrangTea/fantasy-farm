@@ -76,7 +76,7 @@ func test_reservation_snapshot_tracks_prepared_cells_items_pause_and_dismissal()
 	assert_false(service.crop_automation.prepared.has(first.id))
 
 func test_online_row_budget_resumes_without_duplicate_assignments_or_checkpoint_changes() -> void:
-	for index: int in range(15):
+	for index: int in range(3):
 		service.hire("crop")
 	service.feed_inventory("crop").add(preload("res://items/seeds/carrot_seed.tres"), 1000)
 	service.configure_crop(true, false, false)

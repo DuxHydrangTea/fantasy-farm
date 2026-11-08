@@ -100,10 +100,16 @@ func test_v37_migration_unifies_roles_without_loss() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_eq(service.hire("crop"), "")
 	assert_eq(service.hire("crop"), "")
-	for index: int in range(5):
-		assert_eq(service.hire("crop"), "")
+	assert_eq(service.hire("crop"), "")
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
 	var rows: Array = old.workers.rows
+	for index: int in range(3, 7):
+		var copy: Dictionary = rows[2].duplicate(true)
+		copy.id = "old_crop_%d" % index
+		copy.slot = index + 1
+		copy.hire_order = index + 1
+		rows.append(copy)
+	old.workers.next_order = 8
 	var food: AnimalTrough = world.get_node("BarnPen/FeedTrough") as AnimalTrough
 	assert_not_null(food)
 	if food == null:
@@ -131,11 +137,13 @@ func test_v37_migration_unifies_roles_without_loss() -> void:
 	rows.reverse()
 	old.workers.trial_used = ["ranch"]
 	old.version = 37
+	old.land_columns = 24
+	old.land_starting_columns = 8
 	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
 	assert_true(migrated.ok, str(migrated))
 	assert_eq(int(migrated.snapshot.version), SaveSchema.VERSION)
 	var unified: Array = migrated.snapshot.workers.rows
-	assert_eq(unified.size(), 7, "All seven legacy workers survive")
+	assert_eq(unified.size(), 3, "Three legacy workers remain in the active roster")
 	for row: Dictionary in unified:
 		assert_eq(String(row.role), "crop")
 		assert_eq(String(row.zone), "")
@@ -158,21 +166,23 @@ func test_v37_migration_unifies_roles_without_loss() -> void:
 	service.advance(now + 2.0)
 	assert_gt(food.stock, 0, "Migrated feed task continues")
 	assert_false((world.trees.trees[Vector2i(12, 61)] as FruitTree).has_fruit(), "Migrated fruit task continues")
-	assert_eq(service.records.size(), 7)
+	assert_eq(service.records.size(), 3)
 
 func test_v37_migration_rejects_malformed_rows_before_sorting() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_eq(service.hire("crop"), "")
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
 	old.version = 37
+	old.land_columns = 24
+	old.land_starting_columns = 8
 	old.workers.rows.append(42)
 	assert_false(SaveSchema.validate(old, adapter.catalog).ok)
 
-func test_worker_limit_fifteen_enforced_everywhere() -> void:
+func test_worker_limit_three_enforced_everywhere() -> void:
 	world.land.state.restore_blocks(12, 4)
-	for i: int in range(15):
+	for i: int in range(3):
 		assert_eq(service.hire("crop"), "")
-	assert_eq(service.hire("crop"), "The worker team is full (15/15).", "16th hire must explain the actual cap")
+	assert_eq(service.hire("crop"), "The worker team is full (3/3).", "4th hire must explain the actual cap")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_true(SaveSchema.validate(adapter.capture("worker_test", 1, now), adapter.catalog).ok)
 
@@ -328,6 +338,8 @@ func test_v22_migration_and_worker_basket_roundtrip_offline() -> void:
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var old: Dictionary = adapter.capture("worker_test", 1, now)
 	old.version = 22
+	old.land_columns = 24
+	old.land_starting_columns = 8
 	old.erase("workers")
 	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
 	assert_true(migrated.ok, str(migrated))

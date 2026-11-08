@@ -66,7 +66,7 @@ func test_unified_menu_shows_one_team_with_all_controls() -> void:
 	menu._hire()
 	assert_true(world.workers.record("crop").employed)
 	var heading: Label = menu.get_node("%Heading") as Label
-	assert_true("15" in heading.text, "Heading shows the 15 cap: " + heading.text)
+	assert_true("3" in heading.text, "Heading shows the 3 cap: " + heading.text)
 
 func test_unified_badge_and_pause_text_in_both_languages() -> void:
 	menu = _open("crop")
@@ -201,13 +201,13 @@ func test_recovery_actions_only_appear_for_remaining_old_basket_contents() -> vo
 
 func test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker() -> void:
 	menu = _open("crop")
-	for index: int in range(15):
+	for index: int in range(3):
 		assert_false(menu.hire_button.disabled)
 		menu._hire()
 	assert_true(menu.hire_button.disabled)
-	assert_eq(menu.team_list.get_child_count(), 15)
-	assert_eq(world.workers.records_for("crop", true).size(), 15)
-	assert_string_contains(menu.team_summary.text, "42,000")
+	assert_eq(menu.team_list.get_child_count(), 3)
+	assert_eq(world.workers.records_for("crop", true).size(), 3)
+	assert_string_contains(menu.team_summary.text, "8,400")
 	menu._select_worker(2)
 	var selected_id: String = menu.selected_worker_id
 	var other_id: String = String(menu.team_list.get_child(0).get_meta("worker_id"))
@@ -218,11 +218,11 @@ func test_crop_team_selector_hires_to_cap_and_dismisses_only_selected_worker() -
 	assert_false(menu.hire_button.disabled)
 	menu._hire()
 	assert_eq(menu.selected_worker_id, selected_id)
-	assert_eq(menu.team_list.get_child_count(), 15)
+	assert_eq(menu.team_list.get_child_count(), 3)
 
-func test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_view() -> void:
+func test_interacting_with_worker_opens_its_own_selection_and_three_fit_compact_view() -> void:
 	menu = _open("crop")
-	for index: int in range(5):
+	for index: int in range(3):
 		menu._hire()
 	var id: String = menu.selected_worker_id
 	menu.close(false)
@@ -244,16 +244,16 @@ func test_interacting_with_worker_opens_its_own_selection_and_five_fit_compact_v
 		assert_true(Rect2(Vector2.ZERO, menu.root.size).grow(1).encloses(menu.panel.get_global_rect()))
 		assert_true(Rect2(Vector2.ZERO, menu.root.size).grow(1).encloses(menu.hire_button.get_global_rect()))
 
-func test_crop_roster_displays_five_rows_and_selection_updates_details_without_rebuilding() -> void:
+func test_crop_roster_displays_three_rows_and_selection_updates_details_without_rebuilding() -> void:
 	menu = _open("crop")
-	for index: int in range(5):
+	for index: int in range(3):
 		menu._hire()
 	await wait_process_frames(5)
-	assert_eq(menu.team_list.get_child_count(), 5)
+	assert_eq(menu.team_list.get_child_count(), 3)
 	var roster_bounds: Rect2 = (menu.get_node("%OverviewScroll") as ScrollContainer).get_global_rect().grow(1)
 	for child: Button in menu.team_list.get_children():
 		assert_true(child.is_visible_in_tree())
-		assert_true(roster_bounds.encloses(child.get_global_rect()), "All five rows fit the desktop roster: " + child.name)
+		assert_true(roster_bounds.encloses(child.get_global_rect()), "All three rows fit the desktop roster: " + child.name)
 	var button: Button = menu.team_list.get_child(1) as Button
 	var id: String = String(button.get_meta("worker_id"))
 	button.pressed.emit()
@@ -308,3 +308,32 @@ func test_restored_slide_and_stable_worker_buttons() -> void:
 	assert_eq(menu.offset.y, 0.0)
 	assert_eq(ProjectSettings.get_setting("display/window/size/window_width_override"), 1920)
 	assert_eq(ProjectSettings.get_setting("display/window/size/window_height_override"), 1080)
+
+func test_upgrade_tab_purchase_without_hiring_and_compact_layout() -> void:
+	menu = _open("crop")
+	var tabs: TabContainer = menu.upgrade_view.get_parent() as TabContainer
+	tabs.current_tab = 1
+	await wait_process_frames(5)
+	assert_true(menu.upgrade_view.is_visible_in_tree())
+	assert_eq(menu.upgrade_view.buttons.size(), 5)
+	var button: Button = menu.upgrade_view.buttons.speed as Button
+	assert_false(button.disabled)
+	button.pressed.emit()
+	assert_eq(world.workers.upgrades.level("speed"), 1)
+	assert_eq(world.workers.records.size(), 0)
+	await wait_process_frames(2)
+	for language: String in ["en", "vi"]:
+		Language.set_language(language)
+		menu.upgrade_view.refresh(world.workers.upgrade_shop)
+		for resolution: Vector2i in [Vector2i(1280, 720), Vector2i(844, 390)]:
+			viewport.size = resolution
+			await wait_process_frames(6)
+			assert_true(Rect2(Vector2.ZERO, menu.root.size).grow(1).encloses(menu.panel.get_global_rect()))
+			assert_gt(button.size.x, 0.0)
+			assert_gte(button.size.y, 48.0)
+			assert_lte(button.get_global_rect().end.x, menu.panel.get_global_rect().end.x + 1)
+	world.player.wallet.set_balance(0)
+	await wait_process_frames(3)
+	assert_true(button.disabled)
+	assert_true((menu.upgrade_view.reasons.speed as Label).is_visible_in_tree())
+	assert_false((menu.upgrade_view.reasons.speed as Label).text.is_empty(), "A touch user can read why the offer is locked")

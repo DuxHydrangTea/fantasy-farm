@@ -11,7 +11,7 @@ var clock: Array[float]
 var now: float
 var original_clock: Callable
 var original_clock_floor: float
-var cell: Vector2i = Vector2i(48, 30)
+var cell: Vector2i = Vector2i(49, 30)
 
 func before_each() -> void:
 	original_clock = TimeManager.clock_source
@@ -62,7 +62,7 @@ func _commit(job: Dictionary) -> bool:
 	service.busy = false
 	return result
 
-func _plant(point: Vector2i = Vector2i(48, 30), item: ItemDefinition = SEED) -> void:
+func _plant(point: Vector2i = Vector2i(49, 30), item: ItemDefinition = SEED) -> void:
 	source.add(item, 1)
 	assert_true(_commit(service.crop_policy.task("till", point, 5, item)))
 	assert_true(_commit(service.crop_policy.task("plant", point, 4, item)))
@@ -72,12 +72,12 @@ func test_hires_with_auto_plant_and_uses_any_seed_without_player_selection() -> 
 	assert_false(service.crop_automation.auto_fertilize)
 	source.add(SEED, 1)
 	source.add(OTHER, 1)
-	var selected: StringName = world.player.selection.get_selected_item().item_id
+	var selected: ItemDefinition = world.player.selection.get_selected_item()
 	service.advance(now + 30)
 	assert_eq(world.farming.crop_cells().size(), 2)
 	assert_eq(source.count_item(SEED.item_id), 0)
 	assert_eq(source.count_item(OTHER.item_id), 0)
-	assert_eq(world.player.selection.get_selected_item().item_id, selected)
+	assert_eq(world.player.selection.get_selected_item(), selected)
 	var species: Array[String] = []
 	for point: Vector2i in world.farming.crop_cells():
 		species.append(String(world.farming.get_crop(point).definition.crop_id))
@@ -117,7 +117,7 @@ func test_replants_after_harvest_and_prefers_never_planted_plot_before_old_one()
 	assert_eq(again.cell, [cell.x, cell.y])
 	assert_eq(again.kind, "plant")
 	assert_true(_commit(again))
-	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), (SEED.crop as CropDefinition).harvest_amount)
+	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 150, "The fixture plot is fertile in the current map")
 	assert_eq(world.farming.get_crop(cell).definition, OTHER.crop)
 
 func test_does_not_use_bag_or_feed_flowers_and_saplings_as_seeds() -> void:
@@ -198,6 +198,8 @@ func test_schema_v25_migrates_care_only_and_v26_roundtrips_work_and_fertilizer()
 	assert_true(service.crop_automation.owns(cell, world.farming.get_crop(cell)))
 	var legacy: Dictionary = current.duplicate(true)
 	legacy.version = 25
+	legacy.land_columns = 24
+	legacy.land_starting_columns = 8
 	legacy.workers.erase("crop_automation")
 	# v25 never contains the new task kinds.
 	legacy.workers.rows[0].task = {}
@@ -309,8 +311,8 @@ func test_full_1632_plot_field_has_no_daily_quota_and_consumes_only_supplied_sto
 	assert_eq(service.crop_automation.plots.size(), 60, "Never-planted plots are not starved by near repeats")
 	assert_eq(source.count_item(SEED.item_id), 0)
 	assert_eq(source.count_item(OTHER.item_id), 0)
-	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 5350, "Layout v1: 48 carrot crops, including 11 fertile plots")
-	assert_eq(service.output_inventory().count_item((OTHER.crop as CropDefinition).harvest_item.item_id, -1), 12 * (OTHER.crop as CropDefinition).harvest_amount)
+	assert_eq(service.output_inventory().count_item((SEED.crop as CropDefinition).harvest_item.item_id, -1), 5450, "Current path layout: 48 carrots, including 13 fertile plots")
+	assert_eq(service.output_inventory().count_item((OTHER.crop as CropDefinition).harvest_item.item_id, -1), 12 * (OTHER.crop as CropDefinition).harvest_amount + 150, "Three radish plots are fertile in the current path layout")
 	print("CROP_AUTOMATION_FIELD ", JSON.stringify({"elapsed_ms": elapsed, "indexed_cells": service.crop_policy.cells.size(), "plantings": service.crop_automation.sequence, "fertilizer_left": source.count_item(FERTILIZER.item_id)}))
 
 

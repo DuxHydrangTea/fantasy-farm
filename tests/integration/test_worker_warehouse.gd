@@ -179,6 +179,8 @@ func test_v23_profile_imports_old_products_into_new_empty_warehouse_once() -> vo
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var legacy: Dictionary = adapter.capture("warehouse_test", 1, now)
 	legacy.version = 23
+	legacy.land_columns = 24
+	legacy.land_starting_columns = 8
 	legacy.erase("storages")
 	legacy.workers.rows[0].basket[0] = {"item": "apple", "count": 100}
 	legacy.workers.rows[0].basket[1] = {"item": "apple", "count": 50}

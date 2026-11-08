@@ -116,7 +116,7 @@ func test_all_roles_48h_single_jump_matches_hourly_checkpoints_at_empty_full_and
 	var stepped: Dictionary = _signature(now + 172800)
 	assert_eq(stepped.storages, single.storages)
 	assert_eq(stepped.coins, single.coins)
-	assert_eq(stepped.workers, single.workers)
+	assert_true(_compare_snapshot(single.workers, stepped.workers, "workers"), "Worker replay preserves discrete state and timestamp tolerance")
 	assert_eq(stepped.crops, single.crops)
 	# Normalized pen units/needs permit only floating-point accumulation error.
 	assert_eq(stepped.troughs.size(), single.troughs.size())

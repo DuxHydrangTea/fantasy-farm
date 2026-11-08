@@ -16,6 +16,40 @@ var _blocked_elapsed: float = 0.0
 var _wait_remaining: float = 0.0
 var _badge_elapsed: float = 1.0
 var _navigation: PlayerNavigationComponent
+var _care_target: WeakRef
+
+func _exit_tree() -> void:
+	_release_care_target()
+
+func _release_care_target() -> void:
+	var animal: AnimalActor = _care_target.get_ref() as AnimalActor if _care_target != null else null
+	if is_instance_valid(animal) and is_instance_valid(animal.behaviour):
+		animal.behaviour.release_care_hold(self)
+	_care_target = null
+
+func _care_focus_active() -> bool:
+	var actor: WorkerActor = movement.body as WorkerActor
+	var animal: AnimalActor = _care_target.get_ref() as AnimalActor if _care_target != null else null
+	if not is_instance_valid(actor) or actor.is_queued_for_deletion() or not is_instance_valid(actor.worker_service) or not is_instance_valid(animal) or animal.is_queued_for_deletion() or animal.is_dead() or not animal.health.sick:
+		return false
+	var row: Dictionary = actor.worker_service.record_for(String(actor.persistent_id))
+	return not row.is_empty() and actor.worker_service.running(row) and row.task.get("kind", "") == "cure_animal" and String(row.task.get("id", "")) == String(animal.persistent_id)
+
+func _sync_care_target(actor: WorkerActor, row: Dictionary) -> void:
+	var desired: AnimalActor
+	if not row.is_empty() and actor.worker_service.running(row) and row.task.get("kind", "") == "cure_animal":
+		desired = actor.worker_service.bridge.animal_for(String(row.task.id))
+		if is_instance_valid(desired) and (desired.is_dead() or not desired.health.sick):
+			desired = null
+	var current: AnimalActor = _care_target.get_ref() as AnimalActor if _care_target != null else null
+	if desired == current:
+		if is_instance_valid(desired):
+			desired.behaviour.hold_for_care(self, _care_focus_active)
+		return
+	_release_care_target()
+	if is_instance_valid(desired):
+		_care_target = weakref(desired)
+		desired.behaviour.hold_for_care(self, _care_focus_active)
 
 func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
 	if _navigation == null:
@@ -111,6 +145,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 	if actor.care_action != null:
 		actor.care_action.show_action("", Vector2.ZERO)
 	var row: Dictionary = actor.worker_service.record_for(String(actor.persistent_id))
+	_sync_care_target(actor, row)
 	if row.is_empty():
 		return
 	_badge_elapsed += delta
@@ -146,7 +181,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 			var now: float = actor.worker_service.world.farming.time_manager.now()
 			task["arrived_at"] = now
 			task.work_at = maxf(float(task.work_at), now)
-			task.finish_at = maxf(float(task.finish_at), float(task.work_at) + actor.definition.work_seconds)
+			task.finish_at = maxf(float(task.finish_at), float(task.work_at) + actor.worker_service.task_duration(task, actor))
 		if task.kind in ["treat_pests", "treat_weeds", "cure_animal"] and actor.care_action != null:
 			var direction: Vector2 = animation.facing_vector
 			if task.kind == "cure_animal":

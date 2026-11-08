@@ -24,12 +24,35 @@ var _team_ids: Array[String] = []
 @onready var confirm_button: Button = %ConfirmDismiss
 @onready var cancel_button: Button = %CancelDismiss
 var wait_care_button: Button
+var upgrade_view: WorkerUpgradeView
 var priority_choice: OptionButton
 var _confirm: bool = false
 var _dismiss_id: String = ""
 var _elapsed: float = 0.0
 var _compact: bool = false
 var _refresh_queued: bool = false
+
+func _style_worker_tabs(tabs: TabContainer) -> void:
+	tabs.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	var normal: StyleBoxFlat = StyleBoxFlat.new()
+	normal.bg_color = Color("f3ead6")
+	normal.border_color = Color("c9ae80")
+	normal.set_border_width_all(1)
+	normal.set_corner_radius_all(6)
+	normal.content_margin_left = 10
+	normal.content_margin_right = 10
+	normal.content_margin_top = 10
+	normal.content_margin_bottom = 10
+	var selected: StyleBoxFlat = normal.duplicate() as StyleBoxFlat
+	selected.bg_color = Color("667c42")
+	tabs.add_theme_stylebox_override("tab_unselected", normal)
+	tabs.add_theme_stylebox_override("tab_selected", selected)
+	tabs.add_theme_stylebox_override("tab_hovered", selected)
+	tabs.add_theme_stylebox_override("tab_focus", hire_button.get_theme_stylebox("focus"))
+	tabs.add_theme_color_override("font_unselected_color", Color("493121"))
+	tabs.add_theme_color_override("font_selected_color", Color("fff8e8"))
+	tabs.add_theme_color_override("font_hovered_color", Color("fff8e8"))
+	tabs.add_theme_font_size_override("font_size", 16)
 
 func _flush_refresh() -> void:
 	_refresh_queued = false
@@ -42,6 +65,17 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	var tabs: TabContainer = TabContainer.new()
+	tabs.name = "WorkerTabs"
+	tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_style_worker_tabs(tabs)
+	(%WorkScroll as ScrollContainer).add_child(tabs)
+	(%WorkContent as VBoxContainer).reparent(tabs)
+	tabs.set_tab_title(0, tr("Work settings"))
+	upgrade_view = WorkerUpgradeView.new()
+	upgrade_view.name = "TeamUpgrades"
+	tabs.add_child(upgrade_view)
+	tabs.set_tab_title(1, tr("Team upgrades"))
 	wait_care_button = Button.new()
 	wait_care_button.name = "WaitForCare"
 	wait_care_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -170,7 +204,7 @@ func _refresh() -> void:
 	var wage: int = int(WorkerRole.WAGES[role])
 	var cost: int = wage if role in service.trial_used else 0
 	var title: String = tr(str(TITLES[role]))
-	(%Heading as Label).text = tr("Worker team {count}/15").format({"count": count})
+	(%Heading as Label).text = tr("Worker team {count}/{limit}").format({"count": count, "limit": WorkerRole.LIMITS[role]})
 	(%WorkerName as Label).text = _worker_title(row) if employed else title
 	(%Balance as Label).text = _money(customer.wallet.balance)
 	(%Wage as Label).text = _money(wage)
@@ -210,6 +244,7 @@ func _refresh() -> void:
 	hire_button.text = tr("Team full") if count >= int(WorkerRole.LIMITS[role]) else tr("Hire another worker") if count > 0 else tr("Hire worker")
 	dismiss_button.visible = employed
 	dismiss_button.disabled = not available
+	upgrade_view.refresh(service.upgrade_shop)
 	_refresh_supplies(service)
 	_refresh_legacy(service)
 	info.text = "\n".join([title, tr("Daily wage: %d coins · paid at dawn") % wage, tr("First shift is free. Rehiring costs today's wage."), tr("Harvested products go directly to the produce warehouse."), task, (%Supplies as Label).text])

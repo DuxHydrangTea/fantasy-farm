@@ -2,7 +2,7 @@ class_name WorkerRole
 extends RefCounted
 ## Pure policy: deterministic priority, distance, then stable target ID.
 const ROLES: Array[String] = ["crop"]
-const LIMITS: Dictionary = {"crop": 15}
+const LIMITS: Dictionary = {"crop": 3}
 const WAGES: Dictionary = {"crop": 2800}
 const PRIORITY_MODES: Array[String] = ["balanced", "care_first", "harvest_first"]
 const TASK_CAPTIONS: Dictionary = {"till": "Tilling soil", "plant": "Planting crops", "fertilize": "Fertilizing crops", "water": "Watering", "water_crop": "Watering", "feed": "Refilling feed", "water_trough": "Refilling water", "fetch_water": "Fetching water", "harvest": "Harvesting", "fruit": "Harvesting", "pickup": "Collecting produce", "patrol": "Patrolling the work area", "treat_pests": "Treating pests", "treat_weeds": "Treating weeds", "cure_animal": "Treating an animal"}

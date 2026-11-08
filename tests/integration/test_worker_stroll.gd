@@ -118,6 +118,12 @@ func test_rest_between_strolls_is_one_to_three_seconds() -> void:
 	var rest: float = service.bridge.rest_seconds(service.record("crop"))
 	assert_true(rest >= 1.0 and rest <= 3.0)
 
+func test_legacy_waypoint_cursor_is_preserved_by_free_strolls() -> void:
+	var row: Dictionary = service.record("crop")
+	row.patrol_index = 3
+	assert_true(service.bridge.commit(row, service.feed_inventory(row.id), {"kind": "patrol"}))
+	assert_eq(int(row.patrol_index), 3, "Idle checkpoints cannot drift the obsolete save cursor")
+
 func test_worker_rests_between_strolls_after_commit() -> void:
 	# Animals would keep the unified worker busy with trough work forever;
 	# the rest mechanism needs a genuinely idle world to be observable.

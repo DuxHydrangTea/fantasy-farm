@@ -96,10 +96,10 @@ func planting_task(row: Dictionary) -> Dictionary:
 	_cache()
 	var actor: WorkerActor = world.workers.actor_for(row.id)
 	var origin: Vector2 = WorkerRole.point(row.position)
-	var prepared: Vector2i = settings.prepared_for(row.id)
-	if LandExpansionState.REGION.has_point(prepared) and (world.farming.get_crop(prepared) != null or int(soils.get(prepared, 0)) == FarmingController.Soil.UNTILLED or not world.farming.can_plant(prepared, actor)):
-		settings.prepared.erase(row.id)
-		prepared = settings.prepared_for(row.id)
+	for cell: Vector2i in settings.prepared_cells(row.id):
+		if not LandExpansionState.REGION.has_point(cell) or world.farming.get_crop(cell) != null or int(soils.get(cell, 0)) == FarmingController.Soil.UNTILLED or not world.farming.can_plant(cell, actor):
+			settings.remove_prepared(row.id, cell)
+	var prepared: Array[Vector2i] = settings.prepared_cells(row.id)
 	var held: Dictionary = world.workers.reservations(String(row.id))
 	var timestamp: float = world.farming.time_manager.now()
 	# Rank once, then test up to sixteen candidates. No per-cell task allocation,
@@ -122,9 +122,9 @@ func planting_task(row: Dictionary) -> Dictionary:
 		if float(world.workers.blocked_targets.get("%s:%d_%d" % [row.id, cell.x, cell.y], 0)) > timestamp:
 			continue
 		var soil: int = int(soils.get(cell, 0))
-		if soil == FarmingController.Soil.UNTILLED and LandExpansionState.REGION.has_point(prepared):
+		if soil == FarmingController.Soil.UNTILLED and not prepared.is_empty():
 			continue
-		var rank: int = -1 if cell == prepared else int(settings.plots.get(cell, {}).get("last", 0))
+		var rank: int = -1 if prepared.has(cell) else int(settings.plots.get(cell, {}).get("last", 0))
 		# Fixtures and restored indexes may provide cells before their projections.
 		if not points.has(cell):
 			points[cell] = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
@@ -177,7 +177,7 @@ func commit(row: Dictionary, job: Dictionary) -> bool:
 		success = world.farming.apply_area(&"tool", [cell], null, -1, null, actor).changed == 1
 		if success:
 			settings.clear_prepared(cell)
-			settings.prepared[row.id] = cell
+			settings.add_prepared(row.id, cell)
 	elif job.kind == "plant" and settings.auto_plant:
 		var item: ItemDefinition = world.storages.seed_item(StringName(job.item))
 		if item != null and bag.count_item(item.item_id) > 0:

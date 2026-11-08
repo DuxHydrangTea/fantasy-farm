@@ -18,6 +18,9 @@ var failed_paths: int = 0
 var geometry_revision: int = 0
 var _pumped_frame: int = -1
 var _static_areas: Dictionary = {}
+var profiling: bool = false
+var profile_usec: int = 0
+var profile_max_usec: int = 0
 
 func _ready() -> void:
 	get_tree().node_added.connect(_geometry_changed)
@@ -155,6 +158,10 @@ func pump() -> void:
 		else:
 			cursor += 1
 		expansions_last_step += 1
+	if profiling:
+		var spent: int = Time.get_ticks_usec() - started
+		profile_usec += spent
+		profile_max_usec = maxi(profile_max_usec, spent)
 
 func _clear(job: Dictionary, nav: WorkerNavigation, cell: Vector2i) -> bool:
 	if not (job.bounds as Rect2i).has_point(cell):

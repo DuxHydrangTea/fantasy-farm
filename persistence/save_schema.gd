@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 40
+const VERSION: int = 41
 const CropConditions = preload("res://components/crop_condition_state.gd")
 const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
@@ -67,7 +67,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -366,6 +366,12 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		data.erase("land_columns")
 		data.erase("land_starting_columns")
 		data.version = 40
+	if data.get("version") == 40:
+		if not number(data.get("saved_at")) or not WorkerSaveSchema.valid(data.get("workers"), catalog, float(data.saved_at), true):
+			return failure("Invalid legacy worker state.")
+		data = data.duplicate(true)
+		data.workers = WorkerSaveSchema.migrate_team(data.workers)
+		data.version = 41
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if data.has("wall_saved_at") and not number(data.wall_saved_at):

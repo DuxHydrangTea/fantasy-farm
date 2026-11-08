@@ -10,7 +10,7 @@ var clock: Array[float]
 var now: float
 var original_clock: Callable
 var original_clock_floor: float
-var cell: Vector2i = Vector2i(48, 30)
+var cell: Vector2i = Vector2i(49, 30)
 
 func before_each() -> void:
 	original_clock = TimeManager.clock_source
@@ -29,6 +29,10 @@ func before_each() -> void:
 	world.farming.restore_soil([])
 	service = world.workers
 	source = world.storages.inventory("farm_supply_storage")
+	# Quality assertions isolate watering/root effects from random crop disease.
+	world.farming.crop_planted.connect(func(_cell: Vector2i, crop: Crop) -> void:
+		crop.conditions.pest_roll = 1.0
+		crop.conditions.weed_roll = 1.0)
 	assert_eq(service.hire("crop"), "")
 	_limit([cell, cell + Vector2i.RIGHT])
 
@@ -49,7 +53,7 @@ func _commit(job: Dictionary) -> bool:
 	service.busy = false
 	return result
 
-func _plant(point: Vector2i = Vector2i(48, 30), item: ItemDefinition = SEED) -> void:
+func _plant(point: Vector2i = Vector2i(49, 30), item: ItemDefinition = SEED) -> void:
 	source.add(item, 1)
 	assert_true(_commit(service.crop_policy.task("till", point, 5, item)))
 	assert_true(_commit(service.crop_policy.task("plant", point, 4, item)))
@@ -106,8 +110,9 @@ func test_worker_harvest_sends_gold_to_warehouse_and_transfers_preserve_tiers() 
 	crop.mark_watered()
 	assert_true(crop.apply_root())
 	var id: StringName = crop.definition.harvest_item.item_id
-	var amount: int = crop.definition.harvest_amount
 	clock[0] = now + 100
+	crop.refresh(clock[0])
+	var amount: int = world.farming.harvest_amount(cell)
 	assert_true(_commit(service.crop_policy.task("harvest", cell, 0)))
 	var output: InventoryComponent = service.output_inventory()
 	assert_eq(output.count_item(id, 2), amount)
@@ -135,6 +140,8 @@ func test_v28_roundtrip_and_v26_migration_preserve_resources_and_grant_silver() 
 	assert_eq(service.output_inventory().count_item(SEED.crop.harvest_item.item_id, 2), 3)
 	var legacy: Dictionary = data.duplicate(true)
 	legacy.version = 26
+	legacy.land_columns = 24
+	legacy.land_starting_columns = 8
 	for row: Dictionary in legacy.crops:
 		row.erase("watered")
 		row.erase("root_boost")

@@ -105,13 +105,12 @@ func test_worker_care_uses_supplies_once_and_shows_animal_bubble() -> void:
 	assert_eq(bag.count_item(MEDICINE.item_id), 0)
 	assert_not_null(animal.get_node_or_null("CareBubble"))
 	var bubble: Node = animal.get_node("CareBubble")
-	assert_true((bubble.get_node("BubbleVisual/BubblePanel") as Sprite2D).texture in [preload("res://assets/Ui/status_bubbles/bubble_4.png"), preload("res://assets/Ui/status_bubbles/bubble_5.png")])
-	assert_eq((bubble.get_node("BubbleVisual/Text") as Label).text, tr("Feeling healthy!"))
-	var label: Label = bubble.get_node("BubbleVisual/Text") as Label
-	assert_almost_eq(label.position.x + label.size.x * 0.5, 0.0, 0.01)
-	assert_eq(label.size.y, 20.0)
+	var panel: PanelContainer = bubble.get_node("BubbleVisual/BubblePanel") as PanelContainer
+	assert_not_null(panel)
+	var label: Label = panel.get_node("Text") as Label
+	assert_eq(label.text, tr("Feeling healthy!"))
 	assert_eq(label.horizontal_alignment, HORIZONTAL_ALIGNMENT_CENTER)
-	assert_true(label.clip_text)
+	assert_true(panel.get_global_rect().encloses(label.get_global_rect()))
 	assert_false(world.workers.bridge.commit(row, bag, job))
 
 func test_worker_care_crop_conditions_use_correct_supplies() -> void:
@@ -344,6 +343,8 @@ func test_save_migration_roundtrip_and_invalid_health_preflight() -> void:
 	assert_true(SaveSchema.validate(data, adapter.catalog).ok)
 	var legacy: Dictionary = data.duplicate(true)
 	legacy.version = 36
+	legacy.land_columns = 24
+	legacy.land_starting_columns = 8
 	legacy.workers.crop_automation.erase("wait_for_care")
 	for row: Dictionary in legacy.crops:
 		row.erase("conditions")

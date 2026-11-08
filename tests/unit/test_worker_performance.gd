@@ -1,5 +1,5 @@
 extends GutTest
-## Performance regression test for worker system with 15 concurrent workers.
+## Performance regression test for worker system with 3 concurrent workers.
 ## Ensures optimizations don't break core logic.
 
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
@@ -52,12 +52,12 @@ func after_each() -> void:
 	TimeManager.clock_source = _old_source
 	TimeManager._last_timestamp = _old_floor
 
-func test_fifteen_workers_can_be_hired_and_operate() -> void:
-	for i: int in range(15):
+func test_three_workers_can_be_hired_and_operate() -> void:
+	for i: int in range(3):
 		var error: String = service.hire("crop")
 		assert_eq(error, "", "Worker %d hire failed: %s" % [i + 1, error])
 	
-	assert_eq(service.records_for("crop", true).size(), 15)
+	assert_eq(service.records_for("crop", true).size(), 3)
 	service.configure_crop(true, false, false)
 	
 	# Advance 30 seconds and verify workers are functioning
@@ -71,12 +71,12 @@ func test_fifteen_workers_can_be_hired_and_operate() -> void:
 		if service.running(row):
 			active += 1
 	
-	assert_gte(active, 10, "At least 10 workers should be active")
+	assert_gte(active, 3, "All 3 workers should be active")
 	
-	# Performance check: 15 workers × 30s should complete in < 5s wall time
+	# Performance check: 3 workers × 30s should complete in < 5s wall time
 	var elapsed_ms: float = float(elapsed_usec) / 1000.0
-	assert_lt(elapsed_ms, 5000.0, "15 workers advance(30s) took %dms (expected <5000ms)" % elapsed_ms)
-	gut.p("15 workers advance(30s) took %.1fms" % elapsed_ms)
+	assert_lt(elapsed_ms, 5000.0, "3 workers advance(30s) took %dms (expected <5000ms)" % elapsed_ms)
+	gut.p("3 workers advance(30s) took %.1fms" % elapsed_ms)
 
 func test_trough_point_cache_returns_consistent_results() -> void:
 	service.hire("crop")

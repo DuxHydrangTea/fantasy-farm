@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/performance/worker_upgrades_benchmark.gd" id="1"]
+
+[node name="WorkerUpgradesBenchmark" type="Node"]
+script = ExtResource("1")

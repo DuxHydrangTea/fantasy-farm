@@ -18,6 +18,9 @@ var _expected_action: StringName = &""
 var _sleep_after_lying: bool = false
 var _first_decision: bool = true
 var _focused: bool = false
+## Transient care holds are independent of the player's status focus.
+## Weak owners and task predicates prevent abandoned workers freezing animals.
+var _care_holds: Dictionary[int, Dictionary] = {}
 
 func _ready() -> void:
 	wander.animation.action_finished.connect(_on_animation_finished)
@@ -44,7 +47,8 @@ func _physics_process(delta: float) -> void:
 		if current_state != State.IDLE:
 			_enter(State.IDLE)
 		return
-	if _focused:
+	var care_held: bool = _has_care_hold()
+	if _focused or care_held:
 		_stop()
 		return
 	# Boundary enforcement remains active while sitting or sleeping.
@@ -108,9 +112,32 @@ func set_focused(value: bool) -> void:
 		foraging.cancel()
 		_enter(State.IDLE)
 
+func hold_for_care(owner: Node, is_active: Callable) -> void:
+	if _care_holds.has(owner.get_instance_id()):
+		return
+	var already_focused: bool = _focused or _has_care_hold()
+	_care_holds[owner.get_instance_id()] = {"owner": weakref(owner), "active": is_active}
+	if not already_focused and definition != null:
+		foraging.cancel()
+		_enter(State.IDLE)
+
+func release_care_hold(owner: Node) -> void:
+	_care_holds.erase(owner.get_instance_id())
+
+func _has_care_hold() -> bool:
+	if _care_holds.is_empty():
+		return false
+	for identity: int in _care_holds.keys():
+		var entry: Dictionary = _care_holds[identity]
+		var holder: Node = (entry.owner as WeakRef).get_ref() as Node
+		var active: Callable = entry.active
+		if not is_instance_valid(holder) or not holder.is_inside_tree() or holder.is_queued_for_deletion() or not active.is_valid() or not bool(active.call()):
+			_care_holds.erase(identity)
+	return not _care_holds.is_empty()
+
 ## Upright behaviours can be interrupted. A lying animal must wake() first.
 func request_behaviour(action: StringName) -> bool:
-	if _focused or definition == null or not is_instance_valid(wander.pen):
+	if _focused or _has_care_hold() or definition == null or not is_instance_valid(wander.pen):
 		return false
 	if current_state != State.IDLE and current_state != State.WALK and current_state != State.FORAGE:
 		return false

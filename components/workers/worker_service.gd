@@ -20,6 +20,9 @@ var legacy_pending: bool = false
 var crop_automation: CropAutomationState = CropAutomationState.new()
 var _pending_pickups: Array[WeakRef] = []
 var _catching_up: bool = false
+var upgrades: WorkerUpgradeState = WorkerUpgradeState.new()
+var upgrade_shop: WorkerUpgradeService = WorkerUpgradeService.new(self)
+var legacy_baskets: Array = []
 var crop_policy: CropWorkerPolicy
 var navigation: WorkerNavigationSystem
 const ONLINE_BUDGET_USEC: int = 2000
@@ -28,6 +31,11 @@ var _event_row: int = 0
 var _budget_frame: int = -1
 var _budget_spent_usec: int = 0
 var _online_pending: bool = false
+## Opt-in counters for the isolated rendered benchmark.
+var profiling: bool = false
+var scheduler_usec: int = 0
+var commit_usec: int = 0
+var commit_max_usec: int = 0
 
 ## Build once per query/event, rather than scanning every worker for every tile.
 ## Snapshots deliberately rebuild from records: restore and test fixtures can edit them.
@@ -40,13 +48,14 @@ func reservations(except_id: String = "") -> Dictionary:
 		var key: String = target_key(job)
 		if not key.is_empty():
 			result.targets[key] = true
-		if job.has("cell"):
-			result.cells[Vector2i(int(job.cell[0]), int(job.cell[1]))] = true
+		for cell: Vector2i in WorkerAreaPolicy.task_cells(job):
+			result.cells[cell] = true
 		if other.role == "crop":
-			result.cells[crop_automation.prepared_for(other.id)] = true
+			for cell: Vector2i in crop_automation.prepared_cells(other.id):
+				result.cells[cell] = true
 		if job.get("kind", "") in ["till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"]:
 			var item: String = String(job.get("item", ""))
-			result.items[item] = int(result.items.get(item, 0)) + 1
+			result.items[item] = int(result.items.get(item, 0)) + WorkerAreaPolicy.item_count(job)
 	return result
 
 func _ready() -> void:
@@ -120,6 +129,9 @@ func worker_number(id: String) -> int:
 		return 0
 	return int(row.slot)
 
+func task_duration(job: Dictionary, actor: WorkerActor) -> float:
+	return float(job.get("duration", actor.definition.work_seconds))
+
 func target_key(job: Dictionary) -> String:
 	return WorkerRole.target_key(job)
 
@@ -128,13 +140,18 @@ func target_available(row: Dictionary, job: Dictionary) -> bool:
 	if key.is_empty():
 		return true
 	var held: Dictionary = reservations(String(row.id))
-	return not held.targets.has(key) and (not job.has("cell") or not held.cells.has(Vector2i(int(job.cell[0]), int(job.cell[1]))))
+	if not job.has("cells") and held.targets.has(key):
+		return false
+	for cell: Vector2i in WorkerAreaPolicy.task_cells(job):
+		if held.cells.has(cell):
+			return false
+	return true
 
 func reserved_items(item_id: String, except_id: String = "") -> int:
 	var count: int = 0
 	for row: Dictionary in records:
 		if row.id != except_id and running(row) and not row.task.is_empty() and row.task.get("kind", "") in ["till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"] and row.task.get("item", "") == item_id:
-			count += 1
+			count += WorkerAreaPolicy.item_count(row.task)
 	return count
 
 func next_slot(role: String) -> int:
@@ -176,9 +193,36 @@ func _warehouse_changed(id: String) -> void:
 
 func _drain_legacy_products() -> void:
 	legacy_pending = false
+	_drain_archived_baskets()
 	for row: Dictionary in records:
 		world.storages.import_worker_products(bag_for(row.id))
 		world.storages.import_worker_products(bag_for(row.id), true)
+
+func _drain_archived_baskets() -> void:
+	var remaining: Array = []
+	if not legacy_baskets.is_empty() and world.storages.catalog == null:
+		world.storages.catalog = SaveCatalog.new()
+	for slots: Array in legacy_baskets:
+		var bag: InventoryComponent = InventoryComponent.new()
+		bag.slot_count = slots.size()
+		bag.starting_tools = false
+		bag.stack_cap = 100
+		var stacks: Array[Dictionary] = []
+		for slot: Dictionary in slots:
+			stacks.append({"item": world.storages.catalog.items.get(slot.item), "count": int(slot.count), "tiers": slot.tiers.duplicate()})
+		bag.restore_slots(stacks)
+		world.storages.import_worker_products(bag)
+		world.storages.import_worker_products(bag, true)
+		var saved: Array = []
+		var count: int = 0
+		for index: int in range(bag.slot_count):
+			var slot: Dictionary = bag.slot(index)
+			count += int(slot.count)
+			saved.append({"item": String(slot.item.item_id) if slot.item != null else "", "count": int(slot.count), "tiers": slot.tiers.duplicate()})
+		if count > 0:
+			remaining.append(saved)
+		bag.free()
+	legacy_baskets = remaining
 
 func available() -> bool:
 	return world.tool_upgrades != null and world.tool_upgrades.profile_ready and not world.storages.busy
@@ -194,7 +238,7 @@ func hire(role: String, zone: String = "") -> String:
 	if not error.is_empty():
 		return error
 	if records_for(role, true).size() >= int(WorkerRole.LIMITS[role]):
-		return "The worker team is full (15/15)."
+		return "The worker team is full ({limit}/{limit}).".format({"limit": WorkerRole.LIMITS[role]})
 	zone = ""
 	var row: Dictionary = {}
 	for previous: Dictionary in records_for(role):
@@ -328,8 +372,8 @@ func blocked(role: String, now: float) -> void:
 		if String(task.get("kind", "")) == "patrol" or bridge.zone_contains(row, point):
 			task.point = WorkerRole.pair(point)
 			task.attempt = attempt
-			task.finish_at = now + WorkerRole.point(row.position).distance_to(point) / (actor_for(role) as WorkerActor).movement.speed + (actor_for(role) as WorkerActor).definition.work_seconds
-			task.work_at = task.finish_at - (actor_for(role) as WorkerActor).definition.work_seconds
+			task.finish_at = now + WorkerRole.point(row.position).distance_to(point) / (actor_for(role) as WorkerActor).movement.speed + task_duration(task, actor_for(role))
+			task.work_at = task.finish_at - task_duration(task, actor_for(role))
 			return
 	blocked_targets[String(row.id) + ":" + String(task.id)] = now + 120.0
 	waiting_reasons[String(row.id)] = "Cannot reach the target. Will try another job."
@@ -360,6 +404,8 @@ func _advance_online(timestamp: float) -> void:
 	var started: int = Time.get_ticks_usec()
 	_online_pending = not advance(timestamp, false, remaining)
 	_budget_spent_usec += Time.get_ticks_usec() - started
+	if profiling:
+		scheduler_usec += Time.get_ticks_usec() - started
 
 func _process(_delta: float) -> void:
 	if (_event_open or _online_pending) and available() and not busy:
@@ -429,8 +475,19 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 					row.position = task.point.duplicate()
 					if offline:
 						actor.global_position = target
-					bridge.commit(row, feed_inventory(row.id), task)
-					row.task = {}
+					var commit_started: int = Time.get_ticks_usec() if profiling else 0
+					if task.has("cells"):
+						WorkerAreaPolicy.commit_next(self, row, task)
+					else:
+						bridge.commit(row, feed_inventory(row.id), task)
+					if profiling:
+						var spent: int = Time.get_ticks_usec() - commit_started
+						commit_usec += spent
+						commit_max_usec = maxi(commit_max_usec, spent)
+					if task.has("cells") and int(task.cursor) < task.cells.size():
+						task.finish_at = simulated_at + 0.00001
+					else:
+						row.task = {}
 					row.wake_at = simulated_at + (bridge.rest_seconds(row) if String(task.get("kind", "")) == "patrol" else 0.0)
 			if row.task.is_empty() and float(row.wake_at) <= simulated_at:
 				if not offline:
@@ -459,10 +516,12 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 					var stroll: Vector2 = bridge.patrol_point(row)
 					chosen = {"kind": "patrol", "id": "patrol:%d_%d" % [roundi(stroll.x), roundi(stroll.y)], "point": WorkerRole.pair(stroll), "priority": 9}
 				if not chosen.is_empty() and (String(chosen.get("kind", "")) == "patrol" or bridge.zone_contains(row, WorkerRole.point(chosen.point))):
+					WorkerAreaPolicy.expand(self, row, chosen)
+					chosen["duration"] = upgrades.duration(actor.definition.work_seconds, String(chosen.kind))
 					chosen["base_point"] = chosen.point.duplicate()
 					chosen["attempt"] = 0
 					chosen["work_at"] = simulated_at + WorkerRole.point(row.position).distance_to(WorkerRole.point(chosen.point)) / actor.movement.speed + actor.movement.speed / actor.movement.acceleration
-					chosen["finish_at"] = chosen.work_at + actor.definition.work_seconds
+					chosen["finish_at"] = chosen.work_at + task_duration(chosen, actor)
 					if chosen.kind == "patrol":
 						chosen.finish_at = maxf(float(chosen.finish_at), minf(simulated_at + 60.0, wake))
 					row.task = chosen
@@ -521,14 +580,14 @@ func capture(now: float) -> Dictionary:
 			var remaining: float = WorkerRole.point(copy.position).distance_to(WorkerRole.point(copy.task.point))
 			if remaining > 3.0:
 				copy.task.work_at = maxf(float(copy.task.work_at), now + remaining / (actors[row.id] as WorkerActor).movement.speed)
-				copy.task.finish_at = maxf(float(copy.task.finish_at), float(copy.task.work_at) + (actors[row.id] as WorkerActor).definition.work_seconds)
+				copy.task.finish_at = maxf(float(copy.task.finish_at), float(copy.task.work_at) + task_duration(copy.task, actors[row.id] as WorkerActor))
 		copy["basket"] = []
 		var bag: InventoryComponent = bag_for(row.id)
 		for i: int in range(bag.slot_count):
 			var stack: Dictionary = bag.slot(i)
 			copy.basket.append({"item": String(stack.item.item_id) if stack.item != null else "", "count": int(stack.count), "tiers": stack.tiers.duplicate()})
 		rows.append(copy)
-	return {"rows": rows, "trial_used": trial_used.duplicate(), "next_order": next_order, "simulated_at": simulated_at, "crop_automation": crop_automation.capture()}
+	return {"rows": rows, "trial_used": trial_used.duplicate(), "next_order": next_order, "simulated_at": simulated_at, "crop_automation": crop_automation.capture(), "upgrades": upgrades.levels.duplicate(), "legacy_baskets": legacy_baskets.duplicate(true)}
 
 func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	busy = true
@@ -554,6 +613,8 @@ func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	trial_used.assign(data.trial_used)
 	next_order = int(data.next_order)
 	simulated_at = float(data.simulated_at)
+	upgrades.levels = data.get("upgrades", WorkerUpgradeState.fresh()).duplicate()
+	legacy_baskets = data.get("legacy_baskets", []).duplicate(true)
 	crop_automation.restore(data.crop_automation)
 	crop_policy.invalidate()
 	for saved: Dictionary in data.rows:
@@ -630,9 +691,9 @@ func _resume_task(row: Dictionary, timestamp: float) -> void:
 	if not row.task.is_empty() and not target_available(row, row.task):
 		row.task = {}
 	if row.role == "crop":
-		var prepared: Vector2i = crop_automation.prepared_for(row.id)
-		if LandExpansionState.REGION.has_point(prepared) and not target_available(row, crop_policy.task("plant", prepared, 4)):
-			crop_automation.prepared.erase(row.id)
+		for prepared: Vector2i in crop_automation.prepared_cells(row.id):
+			if LandExpansionState.REGION.has_point(prepared) and not target_available(row, crop_policy.task("plant", prepared, 4)):
+				crop_automation.remove_prepared(row.id, prepared)
 
 func configure_crop(plant: bool, fertilizer: bool, pause: bool) -> String:
 	if busy or not available() or records_for("crop", true).is_empty():
