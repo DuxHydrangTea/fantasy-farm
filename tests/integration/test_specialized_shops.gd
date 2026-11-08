@@ -12,7 +12,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(13, 4)
+	world.land.state.restore_blocks(13, 4)
 	world.player.wallet.set_balance(10000000)
 	seeds = world.get_node("LaiBuon") as ShopMerchant
 	pets = world.get_node("PetMerchant") as ShopMerchant

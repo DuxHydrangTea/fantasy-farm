@@ -104,7 +104,7 @@ func _run() -> void:
 	for fertile: bool in [false,true]:
 		var count: int = 0
 		for y: int in range(19,53):
-			for x: int in range(56,maxi(8,57-int(data.land_columns))-1,-1):
+			for x: int in range(56,maxi(8,57-int(data.land_blocks))-1,-1):
 				var cell: Vector2i = Vector2i(x,y)
 				if count >= 2 or blocked.has(cell) or world.farming.cell_is_occupied(cell) or world.farming.fertility.is_fertile(cell) != fertile:
 					continue

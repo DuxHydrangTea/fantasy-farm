@@ -19,7 +19,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(1000000)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	now = world.farming.time_manager.now()
@@ -38,7 +38,7 @@ func after_each() -> void:
 
 func _limit(cells: Array[Vector2i]) -> void:
 	service.crop_policy.cells = cells.duplicate()
-	service.crop_policy.cached_columns = world.land.state.unlocked_columns
+	service.crop_policy.cached_columns = world.land.state.unlocked_blocks
 	service.crop_policy.soils.clear()
 	for point: Vector2i in cells:
 		service.crop_policy.soils[point] = int(world.farming.get_soil_state(point))

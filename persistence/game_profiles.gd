@@ -60,11 +60,13 @@ func _summary(path: String, id: String) -> Dictionary:
 		return {}
 	if not is_finite(float(payload.coins)) or float(payload.coins) < 0:
 		return {}
-	for key: String in ["land_columns", "version"]:
+	if int(payload.get("version", 0)) < 40:
+		payload["land_blocks"] = LandExpansionState.legacy_block_count(int(payload.get("land_columns", 1)))
+	for key: String in ["land_blocks", "version"]:
 		var value: Variant = payload.get(key, 0)
 		if not (value is int or value is float) or not is_finite(float(value)):
 			return {}
-	return {"coins": int(payload.coins), "land_columns": int(payload.get("land_columns", 1)), "version": int(payload.get("version", 0))}
+	return {"coins": int(payload.coins), "land_blocks": int(payload.get("land_blocks", 1)), "version": int(payload.get("version", 0))}
 
 func list_profiles() -> Array[Dictionary]:
 	var data: ConfigFile = _index()
@@ -88,7 +90,7 @@ func list_profiles() -> Array[Dictionary]:
 			summary = _summary(path + ".bak", id)
 		var modified: float = float(FileAccess.get_modified_time(path))
 		var title: String = String(data.get_value(id, "name", ""))
-		rows.append({"id": id, "name": title, "legacy": id == "local" and title.is_empty(), "last_played": float(data.get_value(id, "last_played", modified)), "valid": not summary.is_empty(), "coins": int(summary.get("coins", 0)), "land_columns": int(summary.get("land_columns", 0))})
+		rows.append({"id": id, "name": title, "legacy": id == "local" and title.is_empty(), "last_played": float(data.get_value(id, "last_played", modified)), "valid": not summary.is_empty(), "coins": int(summary.get("coins", 0)), "land_blocks": int(summary.get("land_blocks", 0))})
 	rows.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return a.last_played > b.last_played if a.last_played != b.last_played else String(a.id) < String(b.id))
 	return rows

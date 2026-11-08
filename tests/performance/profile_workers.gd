@@ -35,7 +35,7 @@ func _run() -> void:
 		return
 	
 	# Expand land and prepare world
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1})
 	world.player.wallet.set_balance(10000000)
 	world.tool_upgrades.profile_ready = true

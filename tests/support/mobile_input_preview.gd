@@ -122,7 +122,7 @@ func _run() -> void:
 	await _tap(controls.interact_button)
 	_check(world.land.menu.is_open, "Touch context button opens land confirmation")
 	await _tap(world.land.menu.confirm)
-	_check(world.land.state.unlocked_columns == 2, "Touch confirms one land column")
+	_check(world.land.state.unlocked_blocks == 2, "Touch confirms one land column")
 	_check(player.wallet.balance == 35000, "Touch land purchase charges exactly once")
 	(root.get_node("Language") as GameLanguage).set_language("vi")
 	await _capture("controls-vi")

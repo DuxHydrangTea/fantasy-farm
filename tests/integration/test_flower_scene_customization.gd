@@ -64,7 +64,7 @@ func test_fixed_hives_stay_on_path_after_moving_flower_blocks() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(48)
+	world.land.state.restore_blocks(24)
 	world.starter_content.begin_restore(true)
 	world.starter_content.finish_restore()
 	var garden: FlowerGarden = world.get_node("FlowerGarden") as FlowerGarden

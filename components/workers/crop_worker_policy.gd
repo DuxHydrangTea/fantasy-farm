@@ -59,9 +59,9 @@ func first_item(fertilizer: bool = false, worker_id: String = "") -> ItemDefinit
 	return null
 
 func _cache() -> void:
-	if cached_columns == world.land.state.unlocked_columns:
+	if cached_columns == world.land.state.unlocked_blocks:
 		return
-	cached_columns = world.land.state.unlocked_columns
+	cached_columns = world.land.state.unlocked_blocks
 	cells.clear()
 	soils.clear()
 	points.clear()

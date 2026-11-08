@@ -33,7 +33,7 @@ func before_each() -> void:
 			pot.clear()
 
 func test_rain_waters_only_open_columns_and_keeps_them_wet_until_rain_ends() -> void:
-	world.farming.land.restore_columns(10)
+	world.farming.land.restore_blocks(10)
 	world.weather.set_weather(WeatherManager.Weather.RAIN)
 	assert_eq(world.farming.get_soil_state(Vector2i(56, 22)), FarmingController.Soil.WET)
 	assert_eq(world.farming.get_soil_state(Vector2i(47, 22)), FarmingController.Soil.WET)
@@ -380,5 +380,5 @@ func test_crossing_rainy_dawn_offline_waters_only_owned_soil() -> void:
 	assert_eq(world.weather.current_weather, WeatherManager.Weather.RAIN)
 	assert_eq(world.farming.get_soil_state(Vector2i(56, 22)), FarmingController.Soil.WET)
 	# Fresh profiles open four columns (53..56); 52 is the first locked column.
-	assert_eq(world.farming.land.unlocked_columns, 4)
+	assert_eq(world.farming.land.unlocked_blocks, 4)
 	assert_ne(world.farming.get_soil_state(Vector2i(52, 22)), FarmingController.Soil.WET)

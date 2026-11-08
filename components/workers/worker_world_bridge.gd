@@ -60,7 +60,7 @@ func home(role: String, zone: String = "") -> Vector2:
 		if pen != null:
 			var point: Vector2 = pen.to_global(pen.allowed_bounds(20).position + Vector2(20, 20))
 			return (pen as PondPen).closest_land(point) if pen is PondPen else point
-	var cell: Vector2i = TreePlantation.FRUIT_REGION.position + Vector2i(1, 4) if role == "orchard" else Vector2i(LandExpansionState.REGION.end.x - world.land.state.unlocked_columns + 1, LandExpansionState.REGION.position.y + 1)
+	var cell: Vector2i = TreePlantation.FRUIT_REGION.position + Vector2i(1, 4) if role == "orchard" else LandExpansionState.block_rect(0).position + Vector2i.ONE
 	return world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
 
 func zone_contains(row: Dictionary, point: Vector2, columns: int = -1) -> bool:

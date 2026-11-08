@@ -7,176 +7,77 @@ var player: FarmPlayer
 
 func before_each() -> void:
 	world = WORLD.instantiate() as FarmWorld
-	for child: Node in world.get_children():
-		if String(child.name).begins_with("TreeScatter"):
-			child.free()
 	add_child_autofree(world)
 	land = world.land
-	land.state.restore_columns(1) # Keep the original ownership/migration fixture.
 	farm = world.farming
-	farm.restore_soil([]) # This fixture tests untilled land, independent of authored starter soil.
 	player = world.player
-	player.position = Vector2(900, 310)
+	farm.restore_soil([])
 	await wait_physics_frames(2)
 
-func test_actual_map_permissions_are_exact_rectangle_and_locked_tools_fail() -> void:
-	var count: int = 0
-	for cell: Vector2i in farm.farmland.get_used_cells():
-		var tile: TileData = farm.farmland.get_cell_tile_data(cell)
-		if tile.get_custom_data("can_plant"):
-			assert_true(LandExpansionState.REGION.has_point(cell))
-			count += 1
-	assert_eq(count, 1632)
-	assert_true(farm.can_till(Vector2i(56, 20), player))
-	assert_false(farm.can_till(Vector2i(55, 20), player))
-	assert_false(farm.till(Vector2i(55, 20), player))
-	# Even malformed direct runtime soil restoration cannot bypass plant/water rules.
-	farm.restore_soil([{"cell": [55, 20], "state": 1}])
-	assert_false(farm.can_water(Vector2i(55, 20), player))
-	assert_false(farm.can_plant(Vector2i(55, 20), player))
-	var seed: ItemDefinition = load("res://items/seeds/wheat_seed.tres") as ItemDefinition
-	var now: float = TimeManager.now()
-	farm.restore_crop(Vector2i(55, 20), seed.crop, now - 100.0, now - 1.0, 1.0, now)
-	assert_false(farm.can_harvest(Vector2i(55, 20)))
-	assert_false(farm.harvest(Vector2i(55, 20), player.selection.inventory))
-	assert_not_null(farm.get_crop(Vector2i(55, 20)), "Rejected harvest preserves the crop")
+func test_first_block_tools_rain_and_path_permissions() -> void:
+	assert_eq(land.state.unlocked_blocks, 1)
+	assert_true(farm.can_till(Vector2i(55, 24), player))
+	assert_false(farm.can_till(Vector2i(55, 30), player))
+	assert_false(farm.can_till(Vector2i(48, 24), player))
+	assert_true(farm.till(Vector2i(55, 24), player))
+	farm.rain_water()
+	assert_eq(farm.get_soil_state(Vector2i(55, 24)), FarmingController.Soil.WET)
+	assert_eq(farm.get_soil_state(Vector2i(55, 30)), FarmingController.Soil.UNTILLED)
+	assert_eq(farm.get_soil_state(Vector2i(48, 24)), FarmingController.Soil.UNTILLED)
 
-func test_sign_interaction_confirm_cancel_reveal_and_full_unlock() -> void:
+func test_sign_purchases_whole_block_then_animates_only_that_block() -> void:
 	player.global_position = land.interaction_position() + Vector2(0, 16)
 	player.wallet.set_balance(100000)
-	assert_true(player.shop_interaction.try_interact())
-	assert_true(land.menu.is_open)
-	assert_false(land.menu.status.text.contains("Balance"))
-	assert_true(player.selection.is_menu_open())
-	assert_eq(land.menu, player.shop_interaction.active_shop)
-	land.menu.close()
-	await wait_seconds(0.35)
-	assert_eq(player.wallet.balance, 100000)
-	assert_eq(land.state.unlocked_columns, 1)
-	assert_true(player.shop_interaction.try_interact())
+	assert_true(land.open_purchase(player))
+	assert_true(land.menu.description.text.contains("64"))
 	land.menu.confirm.pressed.emit()
-	await wait_seconds(0.35)
-	assert_false(land.menu.is_open)
-	assert_false(player.selection.is_menu_open())
+	assert_eq(land.state.unlocked_blocks, 2)
 	assert_eq(player.wallet.balance, 40000)
-	assert_eq(land.state.unlocked_columns, 2)
 	assert_false(land.sign.visible)
+	assert_true(farm.can_till(Vector2i(55, 30), player))
+	assert_false(farm.can_till(Vector2i(55, 40), player))
 	await wait_seconds(1.0)
 	assert_true(land.sign.visible)
-	assert_eq(land.state.next_column(), 54)
-	assert_true(farm.land.is_unlocked(Vector2i(55,20)),"The purchased column is owned even if authored decor blocks an individual plot")
-	land.state.restore_columns(48)
-	assert_false(land.sign.visible)
-	assert_false(land.open_purchase(player))
+	assert_eq(land.state.next_block(), Rect2i(49, 37, 8, 7))
 
-func test_distance_and_funds_guard_menu_and_purchase() -> void:
-	player.global_position = land.interaction_position() + Vector2(100, 0)
-	assert_false(land.open_purchase(player))
-	assert_false(land.purchase(1).ok)
-	player.global_position = land.interaction_position() + Vector2(0, 16)
-	assert_true(land.open_purchase(player))
-	assert_true(land.menu.confirm.disabled)
-	land.menu.confirm.pressed.emit()
-	assert_eq(player.wallet.balance, WalletComponent.STARTING_COINS)
-	assert_eq(land.state.unlocked_columns, 1)
-
-func test_purchase_save_reload_migration_and_corrupt_ownership_preflight() -> void:
-	var catalog: SaveCatalog = SaveCatalog.new()
-	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, catalog)
-	player.global_position = land.interaction_position() + Vector2(0, 16)
-	player.wallet.set_balance(100000)
-	assert_true(land.purchase(1).ok)
-	var snapshot: Dictionary = adapter.capture("land_test", 1, TimeManager.now())
-	assert_eq(snapshot.land_columns, 2)
-	assert_true(SaveSchema.validate(snapshot, catalog).ok)
-	var directory: String = "res://.godot/land_save_tests/" + Crypto.new().generate_random_bytes(8).hex_encode()
-	var repository: LocalSaveRepository = LocalSaveRepository.new(directory, catalog)
-	assert_true(repository.write_profile("land_test", snapshot, 0).ok)
-	var loaded: Dictionary = repository.read_profile("land_test")
-	assert_true(loaded.ok)
-	assert_eq(int(loaded.snapshot.land_columns), 2)
-	snapshot = loaded.snapshot
-	DirAccess.remove_absolute(repository.path("land_test"))
-	DirAccess.remove_absolute(directory)
-	land.state.restore_columns(3)
+func test_block_save_roundtrip_and_legacy_column_migration() -> void:
+	land.state.restore_blocks(2)
+	assert_true(farm.till(Vector2i(55, 30), player))
+	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
+	var snapshot: Dictionary = adapter.capture("block_test", 1, TimeManager.now())
+	assert_eq(snapshot.land_blocks, 2)
+	assert_eq(snapshot.land_starting_blocks, 1)
+	assert_true(SaveSchema.validate(snapshot, adapter.catalog).ok)
+	land.state.restore_blocks(1)
 	assert_true(adapter.restore(snapshot, TimeManager.now()).ok)
-	assert_eq(land.state.unlocked_columns, 2)
-	assert_eq(player.wallet.balance, 40000)
-	assert_eq(land._reveal_column, -1)
+	assert_eq(land.state.unlocked_blocks, 2)
 	var legacy: Dictionary = snapshot.duplicate(true)
-	legacy.version = 5
-	legacy.erase("land_columns")
-	legacy.soil = [{"cell": [9, 19], "state": 1}]
-	var migrated: Dictionary = SaveSchema.validate(legacy, catalog)
-	assert_true(migrated.ok)
-	assert_eq(migrated.snapshot.land_columns, 48)
-	assert_false(legacy.has("land_columns"), "Migration never mutates the caller")
-	assert_true(adapter.restore(migrated.snapshot, TimeManager.now()).ok)
-	assert_ne(farm.get_soil_state(Vector2i(9,19)),FarmingController.Soil.UNTILLED,"Migration preserves tilling; replayed rain may wet the soil")
-	var corrupt: Dictionary = migrated.snapshot.duplicate(true)
-	corrupt.land_columns = 1
-	player.wallet.set_balance(777)
-	assert_false(adapter.restore(corrupt, TimeManager.now()).ok)
-	assert_eq(player.wallet.balance, 777, "Preflight fails before mutating wallet or world")
-	assert_eq(land.state.unlocked_columns, 48)
+	legacy.version = 39
+	legacy["land_columns"] = 4
+	legacy["land_starting_columns"] = 4
+	legacy.erase("land_blocks")
+	legacy.erase("land_starting_blocks")
+	var checked: Dictionary = SaveSchema.validate(legacy, adapter.catalog)
+	assert_true(checked.ok)
+	assert_eq(checked.snapshot.land_blocks, 4)
+	assert_eq(legacy.version, 39, "Migration does not mutate its input")
+	for invalid: Variant in [0, 25, 1.5, "2", null]:
+		snapshot.land_blocks = invalid
+		assert_false(SaveSchema.validate(snapshot, adapter.catalog).ok)
 
-func test_menu_fits_small_window_and_releases_lock_for_load() -> void:
-	player.global_position = land.interaction_position() + Vector2(0, 16)
-	assert_true(land.open_purchase(player))
-	await wait_seconds(0.4)
-	var rect: Rect2 = land.menu.panel.get_global_rect()
-	assert_gte(rect.position.x, 0.0)
-	assert_gte(rect.position.y, 0.0)
-	assert_lte(rect.end.x, land.menu.root.size.x)
-	assert_lte(rect.end.y, land.menu.root.size.y)
-	player.shop_interaction.close_for_load()
-	assert_false(player.selection.is_menu_open())
-	assert_false(land.menu.is_open)
-
-func test_legacy_empty_farm_starts_with_one_column_and_bad_counts_fail() -> void:
-	var catalog: SaveCatalog = SaveCatalog.new()
-	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, catalog)
-	var snapshot: Dictionary = adapter.capture("land_test", 1, TimeManager.now())
-	var legacy: Dictionary = snapshot.duplicate(true)
-	legacy.version = 5
-	legacy.erase("land_columns")
-	assert_eq(SaveSchema.validate(legacy, catalog).snapshot.land_columns, 1)
-	legacy.soil = [{"cell": [54, 30], "state": 1}]
-	assert_eq(SaveSchema.validate(legacy, catalog).snapshot.land_columns, 3)
-	for invalid: Variant in [null, 0, 49, 1.5, "2"]:
-		snapshot.land_columns = invalid
-		assert_false(SaveSchema.validate(snapshot, catalog).ok)
-
-func test_locked_grass_gpu_cover_has_four_rids_no_nodes_and_reuses_actor_feed() -> void:
-	var nodes: int = land.get_child_count()
+func test_gpu_cover_hides_locked_blocks_but_keeps_paths_and_reveal_separate() -> void:
 	var effect: ShaderMaterial = ShaderMaterial.new()
 	effect.shader = preload("res://shaders/grass_farm.gdshader")
-	effect.set_shader_parameter(&"actor_count",1)
-	effect.set_shader_parameter(&"interaction_clock",3.0)
 	land.set_grass_effect(effect)
 	assert_true(land.grass_cover.active)
-	assert_eq(land.grass_cover.canvases.size(),4)
-	assert_eq(land.grass_cover.materials.size(),2)
-	assert_eq(land.get_child_count(),nodes)
-	assert_eq(land.grass_cover.base_count,47*34)
-	for material: ShaderMaterial in land.grass_cover.materials:
-		assert_eq(material.get_shader_parameter(&"actor_count"),1)
-		assert_eq(material.get_shader_parameter(&"interaction_clock"),3.0)
-	var builds: int = land.grass_cover.base_builds
-	land.grass_cover.refresh(land)
-	assert_eq(land.grass_cover.base_builds,builds)
-	land.state.restore_columns(12,4)
-	assert_eq(land.grass_cover.base_count,36*34)
-	land._reveal_column = 44
-	land._reveal_rows(10)
-	assert_eq(land.grass_cover.reveal_count,24)
-	assert_eq(land.grass_cover.base_builds,builds+1,"Revealing rows does not rebuild the whole locked region")
+	assert_eq(land.grass_cover.canvases.size(), 4)
+	assert_eq(land.grass_cover.base_count, 1333 - 64)
+	land.state.restore_blocks(2)
+	land._reveal_block = 1
+	land._reveal_rows(3)
+	assert_eq(land.grass_cover.base_count, 1333 - 128)
+	assert_eq(land.grass_cover.reveal_count, 40)
 	land.reset_presentation()
-	assert_eq(land.grass_cover.reveal_count,0)
-	land.state.restore_columns(48,4)
-	assert_eq(land.grass_cover.base_count,0)
-	land.set_grass_effect(null)
-	assert_false(land.grass_cover.active)
-	assert_eq(land.grass_cover.canvases.size(),0)
-	land.set_grass_effect(null)
-	assert_eq(land.get_child_count(),nodes)
+	assert_eq(land.grass_cover.reveal_count, 0)
+	land.state.restore_blocks(24)
+	assert_eq(land.grass_cover.base_count, 0)

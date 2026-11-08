@@ -93,7 +93,7 @@ func _saved_games() -> void:
 		var details: String = tr("Unable to read this save.")
 		if row.valid:
 			var date: String = Time.get_datetime_string_from_unix_time(int(row.last_played)).replace("T", " ")
-			details = tr("{coins} coins · {columns} field columns").format({"coins": GameText.grouped_integer(row.coins), "columns": row.land_columns}) + "\n" + date + " UTC"
+			details = tr("{coins} coins · {columns} field blocks").format({"coins": GameText.grouped_integer(row.coins), "columns": row.land_blocks}) + "\n" + date + " UTC"
 		button.text = caption + "\n" + details
 		button.tooltip_text = button.text
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT

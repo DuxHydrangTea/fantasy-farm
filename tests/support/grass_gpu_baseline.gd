@@ -27,7 +27,7 @@ func _run() -> void:
 	baseline["scope"] = "Fresh bootstrap, no player save, no populated herd; desktop baseline only"
 	baseline["world_nodes"] = _nodes(world)
 	baseline["flower_garden_locked"] = not world.starter_content.flower_garden_unlocked
-	baseline["land_columns"] = world.land.state.unlocked_columns
+	baseline["land_blocks"] = world.land.state.unlocked_blocks
 	baseline["weather"] = "SUNNY; debug noon; stationary camera/player"
 	reports.append(baseline)
 	await RenderingServer.frame_post_draw

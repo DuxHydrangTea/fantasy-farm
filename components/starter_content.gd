@@ -23,7 +23,7 @@ func setup() -> void:
 	refresh()
 
 func refresh() -> void:
-	if _restoring or flower_garden_unlocked or world.land.state.unlocked_columns <= world.land.state.starting_columns:
+	if _restoring or flower_garden_unlocked or world.land.state.unlocked_blocks <= world.land.state.starting_blocks:
 		return
 	# Commit before adding pickups: inventory/save callbacks must see the reward claimed.
 	flower_garden_unlocked = true

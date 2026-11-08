@@ -14,7 +14,7 @@ func before_each() -> void:
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(48, 4)
+	world.land.state.restore_blocks(24, 4)
 	now = world.farming.time_manager.now()
 	var fixed: float = now
 	world.farming.time_manager.clock_source = func() -> float: return fixed

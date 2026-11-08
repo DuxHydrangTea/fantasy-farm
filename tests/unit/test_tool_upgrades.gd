@@ -11,7 +11,7 @@ func before_each() -> void:
 	add_child_autofree(wallet)
 	wallet.set_balance(1000000)
 	land = LandExpansionState.new()
-	land.restore_columns(7, 4)
+	land.restore_blocks(7, 4)
 	service = ToolUpgradeService.new(state, wallet, land, CATALOG.duplicate(true) as ToolUpgradeCatalog)
 	var materials: InventoryComponent = InventoryComponent.new()
 	materials.starting_tools = false
@@ -34,7 +34,7 @@ func test_defaults_and_captured_data_are_independent() -> void:
 
 func test_all_tools_upgrade_one_level_autoselect_and_stop_at_maximum() -> void:
 	wallet.set_balance(WalletComponent.MAX_COINS)
-	land.restore_columns(13, 4)
+	land.restore_blocks(13, 4)
 	for tool: StringName in ToolUpgradeState.TOOLS:
 		for current: int in range(1, ToolUpgradeState.MAX_LEVEL):
 			var offer: Dictionary = service.quote(tool)
@@ -61,12 +61,12 @@ func test_land_gates_use_each_profiles_initial_column_count() -> void:
 	for initial: int in [1, 4]:
 		state = ToolUpgradeState.new()
 		service.state = state
-		land.restore_columns(initial, initial)
+		land.restore_blocks(initial, initial)
 		assert_eq(service.quote(&"hoe").code, "land_locked")
-		land.restore_columns(initial + 1, initial)
+		land.restore_blocks(initial + 1, initial)
 		assert_true(service.purchase(&"hoe", 1, 30000).ok)
 		assert_eq(service.quote(&"hoe").code, "land_locked")
-		land.restore_columns(initial + 3, initial)
+		land.restore_blocks(initial + 3, initial)
 		assert_true(service.purchase(&"hoe", 2, 90000).ok)
 
 func test_insufficient_coins_and_stale_quotes_never_spend() -> void:

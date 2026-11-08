@@ -57,7 +57,7 @@ func before_each() -> void:
 				child.get_node("NeedsComponent").time_manager = clock
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
-	(world as FarmWorld).land.state.restore_columns(48)
+	(world as FarmWorld).land.state.restore_blocks(24)
 	selection = world.get_node("Player/ToolSelection") as ToolSelectionComponent
 	catalog = SaveCatalog.new()
 	for id: String in catalog.animals:

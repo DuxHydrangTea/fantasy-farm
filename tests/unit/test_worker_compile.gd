@@ -19,7 +19,7 @@ func test_candidates_method_signature() -> void:
 	add_child_autofree(world)
 	
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(1000000)
 	
 	var error: String = world.workers.hire("crop")

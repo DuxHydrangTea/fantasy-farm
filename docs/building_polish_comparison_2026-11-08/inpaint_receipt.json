@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"background_job_id\": \"1cce628a-06d5-4dc5-b2a5-bb9c42c537dd\",\n  \"image_id\": \"3430062b-661f-535d-b2de-0da785362691\",\n  \"status\": \"processing\",\n  \"source_image_id\": \"3430062b-661f-535d-b2de-0da785362691\",\n  \"job_id\": \"1cce628a-06d5-4dc5-b2a5-bb9c42c537dd\",\n  \"description\": \"Repair ONLY the masked red tiled roof into polished pixel art. Keep its exact rectangular silhouette, dimensions, top wooden trim, bottom eave, original red palette and existing tile layout. Make roof-tile outlines consistent in thickness, remove broken stray pixels and muddy antialiased edges, and make deliberate crisp pixel clusters with restrained shading. Do not add ornaments, windows or architectural features. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Preserve transparent space around the roof. Match surrounding existing building style.\",\n  \"seed\": 0,\n  \"image_size\": {\n    \"width\": 184,\n    \"height\": 168\n  },\n  \"output_count\": 1,\n  \"estimated_generations\": 6,\n  \"pricing_provisional\": true,\n  \"poll_tool\": \"get_image\",\n  \"download_path\": \"/mcp/images/1cce628a-06d5-4dc5-b2a5-bb9c42c537dd/download\"\n}\nPoll get_image(job_id=\"1cce628a-06d5-4dc5-b2a5-bb9c42c537dd\"). The source_image_id is usable after completion; it is an image ID, not a character/object ID. Actual usage is reported on completion. cancel_job(job_id=...) cancels unfinished work."
+    }
+  ],
+  "structuredContent": {
+    "background_job_id": "1cce628a-06d5-4dc5-b2a5-bb9c42c537dd",
+    "image_id": "3430062b-661f-535d-b2de-0da785362691",
+    "status": "processing",
+    "source_image_id": "3430062b-661f-535d-b2de-0da785362691",
+    "job_id": "1cce628a-06d5-4dc5-b2a5-bb9c42c537dd",
+    "description": "Repair ONLY the masked red tiled roof into polished pixel art. Keep its exact rectangular silhouette, dimensions, top wooden trim, bottom eave, original red palette and existing tile layout. Make roof-tile outlines consistent in thickness, remove broken stray pixels and muddy antialiased edges, and make deliberate crisp pixel clusters with restrained shading. Do not add ornaments, windows or architectural features. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Preserve transparent space around the roof. Match surrounding existing building style.",
+    "seed": 0,
+    "image_size": {
+      "width": 184,
+      "height": 168
+    },
+    "output_count": 1,
+    "estimated_generations": 6,
+    "pricing_provisional": true,
+    "poll_tool": "get_image",
+    "download_path": "/mcp/images/1cce628a-06d5-4dc5-b2a5-bb9c42c537dd/download"
+  },
+  "isError": false
+}

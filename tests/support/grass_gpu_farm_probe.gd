@@ -289,7 +289,7 @@ func _save_and_reload() -> void:
 	var entry: Dictionary = world.grass.interactions.entries[world.player.get_instance_id()]
 	_check(entry.tail == world.player.global_position, "Short save/load teleport resets grass motion history")
 	world.grass.set_conversion(true)
-	_check(world.grass.active and world.farming.land.unlocked_columns == 4, "Save/load keeps grass active and progression intact")
+	_check(world.grass.active and world.farming.land.unlocked_blocks == 4, "Save/load keeps grass active and progression intact")
 	await get_tree().process_frame
 
 func _actual_herd() -> void:

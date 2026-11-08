@@ -10,7 +10,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(1000000)
 	now = world.farming.time_manager.now()
 	adapter = WorldStateAdapter.new(world, SaveCatalog.new())

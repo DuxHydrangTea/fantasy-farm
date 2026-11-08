@@ -65,7 +65,7 @@ func test_thirty_species_survive_world_snapshot_restore() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(48)
+	world.land.state.restore_blocks(24)
 	world.starter_content.begin_restore(true)
 	world.starter_content.finish_restore()
 	var garden: FlowerGarden = world.get_node("FlowerGarden") as FlowerGarden

@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/Produce_Storehouse.png" id="art"]
+[ext_resource type="PackedScene" path="res://scenes/storage/storage_access.tscn" id="access"]
+
+[sub_resource type="RectangleShape2D" id="Shape0"]
+size = Vector2(209, 43)
+
+[sub_resource type="RectangleShape2D" id="Shape1"]
+size = Vector2(60, 22)
+
+[sub_resource type="RectangleShape2D" id="Shape2"]
+size = Vector2(93, 25)
+
+[sub_resource type="RectangleShape2D" id="DoorArea"]
+size = Vector2(56, 36)
+
+[node name="ProduceWarehouse" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(16, -75)
+texture = ExtResource("art")
+
+[node name="Footprint0" type="CollisionShape2D" parent="."]
+position = Vector2(14.5, -27.5)
+shape = SubResource("Shape0")
+
+[node name="Footprint1" type="CollisionShape2D" parent="."]
+position = Vector2(-65, -9)
+shape = SubResource("Shape1")
+
+[node name="Footprint2" type="CollisionShape2D" parent="."]
+position = Vector2(74.5, -1.5)
+shape = SubResource("Shape2")
+
+[node name="StorageAccess" parent="." instance=ExtResource("access")]
+position = Vector2(0, 4)
+interaction_offset = Vector2(0, 8)
+storage_id = "produce_warehouse"
+
+[node name="InteractionArea" parent="StorageAccess" index="1"]
+position = Vector2(0, 12)
+
+[node name="CollisionShape2D" parent="StorageAccess/InteractionArea" index="0"]
+shape = SubResource("DoorArea")
+
+[editable path="StorageAccess"]

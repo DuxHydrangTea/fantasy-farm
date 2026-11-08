@@ -2,7 +2,7 @@ import https from 'node:https';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const API_KEY = process.env.PIXELLAB_API_KEY || '5d9a189d-bb17-4040-9c81-e547c10c5001';
+const API_KEY = process.env.PIXELLAB_API_KEY || 'pixl_09123455bbf54ceda88fce18c1c4ba3d';
 const MCP_URL = 'https://api.pixellab.ai/mcp';
 
 export async function callPixelLabTool(toolName, args = {}) {

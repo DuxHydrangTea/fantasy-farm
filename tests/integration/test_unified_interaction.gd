@@ -247,7 +247,7 @@ func test_land_price_badge_translation_and_confirm_only_debits() -> void:
 	assert_true(world.land.menu.is_open)
 	assert_eq(world.player.wallet.balance,20000)
 	world.land.menu.close()
-	assert_eq(world.land.state.unlocked_columns,1)
+	assert_eq(world.land.state.unlocked_blocks,1)
 
 func _wall(point: Vector2, size: Vector2) -> StaticBody2D:
 	var body: StaticBody2D = StaticBody2D.new()

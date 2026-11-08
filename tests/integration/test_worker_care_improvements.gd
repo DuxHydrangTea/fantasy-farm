@@ -17,7 +17,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.player.wallet.set_balance(10000000)
 	world.trees.reset()
 	for pen: AnimalPen in world.workers.bridge.pens():

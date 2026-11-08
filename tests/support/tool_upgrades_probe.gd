@@ -79,7 +79,7 @@ func _run() -> void:
 	world.objectives.progress.suspended = true
 	world.storages.inventory("produce_warehouse").add(load("res://items/trees/wood.tres") as ItemDefinition, 1000)
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(7, 4)
+	world.land.state.restore_blocks(7, 4)
 	world.weather.set_weather(WeatherManager.Weather.SUNNY)
 	world.weather.set_debug_hour(12)
 	var merchant: ShopMerchant

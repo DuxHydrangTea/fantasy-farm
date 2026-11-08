@@ -39,7 +39,7 @@ func _query(condition: StringName) -> int:
 				return 1
 		return 0
 	if condition == &"land_columns":
-		return world.land.state.unlocked_columns - world.land.state.starting_columns + 1
+		return world.land.state.unlocked_blocks - world.land.state.starting_blocks + 1
 	if condition == &"own_animal":
 		for child: Node in world.get_children():
 			if child is AnimalPen:

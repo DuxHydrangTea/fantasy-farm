@@ -6,7 +6,7 @@ var description: Label
 var status: Label
 var confirm: Button
 var panel: PanelContainer
-var _quoted_columns: int = 0
+var _quoted_blocks: int = 0
 
 func _ready() -> void:
 	_build()
@@ -69,7 +69,7 @@ func _fit() -> void:
 func open_offer(player: FarmPlayer) -> bool:
 	if not super.open(null, player):
 		return false
-	_quoted_columns = expansion.state.unlocked_columns
+	_quoted_blocks = expansion.state.unlocked_blocks
 	_refresh()
 	close_button.grab_focus()
 	return true
@@ -78,8 +78,8 @@ func _refresh() -> void:
 	if not is_open:
 		return
 	var price: int = expansion.state.next_price()
-	description.text = tr("Spend {price} coins to reclaim the next column ({plots} plots)?").format({"price": price, "plots": LandExpansionState.REGION.size.y})
-	status.text = tr("Unlocked: {owned}/{columns} columns").format({"owned": expansion.state.unlocked_columns, "columns": LandExpansionState.REGION.size.x})
+	description.text = tr("Spend {price} coins to reclaim the next block ({plots} plots)?").format({"price": price, "plots": expansion.state.next_block().get_area()})
+	status.text = tr("Unlocked: {owned}/{blocks} blocks").format({"owned": expansion.state.unlocked_blocks, "blocks": LandExpansionState.BLOCK_COUNT})
 	if customer.wallet.balance < price:
 		status.text += "\n" + tr("Not enough coins.")
 	confirm.disabled = customer.wallet.balance < price or expansion.state.is_complete()
@@ -87,7 +87,7 @@ func _refresh() -> void:
 func _buy() -> void:
 	if not is_open:
 		return
-	var result: Dictionary = expansion.purchase(_quoted_columns)
+	var result: Dictionary = expansion.purchase(_quoted_blocks)
 	if result.ok:
 		close(false)
 	else:

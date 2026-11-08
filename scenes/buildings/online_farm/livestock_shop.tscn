@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/To_convert_the_house.png" id="art"]
+
+[sub_resource type="RectangleShape2D" id="MainFootprint"]
+size = Vector2(160, 26)
+
+[sub_resource type="RectangleShape2D" id="LeftProps"]
+size = Vector2(62, 13)
+
+[sub_resource type="RectangleShape2D" id="RightProps"]
+size = Vector2(65, 20)
+
+[node name="LivestockShop" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -44)
+texture = ExtResource("art")
+
+[node name="Footprint" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("MainFootprint")
+
+[node name="LeftProps" type="CollisionShape2D" parent="."]
+position = Vector2(-50.5, 2.5)
+shape = SubResource("LeftProps")
+
+[node name="RightProps" type="CollisionShape2D" parent="."]
+position = Vector2(53, 4)
+shape = SubResource("RightProps")

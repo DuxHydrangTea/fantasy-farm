@@ -15,7 +15,7 @@ func after_each() -> void:
 
 func _write(id: String, coins: int = 1234) -> void:
 	DirAccess.make_dir_recursive_absolute(folder)
-	var payload: String = JSON.stringify({"profile_id": id, "coins": coins, "land_columns": 12, "version": 36})
+	var payload: String = JSON.stringify({"profile_id": id, "coins": coins, "land_blocks": 12, "version": 40})
 	var file: FileAccess = FileAccess.open(folder.path_join("profile_" + id + ".json"), FileAccess.WRITE)
 	file.store_string(JSON.stringify({"format": "fantasy_farm_save", "payload": payload, "sha256": payload.sha256_text()}))
 	file.close()

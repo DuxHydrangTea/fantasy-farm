@@ -42,27 +42,30 @@ func install(land: LandExpansionComponent) -> bool:
 func refresh(land: LandExpansionComponent) -> void:
 	if not active:
 		return
-	var region: Rect2i = LandExpansionState.REGION
-	var width: int = region.size.x-land.state.unlocked_columns
-	if _base_key != width:
-		_base_key = width
+	var blocks: int = land.state.unlocked_blocks
+	if _base_key != blocks:
+		_base_key = blocks
 		for i: int in range(2):
 			RenderingServer.canvas_item_clear(canvases[i])
-		base_count = _draw_cells(land,Rect2i(region.position,Vector2i(width,region.size.y)),0)
+		base_count = 0
+		for index: int in range(blocks, LandExpansionState.BLOCK_COUNT):
+			base_count += _draw_cells(land, LandExpansionState.block_rect(index), 0)
 		base_builds += 1
-	var key: Vector2i = Vector2i(land._reveal_column,land._revealed_rows)
+	var key: Vector2i = Vector2i(land._reveal_block, land._revealed_rows)
 	if key != _reveal_key:
 		_reveal_key = key
 		for i: int in range(2,4):
 			RenderingServer.canvas_item_clear(canvases[i])
 		reveal_count = 0
-		if key.x >= 0 and key.y < region.size.y:
-			reveal_count = _draw_cells(land,Rect2i(Vector2i(key.x,region.position.y+key.y),Vector2i(1,region.size.y-key.y)),2)
+		if key.x >= 0:
+			var block: Rect2i = LandExpansionState.block_rect(key.x)
+			if key.y < block.size.y:
+				reveal_count = _draw_cells(land, Rect2i(block.position + Vector2i(0, key.y), Vector2i(block.size.x, block.size.y - key.y)), 2)
 		reveal_builds += 1
 
 func _draw_cells(land: LandExpansionComponent, cells: Rect2i, offset: int) -> int:
 	var count: int = 0
-	var area: Rect2 = Rect2(land.farming.farmland.map_to_local(cells.position)-Vector2(8,8),Vector2(cells.size)*16.0).grow(12.0)
+	var area: Rect2 = Rect2(land.farming.farmland.map_to_local(LandExpansionState.REGION.position)-Vector2(8,8),Vector2(LandExpansionState.REGION.size)*16.0).grow(12.0)
 	for i: int in range(offset,offset+2):
 		RenderingServer.canvas_item_set_custom_rect(canvases[i],cells.has_area(),area)
 	for y: int in range(cells.position.y,cells.end.y):

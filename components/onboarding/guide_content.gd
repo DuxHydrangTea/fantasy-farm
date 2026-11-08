@@ -11,10 +11,10 @@ const SHORT: Dictionary = {
 	"first_animal": "Buy an animal at the supply shop or check your pens.",
 	"first_feed": "Deposit feed at supply storage. Stand near a food trough and interact.",
 	"first_trough_water": "Select the watering can. Interact with a water trough.",
-	"first_expansion": "Visit the land sign and confirm the next column."
+	"first_expansion": "Visit the land sign and confirm the next block."
 }
 const DETAILS: Dictionary = {
-	"first_soil": "Use the unlocked strip at the edge of the farmland. Stand beside an untilled tile and face it. Select the hoe, then use it. Previously prepared unlocked soil also counts.",
+	"first_soil": "Use the first unlocked farmland block at the top right. Stand beside an untilled tile and face it. Select the hoe, then use it. Previously prepared unlocked soil also counts.",
 	"first_seed": "Deposit crop seeds at the farm supply storage building. Open Stored seeds (G on keyboard), choose a variety, then face prepared empty farmland and use it. Only planting after this step unlocks counts.",
 	"first_water": "Select the watering can and use it on dry soil containing your crop. Plain soil and rain do not count as manually watering a crop. Rewater when soil dries out.",
 	"first_harvest": "Keep the planted tile watered and wait for the plant to mature. Interact with the mature crop. If the bag cannot hold the full harvest, sell some produce first; the crop remains in place.",
@@ -22,7 +22,7 @@ const DETAILS: Dictionary = {
 	"first_animal": "The supply merchant sells young animals for available pen space. Existing living animals also count. Open Objectives to claim this reward when it is ready.",
 	"first_feed": "Buy feed if needed and deposit it at farm supply storage. Stand beside a food trough and interact. The matching stored feed is consumed only at refill impact. A full trough does not count.",
 	"first_trough_water": "Select the watering can, stand beside a water trough and interact. A successful refill counts; a full trough does not. The watering can is not consumed.",
-	"first_expansion": "Find the sign at the next locked farmland column. Approach and interact to see the price, then confirm if you can afford it. Existing ownership of two columns also counts."
+	"first_expansion": "Find the sign at the next locked farmland block. Approach and interact to see the price, then confirm if you can afford it. Existing ownership of two blocks also counts."
 }
 
 static func controls(touch: bool) -> String:

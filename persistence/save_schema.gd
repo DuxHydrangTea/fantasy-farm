@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 39
+const VERSION: int = 40
 const CropConditions = preload("res://components/crop_condition_state.gd")
 const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
@@ -357,6 +357,15 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		if not QualitySaveSchema.split_legacy(data, catalog):
 			return failure("Invalid legacy quality stacks.")
 		data.version = 39
+	if data.get("version") == 39:
+		data = data.duplicate(true)
+		if not number(data.get("land_columns"), 1, 48, true) or not number(data.get("land_starting_columns"), 1, data.land_columns, true):
+			return failure("Invalid legacy farmland ownership.")
+		data["land_blocks"] = LandExpansionState.legacy_block_count(int(data.land_columns))
+		data["land_starting_blocks"] = LandExpansionState.legacy_block_count(int(data.land_starting_columns))
+		data.erase("land_columns")
+		data.erase("land_starting_columns")
+		data.version = 40
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if data.has("wall_saved_at") and not number(data.wall_saved_at):
@@ -413,16 +422,16 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		if not entry is Dictionary or not number(entry.get("at"), 0, data.saved_at) or float(entry.at) < previous or not number(entry.get("weather"), 0, 3, true):
 			return failure("Invalid weather history.")
 		previous = float(entry.at)
-	if not number(data.get("land_columns"), 1, LandExpansionState.REGION.size.x, true):
-		return failure("Invalid unlocked farmland columns.")
-	if not number(data.get("land_starting_columns"), 1, data.land_columns, true):
-		return failure("Invalid starting farmland columns.")
+	if not number(data.get("land_blocks"), 1, LandExpansionState.BLOCK_COUNT, true):
+		return failure("Invalid unlocked farmland blocks.")
+	if not number(data.get("land_starting_blocks"), 1, data.land_blocks, true):
+		return failure("Invalid starting farmland blocks.")
 	var automation: Dictionary = data.workers.crop_automation
 	for prepared: Dictionary in automation.prepared:
-		if not LandExpansionState.cell_is_open(Vector2i(int(prepared.cell[0]), int(prepared.cell[1])), int(data.land_columns)):
+		if not LandExpansionState.cell_is_open(Vector2i(int(prepared.cell[0]), int(prepared.cell[1])), int(data.land_blocks)):
 			return failure("Invalid crop automation plot.")
 	for plot: Dictionary in automation.plots:
-		if not LandExpansionState.cell_is_open(Vector2i(int(plot.cell[0]), int(plot.cell[1])), int(data.land_columns)):
+		if not LandExpansionState.cell_is_open(Vector2i(int(plot.cell[0]), int(plot.cell[1])), int(data.land_blocks)):
 			return failure("Invalid crop automation plot.")
 	if not number(data.get("coins"), 0, WalletComponent.MAX_COINS, true):
 		return failure("Invalid coin balance.")
@@ -460,7 +469,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		var cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))
 		if soil.has(cell):
 			return failure("Invalid or duplicate soil cell.")
-		if not LandExpansionState.cell_is_open(cell, int(data.land_columns)):
+		if not LandExpansionState.cell_is_open(cell, int(data.land_blocks)):
 			return failure("Saved soil is on locked farmland.")
 		if not number(row.get("moisture"), 0, FarmingController.SOIL_MOISTURE_SECONDS) or (row.state == 1 and row.moisture != 0) or (row.state == 2 and row.moisture <= 0):
 			return failure("Invalid soil moisture.")

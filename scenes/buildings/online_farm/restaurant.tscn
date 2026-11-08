@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/Restaurant_Edition.png" id="art"]
+
+[sub_resource type="RectangleShape2D" id="BuildingShape"]
+size = Vector2(160, 34)
+
+[sub_resource type="RectangleShape2D" id="LeftTerraceShape"]
+size = Vector2(43, 15)
+
+[sub_resource type="RectangleShape2D" id="RightTerraceShape"]
+size = Vector2(46, 15)
+
+[node name="Restaurant" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -48)
+texture = ExtResource("art")
+
+[node name="BuildingFootprint" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+shape = SubResource("BuildingShape")
+
+[node name="LeftTerrace" type="CollisionShape2D" parent="."]
+position = Vector2(-52.5, 3.5)
+shape = SubResource("LeftTerraceShape")
+
+[node name="RightTerrace" type="CollisionShape2D" parent="."]
+position = Vector2(58, 3.5)
+shape = SubResource("RightTerraceShape")

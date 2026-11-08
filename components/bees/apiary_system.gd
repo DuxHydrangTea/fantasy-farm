@@ -250,7 +250,7 @@ func placement_error(point: Vector2, columns: int = -1, restoring: bool = false,
 	if not restoring and world.honey_garden != null and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
 		return "Use the three fixed garden hives."
 	var cell: Vector2i = farming.world_to_cell(point)
-	var count: int = columns if columns >= 0 else farming.land.unlocked_columns if farming.land != null else 48
+	var count: int = columns if columns >= 0 else farming.land.unlocked_blocks if farming.land != null else LandExpansionState.BLOCK_COUNT
 	if not LandExpansionState.cell_is_open(cell,count):
 		return "Unlock this land before placing a hive."
 	var ground: TileMapLayer = farming.ground

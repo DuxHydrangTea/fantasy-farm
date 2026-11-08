@@ -6,7 +6,7 @@ func _run() -> void:
 	add_child(world)
 	print("CROP_TEAM_PROBE_WORLD_READY")
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(100000)
 	world.weather.set_debug_hour(12)
 	var timestamp: float = world.farming.time_manager.now()

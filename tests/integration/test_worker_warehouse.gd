@@ -15,7 +15,7 @@ func before_each() -> void:
 	world.farming.time_manager.clock_source = func() -> float: return fixed_now
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	# The unified worker services troughs at higher priority than produce
 	# work; these tests are about warehouse flows, so keep every trough full.
 	for pen: AnimalPen in service.bridge.pens():
@@ -43,7 +43,7 @@ func _fruit_task() -> Dictionary:
 	return {"kind": "fruit", "id": "12_61", "cell": [12, 61], "point": [0, 0], "priority": 0}
 
 func _mature_crop() -> CropDefinition:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
 	world.farming.restore_soil([{"cell": [54, 25], "state": 1}])
 	world.farming.restore_crop(Vector2i(54, 25), seed.crop as CropDefinition, now - 100, now - 1, 1.0, now)
@@ -121,7 +121,7 @@ func test_ranch_pickup_uses_warehouse_and_preserves_partial_pile_and_feed() -> v
 func test_each_role_pickup_candidate_uses_output_not_basket_capacity() -> void:
 	service.hire("crop")
 	service.hire("crop")
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	service.hire("crop")
 	for row: Dictionary in service.records:
 		service.bag_for(row.role).add(APPLE, 1600)
@@ -195,7 +195,7 @@ func test_v23_profile_imports_old_products_into_new_empty_warehouse_once() -> vo
 func test_full_warehouse_still_allows_crop_watering_and_ranch_feeding() -> void:
 	_limit(1, 1)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
 	world.farming.restore_soil([{"cell": [54, 25], "state": 1}])
 	world.farming.restore_crop(Vector2i(54, 25), seed.crop as CropDefinition, now - 10, now + 50, 0.2, now)

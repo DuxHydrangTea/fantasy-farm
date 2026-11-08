@@ -66,7 +66,7 @@ func _run() -> void:
 	add_child(world)
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.weather.set_debug_hour(12)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	world.farming.restore_soil([])

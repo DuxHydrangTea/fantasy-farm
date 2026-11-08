@@ -35,7 +35,7 @@ func quote(tool: StringName) -> Dictionary:
 	if current >= ToolUpgradeState.MAX_LEVEL:
 		return _failure("max_level", "This tool is already fully upgraded.")
 	var offer: ToolUpgradeOffer = catalog.find(tool, current + 1)
-	var columns: int = land.unlocked_columns - land.starting_columns
+	var columns: int = land.unlocked_blocks - land.starting_blocks
 	var result: Dictionary = {"ok": true, "tool": String(tool), "current_level": current, "next_level": current + 1,
 		"price": offer.price, "wood_cost": offer.wood_cost, "wood_owned": wood_owned(), "required_columns": offer.required_purchased_columns, "purchased_columns": columns}
 	if columns < offer.required_purchased_columns:

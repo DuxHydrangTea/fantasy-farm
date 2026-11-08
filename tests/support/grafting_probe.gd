@@ -75,7 +75,7 @@ func _run() -> void:
 	add_child(world)
 	await _frames(10)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(13, 4)
+	world.land.state.restore_blocks(13, 4)
 	world.player.wallet.set_balance(20000)
 	world.objectives.progress.suspended = true
 	world.trees.reset()

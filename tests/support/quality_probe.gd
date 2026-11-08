@@ -65,7 +65,7 @@ func _run() -> void:
 	add_child(world)
 	await _frames(10)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	world.farming.restore_soil([])
 	var clock: Array[float] = [world.farming.time_manager.now()]

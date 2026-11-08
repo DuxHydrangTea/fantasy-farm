@@ -48,7 +48,7 @@ func refresh() -> void:
 	if selected == &"sowing":
 		shop.details.text += "\n" + tr("Applies to all crop seeds.")
 	if next != null:
-		shop.details.text += "\n" + tr("Land purchased: {owned} columns · Required: {required}").format({"owned": upgrades.land.unlocked_columns - upgrades.land.starting_columns, "required": next.required_purchased_columns})
+		shop.details.text += "\n" + tr("Land purchased: {owned} blocks · Required: {required}").format({"owned": upgrades.land.unlocked_blocks - upgrades.land.starting_blocks, "required": next.required_purchased_columns})
 	if next != null:
 		shop.details.text += "\n" + tr("Wood: {owned}/{required} · Warehouse first, then bag (Normal)").format({"owned": upgrades.wood_owned(), "required": next.wood_cost})
 	shop.buy_button.text = tr("Maximum level") if next == null else tr("Upgrade - {coins} coins").format({"coins": next.price})

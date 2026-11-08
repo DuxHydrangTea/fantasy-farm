@@ -28,7 +28,7 @@ func before_each() -> void:
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.farming.restore_soil([{"cell": [48, 30], "state": 1}])
 	world.farming.restore_crop(Vector2i(48, 30), SEED.crop as CropDefinition, FIXED - 10, FIXED + 50, 0.1, FIXED)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())

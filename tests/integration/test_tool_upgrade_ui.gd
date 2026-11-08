@@ -16,7 +16,7 @@ func before_each() -> void:
 	world.storages.inventory("produce_warehouse").add(load("res://items/trees/wood.tres") as ItemDefinition, 1000)
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(10000000)
-	world.land.state.restore_columns(13, 4)
+	world.land.state.restore_blocks(13, 4)
 	merchant = world.get_node("BlacksmithMerchant") as ShopMerchant
 	shop = merchant.shop_ui
 	world.player.global_position = merchant.interaction_position() + Vector2(0, 20)
@@ -48,10 +48,10 @@ func test_money_land_and_loading_guards_disable_the_checkout() -> void:
 	shop.purchase()
 	assert_eq(world.tool_upgrade_state.level(&"hoe"), 1)
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(4, 4)
+	world.land.state.restore_blocks(4, 4)
 	shop._refresh()
 	assert_true(shop.buy_button.disabled)
-	world.land.state.restore_columns(7, 4)
+	world.land.state.restore_blocks(7, 4)
 	world.tool_upgrades.profile_ready = false
 	shop._refresh()
 	assert_true(shop.buy_button.disabled)

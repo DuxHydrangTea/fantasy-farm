@@ -64,7 +64,7 @@ func _live_scenario(count: int, planting: bool) -> void:
 	world = load("res://world/main_world.tscn").instantiate() as FarmWorld
 	root.add_child(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.player.wallet.set_balance(10000000)
 	world.storages.inventory("farm_supply_storage").add(load("res://items/seeds/carrot_seed.tres") as ItemDefinition, 1000)
 	for index: int in range(count):
@@ -128,7 +128,7 @@ func _scenario(count: int, planting: bool) -> void:
 	world.farming.time_manager.clock_source = func() -> float: return now
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(10000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.storages.inventory("farm_supply_storage").add(load("res://items/seeds/carrot_seed.tres") as ItemDefinition, 1000)
 	for index: int in range(count):
 		var error: String = world.workers.hire("crop")

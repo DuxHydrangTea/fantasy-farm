@@ -71,7 +71,7 @@ func _run() -> void:
 	add_child(world)
 	await _frames(10)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(4,4)
+	world.land.state.restore_blocks(4,4)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	world.weather.set_debug_hour(12)
 	var point: Vector2 = world.farming.farmland.to_global(world.farming.farmland.map_to_local(Vector2i(50,25)))
@@ -116,9 +116,9 @@ func _run() -> void:
 	for material: ShaderMaterial in cover.materials:
 		_check(material.get_shader_parameter(&"actor_count") == field.effect.get_shader_parameter(&"actor_count"),"Each weed variant receives shared pressure")
 	var builds: int = cover.base_builds
-	world.land.state.restore_columns(12,4)
+	world.land.state.restore_blocks(12,4)
 	_check(cover.base_count == 36*34,"Unlocking removes weeds from newly owned plots")
-	world.land._reveal_column = 44
+	world.land._reveal_block = 11
 	world.land._reveal_rows(12)
 	_check(cover.reveal_count == 22,"Clearing animation preserves the unrevealed part of the purchased column")
 	_check(cover.base_builds == builds+1,"Reveal animation avoids rebuilding all locked weeds")
@@ -128,7 +128,7 @@ func _run() -> void:
 	field.set_conversion(false)
 	_check(not cover.active and cover.canvases.is_empty(),"F10/fallback restores static cover and frees RIDs")
 	_check(field.set_conversion(true) and cover.active,"GPU cover can be enabled again")
-	world.land.state.restore_columns(48,4)
+	world.land.state.restore_blocks(24,4)
 	_check(cover.base_count == 0,"Fully unlocked farm has no weeds")
 	var report: Dictionary = {"ok":_failures.is_empty(),"checks":_checks,"failures":_failures,"personal_save_used":false}
 	var file: FileAccess = FileAccess.open(_output+"/report.json",FileAccess.WRITE)

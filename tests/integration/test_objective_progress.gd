@@ -114,7 +114,7 @@ func test_trough_refill_counts_at_impact_only_and_stock_restore_does_not_count()
 	assert_false(goals.ready_to_claim())
 	world.player.global_position = world.land.interaction_position() + Vector2(0, 20)
 	world.player.wallet.set_balance(100000)
-	assert_true(world.land.purchase(world.land.state.unlocked_columns).ok)
+	assert_true(world.land.purchase(world.land.state.unlocked_blocks).ok)
 	assert_true(goals.ready_to_claim())
 	assert_true(goals.claim(&"first_expansion").ok)
 	assert_null(goals.active())
@@ -191,17 +191,17 @@ func test_fresh_profile_baseline_and_land_owned_before_activation() -> void:
 			for actor: Node in pen.get_children():
 				if actor is AnimalActor:
 					animals += 1
-	print("OBJECTIVE_BASELINE=" + JSON.stringify({"coins": world.player.wallet.balance, "land_columns": world.land.state.unlocked_columns,
+	print("OBJECTIVE_BASELINE=" + JSON.stringify({"coins": world.player.wallet.balance, "land_blocks": world.land.state.unlocked_blocks,
 		"seed": String(seed.item_id), "seed_count": inventory.get_slot_count(2), "growth_seconds": seed.crop.growth_seconds,
 		"harvest_amount": seed.crop.harvest_amount, "produce_sell_price": price.price, "animals": animals,
 		"first_land_price": world.land.state.next_price(), "objective_rewards": 775}))
 	assert_eq(world.player.wallet.balance, WalletComponent.STARTING_COINS)
-	world.land.state.restore_columns(2)
+	world.land.state.restore_blocks(2)
 	_advance_to(&"first_expansion")
 	assert_true(goals.ready_to_claim())
 
 func test_fully_prepared_legacy_farm_is_not_stuck_on_an_impossible_till_action() -> void:
-	world.land.state.restore_columns(48)
+	world.land.state.restore_blocks(24)
 	var rows: Array = []
 	for y: int in range(LandExpansionState.REGION.position.y, LandExpansionState.REGION.end.y):
 		for x: int in range(LandExpansionState.REGION.position.x, LandExpansionState.REGION.end.x):

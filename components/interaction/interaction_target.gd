@@ -92,7 +92,7 @@ func action_text() -> String:
 		Kind.MERCHANT:
 			return (node as ShopMerchant).interaction_action_text()
 		Kind.LAND:
-			return tr("Reclaim next column ({coins} coins)").format({"coins": GameText.grouped_integer((node as LandExpansionComponent).state.next_price())})
+			return tr("Reclaim next block ({coins} coins)").format({"coins": GameText.grouped_integer((node as LandExpansionComponent).state.next_price())})
 		Kind.TROUGH:
 			var trough: AnimalTrough = node as AnimalTrough
 			var source: String = "Fill feed ({stock}/{capacity})" if trough.kind == AnimalTrough.Kind.FOOD else "Fill water ({stock}/{capacity})"

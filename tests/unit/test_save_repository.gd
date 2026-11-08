@@ -43,7 +43,7 @@ func after_each() -> void:
 		DirAccess.remove_absolute(folder)
 
 func _snapshot(revision: int = 1) -> Dictionary:
-	var data: Dictionary = {"version": SaveSchema.VERSION, "land_columns": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
+	var data: Dictionary = {"version": SaveSchema.VERSION, "land_blocks": 1, "coins": 1000, "world_id": "main_world", "profile_id": "test", "revision": revision, "saved_at": 1000.0,
 		"objectives": ObjectiveSaveSchema.fresh(ObjectiveProgress.DEFAULT_CATALOG),
 		"orders": OrderSaveSchema.fresh(),
 		"tutorial": TutorialSaveSchema.fresh(),
@@ -59,7 +59,7 @@ func _snapshot(revision: int = 1) -> Dictionary:
 		"storage_seed": "",
 		"flower_garden_unlocked": false,
 		"pen_updated_at": {},
-		"land_starting_columns": 1,
+		"land_starting_blocks": 1,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
 		"weather": WeatherSchedule.new().capture(), "trees": [], "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}
 

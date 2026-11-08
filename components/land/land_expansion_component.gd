@@ -11,7 +11,7 @@ var player: FarmPlayer
 var menu: LandPurchaseUI
 var sign: Sprite2D
 var prompt: Label
-var _reveal_column: int = -1
+var _reveal_block: int = -1
 var _revealed_rows: int = 0
 var grass_cover: LandGrassCover = LandGrassCover.new()
 var _clearing: Tween
@@ -44,25 +44,26 @@ func _ready() -> void:
 	_state_changed()
 
 func interaction_position() -> Vector2:
-	return to_global(farming.farmland.map_to_local(Vector2i(state.next_column(), LandExpansionState.REGION.position.y - 1)))
+	var block: Rect2i = state.next_block()
+	return to_global(farming.farmland.map_to_local(Vector2i(block.position.x + floori(float(block.size.x) / 2.0), block.position.y - 1)))
 
 func can_interact(customer: FarmPlayer) -> bool:
-	return customer == player and not state.is_complete() and _reveal_column < 0 and is_visible_in_tree() and customer.global_position.distance_to(interaction_position()) <= REACH
+	return customer == player and not state.is_complete() and _reveal_block < 0 and is_visible_in_tree() and customer.global_position.distance_to(interaction_position()) <= REACH
 
 func open_purchase(customer: FarmPlayer) -> bool:
 	if not can_interact(customer):
 		return false
 	return menu.open_offer(customer)
 
-func purchase(expected_columns: int) -> Dictionary:
+func purchase(expected_blocks: int) -> Dictionary:
 	if not can_interact(player):
 		return {"ok": false, "error": "Move closer to the land sign."}
-	var result: Dictionary = state.purchase(player.wallet, expected_columns)
+	var result: Dictionary = state.purchase(player.wallet, expected_blocks)
 	if result.ok:
-		_reveal_column = int(result.column)
+		_reveal_block = int(result.block)
 		_revealed_rows = 0
 		_clearing = create_tween()
-		_clearing.tween_method(_reveal_rows, 0, LandExpansionState.REGION.size.y, 0.85)
+		_clearing.tween_method(_reveal_rows, 0, LandExpansionState.block_rect(_reveal_block).size.y, 0.85)
 		_clearing.tween_callback(_finish_reveal)
 		_state_changed()
 	return result
@@ -75,20 +76,20 @@ func _reveal_rows(count: int) -> void:
 	queue_redraw()
 
 func _finish_reveal() -> void:
-	_reveal_column = -1
+	_reveal_block = -1
 	_state_changed()
 
 func _state_changed() -> void:
 	grass_cover.refresh(self)
 	if sign != null:
-		sign.visible = not state.is_complete() and _reveal_column < 0
+		sign.visible = not state.is_complete() and _reveal_block < 0
 		sign.position = to_local(interaction_position()) - Vector2(0, 8)
 	queue_redraw()
 
 func reset_presentation() -> void:
 	if _clearing != null and _clearing.is_valid():
 		_clearing.kill()
-	_reveal_column = -1
+	_reveal_block = -1
 	_revealed_rows = 0
 	_state_changed()
 
@@ -101,12 +102,11 @@ func _draw() -> void:
 		return
 	if farming == null or farming.farmland == null:
 		return
-	var region: Rect2i = LandExpansionState.REGION
-	var locked_width: int = region.size.x - state.unlocked_columns
-	if locked_width > 0:
-		_draw_cover(Rect2i(region.position, Vector2i(locked_width, region.size.y)))
-	if _reveal_column >= 0 and _revealed_rows < region.size.y:
-		_draw_cover(Rect2i(Vector2i(_reveal_column, region.position.y + _revealed_rows), Vector2i(1, region.size.y - _revealed_rows)))
+	for index: int in range(state.unlocked_blocks, LandExpansionState.BLOCK_COUNT):
+		_draw_cover(LandExpansionState.block_rect(index))
+	if _reveal_block >= 0:
+		var block: Rect2i = LandExpansionState.block_rect(_reveal_block)
+		_draw_cover(Rect2i(block.position + Vector2i(0, _revealed_rows), Vector2i(block.size.x, block.size.y - _revealed_rows)))
 
 func _draw_cover(cells: Rect2i) -> void:
 	var tile_size: Vector2 = Vector2(farming.farmland.tile_set.tile_size)

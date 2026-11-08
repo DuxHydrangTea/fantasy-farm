@@ -22,7 +22,7 @@ func before_each() -> void:
 	world.weather.schedule.seed = 12345
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(10000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.trees.reset()
 	world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1})
 	

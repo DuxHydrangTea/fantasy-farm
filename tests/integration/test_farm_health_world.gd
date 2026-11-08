@@ -85,7 +85,7 @@ func test_treating_each_crop_condition_preserves_other_flags_and_quality() -> vo
 
 func test_worker_care_uses_supplies_once_and_shows_animal_bubble() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	var row: Dictionary = world.workers.record("crop")
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
@@ -116,7 +116,7 @@ func test_worker_care_uses_supplies_once_and_shows_animal_bubble() -> void:
 
 func test_worker_care_crop_conditions_use_correct_supplies() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	var row: Dictionary = world.workers.record("crop")
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
@@ -145,7 +145,7 @@ func test_crop_care_icon_rises_fades_and_cleans_up() -> void:
 
 func test_worker_care_candidates_reserve_supplies_and_targets() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	assert_eq(world.workers.hire("crop"), "")
 	var first: Dictionary = world.workers.records[0]
@@ -170,7 +170,7 @@ func test_worker_care_candidates_reserve_supplies_and_targets() -> void:
 
 func test_worker_cures_animal_during_offline_simulation() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	var row: Dictionary = world.workers.record("crop")
 	var worker: WorkerActor = world.workers.actor_for(String(row.id))
@@ -186,7 +186,7 @@ func test_worker_cures_animal_during_offline_simulation() -> void:
 
 func test_worker_crop_care_runs_in_offline_scheduler() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	var crop: Crop = _crop(false)
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
@@ -203,7 +203,7 @@ func test_worker_crop_care_runs_in_offline_scheduler() -> void:
 
 func test_worker_care_task_survives_save_validation() -> void:
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	assert_eq(world.workers.hire("crop"), "")
 	var row: Dictionary = world.workers.record("crop")
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")

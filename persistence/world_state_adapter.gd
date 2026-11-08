@@ -80,7 +80,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	animals = entities.animals
 	var data: Dictionary = {"version": SaveSchema.VERSION, "world_id": "main_world", "profile_id": profile, "revision": revision, "saved_at": now,
 		"player": {"position": _pair(player.position), "facing": String(player.animation.facing_direction), "selected_slot": selection.selected_index},
-		"land_columns": farm.land.unlocked_columns if farm.land != null else LandExpansionState.REGION.size.x, "coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": [], "beehives": []}
+		"land_blocks": farm.land.unlocked_blocks if farm.land != null else LandExpansionState.BLOCK_COUNT, "coins": player.wallet.balance, "inventory": [], "soil": farm.capture_soil(), "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": [], "animal_pens": [], "beehives": []}
 	# Dùng String tường minh: gán key mới bằng dấu chấm tạo StringName trên Godot 4.7,
 	# khiến bộ ghi async từ chối DTO dù dữ liệu có thể stringify thành JSON.
 	data["weather"] = world.weather.schedule.capture() if world.weather != null else WeatherSchedule.new().capture()
@@ -98,7 +98,7 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["workers"] = world.workers.capture(now)
 	data["storages"] = world.storages.capture()
 	data["storage_seed"] = String(selection.storage_seed_id)
-	data["land_starting_columns"] = farm.land.starting_columns
+	data["land_starting_blocks"] = farm.land.starting_blocks
 	data["flower_garden_unlocked"] = world.starter_content.flower_garden_unlocked
 	data["pen_updated_at"] = {}
 	if world.apiary != null:
@@ -182,7 +182,7 @@ func preflight(data: Dictionary) -> Dictionary:
 		# only work targets must stay inside the worker's own zone.
 		if not world_bounds.has_point(worker_position):
 			return SaveSchema.failure("Invalid worker position.")
-		if not row.task.is_empty() and String(row.task.get("kind", "")) != "patrol" and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_columns)):
+		if not row.task.is_empty() and String(row.task.get("kind", "")) != "patrol" and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_blocks)):
 			return SaveSchema.failure("Invalid worker target.")
 	if world.wood_market == null or world.wood_market.busy:
 		return SaveSchema.failure("A wood purchase is in progress.", "busy")
@@ -245,10 +245,10 @@ func preflight(data: Dictionary) -> Dictionary:
 		var placement_ok: bool = true
 		if int(row.garden_slot) >= 0:
 			var slot: int = int(row.garden_slot)
-			placement_ok = world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id) and not garden_slots.has(slot) and world.apiary.placement_error(point, int(data.land_columns), true, true).is_empty()
+			placement_ok = world.honey_garden.garden() != null and row.garden_id == String(world.honey_garden.garden().persistent_id) and not garden_slots.has(slot) and world.apiary.placement_error(point, int(data.land_blocks), true, true).is_empty()
 			garden_slots[slot] = true
 		else:
-			placement_ok = world.apiary.placement_error(point,int(data.land_columns),true,not data.honey_garden.migrated).is_empty()
+			placement_ok = world.apiary.placement_error(point,int(data.land_blocks),true,not data.honey_garden.migrated).is_empty()
 			if data.honey_garden.migrated and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
 				placement_ok = false
 		if (int(row.garden_slot) < 0 and point.distance_to(world.apiary.snap_position(point)) > 0.01) or hive_cells.has(cell) or not placement_ok:
@@ -324,7 +324,7 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	if world.land != null:
 		world.land.reset_presentation()
 	if farm.land != null:
-		farm.land.restore_columns(int(data.land_columns), int(data.land_starting_columns))
+		farm.land.restore_blocks(int(data.land_blocks), int(data.land_starting_blocks))
 	world.wood_market.restore(data.wood_market)
 	world.tool_upgrade_state.restore(data.tool_upgrades, false)
 	world.pen_upgrades.restore(data.pen_upgrades)

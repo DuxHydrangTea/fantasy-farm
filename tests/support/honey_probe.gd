@@ -73,7 +73,7 @@ func _run() -> void:
 	await _frames(8)
 	world.honey_garden.set_process(false)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(13,4)
+	world.land.state.restore_blocks(13,4)
 	world.player.wallet.set_balance(5000)
 	world.objectives.progress.suspended = true
 	world.starter_content.begin_restore(true)

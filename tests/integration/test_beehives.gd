@@ -331,7 +331,7 @@ func test_bought_hive_can_be_placed_by_left_click_without_navigation() -> void:
 
 func test_pollination_saving_keeps_reduction_and_replays_offline_growth_once() -> void:
 	apiary.definition.cycle_seconds = 86400.0
-	farm.land.restore_columns(48)
+	farm.land.restore_blocks(24)
 	var pot: FlowerPot = _pot(Vector2i(0,0))
 	garden.global_position += Vector2(904,312)-pot.global_position
 	var cell: Vector2i = Vector2i(53,22)

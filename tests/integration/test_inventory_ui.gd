@@ -61,6 +61,35 @@ func test_inventory_opens_with_tab_or_i_and_closes_with_escape() -> void:
 	await _key(KEY_I)
 	assert_false(ui.root.visible)
 
+func test_24px_icon_uses_integer_scale_and_other_icons_keep_layout() -> void:
+	var slot: InventorySlot = InventorySlot.new()
+	slot.inventory = bag
+	slot.slot_index = 0
+	slot.compact = true
+	viewport.add_child(slot)
+	slot.custom_minimum_size = Vector2(48, 48)
+	var icon: TextureRect = slot.get_node("Icon") as TextureRect
+	icon.texture = load("res://assets/Icons/meowa/extracted_24px/batch_06/01_carrot.png") as Texture2D
+	slot.size = Vector2(72, 72)
+	slot._place_icon()
+	assert_eq(icon.size, Vector2(48, 48), "A 24px icon fills a desktop slot at 2x")
+	slot.size = Vector2(48, 48)
+	slot._place_icon()
+	assert_eq(icon.size, Vector2(24, 24), "A 24px icon fits a compact slot at 1x")
+	slot.hotbar_skin = true
+	slot.size = Vector2(64, 64)
+	slot._place_icon()
+	assert_eq(icon.size, Vector2(48, 48), "A desktop hotbar displays a 24px icon at 2x")
+	assert_eq(icon.position, Vector2(8, 8), "The hotbar icon is centered")
+	slot.size = Vector2(48, 48)
+	slot._place_icon()
+	assert_eq(icon.size, Vector2(24, 24), "A compact hotbar keeps integer scaling")
+	slot.hotbar_skin = false
+	icon.texture = ImageTexture.create_from_image(Image.create(16, 16, false, Image.FORMAT_RGBA8))
+	slot._place_icon()
+	assert_eq(icon.size, Vector2(28, 28), "Other icon sizes retain the existing layout")
+	slot.queue_free()
+
 func test_balance_is_inside_inventory_and_updates_without_reopening() -> void:
 	var actor: FarmPlayer = player as FarmPlayer
 	var hud: WalletHUD = actor.get_node("Hotbar/WalletHUD") as WalletHUD

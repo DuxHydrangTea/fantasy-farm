@@ -31,7 +31,7 @@ func _case(scenario: String) -> void:
 	world = preload("res://world/main_world.tscn").instantiate() as FarmWorld
 	get_tree().root.add_child(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.player.wallet.set_balance(10000000)
 	world.trees.reset()
 	var now: float = clock.now()

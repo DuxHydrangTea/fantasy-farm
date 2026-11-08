@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Lanter_Posts.png" id="1_lamp"]
+
+[node name="StreetLamp" type="StaticBody2D"]
+texture_filter = 1
+metadata/object_id = "street_lamp"
+metadata/object_kind = "street_lamp"
+metadata/source_visual = "res://assets/Outdoor decoration/Lanter_Posts.png"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("1_lamp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 48)

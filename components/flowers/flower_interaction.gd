@@ -48,11 +48,9 @@ func refresh() -> void:
 	var allowed: bool = pot.can_plant(selection.get_selected_item()) if pot.definition == null else (pot.is_mature() or (selection.get_selected_action() == &"water" and pot.can_water()))
 	pot.set_focused(true, allowed)
 	global_position = pot.global_position
-	if pot.is_locked():
-		return # The garden-wide notice explains the unlock without repeating it on every pot.
-	if pot.definition == null:
-		prompt.text = tr("Select flower seeds · Right-click: plant")
-	elif pot.is_mature():
+	if pot.is_locked() or pot.definition == null:
+		return
+	if pot.is_mature():
 		prompt.text = tr("E: harvest flowers") if selection.inventory.capacity_for(pot.definition.harvest_item) >= pot.definition.harvest_amount else tr("Inventory full")
 	elif pot.can_water():
 		prompt.text = tr("Select watering can · Right-click: water")

@@ -95,6 +95,9 @@ func _ready() -> void:
 		_count.add_theme_constant_override("outline_size", 0)
 		_count.add_theme_constant_override("shadow_offset_x", 0)
 		_count.add_theme_constant_override("shadow_offset_y", 0)
+	if hotbar_skin:
+		_count.add_theme_color_override("font_outline_color", Color("f2e9d6"))
+		_count.add_theme_constant_override("outline_size", 2)
 	var count_style: StyleBoxFlat = StyleBoxFlat.new()
 	count_style.bg_color = Color.TRANSPARENT
 	count_style.content_margin_left = 3
@@ -113,6 +116,7 @@ func _ready() -> void:
 	add_child(_quality_badge)
 	_count.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 	resized.connect(_place_count)
+	resized.connect(_place_icon)
 	inventory.changed.connect(refresh)
 	refresh()
 
@@ -121,6 +125,7 @@ func refresh() -> void:
 	var count: int = inventory.get_slot_count(slot_index)
 	_shortcut.visible = show_shortcut and not MobileLayout.is_touch(get_viewport())
 	_icon.texture = item.icon if item != null else null
+	_place_icon()
 	_star.visible = item != null and item.star_fruit
 	_count.text = _format_count(count) if count > 1 else ""
 	_count.visible = count > 1
@@ -162,6 +167,35 @@ func _format_count(count: int) -> String:
 	var whole: int = count / 1000
 	var decimal: int = (count % 1000) / 100
 	return str(whole) + ("," + str(decimal) if decimal > 0 else "") + "K"
+
+func _place_icon() -> void:
+	if _icon == null:
+		return
+	var top: float = 8.0 if compact else 10.0
+	var bottom: float = 12.0 if compact else 18.0
+	var margin: float = 10.0
+	_icon.offset_left = 10.0
+	_icon.offset_right = -10.0
+	_icon.offset_top = top
+	_icon.offset_bottom = -bottom
+	if _icon.texture == null or _icon.texture.get_size() != Vector2(24, 24):
+		return
+	# A desktop hotbar slot has room for a crisp 2x icon behind its labels.
+	if hotbar_skin:
+		top = 8.0
+		bottom = 8.0
+		margin = 8.0
+	var available: Vector2 = size - Vector2(margin * 2.0, top + bottom)
+	var scale_factor: int = floori(minf(available.x, available.y) / 24.0)
+	if scale_factor < 1:
+		return
+	var target: float = float(scale_factor * 24)
+	var left: float = floorf((size.x - target) / 2.0)
+	var upper: float = floorf(top + (available.y - target) / 2.0)
+	_icon.offset_left = left
+	_icon.offset_right = left + target - size.x
+	_icon.offset_top = upper
+	_icon.offset_bottom = upper + target - size.y
 
 func _place_count() -> void:
 	_star.position = Vector2(size.x - 18, 0)

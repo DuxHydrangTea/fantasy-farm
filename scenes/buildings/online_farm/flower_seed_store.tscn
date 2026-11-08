@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/Flower_Seed_Store.png" id="art"]
+
+[sub_resource type="RectangleShape2D" id="Shape0"]
+size = Vector2(116, 29)
+
+[sub_resource type="RectangleShape2D" id="Shape1"]
+size = Vector2(26, 18)
+
+[sub_resource type="RectangleShape2D" id="Shape2"]
+size = Vector2(93, 23)
+
+[node name="FlowerSeedStore" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(37, -47)
+texture = ExtResource("art")
+
+[node name="Footprint0" type="CollisionShape2D" parent="."]
+position = Vector2(31, -19.5)
+shape = SubResource("Shape0")
+
+[node name="Footprint1" type="CollisionShape2D" parent="."]
+position = Vector2(-23, 1)
+shape = SubResource("Shape1")
+
+[node name="Footprint2" type="CollisionShape2D" parent="."]
+position = Vector2(62.5, 1.5)
+shape = SubResource("Shape2")

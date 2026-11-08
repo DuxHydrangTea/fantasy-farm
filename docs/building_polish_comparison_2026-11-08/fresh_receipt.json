@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"background_job_id\": \"cfe684c9-4721-4cba-a853-90efe84d35b7\",\n  \"image_id\": \"23e698d7-dde4-51c5-b1aa-60cc08871a61\",\n  \"status\": \"processing\",\n  \"source_image_id\": \"23e698d7-dde4-51c5-b1aa-60cc08871a61\",\n  \"job_id\": \"cfe684c9-4721-4cba-a853-90efe84d35b7\",\n  \"description\": \"Create a NEW finished farm supply warehouse sprite for a cozy farming RPG, inspired by the reference building. Broad red tiled roof, warm brown wooden facade with stone side supports, two small horizontal blue windows above a centered double wooden door, a few seed sacks and a barrel at the base. Draw all forms anew as deliberate crisp native pixel clusters, consistent outlines, clean repeating roof tiles, restrained shading, no grainy texture or antialiasing. Keep recognizable architectural proportions and a complete silhouette inside the canvas. Straight-on front-facing 2D game view, horizontal front facade, roof visible from slightly above; no isometric, diagonal or three-quarter side view. Isolated transparent background, no text or scenery.\",\n  \"seed\": 0,\n  \"image_size\": {\n    \"width\": 184,\n    \"height\": 168\n  },\n  \"output_count\": 1,\n  \"estimated_generations\": 6,\n  \"pricing_provisional\": true,\n  \"poll_tool\": \"get_image\",\n  \"download_path\": \"/mcp/images/cfe684c9-4721-4cba-a853-90efe84d35b7/download\"\n}\nPoll get_image(job_id=\"cfe684c9-4721-4cba-a853-90efe84d35b7\"). The source_image_id is usable after completion; it is an image ID, not a character/object ID. Actual usage is reported on completion. cancel_job(job_id=...) cancels unfinished work."
+    }
+  ],
+  "structuredContent": {
+    "background_job_id": "cfe684c9-4721-4cba-a853-90efe84d35b7",
+    "image_id": "23e698d7-dde4-51c5-b1aa-60cc08871a61",
+    "status": "processing",
+    "source_image_id": "23e698d7-dde4-51c5-b1aa-60cc08871a61",
+    "job_id": "cfe684c9-4721-4cba-a853-90efe84d35b7",
+    "description": "Create a NEW finished farm supply warehouse sprite for a cozy farming RPG, inspired by the reference building. Broad red tiled roof, warm brown wooden facade with stone side supports, two small horizontal blue windows above a centered double wooden door, a few seed sacks and a barrel at the base. Draw all forms anew as deliberate crisp native pixel clusters, consistent outlines, clean repeating roof tiles, restrained shading, no grainy texture or antialiasing. Keep recognizable architectural proportions and a complete silhouette inside the canvas. Straight-on front-facing 2D game view, horizontal front facade, roof visible from slightly above; no isometric, diagonal or three-quarter side view. Isolated transparent background, no text or scenery.",
+    "seed": 0,
+    "image_size": {
+      "width": 184,
+      "height": 168
+    },
+    "output_count": 1,
+    "estimated_generations": 6,
+    "pricing_provisional": true,
+    "poll_tool": "get_image",
+    "download_path": "/mcp/images/cfe684c9-4721-4cba-a853-90efe84d35b7/download"
+  },
+  "isError": false
+}

@@ -1,0 +1,66 @@
+{
+  "seed_storage_correct": {
+    "id": "d8ccdaee-ca25-4680-9537-7c0bfcf395b5",
+    "tool": "correct_pixelart",
+    "receipt": "id: d8ccdaee-ca25-4680-9537-7c0bfcf395b5\njob_id: d8ccdaee-ca25-4680-9537-7c0bfcf395b5\nasset_id: 4a8c4ab6-ff72-5421-addb-bf4043d101e1\nasset_status: pending (saved when generation completes)\nframes: 1\nsize: 184x168px (unchanged)\nstrength: 0.1\ncost: 0.1 generations\nstatus: processing (~20-60s)\n\nhint: get_image(job_id=\"d8ccdaee-ca25-4680-9537-7c0bfcf395b5\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/d8ccdaee-ca25-4680-9537-7c0bfcf395b5/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: d8ccdaee-ca25-4680-9537-7c0bfcf395b5\njob_id: d8ccdaee-ca25-4680-9537-7c0bfcf395b5\nframes: 1\ntransparent: yes\nasset_id: 4a8c4ab6-ff72-5421-addb-bf4043d101e1\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 0.1 generations\ndownload: https://api.pixellab.ai/mcp/images/d8ccdaee-ca25-4680-9537-7c0bfcf395b5/download",
+    "charged": 0.1
+  },
+  "seed_storage_pixen": {
+    "id": "23e9c6b0-64b0-47c8-b40c-24a81eb58afc",
+    "tool": "edit_image_pixen",
+    "receipt": "id: 23e9c6b0-64b0-47c8-b40c-24a81eb58afc\njob_id: 23e9c6b0-64b0-47c8-b40c-24a81eb58afc\nmodel: pixen\nedit: Polish pixel edges: consistent outline thickness, clean stepped roof diagonals, clear roof tiles and coherent hay clusters. Remove stray pixels and muddy colors. Preserve building silhouette, doors, windows, props, palette and composition. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Keep transparency.\nsource: 184x168px\nsize: 184x168px\ntransparent: True\nasset_id: d85f20fc-9427-5951-ab99-cc84175fa6b2\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"23e9c6b0-64b0-47c8-b40c-24a81eb58afc\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/23e9c6b0-64b0-47c8-b40c-24a81eb58afc/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: 23e9c6b0-64b0-47c8-b40c-24a81eb58afc\njob_id: 23e9c6b0-64b0-47c8-b40c-24a81eb58afc\nframes: 1\ntransparent: yes\nasset_id: d85f20fc-9427-5951-ab99-cc84175fa6b2\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 1 generation\ndownload: https://api.pixellab.ai/mcp/images/23e9c6b0-64b0-47c8-b40c-24a81eb58afc/download",
+    "charged": 1
+  },
+  "produce_warehouse_correct": {
+    "id": "c3071a6f-1091-4499-b620-c8572275e6bc",
+    "tool": "correct_pixelart",
+    "receipt": "id: c3071a6f-1091-4499-b620-c8572275e6bc\njob_id: c3071a6f-1091-4499-b620-c8572275e6bc\nasset_id: a6620e70-02fd-529e-beb7-349b4ad05a12\nasset_status: pending (saved when generation completes)\nframes: 1\nsize: 252x200px (unchanged)\nstrength: 0.1\ncost: 0.1 generations\nstatus: processing (~20-60s)\n\nhint: get_image(job_id=\"c3071a6f-1091-4499-b620-c8572275e6bc\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/c3071a6f-1091-4499-b620-c8572275e6bc/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: c3071a6f-1091-4499-b620-c8572275e6bc\njob_id: c3071a6f-1091-4499-b620-c8572275e6bc\nframes: 1\ntransparent: yes\nasset_id: a6620e70-02fd-529e-beb7-349b4ad05a12\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 0.1 generations\ndownload: https://api.pixellab.ai/mcp/images/c3071a6f-1091-4499-b620-c8572275e6bc/download",
+    "charged": 0.1
+  },
+  "produce_warehouse_pixen": {
+    "id": "84fe3017-5783-46ef-92be-4ff773fbefe6",
+    "tool": "edit_image_pixen",
+    "receipt": "id: 84fe3017-5783-46ef-92be-4ff773fbefe6\njob_id: 84fe3017-5783-46ef-92be-4ff773fbefe6\nmodel: pixen\nedit: Polish pixel edges: consistent outline thickness, clean stepped roof diagonals, clear roof tiles and coherent hay clusters. Remove stray pixels and muddy colors. Preserve building silhouette, doors, windows, props, palette and composition. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Keep transparency.\nsource: 252x200px\nsize: 252x200px\ntransparent: True\nasset_id: 258e4744-449d-5803-a61e-024e10fb5859\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"84fe3017-5783-46ef-92be-4ff773fbefe6\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/84fe3017-5783-46ef-92be-4ff773fbefe6/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: 84fe3017-5783-46ef-92be-4ff773fbefe6\njob_id: 84fe3017-5783-46ef-92be-4ff773fbefe6\nframes: 1\ntransparent: yes\nasset_id: 258e4744-449d-5803-a61e-024e10fb5859\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 1 generation\ndownload: https://api.pixellab.ai/mcp/images/84fe3017-5783-46ef-92be-4ff773fbefe6/download",
+    "charged": 1
+  },
+  "cattle_barn_correct": {
+    "id": "9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26",
+    "tool": "correct_pixelart",
+    "receipt": "id: 9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26\njob_id: 9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26\nasset_id: e8ccabef-1621-5fa4-98dc-c052fdbc8845\nasset_status: pending (saved when generation completes)\nframes: 1\nsize: 252x132px (unchanged)\nstrength: 0.1\ncost: 0.1 generations\nstatus: processing (~20-60s)\n\nhint: get_image(job_id=\"9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: 9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26\njob_id: 9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26\nframes: 1\ntransparent: yes\nasset_id: e8ccabef-1621-5fa4-98dc-c052fdbc8845\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 0.1 generations\ndownload: https://api.pixellab.ai/mcp/images/9fd0ff6c-e2bf-488c-80c4-0aa2dc144f26/download",
+    "charged": 0.1
+  },
+  "cattle_barn_pixen": {
+    "id": "068f99e1-cc1a-408a-8226-97fbef640553",
+    "tool": "edit_image_pixen",
+    "receipt": "id: 068f99e1-cc1a-408a-8226-97fbef640553\njob_id: 068f99e1-cc1a-408a-8226-97fbef640553\nmodel: pixen\nedit: Polish pixel edges: consistent outline thickness, clean stepped roof diagonals, clear roof tiles and coherent hay clusters. Remove stray pixels and muddy colors. Preserve building silhouette, doors, windows, props, palette and composition. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Keep transparency.\nsource: 252x132px\nsize: 252x132px\ntransparent: True\nasset_id: fde2f8be-2965-5a42-ab10-4e5fb9744c46\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"068f99e1-cc1a-408a-8226-97fbef640553\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/068f99e1-cc1a-408a-8226-97fbef640553/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: 068f99e1-cc1a-408a-8226-97fbef640553\njob_id: 068f99e1-cc1a-408a-8226-97fbef640553\nframes: 1\ntransparent: yes\nasset_id: fde2f8be-2965-5a42-ab10-4e5fb9744c46\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 1 generation\ndownload: https://api.pixellab.ai/mcp/images/068f99e1-cc1a-408a-8226-97fbef640553/download",
+    "charged": 1
+  },
+  "chicken_coop_correct": {
+    "id": "3dcd272b-7537-4420-888c-51b69c717e8c",
+    "tool": "correct_pixelart",
+    "receipt": "id: 3dcd272b-7537-4420-888c-51b69c717e8c\njob_id: 3dcd272b-7537-4420-888c-51b69c717e8c\nasset_id: 221df538-2edc-5c3e-a55a-78dc154cb15e\nasset_status: pending (saved when generation completes)\nframes: 1\nsize: 144x132px (unchanged)\nstrength: 0.1\ncost: 0.1 generations\nstatus: processing (~20-60s)\n\nhint: get_image(job_id=\"3dcd272b-7537-4420-888c-51b69c717e8c\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/3dcd272b-7537-4420-888c-51b69c717e8c/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: 3dcd272b-7537-4420-888c-51b69c717e8c\njob_id: 3dcd272b-7537-4420-888c-51b69c717e8c\nframes: 1\ntransparent: yes\nasset_id: 221df538-2edc-5c3e-a55a-78dc154cb15e\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 0.1 generations\ndownload: https://api.pixellab.ai/mcp/images/3dcd272b-7537-4420-888c-51b69c717e8c/download",
+    "charged": 0.1
+  },
+  "chicken_coop_pixen": {
+    "id": "c7c8eeaa-3a08-4623-ba71-486285768462",
+    "tool": "edit_image_pixen",
+    "receipt": "id: c7c8eeaa-3a08-4623-ba71-486285768462\njob_id: c7c8eeaa-3a08-4623-ba71-486285768462\nmodel: pixen\nedit: Polish pixel edges: consistent outline thickness, clean stepped roof diagonals, clear roof tiles and coherent hay clusters. Remove stray pixels and muddy colors. Preserve building silhouette, doors, windows, props, palette and composition. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Keep transparency.\nsource: 144x132px\nsize: 144x132px\ntransparent: True\nasset_id: d7ee424a-f3a8-5210-b82a-608cd234af32\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"c7c8eeaa-3a08-4623-ba71-486285768462\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/c7c8eeaa-3a08-4623-ba71-486285768462/download (423 + Retry-After until ready; ?index=N for the Nth of several images)",
+    "done": true,
+    "result": "status: completed\nid: c7c8eeaa-3a08-4623-ba71-486285768462\njob_id: c7c8eeaa-3a08-4623-ba71-486285768462\nframes: 1\ntransparent: yes\nasset_id: d7ee424a-f3a8-5210-b82a-608cd234af32\nasset_type: image\nasset_status: saved\ngallery: saved to your PixelLab gallery (pixellab.ai/create)\ncharged: 1 generation\ndownload: https://api.pixellab.ai/mcp/images/c7c8eeaa-3a08-4623-ba71-486285768462/download",
+    "charged": 1
+  }
+}

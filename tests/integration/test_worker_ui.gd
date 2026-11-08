@@ -17,7 +17,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	viewport.add_child(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(100000)
 	var timestamp: float = TimeManager.now()
 	TimeManager.clock_source = func() -> float: return timestamp
@@ -149,11 +149,11 @@ func test_dismissal_cancel_and_paid_rehire_preserve_once_only_trial() -> void:
 	assert_false(world.player.selection.shop_open)
 
 func test_locked_hiring_and_insufficient_rehire_funds_disable_action() -> void:
-	world.land.state.restore_columns(4, 4)
+	world.land.state.restore_blocks(4, 4)
 	menu = _open("crop")
 	assert_true(menu.hire_button.disabled)
 	assert_true((menu.get_node("%Unlock") as Label).visible)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	menu._refresh()
 	assert_false(menu.hire_button.disabled)
 	menu._hire()

@@ -15,7 +15,7 @@ func _ready() -> void:
 	world.tool_upgrades.profile_ready = true
 	world.weather.set_debug_hour(12)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	var now: float = world.farming.time_manager.now()
 	var soil: Array[Dictionary] = []
 	for x: int in range(4):

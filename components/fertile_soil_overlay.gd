@@ -26,7 +26,7 @@ func _draw() -> void:
 	for y: int in range(LandExpansionState.REGION.position.y,LandExpansionState.REGION.end.y):
 		for x: int in range(LandExpansionState.REGION.position.x,LandExpansionState.REGION.end.x):
 			var cell: Vector2i = Vector2i(x,y)
-			if farm.land.is_unlocked(cell) and farm.fertility.is_fertile(cell):
+			if farm.land.is_unlocked(cell) and farm.fertility.is_fertile(cell) and not farm.is_farming_blocked_by_overlay(cell):
 				var rect: Rect2 = Rect2(farm.farmland.map_to_local(cell)-size*0.5+Vector2.ONE,size-Vector2(2,2))
 				draw_rect(rect,color,false,1.0)
 				if _bright:

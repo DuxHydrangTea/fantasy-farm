@@ -65,7 +65,7 @@ func _run() -> void:
 	add_child(world)
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(48, 4)
+	world.land.state.restore_blocks(24, 4)
 	var clock: Array[float] = [world.farming.time_manager.now()]
 	world.farming.time_manager.clock_source = func() -> float: return clock[0]
 	var stock: ShopCatalog = preload("res://resources/shops/farm_supply.tres")

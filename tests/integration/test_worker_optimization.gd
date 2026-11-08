@@ -26,7 +26,7 @@ func before_each() -> void:
 	service = world.workers
 	now = world.farming.time_manager.now()
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.player.wallet.set_balance(10000000)
 	world.trees.reset()
 	for pen: AnimalPen in service.bridge.pens():

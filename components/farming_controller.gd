@@ -222,6 +222,8 @@ func restore_soil(records: Array) -> void:
 	var wet: Array[Vector2i] = []
 	for record: Dictionary in records:
 		var cell: Vector2i = Vector2i(int(record.cell[0]), int(record.cell[1]))
+		if is_farming_blocked_by_overlay(cell):
+			continue
 		dry.append(_layer_cell(dry_soil, cell))
 		if int(record.state) == Soil.WET:
 			_moisture[cell] = float(record.get("moisture", SOIL_MOISTURE_SECONDS))
@@ -400,6 +402,21 @@ func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> b
 	# Missing permission is deliberately denied; borders/unmarked grass stay protected.
 	if data == null or not data.has_custom_data(permission) or data.get_custom_data(permission) != true:
 		return false
+	if is_farming_blocked_by_overlay(cell):
+		return false
+	var center: Vector2 = farmland.to_global(farmland.map_to_local(cell))
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = Vector2(farmland.tile_set.tile_size) * 0.8
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = shape
+	query.transform = Transform2D(farmland.global_transform.x, farmland.global_transform.y, center)
+	query.collision_mask = obstacle_mask
+	query.collide_with_areas = false
+	if actor != null:
+		query.exclude = [actor.get_rid()]
+	return farmland.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+func is_farming_blocked_by_overlay(cell: Vector2i) -> bool:
 	var center: Vector2 = farmland.to_global(farmland.map_to_local(cell))
 	if _layers_dirty:
 		_farming_layers.clear()
@@ -412,17 +429,8 @@ func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> b
 			continue
 		var tile: TileData = layer.get_cell_tile_data(layer.local_to_map(layer.to_local(center)))
 		if tile != null and tile.has_custom_data("blocks_farming") and tile.get_custom_data("blocks_farming") == true:
-			return false
-	var shape: RectangleShape2D = RectangleShape2D.new()
-	shape.size = Vector2(farmland.tile_set.tile_size) * 0.8
-	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
-	query.shape = shape
-	query.transform = Transform2D(farmland.global_transform.x, farmland.global_transform.y, center)
-	query.collision_mask = obstacle_mask
-	query.collide_with_areas = false
-	if actor != null:
-		query.exclude = [actor.get_rid()]
-	return farmland.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+			return true
+	return false
 
 func fertilizer_error(cell: Vector2i, actor: PhysicsBody2D = null, sync_apiary: bool = true) -> String:
 	var crop: Crop = get_crop(cell)
@@ -452,6 +460,8 @@ func rain_water() -> void:
 		for x: int in range(LandExpansionState.REGION.position.x, LandExpansionState.REGION.end.x):
 			var cell: Vector2i = Vector2i(x, y)
 			if land != null and not land.is_unlocked(cell):
+				continue
+			if is_farming_blocked_by_overlay(cell):
 				continue
 			var tile: TileData = farmland.get_cell_tile_data(cell)
 			if tile == null or not tile.get_custom_data("can_water"):

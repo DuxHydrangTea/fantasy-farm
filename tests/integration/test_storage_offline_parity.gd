@@ -17,7 +17,7 @@ func before_each() -> void:
 	world.process_mode = Node.PROCESS_MODE_DISABLED
 	add_child_autofree(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(48, 4)
+	world.land.state.restore_blocks(24, 4)
 	world.player.wallet.set_balance(10000)
 	now = world.farming.time_manager.now()
 	var fixed: float = now

@@ -19,7 +19,7 @@ func _snapshot() -> Dictionary:
 
 func _unlock() -> void:
 	world.player.wallet.set_balance(87000)
-	assert_true(world.land.state.purchase(world.player.wallet, 4).ok)
+	assert_true(world.land.state.purchase(world.player.wallet, 1).ok)
 	assert_eq(world.player.wallet.balance, 27000)
 
 func _flower_pickups(data: Dictionary) -> Array:
@@ -29,15 +29,15 @@ func test_new_profile_has_no_free_animals_flowers_or_seeds() -> void:
 	var data: Dictionary = _snapshot()
 	assert_eq(data.animals.size(), 0)
 	assert_eq(data.coins, 10000)
-	assert_eq(data.land_columns, 4)
-	assert_eq(data.land_starting_columns, 4)
+	assert_eq(data.land_blocks, 1)
+	assert_eq(data.land_starting_blocks, 1)
 	assert_eq(world.land.state.next_price(), 60000)
 	var open_cells: int = 0
 	for y: int in range(19, 53):
 		for x: int in range(9, 57):
-			if world.land.state.is_unlocked(Vector2i(x, y)):
+			if LandExpansionState.block_index(Vector2i(x, y)) >= 0 and world.land.state.is_unlocked(Vector2i(x, y)):
 				open_cells += 1
-	assert_eq(open_cells, 136)
+	assert_eq(open_cells, 64)
 	assert_false(data.flower_garden_unlocked)
 	assert_true(garden.starter_content_locked)
 	assert_eq(data.flower_gardens[0].flowers.size(), 0)
@@ -45,8 +45,8 @@ func test_new_profile_has_no_free_animals_flowers_or_seeds() -> void:
 	assert_eq(world.player.selection.inventory.count_item(&"carrot_seed"), 24)
 	assert_false(world.objectives.progress.ready_to_claim())
 	for x: int in range(53, 57):
-		assert_true(world.farming.till(Vector2i(x, 30)), "Each starting column can actually be tilled")
-	assert_false(world.farming.till(Vector2i(52, 30)), "The fifth column still requires purchase")
+		assert_true(world.farming.till(Vector2i(x, 24)), "Each cell in the starting block can actually be tilled")
+	assert_false(world.farming.till(Vector2i(52, 30)), "The next block still requires purchase")
 
 func test_locked_pot_does_not_consume_purchased_seed() -> void:
 	var bag: InventoryComponent = world.player.selection.inventory
@@ -102,29 +102,31 @@ func test_locked_profile_roundtrip_and_invalid_flag_are_transactional() -> void:
 	assert_false(adapter.restore(bad, TimeManager.now()).ok)
 	assert_eq(world.player.wallet.balance, int(data.coins))
 	assert_false(world.starter_content.flower_garden_unlocked)
-	assert_eq(world.land.state.starting_columns, 4)
+	assert_eq(world.land.state.starting_blocks, 1)
 	assert_eq(world.land.state.next_price(), 60000)
 
 func test_v19_keeps_original_land_and_inventory_without_granting_new_starter_items() -> void:
 	var data: Dictionary = _snapshot()
 	data.version = 19
-	data.erase("land_starting_columns")
-	data.land_columns = 1
+	data.erase("land_starting_blocks")
+	data.erase("land_blocks")
+	data["land_columns"] = 1
 	for row: Dictionary in data.inventory:
 		if row.item == "carrot_seed":
 			row.count = 7
+			row.tiers = [7, 0, 0]
 	var checked: Dictionary = SaveSchema.validate(data, adapter.catalog)
-	assert_true(checked.ok)
-	assert_eq(checked.snapshot.land_columns, 1)
-	assert_eq(checked.snapshot.land_starting_columns, 1)
-	assert_false(data.has("land_starting_columns"))
+	assert_true(checked.ok, str(checked))
+	assert_eq(checked.snapshot.land_blocks, 4)
+	assert_eq(checked.snapshot.land_starting_blocks, 4)
+	assert_false(data.has("land_starting_blocks"))
 	assert_true(adapter.restore(data, TimeManager.now()).ok)
 	assert_eq(world.player.selection.inventory.count_item(&"carrot_seed"), 7)
-	assert_eq(world.land.state.unlocked_columns, 1)
+	assert_eq(world.land.state.unlocked_blocks, 4)
 	assert_eq(world.land.state.next_price(), 60000)
 	assert_true(garden.starter_content_locked)
 	world.player.wallet.set_balance(60000)
-	assert_true(world.land.state.purchase(world.player.wallet, 1).ok)
+	assert_true(world.land.state.purchase(world.player.wallet, 4).ok)
 	assert_false(garden.starter_content_locked)
 	assert_eq(world.land.state.next_price(), 150000)
 
@@ -140,11 +142,14 @@ func test_v16_save_keeps_animals_flowers_inventory_and_unlocked_garden() -> void
 	assert_true(trade.buy(shop.animal_offers[0], 1).ok)
 	var data: Dictionary = _snapshot()
 	data.version = 16
+	data["land_columns"] = 4
+	data.erase("land_blocks")
+	data.erase("land_starting_blocks")
 	data.erase("flower_garden_unlocked")
 	assert_true(adapter.restore(data, TimeManager.now()).ok)
 	var restored: Dictionary = _snapshot()
 	assert_true(restored.flower_garden_unlocked)
-	assert_eq(restored.land_columns, 4)
+	assert_eq(restored.land_blocks, 4)
 	assert_eq(restored.animals.size(), 1)
 	assert_eq(restored.animals[0].id, data.animals[0].id)
 	assert_eq(restored.coins, data.coins)
@@ -157,12 +162,12 @@ func test_capture_during_wallet_signal_observes_committed_reward() -> void:
 	var captures: Array[Dictionary] = []
 	world.player.wallet.set_balance(87000)
 	world.player.wallet.changed.connect(func(_balance: int) -> void: captures.append(_snapshot()))
-	assert_true(world.land.state.purchase(world.player.wallet, 4).ok)
+	assert_true(world.land.state.purchase(world.player.wallet, 1).ok)
 	assert_eq(captures.size(), 1)
 	assert_true(captures[0].flower_garden_unlocked)
 	assert_eq(_flower_pickups(captures[0]).size(), 10)
 
-func test_twenty_four_carrots_and_five_rewards_reach_129000_then_first_land() -> void:
+func test_twenty_four_carrots_and_five_rewards_afford_first_block() -> void:
 	var clock: FarmClock = FarmClock.new()
 	var time: Dictionary = {"now": TimeManager.now()}
 	clock.clock_source = func() -> float: return float(time.now)
@@ -171,7 +176,7 @@ func test_twenty_four_carrots_and_five_rewards_reach_129000_then_first_land() ->
 	var bag: InventoryComponent = world.player.selection.inventory
 	var goals: ObjectiveProgress = world.objectives.progress
 	for index: int in range(24):
-		var cell: Vector2i = Vector2i(56, 20 + index)
+		var cell: Vector2i = Vector2i(49 + index % 8, 20 + index / 8)
 		world.player.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell + Vector2i.UP))
 		world.player.animation.face(Vector2.DOWN)
 		assert_true(world.farming.till(cell, world.player))
@@ -185,18 +190,23 @@ func test_twenty_four_carrots_and_five_rewards_reach_129000_then_first_land() ->
 			assert_true(goals.claim(&"first_water").ok)
 	time.now = float(time.now) + 61.0
 	for index: int in range(24):
-		assert_true(world.farming.harvest(Vector2i(56, 20 + index), bag))
+		assert_true(world.farming.harvest(Vector2i(49 + index % 8, 20 + index / 8), bag))
 		if index == 0:
 			assert_true(goals.claim(&"first_harvest").ok)
-	assert_eq(bag.count_item(&"carrot_produces"), 2400)
+	assert_gte(bag.count_item(&"carrot_produces", 0) + bag.count_item(&"carrot_produces", 1) + bag.count_item(&"carrot_produces", 2), 2400, "Fertile cells may add bonus produce")
 	var buyer: ShopMerchant = world.get_node("ProduceBuyer") as ShopMerchant
 	var sales: ProduceSalesUI = buyer.menu as ProduceSalesUI
 	assert_true(sales.open(buyer, world.player))
-	assert_true(sales.service.sell(sales.catalog.find(&"carrot_produces"), 2400).ok)
+	for tier: int in range(3):
+		var count: int = bag.count_item(&"carrot_produces", tier)
+		if count > 0:
+			sales.service.tier = tier
+			assert_true(sales.service.sell(sales.catalog.find(&"carrot_produces"), count).ok)
 	sales.close(false)
 	assert_true(goals.claim(&"first_sale").ok)
-	assert_eq(world.player.wallet.balance, 129000)
+	assert_gte(world.player.wallet.balance, 60000)
+	var before_purchase: int = world.player.wallet.balance
 	assert_false(goals.ready_to_claim(), "No free animal completes the next goal")
-	assert_true(world.land.state.purchase(world.player.wallet, 4).ok)
-	assert_eq(world.player.wallet.balance, 69000)
+	assert_true(world.land.state.purchase(world.player.wallet, 1).ok)
+	assert_eq(world.player.wallet.balance, before_purchase - 60000)
 	assert_false(garden.starter_content_locked)

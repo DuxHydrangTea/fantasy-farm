@@ -1,0 +1,27 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"background_job_id\": \"891c1758-f791-4269-be4d-7d8739cb8aeb\",\n  \"image_id\": \"653ac6e0-3610-5bcd-a28e-f1e5156ecae5\",\n  \"status\": \"processing\",\n  \"source_image_id\": \"653ac6e0-3610-5bcd-a28e-f1e5156ecae5\",\n  \"job_id\": \"891c1758-f791-4269-be4d-7d8739cb8aeb\",\n  \"description\": \"Polish this existing pixel-art farm supply warehouse into finished game art. Repair jagged and broken outlines, make outline thickness and stepped edges consistent, clean roof tile shapes and remove stray or muddy pixels. Preserve exact building silhouette, roof slope, door and window positions, sacks, barrel, composition and original colors. Keep a restrained coherent palette and crisp native pixels. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Preserve transparent background. Do not add architectural elements or remove props.\",\n  \"seed\": 0,\n  \"image_size\": {\n    \"width\": 184,\n    \"height\": 168\n  },\n  \"output_count\": 1,\n  \"estimated_generations\": 6,\n  \"pricing_provisional\": true,\n  \"poll_tool\": \"get_image\",\n  \"download_path\": \"/mcp/images/891c1758-f791-4269-be4d-7d8739cb8aeb/download\"\n}\nPoll get_image(job_id=\"891c1758-f791-4269-be4d-7d8739cb8aeb\"). The source_image_id is usable after completion; it is an image ID, not a character/object ID. Actual usage is reported on completion. cancel_job(job_id=...) cancels unfinished work."
+    }
+  ],
+  "structuredContent": {
+    "background_job_id": "891c1758-f791-4269-be4d-7d8739cb8aeb",
+    "image_id": "653ac6e0-3610-5bcd-a28e-f1e5156ecae5",
+    "status": "processing",
+    "source_image_id": "653ac6e0-3610-5bcd-a28e-f1e5156ecae5",
+    "job_id": "891c1758-f791-4269-be4d-7d8739cb8aeb",
+    "description": "Polish this existing pixel-art farm supply warehouse into finished game art. Repair jagged and broken outlines, make outline thickness and stepped edges consistent, clean roof tile shapes and remove stray or muddy pixels. Preserve exact building silhouette, roof slope, door and window positions, sacks, barrel, composition and original colors. Keep a restrained coherent palette and crisp native pixels. Straight-on front-facing 2D game view, horizontal front facade, roof visible slightly from above; no isometric, diagonal or three-quarter side view. Preserve transparent background. Do not add architectural elements or remove props.",
+    "seed": 0,
+    "image_size": {
+      "width": 184,
+      "height": 168
+    },
+    "output_count": 1,
+    "estimated_generations": 6,
+    "pricing_provisional": true,
+    "poll_tool": "get_image",
+    "download_path": "/mcp/images/891c1758-f791-4269-be4d-7d8739cb8aeb/download"
+  },
+  "isError": false
+}

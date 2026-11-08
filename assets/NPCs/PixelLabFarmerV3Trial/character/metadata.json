@@ -1,0 +1,36 @@
+{
+  "group_id": "c38b4276-4b53-4d11-963a-a1f93d025683",
+  "states": [
+    {
+      "character": {
+        "id": "9ecc8174-67b7-4cac-9fe8-f7b04b287d06",
+        "name": "Idle",
+        "prompt": "Male farmer for a cozy farming RPG, brown hair, straw hat, blue work shirt, brown overalls and sturdy boots. Taller slim adult proportions, clear visible arms and legs, less chibi, readable simple pixel art and warm earthy colours.",
+        "size": {
+          "width": 32,
+          "height": 32
+        },
+        "template_id": "mannequin",
+        "directions": 8,
+        "view": "low top-down",
+        "created_at": "2026-11-07T15:30:48.261307+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "south-east": "Idle/rotations/south-east.png",
+          "east": "Idle/rotations/east.png",
+          "north-east": "Idle/rotations/north-east.png",
+          "north": "Idle/rotations/north.png",
+          "north-west": "Idle/rotations/north-west.png",
+          "west": "Idle/rotations/west.png",
+          "south-west": "Idle/rotations/south-west.png"
+        },
+        "animations": {}
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-11-07T15:34:22.716991"
+}

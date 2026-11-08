@@ -54,7 +54,7 @@ func advance(timestamp: float, refresh_visuals: bool = true) -> void:
 	_advancing = false
 
 func _apply_rain(timestamp: float) -> void:
-	var columns: int = world.farming.land.unlocked_columns
+	var columns: int = world.farming.land.unlocked_blocks
 	var day: int = schedule.day_at(timestamp)
 	if schedule.weather_at(timestamp) == Weather.RAIN and (day != _rain_day or columns != _rain_columns):
 		_rain_day = day

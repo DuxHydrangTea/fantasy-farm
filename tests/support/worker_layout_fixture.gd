@@ -12,7 +12,7 @@ func _ready() -> void:
 	world.name = "Farm"
 	add_child(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.player.wallet.set_balance(12500)
 	var timestamp: float = world.farming.time_manager.now()
 	world.farming.time_manager.clock_source = func() -> float: return timestamp

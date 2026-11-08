@@ -11,7 +11,7 @@ func _run() -> void:
 	world = preload("res://world/main_world.tscn").instantiate() as FarmWorld
 	add_child(world)
 	world.tool_upgrades.profile_ready = true
-	world.land.state.restore_columns(16, 8)
+	world.land.state.restore_blocks(16, 8)
 	world.player.wallet.set_balance(907959824)
 	world.weather.set_debug_hour(12)
 	world.player.global_position = world.farming.farmland.to_global(world.farming.farmland.map_to_local(Vector2i(43, 13)))

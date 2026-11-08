@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/Generate_Upgrade_Tool_Store_Ed.png" id="art"]
+
+[sub_resource type="RectangleShape2D" id="Shape0"]
+size = Vector2(154, 34)
+
+[sub_resource type="RectangleShape2D" id="Shape1"]
+size = Vector2(56, 13)
+
+[sub_resource type="RectangleShape2D" id="Shape2"]
+size = Vector2(47, 14)
+
+[node name="ToolUpgradeStore" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -61)
+texture = ExtResource("art")
+
+[node name="Footprint0" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -26)
+shape = SubResource("Shape0")
+
+[node name="Footprint1" type="CollisionShape2D" parent="."]
+position = Vector2(-53, -9.5)
+shape = SubResource("Shape1")
+
+[node name="Footprint2" type="CollisionShape2D" parent="."]
+position = Vector2(45.5, -10)
+shape = SubResource("Shape2")

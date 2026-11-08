@@ -23,7 +23,7 @@ func before_each() -> void:
 	world.weather.schedule.seed = 12345
 	world.tool_upgrades.profile_ready = true
 	world.player.wallet.set_balance(1000000)
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.trees.reset()
 	# The fixture spans ten columns; the current save schema requires ownership.
 	assert_true(world.tree_plot_upgrades.state.restore({"fruit": 10, "timber": 1}))
@@ -96,7 +96,7 @@ func test_warehouse_full_preserves_entire_tree_yield_and_task_budget() -> void:
 	assert_true(bool(service.bridge.storage_waiting.get("crop", false)))
 
 func test_v37_migration_unifies_roles_without_loss() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	assert_eq(service.hire("crop"), "")
 	assert_eq(service.hire("crop"), "")
@@ -169,7 +169,7 @@ func test_v37_migration_rejects_malformed_rows_before_sorting() -> void:
 	assert_false(SaveSchema.validate(old, adapter.catalog).ok)
 
 func test_worker_limit_fifteen_enforced_everywhere() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	for i: int in range(15):
 		assert_eq(service.hire("crop"), "")
 	assert_eq(service.hire("crop"), "The worker team is full (15/15).", "16th hire must explain the actual cap")
@@ -177,9 +177,9 @@ func test_worker_limit_fifteen_enforced_everywhere() -> void:
 	assert_true(SaveSchema.validate(adapter.capture("worker_test", 1, now), adapter.catalog).ok)
 
 func test_unified_unlock_and_spawn() -> void:
-	world.land.state.restore_columns(4, 4)
+	world.land.state.restore_blocks(4, 4)
 	assert_true(not service.unlock_error("crop").is_empty(), "12-column gate still gates")
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	assert_eq(service.unlock_error("crop"), "")
 	var first: Vector2 = service.spawn_point("crop", "")
 	var second: Vector2 = service.spawn_point("crop", "pen_x")
@@ -210,7 +210,7 @@ func test_unified_worker_refills_retained_feed_without_warehouse_packages() -> v
 			assert_eq(trough.feed_reserve, 0)
 
 func test_unified_worker_feeds_troughs_and_harvests_trees() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	for pen: AnimalPen in service.bridge.pens():
 		for child: Node in pen.get_children():
 			if child is AnimalTrough:
@@ -468,7 +468,7 @@ func test_crop_waters_then_harvests_without_tilling_or_planting() -> void:
 	for tree: PerennialTree in world.trees.trees.values():
 		if tree is FruitTree and not tree.removed:
 			(tree as FruitTree).fruit_work = 0.0
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	var cell: Vector2i = Vector2i(54, 25)
 	world.farming.restore_soil([{"cell": [cell.x, cell.y], "state": 1}])
 	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
@@ -530,14 +530,14 @@ func test_partial_product_transfer_preserves_feed_and_full_destination() -> void
 	assert_eq(bag.count_item(APPLE.item_id), 250)
 
 func test_crop_worker_load_validates_against_saved_land_not_current_land() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	assert_eq(service.hire("crop"), "")
 	var adapter: WorldStateAdapter = WorldStateAdapter.new(world, SaveCatalog.new())
 	var saved: Dictionary = adapter.capture("worker_test", 1, now)
-	world.land.state.restore_columns(4, 4)
+	world.land.state.restore_blocks(4, 4)
 	if not _checkpoint_ok(adapter, saved) or not _restore_ok(adapter, saved, now):
 		return
-	assert_eq(world.land.state.unlocked_columns, 12)
+	assert_eq(world.land.state.unlocked_blocks, 12)
 
 func test_hiring_another_role_does_not_teleport_a_blocked_online_worker() -> void:
 	var clock: Array[float] = [now]
@@ -589,7 +589,7 @@ func test_ranch_two_hour_jump_matches_minute_steps() -> void:
 	assert_almost_eq(food.available_units(), stock, 0.01)
 
 func test_crop_two_minute_jump_matches_second_steps() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	world.weather.set_weather(WeatherSchedule.Weather.SUNNY)
 	var seed: ItemDefinition = load("res://items/seeds/carrot_seed.tres") as ItemDefinition
 	world.farming.restore_soil([{"cell": [54, 25], "state": 1}])
@@ -611,7 +611,7 @@ func test_crop_two_minute_jump_matches_second_steps() -> void:
 	assert_eq(world.farming.crop_cells().size(), 0)
 
 func test_unpaid_shift_preserves_remaining_task_and_uses_hire_order() -> void:
-	world.land.state.restore_columns(12, 4)
+	world.land.state.restore_blocks(12, 4)
 	service.hire("crop")
 	service.hire("crop")
 	service.hire("crop")

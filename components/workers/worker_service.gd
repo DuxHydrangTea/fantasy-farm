@@ -184,7 +184,7 @@ func available() -> bool:
 	return world.tool_upgrades != null and world.tool_upgrades.profile_ready and not world.storages.busy
 
 func unlock_error(role: String) -> String:
-	return "Unlock at least 12 farmland columns." if world.land.state.unlocked_columns < 12 else ""
+	return "Unlock at least 12 farmland blocks." if world.land.state.unlocked_blocks < 12 else ""
 
 func hire(role: String, zone: String = "") -> String:
 	if busy or not available() or not role in WorkerRole.ROLES:

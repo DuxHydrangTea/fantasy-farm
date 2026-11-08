@@ -30,7 +30,7 @@ func _has_source(id: StringName) -> bool:
 			var source: Resource = offer.item.crop
 			if source is CropDefinition:
 				var crop: CropDefinition = source as CropDefinition
-				if crop.is_valid() and crop.has_valid_harvest() and (crop.harvest_item as ItemDefinition).item_id == id and world.land.state.unlocked_columns > 0:
+				if crop.is_valid() and crop.has_valid_harvest() and (crop.harvest_item as ItemDefinition).item_id == id and world.land.state.unlocked_blocks > 0:
 					return true
 			if source is FlowerDefinition and (source as FlowerDefinition).is_valid() and (source as FlowerDefinition).harvest_item.item_id == id:
 				for garden: Node in world.get_tree().get_nodes_in_group(&"flower_gardens"):

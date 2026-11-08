@@ -34,7 +34,7 @@ func _enable_harness() -> void:
 	world.tool_upgrades.profile_ready = true
 	world.tool_upgrades.purchasing_enabled = true
 	world.player.wallet.set_balance(500000)
-	world.land.state.restore_columns(7, 4)
+	world.land.state.restore_blocks(7, 4)
 
 func test_world_composition_enables_feature_but_waits_for_profile_load() -> void:
 	assert_not_null(world.tool_upgrades)
@@ -60,7 +60,7 @@ func test_v20_and_v19_migrate_sequentially_without_mutating_input() -> void:
 	old.version = 19
 	result = SaveSchema.validate(old, adapter.catalog)
 	assert_true(result.ok)
-	assert_eq(result.snapshot.land_starting_columns, 1)
+	assert_eq(result.snapshot.land_starting_blocks, 1)
 	assert_eq(result.snapshot.tool_upgrades, ToolUpgradeState.fresh())
 	assert_false(old.has("tool_upgrades"))
 
