@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_15_frames.tres" id="1_jlun0"]
+[ext_resource type="Resource" path="res://animals/productions/pig_15_production.tres" id="2_buo5n"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_j5te2"]
+
+[resource]
+script = ExtResource("3_j5te2")
+animal_id = &"pig_15"
+display_name = "Black Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_jlun0")
+maturity_seconds = 43200.0
+production = ExtResource("2_buo5n")

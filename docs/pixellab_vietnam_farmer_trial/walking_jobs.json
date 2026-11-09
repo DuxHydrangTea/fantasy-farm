@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794149676817,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "character: 87d2a2ca-4b4d-4477-bb49-696d348f4bd1\nanimation: walking\nmode: template\ndirections: south, north, east (3 jobs)\njob_ids: south=e88bfa9e-5e64-4df1-bf46-c11975f21d30, north=6db680fd-acf0-4071-a873-0e607e9c07e2, east=86a01d2b-d171-4ce4-b972-d036c22e3fdc\ngroup: 3c232e5d-3e34-4155-9397-3f2542a85272\ncost: 3 generations (1/dir x 3)\neta: ~2-4 min\nadd more directions to this group: animate_character(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\", template_animation_id=\"walking\", animation_group_id=\"3c232e5d-3e34-4155-9397-3f2542a85272\", directions=[...])\n\nhint: get_character(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\")\nif poor: delete_animation(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\", animation_type=\"...\") then retry with mode=\"v3\""
+      }
+    ],
+    "isError": false
+  }
+}

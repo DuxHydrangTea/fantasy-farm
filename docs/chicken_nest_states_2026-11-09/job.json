@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794181331074,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: 57369688-ca88-42a1-90e0-9578c6d5206d\njob_id: 57369688-ca88-42a1-90e0-9578c6d5206d\ndescription: A horizontal 3-frame game sprite sheet, exactly three 32x32 cells side by side. SAME small round oval straw chicken nesting bed in every cell, identical outer silhouette, base position, rim, perspective and colors. Left: completely empty dark hollow nest. Middle: same nest containing TWO small cream chicken eggs. Right: same nest containing SIX small cream chicken eggs clustered inside. Straw golden brown, warm dark brown outline, compact flat pixel shading, limited colors. Native crisp low-resolution cozy farming RPG pixel art. Each nest about 24 pixels wide and 16 pixels tall, centered in its cell on the same baseline. Orthogonal front view, hollow visible slightly from above, no isometric or diagonal view. No chickens, no basket handles, no surrounding ground, no text or borders. Transparent background including space between cells.\nsize: 96x32px\ntransparent: True\nasset_id: 210e1275-666c-5f00-a7c9-48cf6d9066f4\nasset_status: pending (saved when generation completes)\nforced_palette: yes\nseed: 91132\ncost: 1 generation\nstatus: processing (~10-40s)\n\nhint: get_image(job_id=\"57369688-ca88-42a1-90e0-9578c6d5206d\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/57369688-ca88-42a1-90e0-9578c6d5206d/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

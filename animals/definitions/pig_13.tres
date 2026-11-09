@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_13_frames.tres" id="1_akksa"]
+[ext_resource type="Resource" path="res://animals/productions/pig_13_production.tres" id="2_jy4i3"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_j4nu7"]
+
+[resource]
+script = ExtResource("3_j4nu7")
+animal_id = &"pig_13"
+display_name = "Charcoal Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_akksa")
+maturity_seconds = 43200.0
+production = ExtResource("2_jy4i3")

@@ -1,6 +1,7 @@
 extends SceneTree
 ## One-time deterministic resource authoring, using ResourceSaver for links/UIDs.
 func _initialize() -> void:
+	var names: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://scripts/setup/animal_variant_names.json"))
 	var base: AnimalDefinition = load("res://animals/definitions/chicken.tres") as AnimalDefinition
 	var offers: Array[AnimalShopOffer] = []
 	for index: int in range(2, 19):
@@ -12,7 +13,8 @@ func _initialize() -> void:
 		production = load(production_path) as AnimalProductionDefinition
 		var definition: AnimalDefinition = base.duplicate() as AnimalDefinition
 		definition.animal_id = StringName(id)
-		definition.display_name = "Chicken %02d" % index
+		assert(names.has(id))
+		definition.display_name = String(names[id].en)
 		var frames_path: String = "res://sprite_frames/animals/%s_frames.tres" % id
 		definition.adult_frames = load(frames_path) as SpriteFrames
 		definition.production = production

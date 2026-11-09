@@ -17,6 +17,7 @@ var item_feedback: ItemGainFeedback
 var tree_interaction: TreeInteraction
 var mobile_controls: MobileControls
 var tool_range_ui: ToolRangeUI
+var audio_feedback: PlayerAudioFeedback
 
 func _enter_tree() -> void:
 	add_to_group(&"farm_players")
@@ -66,6 +67,10 @@ func _enter_tree() -> void:
 	mobile_controls.name = "MobileControls"
 	mobile_controls.player = self
 	add_child(mobile_controls)
+	audio_feedback = PlayerAudioFeedback.new()
+	audio_feedback.name = "AudioFeedback"
+	audio_feedback.player = self
+	add_child(audio_feedback)
 	var settings: Node = preload("res://components/farm_settings.gd").new()
 	settings.name = "FarmSettings"
 	settings.player = self

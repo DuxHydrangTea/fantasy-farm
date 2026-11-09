@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_04_frames.tres" id="1_4q5ue"]
+[ext_resource type="Resource" path="res://animals/productions/pig_04_production.tres" id="2_bkii2"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_6wvsg"]
+
+[resource]
+script = ExtResource("3_6wvsg")
+animal_id = &"pig_04"
+display_name = "Brown-footed Cream Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_4q5ue")
+maturity_seconds = 43200.0
+production = ExtResource("2_bkii2")

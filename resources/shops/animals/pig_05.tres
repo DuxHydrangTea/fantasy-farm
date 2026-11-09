@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+
+[ext_resource type="Resource" path="res://animals/definitions/pig_05.tres" id="1_kdfap"]
+[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_smxbo"]
+
+[resource]
+script = ExtResource("2_smxbo")
+animal = ExtResource("1_kdfap")
+price = 200000

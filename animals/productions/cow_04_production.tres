@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+
+[ext_resource type="Resource" path="res://items/animal_produces/cow_milk.tres" id="1_7w4ka"]
+[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="2_6ldew"]
+
+[resource]
+script = ExtResource("2_6ldew")
+production_item = ExtResource("1_7w4ka")
+production_amount = 175
+production_seconds = 14400.0

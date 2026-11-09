@@ -27,6 +27,7 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(%Balance as Label)
 	models_changed.connect(_refresh)
 	world.grafting.changed.connect(_refresh)
 	root.resized.connect(_fit)
@@ -151,7 +152,7 @@ func _refresh() -> void:
 	(%ProgressText as Label).text = tr("Ready to harvest") if tree.has_fruit() else tr("Fruit progress: {percent}%").format({"percent": progress})
 	(%Pending as Label).text = tr("Next crop: {direction}").format({"direction": FruitTree.graft_name(tree.pending_graft)}) if tree.pending_graft != FruitTree.Graft.NONE else ""
 	(%Pending as Label).visible = tree.pending_graft != FruitTree.Graft.NONE
-	(%Balance as Label).text = tr("{coins} coins").format({"coins": GameText.grouped_integer(customer.wallet.balance)})
+	(%Balance as Label).text = GameText.grouped_integer(customer.wallet.balance)
 	(%YieldIcon as TextureRect).texture = _cropped(tree.definition.harvest_item.icon)
 	(%QualityIcon as TextureRect).texture = _cropped(tree.definition.star_harvest_item.icon) if tree.definition.star_harvest_item != null else null
 	(%YieldOutput as Label).text = _output_text(FruitTree.Graft.YIELD)
@@ -225,6 +226,7 @@ func _choose(direction: int, expected_revision: int = -1) -> void:
 		return
 	_message = world.grafting.choose(tree, direction, _revision if expected_revision < 0 else expected_revision)
 	if _message.is_empty():
+		Sound.play(&"graft_tree")
 		_message = "Graft scheduled for the next crop."
 		_clear_review()
 		_save.call_deferred()

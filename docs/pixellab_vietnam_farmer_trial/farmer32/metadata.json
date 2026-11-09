@@ -1,0 +1,79 @@
+{
+  "group_id": "a2f1568c-1efb-44ea-9710-a9fc9f4ca926",
+  "states": [
+    {
+      "character": {
+        "id": "15f0601f-fdae-4fb1-b9ba-f7c7fc9c2ead",
+        "name": "Idle",
+        "prompt": "Vietnamese farmer wearing straw hat, indigo ao ba ba, brown trousers and checked scarf; faithfully preserve the supplied sprite",
+        "size": {
+          "width": 32,
+          "height": 32
+        },
+        "template_id": "mannequin",
+        "directions": 4,
+        "view": "low top-down",
+        "created_at": "2026-11-08T18:18:53.393762+00:00"
+      },
+      "folder": "Idle",
+      "frames": {
+        "rotations": {
+          "south": "Idle/rotations/south.png",
+          "west": "Idle/rotations/west.png",
+          "east": "Idle/rotations/east.png",
+          "north": "Idle/rotations/north.png"
+        },
+        "animations": {
+          "farmer32_walking": {
+            "north": [
+              "Idle/animations/farmer32_walking/north/frame_000.png",
+              "Idle/animations/farmer32_walking/north/frame_001.png",
+              "Idle/animations/farmer32_walking/north/frame_002.png",
+              "Idle/animations/farmer32_walking/north/frame_003.png",
+              "Idle/animations/farmer32_walking/north/frame_004.png",
+              "Idle/animations/farmer32_walking/north/frame_005.png"
+            ],
+            "south": [
+              "Idle/animations/farmer32_walking/south/frame_000.png",
+              "Idle/animations/farmer32_walking/south/frame_001.png",
+              "Idle/animations/farmer32_walking/south/frame_002.png",
+              "Idle/animations/farmer32_walking/south/frame_003.png",
+              "Idle/animations/farmer32_walking/south/frame_004.png",
+              "Idle/animations/farmer32_walking/south/frame_005.png"
+            ],
+            "east": [
+              "Idle/animations/farmer32_walking/east/frame_000.png",
+              "Idle/animations/farmer32_walking/east/frame_001.png",
+              "Idle/animations/farmer32_walking/east/frame_002.png",
+              "Idle/animations/farmer32_walking/east/frame_003.png",
+              "Idle/animations/farmer32_walking/east/frame_004.png",
+              "Idle/animations/farmer32_walking/east/frame_005.png"
+            ]
+          },
+          "farmer32_breathing-idle": {
+            "east": [
+              "Idle/animations/farmer32_breathing-idle/east/frame_000.png",
+              "Idle/animations/farmer32_breathing-idle/east/frame_001.png",
+              "Idle/animations/farmer32_breathing-idle/east/frame_002.png",
+              "Idle/animations/farmer32_breathing-idle/east/frame_003.png"
+            ],
+            "north": [
+              "Idle/animations/farmer32_breathing-idle/north/frame_000.png",
+              "Idle/animations/farmer32_breathing-idle/north/frame_001.png",
+              "Idle/animations/farmer32_breathing-idle/north/frame_002.png",
+              "Idle/animations/farmer32_breathing-idle/north/frame_003.png"
+            ],
+            "south": [
+              "Idle/animations/farmer32_breathing-idle/south/frame_000.png",
+              "Idle/animations/farmer32_breathing-idle/south/frame_001.png",
+              "Idle/animations/farmer32_breathing-idle/south/frame_002.png",
+              "Idle/animations/farmer32_breathing-idle/south/frame_003.png"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "export_version": "3.1",
+  "export_date": "2026-11-08T18:23:47.149521"
+}

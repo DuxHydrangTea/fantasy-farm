@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+
+[ext_resource type="Resource" path="res://items/animal_produces/goose_egg.tres" id="1_n8sa0"]
+[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="2_1f3ae"]
+
+[resource]
+script = ExtResource("2_1f3ae")
+production_item = ExtResource("1_n8sa0")
+production_amount = 125
+production_seconds = 3600.0

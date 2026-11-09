@@ -28,6 +28,7 @@ func _ready() -> void:
 	label = Label.new()
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(label)
+	VisualValueRow.money(label)
 	var settings_button: Button = Button.new()
 	settings_button.name = "Settings"
 	settings_button.text = "\u2699"
@@ -44,7 +45,7 @@ func _ready() -> void:
 	_refresh(wallet.balance)
 
 func _refresh(balance: int) -> void:
-	label.text = tr("{coins} coins").format({"coins": FarmUI.compact_number(balance)})
+	label.text = FarmUI.compact_number(balance)
 	panel.tooltip_text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
 
 func _notification(what: int) -> void:

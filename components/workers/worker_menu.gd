@@ -65,6 +65,8 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(%Balance as Label)
+	VisualValueRow.money(%Wage as Label)
 	var tabs: TabContainer = TabContainer.new()
 	tabs.name = "WorkerTabs"
 	tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -428,6 +430,7 @@ func _hire() -> void:
 		return
 	var error: String = world.workers.hire(role)
 	if error.is_empty():
+		Sound.play(&"worker_hire")
 		for row: Dictionary in world.workers.records_for(role, true):
 			if int(row.hire_order) == world.workers.next_order - 1:
 				selected_worker_id = row.id

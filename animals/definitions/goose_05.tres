@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_05_frames.tres" id="1_x2fxx"]
+[ext_resource type="Resource" path="res://animals/productions/goose_05_production.tres" id="2_lq7tc"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_5d6gu"]
+
+[resource]
+script = ExtResource("3_5d6gu")
+animal_id = &"goose_05"
+display_name = "Pied Goose"
+species = 5
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_x2fxx")
+eggs_on_land = true
+maturity_seconds = 14400.0
+production = ExtResource("2_lq7tc")

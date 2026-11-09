@@ -1,6 +1,7 @@
 class_name ChefCooking
 extends RefCounted
 ## One serial queue owned by the farm, independent of the Chef scene and UI.
+signal batch_completed
 signal changed
 signal crafted(recipe_id: String)
 const CAPACITY: int = 20
@@ -44,6 +45,7 @@ func advance(now: float, notify: bool = true) -> void:
 		completed = true
 	if completed and notify:
 		changed.emit()
+		batch_completed.emit()
 
 func capture(now: float) -> Dictionary:
 	advance(now, false)

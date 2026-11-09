@@ -18,6 +18,8 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(balance_label)
+	VisualValueRow.money(%Cost as Label)
 	visit_started.connect(_visit)
 	models_changed.connect(refresh)
 	root.resized.connect(_fit)
@@ -60,7 +62,7 @@ func _visit() -> void:
 	close_button.grab_focus()
 
 func _coins(value: int) -> String:
-	return tr("{coins} coins").format({"coins": GameText.grouped_integer(value)})
+	return GameText.grouped_integer(value)
 
 func refresh() -> void:
 	if not is_open:
@@ -96,6 +98,7 @@ func _purchase() -> void:
 	if not is_open or Time.get_ticks_msec() < _cooldown_until or not bool(_offer.get("ok", false)):
 		return
 	var result: Dictionary = board.world.tree_plot_upgrades.purchase(board.kind, int(_offer.level), int(_offer.price))
+	Sound.result(result, &"upgrade_complete")
 	if result.ok:
 		_cooldown_until = Time.get_ticks_msec() + 500
 	feedback.text = tr("Expanded to {capacity} tree plots.").format({"capacity": result.capacity}) if result.ok else tr(str(result.error))

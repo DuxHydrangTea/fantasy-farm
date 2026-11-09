@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794179951660,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: a01382f3-33f9-40ae-b1ed-dbb361e95466\njob_id: a01382f3-33f9-40ae-b1ed-dbb361e95466\nmode: text\nframes: 1\nsize: 96x112px\ntransparent: True\nedit: Adapt this existing small red-roof timber shed into a dedicated GOOSE shelter for a cozy farming pixel-art RPG. Preserve original compact silhouette, red tiled roof, camera angle, scale and canvas. Change the front structure: broad low open doorway at ground level for geese, sturdy warm-brown timber framing, low gray fieldstone plinth under both side walls, dark interior with a little golden straw bedding. Replace window with a small upper wooden slatted ventilation opening. Add a tiny carved WHITE GOOSE emblem with long neck and orange beak above the doorway, no letters. Shallow flat stone threshold, no stairs or chicken ramp. Refine roof tile clusters and timber shading with crisp dark colored outlines and compact pixel details matching the original style and stone-foundation cattle barn. Straight-on, front-facing 2D game view, horizontal front facade, roof visible from slightly above; no isometric, diagonal or three-quarter side view. Transparent background, full silhouette, no pond, fence, live animals, scenery or text.\nasset_id: c537d5a8-6fdd-58f2-8bea-63c5e4b44246\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"a01382f3-33f9-40ae-b1ed-dbb361e95466\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/a01382f3-33f9-40ae-b1ed-dbb361e95466/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

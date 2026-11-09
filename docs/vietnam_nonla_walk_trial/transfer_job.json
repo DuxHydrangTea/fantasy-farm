@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794162514215,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: 079377f8-617b-499f-bccb-3b31fa5f7106\njob_id: 079377f8-617b-499f-bccb-3b31fa5f7106\nframes: 6\nsize: 32x32px\ntransparent: True\ninstructions: Preserve the exact input walking poses, foot positions, motion, scale and chibi proportions in every frame. Apply the same Vietnamese conical non la hat, indigo shirt, brown trousers and checkered scarf as the reference. Keep hat shape stable. No body elongation.\nasset_id: 490bae5c-4de0-5b36-843d-13e9e62324f0\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~1-2 min)\n\nhint: get_image(job_id=\"079377f8-617b-499f-bccb-3b31fa5f7106\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/079377f8-617b-499f-bccb-3b31fa5f7106/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

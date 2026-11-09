@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_12_frames.tres" id="1_i5y45"]
+[ext_resource type="Resource" path="res://animals/productions/pig_12_production.tres" id="2_2eejm"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_v7xdr"]
+
+[resource]
+script = ExtResource("3_v7xdr")
+animal_id = &"pig_12"
+display_name = "Brown-footed Slate Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_i5y45")
+maturity_seconds = 43200.0
+production = ExtResource("2_2eejm")

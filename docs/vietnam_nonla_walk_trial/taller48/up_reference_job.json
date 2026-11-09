@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794163634846,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: 25d525a8-12c0-4799-ac5b-098f623c2ced\njob_id: 25d525a8-12c0-4799-ac5b-098f623c2ced\nmode: text\nframes: 1\nsize: 48x48px\ntransparent: True\nedit: Turn this exact Vietnamese farmer around 180 degrees to face NORTH / UP, showing the BACK of his head, hat, shirt, arms and trousers. Strict straight back view, no face, no eyes, no front buttons or front scarf ends visible. Same conical non la palm-leaf hat viewed from behind, indigo ao ba ba shirt, brown trousers, scarf collar around back of neck. Preserve exact tall body proportions, scale, native pixel density, camera elevation and foot baseline. Character remains about 40-43 pixels tall within 48x48 canvas. Same walking starting pose viewed from behind. Transparent background, crisp pixel art.\nasset_id: 2a522c45-1517-58b1-ad2d-f06f19127455\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"25d525a8-12c0-4799-ac5b-098f623c2ced\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/25d525a8-12c0-4799-ac5b-098f623c2ced/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

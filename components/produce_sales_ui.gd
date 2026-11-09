@@ -28,6 +28,11 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(balance_label)
+	VisualValueRow.money(%Total as Label)
+	for button: Button in [sell_quantity_button, sell_all_button]:
+		button.icon = VisualValueRow.COIN
+		button.add_theme_constant_override("icon_max_width", 20)
 	quality_tabs.assign([%Normal, %Silver, %Gold])
 	for tier: int in range(quality_tabs.size()):
 		quality_tabs[tier].pressed.connect(_choose_tier.bind(tier))
@@ -67,7 +72,7 @@ func _quantity_changed(_value: float) -> void:
 	_refresh()
 
 func _coins(value: int) -> String:
-	return tr("{coins} coins").format({"coins": GameText.grouped_integer(value)})
+	return GameText.grouped_integer(value)
 
 func _rebuild_rows(rows: Array[ProducePrice]) -> void:
 	_rows = rows
@@ -76,6 +81,10 @@ func _rebuild_rows(rows: Array[ProducePrice]) -> void:
 	row_buttons.clear()
 	for index: int in range(_rows.size()):
 		var button: Button = ROW_SCENE.instantiate() as Button
+		var price: Label = button.get_node("Margin/Row/Price") as Label
+		var coin: TextureRect = VisualValueRow.make_icon(VisualValueRow.COIN, 20)
+		price.get_parent().add_child(coin)
+		price.get_parent().move_child(coin, price.get_index())
 		button.pressed.connect(_select_index.bind(index))
 		items.add_child(button)
 		row_buttons.append(button)
@@ -166,6 +175,7 @@ func sell_all() -> void:
 		_show_result(service.sell_all())
 
 func _show_result(result: Dictionary) -> void:
+	Sound.result(result, &"coin_receive")
 	if result.ok:
 		bought_this_visit = true
 		_message = tr("Sold {count} items for {coins} coins!").format({"count": int(result.quantity), "coins": GameText.grouped_integer(int(result.total))})

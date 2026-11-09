@@ -160,6 +160,7 @@ func _on_frame_changed() -> void:
 			added = trough.refill(trough.water_per_use)
 	_feedback = "Added {amount}" if added > 0 else ""
 	if added > 0:
+		Sound.play(&"feed_trough" if action == &"refill_food" else &"water_trough")
 		refill_committed.emit(action, 1)
 	_feedback_amount = added
 	_feedback_until = Time.get_ticks_msec() + 1000

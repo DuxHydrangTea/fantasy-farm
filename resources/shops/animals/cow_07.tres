@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+
+[ext_resource type="Resource" path="res://animals/definitions/cow_07.tres" id="1_mhg24"]
+[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_fa7qb"]
+
+[resource]
+script = ExtResource("2_fa7qb")
+animal = ExtResource("1_mhg24")
+price = 187500

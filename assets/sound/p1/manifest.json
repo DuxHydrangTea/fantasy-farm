@@ -1,0 +1,579 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "event": "animal_chicken",
+      "file": "assets/sound/p1/animal_chicken.wav",
+      "duration": 2.7859183673469388,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/henhouse-s0282.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/0282.mp3",
+        "file": "chicken.mp3"
+      },
+      "source_sha256": "f3c8ad223eabb1e2d7691fe5211278267b6854b0ca42bd65304dc2f887d57e1f",
+      "sha256": "2b9a1426e8614741f89dc79476a342b5d7e36777075cb002e576f7951d40047b",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_duck",
+      "file": "assets/sound/p1/animal_duck.wav",
+      "duration": 2.785986394557823,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/ducks-s0276.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/0276.mp3",
+        "file": "duck.mp3"
+      },
+      "source_sha256": "903714a0b30891c0923ab25a72045450fe7a6112ba9f2cd9aab653222678a144",
+      "sha256": "c6a97b1fd16e167a3423d6c862cdf77bcce0196cfceadfaa87314e8b8d788c01",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_cow",
+      "file": "assets/sound/p1/animal_cow.wav",
+      "duration": 2.190907029478458,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/cow-moos-2-s2382.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/2382.mp3",
+        "file": "cow.mp3"
+      },
+      "source_sha256": "43eb6ad1e43443c7b47b365d425072da4cc27642dcd26b3509c5107f7fcd924a",
+      "sha256": "d98cf946ce698aa23f668745f07425397b5f80751c5767a12c89372e5092c581",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_sheep",
+      "file": "assets/sound/p1/animal_sheep.wav",
+      "duration": 0.8645578231292517,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/sheep-1-s2343.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/2343.mp3",
+        "file": "sheep.mp3"
+      },
+      "source_sha256": "ed81bf7e40b90955a07a2eea254973f8ad3c82ba2077cd95a1370fb3af166a71",
+      "sha256": "b81ed54d3a8540d4bc26dd81184b0f71f9ce12805ea5783abd2bb35771f73cf1",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_pig",
+      "file": "assets/sound/p1/animal_pig.wav",
+      "duration": 2.8,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/grumpy-pig-1-s1658.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/1658.mp3",
+        "file": "pig.mp3"
+      },
+      "source_sha256": "fed7ef69597a0e7561d2ffdbd85956cb9eec6e56c37789af0db30c87df83f068",
+      "sha256": "8e144fb08589368458f4d2fb22684c4fd60895dc88b94e768262b1280075a857",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_goose",
+      "file": "assets/sound/p1/animal_goose.wav",
+      "duration": 1.3151020408163265,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "SFXMint",
+        "license": "CC0-1.0",
+        "url": "https://sfxmint.com/sounds/goose-honk",
+        "download": "https://sfxmint.com/dl/goose-honk-07.mp3",
+        "file": "goose.mp3",
+        "note": "Public-library sound; publisher describes library as AI/procedural."
+      },
+      "source_sha256": "630b43b262269426439691d0099d2f11a580795dcc6a5878206776fa058f34fb",
+      "sha256": "71e3cd1ff5ac903f119f2d1aace797291c0ca81a7d1ebc11071c36a62f744fdc",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "animal_horse",
+      "file": "assets/sound/p1/animal_horse.wav",
+      "duration": 1.0141043083900227,
+      "peak_db": -19,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/horse-neighing-4-s1541.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/1541.mp3",
+        "file": "horse.mp3"
+      },
+      "source_sha256": "8e55a10d947b1a01ef2473ddf72941a7ad36ca7723b85f4b11ea557c04e9a35f",
+      "sha256": "1c905fd8516d9a09da055b4f957c6252c2d99f0bec2851322420bd93ed8f69db",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass3200, fades, normalized -19dBFS"
+    },
+    {
+      "event": "bees_loop",
+      "file": "assets/sound/p1/bees_loop.wav",
+      "duration": 3.5,
+      "peak_db": -28,
+      "loop": true,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/solitary-bees-or-flies-s0101.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/0101.mp3",
+        "file": "bees.mp3"
+      },
+      "source_sha256": "fecdb9202bb6a20ea47c3109725a0ac53613903e019049b0953de235382d48d5",
+      "sha256": "47dc464cbecced55282cddceb5182587bf86c8565a4d316d7cf16426d28e1453",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass2500, fades, normalized -28dBFS"
+    },
+    {
+      "event": "kitchen_loop",
+      "file": "assets/sound/p1/kitchen_loop.wav",
+      "duration": 3.5,
+      "peak_db": -28,
+      "loop": true,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/frying-in-the-pan-1-s0143.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/0143.mp3",
+        "file": "kitchen.mp3"
+      },
+      "source_sha256": "d154890b5795573fd53db1d686993857979ea2a2453eef796ee99ce2d8230eef",
+      "sha256": "7700101d57fb3cbcc2dc9d44a84495b1c6e80624ca5eee18c53b53e3b3098968",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass2500, fades, normalized -28dBFS"
+    },
+    {
+      "event": "feed_trough",
+      "file": "assets/sound/p1/feed_trough.wav",
+      "duration": 0.9864172335600907,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/raw-rice-poured-into-a-saucepan-s0201.html",
+        "download": "https://bigsoundbank.com/UPLOAD/mp3/0201.mp3",
+        "file": "feed.mp3"
+      },
+      "source_sha256": "16502b13e14771b62c6e43fd2d970d36b802c18111c5975b4c7481319b41e1d9",
+      "sha256": "7cf71abdd3f524b5e0050ac879e7a7ab28f6cfe2c4448431a81ba8941c95b959",
+      "processing": "excerpt 1s, mono 44100Hz PCM16, highpass65, double lowpass2500, fades, normalized -22dBFS"
+    },
+    {
+      "event": "animal_care",
+      "file": "assets/sound/p1/animal_care.wav",
+      "duration": 0.45,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/cloth1.ogg"
+      },
+      "source_sha256": "ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d",
+      "sha256": "40434f8ef23e6acd5cbdc03e8d45940a15807df4f3de76760aea49714af9bea4",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_egg",
+      "file": "assets/sound/p1/collect_egg.wav",
+      "duration": 0.25,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/bookPlace1.ogg"
+      },
+      "source_sha256": "26f3ce60fbde85b678b0ad7f6624d80535fe540d88232ad1e38e47a96662d977",
+      "sha256": "774fd2828c3684fa633db7244987ec6467d129ed73fce5db16b161c8874487df",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_milk",
+      "file": "assets/sound/p1/collect_milk.wav",
+      "duration": 0.3305668934240363,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/metalPot1.ogg"
+      },
+      "source_sha256": "159def979e8e386c2c539f5e99cc30a080eb2dcb6c911fa2e4ccc0785b2522fd",
+      "sha256": "f3657630805ec7da1804aca99d44e10c558ba4762664fb5f8c9807a59afd779f",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_wool",
+      "file": "assets/sound/p1/collect_wool.wav",
+      "duration": 0.3333106575963719,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/cloth2.ogg"
+      },
+      "source_sha256": "8a7451193c38bc05483aec25dd193e163a15d44cf7fff04ac7912573231b0201",
+      "sha256": "1cd6b32d8991d30e8d9fa01fa72e6b185b6409f9343b921d06d1f15ec59d20f4",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_truffle",
+      "file": "assets/sound/p1/collect_truffle.wav",
+      "duration": 0.3802721088435374,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/dropLeather.ogg"
+      },
+      "source_sha256": "097e1d3b74949b0145fda0519d40b7e0773ab82ec4858727f95be830927e1a45",
+      "sha256": "5871f74c91e1d5ab93f3869a20a4403f03a7b104a629a5d6f073dfcd88d93795",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "tree_chop",
+      "file": "assets/sound/p1/tree_chop.wav",
+      "duration": 0.24027210884353742,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/chop.ogg"
+      },
+      "source_sha256": "d00c2b3c9fff07e376145c8c8c45c90e5084ec192f6ce0387db233f7b86f1486",
+      "sha256": "1ee0f46b5b7d38e0532b3982d02e8e502582e9a19da232400e753b42f4b412b7",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "tree_fall",
+      "file": "assets/sound/p1/tree_fall.wav",
+      "duration": 0.6404761904761904,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/creak1.ogg"
+      },
+      "source_sha256": "8a346186fd297254248cab8e8117060a52a5cf2a84f603153a762108550ea95e",
+      "sha256": "313fc2ff3eca896c81f884a64d1a18c4363ba1d081fe75673e38f7134b767d5f",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "stump_dig",
+      "file": "assets/sound/p1/stump_dig.wav",
+      "duration": 0.5268027210884354,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "impact-sounds/Audio/impactSoft_heavy_000.ogg"
+      },
+      "source_sha256": "49e7ca88743fca974bb8676ea138b751cfd8f9033b5e7af8736c2a215d6edbc1",
+      "sha256": "c43e65bb2f5fea8aee6946d43a7cb3417253f90ef777b30b59b55165d4044084",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "graft_tree",
+      "file": "assets/sound/p1/graft_tree.wav",
+      "duration": 0.4910430839002268,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/knifeSlice.ogg"
+      },
+      "source_sha256": "4cd96dc630bed9840c15f1dd2306da2cc56a4da26a5d3f1a03c5a7265ac5e54f",
+      "sha256": "5ff7087a4bab53b615e9e43f9740d98c4b22548de97567e896325b5a5f9b4240",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "fertilize_crop",
+      "file": "assets/sound/p1/fertilize_crop.wav",
+      "duration": 0.4765759637188209,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/cloth3.ogg"
+      },
+      "source_sha256": "a48632d17a4f1416541d261a32a31612e01267144c407fa3ecab3ff410f0085b",
+      "sha256": "33480181b350c78c4f01c8842d8d97219682dde3f800a469fe718a6ba293ced7",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "weed_remove",
+      "file": "assets/sound/p1/weed_remove.wav",
+      "duration": 0.3843537414965986,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/cloth4.ogg"
+      },
+      "source_sha256": "e7ab9a6c4466dea874196c61f59bf1da05cfe58748f42fadd695d441a154a99b",
+      "sha256": "a2873827d0a2d5690ae8935da2338667727613e6f101062110b4d9d5b803f86d",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "spray_crop",
+      "file": "assets/sound/p1/spray_crop.wav",
+      "duration": 0.49430839002267574,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/clothBelt.ogg"
+      },
+      "source_sha256": "f29560a2aea95bbfeb643e1e8f56ec2b6f7e32f32ce4e140645a36db81de3253",
+      "sha256": "b33c71abc6ad847897d51fc2cb8c9fa6153fbce83e3dad194c08fac8b233619e",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_honey",
+      "file": "assets/sound/p1/collect_honey.wav",
+      "duration": 0.3278684807256236,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/metalPot2.ogg"
+      },
+      "source_sha256": "8e1f820d217d380fde10e969d109db34303e3f4d11c3951926eddef813d04ae2",
+      "sha256": "5626c825d527cb7465f431b6cd10268b0daea103b7cc122e6ec9b887a19acf52",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "repair_hive",
+      "file": "assets/sound/p1/repair_hive.wav",
+      "duration": 0.2785714285714286,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "impact-sounds/Audio/impactWood_medium_000.ogg"
+      },
+      "source_sha256": "1723a9fd25103ed41af06054814e84e65f4a772bac86ab2dc927da93d9592ff5",
+      "sha256": "57a207ff864f23e207edc65e3d5a731f6e303cb775eac66c3ad9b24657a0d53d",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "cook_start",
+      "file": "assets/sound/p1/cook_start.wav",
+      "duration": 0.48029478458049885,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/metalPot3.ogg"
+      },
+      "source_sha256": "d306e5b848f6843332d0ca19f8f7dfe5796aeb56d8273902b085df463273f1dc",
+      "sha256": "26a3cf8d0536bc94263a62583bdf91089b189976ad3939aeb548c011cfe50467",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "cook_ready",
+      "file": "assets/sound/p1/cook_ready.wav",
+      "duration": 0.33639455782312927,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/bookPlace2.ogg"
+      },
+      "source_sha256": "831874e8fd142d4d0a03ff009f1f83966338a7878c0f6f38c613ae5b80dd731e",
+      "sha256": "dc5b0131633c90ed9b7bad5585e966eee47ff45e2d1e7094439d9f5a82490e8c",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "collect_dish",
+      "file": "assets/sound/p1/collect_dish.wav",
+      "duration": 0.43056689342403626,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/metalPot1.ogg"
+      },
+      "source_sha256": "159def979e8e386c2c539f5e99cc30a080eb2dcb6c911fa2e4ccc0785b2522fd",
+      "sha256": "b94732ff9b2268abbf6577ec6a42620e721ea3d96b8abacc3c294b9750c2d6e4",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "upgrade_complete",
+      "file": "assets/sound/p1/upgrade_complete.wav",
+      "duration": 0.23061224489795917,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/bookClose.ogg"
+      },
+      "source_sha256": "81e976532565f4372abd14e83d2684195fa548d0a28d345de221e56052454f32",
+      "sha256": "5d03b1627c0441ba85bcee82c20e905ba93fd98ad941944c20762661f47c72e6",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "land_clear",
+      "file": "assets/sound/p1/land_clear.wav",
+      "duration": 0.5691383219954649,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "impact-sounds/Audio/impactSoft_heavy_001.ogg"
+      },
+      "source_sha256": "4d0096364ba9e46119d2ff6df493fdc101bd2e1efae061da5e5f77a53b3fdcb6",
+      "sha256": "faf739443d44600fc0fed45b5d45e1ac92401e343de103abbd265cc864a02314",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "worker_hire",
+      "file": "assets/sound/p1/worker_hire.wav",
+      "duration": 0.1510657596371882,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/bookOpen.ogg"
+      },
+      "source_sha256": "953390534377222bee89ac8cd9e60a58fdc037c71a4d7c18c43cd647c7f34ba8",
+      "sha256": "e6fac1c9ef10171d7d4f86ac683cbdabf92283ee8a3eebcb2fb8e196c2a8a999",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "worker_wage",
+      "file": "assets/sound/p1/worker_wage.wav",
+      "duration": 0.46294784580498866,
+      "peak_db": -22,
+      "loop": false,
+      "source": {
+        "author": "Kenney",
+        "license": "CC0-1.0",
+        "file": "rpg-audio/Audio/handleCoins.ogg"
+      },
+      "source_sha256": "8a91f969e932df709df80ee124d86a51389eed9b67f22e5e716bc2bbf60d8dab",
+      "sha256": "ae59c7701c2f339b87e46526231312186465be5d2cc96321f7aba08d4bc9f5a9",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass1800, fades, normalized -22dBFS"
+    },
+    {
+      "event": "water_trough",
+      "file": "assets/sound/p1/water_trough.wav",
+      "duration": 1.0,
+      "peak_db": -23,
+      "loop": false,
+      "source": {
+        "license": "CC0-1.0",
+        "derived_from": "assets/sound/farming/water_crop_01.wav",
+        "details": "See parent P0 manifest."
+      },
+      "source_sha256": "5c785d043076d29efe4602b78fa1e5e844cb5cafd47860cef31c0ebeb3fc1cb7",
+      "sha256": "7522ca0a1c956686d7c8d33bd635b94311ad2f561daf5807931698b04d80b6b3",
+      "processing": "excerpt 0s, mono 44100Hz PCM16, highpass65, double lowpass2500, fades, normalized -23dBFS"
+    }
+  ],
+  "sources": {
+    "chicken": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/henhouse-s0282.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/0282.mp3",
+      "file": "chicken.mp3"
+    },
+    "duck": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/ducks-s0276.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/0276.mp3",
+      "file": "duck.mp3"
+    },
+    "cow": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/cow-moos-2-s2382.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/2382.mp3",
+      "file": "cow.mp3"
+    },
+    "sheep": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/sheep-1-s2343.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/2343.mp3",
+      "file": "sheep.mp3"
+    },
+    "pig": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/grumpy-pig-1-s1658.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/1658.mp3",
+      "file": "pig.mp3"
+    },
+    "horse": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/horse-neighing-4-s1541.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/1541.mp3",
+      "file": "horse.mp3"
+    },
+    "bees": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/solitary-bees-or-flies-s0101.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/0101.mp3",
+      "file": "bees.mp3"
+    },
+    "kitchen": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/frying-in-the-pan-1-s0143.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/0143.mp3",
+      "file": "kitchen.mp3"
+    },
+    "feed": {
+      "author": "Joseph SARDIN",
+      "license": "CC0-1.0",
+      "url": "https://bigsoundbank.com/raw-rice-poured-into-a-saucepan-s0201.html",
+      "download": "https://bigsoundbank.com/UPLOAD/mp3/0201.mp3",
+      "file": "feed.mp3"
+    },
+    "goose": {
+      "author": "SFXMint",
+      "license": "CC0-1.0",
+      "url": "https://sfxmint.com/sounds/goose-honk",
+      "download": "https://sfxmint.com/dl/goose-honk-07.mp3",
+      "file": "goose.mp3",
+      "note": "Public-library sound; publisher describes library as AI/procedural."
+    }
+  }
+}

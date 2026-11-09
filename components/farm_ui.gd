@@ -8,6 +8,10 @@ const WARNING: Color = Color("985021")
 static var _themes: Dictionary = {}
 static var ui_scale: float = 1.0
 static var master_volume: float = 1.0
+static var effects_volume: float = 0.8
+static var interface_volume: float = 0.8
+static var ambience_volume: float = 0.7
+static var music_volume: float = 0.45
 static var language: String = "vi"
 static var _preferences_loaded: bool = false
 const PREFERENCES: String = "user://ui_preferences.cfg"
@@ -21,6 +25,10 @@ static func load_preferences() -> void:
 		return
 	ui_scale = clampf(float(config.get_value("ui", "scale", 1.0)), 1.0, 1.5)
 	master_volume = clampf(float(config.get_value("audio", "master", 1.0)), 0.0, 1.0)
+	effects_volume = clampf(float(config.get_value("audio", "effects", 0.8)), 0.0, 1.0)
+	interface_volume = clampf(float(config.get_value("audio", "interface", 0.8)), 0.0, 1.0)
+	ambience_volume = clampf(float(config.get_value("audio", "ambience", 0.7)), 0.0, 1.0)
+	music_volume = clampf(float(config.get_value("audio", "music", 0.45)), 0.0, 1.0)
 	var locale: String = String(config.get_value("ui", "language", "vi"))
 	language = locale if locale in ["en", "vi"] else "vi"
 
@@ -29,6 +37,10 @@ static func save_preferences(path: String = PREFERENCES) -> Error:
 	config.set_value("ui", "scale", ui_scale)
 	config.set_value("ui", "language", TranslationServer.get_locale())
 	config.set_value("audio", "master", master_volume)
+	config.set_value("audio", "effects", effects_volume)
+	config.set_value("audio", "interface", interface_volume)
+	config.set_value("audio", "ambience", ambience_volume)
+	config.set_value("audio", "music", music_volume)
 	return config.save(path)
 
 static func apply(root: Control) -> void:

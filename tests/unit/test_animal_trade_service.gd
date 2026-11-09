@@ -36,7 +36,7 @@ func before_each() -> void:
 	await wait_physics_frames(2)
 
 func test_catalog_has_seven_species_and_resale_never_exceeds_purchase() -> void:
-	assert_eq(catalog.animal_offers.size(), 24)
+	assert_eq(catalog.animal_offers.size(), 64)
 	var ids: Dictionary = {}
 	for entry: AnimalShopOffer in catalog.animal_offers:
 		assert_true(entry.is_valid())

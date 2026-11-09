@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794163224684,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: ba775d70-098b-497e-a2f7-2b9049b42027\njob_id: ba775d70-098b-497e-a2f7-2b9049b42027\nmode: text\nframes: 1\nsize: 48x48px\ntransparent: True\nedit: Redraw this Vietnamese farmer visibly TALLER and LARGER at native pixel resolution, occupying about 40 pixels tall within the 48x48 canvas. Hat top near y=4, foot baseline near y=44. Extend torso and legs naturally with fresh pixel art detail; moderately less chibi proportions, not a stretched or nearest-neighbor enlarged sprite. Keep the same Vietnamese conical non la palm-leaf hat, indigo ao ba ba shirt, brown trousers and black white checkered scarf. Straight-on front view, same walking pose. Crisp pixel art, transparent background. Important: increase actual character height and body proportions, do not merely add empty canvas.\nasset_id: ce624f09-30d1-53d0-a620-936c3e8481cf\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"ba775d70-098b-497e-a2f7-2b9049b42027\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/ba775d70-098b-497e-a2f7-2b9049b42027/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

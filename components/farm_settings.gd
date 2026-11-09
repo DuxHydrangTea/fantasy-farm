@@ -6,6 +6,9 @@ var language_choice: OptionButton
 var size_choice: OptionButton
 var volume: HSlider
 var volume_label: Label
+var audio_sliders: Dictionary[StringName, HSlider] = {}
+var audio_labels: Dictionary[StringName, Label] = {}
+const AUDIO_CAPTIONS: Dictionary = {&"effects": "Effects volume: {value}%", &"interface": "Interface sounds: {value}%", &"ambience": "Ambience volume: {value}%", &"music": "Music volume: {value}%"}
 var heading: Label
 var language_label: Label
 var size_label: Label
@@ -31,15 +34,20 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	panel = PanelContainer.new()
 	center.add_child(panel)
+	var shell: VBoxContainer = VBoxContainer.new()
+	panel.add_child(shell)
 	var scroll: ScrollContainer = ScrollContainer.new()
+	scroll.name = "SettingsScroll"
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	panel.add_child(scroll)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	shell.add_child(scroll)
 	var body: VBoxContainer = VBoxContainer.new()
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_theme_constant_override("separation", 12)
 	scroll.add_child(body)
 	var header: HBoxContainer = HBoxContainer.new()
-	body.add_child(header)
+	shell.add_child(header)
+	shell.move_child(header, 0)
 	heading = Label.new()
 	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	heading.add_theme_font_size_override("font_size", 24)
@@ -72,6 +80,17 @@ func _ready() -> void:
 	volume.custom_minimum_size.y = 32
 	volume.value_changed.connect(_volume_changed)
 	body.add_child(volume)
+	for key: StringName in AUDIO_CAPTIONS:
+		var caption: Label = Label.new()
+		body.add_child(caption)
+		audio_labels[key] = caption
+		var slider: HSlider = HSlider.new()
+		slider.max_value = 100
+		slider.step = 1
+		slider.custom_minimum_size.y = 48
+		slider.value_changed.connect(_audio_changed.bind(key))
+		body.add_child(slider)
+		audio_sliders[key] = slider
 	status = Label.new()
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status.add_theme_font_size_override("font_size", 14)
@@ -107,6 +126,10 @@ func _sync() -> void:
 	language_label.text = tr("Language")
 	size_label.text = tr("Interface size")
 	volume_label.text = tr("Master volume: {value}%").format({"value": roundi(FarmUI.master_volume * 100)})
+	var levels: Dictionary = {&"effects": FarmUI.effects_volume, &"interface": FarmUI.interface_volume, &"ambience": FarmUI.ambience_volume, &"music": FarmUI.music_volume}
+	for key: StringName in audio_sliders:
+		audio_sliders[key].set_value_no_signal(float(levels[key]) * 100.0)
+		audio_labels[key].text = tr(String(AUDIO_CAPTIONS[key])).format({"value": roundi(float(levels[key]) * 100.0)})
 	_syncing = false
 
 func _language_changed(index: int) -> void:
@@ -131,8 +154,19 @@ func _volume_changed(value: float) -> void:
 	_store()
 
 func _apply_volume() -> void:
-	AudioServer.set_bus_mute(0, FarmUI.master_volume <= 0.0)
-	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(0.001, FarmUI.master_volume)))
+	Sound.apply_volumes()
+
+func _audio_changed(value: float, key: StringName) -> void:
+	if _syncing:
+		return
+	match key:
+		&"effects": FarmUI.effects_volume = value / 100.0
+		&"interface": FarmUI.interface_volume = value / 100.0
+		&"ambience": FarmUI.ambience_volume = value / 100.0
+		&"music": FarmUI.music_volume = value / 100.0
+	_apply_volume()
+	_sync()
+	_store()
 
 func _store() -> void:
 	_dirty = true

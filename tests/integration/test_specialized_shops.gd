@@ -23,6 +23,35 @@ func before_each() -> void:
 func after_each() -> void:
 	Language.set_language("vi")
 
+func test_animal_subtabs_filter_each_species_and_keep_selection_visible() -> void:
+	var shop: ShopUI = _open(pets)
+	shop.show_category(ShopOffer.Category.ANIMAL)
+	assert_true(shop._species_scroll.visible)
+	assert_eq(shop.grid.get_child_count(), pets.catalog.animal_offers.size())
+	assert_true(shop.production_row.visible)
+	assert_eq(shop.production_row.icon.texture, shop.selected_animal_offer.animal.production.production_item.icon)
+	assert_true(shop.balance_label.has_meta(&"coin_row"))
+	for species: int in range(7):
+		shop._species_tabs[species].pressed.emit()
+		var expected: Array[AnimalShopOffer] = []
+		for offer: AnimalShopOffer in pets.catalog.animal_offers:
+			if offer.animal.species == species:
+				expected.append(offer)
+		assert_eq(shop.grid.get_child_count(), expected.size())
+		assert_true(shop._species_tabs[species].button_pressed)
+		assert_true(expected.has(shop.selected_animal_offer))
+		for offer: AnimalShopOffer in shop._buttons:
+			assert_eq(int(offer.animal.species), species)
+	Language.set_language("vi")
+	await wait_frames(2)
+	assert_eq(shop._species_tabs[AnimalTypes.Species.CHICKEN].text, "Gà")
+	assert_eq(shop.animal_species, AnimalTypes.Species.HORSE)
+	shop.show_animal_species(-1)
+	assert_eq(shop.grid.get_child_count(), pets.catalog.animal_offers.size())
+	shop.show_category(ShopOffer.Category.FEED)
+	assert_false(shop._species_scroll.visible)
+	assert_false(shop.production_row.visible)
+
 func _open(npc: ShopMerchant) -> ShopUI:
 	world.player.global_position = npc.interaction_position() + Vector2(0, 24)
 	world.player.animation.face(npc.interaction_position() - world.player.global_position)
@@ -82,7 +111,7 @@ func test_stock_is_split_without_losing_or_duplicating_existing_items() -> void:
 	assert_true(offered.has(&"watering_can"))
 	assert_true(seeds.catalog.animal_offers.is_empty())
 	assert_true(smith.catalog.animal_offers.is_empty())
-	assert_eq(pets.catalog.animal_offers.size(), 24)
+	assert_eq(pets.catalog.animal_offers.size(), 64)
 
 func test_each_npc_opens_its_own_tabs_and_rejects_other_shop_categories() -> void:
 	for npc: ShopMerchant in [seeds, flowers, pets, smith]:

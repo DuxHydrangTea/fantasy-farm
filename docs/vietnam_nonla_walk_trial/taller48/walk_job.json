@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794163377178,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: c5b4736c-1256-4459-a3f3-1b956301d31c\njob_id: c5b4736c-1256-4459-a3f3-1b956301d31c\naction: Seamless looping walk cycle in place, facing straight toward the viewer throughout. Complete one natural alternating left-right step cycle with gentle opposite arm swings. Keep head and hat stable, constant tall body proportions and scale, fixed screen position and foot baseline. No turning, no camera movement, no zoom, no forward translation. Preserve exact appearance and transparent background.\nframes: 8\nsize: 48x48px\ntransparent: True\nlast_frame: yes (interpolating to it)\nseed: 40961\nasset_id: 2558a17e-2e62-5a4e-87d6-10a8b16a9cc0\nasset_status: pending (saved when generation completes)\ncost: 1 generation\nstatus: processing (~30-180s)\n\nhint: get_image(job_id=\"c5b4736c-1256-4459-a3f3-1b956301d31c\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/c5b4736c-1256-4459-a3f3-1b956301d31c/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

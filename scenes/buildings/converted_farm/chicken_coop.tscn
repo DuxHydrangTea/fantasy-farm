@@ -1,38 +1,17 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://assets/Buildings/ConvertedFarm/chicken_coop.png" id="art"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/UpgradedLivestock/chicken_coop.png" id="1_fthn7"]
 
-[sub_resource type="RectangleShape2D" id="Footprint0"]
-size = Vector2(42, 27)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y42h5"]
+size = Vector2(46, 36)
 
-[sub_resource type="RectangleShape2D" id="Footprint1"]
-size = Vector2(49, 26)
-
-[sub_resource type="RectangleShape2D" id="Footprint2"]
-size = Vector2(14, 16)
-
-[sub_resource type="RectangleShape2D" id="Footprint3"]
-size = Vector2(20, 10)
-
-[node name="ChickenCoop" type="StaticBody2D"]
+[node name="ChickenCoop" type="StaticBody2D" unique_id=39953892]
 texture_filter = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(3, -40.5)
-texture = ExtResource("art")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=705178818]
+position = Vector2(0, -58)
+texture = ExtResource("1_fthn7")
 
-[node name="Footprint0" type="CollisionShape2D" parent="."]
-position = Vector2(-14, -24.5)
-shape = SubResource("Footprint0")
-
-[node name="Footprint1" type="CollisionShape2D" parent="."]
-position = Vector2(34.5, -12)
-shape = SubResource("Footprint1")
-
-[node name="Footprint2" type="CollisionShape2D" parent="."]
-position = Vector2(-44, -20)
-shape = SubResource("Footprint2")
-
-[node name="Footprint3" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 2)
-shape = SubResource("Footprint3")
+[node name="Footprint" type="CollisionShape2D" parent="." unique_id=953775578]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_y42h5")

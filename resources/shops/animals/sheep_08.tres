@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+
+[ext_resource type="Resource" path="res://animals/definitions/sheep_08.tres" id="1_6acok"]
+[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_sir4q"]
+
+[resource]
+script = ExtResource("2_sir4q")
+animal = ExtResource("1_6acok")
+price = 137500

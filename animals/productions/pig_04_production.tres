@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+
+[ext_resource type="Resource" path="res://items/animal_produces/pig_truffle.tres" id="1_7lhwh"]
+[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="2_see4c"]
+
+[resource]
+script = ExtResource("2_see4c")
+production_item = ExtResource("1_7lhwh")
+production_amount = 175
+production_seconds = 28800.0

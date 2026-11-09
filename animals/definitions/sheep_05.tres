@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/sheep_05_frames.tres" id="1_kb86p"]
+[ext_resource type="Resource" path="res://animals/productions/sheep_05_production.tres" id="2_q73qx"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_hgdi6"]
+
+[resource]
+script = ExtResource("3_hgdi6")
+animal_id = &"sheep_05"
+display_name = "Jade Sheep"
+species = 3
+move_speed = 26.0
+footprint = Vector2(14, 8)
+pen_margin = 14.0
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_kb86p")
+maturity_seconds = 21600.0
+production = ExtResource("2_q73qx")

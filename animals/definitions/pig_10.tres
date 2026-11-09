@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_10_frames.tres" id="1_uirjc"]
+[ext_resource type="Resource" path="res://animals/productions/pig_10_production.tres" id="2_r5ji3"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_mnldg"]
+
+[resource]
+script = ExtResource("3_mnldg")
+animal_id = &"pig_10"
+display_name = "Brown-footed Blue Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_uirjc")
+maturity_seconds = 43200.0
+production = ExtResource("2_r5ji3")

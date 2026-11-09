@@ -1,6 +1,7 @@
 class_name WorkerService
 extends Node
 ## One ordered event timeline for all roles. No background per-tile nodes.
+signal wage_paid
 signal changed
 signal catch_up_progress(fraction: float)
 const SCENES: Dictionary = {"crop": preload("res://scenes/workers/crop_worker.tscn")}
@@ -368,6 +369,8 @@ func _pay(row: Dictionary, day: int) -> void:
 		if row.role != "crop" or not crop_automation.paused:
 			_resume_task(row, simulated_at)
 		world.player.wallet.set_balance(world.player.wallet.balance - wage)
+		if not _catching_up and bridge.present_care_effects:
+			wage_paid.emit()
 	elif previously_active and float(row.paused_at) == 0.0:
 		row.paused_at = simulated_at
 	row.wake_at = simulated_at

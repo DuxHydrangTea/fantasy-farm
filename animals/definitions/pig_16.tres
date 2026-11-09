@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_16_frames.tres" id="1_5sgjd"]
+[ext_resource type="Resource" path="res://animals/productions/pig_16_production.tres" id="2_8q642"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_3vrsu"]
+
+[resource]
+script = ExtResource("3_3vrsu")
+animal_id = &"pig_16"
+display_name = "Brown-footed Black Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_5sgjd")
+maturity_seconds = 43200.0
+production = ExtResource("2_8q642")

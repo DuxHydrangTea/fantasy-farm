@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_02_frames.tres" id="1_s11sc"]
+[ext_resource type="Resource" path="res://animals/productions/pig_02_production.tres" id="2_quilq"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_jbu77"]
+
+[resource]
+script = ExtResource("3_jbu77")
+animal_id = &"pig_02"
+display_name = "Brown-footed Pink Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_s11sc")
+maturity_seconds = 43200.0
+production = ExtResource("2_quilq")

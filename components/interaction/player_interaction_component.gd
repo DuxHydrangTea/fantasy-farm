@@ -135,11 +135,15 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 			var hive: Beehive = target.node as Beehive
 			if hive.apiary.world.honey_garden.inside(hive):
 				return hive.apiary.world.honey_menu.open_hive(hive)
-			hive.collect(player.selection.inventory)
+			if hive.collect(player.selection.inventory):
+				Sound.play(&"collect_honey")
 			return true
 		InteractionTarget.Kind.ANIMAL:
 			var animal: AnimalActor = target.node as AnimalActor
-			animal.collect_produce(player.selection.inventory)
+			var collected: int = animal.collect_produce(player.selection.inventory)
+			if collected > 0:
+				player.item_feedback.present_animal_collection(animal, collected)
+				Sound.play(&"collect_milk" if animal.definition.species == AnimalTypes.Species.COW else &"collect_wool" if animal.definition.species == AnimalTypes.Species.SHEEP else &"collect_truffle" if animal.definition.species == AnimalTypes.Species.PIG else &"collect_egg")
 			return true
 		InteractionTarget.Kind.CROP:
 			var crop: Crop = target.node as Crop

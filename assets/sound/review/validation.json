@@ -1,0 +1,307 @@
+{
+  "ok": true,
+  "events": 23,
+  "assets_checked": 48,
+  "local_audio_links_checked": 49,
+  "format": "WAV PCM 16-bit mono 44100 Hz",
+  "checks": [
+    "file hashes",
+    "decodable WAV headers",
+    "duration",
+    "non-silent",
+    "no clipping",
+    "fade endpoints",
+    "local preview references",
+    "JavaScript syntax"
+  ],
+  "files": [
+    {
+      "file": "movement/footstep_dirt_01.wav",
+      "duration_seconds": 0.2825,
+      "peak_dbfs": -18.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_dirt_02.wav",
+      "duration_seconds": 0.2652,
+      "peak_dbfs": -18.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_dirt_03.wav",
+      "duration_seconds": 0.25,
+      "peak_dbfs": -18.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_dirt_04.wav",
+      "duration_seconds": 0.2363,
+      "peak_dbfs": -18.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_grass_01.wav",
+      "duration_seconds": 0.35,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_grass_02.wav",
+      "duration_seconds": 0.35,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_grass_03.wav",
+      "duration_seconds": 0.35,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_grass_04.wav",
+      "duration_seconds": 0.35,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_stone_01.wav",
+      "duration_seconds": 0.103,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_stone_02.wav",
+      "duration_seconds": 0.1047,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_stone_03.wav",
+      "duration_seconds": 0.1099,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "movement/footstep_stone_04.wav",
+      "duration_seconds": 0.1076,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "farming/till_soil_01.wav",
+      "duration_seconds": 0.9,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/till_soil_02.wav",
+      "duration_seconds": 0.9,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/till_soil_03.wav",
+      "duration_seconds": 0.9,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/sow_seed_01.wav",
+      "duration_seconds": 0.65,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/sow_seed_02.wav",
+      "duration_seconds": 0.65,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/sow_seed_03.wav",
+      "duration_seconds": 0.65,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/water_crop_01.wav",
+      "duration_seconds": 1.15,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/water_crop_02.wav",
+      "duration_seconds": 1.15,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "farming/water_crop_03.wav",
+      "duration_seconds": 1.15,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_crop_01.wav",
+      "duration_seconds": 0.7,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_crop_02.wav",
+      "duration_seconds": 0.7,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_crop_03.wav",
+      "duration_seconds": 0.7,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_flower_01.wav",
+      "duration_seconds": 0.45,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_flower_02.wav",
+      "duration_seconds": 0.45,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_fruit_01.wav",
+      "duration_seconds": 0.5,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "harvest/harvest_fruit_02.wav",
+      "duration_seconds": 0.5,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "items/item_pickup_01.wav",
+      "duration_seconds": 0.0995,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "items/item_pickup_02.wav",
+      "duration_seconds": 0.1617,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "economy/coin_receive_01.wav",
+      "duration_seconds": 0.7702,
+      "peak_dbfs": -10.0,
+      "passed": true
+    },
+    {
+      "file": "economy/coin_receive_02.wav",
+      "duration_seconds": 0.3231,
+      "peak_dbfs": -10.0,
+      "passed": true
+    },
+    {
+      "file": "economy/coin_spend_01.wav",
+      "duration_seconds": 0.1696,
+      "peak_dbfs": -10.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_click_01.wav",
+      "duration_seconds": 0.085,
+      "peak_dbfs": -24.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_click_02.wav",
+      "duration_seconds": 0.085,
+      "peak_dbfs": -24.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_tab_01.wav",
+      "duration_seconds": 0.1,
+      "peak_dbfs": -24.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_tab_02.wav",
+      "duration_seconds": 0.1,
+      "peak_dbfs": -24.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_open_01.wav",
+      "duration_seconds": 0.18,
+      "peak_dbfs": -23.0,
+      "passed": true
+    },
+    {
+      "file": "ui/ui_close_01.wav",
+      "duration_seconds": 0.16,
+      "peak_dbfs": -24.0,
+      "passed": true
+    },
+    {
+      "file": "storage/storage_deposit_01.wav",
+      "duration_seconds": 0.2387,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "storage/storage_deposit_02.wav",
+      "duration_seconds": 0.2481,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "storage/storage_withdraw_01.wav",
+      "duration_seconds": 0.55,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "storage/storage_withdraw_02.wav",
+      "duration_seconds": 0.3826,
+      "peak_dbfs": -12.0,
+      "passed": true
+    },
+    {
+      "file": "feedback/error_resources_01.wav",
+      "duration_seconds": 0.1617,
+      "peak_dbfs": -14.0,
+      "passed": true
+    },
+    {
+      "file": "feedback/error_capacity_01.wav",
+      "duration_seconds": 0.1045,
+      "peak_dbfs": -14.0,
+      "passed": true
+    },
+    {
+      "file": "rewards/order_delivered_01.wav",
+      "duration_seconds": 0.539,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "rewards/objective_complete_01.wav",
+      "duration_seconds": 0.4942,
+      "peak_dbfs": -9.0,
+      "passed": true
+    },
+    {
+      "file": "rewards/reward_claim_01.wav",
+      "duration_seconds": 0.992,
+      "peak_dbfs": -9.0,
+      "passed": true
+    }
+  ]
+}

@@ -208,6 +208,14 @@ func test_scene_cards_and_quotes_show_normal_and_perfect_rewards() -> void:
 	ui._request("perfect")
 	assert_false(ui.confirm_button.disabled)
 	var plan: Dictionary = ui._pending_plan.duplicate(true)
+	var output_rows: Array[VisualValueRow] = []
+	for child: Node in ui.confirmation_items.get_children():
+		if child is VisualValueRow:
+			output_rows.append(child as VisualValueRow)
+	assert_gt(output_rows.size(), entry.items.size())
+	assert_eq(output_rows[0].icon.texture, entry.items[0].icon)
+	assert_not_null(output_rows[0].get_node_or_null("QualityBadge"))
+	assert_eq(output_rows[-1].icon.texture, VisualValueRow.COIN)
 	var balance: int = world.player.wallet.balance
 	ui._confirm()
 	assert_eq(world.player.wallet.balance, balance + int(plan.coins))

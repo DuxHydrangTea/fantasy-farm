@@ -219,6 +219,8 @@ func close() -> void:
 		_slide.leave(func() -> void: selection.set_objectives_open(false))
 
 func _visibility(value: bool) -> void:
+	if value or _closing:
+		Sound.play(&"ui_open" if value else &"ui_close")
 	_closing = false
 	overlay.visible = value
 	if value:
@@ -251,6 +253,7 @@ func _claim_tracked() -> void:
 
 func _claim() -> void:
 	var result: Dictionary = model.claim(model.catalog.steps[inspected].objective_id)
+	Sound.result(result, &"reward_claim")
 	_message = "Reward received: +%d coins" if result.ok else String(result.error)
 	_reward = int(result.get("coins", 0))
 	refresh()
@@ -273,6 +276,7 @@ func refresh() -> void:
 	var data: Dictionary = model.capture()
 	var ready_id: String = String(model.active().objective_id) if model.ready_to_claim() else ""
 	if ready_id != _ready_id and not ready_id.is_empty():
+		Sound.play(&"objective_complete")
 		_message = "Objective complete! Open Objectives to claim your reward."
 		_completion.start()
 	_ready_id = ready_id

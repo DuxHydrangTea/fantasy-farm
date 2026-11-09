@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794179775486,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: f529d6d2-536f-451c-b7ce-cb1b13ada794\njob_id: f529d6d2-536f-451c-b7ce-cb1b13ada794\nmode: text\nframes: 1\nsize: 128x144px\ntransparent: True\nedit: Adapt this existing red-roof wooden barn into a cattle barn with a modest structural upgrade. Keep its recognizable broad red tiled roof and timber architecture, original canvas and overall scale. Replace the bottom quarter of the timber walls with a clearly visible substantial gray fieldstone foundation: irregular fitted stone blocks, dark mortar seams, warm gray highlights and cool charcoal shadows, wrapping continuously around the front base. Wooden wall framing rests visibly on the stone plinth. Widen the central cattle entrance slightly, with thick timber lintel and sturdy doorposts anchored into stone; open dark interior, a little straw inside. Stone threshold remains nearly at ground level, no steep stairs for cattle. Add discreet reinforcing timber braces and a small carved cow-head emblem below the loft. Polish tile readability and rich warm brown wood to match cozy farming RPG sprites, compact pixel clusters and crisp dark colored outlines. Straight-on, front-facing 2D game view, horizontal front facade, roof visible from slightly above; no isometric, diagonal or three-quarter side view. Preserve complete silhouette, transparent background, no text or surrounding scenery.\nasset_id: a7170369-952a-5b5d-92cc-dba648208011\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"f529d6d2-536f-451c-b7ce-cb1b13ada794\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/f529d6d2-536f-451c-b7ce-cb1b13ada794/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

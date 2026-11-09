@@ -63,6 +63,7 @@ func purchase() -> void:
 		refresh()
 		return
 	var result: Dictionary = upgrades.purchase(selected, int(offered.current_level), int(offered.price), int(offered.wood_cost))
+	Sound.result(result, &"upgrade_complete")
 	refresh()
 	if result.ok:
 		shop.bought_this_visit = true

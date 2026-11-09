@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_06_frames.tres" id="1_vo8yf"]
+[ext_resource type="Resource" path="res://animals/productions/pig_06_production.tres" id="2_x07ic"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_hj2we"]
+
+[resource]
+script = ExtResource("3_hj2we")
+animal_id = &"pig_06"
+display_name = "Dark-footed Ginger Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_vo8yf")
+maturity_seconds = 43200.0
+production = ExtResource("2_x07ic")

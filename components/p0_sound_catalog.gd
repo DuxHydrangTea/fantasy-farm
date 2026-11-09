@@ -1,0 +1,27 @@
+extends RefCounted
+## Explicit preloads keep the approved P0 clips in exported builds.
+const CLIPS: Dictionary = {
+	&"footstep_dirt": [preload("res://assets/sound/movement/footstep_dirt_01.wav"), preload("res://assets/sound/movement/footstep_dirt_02.wav"), preload("res://assets/sound/movement/footstep_dirt_03.wav"), preload("res://assets/sound/movement/footstep_dirt_04.wav")],
+	&"footstep_grass": [preload("res://assets/sound/movement/footstep_grass_01.wav"), preload("res://assets/sound/movement/footstep_grass_02.wav"), preload("res://assets/sound/movement/footstep_grass_03.wav"), preload("res://assets/sound/movement/footstep_grass_04.wav")],
+	&"footstep_stone": [preload("res://assets/sound/movement/footstep_stone_01.wav"), preload("res://assets/sound/movement/footstep_stone_02.wav"), preload("res://assets/sound/movement/footstep_stone_03.wav"), preload("res://assets/sound/movement/footstep_stone_04.wav")],
+	&"till_soil": [preload("res://assets/sound/farming/till_soil_01.wav"), preload("res://assets/sound/farming/till_soil_02.wav"), preload("res://assets/sound/farming/till_soil_03.wav")],
+	&"sow_seed": [preload("res://assets/sound/farming/sow_seed_01.wav"), preload("res://assets/sound/farming/sow_seed_02.wav"), preload("res://assets/sound/farming/sow_seed_03.wav")],
+	&"water_crop": [preload("res://assets/sound/farming/water_crop_01.wav"), preload("res://assets/sound/farming/water_crop_02.wav"), preload("res://assets/sound/farming/water_crop_03.wav")],
+	&"harvest_crop": [preload("res://assets/sound/harvest/harvest_crop_01.wav"), preload("res://assets/sound/harvest/harvest_crop_02.wav"), preload("res://assets/sound/harvest/harvest_crop_03.wav")],
+	&"harvest_flower": [preload("res://assets/sound/harvest/harvest_flower_01.wav"), preload("res://assets/sound/harvest/harvest_flower_02.wav")],
+	&"harvest_fruit": [preload("res://assets/sound/harvest/harvest_fruit_01.wav"), preload("res://assets/sound/harvest/harvest_fruit_02.wav")],
+	&"item_pickup": [preload("res://assets/sound/items/item_pickup_01.wav"), preload("res://assets/sound/items/item_pickup_02.wav")],
+	&"coin_receive": [preload("res://assets/sound/economy/coin_receive_01.wav"), preload("res://assets/sound/economy/coin_receive_02.wav")],
+	&"coin_spend": [preload("res://assets/sound/economy/coin_spend_01.wav")],
+	&"ui_click": [preload("res://assets/sound/ui/ui_click_01.wav"), preload("res://assets/sound/ui/ui_click_02.wav")],
+	&"ui_tab": [preload("res://assets/sound/ui/ui_tab_01.wav"), preload("res://assets/sound/ui/ui_tab_02.wav")],
+	&"ui_open": [preload("res://assets/sound/ui/ui_open_01.wav")],
+	&"ui_close": [preload("res://assets/sound/ui/ui_close_01.wav")],
+	&"storage_deposit": [preload("res://assets/sound/storage/storage_deposit_01.wav"), preload("res://assets/sound/storage/storage_deposit_02.wav")],
+	&"storage_withdraw": [preload("res://assets/sound/storage/storage_withdraw_01.wav"), preload("res://assets/sound/storage/storage_withdraw_02.wav")],
+	&"error_resources": [preload("res://assets/sound/feedback/error_resources_01.wav")],
+	&"error_capacity": [preload("res://assets/sound/feedback/error_capacity_01.wav")],
+	&"order_delivered": [preload("res://assets/sound/rewards/order_delivered_01.wav")],
+	&"objective_complete": [preload("res://assets/sound/rewards/objective_complete_01.wav")],
+	&"reward_claim": [preload("res://assets/sound/rewards/reward_claim_01.wav")],
+}

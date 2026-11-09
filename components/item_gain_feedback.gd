@@ -20,7 +20,7 @@ func _ready() -> void:
 		farming.harvest_yielded.connect(_on_legacy_harvest)
 	var world: FarmWorld = player.get_parent() as FarmWorld
 	if world != null and world.trees != null:
-		world.trees.harvest_yielded.connect(_on_harvest)
+		world.trees.harvest_yielded.connect(_on_tree_harvest)
 
 # Nhiều đống đồ có thể báo đầy trong cùng một frame. Dùng đồng hồ đếm mili giây của phiên,
 # không dùng Unix/timestamp lớn cây, để giới hạn thông báo mỗi 1,5 giây không bị chỉnh giờ ảnh hưởng.
@@ -30,6 +30,7 @@ func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int)
 	if now - _last_capacity_notice < 1500:
 		return
 	_last_capacity_notice = now
+	Sound.play(&"error_capacity")
 	var text: String = "Inventory full" if available == 0 else "Not enough inventory space"
 	_spawn(item, 0, self, Vector2(0, -64), text)
 
@@ -40,6 +41,7 @@ func _on_capacity_blocked(item: ItemDefinition, _requested: int, available: int)
 func _on_pickup(item: ItemDefinition, amount: int) -> void:
 	if item == null or amount <= 0:
 		return
+	Sound.play(FarmSound.collection_event(item.item_id))
 	var reference: WeakRef = _recent.get(item.item_id) as WeakRef
 	var existing: ItemGainPopup = reference.get_ref() as ItemGainPopup if reference != null else null
 	if is_instance_valid(existing) and not existing.is_queued_for_deletion() and existing.age < 0.15:
@@ -52,17 +54,18 @@ func _on_pickup(item: ItemDefinition, amount: int) -> void:
 func _on_flower_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D) -> void:
 	if inventory != player.selection.inventory or item == null or amount <= 0 or not is_instance_valid(host):
 		return
-	var popup: ItemGainPopup = _spawn(item, amount, host, Vector2.ZERO)
-	popup.place_world(at)
+	Sound.play(&"harvest_flower")
+	_on_harvest(item, amount, at, inventory)
 
-func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0, tier: int = 0) -> void:
+func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0, tier: int = 0) -> ItemGainPopup:
 	if inventory != player.selection.inventory or item == null or amount <= 0:
-		return
+		return null
 	# Harvesting while picking up eggs must not stack two rewards on one line.
 	for previous: ItemGainPopup in _popups:
 		if is_instance_valid(previous) and previous.get_parent() == self and absf(previous.global_position.x - at.x) < 64.0 and absf(previous.global_position.y - at.y) < 28.0:
 			previous.shift_up(maxf(0.0, previous.global_position.y - at.y + 28.0))
-	var host: Node = player.farming_actions.farming.get_parent()
+	var farm: FarmingController = player.farming_actions.get_farming_controller()
+	var host: Node = farm.get_parent() if farm != null else player.get_parent()
 	var popup: ItemGainPopup = _spawn(item, amount, host, Vector2.ZERO)
 	popup.modulate = ItemQuality.color(tier)
 	popup.place_world(at)
@@ -85,6 +88,7 @@ func _on_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: Inve
 	burst.global_position = at
 	burst.global_scale = Vector2.ONE
 	_bursts.append(burst)
+	return popup
 
 func _spawn(item: ItemDefinition, amount: int, host: Node, at: Vector2, message: String = "") -> ItemGainPopup:
 	var active: Array[ItemGainPopup] = []
@@ -116,9 +120,25 @@ func clear() -> void:
 	_last_capacity_notice = -1500
 
 func _on_quality_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, tier: int) -> void:
+	if inventory == player.selection.inventory and item != null and amount > 0:
+		Sound.play(FarmSound.collection_event(item.item_id, &"harvest_crop"))
 	_on_harvest(item, amount, at, inventory, 0.0, tier)
+
+func _on_tree_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float = 0.0, tier: int = 0) -> void:
+	if inventory == player.selection.inventory and item != null and amount > 0:
+		Sound.play(&"harvest_fruit")
+	_on_harvest(item, amount, at, inventory, drop_height, tier)
 
 func _on_legacy_harvest(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent) -> void:
 	# Crops have their dedicated event; honey still uses the original event.
 	if item.resource_path.begins_with("res://items/honey/"):
 		_on_harvest(item, amount, at, inventory)
+
+func present_animal_collection(animal: AnimalActor, amount: int) -> void:
+	if not is_instance_valid(animal) or animal.production.definition == null or amount <= 0:
+		return
+	var item: ItemDefinition = animal.production.definition.production_item
+	var popup: ItemGainPopup = _on_harvest(item, amount, animal.global_position + Vector2(0, 4), player.selection.inventory)
+	if popup != null:
+		# Keep rewards below the animal; head-space belongs to care/status bubbles.
+		popup.place_world(animal.global_position + Vector2(0, 24))

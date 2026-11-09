@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/goose_02_frames.tres" id="1_3ucvd"]
+[ext_resource type="Resource" path="res://animals/productions/goose_02_production.tres" id="2_gjsqy"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_k56hl"]
+
+[resource]
+script = ExtResource("3_k56hl")
+animal_id = &"goose_02"
+display_name = "Silver Goose"
+species = 5
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_3ucvd")
+eggs_on_land = true
+maturity_seconds = 14400.0
+production = ExtResource("2_gjsqy")

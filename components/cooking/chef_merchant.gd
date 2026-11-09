@@ -71,7 +71,7 @@ func refresh_cooking_status() -> void:
 		cooking_status.hide()
 		return
 	var model: ChefCooking = _world.cooking
-	model.advance(_world.farming.time_manager.now(), false)
+	model.advance(_world.farming.time_manager.now())
 	cooking_status.visible = (not model.queue.is_empty() or not model.ready.is_empty()) and not menu.is_open and not bubble.visible
 	if model.queue.is_empty():
 		cooking_label.text = tr("Ready: %d dishes") % model.ready.size()

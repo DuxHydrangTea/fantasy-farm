@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopOffer" format=3]
+
+[ext_resource type="Resource" path="res://animals/definitions/duck_05.tres" id="1_ecv6s"]
+[ext_resource type="Script" path="res://scripts/animal_shop_offer.gd" id="2_2kr30"]
+
+[resource]
+script = ExtResource("2_2kr30")
+animal = ExtResource("1_ecv6s")
+price = 50000

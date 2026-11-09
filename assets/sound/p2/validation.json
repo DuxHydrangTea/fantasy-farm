@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "clips": [
+    {
+      "event": "birds_day",
+      "seconds": 24.0,
+      "peak": 0.06258063018321991,
+      "rms": 0.0053145564161241055,
+      "energy_above_6khz": 2.5846409810135553e-05,
+      "loop_seam_difference": 0.00017597503028810024,
+      "hash_matches": true
+    },
+    {
+      "event": "crickets_night",
+      "seconds": 11.0,
+      "peak": 0.03579936921596527,
+      "rms": 0.009948032908141613,
+      "energy_above_6khz": 3.2544925984396193e-07,
+      "loop_seam_difference": 0.0006059692241251469,
+      "hash_matches": true
+    },
+    {
+      "event": "rain_loop",
+      "seconds": 24.0,
+      "peak": 0.056518327444791794,
+      "rms": 0.0020620780996978283,
+      "energy_above_6khz": 0.0014078721551064556,
+      "loop_seam_difference": 0.0008081174455583096,
+      "hash_matches": true
+    },
+    {
+      "event": "music_day",
+      "seconds": 50.526326530612245,
+      "peak": 0.10096920281648636,
+      "rms": 0.024308905005455017,
+      "energy_above_6khz": 4.202392063875815e-08,
+      "loop_seam_difference": 0.0002280278131365776,
+      "hash_matches": true
+    },
+    {
+      "event": "music_twilight",
+      "seconds": 58.18181405895692,
+      "peak": 0.09948691725730896,
+      "rms": 0.024368247017264366,
+      "energy_above_6khz": 4.025775479988275e-08,
+      "loop_seam_difference": 0.0004083607345819473,
+      "hash_matches": true
+    },
+    {
+      "event": "music_night",
+      "seconds": 66.20689342403628,
+      "peak": 0.09933382272720337,
+      "rms": 0.022228145971894264,
+      "energy_above_6khz": 5.961793876712476e-08,
+      "loop_seam_difference": 0.0001659942790865898,
+      "hash_matches": true
+    }
+  ]
+}

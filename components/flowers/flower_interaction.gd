@@ -91,9 +91,11 @@ func _on_frame_changed() -> void:
 	var garden: FlowerGarden = _pending.garden
 	var now: float = garden.time_manager.now()
 	if action == &"flower_plant" and selection.inventory.slot(_slot).item == _seed:
-		_pending.plant(selection.inventory, _slot, now)
+		if _pending.plant(selection.inventory, _slot, now):
+			Sound.play(&"sow_seed")
 	elif action == &"flower_water" and selection.get_selected_action() == &"water":
-		_pending.water(now)
+		if _pending.water(now):
+			Sound.play(&"water_crop")
 	elif action == &"flower_harvest":
 		var pot: FlowerPot = _pending
 		pot.refresh(now)

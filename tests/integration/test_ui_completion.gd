@@ -170,7 +170,7 @@ func test_animal_speech_uses_shared_font_and_contains_vietnamese_text() -> void:
 	anchor.add_child(speech)
 	await wait_process_frames(3)
 	var panel: PanelContainer = speech.get_node("BubbleVisual/BubblePanel") as PanelContainer
-	var text: Label = panel.get_node("Text") as Label
+	var text: Label = panel.get_node("Row/Text") as Label
 	assert_true(panel.get_theme_stylebox("panel") is StyleBoxFlat)
 	assert_eq(text.get_theme_font("font"), preload("res://resources/ui/game_font.tres"))
 	assert_eq(text.text, tr("Feeling healthy!"))

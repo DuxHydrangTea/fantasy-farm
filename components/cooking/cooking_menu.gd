@@ -28,6 +28,8 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(%Balance as Label)
+	VisualValueRow.money(%Cost as Label)
 	_build_recipes()
 	_build_ingredients()
 	TouchQuantityComponent.attach(quantity, root, true)
@@ -176,7 +178,7 @@ func _refresh() -> void:
 	var amount: int = int(quantity.value)
 	product_icon.texture = selected.output.icon
 	product_name.text = tr(selected.display_name)
-	(%Balance as Label).text = tr("{coins} coins").format({"coins": GameText.grouped_integer(customer.wallet.balance)})
+	(%Balance as Label).text = GameText.grouped_integer(customer.wallet.balance)
 	for i: int in range(_ingredient_counts.size()):
 		var owned: int = customer.selection.inventory.count_item(selected.ingredients[i].item_id, selected.tier_at(i))
 		var needed: int = selected.amounts[i] * amount
@@ -246,7 +248,9 @@ func _cook() -> void:
 	if not _available():
 		return
 	_message = world.cooking.start(String(selected.recipe_id), int(quantity.value), customer.selection.inventory, world.farming.time_manager.now(), customer.wallet)
+	Sound.result({"ok": _message.is_empty(), "error": _message}, &"coin_spend" if selected.coin_cost > 0 else &"ui_click")
 	if _message.is_empty():
+		Sound.play(&"cook_start")
 		_message = "Chef is cooking. Come back later!"
 		bought_this_visit = true
 		_save.call_deferred()
@@ -258,6 +262,7 @@ func _collect() -> void:
 	var collected: int = world.cooking.collect(customer.selection.inventory, world.farming.time_manager.now())
 	_message = "Dishes collected." if collected > 0 else "Your bag is full. Make room and collect again."
 	if collected > 0:
+		Sound.play(&"collect_dish")
 		_save.call_deferred()
 	_refresh()
 

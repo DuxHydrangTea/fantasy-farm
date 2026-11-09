@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794149675521,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "character: 87d2a2ca-4b4d-4477-bb49-696d348f4bd1\nanimation: breathing-idle\nmode: template\ndirections: south, north, east (3 jobs)\njob_ids: south=3d65c6bc-aa14-49aa-aab3-e31a7a9b9fce, north=ba660d21-343a-4f3d-b098-6ae80f9173eb, east=2ffc2cc0-bad8-4234-9d7b-acc4c081a4a6\ngroup: 332bc1ae-bbce-42a2-a995-3cbea800f749\ncost: 3 generations (1/dir x 3)\neta: ~2-4 min\nadd more directions to this group: animate_character(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\", template_animation_id=\"breathing-idle\", animation_group_id=\"332bc1ae-bbce-42a2-a995-3cbea800f749\", directions=[...])\n\nhint: get_character(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\")\nif poor: delete_animation(character_id=\"87d2a2ca-4b4d-4477-bb49-696d348f4bd1\", animation_type=\"...\") then retry with mode=\"v3\""
+      }
+    ],
+    "isError": false
+  }
+}

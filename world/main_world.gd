@@ -3,6 +3,8 @@ extends Node2D
 ## MainWorld composition root. References are serialized in the scene.
 @export var player: FarmPlayer
 @export var farming: FarmingController
+var atmosphere: FarmAtmosphere
+var soundscape: FarmSoundscape
 var land: LandExpansionComponent
 var apiary: ApiarySystem
 var weather: WeatherManager
@@ -148,6 +150,14 @@ func _ready() -> void:
 	grass.name = "GPUGrass"
 	grass.world = self
 	add_child(grass)
+	soundscape = FarmSoundscape.new()
+	soundscape.world = self
+	soundscape.name = "Soundscape"
+	add_child(soundscape)
+	atmosphere = FarmAtmosphere.new()
+	atmosphere.world = self
+	atmosphere.name = "Atmosphere"
+	add_child(atmosphere)
 	if OS.is_debug_build() and debug_worker_enabled:
 		debug_worker = _spawn_debug_orchard_worker()
 	if OS.is_debug_build():

@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794163942070,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: 07030b0c-fedc-45f3-a74a-a83d23aee88a\njob_id: 07030b0c-fedc-45f3-a74a-a83d23aee88a\nmode: text\nframes: 1\nsize: 48x48px\ntransparent: True\nedit: Rotate this exact Vietnamese farmer to face EAST / RIGHT, strict 90-degree side profile, nose and feet pointing right. Preserve identity, tall slender proportions, native pixel density and exact scale. Same Vietnamese conical non la palm-leaf hat, indigo ao ba ba shirt, brown trousers and black white checkered scarf, correctly seen from the side. About 40-43 pixels tall, foot baseline y=44, complete silhouette within 48x48. Natural walking starting pose. No front-facing or three-quarter view. Transparent background, crisp pixel art.\nasset_id: 7b3dab80-b349-5322-b1fc-da74e201180c\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"07030b0c-fedc-45f3-a74a-a83d23aee88a\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/07030b0c-fedc-45f3-a74a-a83d23aee88a/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

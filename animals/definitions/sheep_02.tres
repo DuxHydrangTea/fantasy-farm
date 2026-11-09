@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/sheep_02_frames.tres" id="1_ngoye"]
+[ext_resource type="Resource" path="res://animals/productions/sheep_02_production.tres" id="2_qwk0j"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_m3d7f"]
+
+[resource]
+script = ExtResource("3_m3d7f")
+animal_id = &"sheep_02"
+display_name = "Scarlet Sheep"
+species = 3
+move_speed = 26.0
+footprint = Vector2(14, 8)
+pen_margin = 14.0
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_ngoye")
+maturity_seconds = 21600.0
+production = ExtResource("2_qwk0j")

@@ -92,6 +92,7 @@ func _on_frame_changed() -> void:
 		return
 	var action: StringName = _action
 	_action = &""
+	last_result = {}
 	if not is_instance_valid(farming):
 		return
 	if action == &"tool" and state.current_state == StateComponent.State.TOOL:
@@ -105,6 +106,7 @@ func _on_frame_changed() -> void:
 		if _storage_seed:
 			if selection.storage_service != null and selection.planting_inventory() == _plant_source and selection.get_selected_item() == _seed:
 				last_result = selection.storage_service.plant_from_storage(_seed.item_id, _selection_revision, _targets)
+				_area_sound(action)
 			return
 		var inventory: InventoryComponent = selection.inventory
 		# Selection changes cannot redirect the seed or spend a different stack mid-action.
@@ -112,6 +114,11 @@ func _on_frame_changed() -> void:
 			last_result = farming.apply_area(action, _targets, inventory, _slot_index, _seed, get_parent() as PhysicsBody2D)
 	elif action == &"harvest" and state.current_state == StateComponent.State.TOOL:
 		farming.harvest(_cell, state.tool_selection.inventory)
+	_area_sound(action)
+
+func _area_sound(action: StringName) -> void:
+	if int(last_result.get("changed", 0)) > 0:
+		Sound.play(&"till_soil" if action == &"tool" else &"water_crop" if action == &"water" else &"sow_seed")
 
 func get_action() -> StringName:
 	return _action if not _action.is_empty() else state.active_action

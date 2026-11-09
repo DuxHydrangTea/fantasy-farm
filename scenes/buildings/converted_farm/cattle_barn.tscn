@@ -1,66 +1,17 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://assets/Buildings/ConvertedFarm/cattle_barn.png" id="art"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/UpgradedLivestock/cattle_barn.png" id="1_57ddm"]
 
-[sub_resource type="RectangleShape2D" id="Footprint0"]
-size = Vector2(94, 34)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ouug"]
+size = Vector2(100, 40)
 
-[sub_resource type="RectangleShape2D" id="Footprint1"]
-size = Vector2(40, 34)
-
-[sub_resource type="RectangleShape2D" id="Footprint2"]
-size = Vector2(94, 9)
-
-[sub_resource type="RectangleShape2D" id="Footprint3"]
-size = Vector2(34, 5)
-
-[sub_resource type="RectangleShape2D" id="Footprint4"]
-size = Vector2(5, 61)
-
-[sub_resource type="RectangleShape2D" id="Footprint5"]
-size = Vector2(76, 5)
-
-[sub_resource type="RectangleShape2D" id="Footprint6"]
-size = Vector2(44, 22)
-
-[sub_resource type="RectangleShape2D" id="Footprint7"]
-size = Vector2(33, 18)
-
-[node name="CattleBarn" type="StaticBody2D"]
+[node name="CattleBarn" type="StaticBody2D" unique_id=1743991484]
 texture_filter = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(15, -31.5)
-texture = ExtResource("art")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=840405170]
+position = Vector2(0, -57)
+texture = ExtResource("1_57ddm")
 
-[node name="Footprint0" type="CollisionShape2D" parent="."]
-position = Vector2(-44, -17)
-shape = SubResource("Footprint0")
-
-[node name="Footprint1" type="CollisionShape2D" parent="."]
-position = Vector2(67, -17)
-shape = SubResource("Footprint1")
-
-[node name="Footprint2" type="CollisionShape2D" parent="."]
-position = Vector2(23, -31.5)
-shape = SubResource("Footprint2")
-
-[node name="Footprint3" type="CollisionShape2D" parent="."]
-position = Vector2(116, -50.5)
-shape = SubResource("Footprint3")
-
-[node name="Footprint4" type="CollisionShape2D" parent="."]
-position = Vector2(134.5, -16.5)
-shape = SubResource("Footprint4")
-
-[node name="Footprint5" type="CollisionShape2D" parent="."]
-position = Vector2(96, 16.5)
-shape = SubResource("Footprint5")
-
-[node name="Footprint6" type="CollisionShape2D" parent="."]
-position = Vector2(-71, 4)
-shape = SubResource("Footprint6")
-
-[node name="Footprint7" type="CollisionShape2D" parent="."]
-position = Vector2(-27.5, 0)
-shape = SubResource("Footprint7")
+[node name="Footprint" type="CollisionShape2D" parent="." unique_id=1092903724]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_6ouug")

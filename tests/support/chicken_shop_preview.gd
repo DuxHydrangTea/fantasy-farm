@@ -29,7 +29,7 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png(output.path_join("chicken-shop-%dx%d.png" % [size.x, size.y]))
 		assert(Rect2(Vector2.ZERO, Vector2(size)).grow(1).encloses(shop.panel.get_global_rect()))
-	assert(shop.details.text.contains("525"))
+	assert(shop.production_row.value.text.contains("525"))
 	assert(SaveManager.adapter == null)
 	print("CHICKEN_SHOP_PREVIEW ", shop.details.text)
 	shop.close(false)

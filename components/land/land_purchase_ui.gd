@@ -88,6 +88,7 @@ func _buy() -> void:
 	if not is_open:
 		return
 	var result: Dictionary = expansion.purchase(_quoted_blocks)
+	Sound.result(result, &"land_clear")
 	if result.ok:
 		close(false)
 	else:

@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/support/care_feedback_preview.gd" id="1"]
+
+[node name="CareFeedbackPreview" type="Node"]
+script = ExtResource("1")

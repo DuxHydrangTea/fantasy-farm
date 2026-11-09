@@ -13,8 +13,10 @@ var animal: AnimalActor
 var display_id: String
 var _compact: bool = false
 var _text: AnimalStatusText = AnimalStatusText.new()
+var production_row: VisualValueRow
 
 func _ready() -> void:
+	production_row = VisualValueRow.before(produce)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var style: StyleBox = preload("res://resources/ui/cozy_hud/slot_normal.tres").duplicate() as StyleBox
 	for edge: int in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]:
@@ -49,6 +51,8 @@ func set_compact(value: bool) -> void:
 	(%Stage as Label).add_theme_font_size_override("font_size", 12 if value else 16)
 	for label: Label in [food_text, water_text, produce]:
 		label.add_theme_font_size_override("font_size", 12 if value else 16)
+	production_row.value.add_theme_font_size_override("font_size", 12 if value else 16)
+	production_row.icon.custom_minimum_size = Vector2(20, 20) if value else Vector2(24, 24)
 	food_text.custom_minimum_size.x = 64 if value else 96
 	water_text.custom_minimum_size.x = 64 if value else 96
 	(%Body as VBoxContainer).add_theme_constant_override("separation", 4 if value else 8)
@@ -78,7 +82,9 @@ func refresh() -> void:
 	water_text.text = tr("Hydration: {percent}%").format({"percent": floori(water.value)})
 	(food.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = Color("c78d3b") if food.value < 30 else Color("89a76c")
 	(water.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = Color("c78d3b") if water.value < 30 else Color("65a0b8")
-	produce.text = _text.produce(animal) + "\n" + _text.production_state(animal)
+	var definition: AnimalProductionDefinition = animal.production.definition
+	production_row.show_production(definition, _text.remaining(definition.production_seconds) if definition != null else "")
+	produce.text = "%d%% · %s" % [floori(animal.production.progress_ratio() * 100.0), _text.production_state(animal)]
 	if animal.production.stored_amount > 0 and animal.production.definition != null and animal.production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION:
 		produce.text += "\n" + tr("Ready to collect: {amount}").format({"amount": animal.production.stored_amount})
 	tooltip_text = _text.maturity(animal) + "\n" + _text.lifetime(animal)

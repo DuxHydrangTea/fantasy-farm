@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "event": "birds_day",
+      "file": "assets/sound/p2/birds_day.ogg",
+      "duration": 24.0,
+      "peak_db": -24,
+      "loop": true,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/countryside-s0097.html",
+        "source_sha256": "6b28d6a896620e37ea62c6bfc9248dd31f7363692f63970ad8cd0dbf64a278d0"
+      },
+      "processing": "12s excerpt, highpass100, double lowpass3800, 1s wrap crossfade, peak normalize",
+      "sha256": "33362adbb8974a5314d2f4904153e628e569431f73ed2f0390bc6b00a94c776c"
+    },
+    {
+      "event": "crickets_night",
+      "file": "assets/sound/p2/crickets_night.ogg",
+      "duration": 11.0,
+      "peak_db": -29,
+      "loop": true,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/song-of-nocturnal-insect-2-s0425.html",
+        "source_sha256": "e2844a9c4535afef647aef0e053786ed0257a14a65f4fd2f7b77da1fa855418f"
+      },
+      "processing": "1s excerpt, highpass100, 4 lowpass filters at 2400Hz, 1s wrap crossfade, peak normalize",
+      "sha256": "1f436bad6b305a68fb46ad6de506aa85d93864180857c906abb35d620d3ff445"
+    },
+    {
+      "event": "rain_loop",
+      "file": "assets/sound/p2/rain_loop.ogg",
+      "duration": 24.0,
+      "peak_db": -24,
+      "loop": true,
+      "source": {
+        "author": "Joseph SARDIN",
+        "license": "CC0-1.0",
+        "url": "https://bigsoundbank.com/rain-on-puddle-s1290.html",
+        "source_sha256": "aa5a6824c92440431ec38b3de692a941b61fdfa3c29c69b14307651000269360"
+      },
+      "processing": "15s excerpt, highpass100, double lowpass3200, 1s wrap crossfade, peak normalize",
+      "sha256": "75d82f8a1d452f19f65031a912059302831702f22a3bda385baf0d5a27de4784"
+    },
+    {
+      "event": "music_day",
+      "file": "assets/sound/p2/music_day.ogg",
+      "duration": 50.526326530612245,
+      "peak_db": -20,
+      "loop": true,
+      "source": {
+        "author": "Fantasy Farm project",
+        "license": "Original project asset; no third-party samples",
+        "type": "original procedural composition",
+        "score": "assets/sound/p2/music_day.json",
+        "renderer": ".agents/skills/godot/scripts/assets/make_music.py"
+      },
+      "processing": "Original 16 bars, sine pad/keys/bass, no percussion; renderer wraps release tails at loop seam",
+      "sha256": "90c843f1fbaf3ec3d32add40aa0c21e13b12a76b75d503ca5e1f9e639598736a"
+    },
+    {
+      "event": "music_twilight",
+      "file": "assets/sound/p2/music_twilight.ogg",
+      "duration": 58.18181405895692,
+      "peak_db": -20,
+      "loop": true,
+      "source": {
+        "author": "Fantasy Farm project",
+        "license": "Original project asset; no third-party samples",
+        "type": "original procedural composition",
+        "score": "assets/sound/p2/music_twilight.json",
+        "renderer": ".agents/skills/godot/scripts/assets/make_music.py"
+      },
+      "processing": "Original 16 bars, sine pad/keys/bass, no percussion; renderer wraps release tails at loop seam",
+      "sha256": "542e9c67a24e302bcb338ab535c86f3ea922f69fd49e20c3ed9c77edbcd9e723"
+    },
+    {
+      "event": "music_night",
+      "file": "assets/sound/p2/music_night.ogg",
+      "duration": 66.20689342403628,
+      "peak_db": -20,
+      "loop": true,
+      "source": {
+        "author": "Fantasy Farm project",
+        "license": "Original project asset; no third-party samples",
+        "type": "original procedural composition",
+        "score": "assets/sound/p2/music_night.json",
+        "renderer": ".agents/skills/godot/scripts/assets/make_music.py"
+      },
+      "processing": "Original 16 bars, sine pad/keys/bass, no percussion; renderer wraps release tails at loop seam",
+      "sha256": "b74e8025178d06ad01abbbd55f799851d4ff9665868fe37eb56c18b53565d8d5"
+    }
+  ],
+  "existing_wind": "res://assets/audio/farm_wind.wav (WeatherEffects owns the only wind voice)"
+}

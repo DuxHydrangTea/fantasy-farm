@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/cow_06_frames.tres" id="1_exeic"]
+[ext_resource type="Resource" path="res://animals/productions/cow_06_production.tres" id="2_q5ti3"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_ktb72"]
+
+[resource]
+script = ExtResource("3_ktb72")
+animal_id = &"cow_06"
+display_name = "Mahogany Cow"
+species = 2
+move_speed = 22.0
+footprint = Vector2(18, 10)
+pen_margin = 16.0
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_exeic")
+maturity_seconds = 28800.0
+production = ExtResource("2_q5ti3")

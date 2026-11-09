@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AnimalProductionDefinition" format=3]
+
+[ext_resource type="Resource" path="res://items/animal_produces/sheep_wool.tres" id="1_5or1g"]
+[ext_resource type="Script" path="res://scripts/animals/animal_production_definition.gd" id="2_5m2vh"]
+
+[resource]
+script = ExtResource("2_5m2vh")
+production_item = ExtResource("1_5or1g")
+production_amount = 275
+production_seconds = 10800.0

@@ -22,7 +22,8 @@ func test_pen_upgrade_keeps_quote_price_capacity_and_cooldown_consistent() -> vo
 	var price: int = int(menu._upgrade_offer.price)
 	var capacity: int = menu.board.pen.capacity
 	assert_eq(menu.cards.size(), 4)
-	assert_eq(menu.balance_label.text, tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)}))
+	assert_eq(menu.balance_label.text, GameText.grouped_integer(balance))
+	assert_true(menu.balance_label.has_meta(&"coin_row"))
 	menu._purchase_upgrade()
 	assert_eq(menu.board.pen.capacity, capacity + 5)
 	assert_eq(fixture.world.player.wallet.balance, balance - price)

@@ -93,10 +93,11 @@ func _use_medicine(animal: AnimalActor) -> void:
 	_feedback = "Animal cured!" if result.ok else String(result.error)
 	_feedback_until = Time.get_ticks_msec() + 1800
 	if result.ok and is_instance_valid(animal):
+		Sound.play(&"animal_care")
 		var effect: Node2D = HealingEffect.new()
 		effect.name = "AnimalHealingEffect"
 		animal.add_child(effect)
-		animal.add_child(CareBubble.new())
+		CareBubble.present(animal, _item.icon)
 
 func _state_changed(_old: StringName, current: StringName) -> void:
 	if current != &"tool":
@@ -117,6 +118,7 @@ func _frame_changed() -> void:
 			var target: InteractionTarget = InteractionTarget.new(_weed_crop, InteractionTarget.Kind.CROP, player)
 			var cell: Vector2i = farm.world_to_cell(target.point())
 			if farm.get_crop(cell) == _weed_crop and farm.treat_crop(cell, false, player):
+				Sound.play(&"weed_remove")
 				_feedback = "Weeds cleared!"
 			else:
 				_feedback = "Move closer to the crop."
@@ -131,6 +133,10 @@ func _frame_changed() -> void:
 		_feedback = "Face a nearby sick animal to use medicine." if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Face a nearby animal to use the tonic."
 	else:
 		var result: Dictionary = service.use(player.farming_actions.get_farming_controller(), _cell, _animal, player.selection.inventory, _slot, _item, player)
+		if result.ok:
+			if action == &"animal_tonic":
+				CareBubble.present(_animal, _item.icon, "Animal tonic applied!")
+			Sound.play(&"animal_care" if action == &"animal_tonic" else &"spray_crop" if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE else &"weed_remove" if _item.booster_kind == ItemDefinition.BoosterKind.HERBICIDE else &"fertilize_crop")
 		_feedback = ("Animal cured!" if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Pests removed!" if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE else "Booster applied!") if result.ok else String(result.error)
 	_feedback_until = Time.get_ticks_msec() + 1800
 

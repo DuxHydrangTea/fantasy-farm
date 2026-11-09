@@ -137,6 +137,7 @@ func _refresh() -> void:
 func _repair() -> void:
 	_message = world.honey_garden.repair(hive)
 	if _message.is_empty():
+		Sound.play(&"repair_hive")
 		_message = "Hive repaired."
 		_save.call_deferred()
 	_refresh()
@@ -144,6 +145,7 @@ func _repair() -> void:
 func _collect() -> void:
 	_message = world.honey_garden.collect(hive)
 	if _message.is_empty():
+		Sound.play(&"collect_honey")
 		_message = "Honey collected."
 		_save.call_deferred()
 	_refresh()

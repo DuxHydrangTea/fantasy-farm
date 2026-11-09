@@ -28,6 +28,10 @@ var selected: ShopOffer
 var category: int = ShopOffer.Category.CROP
 var _buttons: Dictionary = {}
 var _category_tabs: Dictionary[int, Button] = {}
+var animal_species: int = -1
+var _species_scroll: ScrollContainer
+var _species_tabs: Dictionary[int, Button] = {}
+const SPECIES_TITLES: Array[String] = ["Chicken", "Duck", "Cow", "Sheep", "Pig", "Goose", "Horse"]
 @onready var product_icon: TextureRect = %ProductIcon
 @onready var product_name: Label = %ProductName
 @onready var product_type: Label = %ProductType
@@ -40,10 +44,15 @@ var _category_tabs: Dictionary[int, Button] = {}
 @onready var total_row: HBoxContainer = %TotalRow
 var _compact: bool = false
 var _animal_text: AnimalStatusText = AnimalStatusText.new()
+var production_row: VisualValueRow
 
 func _ready() -> void:
 	InventorySlot.style_count(owned_count)
 	super._ready()
+	for label: Label in [balance_label, unit_price, total_price]:
+		VisualValueRow.money(label)
+	production_row = VisualValueRow.before(details)
+	production_row.hide()
 	_normal_hint = hint.text
 	TouchQuantityComponent.attach(quantity, root, true)
 	balance_label.show()
@@ -62,9 +71,47 @@ func _ready() -> void:
 		button.set_meta("category_id", index)
 		_category_tabs[index] = button
 		button.pressed.connect(show_category.bind(index))
+	_build_species_tabs()
 	_fit_layout()
 
+func _build_species_tabs() -> void:
+	_species_scroll = ScrollContainer.new()
+	_species_scroll.name = "AnimalSpeciesTabs"
+	_species_scroll.custom_minimum_size.y = 56
+	_species_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	_species_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_species_scroll.follow_focus = true
+	var left: Node = categories.get_parent().get_parent()
+	left.add_child(_species_scroll)
+	left.move_child(_species_scroll, categories.get_parent().get_index() + 1)
+	var row: HBoxContainer = HBoxContainer.new()
+	_species_scroll.add_child(row)
+	for species: int in range(-1, SPECIES_TITLES.size()):
+		var tab: Button = Button.new()
+		tab.toggle_mode = true
+		tab.custom_minimum_size = Vector2(76, 40)
+		tab.pressed.connect(show_animal_species.bind(species))
+		row.add_child(tab)
+		_species_tabs[species] = tab
+	_species_scroll.hide()
+
+func show_animal_species(species: int) -> void:
+	if category != ShopOffer.Category.ANIMAL or not _species_tabs.has(species):
+		return
+	animal_species = species
+	browse.scroll_vertical = 0
+	show_category(category)
+
+func _refresh_species_tabs() -> void:
+	_species_scroll.visible = category == ShopOffer.Category.ANIMAL
+	for species: int in _species_tabs:
+		var tab: Button = _species_tabs[species]
+		tab.text = tr("All animals") if species == -1 else tr(SPECIES_TITLES[species])
+		tab.set_pressed_no_signal(species == animal_species)
+		tab.visible = species == -1 or merchant.catalog.animal_offers.any(func(offer: AnimalShopOffer) -> bool: return offer.animal.species == species)
+
 func _start_visit() -> void:
+	animal_species = -1
 	service = ShopService.new(merchant.catalog, customer.wallet, customer.selection.inventory)
 	var world: FarmWorld = customer.get_parent() as FarmWorld
 	service.world = world
@@ -111,6 +158,10 @@ func show_category(value: int) -> void:
 	var previous_offer: AnimalShopOffer = selected_animal_offer if category == value else null
 	var previous: AnimalActor = selected_animal if category == value and is_instance_valid(selected_animal) else null
 	category = value
+	buy_button.icon = VisualValueRow.COIN if value == ShopOffer.Category.SELL_ANIMAL else null
+	buy_button.add_theme_constant_override("icon_max_width", 20)
+	production_row.hide()
+	_refresh_species_tabs()
 	for child: Node in grid.get_children():
 		child.free()
 	_buttons.clear()
@@ -131,10 +182,12 @@ func show_category(value: int) -> void:
 		upgrade_view.build()
 	elif category == ShopOffer.Category.ANIMAL:
 		for offer: AnimalShopOffer in merchant.catalog.animal_offers:
+			if animal_species != -1 and offer.animal.species != animal_species:
+				continue
 			_card(offer.icon(), tr(offer.animal.display_name), offer.price, offer, select_animal_offer.bind(offer))
 			if selected_animal_offer == null:
 				selected_animal_offer = offer
-		if merchant.catalog.animal_offers.has(previous_offer):
+		if _buttons.has(previous_offer):
 			selected_animal_offer = previous_offer
 	elif category == ShopOffer.Category.SELL_ANIMAL:
 		_animal_rows = animal_service.owned_animals()
@@ -195,6 +248,8 @@ func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback:
 	price.add_theme_font_size_override("font_size", 16 if _compact else 18)
 	price.text = _coins(cost)
 	card_body.add_child(price)
+	if category != UPGRADES:
+		VisualValueRow.money(price)
 	button.pressed.connect(callback)
 	grid.add_child(button)
 	_buttons[key] = button
@@ -270,6 +325,7 @@ func _duration(seconds: float, remaining: bool = true) -> String:
 
 func _refresh_animal_purchase() -> void:
 	if selected_animal_offer == null:
+		production_row.hide()
 		present_product(null, tr("No animals available to buy."), "")
 		unit_price.text = "—"
 		total_price.text = "—"
@@ -282,8 +338,8 @@ func _refresh_animal_purchase() -> void:
 	present_product(offer.icon(), tr(offer.animal.display_name), tr("Animals"))
 	unit_price.text = _coins(offer.price)
 	total_price.text = _coins(offer.price * amount)
-	details.text = tr("{animal} · {price} coins / animal · Young, placed in a pen\nMatures in {maturity} · Lifespan {lifespan}").format({"animal": tr(offer.animal.display_name), "price": offer.price, "maturity": _duration(offer.animal.maturity_seconds), "lifespan": _duration(offer.animal.lifespan_seconds)})
-	details.text = _animal_text.recipe(offer.animal.production) + "\n" + details.text
+	details.text = tr("Young, placed in a pen") + "\n" + tr("Matures in {maturity}\nLifespan {lifespan}").format({"maturity": _duration(offer.animal.maturity_seconds), "lifespan": _duration(offer.animal.lifespan_seconds)})
+	production_row.show_production(offer.animal.production, _animal_text.remaining(offer.animal.production.production_seconds) if offer.animal.production != null else "")
 	buy_button.text = tr("Buy ×{count}").format({"count": amount})
 	buy_button.disabled = not checked.ok
 	status.text = tr("New animals start at age 0. Resale: 50% when young, 75% when adult.") if checked.ok else GameText.error(checked)
@@ -300,16 +356,18 @@ func _refresh_animal_sale() -> void:
 	for animal: AnimalActor in _animal_rows:
 		if is_instance_valid(animal):
 			var quote: Dictionary = animal_service.quote_sell(animal)
-			(_price_labels[animal] as Label).text = tr("{coins} coins").format({"coins": int(quote.get("total", 0))})
+			(_price_labels[animal] as Label).text = _coins(int(quote.get("total", 0)))
 	var checked: Dictionary = animal_service.quote_sell(selected_animal)
 	buy_button.disabled = not checked.ok
 	buy_button.text = tr("Sell animal") if not checked.ok else tr("Sell - {coins} coins").format({"coins": int(checked.total)})
 	if not checked.ok:
+		production_row.hide()
 		present_product(null, tr("Sell animals"), "")
 		details.text = tr("Select the individual animal you want to sell.") if not _animal_rows.is_empty() else tr("No animals on your farm to sell.")
 		status.text = tr("Sell one animal at a time. Finished produce stays on the farm.")
 		return
 	var animal: AnimalActor = selected_animal
+	production_row.show_production(animal.definition.production, _animal_text.remaining(animal.definition.production.production_seconds) if animal.definition.production != null else "")
 	present_product(animal.sprite.sprite_frames.get_frame_texture(&"idle_down", 0), tr(animal.definition.display_name), tr("Sell animals"))
 	details.text = tr("{animal} · #{id} · {stage} · Age {age}").format({"animal": tr(animal.definition.display_name), "id": String(animal.persistent_id).right(8), "stage": tr("Adult") if animal.growth.is_adult() else tr("Young"), "age": _duration(animal.growth.age_seconds, false)})
 	details.text += "\n" + _animal_text.summary(animal)
@@ -328,6 +386,7 @@ func purchase() -> void:
 			selected_animal = null
 		var sold_name: String = tr(selected_animal.definition.display_name) if is_instance_valid(selected_animal) else tr("animal")
 		var sale: Dictionary = animal_service.sell(selected_animal)
+		Sound.result(sale, &"coin_receive")
 		if sale.ok:
 			bought_this_visit = true
 			selected_animal = null
@@ -339,6 +398,7 @@ func purchase() -> void:
 		return
 	var animal_purchase: bool = category == ShopOffer.Category.ANIMAL
 	var result: Dictionary = animal_service.buy(selected_animal_offer, int(quantity.value)) if animal_purchase else service.buy(selected, int(quantity.value))
+	Sound.result(result, &"coin_spend")
 	if result.ok:
 		bought_this_visit = true
 		if not animal_purchase and selected.item.item_id == WoodMarket.ITEM:
@@ -360,7 +420,7 @@ func _refresh_language() -> void:
 		show_category(category)
 
 func _coins(amount: int) -> String:
-	return tr("{coins} coins").format({"coins": GameText.grouped_integer(amount)})
+	return GameText.grouped_integer(amount)
 
 func present_product(texture: Texture2D, title: String, subtitle: String) -> void:
 	product_icon.texture = texture
@@ -412,12 +472,13 @@ func _fit_layout() -> void:
 	var width: float = panel.custom_minimum_size.x - 32.0 - sidebar.custom_minimum_size.x - 26.0 - 16.0
 	var card_width: float = 104.0 if _compact else 148.0
 	grid.columns = clampi(floori((width + 8.0) / (card_width + 8.0)), 1, 4)
-	for card: Button in _buttons.values():
+	for key: Variant in _buttons:
+		var card: Button = _buttons[key]
 		card.custom_minimum_size = Vector2(card_width, 108 if _compact else 148)
 		var content: VBoxContainer = card.get_child(0) as VBoxContainer
 		(content.get_child(0) as TextureRect).custom_minimum_size = Vector2(32, 32) if _compact else Vector2(56, 56)
 		(content.get_child(1) as Label).add_theme_font_size_override("font_size", 16 if _compact else 18)
-		(content.get_child(2) as Label).add_theme_font_size_override("font_size", 16 if _compact else 18)
+		(_price_labels[key] as Label).add_theme_font_size_override("font_size", 16 if _compact else 18)
 		if category == UPGRADES:
 			card.custom_minimum_size.y = 176
 	TouchQuantityComponent.refresh_for(quantity)

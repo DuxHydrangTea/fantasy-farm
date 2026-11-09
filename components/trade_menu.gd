@@ -36,6 +36,7 @@ func open(owner_npc: ShopMerchant, player: FarmPlayer) -> bool:
 	visit_started.emit()
 	_closing = false
 	_slide.enter()
+	Sound.play(&"ui_open")
 	return true
 
 func _wallet_changed(_balance: int) -> void:
@@ -50,6 +51,7 @@ func close(show_thanks: bool = true) -> void:
 	if show_thanks and is_inside_tree() and not is_queued_for_deletion():
 		if not _closing:
 			_closing = true
+			Sound.play(&"ui_close")
 			_slide.leave(_finish_close.bind(show_thanks))
 	else:
 		_finish_close(show_thanks)

@@ -1,0 +1,140 @@
+[
+  {
+    "start_seconds": 0,
+    "event": "footstep_dirt",
+    "title": "Bước chân trên đất",
+    "file": "movement/footstep_dirt_01.wav"
+  },
+  {
+    "start_seconds": 0.93,
+    "event": "footstep_grass",
+    "title": "Bước chân trên cỏ",
+    "file": "movement/footstep_grass_01.wav"
+  },
+  {
+    "start_seconds": 1.93,
+    "event": "footstep_stone",
+    "title": "Bước chân trên đường đá",
+    "file": "movement/footstep_stone_01.wav"
+  },
+  {
+    "start_seconds": 2.69,
+    "event": "till_soil",
+    "title": "Cuốc đất",
+    "file": "farming/till_soil_01.wav"
+  },
+  {
+    "start_seconds": 4.24,
+    "event": "sow_seed",
+    "title": "Gieo hạt",
+    "file": "farming/sow_seed_01.wav"
+  },
+  {
+    "start_seconds": 5.54,
+    "event": "water_crop",
+    "title": "Tưới nước",
+    "file": "farming/water_crop_01.wav"
+  },
+  {
+    "start_seconds": 7.34,
+    "event": "harvest_crop",
+    "title": "Thu hoạch rau",
+    "file": "harvest/harvest_crop_01.wav"
+  },
+  {
+    "start_seconds": 8.69,
+    "event": "harvest_flower",
+    "title": "Hái hoa",
+    "file": "harvest/harvest_flower_01.wav"
+  },
+  {
+    "start_seconds": 9.79,
+    "event": "harvest_fruit",
+    "title": "Hái trái cây",
+    "file": "harvest/harvest_fruit_01.wav"
+  },
+  {
+    "start_seconds": 10.94,
+    "event": "item_pickup",
+    "title": "Nhặt vật phẩm",
+    "file": "items/item_pickup_01.wav"
+  },
+  {
+    "start_seconds": 11.69,
+    "event": "coin_receive",
+    "title": "Nhận xu",
+    "file": "economy/coin_receive_01.wav"
+  },
+  {
+    "start_seconds": 13.11,
+    "event": "coin_spend",
+    "title": "Thanh toán",
+    "file": "economy/coin_spend_01.wav"
+  },
+  {
+    "start_seconds": 13.92,
+    "event": "ui_click",
+    "title": "Bấm nút",
+    "file": "ui/ui_click_01.wav"
+  },
+  {
+    "start_seconds": 14.66,
+    "event": "ui_tab",
+    "title": "Đổi tab",
+    "file": "ui/ui_tab_01.wav"
+  },
+  {
+    "start_seconds": 15.41,
+    "event": "ui_open",
+    "title": "Mở menu",
+    "file": "ui/ui_open_01.wav"
+  },
+  {
+    "start_seconds": 16.24,
+    "event": "ui_close",
+    "title": "Đóng menu",
+    "file": "ui/ui_close_01.wav"
+  },
+  {
+    "start_seconds": 17.05,
+    "event": "storage_deposit",
+    "title": "Cất vật phẩm vào kho",
+    "file": "storage/storage_deposit_01.wav"
+  },
+  {
+    "start_seconds": 17.94,
+    "event": "storage_withdraw",
+    "title": "Lấy vật phẩm khỏi kho",
+    "file": "storage/storage_withdraw_01.wav"
+  },
+  {
+    "start_seconds": 19.14,
+    "event": "error_resources",
+    "title": "Không đủ tiền hoặc nguyên liệu",
+    "file": "feedback/error_resources_01.wav"
+  },
+  {
+    "start_seconds": 19.95,
+    "event": "error_capacity",
+    "title": "Túi hoặc kho đầy",
+    "file": "feedback/error_capacity_01.wav"
+  },
+  {
+    "start_seconds": 20.7,
+    "event": "order_delivered",
+    "title": "Giao đơn hàng thành công",
+    "file": "rewards/order_delivered_01.wav"
+  },
+  {
+    "start_seconds": 21.89,
+    "event": "objective_complete",
+    "title": "Hoàn thành mục tiêu",
+    "file": "rewards/objective_complete_01.wav"
+  },
+  {
+    "start_seconds": 23.04,
+    "event": "reward_claim",
+    "title": "Nhận thưởng nhiệm vụ",
+    "file": "rewards/reward_claim_01.wav"
+  }
+]

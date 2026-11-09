@@ -37,6 +37,7 @@ func _ready() -> void:
 	for point: Vector2 in [Vector2(0, 0), Vector2(64, 0), Vector2(0, 64), Vector2(64, 64)]:
 		_clouds.append(_atlas(CLOUDS, Rect2(point, Vector2(64, 64))))
 	wind_audio = AudioStreamPlayer.new()
+	wind_audio.bus = &"Ambience"
 	wind_audio.stream = preload("res://assets/audio/farm_wind.wav")
 	wind_audio.volume_db = -80.0
 	add_child(wind_audio)

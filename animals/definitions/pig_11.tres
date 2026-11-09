@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/pig_11_frames.tres" id="1_ts3wk"]
+[ext_resource type="Resource" path="res://animals/productions/pig_11_production.tres" id="2_brp0s"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_8lyo4"]
+
+[resource]
+script = ExtResource("3_8lyo4")
+animal_id = &"pig_11"
+display_name = "Slate Pig"
+species = 4
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_ts3wk")
+maturity_seconds = 43200.0
+production = ExtResource("2_brp0s")

@@ -24,6 +24,8 @@ func _ready() -> void:
 	root = %Root
 	close_button = %Close
 	super._ready()
+	VisualValueRow.money(balance_label)
+	VisualValueRow.money(%UpgradeCost as Label)
 	visit_started.connect(_visit)
 	models_changed.connect(refresh)
 	root.resized.connect(_fit)
@@ -63,7 +65,7 @@ func _fit() -> void:
 		card.set_compact(_compact)
 
 func _coins(value: int) -> String:
-	return tr("{coins} coins").format({"coins": GameText.grouped_integer(value)})
+	return GameText.grouped_integer(value)
 
 func _refresh_summary(animals: Array[AnimalActor]) -> void:
 	balance_label.text = _coins(customer.wallet.balance)
@@ -174,6 +176,7 @@ func _purchase_upgrade() -> void:
 	if not is_open or Time.get_ticks_msec() < _upgrade_cooldown_until or not bool(_upgrade_offer.get("ok", false)):
 		return
 	var result: Dictionary = board.world.pen_upgrades.purchase(board.pen, int(_upgrade_offer.level), int(_upgrade_offer.price))
+	Sound.result(result, &"upgrade_complete")
 	if result.ok:
 		_upgrade_cooldown_until = Time.get_ticks_msec() + 500
 	upgrade_feedback.text = tr("Pen expanded to {capacity} spaces.").format({"capacity": result.capacity}) if result.ok else tr(str(result.error))

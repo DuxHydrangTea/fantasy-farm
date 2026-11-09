@@ -11,8 +11,10 @@ extends CanvasLayer
 var animal: AnimalActor
 var _text: AnimalStatusText = AnimalStatusText.new()
 var _elapsed: float = 0.0
+var production_row: VisualValueRow
 
 func _ready() -> void:
+	production_row = VisualValueRow.before(produce_label)
 	UIScaleComponent.attach(self, root)
 	root.resized.connect(_fit_layout)
 	_fit_layout()
@@ -21,6 +23,8 @@ func _ready() -> void:
 func _fit_layout() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	var panel: PanelContainer = title.get_parent().get_parent() as PanelContainer
+	# Leave the top-right wallet and settings controls visible above the inspector.
+	(panel.get_parent() as MarginContainer).add_theme_constant_override("margin_top", 76)
 	panel.custom_minimum_size.x = 320 if touch else 340
 	title.add_theme_font_size_override("font_size", 20 if touch else 24)
 	for caption: Label in [maturity_label, lifetime_label, produce_label, state_label]:
@@ -39,7 +43,14 @@ func refresh() -> void:
 	maturity_label.text = _text.maturity(animal)
 	maturity_label.tooltip_text = tr("Early maturity") if animal.growth.juvenile_tonic_used else ""
 	lifetime_label.text = _text.lifetime(animal)
-	produce_label.text = _text.produce(animal)
+	var definition: AnimalProductionDefinition = animal.production.definition
+	production_row.show_production(definition, _text.remaining(definition.production_seconds) if definition != null else "")
+	produce_label.text = "%d%%" % floori(animal.production.progress_ratio() * 100.0)
+	var ready_amount: int = animal.production.stored_amount
+	if animal.product_pickup() != null:
+		ready_amount += animal.product_pickup().amount
+	if ready_amount > 0:
+		produce_label.text += " · " + tr("Ready to collect: {amount}").format({"amount": GameText.grouped_integer(ready_amount)})
 	produce_label.tooltip_text = tr("Tonic active") if animal.production.tonic_pending else ""
 	progress.value = clampf(animal.production.progress_ratio() * 100.0, 0.0, 100.0)
 	state_label.text = _text.production_state(animal)

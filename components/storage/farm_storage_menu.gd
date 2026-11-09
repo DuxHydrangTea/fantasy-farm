@@ -243,14 +243,16 @@ func _move() -> void:
 	if not is_open or move_button.disabled:
 		return
 	quantity.apply()
-	_finish(service.transfer(storage_id, customer.selection.inventory, selected_id, int(quantity.value), depositing, selected_tier))
+	_finish(service.transfer(storage_id, customer.selection.inventory, selected_id, int(quantity.value), depositing, selected_tier), depositing)
 
 
 func _bulk(deposit: bool) -> void:
 	if is_open:
-		_finish(service.transfer_all(storage_id, customer.selection.inventory, deposit))
+		_finish(service.transfer_all(storage_id, customer.selection.inventory, deposit), deposit)
 
-func _finish(result: Dictionary) -> void:
+func _finish(result: Dictionary, deposit: bool) -> void:
+	if not result.ok or int(result.get("moved", 0)) > 0:
+		Sound.result(result, &"storage_deposit" if deposit else &"storage_withdraw")
 	status.text = tr("Moved {count} items.").format({"count": result.moved}) if result.ok else tr(result.error)
 	_queue_refresh()
 	if result.ok:

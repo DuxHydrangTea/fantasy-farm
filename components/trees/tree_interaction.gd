@@ -119,15 +119,25 @@ func _impact() -> void:
 	var bag: InventoryComponent = player.selection.inventory
 	if action == &"tree_plant":
 		if player.global_position.distance_to(system.point_for(_cell)) <= 64:
-			system.plant(_cell, bag, _slot, _item, now)
+			if system.plant(_cell, bag, _slot, _item, now) != null:
+				Sound.play(&"sow_seed")
 		return
 	if not is_instance_valid(pending) or pending.removed or player.global_position.distance_to(pending.global_position) > 32:
 		return
 	match action:
-		&"tree_water": (pending as FruitTree).water(now)
-		&"tree_uproot": (pending as FruitTree).uproot(bag)
-		&"tree_chop": (pending as TimberTree).chop(bag)
+		&"tree_water":
+			if (pending as FruitTree).water(now):
+				Sound.play(&"water_crop")
+		&"tree_uproot":
+			if (pending as FruitTree).uproot(bag):
+				Sound.play(&"stump_dig")
+		&"tree_chop":
+			var timber: TimberTree = pending as TimberTree
+			if timber.chop(bag):
+				Sound.play(&"tree_fall" if timber.stump else &"tree_chop")
 		&"tree_dig":
 			if player.selection.revision == _selection_revision:
-				system.world.farming.apply_area(&"tool", _dig_targets, bag, -1, null, player)
+				var result: Dictionary = system.world.farming.apply_area(&"tool", _dig_targets, bag, -1, null, player)
+				if int(result.get("changed", 0)) > 0:
+					Sound.play(&"stump_dig")
 	pending = null

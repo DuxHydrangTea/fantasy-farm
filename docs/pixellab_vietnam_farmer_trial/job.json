@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794149351365,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: acb394ac-997d-4c0a-9416-8d7f0d181eb1\njob_id: acb394ac-997d-4c0a-9416-8d7f0d181eb1\nmode: text\nframes: 1\nsize: 64x64px\ntransparent: True\nedit: Redress this same tiny farmer character in traditional Vietnamese rural clothing: simple indigo blue ao ba ba long-sleeved shirt, loose dark earthy brown trousers and a small black-and-white checkered khan ran scarf around neck. Keep the original straw hat, face, proportions, exact pose, position, scale, camera angle and pixel density. Simple readable pixel clusters, crisp outlines, transparent background. No text, no scenery, no added objects.\nasset_id: 5a5dae0b-2e5d-5de2-b067-057fe79d6217\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"acb394ac-997d-4c0a-9416-8d7f0d181eb1\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/acb394ac-997d-4c0a-9416-8d7f0d181eb1/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}

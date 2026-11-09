@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794162078188,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "character: 15f0601f-fdae-4fb1-b9ba-f7c7fc9c2ead\nanimation: walking\nmode: skeleton-v3\ndirections: south, north, east (3 jobs)\njob_ids: south=a26e9dc6-3023-4754-b9d4-c84a3b2f5682, north=69e34934-9422-4be1-8d5f-b672e54aedf1, east=4afd736d-174e-4b5c-9dc3-c96ea412dbc9\ngroup: a47df249-6333-4bc7-b4f8-014a8967d490\ncost: 9 generations (3/dir x 3)\neta: ~3-5 min/direction\nadd more directions to this group: animate_character(character_id=\"15f0601f-fdae-4fb1-b9ba-f7c7fc9c2ead\", mode=\"skeleton-v3\", template_animation_id=\"walking\", animation_group_id=\"a47df249-6333-4bc7-b4f8-014a8967d490\", directions=[...])\n\nhint: get_character(character_id=\"15f0601f-fdae-4fb1-b9ba-f7c7fc9c2ead\")"
+      }
+    ],
+    "isError": false
+  }
+}

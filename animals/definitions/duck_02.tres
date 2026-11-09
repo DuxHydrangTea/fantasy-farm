@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AnimalDefinition" format=3]
+
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/duck_02_frames.tres" id="1_pjhfk"]
+[ext_resource type="Resource" path="res://animals/productions/duck_02_production.tres" id="2_h4tmv"]
+[ext_resource type="Script" path="res://scripts/animals/animal_definition.gd" id="3_xtjv1"]
+
+[resource]
+script = ExtResource("3_xtjv1")
+animal_id = &"duck_02"
+display_name = "Golden Duck"
+species = 1
+satiety_depletion_seconds = 3600.0
+hydration_depletion_seconds = 3600.0
+adult_frames = ExtResource("1_pjhfk")
+can_swim = true
+eggs_on_land = true
+maturity_seconds = 7200.0
+production = ExtResource("2_h4tmv")

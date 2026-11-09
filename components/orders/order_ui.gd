@@ -30,6 +30,7 @@ var _display_serial: int = -1
 var _display_entry: OrderDefinition
 var _counts: Array[Label] = []
 var _compact: bool = false
+var confirmation_items: VBoxContainer
 
 func _ready() -> void:
 	root = %Root
@@ -41,6 +42,18 @@ func _ready() -> void:
 	_card_states.assign([%OrderState0, %OrderState1, %OrderState2])
 	_card_rewards.assign([%OrderReward0, %OrderReward1, %OrderReward2])
 	super._ready()
+	for label: Label in [%Balance, %NormalReward, %PerfectReward]:
+		VisualValueRow.money(label)
+	for label: Label in _card_rewards:
+		VisualValueRow.money(label)
+	var confirm_scroll: Node = confirmation_text.get_parent()
+	var content: VBoxContainer = VBoxContainer.new()
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	confirm_scroll.remove_child(confirmation_text)
+	confirm_scroll.add_child(content)
+	content.add_child(confirmation_text)
+	confirmation_items = VBoxContainer.new()
+	content.add_child(confirmation_items)
 	visit_started.connect(_visit)
 	models_changed.connect(_refresh)
 	board.service.changed.connect(_refresh)
@@ -92,7 +105,7 @@ func _select(index: int) -> void:
 	(%DetailScroll as ScrollContainer).scroll_vertical = 0
 
 func _money(value: int) -> String:
-	return tr("{coins} coins").format({"coins": GameText.grouped_integer(value)})
+	return GameText.grouped_integer(value)
 
 func _build_requirements(entry: OrderDefinition) -> void:
 	for child: Node in (%Requirements as VBoxContainer).get_children():
@@ -196,6 +209,8 @@ func _request(kind: String) -> void:
 	cancel_button.grab_focus()
 
 func _refresh_confirmation() -> void:
+	for child: Node in confirmation_items.get_children():
+		child.free()
 	var entry: OrderDefinition = board.service.definition(_pending_serial)
 	var delivery: bool = _pending_kind in ["deliver","perfect"]
 	var latest: Dictionary = board.service.quote(_pending_serial,_pending_kind == "perfect") if delivery else {}
@@ -204,19 +219,39 @@ func _refresh_confirmation() -> void:
 		confirmation_text.text = tr("This order has changed. Select it again.")
 	else:
 		confirmation_text.text = tr("Deliver all requested items for the reward?") if delivery else tr("Abandon this order without a coin penalty?")
-		confirmation_text.text += "\n\n" + _summary(entry)
+		confirmation_text.text += "\n" + tr(entry.title)
 		if delivery and _pending_plan.get("ok",false):
-			confirmation_text.text += "\n\n" + tr("Exact item tiers to consume:")
+			confirmation_text.text += "\n" + tr("Exact item tiers to consume:")
 			for row: Dictionary in _pending_plan.rows:
 				var item: ItemDefinition = null
 				for candidate: ItemDefinition in entry.items:
 					if String(candidate.item_id) == row.item:
 						item = candidate
-				confirmation_text.text += "\n" + tr(item.display_name) + ": " + ItemQuality.summary(row.tiers)
-			var reward_text: String = tr("Perfect reward: {coins} coins").format({"coins":int(_pending_plan.coins)}) if _pending_kind == "perfect" else tr("Reward: %d coins") % int(_pending_plan.coins)
-			confirmation_text.text += "\n" + reward_text
+				for tier: int in range(3):
+					if int(row.tiers[tier]) <= 0:
+						continue
+					var value_row: VisualValueRow = VisualValueRow.new()
+					confirmation_items.add_child(value_row)
+					value_row.show_item(item, "× %s · %s" % [GameText.grouped_integer(int(row.tiers[tier])), tr(item.display_name)], tier)
+			var reward: Label = Label.new()
+			reward.text = tr("Perfect reward") if _pending_kind == "perfect" else tr("Reward")
+			confirmation_items.add_child(reward)
+			var reward_row: VisualValueRow = VisualValueRow.new()
+			confirmation_items.add_child(reward_row)
+			reward_row.show_coins(int(_pending_plan.coins))
 			if _pending_kind == "perfect":
-				confirmation_text.text += "\n" + tr("Direct sale of these tiers: {coins} coins").format({"coins":int(_pending_plan.sale_coins)})
+				var comparison: Label = Label.new()
+				comparison.text = tr("Direct sale value")
+				comparison.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				confirmation_items.add_child(comparison)
+				var sale_row: VisualValueRow = VisualValueRow.new()
+				confirmation_items.add_child(sale_row)
+				sale_row.show_coins(int(_pending_plan.sale_coins))
+		else:
+			for index: int in range(entry.items.size()):
+				var value_row: VisualValueRow = VisualValueRow.new()
+				confirmation_items.add_child(value_row)
+				value_row.show_item(entry.items[index], "× %s · %s" % [GameText.grouped_integer(entry.amounts[index]), tr(entry.items[index].display_name)])
 		if stale:
 			confirmation_text.text += "\n\n" + tr("The ingredient tiers changed. Review the preview and confirm again.")
 	confirm_button.text = tr("Confirm delivery") if delivery else tr("Confirm abandon")
@@ -228,6 +263,8 @@ func _confirm() -> void:
 		return
 	var delivery: bool = _pending_kind in ["deliver","perfect"]
 	var result: Dictionary = board.service.deliver(_pending_serial,_pending_kind == "perfect",_pending_plan) if delivery else board.service.abandon(_pending_serial)
+	if delivery or not result.ok:
+		Sound.result(result, &"order_delivered")
 	_message = ("Order delivered: +%d coins" if delivery else "Order abandoned. No coins spent.") if result.ok else String(result.error)
 	_coins = int(result.get("coins",0))
 	_cancel()

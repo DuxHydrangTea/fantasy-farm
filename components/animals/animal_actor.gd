@@ -1,5 +1,8 @@
 class_name AnimalActor
 extends CharacterBody2D
+const CareBubble = preload("res://components/animals/animal_care_bubble.gd")
+const WATER_FEEDBACK: Texture2D = preload("res://assets/Ui/status_bubbles/thirsty.png")
+const FOOD_FEEDBACK: Texture2D = preload("res://assets/Ui/status_bubbles/hungry.png")
 const HealthState = preload("res://components/animals/animal_health_state.gd")
 const HealthBadges = preload("res://components/condition_badges.gd")
 var health: HealthState = HealthState.new()
@@ -66,6 +69,7 @@ func _ready() -> void:
 	_refresh_health_badges()
 	animation.play("idle")
 	foraging.configure(definition, needs, wander)
+	foraging.serving_consumed.connect(_on_serving_consumed)
 	behaviour.configure(definition)
 	if pen is PondPen and definition.eggs_on_land:
 		waterfowl = WaterfowlComponent.new()
@@ -259,3 +263,7 @@ func cure_disease() -> bool:
 	var cured: bool = health.cure(timestamp)
 	_refresh_health_badges()
 	return cured
+
+func _on_serving_consumed(kind: int, item: ItemDefinition) -> void:
+	var texture: Texture2D = WATER_FEEDBACK if kind == AnimalTrough.Kind.WATER else item.icon if item != null else FOOD_FEEDBACK
+	CareBubble.present(self, texture, "Drank water!" if kind == AnimalTrough.Kind.WATER else "Had a meal!")

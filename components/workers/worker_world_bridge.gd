@@ -1,6 +1,7 @@
 class_name WorkerWorldBridge
 extends RefCounted
 ## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
+signal action_presented(kind: StringName, point: Vector2)
 const STROLL_ATTEMPTS: int = 2
 const STROLL_MIN_DISTANCE: float = 48.0
 const STROLL_MAX_DISTANCE: float = 128.0
@@ -333,7 +334,15 @@ func _capacity(inventory: InventoryComponent, item: ItemDefinition, cache: Dicti
 		cache[key] = inventory.capacity_for(item, tier)
 	return int(cache[key])
 
-func commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Dictionary) -> bool:
+func commit(row: Dictionary, feed_inventory: InventoryComponent, task: Dictionary) -> bool:
+	var kind: StringName = StringName(task.kind)
+	var point: Vector2 = WorkerRole.point(task.get("point", row.get("position", [0, 0])))
+	var success: bool = _commit(row, feed_inventory, task)
+	if success and present_care_effects:
+		action_presented.emit(kind, point)
+	return success
+
+func _commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Dictionary) -> bool:
 	invalidate_ranch()
 	if task.kind in ["treat_pests", "treat_weeds", "cure_animal"]:
 		return _commit_care(row, task)
@@ -408,7 +417,7 @@ func _commit_care(row: Dictionary, task: Dictionary) -> bool:
 	world.storages.busy = false
 	if success and animal != null and present_care_effects:
 		animal.add_child(HealingEffect.new())
-		animal.add_child(CareBubble.new())
+		CareBubble.present(animal, ANIMAL_MEDICINE.icon)
 	return success
 
 func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task: Dictionary) -> bool:

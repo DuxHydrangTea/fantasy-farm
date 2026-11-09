@@ -2,6 +2,7 @@ class_name AnimalForagingComponent
 extends Node
 ## Species-independent supply selection, reservations, travel and consumption.
 ## Behaviour owns the animation/state transitions; Needs owns food/water values.
+signal serving_consumed(kind: int, item: ItemDefinition)
 enum Travel { MOVING, ARRIVED, FAILED }
 var definition: AnimalDefinition
 var needs: AnimalNeedsComponent
@@ -105,7 +106,14 @@ func step(delta: float) -> Travel:
 	return Travel.MOVING
 
 func finish() -> float:
-	return target.serve(wander.movement.body, needs, definition, target_slot) if target_is_valid() else 0.0
+	if not target_is_valid():
+		return 0.0
+	var kind: int = int(target.kind)
+	var item: ItemDefinition = target.feed_item
+	var restored: float = target.serve(wander.movement.body, needs, definition, target_slot)
+	if restored > 0.0:
+		serving_consumed.emit(kind, item)
+	return restored
 
 func cancel(failed: bool = false) -> void:
 	if is_instance_valid(target):

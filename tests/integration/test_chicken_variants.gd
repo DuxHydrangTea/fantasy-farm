@@ -35,7 +35,7 @@ func offer_for(index: int) -> AnimalShopOffer:
 func test_all_eighteen_skins_are_distinct_buyable_definitions_with_linear_yield() -> void:
 	var resources: SaveCatalog = SaveCatalog.new()
 	var general: ShopCatalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
-	assert_eq(STOCK.animal_offers.size(), 24)
+	assert_eq(STOCK.animal_offers.filter(func(offer: AnimalShopOffer) -> bool: return offer.animal.species == AnimalTypes.Species.CHICKEN).size(), 18)
 	var frames: Dictionary = {}
 	for index: int in range(1, 19):
 		var offer: AnimalShopOffer = offer_for(index)

@@ -216,7 +216,7 @@ func test_schema_rejects_invalid_numbers_types_and_duplicate_cells() -> void:
 
 func test_catalog_contains_all_current_gameplay_definitions() -> void:
 	assert_eq(catalog.crops.size(), 22)
-	assert_eq(catalog.animals.size(), 24)
+	assert_eq(catalog.animals.size(), 64)
 	assert_true(catalog.items.has("cow_milk"))
 	assert_true(catalog.items.has("sheep_wool"))
 	assert_true(catalog.valid_skin("chicken", "rooster"))

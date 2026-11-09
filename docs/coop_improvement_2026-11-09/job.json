@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1794179580914,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "id: eb8ce6d7-5638-425f-930d-177683769fab\njob_id: eb8ce6d7-5638-425f-930d-177683769fab\nmode: text\nframes: 1\nsize: 80x128px\ntransparent: True\nedit: Polish this existing chicken coop pixel sprite into a more charming, carefully crafted game asset. Preserve its exact footprint, tall narrow silhouette, roof ridge position, original red tiled roof, timber frame, central chicken doorway and short ramp. Refine red roof tiles into clean readable clusters with restrained warm highlights and cool dark shadows; richer warm honey-brown wood with subtle grain, tidy beam joints, a small carved chicken emblem on the front gable and discreet straw visible inside the dark entrance. Improve depth, material separation and readability without clutter. Match original native pixel density, crisp dark colored outlines and limited compact shading; no smooth gradients or blurry microtexture. Straight-on, front-facing 2D game view, horizontal front facade, with roof visible slightly from above; no isometric, diagonal or three-quarter side view. Keep complete original building within 80x128, transparent background, no added ground, fences, text or surrounding scenery.\nasset_id: 3c64c9d9-d6a0-54eb-a17a-e3464b05887e\nasset_status: pending (saved when generation completes)\ncost: ~10 generations\nstatus: processing (~30-90s)\n\nhint: get_image(job_id=\"eb8ce6d7-5638-425f-930d-177683769fab\")\nwithout get_image: GET https://api.pixellab.ai/mcp/images/eb8ce6d7-5638-425f-930d-177683769fab/download (423 + Retry-After until ready; ?index=N for the Nth of several images)"
+      }
+    ],
+    "isError": false
+  }
+}
