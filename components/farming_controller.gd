@@ -8,6 +8,7 @@ signal soil_changed(cell: Vector2i, previous: int, current: int)
 signal action_committed(condition: StringName, amount: int)
 signal crop_planted(cell: Vector2i, crop: Node2D)
 signal crop_harvested(cell: Vector2i)
+signal crop_treated(cell: Vector2i)
 signal quality_harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, tier: int)
 signal crop_lost(inventory: InventoryComponent)
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent)
@@ -26,6 +27,8 @@ enum Soil { UNTILLED, DRY, WET }
 var fertility: FertileSoil = FertileSoil.new()
 var apiary: ApiarySystem
 var weather: WeatherSchedule
+var sync_weather: Callable
+var trees: TreePlantation
 const SOIL_MOISTURE_SECONDS: float = 21600.0
 var defer_soil_edges: bool = false
 var _soil_edges_dirty: bool = false
@@ -267,9 +270,8 @@ func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	if _area_busy:
 		return false
-	var farm_world: FarmWorld = get_parent() as FarmWorld
-	if farm_world != null and farm_world.weather != null:
-		farm_world.weather.advance(time_manager.now())
+	if sync_weather.is_valid():
+		sync_weather.call(time_manager.now())
 	if not _valid_terrain(wet_soil, wet_terrain_set, wet_terrain) or not can_water(cell, actor):
 		return false
 	# Keep the continuous tilled bed below wet patches, avoiding gaps at dry/wet seams.
@@ -301,8 +303,8 @@ func apply_area(action: StringName, targets: Array[Vector2i], inventory: Invento
 	if action == &"plant" and (inventory == null or seed == null or seed.item_type != ItemDefinition.ItemType.SEED or not seed.crop is CropDefinition or not seed.crop.is_valid() or (not shared and inventory.slot(slot).item != seed)):
 		return result
 	_area_busy = true
-	if action == &"water" and get_parent() is FarmWorld:
-		(get_parent() as FarmWorld).weather.advance(time_manager.now())
+	if action == &"water" and sync_weather.is_valid():
+		sync_weather.call(time_manager.now())
 	if action == &"plant" and apiary != null:
 		apiary.sync()
 	var selected: Array[Vector2i] = []
@@ -317,13 +319,12 @@ func apply_area(action: StringName, targets: Array[Vector2i], inventory: Invento
 		_area_busy = false
 		return result
 	var tree_changes: int = 0
-	if action == &"tool" and actor is FarmPlayer and get_parent() is FarmWorld:
-		var system: TreePlantation = (get_parent() as FarmWorld).trees
+	if action == &"tool" and actor is FarmPlayer and trees != null:
 		for i: int in range(selected.size() - 1, -1, -1):
 			var cell: Vector2i = selected[i]
-			var tree: TimberTree = system.tool_target(cell)
+			var tree: TimberTree = trees.tool_target(cell)
 			if tree != null:
-				if system.can_dig(cell, inventory) and tree.dig(inventory):
+				if trees.can_dig(cell, inventory) and tree.dig(inventory):
 					tree_changes += 1
 				selected.remove_at(i)
 	var committed: Array[Vector2i] = []
@@ -521,13 +522,13 @@ func root_error(cell: Vector2i, actor: PhysicsBody2D = null) -> String:
 func apply_root(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return root_error(cell, actor).is_empty() and get_crop(cell).apply_root()
 
+func has_tree_tool_target(cell: Vector2i) -> bool:
+	return trees != null and trees.tool_target(cell) != null
+
 func can_tool(cell: Vector2i, actor: PhysicsBody2D = null, inventory: InventoryComponent = null) -> bool:
 	if can_till(cell, actor):
 		return true
-	if actor is FarmPlayer and get_parent() is FarmWorld:
-		var system: TreePlantation = (get_parent() as FarmWorld).trees
-		return system != null and system.can_dig(cell, inventory)
-	return false
+	return actor is FarmPlayer and trees != null and trees.can_dig(cell, inventory)
 
 func care_error(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> String:
 	var crop: Crop = get_crop(cell)
@@ -540,12 +541,10 @@ func care_error(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> Str
 	crop.refresh(time_manager.now())
 	return "" if (crop.conditions.pests if pests else crop.conditions.weeds) else "This crop does not need that treatment."
 
-func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> bool:
+func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null, show_effect: bool = true) -> bool:
 	if not care_error(cell, pests, actor).is_empty():
 		return false
 	var crop: Crop = get_crop(cell)
-	var world: FarmWorld = get_parent() as FarmWorld
-	var show_effect: bool = world == null or world.workers == null or not world.workers.busy or world.workers.bridge.present_care_effects
 	if show_effect and crop.condition_badges != null:
 		var statuses: Array[StringName] = crop.condition_badges.active_statuses
 		var index: int = statuses.find(&"pests" if pests else &"weeds")
@@ -561,8 +560,7 @@ func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> boo
 		crop.conditions.weeds = false
 	crop._update_condition_visuals()
 	crop.conditions_changed.emit()
-	if world != null and world.workers != null:
-		world.workers.request_scan("crop")
+	crop_treated.emit(cell)
 	crop.react(7.0)
 	action_committed.emit(&"treat_pests" if pests else &"clear_weeds", 1)
 	return true

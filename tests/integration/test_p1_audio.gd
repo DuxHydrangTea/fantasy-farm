@@ -39,15 +39,15 @@ func test_calls_follow_player_distance_and_stop_exactly_outside_radius() -> void
 	assert_true(voice.playing)
 	assert_eq(voice.bus, &"Ambience")
 	var near_db: float = voice.volume_db
-	animal.global_position = world.player.global_position + Vector2(120, 0)
+	animal.global_position = world.player.global_position + Vector2(180, 0)
 	soundscape._process(0.01)
 	assert_lt(voice.volume_db, near_db - 10.0)
-	animal.global_position = world.player.global_position + Vector2(160, 0)
+	animal.global_position = world.player.global_position + Vector2(FarmSoundscape.RADIUS, 0)
 	soundscape._process(0.01)
 	assert_false(voice.playing)
 	_call()
 	assert_false(voice.playing)
-	assert_eq(FarmSoundscape.distance_gain(160.0), 0.0)
+	assert_eq(FarmSoundscape.distance_gain(FarmSoundscape.RADIUS), 0.0)
 
 func test_sleeping_hidden_retired_and_foreign_animals_are_silent() -> void:
 	animal.behaviour.current_state = AnimalBehaviourComponent.State.SLEEP
@@ -66,7 +66,7 @@ func test_sleeping_hidden_retired_and_foreign_animals_are_silent() -> void:
 func test_pool_is_bounded_and_call_delays_prevent_herd_bursts() -> void:
 	_call()
 	assert_eq(soundscape.voices.size(), 2)
-	assert_gt(float(soundscape._schedule[animal.get_instance_id()]), soundscape._elapsed + 11.0)
+	assert_between(float(soundscape._schedule[animal.get_instance_id()]) - soundscape._elapsed, 6.0, 12.0)
 	assert_gt(soundscape._next_call, soundscape._elapsed + 2.0)
 	soundscape._scan()
 	assert_false(soundscape.voices[1].playing)
@@ -77,6 +77,24 @@ func test_pool_is_bounded_and_call_delays_prevent_herd_bursts() -> void:
 	assert_null(reference.get_ref())
 	assert_false(soundscape.voices[0].playing)
 	assert_true(soundscape._schedule.is_empty())
+
+func test_nearby_herd_calls_sooner_and_prioritizes_the_closest_due_animal() -> void:
+	animal.position.x += 140.0
+	soundscape._schedule[animal.get_instance_id()] = 0.0
+	var closest: AnimalActor
+	for index: int in range(5):
+		var chicken: AnimalActor = preload("res://scenes/animals/chicken.tscn").instantiate() as AnimalActor
+		chicken.pen = animal.pen
+		chicken.position = world.player.global_position + Vector2(24.0 + index * 10.0, 0.0)
+		world.add_child(chicken)
+		soundscape._schedule[chicken.get_instance_id()] = 0.0
+		if index == 0:
+			closest = chicken
+	soundscape._scan()
+	assert_true(soundscape.voices[0].playing)
+	assert_eq(soundscape.sources[0].get_ref(), closest)
+	assert_between(soundscape._next_call - soundscape._elapsed, 1.0, 1.6)
+	assert_false(soundscape.voices[1].playing)
 
 func test_every_species_has_a_valid_quiet_nonlooping_call() -> void:
 	for event: StringName in FarmSoundscape.CALLS:

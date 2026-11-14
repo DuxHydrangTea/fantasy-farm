@@ -28,6 +28,7 @@ func test_each_purchase_opens_one_whole_block_and_all_24_cover_only_planting_cel
 	var previous: int = 0
 	for index: int in range(24):
 		var block: Rect2i = LandExpansionState.block_rect(index)
+		assert_eq(block.size, Vector2i(8, 8))
 		for y: int in range(block.position.y, block.end.y):
 			for x: int in range(block.position.x, block.end.x):
 				var cell: Vector2i = Vector2i(x, y)
@@ -38,7 +39,7 @@ func test_each_purchase_opens_one_whole_block_and_all_24_cover_only_planting_cel
 			assert_gt(state.next_price(), previous)
 			previous = state.next_price()
 			assert_eq(state.purchase(wallet, index + 1).block, index + 1)
-	assert_eq(cells.size(), 1333)
+	assert_eq(cells.size(), 1536)
 	assert_true(state.is_complete())
 	assert_eq(state.next_price(), 0)
 	assert_false(state.purchase(wallet, 24).ok)
@@ -69,4 +70,4 @@ func test_restore_and_legacy_conversion_preserve_owned_cells() -> void:
 		assert_true(state.restore_blocks(blocks))
 		for y: int in range(19, 53):
 			for x: int in range(57 - columns, 57):
-				assert_true(state.is_unlocked(Vector2i(x, y)))
+				assert_true(state.is_unlocked(LandExpansionState.from_legacy_cell(Vector2i(x, y))))

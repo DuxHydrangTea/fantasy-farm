@@ -21,11 +21,11 @@ func _run() -> void:
 	voice.process_mode = Node.PROCESS_MODE_ALWAYS
 	voice.stream = FarmSound.P1_CATALOG[&"animal_cow"][0] as AudioStream
 	var measurements: Array[Dictionary] = []
-	for distance: float in [20.0, 120.0, 160.0]:
+	for distance: float in [20.0, 180.0, FarmSoundscape.RADIUS]:
 		voice.stop()
 		await get_tree().create_timer(0.15).timeout
 		capture.clear_buffer()
-		if world.soundscape._place(voice, world.player.global_position + Vector2(distance, 0)):
+		if world.soundscape._place(voice, world.player.global_position + Vector2(distance, 0), FarmSoundscape.CALL_VOLUME_DB):
 			voice.play()
 		await get_tree().create_timer(0.7).timeout
 		var samples: PackedVector2Array = capture.get_buffer(capture.get_frames_available())

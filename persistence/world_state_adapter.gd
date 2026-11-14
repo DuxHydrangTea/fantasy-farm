@@ -178,11 +178,10 @@ func preflight(data: Dictionary) -> Dictionary:
 		var worker_position: Vector2 = WorkerRole.point(row.position)
 		var camera: Camera2D = world.player.camera
 		var world_bounds: Rect2 = Rect2(Vector2(camera.limit_left, camera.limit_top), Vector2(camera.limit_right - camera.limit_left, camera.limit_bottom - camera.limit_top))
-		# Strolling workers legitimately stand and target anywhere in the world;
-		# only work targets must stay inside the worker's own zone.
+		# Strolling workers can stand anywhere within the world bounds.
 		if not world_bounds.has_point(worker_position):
 			return SaveSchema.failure("Invalid worker position.")
-		if not row.task.is_empty() and String(row.task.get("kind", "")) != "patrol" and not world.workers.bridge.zone_contains(row, WorkerRole.point(row.task.point), int(data.land_blocks)):
+		if not world.workers.is_saved_task_target_valid(row, int(data.land_blocks)):
 			return SaveSchema.failure("Invalid worker target.")
 	if world.wood_market == null or world.wood_market.busy:
 		return SaveSchema.failure("A wood purchase is in progress.", "busy")
@@ -430,7 +429,7 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	return {"ok": true, "previous_simulation": previous_simulation}
 
 func _finish_restore(now: float, previous_simulation: float) -> Dictionary:
-	world.workers.bridge.sync(now)
+	world.workers.sync_after_restore(now)
 	world.weather.advance(now) # Publish final lighting/HUD once after offline replay.
 	for garden: FlowerGarden in world.apiary.gardens:
 		garden.refresh(now)

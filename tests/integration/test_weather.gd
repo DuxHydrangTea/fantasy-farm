@@ -160,7 +160,13 @@ func test_sequential_fades_and_ui_stay_separate_from_world_tint() -> void:
 
 func test_lamps_never_darken_daylight_while_fading_at_dawn_and_dusk() -> void:
 	var lighting: DayNightComponent = world.weather.day_night
-	assert_eq(lighting.lights.size(), world.night_light_positions.size() + 1, "Include the moving land sign lamp")
+	var road_lamps: Node2D = world.get_node("RoadLamps")
+	assert_gt(road_lamps.get_child_count(), 1)
+	assert_eq(lighting.lights.size(), world.night_light_positions.size() + 1 + road_lamps.get_child_count(), "Include the land sign and every road lamp")
+	for lamp: Node in road_lamps.get_children():
+		var light: PointLight2D = lamp.get_node("PointLight2D")
+		assert_has(lighting.lights, light)
+		assert_not_null(light.texture)
 	for light: PointLight2D in lighting.lights:
 		assert_eq(light.blend_mode, Light2D.BLEND_MODE_ADD, "A fading lamp must add light, never mix a darker color over the world")
 	for hour: float in [6.0, 17.5, 23.0]:

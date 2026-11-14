@@ -115,7 +115,7 @@ func _draw() -> void:
 
 func _is_farming_cell(farming: FarmingController, cell: Vector2i) -> bool:
 	# Keep blocked/locked plots visible, but ordinary grass and paths have no target.
-	if farming.get_parent() is FarmWorld and (farming.get_parent() as FarmWorld).trees != null and (farming.get_parent() as FarmWorld).trees.tool_target(cell) != null:
+	if farming.has_tree_tool_target(cell):
 		return true
 	if farming.land != null and LandExpansionState.REGION.has_point(cell):
 		return true

@@ -224,9 +224,14 @@ func _prepare_matrix(large: bool) -> void:
 			tree.fruit_work = tree.definition.fruit_cycle_seconds
 			tree.refresh(now)
 	var soil: Array = []
-	for y: int in range(19, 23):
-		for x: int in range(9, 57):
-			soil.append({"cell": [x, y], "state": 1})
+	# Select actual farmable cells: the old rectangle now intersects authored
+	# overlays, so restore_soil skipped cells while the fixture planted them.
+	for y: int in range(LandExpansionState.REGION.position.y, LandExpansionState.REGION.end.y):
+		for x: int in range(LandExpansionState.REGION.position.x, LandExpansionState.REGION.end.x):
+			var cell: Vector2i = Vector2i(x, y)
+			if soil.size() < 192 and world.farming.can_till(cell):
+				soil.append({"cell": [x, y], "state": 1})
+	assert_eq(soil.size(), 192, "Stress fixture requires 192 usable cells")
 	world.farming.restore_soil(soil)
 	for row: Dictionary in soil:
 		var cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))

@@ -409,7 +409,11 @@ func _commit_care(row: Dictionary, task: Dictionary) -> bool:
 	var snapshot: Array[Dictionary] = world.storages._snapshot(bag)
 	var success: bool = false
 	if bag.remove(item.item_id, 1, false) == 1:
-		success = animal.cure_disease() if animal != null else world.farming.treat_crop(cell, task.kind == "treat_pests")
+		if animal != null:
+			success = animal.cure_disease()
+		else:
+			var show_effect: bool = not world.workers.busy or present_care_effects
+			success = world.farming.treat_crop(cell, task.kind == "treat_pests", null, show_effect)
 		if success:
 			bag.changed.emit()
 		else:
@@ -446,7 +450,10 @@ func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) 
 	for tree: PerennialTree in world.trees.trees.values():
 		if tree is FruitTree and tree.growth_started_at >= 0 and _capacity(inventory, (tree as FruitTree).harvest_item(), capacities) >= (tree as FruitTree).harvest_amount():
 			var remaining: float = maxf(0, tree.matures_at - now) + maxf(0, tree.definition.fruit_cycle_seconds - (tree as FruitTree).fruit_work) * 0.75
-			if remaining > 0.01:
+			# A nearly ready batch still needs a wake. Dropping the final 10ms
+			# made floating-point accumulation at extra checkpoints defer harvest
+			# until an unrelated event (and eventually change patrol routes).
+			if remaining > 0.0:
 				next = minf(next, now + remaining)
 	var evaporation: float = world.weather.schedule.evaporation_rate(now)
 	for cell: Vector2i in world.farming.crop_cells():

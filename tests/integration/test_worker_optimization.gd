@@ -101,6 +101,78 @@ func test_online_row_budget_resumes_without_duplicate_assignments_or_checkpoint_
 			assert_false(reserved.has(key), "Two workers cannot own the same target")
 			reserved[key] = true
 
+func test_offline_checkpoint_pickup_notification_preserves_planned_patrol() -> void:
+	service.hire("crop")
+	var row: Dictionary = service.record("crop")
+	var patrol: Dictionary = {"kind": "patrol", "point": row.position.duplicate(), "finish_at": now + 60.0}
+	row.task = patrol.duplicate(true)
+	var pile: ItemPickup = ItemPickup.create()
+	pile.item = preload("res://items/trees/apple.tres")
+	pile.amount = 1
+	world.add_child(pile)
+	service.prepare_simulation_event(true)
+	assert_eq(row.task, patrol, "Publishing an offline checkpoint must preserve scheduled work")
+	service.request_scan("crop")
+	assert_true(row.task.is_empty(), "External gameplay changes still interrupt idle patrol")
+
+func test_rescan_preserves_due_patrol_until_arrival_is_committed() -> void:
+	service.hire("crop")
+	var row: Dictionary = service.record("crop")
+	var actor: WorkerActor = service.actor_for(String(row.id))
+	var destination: Vector2 = actor.global_position + Vector2(50, 0)
+	row.task = {"kind": "patrol", "point": WorkerRole.pair(destination), "finish_at": now}
+	service.request_scan("crop")
+	assert_false(row.task.is_empty(), "A rescan at arrival must leave the due task for the scheduler to finish")
+	service.simulated_at = now
+	service._scheduler._finish_due_task(service, row, actor, true)
+	assert_eq(actor.global_position, destination)
+	assert_eq(WorkerRole.point(row.position), destination)
+	assert_true(row.task.is_empty())
+
+func test_nearly_ready_fruit_keeps_a_wake_instead_of_waiting_for_dawn() -> void:
+	service.hire("crop")
+	var row: Dictionary = service.record("crop")
+	var tree: FruitTree = world.trees.create_tree(Vector2i(12, 61), world.trees.definitions[&"apple"], now) as FruitTree
+	tree.growth_started_at = now - tree.definition.growth_seconds - 1.0
+	tree.matures_at = now - 1.0
+	tree.last_at = now
+	tree.fruit_work = tree.definition.fruit_cycle_seconds - 0.005
+	service.bridge.invalidate_ranch()
+	assert_almost_eq(service.bridge.next_wake(row, service.feed_inventory(row.id), now), now + 0.25, 0.000001, "The final milliseconds of growth still need a scheduler event")
+
+func test_trough_updates_only_interrupt_patrol_when_refill_becomes_possible() -> void:
+	service.hire("crop")
+	var row: Dictionary = service.record("crop")
+	var trough: AnimalTrough = world.get_node("BarnPen/WaterTrough") as AnimalTrough
+	var threshold: int = trough.capacity - trough.water_per_use
+	var patrol: Dictionary = {"kind": "patrol", "point": row.position.duplicate(), "finish_at": now + 60.0}
+	row.task = patrol.duplicate(true)
+	service.trough_levels[trough.get_instance_id()] = threshold + 1
+	service._trough_changed(threshold, trough)
+	assert_true(row.task.is_empty(), "New refill demand interrupts idle walking")
+	row.task = patrol.duplicate(true)
+	service._trough_changed(threshold - 1, trough)
+	assert_eq(row.task, patrol, "Further depletion must not introduce checkpoint-dependent interruptions")
+	service._trough_changed(trough.capacity, trough)
+	assert_eq(row.task, patrol, "Refilling does not create another demand")
+
+func test_area_task_keeps_wake_checkpoint_until_last_cell() -> void:
+	service.hire("crop")
+	var row: Dictionary = service.record("crop")
+	var actor: WorkerActor = service.actor_for(String(row.id))
+	var wake: float = now - 10.0
+	row.wake_at = wake
+	# Invalidated cells are skipped but still advance the batch cursor.
+	row.task = {"kind": "till", "point": WorkerRole.pair(actor.global_position), "cells": [[-1, -1], [-2, -1]], "cursor": 0, "finish_at": now}
+	service.simulated_at = now
+	service._scheduler._finish_due_task(service, row, actor, true)
+	assert_eq(int(row.task.cursor), 1)
+	assert_eq(float(row.wake_at), wake, "A partial batch must preserve its saved wake checkpoint")
+	service.simulated_at = float(row.task.finish_at)
+	service._scheduler._finish_due_task(service, row, actor, true)
+	assert_true(row.task.is_empty())
+	assert_eq(float(row.wake_at), service.simulated_at, "Wake changes when the final cell completes")
+
 func test_idle_stroll_is_local_and_falls_back_to_rest_instead_of_distant_path() -> void:
 	service.hire("crop")
 	var row: Dictionary = service.record("crop")

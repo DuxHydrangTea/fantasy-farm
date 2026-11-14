@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Lanter_Posts.png" id="1_lamp"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
+size = Vector2(10, 4)
+
 [node name="StreetLamp" type="StaticBody2D"]
 texture_filter = 1
 metadata/object_id = "street_lamp"
@@ -13,3 +16,14 @@ position = Vector2(0, -24)
 texture = ExtResource("1_lamp")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -2)
+shape = SubResource("RectangleShape2D_base")
+
+[node name="PointLight2D" type="PointLight2D" parent="." groups=["street_lamp_lights"]]
+position = Vector2(1, -37)
+enabled = false
+texture_scale = 1.55
+color = Color(1, 0.72, 0.36, 1)
+blend_mode = 0

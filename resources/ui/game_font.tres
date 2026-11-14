@@ -1,10 +1,14 @@
 [gd_resource type="FontVariation" format=3 uid="uid://dodei4nophgsq"]
 
+[ext_resource type="FontFile" uid="uid://dnrmxogjymr7k" path="res://assets/Fonts/SVN-Determination Sans.ttf" id="1_bundled"]
+[ext_resource type="FontVariation" uid="uid://y8d1w1r3dstq" path="res://resources/ui/pixelify_sans.tres" id="2_bundled"]
+
 [sub_resource type="SystemFont" id="SystemFont_0ksk4"]
 font_names = PackedStringArray("Segoe UI", "Noto Sans", "Arial")
 multichannel_signed_distance_field = true
 
 [resource]
+fallbacks = Array[Font]([ExtResource("1_bundled"), ExtResource("2_bundled")])
 base_font = SubResource("SystemFont_0ksk4")
 variation_opentype = {
 0: 1

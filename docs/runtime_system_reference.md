@@ -1,6 +1,29 @@
 # Fantasy Farm — Phân tích hệ thống và tra cứu script runtime
 
-Cập nhật ngày **20/10/2026**, đối chiếu commit **`de8eaa0` — `add duck cow`** và refactor `class_name`/typed wiring trong workspace trên nhánh `rewrite-by-ai`. Tài liệu mô tả code hiện có, không phải bản thiết kế cho các tính năng tương lai.
+## Luồng farming, worker và lưu game hiện tại
+
+| Phần | Trách nhiệm và điểm kết nối |
+|---|---|
+| [`FarmWorld`](../world/main_world.gd) | Tạo các hệ thống và nối tham chiếu ở `_enter_tree()` hoặc `_ready()` theo thời điểm node sẵn sàng. Khi tạo thời tiết và vườn cây, gán `sync_weather` và `trees` cho farming. |
+| [`FarmingController`](../components/farming_controller.gd) | Sở hữu trạng thái đất và cây theo ô. `water()` và `apply_area()` đồng bộ thời tiết trước khi xét ô cần tưới. `has_tree_tool_target()` giúp preview nhận biết mục tiêu cây. Việc đào vẫn đi qua kiểm tra quyền người chơi, mục tiêu và sức chứa túi. |
+| [`WorkerService`](../components/workers/worker_service.gd) | Sở hữu hồ sơ worker, tuyển dụng, trả lương, giữ chỗ và lưu/khôi phục. `advance()` quản lý khóa, truyền đồng hồ và lịch thời tiết vào scheduler, rồi khôi phục đồng hồ và deadline khi scheduler trả về. `prepare_simulation_event()` đồng bộ world và xử lý pickup đang chờ. |
+| [`WorkerScheduler`](../components/workers/worker_scheduler.gd) | Điều phối từng mốc mô phỏng, ngân sách mỗi frame và vị trí tiếp tục. Xử lý việc đến hạn trước khi giao việc mới. `_choose_task()` lọc mục tiêu rồi dùng `WorkerRole` để áp dụng ưu tiên và chọn ứng viên. Scheduler truy cập hồ sơ và các thao tác gameplay qua `WorkerService`. |
+| [`WorkerWorldBridge`](../components/workers/worker_world_bridge.gd) | Tìm mục tiêu trong nông trại và thực thi task. Khi dùng thuốc cho cây, giữ khóa kho và truyền điều kiện hiển thị hiệu ứng sang farming. |
+| [`WorldStateAdapter`](../persistence/world_state_adapter.gd) | Thu thập snapshot và khôi phục scene. Kiểm tra mục tiêu worker bằng `is_saved_task_target_valid()` với số lô đất trong save, rồi gọi `sync_after_restore()` khi hoàn tất khôi phục. Định dạng save hiện tại là [v41](../persistence/save_schema.gd). |
+
+**Tưới đất.** `FarmingActionComponent` của người chơi hoặc `WorkerWorldBridge` gọi `FarmingController.apply_area()`. Farming gọi `sync_weather` đồng bộ, lọc ô hợp lệ và cập nhật đất. `WeatherManager` xử lý mưa và bốc hơi qua các phương thức của farming.
+
+**Xử lý sâu hoặc cỏ.** Sau khi cập nhật tình trạng cây, farming phát `crop_treated(cell)`. `WorkerService` nhận signal ngay để cập nhật lịch quét. Worker trừ thuốc dưới khóa kho và hoàn trả nếu thao tác thất bại. Khi mô phỏng offline, worker bỏ hiệu ứng thuốc trên cây trong lúc chạy scheduler.
+
+**Quét lại và hoàn tất tuần tra.** `request_scan()` chỉ hủy tuần tra chưa đến hạn. Task đã tới hạn được scheduler hoàn tất để ghi vị trí đến nơi trước khi nghỉ hoặc giao việc. Biến động máng chỉ ngắt tuần tra khi vừa vượt ngưỡng cần tiếp; trái cây gần chín vẫn có sự kiện đánh thức. Các quy tắc này giữ replay ổn định khi thêm checkpoint giữa timeline.
+
+Trong bước chuẩn bị sự kiện offline, thông báo từ đồng bộ world và pickup không được diễn giải thành lệnh quét mới: scheduler đã lập lịch theo ranh giới trạng thái. Giới hạn này kết thúc trước khi thực thi task, và không áp dụng cho thay đổi gameplay bên ngoài bước đồng bộ.
+
+Kiểm tra luồng tưới và thao tác theo vùng bằng [test_farming_area](../tests/integration/test_farming_area.gd) và [test_weather](../tests/integration/test_weather.gd). Kiểm tra worker xử lý cây bằng [test_farm_health_world](../tests/integration/test_farm_health_world.gd), giữ chỗ và ngân sách bằng [test_worker_optimization](../tests/integration/test_worker_optimization.gd), và lưu/tải cùng mô phỏng offline bằng [test_workers](../tests/integration/test_workers.gd) và [test_storage_offline_parity](../tests/integration/test_storage_offline_parity.gd). Xem [kết quả refactor](architecture_refactor_results.md) để biết phạm vi test đã chạy.
+
+## Tài liệu tra cứu lịch sử
+
+Cập nhật ngày **20/10/2026**, đối chiếu commit **`de8eaa0` — `add duck cow`** và refactor `class_name`/typed wiring trong workspace trên nhánh `rewrite-by-ai`. Các phần dưới mô tả runtime tại mốc đó.
 
 ## 1. Phạm vi và cách đọc
 

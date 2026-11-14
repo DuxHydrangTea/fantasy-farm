@@ -631,7 +631,7 @@ func test_unpaid_shift_preserves_remaining_task_and_uses_hire_order() -> void:
 	service.simulated_at = world.weather.schedule.dawn_at(day)
 	world.player.wallet.set_balance(5600)
 	for row: Dictionary in service.records:
-		service._pay(row, day)
+		service.pay_daily_wage(row, day)
 	assert_true(service.records[0].active)
 	assert_true(service.records[1].active)
 	assert_false(service.records[2].active)

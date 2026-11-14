@@ -15,9 +15,10 @@ func _run() -> void:
 		scenarios.assign(["missing_supplies"])
 	for scenario: String in scenarios:
 		await _case(scenario)
-	var output: String = "res://docs/worker_badge_preview.json" if preview else "res://docs/worker_care_benchmark_2026-11-01.json"
+	var filename: String = "worker_badge_preview.json" if preview else "worker_care_benchmark_2026-11-01.json"
 	if ui_review:
-		output = "res://docs/ui_completion_worker_benchmark.json"
+		filename = "ui_completion_worker_benchmark.json"
+	var output: String = "res://docs/".path_join(filename)
 	var file: FileAccess = FileAccess.open(output, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"engine": Engine.get_version_info(), "display": DisplayServer.get_name(), "save_bound": (get_tree().root.get_node("SaveManager") as GameSaveManager).adapter != null, "seconds_per_case": 20, "scenarios": reports}, "\t"))
 	get_tree().quit()

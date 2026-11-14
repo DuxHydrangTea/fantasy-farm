@@ -2,14 +2,16 @@ class_name LandExpansionState
 extends RefCounted
 ## Buy one path-bounded block at a time, snaking down/up from the top right.
 signal changed
-const REGION: Rect2i = Rect2i(9, 19, 48, 34)
+const LEGACY_REGION: Rect2i = Rect2i(9, 19, 48, 34)
+const REGION: Rect2i = Rect2i(4, 19, 53, 35)
+const BLOCK_SIZE: int = 8
 const BASE_PRICE: int = 60000
 const BLOCK_COUNT: int = 24
 const STARTING_BLOCKS: int = 1
-const X_STARTS: Array[int] = [9, 17, 25, 33, 41, 49]
-const X_ENDS: Array[int] = [16, 24, 32, 40, 48, 57]
-const Y_STARTS: Array[int] = [19, 28, 37, 45]
-const Y_ENDS: Array[int] = [27, 36, 44, 53]
+const LEGACY_X_STARTS: Array[int] = [9, 17, 25, 33, 41, 49]
+const LEGACY_X_ENDS: Array[int] = [16, 24, 32, 40, 48, 57]
+const LEGACY_Y_STARTS: Array[int] = [19, 28, 37, 45]
+const LEGACY_Y_ENDS: Array[int] = [27, 36, 44, 53]
 var starting_blocks: int = STARTING_BLOCKS
 var unlocked_blocks: int = STARTING_BLOCKS
 var _buying: bool = false
@@ -20,7 +22,25 @@ static func block_rect(index: int) -> Rect2i:
 	var column_offset: int = floori(float(index) / 4.0)
 	var column: int = 5 - column_offset
 	var row: int = index % 4 if column_offset % 2 == 0 else 3 - index % 4
-	return Rect2i(X_STARTS[column], Y_STARTS[row], X_ENDS[column] - X_STARTS[column], Y_ENDS[row] - Y_STARTS[row])
+	var origin: Vector2i = REGION.position + Vector2i(column, row) * (BLOCK_SIZE + 1)
+	return Rect2i(origin, Vector2i(BLOCK_SIZE, BLOCK_SIZE))
+
+static func from_legacy_cell(cell: Vector2i) -> Vector2i:
+	if not LEGACY_REGION.has_point(cell):
+		return cell
+	return Vector2i(
+		_expand_legacy_axis(cell.x, REGION.position.x, LEGACY_X_STARTS, LEGACY_X_ENDS),
+		_expand_legacy_axis(cell.y, REGION.position.y, LEGACY_Y_STARTS, LEGACY_Y_ENDS)
+	)
+
+static func _expand_legacy_axis(value: int, origin: int, starts: Array[int], ends: Array[int]) -> int:
+	for index: int in range(starts.size()):
+		var start: int = origin + index * (BLOCK_SIZE + 1)
+		if value < ends[index]:
+			return start + value - starts[index]
+		if value == ends[index]:
+			return start + BLOCK_SIZE
+	return value
 
 static func block_index(cell: Vector2i) -> int:
 	for index: int in range(BLOCK_COUNT):
@@ -29,11 +49,10 @@ static func block_index(cell: Vector2i) -> int:
 	return -1
 
 static func legacy_block_count(columns: int) -> int:
-	var count: int = 1
-	for index: int in range(BLOCK_COUNT):
-		if block_rect(index).end.x > REGION.end.x - columns:
-			count = index + 1
-	return count
+	for column: int in range(LEGACY_X_ENDS.size()):
+		if LEGACY_X_ENDS[column] > LEGACY_REGION.end.x - columns:
+			return (LEGACY_X_ENDS.size() - column) * LEGACY_Y_STARTS.size()
+	return 1
 
 static func cell_is_open(cell: Vector2i, blocks: int) -> bool:
 	# Paths remain walkable and visible; their TileData separately blocks farming.

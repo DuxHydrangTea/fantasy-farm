@@ -1,0 +1,524 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="ground"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Well.png" id="well"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="flowers"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barrel.tscn" id="barrel"]
+
+[sub_resource type="TileSetAtlasSource" id="Atlas_soil"]
+texture = ExtResource("ground")
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_paths"]
+sources/0 = SubResource("Atlas_soil")
+
+[sub_resource type="RectangleShape2D" id="Shape_well"]
+size = Vector2(21, 8)
+
+[sub_resource type="RectangleShape2D" id="Shape_bench"]
+size = Vector2(27, 8)
+
+[sub_resource type="RectangleShape2D" id="Shape_barrel"]
+size = Vector2(10, 6)
+
+[sub_resource type="RectangleShape2D" id="Shape_crates"]
+size = Vector2(26, 7)
+
+[node name="OrchardDecor" type="Node2D"]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="DirtPatches" type="TileMapLayer" parent="."]
+z_index = -2
+tile_map_data = PackedByteArray("AAAOAFUAAAAAAAUAAAAPAFUAAAABAAUAAAAQAFUAAAABAAUAAAARAFUAAAABAAUAAAASAFUAAAABAAUAAAATAFUAAAABAAUAAAAUAFUAAAACAAUAAAAOAFYAAAAAAAYAAAAPAFYAAAABAAYAAAAQAFYAAAABAAYAAAARAFYAAAABAAYAAAASAFYAAAABAAYAAAATAFYAAAABAAYAAAAUAFYAAAACAAYAAAAOAFcAAAAAAAcAAAAPAFcAAAABAAcAAAAQAFcAAAABAAcAAAARAFcAAAABAAcAAAASAFcAAAABAAcAAAATAFcAAAABAAcAAAAUAFcAAAACAAcAAAA0AFUAAAAAAAUAAAA1AFUAAAABAAUAAAA2AFUAAAABAAUAAAA3AFUAAAABAAUAAAA4AFUAAAABAAUAAAA5AFUAAAABAAUAAAA6AFUAAAABAAUAAAA7AFUAAAACAAUAAAA0AFYAAAAAAAYAAAA1AFYAAAABAAYAAAA2AFYAAAABAAYAAAA3AFYAAAABAAYAAAA4AFYAAAABAAYAAAA5AFYAAAABAAYAAAA6AFYAAAABAAYAAAA7AFYAAAACAAYAAAA0AFcAAAAAAAcAAAA1AFcAAAABAAcAAAA2AFcAAAABAAcAAAA3AFcAAAABAAcAAAA4AFcAAAABAAcAAAA5AFcAAAABAAcAAAA6AFcAAAABAAcAAAA7AFcAAAACAAcAAAAgAFUAAAAAAAUAAAAhAFUAAAABAAUAAAAiAFUAAAABAAUAAAAjAFUAAAABAAUAAAAkAFUAAAACAAUAAAAgAFYAAAAAAAYAAAAhAFYAAAABAAYAAAAiAFYAAAABAAYAAAAjAFYAAAABAAYAAAAkAFYAAAACAAYAAAAgAFcAAAAAAAcAAAAhAFcAAAABAAcAAAAiAFcAAAABAAcAAAAjAFcAAAABAAcAAAAkAFcAAAACAAcAAAA=")
+tile_set = SubResource("TileSet_paths")
+
+[node name="OrchardWell" type="StaticBody2D" parent="."]
+position = Vector2(551, 1394)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="OrchardWell"]
+position = Vector2(0, -23)
+texture = ExtResource("well")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OrchardWell"]
+position = Vector2(0, -4)
+shape = SubResource("Shape_well")
+
+[node name="WoodenBench" type="StaticBody2D" parent="."]
+position = Vector2(902, 1394)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="WoodenBench"]
+position = Vector2(0, -11)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WoodenBench"]
+position = Vector2(0, -4)
+shape = SubResource("Shape_bench")
+
+[node name="CrateFootprint" type="StaticBody2D" parent="."]
+position = Vector2(285, 1382)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrateFootprint"]
+shape = SubResource("Shape_crates")
+
+[node name="HarvestCrateA" parent="." instance=ExtResource("crate")]
+position = Vector2(278, 1384)
+
+[node name="HarvestCrateB" parent="." instance=ExtResource("crate")]
+position = Vector2(291, 1387)
+
+[node name="HarvestBarrel" parent="." instance=ExtResource("barrel")]
+position = Vector2(313, 1387)
+
+[node name="BarrelFootprint" type="StaticBody2D" parent="."]
+position = Vector2(313, 1384)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BarrelFootprint"]
+shape = SubResource("Shape_barrel")
+
+[node name="HayByCrates" type="Sprite2D" parent="."]
+position = Vector2(323, 1390)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="SmallHarvestBasket" type="Sprite2D" parent="."]
+position = Vector2(266, 1390)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="BenchBasket" type="Sprite2D" parent="."]
+position = Vector2(879, 1398)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="WellPot" type="Sprite2D" parent="."]
+position = Vector2(569, 1394)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(96, 16, 16, 16)
+
+[node name="BenchPotWest" type="Sprite2D" parent="."]
+position = Vector2(883, 1382)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="BenchPotEast" type="Sprite2D" parent="."]
+position = Vector2(922, 1393)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(96, 48, 16, 16)
+
+[node name="PackingPot" type="Sprite2D" parent="."]
+position = Vector2(255, 1387)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(112, 16, 16, 16)
+
+[node name="NorthwestGrass" type="Sprite2D" parent="."]
+position = Vector2(178, 951)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="NorthwestStone" type="Sprite2D" parent="."]
+position = Vector2(190, 950)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="NorthwestFlower" type="Sprite2D" parent="."]
+position = Vector2(185, 962)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
+
+[node name="NorthBlueFlowers" type="Sprite2D" parent="."]
+position = Vector2(342, 948)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 16)
+
+[node name="NorthYellowFlowers" type="Sprite2D" parent="."]
+position = Vector2(356, 950)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 16, 16, 16)
+
+[node name="NorthTuft" type="Sprite2D" parent="."]
+position = Vector2(367, 947)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="NorthMidGrass" type="Sprite2D" parent="."]
+position = Vector2(506, 949)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="NorthMidFlower" type="Sprite2D" parent="."]
+position = Vector2(515, 955)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 32, 16, 16)
+
+[node name="NortheastShrub" type="Sprite2D" parent="."]
+position = Vector2(984, 950)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 80, 16, 16)
+
+[node name="NortheastStone" type="Sprite2D" parent="."]
+position = Vector2(968, 953)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="NortheastFlower" type="Sprite2D" parent="."]
+position = Vector2(991, 960)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 48, 16, 16)
+
+[node name="WestFlowersA" type="Sprite2D" parent="."]
+position = Vector2(175, 1077)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="WestGrassA" type="Sprite2D" parent="."]
+position = Vector2(182, 1090)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="WestStone" type="Sprite2D" parent="."]
+position = Vector2(175, 1192)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="WestFlowersB" type="Sprite2D" parent="."]
+position = Vector2(185, 1200)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="WestGrassB" type="Sprite2D" parent="."]
+position = Vector2(173, 1312)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="EastFlowerA" type="Sprite2D" parent="."]
+position = Vector2(983, 1080)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="EastGrassA" type="Sprite2D" parent="."]
+position = Vector2(990, 1091)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="EastGrassB" type="Sprite2D" parent="."]
+position = Vector2(986, 1274)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="EastFlowerB" type="Sprite2D" parent="."]
+position = Vector2(993, 1263)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(16, 48, 16, 16)
+
+[node name="SouthwestShrub" type="Sprite2D" parent="."]
+position = Vector2(178, 1387)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 80, 16, 16)
+
+[node name="SouthwestGrass" type="Sprite2D" parent="."]
+position = Vector2(190, 1395)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="SouthwestFlowers" type="Sprite2D" parent="."]
+position = Vector2(181, 1400)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 32, 16, 16)
+
+[node name="WellGrass" type="Sprite2D" parent="."]
+position = Vector2(531, 1384)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="WellStone" type="Sprite2D" parent="."]
+position = Vector2(574, 1380)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SoutheastShrub" type="Sprite2D" parent="."]
+position = Vector2(984, 1395)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 80, 16, 16)
+
+[node name="SoutheastFlower" type="Sprite2D" parent="."]
+position = Vector2(974, 1394)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 16)
+
+[node name="SoutheastGrass" type="Sprite2D" parent="."]
+position = Vector2(990, 1401)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="MeadowA" type="Sprite2D" parent="."]
+position = Vector2(366, 1010)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 16)
+
+[node name="MeadowB" type="Sprite2D" parent="."]
+position = Vector2(624, 1057)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="MeadowC" type="Sprite2D" parent="."]
+position = Vector2(831, 1105)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 16, 16, 16)
+
+[node name="MeadowD" type="Sprite2D" parent="."]
+position = Vector2(390, 1203)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)
+
+[node name="MeadowE" type="Sprite2D" parent="."]
+position = Vector2(711, 1248)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="MeadowF" type="Sprite2D" parent="."]
+position = Vector2(477, 1299)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(16, 48, 16, 16)
+
+[node name="SteppingStone01" type="Sprite2D" parent="."]
+position = Vector2(345, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone02" type="Sprite2D" parent="."]
+position = Vector2(364, 1386)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone03" type="Sprite2D" parent="."]
+position = Vector2(387, 1385)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone04" type="Sprite2D" parent="."]
+position = Vector2(409, 1387)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone05" type="Sprite2D" parent="."]
+position = Vector2(432, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone06" type="Sprite2D" parent="."]
+position = Vector2(454, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone07" type="Sprite2D" parent="."]
+position = Vector2(475, 1387)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone08" type="Sprite2D" parent="."]
+position = Vector2(496, 1385)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone09" type="Sprite2D" parent="."]
+position = Vector2(512, 1388)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone10" type="Sprite2D" parent="."]
+position = Vector2(592, 1388)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone11" type="Sprite2D" parent="."]
+position = Vector2(615, 1391)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone12" type="Sprite2D" parent="."]
+position = Vector2(640, 1392)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone13" type="Sprite2D" parent="."]
+position = Vector2(666, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone14" type="Sprite2D" parent="."]
+position = Vector2(691, 1388)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone15" type="Sprite2D" parent="."]
+position = Vector2(716, 1386)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone16" type="Sprite2D" parent="."]
+position = Vector2(743, 1387)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone17" type="Sprite2D" parent="."]
+position = Vector2(768, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone18" type="Sprite2D" parent="."]
+position = Vector2(793, 1391)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="SteppingStone19" type="Sprite2D" parent="."]
+position = Vector2(814, 1389)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="SteppingStone20" type="Sprite2D" parent="."]
+position = Vector2(831, 1386)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="MeadowANeighbor" type="Sprite2D" parent="."]
+position = Vector2(374, 1014)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(16, 48, 16, 16)
+
+[node name="MeadowAGrass" type="Sprite2D" parent="."]
+position = Vector2(357, 1014)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="MeadowBFlower" type="Sprite2D" parent="."]
+position = Vector2(636, 1058)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)
+
+[node name="MeadowCNeighbor" type="Sprite2D" parent="."]
+position = Vector2(840, 1109)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 48, 16, 16)
+
+[node name="MeadowDNeighbor" type="Sprite2D" parent="."]
+position = Vector2(381, 1205)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="MeadowEFlower" type="Sprite2D" parent="."]
+position = Vector2(720, 1250)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(32, 32, 16, 16)
+
+[node name="MeadowFGrass" type="Sprite2D" parent="."]
+position = Vector2(466, 1301)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="BenchSideGrass" type="Sprite2D" parent="."]
+position = Vector2(935, 1400)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="PackingSideGrass" type="Sprite2D" parent="."]
+position = Vector2(233, 1379)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="NorthMidStone" type="Sprite2D" parent="."]
+position = Vector2(496, 953)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)

@@ -26,6 +26,9 @@ static func attach(layer: CanvasLayer, control: Control) -> UIScaleComponent:
 func _ready() -> void:
 	add_to_group(&"ui_scales")
 	root.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	# Keep the top-left origin fixed when the virtual size changes.
+	root.grow_horizontal = Control.GROW_DIRECTION_END
+	root.grow_vertical = Control.GROW_DIRECTION_END
 	get_viewport().size_changed.connect(refresh)
 	refresh()
 	# Stretch/DPI can change without a logical viewport resize.

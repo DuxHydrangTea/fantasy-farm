@@ -1,7 +1,8 @@
 class_name FarmSoundscape
 extends Node2D
 ## A fixed pool, independent of herd size. Distances use the player's feet.
-const RADIUS: float = 160.0
+const RADIUS: float = 240.0
+const CALL_VOLUME_DB: float = 9.0
 const CALLS: Array[StringName] = [&"animal_chicken", &"animal_duck", &"animal_cow", &"animal_sheep", &"animal_pig", &"animal_goose", &"animal_horse"]
 var world: FarmWorld
 var voices: Array[AudioStreamPlayer2D] = []
@@ -61,49 +62,63 @@ func _process(delta: float) -> void:
 			voices[index].stop()
 			sources[index] = null
 		else:
-			_place(voices[index], animal.global_position)
+			_place(voices[index], animal.global_position, CALL_VOLUME_DB)
 	if _elapsed >= _scan_at:
 		_scan_at = _elapsed + 0.35
 		_scan()
 
-func _place(voice: AudioStreamPlayer2D, point: Vector2) -> bool:
+func _place(voice: AudioStreamPlayer2D, point: Vector2, volume_db: float = 0.0) -> bool:
 	voice.global_position = point
 	var gain: float = distance_gain(world.player.global_position.distance_to(point), voice.max_distance)
 	if gain <= 0.0001:
 		voice.stop()
 		return false
-	voice.volume_db = linear_to_db(gain)
+	voice.volume_db = volume_db + linear_to_db(gain)
 	return true
 
-func _scan() -> void:
+func _scan_animals() -> void:
 	var living: Dictionary = {}
+	var nearby_count: int = 0
+	var caller: AnimalActor
+	var closest_due: float = RADIUS
 	for node: Node in get_tree().get_nodes_in_group(&"animal_status_targets"):
 		var animal: AnimalActor = node as AnimalActor
 		if not eligible(animal):
 			continue
 		var id: int = animal.get_instance_id()
 		living[id] = true
-		var near: bool = world.player.global_position.distance_to(animal.global_position) < RADIUS
-		if not near:
+		var distance: float = world.player.global_position.distance_to(animal.global_position)
+		if distance >= RADIUS:
 			_schedule.erase(id) # Returning to the pen starts with a fresh random delay.
 			continue
+		if distance <= RADIUS * 0.75:
+			nearby_count += 1
 		if not _schedule.has(id):
-			_schedule[id] = _elapsed + randf_range(3.0, 9.0)
-		if _elapsed < float(_schedule[id]) or _elapsed < _next_call:
-			continue
-		for index: int in range(voices.size()):
-			if voices[index].playing:
-				continue
-			voices[index].stream = FarmSound.P1_CATALOG[CALLS[int(animal.definition.species)]][0] as AudioStream
-			sources[index] = weakref(animal)
-			if _place(voices[index], animal.global_position):
-				voices[index].play()
-			_schedule[id] = _elapsed + randf_range(12.0, 28.0)
-			_next_call = _elapsed + randf_range(2.5, 4.0)
-			break
+			_schedule[id] = _elapsed + randf_range(0.8, 3.0)
+		if _elapsed >= float(_schedule[id]) and distance < closest_due:
+			caller = animal
+			closest_due = distance
 	for id: Variant in _schedule.keys():
 		if not living.has(id):
 			_schedule.erase(id)
+	if caller == null or _elapsed < _next_call:
+		return
+	for index: int in range(voices.size()):
+		var voice: AudioStreamPlayer2D = voices[index]
+		if voice.playing:
+			continue
+		if _place(voice, caller.global_position, CALL_VOLUME_DB):
+			voice.stream = FarmSound.P1_CATALOG[CALLS[int(caller.definition.species)]][0] as AudioStream
+			voice.pitch_scale = randf_range(0.94, 1.06)
+			sources[index] = weakref(caller)
+			voice.play()
+			var herd: float = clampf((nearby_count - 1) / 5.0, 0.0, 1.0)
+			_next_call = _elapsed + lerpf(2.4, 1.0, herd) + randf_range(0.0, 0.6)
+		_schedule[caller.get_instance_id()] = _elapsed + randf_range(6.0, 12.0)
+		break
+
+func _scan() -> void:
+	_scan_animals()
 	var hive: Beehive
 	var closest: float = _bee.max_distance
 	for node: Node in get_tree().get_nodes_in_group(&"beehives"):

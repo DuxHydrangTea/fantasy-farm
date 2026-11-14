@@ -1,7 +1,7 @@
 class_name SaveSchema
 extends RefCounted
 ## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 41
+const VERSION: int = 42
 const CropConditions = preload("res://components/crop_condition_state.gd")
 const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
@@ -67,7 +67,7 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	# hot-reload script rồi autosave trước khi được khởi động lại. Không xử lý hình dạng cũ này
 	# thì lần mở sau bag 64 ô sẽ không khớp save, khiến tải bị từ chối.
 	# Không tự lấp lại các slot đã tồn tại: làm vậy có thể ghi đè đồ người chơi hoặc cấp thêm đồ.
-	if data.get("version") == 4 or (data.get("version") in [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, VERSION] and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
+	if data.get("version") == 4 or (number(data.get("version"), 5, VERSION, true) and data.get("inventory") is Array and data.inventory.size() == InventoryComponent.LEGACY_SLOT_COUNT):
 		if not data.get("inventory") is Array:
 			return failure("Invalid legacy inventory.")
 		data = data.duplicate(true)
@@ -88,8 +88,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			if not row is Dictionary or not vector(row.get("cell"), true):
 				return failure("Invalid legacy soil cell.")
 			var cell: Vector2i = Vector2i(int(row.cell[0]), int(row.cell[1]))
-			if LandExpansionState.REGION.has_point(cell):
-				columns = maxi(columns, LandExpansionState.REGION.end.x - cell.x)
+			if LandExpansionState.LEGACY_REGION.has_point(cell):
+				columns = maxi(columns, LandExpansionState.LEGACY_REGION.end.x - cell.x)
 		data.land_columns = columns
 		data.version = 6
 	if data.get("version") == 6:
@@ -372,6 +372,11 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		data = data.duplicate(true)
 		data.workers = WorkerSaveSchema.migrate_team(data.workers)
 		data.version = 41
+	if data.get("version") == 41:
+		data = data.duplicate(true)
+		if not _migrate_farmland(data, catalog):
+			return failure("Invalid legacy farmland state.")
+		data.version = 42
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if data.has("wall_saved_at") and not number(data.wall_saved_at):
@@ -592,6 +597,50 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 			elif flower.growth_started_at < flower.planted_at or flower.growth_started_at > data.saved_at or flower.matures_at <= flower.growth_started_at:
 				return failure("Invalid flower watering or maturity time.")
 	return {"ok": true, "snapshot": data}
+
+static func _migrate_farmland(data: Dictionary, catalog: SaveCatalog) -> bool:
+	if not number(data.get("saved_at")) or not WorkerSaveSchema.valid(data.get("workers"), catalog, float(data.saved_at)):
+		return false
+	var automation: Dictionary = data.workers.crop_automation
+	for rows: Variant in [data.get("soil"), data.get("crops"), automation.plots, automation.prepared]:
+		if not rows is Array or rows.size() > 100000:
+			return false
+		for row: Variant in rows:
+			if not row is Dictionary or not vector(row.get("cell"), true):
+				return false
+			row.cell = _map_farmland_cell(row.cell)
+			if row.has("cells"):
+				var mapped: Array = []
+				for pair: Array in row.cells:
+					mapped.append(_map_farmland_cell(pair))
+				row.cells = mapped
+	for worker: Dictionary in data.workers.rows:
+		var task: Dictionary = worker.task
+		if task.get("kind") not in ["harvest", "water_crop", "till", "plant", "fertilize", "treat_pests", "treat_weeds"]:
+			continue
+		var moved: bool = _map_farmland_cell(task.cell) != task.cell
+		for pair: Array in task.get("cells", []):
+			moved = moved or _map_farmland_cell(pair) != pair
+		if moved:
+			# Replan jobs whose target or reach changed with the field layout.
+			worker.task = {}
+			worker.wake_at = data.saved_at
+	if not data.get("beehives") is Array or data.beehives.size() > 100000:
+		return false
+	for hive: Variant in data.beehives:
+		if not hive is Dictionary or not vector(hive.get("position")):
+			return false
+		if hive.get("garden_slot", -1) >= 0:
+			continue
+		var position: Vector2 = Vector2(float(hive.position[0]), float(hive.position[1]))
+		var cell: Vector2i = Vector2i((position / 16.0).floor())
+		var offset: Vector2 = Vector2(LandExpansionState.from_legacy_cell(cell) - cell) * 16.0
+		hive.position = [position.x + offset.x, position.y + offset.y]
+	return true
+
+static func _map_farmland_cell(pair: Array) -> Array:
+	var cell: Vector2i = LandExpansionState.from_legacy_cell(Vector2i(int(pair[0]), int(pair[1])))
+	return [cell.x, cell.y]
 
 static func _entity(row: Dictionary, ids: Dictionary) -> bool:
 	if not identifier(row.get("id")) or ids.has(row.id) or not vector(row.get("position")):

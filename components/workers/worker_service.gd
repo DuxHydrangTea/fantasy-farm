@@ -26,12 +26,8 @@ var upgrade_shop: WorkerUpgradeService = WorkerUpgradeService.new(self)
 var legacy_baskets: Array = []
 var crop_policy: CropWorkerPolicy
 var navigation: WorkerNavigationSystem
-const ONLINE_BUDGET_USEC: int = 2000
-var _event_open: bool = false
-var _event_row: int = 0
-var _budget_frame: int = -1
-var _budget_spent_usec: int = 0
-var _online_pending: bool = false
+var _scheduler: WorkerScheduler = WorkerScheduler.new()
+var _syncing_offline: bool = false
 ## Opt-in counters for the isolated rendered benchmark.
 var profiling: bool = false
 var scheduler_usec: int = 0
@@ -71,6 +67,7 @@ func _ready() -> void:
 	world.farming.time_manager.before_tick.connect(_before_tick)
 	world.farming.crop_planted.connect(_crop_planted)
 	world.farming.crop_harvested.connect(_crop_harvested)
+	world.farming.crop_treated.connect(_crop_treated)
 	world.farming.soil_changed.connect(_soil_changed)
 	world.land.state.changed.connect(func() -> void:
 		crop_policy.invalidate()
@@ -357,7 +354,7 @@ func _spawn(row: Dictionary) -> void:
 	access.worker_id = row.id
 	actor.add_child(access)
 
-func _pay(row: Dictionary, day: int) -> void:
+func pay_daily_wage(row: Dictionary, day: int) -> void:
 	if not row.employed or int(row.last_wage_day) >= day:
 		return
 	var wage: int = int(WorkerRole.WAGES[row.role])
@@ -402,38 +399,15 @@ func blocked(role: String, now: float) -> void:
 	request_scan(row.role)
 
 func _before_tick(timestamp: float) -> void:
-	if not available() or records.is_empty() or timestamp - simulated_at < 0.25:
-		return
-	# Catch up workers before other world systems consume this same time span.
-	var offline: bool = timestamp - simulated_at > 5.0 and not _event_open
-	if offline:
-		advance(timestamp, true)
-	else:
-		_advance_online(timestamp)
-
-func _advance_online(timestamp: float) -> void:
-	var frame: int = Engine.get_process_frames()
-	if frame != _budget_frame:
-		_budget_frame = frame
-		_budget_spent_usec = 0
-	var remaining: int = ONLINE_BUDGET_USEC - _budget_spent_usec
-	if remaining <= 0:
-		return
-	var started: int = Time.get_ticks_usec()
-	_online_pending = not advance(timestamp, false, remaining)
-	_budget_spent_usec += Time.get_ticks_usec() - started
-	if profiling:
-		scheduler_usec += Time.get_ticks_usec() - started
+	_scheduler.before_tick(self, timestamp)
 
 func _process(_delta: float) -> void:
-	if (_event_open or _online_pending) and available() and not busy:
-		_advance_online(world.farming.time_manager.now())
+	if _scheduler.has_pending_work() and available() and not busy:
+		_scheduler.advance_online(self, world.farming.time_manager.now())
 
 func settle(now: float) -> void:
 	advance(now, now - simulated_at > 5.0)
 
-## A budget yields only between complete events. The next call resumes at the
-## next event, including when that event is exactly the requested endpoint.
 func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 	if busy or world.storages.busy or not is_finite(until) or until < simulated_at:
 		return true
@@ -446,125 +420,19 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 	crop_policy.deadline_usec = started + budget_usec if not offline and budget_usec > 0 else 0
 	var clock: FarmClock = world.farming.time_manager
 	var previous: float = clock.simulation_timestamp
-	if not _event_open:
-		records.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.hire_order) < int(b.hire_order))
-	while simulated_at <= until:
-		clock.simulation_timestamp = simulated_at
-		if not _event_open:
-			if legacy_pending:
-				_drain_legacy_products()
-			bridge.sync(simulated_at, offline)
-			_drain_pickups()
-			_event_row = 0
-			_event_open = true
-		var day: int = world.weather.schedule.day_at(simulated_at)
-		for index: int in range(_event_row, records.size()):
-			if not offline and budget_usec > 0 and index > _event_row and Time.get_ticks_usec() - started >= budget_usec:
-				_event_row = index
-				clock.simulation_timestamp = previous
-				busy = false
-				crop_policy.deadline_usec = 0
-				return false
-			var row: Dictionary = records[index]
-			_pay(row, day)
-			if not running(row):
-				continue
-			var actor: WorkerActor = actors[row.id] as WorkerActor
-			if not row.task.is_empty() and row.task.kind == "cure_animal":
-				if not bridge.refresh_animal_task(row, offline):
-					row.task = {}
-					row.wake_at = simulated_at + 0.5
-			# Animal demand can arise while travelling to a lower-priority plot.
-			# Keep prepared soil; an interrupted job has not spent its supplies.
-			if not row.task.is_empty() and row.task.kind in ["till", "plant", "fertilize"] and float(row.task.finish_at) > simulated_at:
-				var urgent_held: Dictionary = reservations(String(row.id))
-				for option: Dictionary in bridge.ranch_candidates(row, feed_inventory(row.id), urgent_held):
-					if float(blocked_targets.get(String(row.id) + ":" + String(option.id), 0)) <= simulated_at:
-						row.position = WorkerRole.pair(actor.global_position)
-						row.task = {}
-						row.wake_at = simulated_at
-						break
-			var task: Dictionary = row.task
-			if not task.is_empty() and float(task.finish_at) <= simulated_at + 0.00001:
-				var target: Vector2 = WorkerRole.point(task.point)
-				if not offline and actor.global_position.distance_to(target) > 3.0:
-					task.finish_at = simulated_at + 0.25
-				else:
-					row.position = task.point.duplicate()
-					if offline:
-						actor.global_position = target
-					var commit_started: int = Time.get_ticks_usec() if profiling else 0
-					if task.has("cells"):
-						WorkerAreaPolicy.commit_next(self, row, task)
-					else:
-						bridge.commit(row, feed_inventory(row.id), task)
-					if profiling:
-						var spent: int = Time.get_ticks_usec() - commit_started
-						commit_usec += spent
-						commit_max_usec = maxi(commit_max_usec, spent)
-					if task.has("cells") and int(task.cursor) < task.cells.size():
-						task.finish_at = simulated_at + 0.00001
-					else:
-						row.task = {}
-					row.wake_at = simulated_at + (bridge.rest_seconds(row) if String(task.get("kind", "")) == "patrol" else 0.0)
-			if row.task.is_empty() and float(row.wake_at) <= simulated_at:
-				if not offline:
-					row.position = WorkerRole.pair(actor.global_position)
-				# Full crop/plant scan is exclusively for workers that need a task.
-				var options: Array[Dictionary] = []
-				var held: Dictionary = reservations(String(row.id))
-				crop_policy.query_pending = false
-				var candidates: Array[Dictionary] = bridge.candidates(row, feed_inventory(row.id))
-				if crop_policy.query_pending:
-					_event_row = index
-					clock.simulation_timestamp = previous
-					busy = false
-					crop_policy.deadline_usec = 0
-					return false
-				for option: Dictionary in candidates:
-					var cell_free: bool = not option.has("cell") or not held.cells.has(Vector2i(int(option.cell[0]), int(option.cell[1])))
-					if cell_free and not held.targets.has(target_key(option)) and float(blocked_targets.get(String(row.id) + ":" + String(option.id), 0)) <= simulated_at and bridge.zone_contains(row, WorkerRole.point(option.point)):
-						options.append(option)
-				WorkerRole.apply_priorities(options, crop_automation.priority_mode)
-				if options.is_empty() and not candidates.is_empty() and not waiting_reasons.has(String(row.id)):
-					waiting_reasons[String(row.id)] = "Work targets are reserved or blocked. Waiting for another opportunity."
-				var chosen: Dictionary = WorkerRole.choose(options, WorkerRole.point(row.position))
-				var wake: float = bridge.next_wake(row, feed_inventory(row.id), simulated_at)
-				if chosen.is_empty():
-					var stroll: Vector2 = bridge.patrol_point(row)
-					chosen = {"kind": "patrol", "id": "patrol:%d_%d" % [roundi(stroll.x), roundi(stroll.y)], "point": WorkerRole.pair(stroll), "priority": 9}
-				if not chosen.is_empty() and (String(chosen.get("kind", "")) == "patrol" or bridge.zone_contains(row, WorkerRole.point(chosen.point))):
-					WorkerAreaPolicy.expand(self, row, chosen)
-					chosen["duration"] = upgrades.duration(actor.definition.work_seconds, String(chosen.kind))
-					chosen["base_point"] = chosen.point.duplicate()
-					chosen["attempt"] = 0
-					chosen["work_at"] = simulated_at + WorkerRole.point(row.position).distance_to(WorkerRole.point(chosen.point)) / actor.movement.speed + actor.movement.speed / actor.movement.acceleration
-					chosen["finish_at"] = chosen.work_at + task_duration(chosen, actor)
-					if chosen.kind == "patrol":
-						chosen.finish_at = maxf(float(chosen.finish_at), minf(simulated_at + 60.0, wake))
-					row.task = chosen
-				else:
-					row.wake_at = bridge.next_wake(row, feed_inventory(row.id), simulated_at)
-		_event_open = false
-		_event_row = 0
-		if simulated_at >= until:
-			break
-		var next: float = minf(until, world.weather.schedule.dawn_at(day + 1))
-		for row: Dictionary in records:
-			if running(row):
-				next = minf(next, float(row.task.finish_at) if not row.task.is_empty() else float(row.wake_at))
-				if not row.task.is_empty() and row.task.kind in ["till", "plant", "fertilize"]:
-					next = minf(next, bridge.next_wake(row, feed_inventory(row.id), simulated_at))
-		simulated_at = minf(until, maxf(simulated_at + 0.00001, next))
-		if budget_usec > 0 and Time.get_ticks_usec() - started >= budget_usec:
-			clock.simulation_timestamp = previous
-			busy = false
-			crop_policy.deadline_usec = 0
-			return false
+	var complete: bool = _scheduler.advance(self, clock, world.weather.schedule, until, offline, budget_usec, started)
 	clock.simulation_timestamp = previous
 	busy = false
 	crop_policy.deadline_usec = 0
-	return true
+	return complete
+
+func prepare_simulation_event(offline: bool) -> void:
+	if legacy_pending:
+		_drain_legacy_products()
+	_syncing_offline = offline
+	bridge.sync(simulated_at, offline)
+	_drain_pickups()
+	_syncing_offline = false
 
 func advance_async(until: float, budget_usec: int = 32000) -> void:
 	_catching_up = true
@@ -607,11 +475,17 @@ func capture(now: float) -> Dictionary:
 		rows.append(copy)
 	return {"rows": rows, "trial_used": trial_used.duplicate(), "next_order": next_order, "simulated_at": simulated_at, "crop_automation": crop_automation.capture(), "upgrades": upgrades.levels.duplicate(), "legacy_baskets": legacy_baskets.duplicate(true)}
 
+func is_saved_task_target_valid(row: Dictionary, land_blocks: int) -> bool:
+	var task: Dictionary = row.task
+	# Patrol is allowed to cross work areas.
+	return task.is_empty() or String(task.get("kind", "")) == "patrol" or bridge.zone_contains(row, WorkerRole.point(task.point), land_blocks)
+
+func sync_after_restore(timestamp: float) -> void:
+	bridge.sync(timestamp)
+
 func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	busy = true
-	_event_open = false
-	_event_row = 0
-	_online_pending = false
+	_scheduler.reset_checkpoint()
 	navigation.reset()
 	for actor: WorkerActor in actors.values():
 		actor.free()
@@ -649,10 +523,22 @@ func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	busy = false
 
 func request_scan(role: String) -> void:
+	# Offline sync publishes intermediate world state at caller checkpoints too.
+	# The scheduler already planned wake boundaries for that evolving state;
+	# treating those notifications as external edits changes persisted routes.
+	if _syncing_offline:
+		return
+	var now: float = world.farming.time_manager.now()
 	for row: Dictionary in records_for(role):
-		row.wake_at = minf(float(row.wake_at), world.farming.time_manager.now())
-		if not row.task.is_empty() and row.task.kind == "patrol":
+		row.wake_at = minf(float(row.wake_at), now)
+		# World sync may notify us at the same instant a walk completes.
+		# Preserve due tasks so the scheduler commits arrival before resting;
+		# otherwise an extra replay checkpoint can erase the destination.
+		if not row.task.is_empty() and row.task.kind == "patrol" and float(row.task.finish_at) > now + 0.00001:
 			row.task = {}
+
+func _crop_treated(_cell: Vector2i) -> void:
+	request_scan("crop")
 
 func _node_added(node: Node) -> void:
 	if not world.is_ancestor_of(node):
@@ -685,8 +571,14 @@ func _pickup_added(node: Node) -> void:
 func _trough_changed(stock: int, trough: AnimalTrough) -> void:
 	bridge.invalidate_ranch()
 	var key: int = trough.get_instance_id()
-	if int(trough_levels.get(key, stock)) != stock:
-		trough_levels[key] = stock
+	var previous: int = int(trough_levels.get(key, stock))
+	trough_levels[key] = stock
+	var units: int = trough.water_per_use if trough.kind == AnimalTrough.Kind.WATER else 1
+	var threshold: int = trough.capacity - units
+	# Depletion within an already refillable trough does not create new work.
+	# Interrupting patrol on every stock update made arbitrary offline checkpoint
+	# boundaries change worker routes and subsequent harvest times.
+	if previous > threshold and stock <= threshold:
 		request_scan("crop")
 
 func running(row: Dictionary) -> bool:

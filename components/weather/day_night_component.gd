@@ -36,7 +36,6 @@ func _ready() -> void:
 	glow.fill = GradientTexture2D.FILL_RADIAL
 	glow.fill_from = Vector2(0.5, 0.5)
 	glow.fill_to = Vector2(0.5, 1.0)
-	# MIX darkens daylight when the lamp fades below the ambient brightness.
 	for anchor: Vector2 in world.night_light_positions:
 		var light: PointLight2D = PointLight2D.new()
 		light.position = anchor
@@ -60,6 +59,10 @@ func _ready() -> void:
 		light.blend_mode = Light2D.BLEND_MODE_ADD
 		world.land.sign.add_child(light)
 		lights.append(light)
+	for node: Node in get_tree().get_nodes_in_group(&"street_lamp_lights"):
+		if node is PointLight2D and world.is_ancestor_of(node):
+			node.texture = glow
+			lights.append(node)
 
 func refresh(timestamp: float, weather_tint: Color) -> void:
 	var daylight: Color = daylight_color(timestamp)

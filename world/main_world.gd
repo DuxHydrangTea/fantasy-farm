@@ -52,6 +52,7 @@ func _enter_tree() -> void:
 	weather.world = self
 	weather.name = "WeatherManager"
 	farming.weather = weather.schedule
+	farming.sync_weather = weather.advance
 	_wire_weather(self)
 	# Typed composition keeps land wiring independent of node names.
 	land = LandExpansionComponent.new()
@@ -70,6 +71,7 @@ func _enter_tree() -> void:
 	trees = TreePlantation.new()
 	trees.name = "TreePlantation"
 	trees.world = self
+	farming.trees = trees
 	add_child(trees)
 	objectives = ObjectiveTracker.new()
 	objectives.name = "Objectives"
