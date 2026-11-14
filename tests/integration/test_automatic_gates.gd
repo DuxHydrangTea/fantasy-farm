@@ -1,11 +1,50 @@
 extends GutTest
 
 const Gate = preload("res://components/automatic_gate.gd")
+const WORLD: PackedScene = preload("res://world/main_world.tscn")
+const SIGN_GATE_PATH: String = "res://scenes/objects/outdoor_decor/wooden_sign_gate.tscn"
 const GATE_PATHS: Array[String] = [
 	"res://scenes/objects/outdoor_decor/horizontal_gate_left_hinge.tscn",
 	"res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn",
 	"res://scenes/objects/outdoor_decor/vertical_gate.tscn",
 ]
+
+func test_farm_entrances_use_open_sign_gates_and_removed_openings_are_fenced() -> void:
+	var world: FarmWorld = WORLD.instantiate() as FarmWorld
+	add_child_autofree(world)
+	world.player.set_physics_process(false)
+	await wait_physics_frames(2)
+	var navigation: PlayerNavigationComponent = world.player.state.navigation
+	var automatic_gates: Array[Node] = world.find_children("*", "StaticBody2D", true, false).filter(
+		func(body: Node) -> bool: return body.get_script() == Gate)
+	assert_true(automatic_gates.is_empty(), "The map should have no automatic gates")
+	for name: String in ["FarmlandEntrance", "CoopEntrance", "BarnEntrance", "PondEntrance", "StorageYard/ProduceEntrance", "StorageYard/SeedEntrance"]:
+		var gate: StaticBody2D = world.get_node_or_null(name)
+		assert_not_null(gate, name)
+		if gate == null:
+			continue
+		assert_eq(gate.scene_file_path, SIGN_GATE_PATH, name)
+		var from_north: Vector2 = gate.global_position + Vector2(0, -30)
+		var from_south: Vector2 = gate.global_position + Vector2(0, 22)
+		assert_true(navigation._segment_clear(from_north, from_south), "%s stays clear from the north" % name)
+		assert_true(navigation._segment_clear(from_south, from_north), "%s stays clear from the south" % name)
+	for x: int in [1000, 1400]:
+		assert_false(navigation._segment_clear(Vector2(x - 20, 432), Vector2(x + 20, 432)), "Coop sides are closed")
+		assert_false(navigation._segment_clear(Vector2(x - 20, 728), Vector2(x + 20, 728)), "Barn sides are closed")
+	assert_false(navigation._segment_clear(Vector2(1192, 532), Vector2(1192, 563)), "Coop south fence is closed")
+	assert_false(navigation._segment_clear(Vector2(537, 265), Vector2(537, 303)), "Old farmland entrance is closed")
+
+func test_holding_down_from_beside_farmland_gate_enters_through_the_opening() -> void:
+	var world: FarmWorld = WORLD.instantiate() as FarmWorld
+	add_child_autofree(world)
+	var gate: Node2D = world.get_node("FarmlandEntrance")
+	world.player.global_position = gate.global_position + Vector2(54, -19)
+	await wait_physics_frames(2)
+	Input.action_press(&"move_down")
+	await wait_physics_frames(95)
+	Input.action_release(&"move_down")
+	assert_gt(world.player.global_position.y, gate.global_position.y + 32.0)
+	assert_lt(absf(world.player.global_position.x - gate.global_position.x), 18.0)
 
 func _player_at(point: Vector2) -> Node2D:
 	var player: Node2D = Node2D.new()

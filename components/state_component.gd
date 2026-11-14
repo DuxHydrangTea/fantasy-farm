@@ -57,12 +57,12 @@ func _physics_process(delta: float) -> void:
 		movement.stop()
 		_update_dust(false)
 		return
-	var keyboard: Vector2 = _movement_direction()
-	if not keyboard.is_zero_approx():
-		if navigation != null:
+	var manual: Vector2 = _movement_direction()
+	if not manual.is_zero_approx():
+		if navigation != null and navigation.has_focus:
 			navigation.cancel()
 		movement.cancel_target()
-	var direction: Vector2 = keyboard if not keyboard.is_zero_approx() else movement.target_direction()
+	var direction: Vector2 = manual if not manual.is_zero_approx() else movement.target_direction()
 	animation.update_facing_direction(direction)
 	if _harvest_requested:
 		_harvest_requested = false
@@ -74,11 +74,15 @@ func _physics_process(delta: float) -> void:
 			return
 	var previous_position: Vector2 = movement.body.global_position
 	if navigation != null and navigation.has_focus:
+		movement.clear_detour()
 		navigation.move(delta)
 	elif movement.has_target:
+		movement.clear_detour()
 		movement.move_to_target(delta)
 	else:
-		movement.move(direction, delta)
+		movement.move_with_avoidance(direction, delta)
+		if not manual.is_zero_approx():
+			animation.update_facing_direction(movement.body.global_position - previous_position)
 	# Collision can prevent movement even while input or a destination remains.
 	var did_move: bool = movement.body.global_position.distance_squared_to(previous_position) > 0.000001
 	transition_to(State.WALK if did_move else State.IDLE)

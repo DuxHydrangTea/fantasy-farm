@@ -2,6 +2,7 @@ class_name WorkerNavigation
 extends PlayerNavigationComponent
 ## Worker-only movement adapter. Player navigation and input remain independent.
 var system: WorkerNavigationSystem
+var exact_goal: bool = false
 var _check_remaining: float = 0.0
 var _checked_waypoint: Vector2 = Vector2.INF
 
@@ -9,13 +10,22 @@ func _ready() -> void:
 	set_physics_process(false)
 
 func request_focus(point: Vector2) -> void:
-	if has_focus and focus_position.is_equal_approx(point):
+	request_worker_goal(point, false)
+
+func request_worker_goal(point: Vector2, exact: bool) -> void:
+	if has_focus and focus_position.is_equal_approx(point) and exact_goal == exact:
 		return
 	cancel()
+	exact_goal = exact
 	focus_position = point
 	has_focus = true
 	is_navigating = true
 	system.request(self)
+
+func _in_focus_range(point: Vector2) -> bool:
+	if exact_goal:
+		return point.distance_to(focus_position) <= movement.arrival_distance
+	return super._in_focus_range(point)
 
 func cancel() -> void:
 	if system != null:

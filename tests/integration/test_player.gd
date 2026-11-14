@@ -410,6 +410,7 @@ func test_spam_clicks_around_wall_keep_safe_detour_and_reach_latest_destination(
 	assert_false(navigation.is_navigating)
 
 func test_action_cancels_destination_and_ignores_clicks() -> void:
+	player.get_node("ToolSelection").select_slot(0)
 	_click_world(player.global_position + Vector2(100, 0))
 	await wait_physics_frames(5)
 	_send_key(KEY_SPACE, true)
@@ -426,6 +427,7 @@ func test_action_cancels_destination_and_ignores_clicks() -> void:
 	assert_eq(state.current_state, StateComponent.State.IDLE)
 
 func test_right_click_uses_tool_without_moving() -> void:
+	player.get_node("ToolSelection").select_slot(0)
 	_click_world(player.position + Vector2(100, 0), MOUSE_BUTTON_RIGHT)
 	await wait_physics_frames(5)
 	assert_false(state.movement.has_target)
@@ -453,18 +455,47 @@ func _wall(offset: Vector2, wall_size: Vector2) -> StaticBody2D:
 	viewport.add_child(wall)
 	return wall
 
-func test_click_focus_finds_a_path_around_collision() -> void:
-	var wall: StaticBody2D = _wall(Vector2(30, 0), Vector2(10, 100))
+func test_holding_direction_walks_around_a_wall_and_then_continues_forward() -> void:
+	var wall: StaticBody2D = _wall(Vector2(30, 0), Vector2(12, 100))
 	await wait_physics_frames(2)
 	var start: Vector2 = player.position
-	var focus: Vector2 = start + Vector2(96, 0)
+	_send_key(KEY_RIGHT, true)
+	await wait_physics_frames(100)
+	assert_gt(player.position.x, wall.position.x + 24.0)
+	assert_gt(absf(player.position.y - start.y), 50.0)
+	var around: Vector2 = player.position
+	await wait_physics_frames(8)
+	assert_gt(player.position.x, around.x)
+	assert_almost_eq(player.position.y, around.y, 0.5)
+	_send_key(KEY_RIGHT, false)
+
+func test_direction_change_interrupts_the_detour() -> void:
+	_wall(Vector2(28, 0), Vector2(12, 100))
+	await wait_physics_frames(2)
+	var start: Vector2 = player.position
+	_send_key(KEY_RIGHT, true)
+	await wait_physics_frames(25)
+	assert_gt(absf(player.position.y - start.y), 8.0)
+	var mid_detour: Vector2 = player.position
+	_send_key(KEY_RIGHT, false)
+	_send_key(KEY_LEFT, true)
+	await wait_physics_frames(18)
+	assert_lt(player.position.x, mid_detour.x - 12.0)
+	assert_lt(absf(player.position.y - mid_detour.y), 12.0)
+	_send_key(KEY_LEFT, false)
+
+func test_click_focus_finds_a_path_around_collision(thin = use_parameters([false, true])) -> void:
+	var wall: StaticBody2D = _wall(Vector2(0, 32), Vector2(100, 1)) if thin else _wall(Vector2(30, 0), Vector2(10, 100))
+	await wait_physics_frames(2)
+	var start: Vector2 = player.position
+	var focus: Vector2 = start + (Vector2(0, 96) if thin else Vector2(96, 0))
 	_click_world(focus)
 	var detour: float = 0.0
 	for frame: int in range(180):
 		await wait_physics_frames(1)
-		detour = maxf(detour, absf(player.position.y - start.y))
+		detour = maxf(detour, absf(player.position.x - start.x) if thin else absf(player.position.y - start.y))
 	assert_gt(detour, 45.0, "Must go around the wall")
-	assert_gt(player.position.x, wall.position.x)
+	assert_gt(player.position.y if thin else player.position.x, wall.position.y if thin else wall.position.x)
 	assert_lte(player.position.distance_to(focus), navigation.interaction_distance + state.movement.arrival_distance)
 	assert_false(state.movement.has_target)
 	assert_false(navigation.is_navigating)
@@ -543,14 +574,7 @@ func test_inventory_cancels_focus_route() -> void:
 	assert_eq(player.position, stopped)
 
 func test_collision_plays_idle_and_resumes_walking_when_path_clears() -> void:
-	var wall: StaticBody2D = StaticBody2D.new()
-	var collision: CollisionShape2D = CollisionShape2D.new()
-	var shape: RectangleShape2D = RectangleShape2D.new()
-	shape.size = Vector2(10, 100)
-	collision.shape = shape
-	wall.add_child(collision)
-	wall.position = player.position + Vector2(30, 0)
-	viewport.add_child(wall)
+	var wall: StaticBody2D = _wall(Vector2(30, 0), Vector2(10, 512))
 	await wait_physics_frames(2)
 	_send_key(KEY_D, true)
 	await wait_physics_frames(25)

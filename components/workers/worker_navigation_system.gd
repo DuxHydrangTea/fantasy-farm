@@ -90,6 +90,10 @@ func invalidate_region(area: Rect2) -> void:
 		for y: int in range(first.y, last.y + 1):
 			for x: int in range(first.x, last.x + 1):
 				cells.erase(Vector2i(x, y))
+				var cell: Vector2i = Vector2i(x, y)
+				cache.edges.erase(cell)
+				for direction: Vector2i in DIRECTIONS:
+					cache.edges.erase(cell + direction)
 	_restart_jobs(area)
 
 func _restart_jobs(area: Rect2 = Rect2()) -> void:
@@ -127,7 +131,7 @@ func request(nav: WorkerNavigation) -> void:
 	var origin: Vector2 = Vector2(nav.camera.limit_left, nav.camera.limit_top) + Vector2.ONE * nav.cell_size
 	var key: String = str([nav.movement.body.get_world_2d().space, shape.shape.get_rid(), shape.shape.get_rect(), shape.transform, nav.movement.body.global_scale, nav.movement.body.global_rotation, nav.movement.body.collision_mask, bounds, origin, nav.cell_size])
 	if not caches.has(key):
-		caches[key] = {"cells": {}, "origin": origin, "size": nav.cell_size}
+		caches[key] = {"cells": {}, "edges": {}, "origin": origin, "size": nav.cell_size}
 	var job: Dictionary = {"nav": weakref(nav), "key": key, "bounds": bounds, "open": [], "cost": {}, "parent": {}, "closed": {}, "phase": 0, "seed": 0, "start": Vector2i.ZERO, "start_distance": INF, "origin": nav.movement.body.global_position, "neighbour": 0, "current": Vector2i.ZERO}
 	jobs.append(job)
 	nav._planning = true
@@ -172,6 +176,18 @@ func _clear(job: Dictionary, nav: WorkerNavigation, cell: Vector2i) -> bool:
 		cells[cell] = nav._point_clear(nav._point(cell))
 	return bool(cells[cell])
 
+func _edge_clear(job: Dictionary, nav: WorkerNavigation, from: Vector2i, to: Vector2i) -> bool:
+	# Clear endpoints can straddle a thin fence. Cache swept connections as well
+	# as cells, shared by workers with the same collision footprint.
+	var edges: Dictionary = caches[job.key].edges
+	if not edges.has(from):
+		edges[from] = {}
+	var neighbours: Dictionary = edges[from]
+	if not neighbours.has(to):
+		queries_last_step += 2
+		neighbours[to] = nav._segment_clear(nav._point(from), nav._point(to))
+	return bool(neighbours[to])
+
 func _expand(job: Dictionary, nav: WorkerNavigation) -> bool:
 	if int(job.phase) == 0:
 		if not (job.bounds as Rect2i).has_point(nav._cell(job.origin)) or not (job.bounds as Rect2i).has_point(nav._cell(nav.focus_position)):
@@ -182,6 +198,10 @@ func _expand(job: Dictionary, nav: WorkerNavigation) -> bool:
 			nav.accept_path(PackedVector2Array([nav.focus_position]))
 			completed_paths += 1
 			return true
+		if nav.exact_goal:
+			queries_last_step += 1
+			if not nav._point_clear(nav.focus_position):
+				return _failed(nav)
 		job.phase = 1
 		return false
 	if int(job.phase) == 1:
@@ -211,8 +231,18 @@ func _expand(job: Dictionary, nav: WorkerNavigation) -> bool:
 		if job.closed.has(cell):
 			return false
 		job.closed[cell] = true
-		if nav._point(cell).distance_squared_to(nav.focus_position) <= nav.interaction_distance * nav.interaction_distance and nav._goal_valid(nav._point(cell)):
+		var point: Vector2 = nav._point(cell)
+		var near_goal: bool = point.distance_squared_to(nav.focus_position) <= nav.interaction_distance * nav.interaction_distance
+		var reaches_goal: bool = false
+		if near_goal and nav.exact_goal:
+			queries_last_step += 2
+			reaches_goal = nav._segment_clear(point, nav.focus_position)
+		elif near_goal:
+			reaches_goal = nav._goal_valid(point)
+		if reaches_goal:
 			var path: PackedVector2Array = PackedVector2Array()
+			if nav.exact_goal and not point.is_equal_approx(nav.focus_position):
+				path.append(nav.focus_position)
 			while job.parent.has(cell):
 				path.append(nav._point(cell))
 				cell = job.parent[cell]
@@ -231,7 +261,7 @@ func _expand(job: Dictionary, nav: WorkerNavigation) -> bool:
 	if int(job.neighbour) == 4:
 		job.phase = 2
 	var cost: int = int(job.cost[current]) + 1
-	if not job.closed.has(next) and cost < int(job.cost.get(next, 0x7FFFFFFF)) and _clear(job, nav, next):
+	if not job.closed.has(next) and cost < int(job.cost.get(next, 0x7FFFFFFF)) and _clear(job, nav, next) and _edge_clear(job, nav, current, next):
 		job.cost[next] = cost
 		job.parent[next] = current
 		_push(job.open, [float(cost) + _heuristic(nav, next), cost, next])

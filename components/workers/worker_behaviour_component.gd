@@ -1,9 +1,6 @@
 class_name WorkerBehaviourComponent
 extends Node
-## M0: waypoint patrol only — role task scan/work arrives in M1+.
-## Keeps its own goal across MovementComponent's 0.2s blocked auto-cancel
-## (see movement_component.gd): a blocked target is re-issued every frame
-## until `stuck_seconds` elapses, then skipped for the next waypoint.
+## Follows service tasks with shared navigation and handles standalone patrols.
 @export var movement: MovementComponent
 @export var animation: AnimationComponent
 var patrol_points: Array[Vector2] = []
@@ -15,8 +12,9 @@ var waypoint_index: int = 0
 var _blocked_elapsed: float = 0.0
 var _wait_remaining: float = 0.0
 var _badge_elapsed: float = 1.0
-var _navigation: PlayerNavigationComponent
+var _navigation: WorkerNavigation
 var _care_target: WeakRef
+var _path_to_work_point: bool = false
 
 func _exit_tree() -> void:
 	_release_care_target()
@@ -51,11 +49,10 @@ func _sync_care_target(actor: WorkerActor, row: Dictionary) -> void:
 		_care_target = weakref(desired)
 		desired.behaviour.hold_for_care(self, _care_focus_active)
 
-func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
+func _request_navigation(actor: WorkerActor, goal: Vector2) -> void:
 	if _navigation == null:
-		var worker_navigation: WorkerNavigation = WorkerNavigation.new()
-		worker_navigation.system = actor.worker_service.navigation
-		_navigation = worker_navigation
+		_navigation = WorkerNavigation.new()
+		_navigation.system = actor.worker_service.navigation
 		_navigation.movement = movement
 		_navigation.animation = animation
 		_navigation.camera = actor.worker_service.world.player.camera
@@ -71,8 +68,11 @@ func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
 		_navigation.focus_finished.connect(func(reached: bool) -> void:
 			if not reached:
 				actor.worker_service.blocked(String(actor.persistent_id), actor.worker_service.world.farming.time_manager.now()))
-	if not _navigation.has_focus or not _navigation.focus_position.is_equal_approx(goal):
-		_navigation.request_focus(goal)
+	if not _navigation.has_focus or not _navigation.focus_position.is_equal_approx(goal) or _navigation.exact_goal != _path_to_work_point:
+		_navigation.request_worker_goal(goal, _path_to_work_point)
+
+func _navigate(actor: WorkerActor, goal: Vector2, delta: float) -> void:
+	_request_navigation(actor, goal)
 	var before: Vector2 = actor.global_position
 	_navigation.move(delta)
 	animation.play("walk" if actor.global_position.distance_squared_to(before) > 0.000001 else "idle")
@@ -106,7 +106,7 @@ func _step(delta: float) -> void:
 			_advance_waypoint()
 		return
 	var before: Vector2 = movement.body.global_position
-	movement.move_to_target(delta)
+	movement.move_to_target(delta, true)
 	var displacement: Vector2 = movement.body.global_position - before
 	animation.update_facing_direction(displacement)
 	animation.play("idle" if displacement.is_zero_approx() else "walk")
@@ -153,6 +153,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		_badge_elapsed = 0.0
 		_update_badge(actor, row)
 	if not actor.worker_service.running(row):
+		_path_to_work_point = false
 		if _navigation != null and _navigation.has_focus:
 			_navigation.cancel()
 		movement.cancel_target()
@@ -161,6 +162,7 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		return
 	var task: Dictionary = row.task
 	if task.is_empty():
+		_path_to_work_point = false
 		if _navigation != null and _navigation.has_focus:
 			_navigation.cancel()
 		movement.cancel_target()
@@ -168,12 +170,16 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 		animation.play("idle")
 		return
 	var goal: Vector2 = WorkerRole.point(task.point)
-	if actor.global_position.distance_to(goal) > 12.0:
+	var distance: float = actor.global_position.distance_to(goal)
+	if _path_to_work_point and (_navigation == null or not _navigation.focus_position.is_equal_approx(goal)):
+		_path_to_work_point = false
+	if distance > 12.0 or (_path_to_work_point and distance > movement.arrival_distance):
 		_navigate(actor, goal, delta)
 		return
 	if _navigation != null and _navigation.has_focus:
 		_navigation.cancel()
-	if actor.global_position.distance_to(goal) <= movement.arrival_distance:
+	if distance <= movement.arrival_distance:
+		_path_to_work_point = false
 		movement.cancel_target()
 		movement.stop()
 		animation.play("idle")
@@ -199,11 +205,9 @@ func _step_work(actor: WorkerActor, delta: float) -> void:
 	var displacement: Vector2 = actor.global_position - before
 	animation.update_facing_direction(displacement)
 	animation.play("walk" if displacement.length_squared() > 0.000001 else "idle")
-	_blocked_elapsed = _blocked_elapsed + delta if displacement.length_squared() < 0.000001 else 0.0
-	if _blocked_elapsed >= stuck_seconds:
-		actor.worker_service.blocked(String(actor.persistent_id), actor.worker_service.world.farming.time_manager.now())
-		movement.cancel_target()
-		_blocked_elapsed = 0.0
+	if not movement.has_target and actor.global_position.distance_to(goal) > movement.arrival_distance:
+		_path_to_work_point = true
+		_request_navigation(actor, goal)
 
 func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
 	var kind: String = String(row.task.get("kind", ""))

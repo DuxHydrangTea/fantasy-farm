@@ -83,13 +83,6 @@ func _ready() -> void:
 		source.name = "WorkerWaterSource"
 		pen.add_child(source)
 		source.global_position = bridge.home("ranch", String(pen.persistent_id))
-		var label: Label = Label.new()
-		label.text = tr("Water source")
-		label.position = Vector2(-18, -8)
-		label.scale = Vector2(0.3, 0.3)
-		label.modulate = Color(0.6, 0.85, 1)
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		source.add_child(label)
 
 func records_for(role: String, employed_only: bool = false) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []

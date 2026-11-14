@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Fence_Big_Arch.png" id="art"]
+
+[sub_resource type="RectangleShape2D" id="Post"]
+size = Vector2(9, 6)
+
+[node name="WoodenArchGate" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("art")
+offset = Vector2(0, -23)
+
+[node name="LeftPost" type="CollisionShape2D" parent="."]
+position = Vector2(-24, -3)
+shape = SubResource("Post")
+
+[node name="RightPost" type="CollisionShape2D" parent="."]
+position = Vector2(24, -3)
+shape = SubResource("Post")

@@ -36,6 +36,7 @@ var _footprint_signature: Array = []
 var total_physics_queries: int = 0
 var _shared_query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 var _grid: AStarGrid2D
+var _grid_sample_shape: RectangleShape2D
 var _path: PackedVector2Array = PackedVector2Array()
 var _path_index: int = 0
 var _needs_path: bool = false
@@ -289,6 +290,14 @@ func _prepare_grid() -> void:
 	if _grid != null and _grid.region == bounds and _grid.cell_size == Vector2.ONE * cell_size and _grid.offset == Vector2(camera.limit_left, camera.limit_top) + Vector2.ONE * cell_size and footprint == _footprint_signature:
 		return
 	_footprint_signature = footprint
+	_grid_sample_shape = null
+	if collision_shape.shape is RectangleShape2D:
+		# Feet are only 2 px high, while nodes are 8 px apart. Fill that gap
+		# for grid sampling so a thin fence cannot hide between two rows.
+		# Direct paths and movement still sweep the actual collision shape.
+		var footprint_scale: Vector2 = collision_shape.global_scale.abs().max(Vector2.ONE * 0.0001)
+		_grid_sample_shape = RectangleShape2D.new()
+		_grid_sample_shape.size = collision_shape.shape.get_rect().size.max(Vector2.ONE * cell_size / footprint_scale)
 	_grid = AStarGrid2D.new()
 	_grid.region = bounds
 	_grid.cell_size = Vector2.ONE * cell_size
@@ -304,7 +313,11 @@ func _scan_cell(region: Rect2i, cursor: int) -> Vector2i:
 	return region.position + Vector2i(cursor % region.size.x, cursor / region.size.x)
 
 func _sample(cell: Vector2i) -> void:
-	var solid: bool = not _point_clear(_point(cell))
+	var query: PhysicsShapeQueryParameters2D = _query(_point(cell))
+	if _grid_sample_shape != null:
+		query.shape = _grid_sample_shape
+	total_physics_queries += 1
+	var solid: bool = not movement.body.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 	_sampled[cell] = solid
 	_grid.set_point_solid(cell, solid or _blocked_cells.has(cell))
 

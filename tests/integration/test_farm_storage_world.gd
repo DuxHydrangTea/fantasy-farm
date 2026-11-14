@@ -30,10 +30,11 @@ func test_storage_yard_connects_both_doors_to_the_road() -> void:
 		assert_ne(road.get_cell_source_id(road.local_to_map(road.to_local(forecourt))), -1, "%s gate meets the paved lane" % storage_id)
 		assert_true(navigation._segment_clear(main_road, junction), "%s lane is reachable from the main road" % storage_id)
 		assert_true(navigation._segment_clear(junction, forecourt), "%s branch fits the player" % storage_id)
-		world.player.global_position = forecourt
-		await wait_physics_frames(2)
-		assert_true(gate.get("is_open"), "%s gate opens from the road" % storage_id)
+		assert_null(gate.get_script(), "%s stays open without a proximity script" % storage_id)
 		assert_true(navigation._segment_clear(forecourt, door), "%s approach fits the player" % storage_id)
+		for x: float in [-24.0, 24.0]:
+			var post: Vector2 = gate.global_position + Vector2(x, 0)
+			assert_false(navigation._segment_clear(post + Vector2(0, 12), post - Vector2(0, 12)), "%s gate post blocks movement" % storage_id)
 		world.player.global_position = door
 		await wait_physics_frames(2)
 		assert_true(access.can_reach(world.player), "%s can be used after entering the yard" % storage_id)

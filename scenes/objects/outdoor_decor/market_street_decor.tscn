@@ -1,0 +1,448 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Dirt_Edges.png" id="ground"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="flowers"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Water_Troughs.png" id="water"]
+[ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Planters.png" id="planters"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barrel.tscn" id="barrel"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/fountain.tscn" id="fountain"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/street_lamp.tscn" id="street_lamp"]
+
+[sub_resource type="TileSetAtlasSource" id="DirtAtlas"]
+texture = ExtResource("ground")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="Surface"]
+sources/0 = SubResource("DirtAtlas")
+
+[sub_resource type="RectangleShape2D" id="BenchFeet"]
+size = Vector2(26,6)
+
+[sub_resource type="RectangleShape2D" id="FountainFeet"]
+size = Vector2(24,10)
+
+[node name="MarketStreetDecor" type="Node2D"]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="ShopForecourts" type="TileMapLayer" parent="."]
+z_index = -3
+tile_map_data = PackedByteArray("AAAmAAkAAAAAAAAAAAAnAAkAAAABAAAAAAAoAAkAAAABAAAAAAApAAkAAAABAAAAAAAqAAkAAAABAAAAAAArAAkAAAABAAAAAAAsAAkAAAABAAAAAAAtAAkAAAABAAAAAAAuAAkAAAABAAAAAAAvAAkAAAABAAAAAAAwAAkAAAABAAAAAAAxAAkAAAABAAAAAAAyAAkAAAABAAAAAAAzAAkAAAABAAAAAAA0AAkAAAABAAAAAAA1AAkAAAABAAAAAAA2AAkAAAABAAAAAAA3AAkAAAABAAAAAAA4AAkAAAABAAAAAAA5AAkAAAABAAAAAAA6AAkAAAABAAAAAAA7AAkAAAABAAAAAAA8AAkAAAABAAAAAAA9AAkAAAABAAAAAAA+AAkAAAABAAAAAAA/AAkAAAABAAAAAABAAAkAAAABAAAAAABBAAkAAAABAAAAAABCAAkAAAABAAAAAABDAAkAAAABAAAAAABEAAkAAAACAAAAAAAmAAoAAAAAAAEAAAAnAAoAAAABAAEAAAAoAAoAAAABAAEAAAApAAoAAAABAAEAAAAqAAoAAAABAAEAAAArAAoAAAABAAEAAAAsAAoAAAABAAEAAAAtAAoAAAABAAEAAAAuAAoAAAABAAEAAAAvAAoAAAABAAEAAAAwAAoAAAABAAEAAAAxAAoAAAABAAEAAAAyAAoAAAABAAEAAAAzAAoAAAABAAEAAAA0AAoAAAABAAEAAAA1AAoAAAABAAEAAAA2AAoAAAABAAEAAAA3AAoAAAABAAEAAAA4AAoAAAABAAEAAAA5AAoAAAABAAEAAAA6AAoAAAABAAEAAAA7AAoAAAABAAEAAAA8AAoAAAABAAEAAAA9AAoAAAABAAEAAAA+AAoAAAABAAEAAAA/AAoAAAABAAEAAABAAAoAAAABAAEAAABBAAoAAAABAAEAAABCAAoAAAABAAEAAABDAAoAAAABAAEAAABEAAoAAAACAAEAAAAmAAsAAAAAAAEAAAAnAAsAAAABAAEAAAAoAAsAAAABAAEAAAApAAsAAAABAAEAAAAqAAsAAAABAAEAAAArAAsAAAABAAEAAAAsAAsAAAABAAEAAAAtAAsAAAABAAEAAAAuAAsAAAABAAEAAAAvAAsAAAABAAEAAAAwAAsAAAABAAEAAAAxAAsAAAABAAEAAAAyAAsAAAABAAEAAAAzAAsAAAABAAEAAAA0AAsAAAABAAEAAAA1AAsAAAABAAEAAAA2AAsAAAABAAEAAAA3AAsAAAABAAEAAAA4AAsAAAABAAEAAAA5AAsAAAABAAEAAAA6AAsAAAABAAEAAAA7AAsAAAABAAEAAAA8AAsAAAABAAEAAAA9AAsAAAABAAEAAAA+AAsAAAABAAEAAAA/AAsAAAABAAEAAABAAAsAAAABAAEAAABBAAsAAAABAAEAAABCAAsAAAABAAEAAABDAAsAAAABAAEAAABEAAsAAAACAAEAAAAmAAwAAAAAAAIAAAAnAAwAAAABAAIAAAAoAAwAAAABAAIAAAApAAwAAAABAAIAAAAqAAwAAAABAAIAAAArAAwAAAABAAIAAAAsAAwAAAABAAIAAAAtAAwAAAABAAIAAAAuAAwAAAABAAIAAAAvAAwAAAABAAIAAAAwAAwAAAABAAIAAAAxAAwAAAABAAIAAAAyAAwAAAABAAIAAAAzAAwAAAABAAIAAAA0AAwAAAABAAIAAAA1AAwAAAABAAIAAAA2AAwAAAABAAIAAAA3AAwAAAABAAIAAAA4AAwAAAABAAIAAAA5AAwAAAABAAIAAAA6AAwAAAABAAIAAAA7AAwAAAABAAIAAAA8AAwAAAABAAIAAAA9AAwAAAABAAIAAAA+AAwAAAABAAIAAAA/AAwAAAABAAIAAABAAAwAAAABAAIAAABBAAwAAAABAAIAAABCAAwAAAABAAIAAABDAAwAAAABAAIAAABEAAwAAAACAAIAAABHAAkAAAAAAAAAAABIAAkAAAABAAAAAABJAAkAAAABAAAAAABKAAkAAAABAAAAAABLAAkAAAABAAAAAABMAAkAAAABAAAAAABNAAkAAAABAAAAAABOAAkAAAABAAAAAABPAAkAAAABAAAAAABQAAkAAAABAAAAAABRAAkAAAABAAAAAABSAAkAAAABAAAAAABTAAkAAAABAAAAAABUAAkAAAACAAAAAABHAAoAAAAAAAEAAABIAAoAAAABAAEAAABJAAoAAAABAAEAAABKAAoAAAABAAEAAABLAAoAAAABAAEAAABMAAoAAAABAAEAAABNAAoAAAABAAEAAABOAAoAAAABAAEAAABPAAoAAAABAAEAAABQAAoAAAABAAEAAABRAAoAAAABAAEAAABSAAoAAAABAAEAAABTAAoAAAABAAEAAABUAAoAAAACAAEAAABHAAsAAAAAAAEAAABIAAsAAAABAAEAAABJAAsAAAABAAEAAABKAAsAAAABAAEAAABLAAsAAAABAAEAAABMAAsAAAABAAEAAABNAAsAAAABAAEAAABOAAsAAAABAAEAAABPAAsAAAABAAEAAABQAAsAAAABAAEAAABRAAsAAAABAAEAAABSAAsAAAABAAEAAABTAAsAAAABAAEAAABUAAsAAAACAAEAAABHAAwAAAAAAAIAAABIAAwAAAABAAIAAABJAAwAAAABAAIAAABKAAwAAAABAAIAAABLAAwAAAABAAIAAABMAAwAAAABAAIAAABNAAwAAAABAAIAAABOAAwAAAABAAIAAABPAAwAAAABAAIAAABQAAwAAAABAAIAAABRAAwAAAABAAIAAABSAAwAAAABAAIAAABTAAwAAAABAAIAAABUAAwAAAACAAIAAABWAAkAAAAAAAAAAABXAAkAAAABAAAAAABYAAkAAAABAAAAAABZAAkAAAABAAAAAABaAAkAAAABAAAAAABbAAkAAAABAAAAAABcAAkAAAABAAAAAABdAAkAAAABAAAAAABeAAkAAAABAAAAAABfAAkAAAABAAAAAABgAAkAAAABAAAAAABhAAkAAAABAAAAAABiAAkAAAABAAAAAABjAAkAAAACAAAAAABWAAoAAAAAAAEAAABXAAoAAAABAAEAAABYAAoAAAABAAEAAABZAAoAAAABAAEAAABaAAoAAAABAAEAAABbAAoAAAABAAEAAABcAAoAAAABAAEAAABdAAoAAAABAAEAAABeAAoAAAABAAEAAABfAAoAAAABAAEAAABgAAoAAAABAAEAAABhAAoAAAABAAEAAABiAAoAAAABAAEAAABjAAoAAAACAAEAAABWAAsAAAAAAAEAAABXAAsAAAABAAEAAABYAAsAAAABAAEAAABZAAsAAAABAAEAAABaAAsAAAABAAEAAABbAAsAAAABAAEAAABcAAsAAAABAAEAAABdAAsAAAABAAEAAABeAAsAAAABAAEAAABfAAsAAAABAAEAAABgAAsAAAABAAEAAABhAAsAAAABAAEAAABiAAsAAAABAAEAAABjAAsAAAACAAEAAABWAAwAAAAAAAIAAABXAAwAAAABAAIAAABYAAwAAAABAAIAAABZAAwAAAABAAIAAABaAAwAAAABAAIAAABbAAwAAAABAAIAAABcAAwAAAABAAIAAABdAAwAAAABAAIAAABeAAwAAAABAAIAAABfAAwAAAABAAIAAABgAAwAAAABAAIAAABhAAwAAAABAAIAAABiAAwAAAABAAIAAABjAAwAAAACAAIAAABqAAkAAAAAAAAAAABrAAkAAAABAAAAAABsAAkAAAABAAAAAABtAAkAAAABAAAAAABuAAkAAAABAAAAAABvAAkAAAABAAAAAABwAAkAAAABAAAAAABxAAkAAAABAAAAAAByAAkAAAABAAAAAABzAAkAAAABAAAAAAB0AAkAAAABAAAAAAB1AAkAAAABAAAAAAB2AAkAAAACAAAAAABqAAoAAAAAAAEAAABrAAoAAAABAAEAAABsAAoAAAABAAEAAABtAAoAAAABAAEAAABuAAoAAAABAAEAAABvAAoAAAABAAEAAABwAAoAAAABAAEAAABxAAoAAAABAAEAAAByAAoAAAABAAEAAABzAAoAAAABAAEAAAB0AAoAAAABAAEAAAB1AAoAAAABAAEAAAB2AAoAAAACAAEAAABqAAsAAAAAAAEAAABrAAsAAAABAAEAAABsAAsAAAABAAEAAABtAAsAAAABAAEAAABuAAsAAAABAAEAAABvAAsAAAABAAEAAABwAAsAAAABAAEAAABxAAsAAAABAAEAAAByAAsAAAABAAEAAABzAAsAAAABAAEAAAB0AAsAAAABAAEAAAB1AAsAAAABAAEAAAB2AAsAAAACAAEAAABqAAwAAAAAAAIAAABrAAwAAAABAAIAAABsAAwAAAABAAIAAABtAAwAAAABAAIAAABuAAwAAAABAAIAAABvAAwAAAABAAIAAABwAAwAAAABAAIAAABxAAwAAAABAAIAAAByAAwAAAABAAIAAABzAAwAAAABAAIAAAB0AAwAAAABAAIAAAB1AAwAAAABAAIAAAB2AAwAAAACAAIAAAB6AAkAAAAAAAAAAAB7AAkAAAABAAAAAAB8AAkAAAABAAAAAAB9AAkAAAACAAAAAAB6AAoAAAAAAAEAAAB7AAoAAAABAAEAAAB8AAoAAAABAAEAAAB9AAoAAAACAAEAAAB6AAsAAAAAAAEAAAB7AAsAAAABAAEAAAB8AAsAAAABAAEAAAB9AAsAAAACAAEAAAB6AAwAAAAAAAIAAAB7AAwAAAABAAIAAAB8AAwAAAABAAIAAAB9AAwAAAACAAIAAAB5ABgAAAAAAAAAAAB6ABgAAAABAAAAAAB7ABgAAAABAAAAAAB8ABgAAAABAAAAAAB9ABgAAAABAAAAAAB+ABgAAAABAAAAAAB/ABgAAAACAAAAAAB5ABkAAAAAAAEAAAB6ABkAAAABAAEAAAB7ABkAAAABAAEAAAB8ABkAAAABAAEAAAB9ABkAAAABAAEAAAB+ABkAAAABAAEAAAB/ABkAAAACAAEAAAB5ABoAAAAAAAEAAAB6ABoAAAABAAEAAAB7ABoAAAABAAEAAAB8ABoAAAABAAEAAAB9ABoAAAABAAEAAAB+ABoAAAABAAEAAAB/ABoAAAACAAEAAAB5ABsAAAABAAEAAAB6ABsAAAABAAEAAAB7ABsAAAABAAEAAAB8ABsAAAABAAEAAAB9ABsAAAABAAEAAAB+ABsAAAABAAEAAAB/ABsAAAACAAEAAAB5ABwAAAABAAEAAAB6ABwAAAABAAEAAAB7ABwAAAABAAEAAAB8ABwAAAABAAEAAAB9ABwAAAABAAEAAAB+ABwAAAABAAEAAAB/ABwAAAACAAEAAAB5AB0AAAABAAEAAAB6AB0AAAABAAEAAAB7AB0AAAABAAEAAAB8AB0AAAABAAEAAAB9AB0AAAABAAEAAAB+AB0AAAABAAEAAAB/AB0AAAACAAEAAAB5AB4AAAAAAAIAAAB6AB4AAAABAAIAAAB7AB4AAAABAAIAAAB8AB4AAAABAAIAAAB9AB4AAAABAAIAAAB+AB4AAAABAAIAAAB/AB4AAAACAAIAAAA=")
+tile_set = SubResource("Surface")
+
+[node name="SeedDeliveryA" parent="." instance=ExtResource("crate")]
+position = Vector2(634,178)
+
+[node name="SeedDeliveryB" parent="." instance=ExtResource("crate")]
+position = Vector2(650,190)
+
+[node name="SeedDeliveryBarrel" parent="." instance=ExtResource("barrel")]
+position = Vector2(624,197)
+
+[node name="FlowerStock" parent="." instance=ExtResource("crate")]
+position = Vector2(1083,183)
+
+[node name="CafeSupplies" parent="." instance=ExtResource("barrel")]
+position = Vector2(1344,181)
+
+[node name="PetFeedCrate" parent="." instance=ExtResource("crate")]
+position = Vector2(1421,180)
+
+[node name="PetFeedBarrel" parent="." instance=ExtResource("barrel")]
+position = Vector2(1432,197)
+
+[node name="SmithQuenchBarrel" parent="." instance=ExtResource("barrel")]
+position = Vector2(1967,176)
+
+[node name="SeedBasket" type="Sprite2D" parent="."]
+position = Vector2(667,197)
+offset = Vector2(0,-8.0)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(0,0,16,16)
+
+[node name="GardenBench" type="StaticBody2D" parent="."]
+position = Vector2(846,194)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="GardenBench"]
+position = Vector2(0,0)
+offset = Vector2(0,-16.0)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32,0,32,32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GardenBench"]
+position = Vector2(0,-3)
+shape = SubResource("BenchFeet")
+
+[node name="SharedGardenNorth" type="Sprite2D" parent="."]
+position = Vector2(846,158)
+offset = Vector2(0,-9.5)
+texture = ExtResource("planters")
+region_enabled = true
+region_rect = Rect2(88,44,34,19)
+
+[node name="GardenPot1" type="Sprite2D" parent="."]
+position = Vector2(807,181)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,0,16,16)
+
+[node name="GardenPot2" type="Sprite2D" parent="."]
+position = Vector2(817,199)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(112,0,16,16)
+
+[node name="GardenPot3" type="Sprite2D" parent="."]
+position = Vector2(874,182)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(112,16,16,16)
+
+[node name="GardenPot4" type="Sprite2D" parent="."]
+position = Vector2(881,200)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,16,16,16)
+
+[node name="GardenPot5" type="Sprite2D" parent="."]
+position = Vector2(908,194)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(96,16,16,16)
+
+[node name="GardenPot6" type="Sprite2D" parent="."]
+position = Vector2(1091,200)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,32,16,16)
+
+[node name="GardenPot7" type="Sprite2D" parent="."]
+position = Vector2(610,199)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(128,16,16,16)
+
+[node name="GardenPot8" type="Sprite2D" parent="."]
+position = Vector2(778,197)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(96,32,16,16)
+
+[node name="CafeBenchWest" type="StaticBody2D" parent="."]
+position = Vector2(1162,199)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CafeBenchWest"]
+position = Vector2(0,0)
+offset = Vector2(0,-16.0)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32,0,32,32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CafeBenchWest"]
+position = Vector2(0,-3)
+shape = SubResource("BenchFeet")
+
+[node name="CafeBenchEast" type="StaticBody2D" parent="."]
+position = Vector2(1305,199)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CafeBenchEast"]
+position = Vector2(0,0)
+offset = Vector2(0,-16.0)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32,0,32,32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CafeBenchEast"]
+position = Vector2(0,-3)
+shape = SubResource("BenchFeet")
+
+[node name="CafePicnic" type="Sprite2D" parent="."]
+position = Vector2(1138,201)
+offset = Vector2(0,-8.0)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(16,0,16,16)
+
+[node name="CafeWestFlowers" type="Sprite2D" parent="."]
+position = Vector2(1127,201)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(112,0,16,16)
+
+[node name="CafeEastFlowers" type="Sprite2D" parent="."]
+position = Vector2(1331,201)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(128,16,16,16)
+
+[node name="PetHay" type="Sprite2D" parent="."]
+position = Vector2(1448,192)
+offset = Vector2(0,-8.0)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(0,0,16,16)
+
+[node name="PetWaterTrough" type="Sprite2D" parent="."]
+position = Vector2(1396,170)
+offset = Vector2(0,-8.0)
+texture = ExtResource("water")
+region_enabled = true
+region_rect = Rect2(16,0,32,16)
+
+[node name="PetPlanter" type="Sprite2D" parent="."]
+position = Vector2(1405,200)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,16,16,16)
+
+[node name="PetEastFlowers" type="Sprite2D" parent="."]
+position = Vector2(1610,199)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,0,16,16)
+
+[node name="BuyerPlanter" type="Sprite2D" parent="."]
+position = Vector2(1664,153)
+offset = Vector2(0,-9.5)
+texture = ExtResource("planters")
+region_enabled = true
+region_rect = Rect2(88,44,34,19)
+
+[node name="BuyerFlower" type="Sprite2D" parent="."]
+position = Vector2(1628,198)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(128,16,16,16)
+
+[node name="SmithLogs" type="Sprite2D" parent="."]
+position = Vector2(1991,197)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(32,160,32,16)
+
+[node name="SmithStone" type="Sprite2D" parent="."]
+position = Vector2(1976,165)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,192,32,16)
+
+[node name="SmithEastPlant" type="Sprite2D" parent="."]
+position = Vector2(2018,198)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,16,16,16)
+
+[node name="SmithWestPlant" type="Sprite2D" parent="."]
+position = Vector2(1699,199)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,32,16,16)
+
+[node name="MarketGrass0" type="Sprite2D" parent="."]
+position = Vector2(601,185)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass1" type="Sprite2D" parent="."]
+position = Vector2(795,148)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass2" type="Sprite2D" parent="."]
+position = Vector2(896,153)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass3" type="Sprite2D" parent="."]
+position = Vector2(1108,185)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass4" type="Sprite2D" parent="."]
+position = Vector2(1362,181)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass5" type="Sprite2D" parent="."]
+position = Vector2(1396,181)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass6" type="Sprite2D" parent="."]
+position = Vector2(1621,149)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass7" type="Sprite2D" parent="."]
+position = Vector2(1939,173)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="MarketGrass8" type="Sprite2D" parent="."]
+position = Vector2(2031,182)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="SquareFountain" parent="." instance=ExtResource("fountain")]
+position = Vector2(1992,443)
+
+[node name="FountainFootprint" type="StaticBody2D" parent="."]
+position = Vector2(1992,440)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FountainFootprint"]
+shape = SubResource("FountainFeet")
+
+[node name="SquareBenchWest" type="StaticBody2D" parent="."]
+position = Vector2(1955,470)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="SquareBenchWest"]
+position = Vector2(0,0)
+offset = Vector2(0,-16.0)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32,0,32,32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SquareBenchWest"]
+position = Vector2(0,-3)
+shape = SubResource("BenchFeet")
+
+[node name="SquareBenchEast" type="StaticBody2D" parent="."]
+position = Vector2(2021,470)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="SquareBenchEast"]
+position = Vector2(0,0)
+offset = Vector2(0,-16.0)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32,0,32,32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SquareBenchEast"]
+position = Vector2(0,-3)
+shape = SubResource("BenchFeet")
+
+[node name="SquarePlanterWest" type="Sprite2D" parent="."]
+position = Vector2(1954,403)
+offset = Vector2(0,-9.5)
+texture = ExtResource("planters")
+region_enabled = true
+region_rect = Rect2(88,44,34,19)
+
+[node name="SquarePlanterEast" type="Sprite2D" parent="."]
+position = Vector2(2020,403)
+offset = Vector2(0,-9.5)
+texture = ExtResource("planters")
+region_enabled = true
+region_rect = Rect2(88,44,34,19)
+
+[node name="SquarePot0" type="Sprite2D" parent="."]
+position = Vector2(1950,419)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(96,0,16,16)
+
+[node name="SquarePot1" type="Sprite2D" parent="."]
+position = Vector2(2041,419)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,32,16,16)
+
+[node name="SquarePot2" type="Sprite2D" parent="."]
+position = Vector2(1950,483)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(128,16,16,16)
+
+[node name="SquarePot3" type="Sprite2D" parent="."]
+position = Vector2(2041,483)
+offset = Vector2(0,-8.0)
+texture = ExtResource("flowers")
+region_enabled = true
+region_rect = Rect2(80,16,16,16)
+
+[node name="SquareLamp" parent="." instance=ExtResource("street_lamp")]
+position = Vector2(1946,512)
+
+[node name="FlowerCafeLamp" parent="." instance=ExtResource("street_lamp")]
+position = Vector2(1108,203)
+
+[node name="BuyerLamp" parent="." instance=ExtResource("street_lamp")]
+position = Vector2(1636,203)
+
+[node name="SeedLamp" parent="." instance=ExtResource("street_lamp")]
+position = Vector2(760,202)
+
+[node name="CafeLamp" parent="." instance=ExtResource("street_lamp")]
+position = Vector2(1280,201)
+
+[node name="SquareGrassWest" type="Sprite2D" parent="."]
+position = Vector2(1922,505)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)
+
+[node name="SquareGrassEast" type="Sprite2D" parent="."]
+position = Vector2(2054,459)
+offset = Vector2(0,-8.0)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64,352,16,16)

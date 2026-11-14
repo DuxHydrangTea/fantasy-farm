@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://uu73t53rgof1" path="res://scenes/trees/medium_birch_tree.tscn" id="birch"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
 [ext_resource type="TileSet" uid="uid://coe4hu76jd1vh" path="res://resources/tilesets/fence.tres" id="fence"]
-[ext_resource type="PackedScene" uid="uid://vgjyw7vjrd6w" path="res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn" id="gate"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/wooden_sign_gate.tscn" id="sign_gate"]
 [ext_resource type="Texture2D" uid="uid://pheuwdhrtesv" path="res://assets/Tiles/Grass/Grass_Dirt_Edges.png" id="ground"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/street_lamp.tscn" id="lamp"]
 [ext_resource type="PackedScene" uid="uid://cw7r3r7qx0koe" path="res://scenes/trees/medium_oak_tree.tscn" id="oak"]
@@ -56,10 +56,10 @@ y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAXAPz/AQABAAEAAAAYAPz/AQACAAAAAAAZAPz/AQACAAAAAAAaAPz/AQACAAAAAAAbAPz/AQACAAAAAAAcAPz/AQACAAAAAAAdAPz/AQACAAAAAAAeAPz/AQACAAAAAAAfAPz/AQACAAAAAAAgAPz/AQACAAAAAAAhAPz/AQACAAAAAAAiAPz/AQACAAAAAAAjAPz/AQACAAAAAAAkAPz/AQACAAAAAAAlAPz/AQACAAAAAAAmAPz/AQACAAAAAAAnAPz/AQACAAAAAAAoAPz/AQACAAAAAAApAPz/AQACAAAAAAAqAPz/AQACAAAAAAArAPz/AQACAAAAAAAsAPz/AQACAAAAAAAtAPz/AQACAAAAAAAuAPz/AQACAAAAAAAvAPz/AQACAAAAAAAwAPz/AQACAAAAAAAxAPz/AQACAAAAAAAyAPz/AQACAAAAAAAzAPz/AQACAAAAAAA0APz/AQACAAAAAAA1APz/AQACAAAAAAA2APz/AQACAAAAAAA3APz/AQACAAAAAAA4APz/AQADAAEAAAAXAP7/AQAAAAEAAAA4AP7/AQAAAAEAAAAXAP//AQAAAAEAAAA4AP//AQAAAAEAAAAXAAAAAQAAAAEAAAA4AAAAAQAAAAEAAAAXAAEAAQAAAAEAAAA4AAEAAQAAAAEAAAAXAAIAAQAAAAEAAAA4AAIAAQAAAAEAAAAXAAMAAQAAAAEAAAA4AAMAAQAAAAEAAAAXAAQAAQAAAAEAAAA4AAQAAQAAAAEAAAAXAAUAAQAAAAEAAAA4AAUAAQAAAAEAAAAXAAYAAQAAAAEAAAA4AAYAAQAAAAEAAAAXAAcAAQAAAAEAAAA4AAcAAQAAAAEAAAAXAAgAAQAAAAEAAAA4AAgAAQAAAAEAAAAXAAkAAQAAAAEAAAA4AAkAAQAAAAEAAAAXAAoAAQAAAAEAAAA4AAoAAQAAAAEAAAAXAAsAAQAAAAEAAAA4AAsAAQAAAAEAAAAXAAwAAQAAAAEAAAA4AAwAAQAAAAEAAAAXAA0AAQABAAMAAAAYAA0AAQACAAAAAAAZAA0AAQACAAAAAAAaAA0AAQACAAAAAAAbAA0AAQACAAAAAAAcAA0AAQACAAAAAAAdAA0AAQACAAAAAAAhAA0AAQACAAAAAAAiAA0AAQACAAAAAAAjAA0AAQACAAAAAAAkAA0AAQACAAAAAAAlAA0AAQACAAAAAAAmAA0AAQACAAAAAAAnAA0AAQACAAAAAAAoAA0AAQACAAAAAAApAA0AAQACAAAAAAAqAA0AAQACAAAAAAArAA0AAQACAAAAAAAsAA0AAQACAAAAAAAwAA0AAQACAAAAAAAxAA0AAQACAAAAAAAyAA0AAQACAAAAAAAzAA0AAQACAAAAAAA0AA0AAQACAAAAAAA1AA0AAQACAAAAAAA2AA0AAQACAAAAAAA3AA0AAQACAAAAAAA4AA0AAQADAAMAAAAXAP3/AQAAAAEAAAA4AP3/AQAAAAEAAAA=")
 tile_set = ExtResource("fence")
 
-[node name="ProduceEntrance" parent="." unique_id=1482194083 instance=ExtResource("gate")]
+[node name="ProduceEntrance" parent="." unique_id=1482194083 instance=ExtResource("sign_gate")]
 position = Vector2(504, 224)
 
-[node name="SeedEntrance" parent="." unique_id=1629952471 instance=ExtResource("gate")]
+[node name="SeedEntrance" parent="." unique_id=1629952471 instance=ExtResource("sign_gate")]
 position = Vector2(744, 224)
 
 [node name="ProduceLamp" parent="." unique_id=434087820 instance=ExtResource("lamp")]

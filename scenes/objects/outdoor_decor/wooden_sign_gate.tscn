@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Fence_Big_Sign.png" id="art"]
+[ext_resource type="FontFile" path="res://assets/Fonts/Pixelify_Sans/PixelifySans.ttf" id="sign_font"]
+
+[sub_resource type="RectangleShape2D" id="Post"]
+size = Vector2(9, 6)
+
+[node name="WoodenSignGate" type="StaticBody2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("art")
+offset = Vector2(0, -23)
+
+[node name="SignText" type="Label" parent="."]
+offset_left = -15.0
+offset_top = -39.0
+offset_right = 15.0
+offset_bottom = -30.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.247, 0.157, 0.196, 1)
+theme_override_fonts/font = ExtResource("sign_font")
+theme_override_font_sizes/font_size = 7
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="LeftPost" type="CollisionShape2D" parent="."]
+position = Vector2(-24, -3)
+shape = SubResource("Post")
+
+[node name="RightPost" type="CollisionShape2D" parent="."]
+position = Vector2(24, -3)
+shape = SubResource("Post")

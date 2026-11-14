@@ -58,6 +58,29 @@ func test_actor_without_definition_stands_idle_safely() -> void:
 	actor.queue_free()
 	await get_tree().process_frame
 
+func test_patrol_walks_around_a_wall_to_its_waypoint() -> void:
+	var actor: WorkerActor = WORKER_SCENES[0].instantiate() as WorkerActor
+	add_child_autofree(actor)
+	var wall: StaticBody2D = StaticBody2D.new()
+	var collision: CollisionShape2D = CollisionShape2D.new()
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = Vector2(12, 60)
+	collision.shape = shape
+	wall.position = Vector2(48, 0)
+	wall.add_child(collision)
+	add_child_autofree(wall)
+	await wait_physics_frames(2)
+	var goal: Vector2 = Vector2(96, 0)
+	actor.configure_patrol([goal])
+	var detour: float = 0.0
+	for frame: int in range(240):
+		await wait_physics_frames(1)
+		detour = maxf(detour, absf(actor.position.y))
+		if actor.position.distance_to(goal) <= actor.movement.arrival_distance:
+			break
+	assert_gt(detour, 30.0)
+	assert_lte(actor.position.distance_to(goal), actor.movement.arrival_distance)
+
 func test_debug_world_spawns_patrolling_orchard_worker() -> void:
 	if not OS.is_debug_build():
 		pending("Debug worker only spawns in debug builds")

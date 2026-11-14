@@ -183,7 +183,8 @@ func test_idle_stroll_is_local_and_falls_back_to_rest_instead_of_distant_path() 
 func test_static_body_addition_and_removal_invalidate_only_affected_cached_cells() -> void:
 	var system: WorkerNavigationSystem = service.navigation
 	var cells: Dictionary = {Vector2i(10, 10): true, Vector2i(40, 40): true}
-	system.caches["fixture"] = {"origin": Vector2(8, 8), "size": 8.0, "cells": cells}
+	var edges: Dictionary = {Vector2i(10, 10): {Vector2i(10, 11): true}, Vector2i(40, 40): {Vector2i(40, 41): true}}
+	system.caches["fixture"] = {"origin": Vector2(8, 8), "size": 8.0, "cells": cells, "edges": edges}
 	var wall: StaticBody2D = StaticBody2D.new()
 	wall.position = Vector2(88, 88)
 	var collision: CollisionShape2D = CollisionShape2D.new()
@@ -193,10 +194,14 @@ func test_static_body_addition_and_removal_invalidate_only_affected_cached_cells
 	wall.add_child(collision)
 	world.add_child(wall)
 	assert_false(cells.has(Vector2i(10, 10)))
+	assert_false(edges.has(Vector2i(10, 10)))
+	assert_true(edges.has(Vector2i(40, 40)), "Unrelated swept connections must survive")
 	assert_true(cells.has(Vector2i(40, 40)), "Unrelated terrain cache must survive")
 	cells[Vector2i(10, 10)] = false
+	edges[Vector2i(10, 10)] = {Vector2i(10, 11): false}
 	world.remove_child(wall)
 	assert_false(cells.has(Vector2i(10, 10)), "Removed obstacles must become eligible for sampling again")
+	assert_false(edges.has(Vector2i(10, 10)), "Removed fences must reopen their connections")
 	assert_true(cells.has(Vector2i(40, 40)))
 	wall.free()
 
@@ -264,7 +269,12 @@ func test_shared_navigation_round_robin_finishes_direct_requests_without_private
 		assert_false(nav._path.is_empty())
 	viewport.queue_free()
 
-func test_navigation_routes_around_wall_and_invalidates_changed_geometry() -> void:
+func test_navigation_routes_around_wall_and_invalidates_changed_geometry(scenario = use_parameters([
+	{"exact": false, "thin": false}, {"exact": true, "thin": false},
+	{"exact": false, "thin": true}, {"exact": true, "thin": true},
+])) -> void:
+	var exact: bool = scenario.exact
+	var thin: bool = scenario.thin
 	var viewport: SubViewport = SubViewport.new()
 	viewport.world_2d = World2D.new()
 	add_child_autofree(viewport)
@@ -281,11 +291,12 @@ func test_navigation_routes_around_wall_and_invalidates_changed_geometry() -> vo
 	var wall: StaticBody2D = StaticBody2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	var shape: RectangleShape2D = RectangleShape2D.new()
-	shape.size = Vector2(16, 96)
+	shape.size = Vector2(96, 1) if thin else Vector2(16, 96)
 	collision.shape = shape
 	wall.add_child(collision)
 	viewport.add_child(wall)
-	wall.position = Vector2(128, 128)
+	# A thin horizontal fence falls between grid rows; both endpoints are clear.
+	wall.position = Vector2(96, 164) if thin else Vector2(128, 128)
 	var nav: WorkerNavigation = WorkerNavigation.new()
 	nav.movement = actor.movement
 	nav.animation = actor.animation
@@ -296,7 +307,10 @@ func test_navigation_routes_around_wall_and_invalidates_changed_geometry() -> vo
 	nav.interaction_distance = 12.0
 	actor.add_child(nav)
 	await wait_physics_frames(2)
-	nav.request_focus(Vector2(192, 128))
+	var goal: Vector2 = Vector2(192, 128) if not exact else Vector2(193, 127)
+	if thin:
+		goal = Vector2(64, 208) if not exact else Vector2(65, 209)
+	nav.request_worker_goal(goal, exact)
 	for frame: int in range(600):
 		service.navigation.pump()
 		nav.move(1.0 / 60.0)
@@ -304,7 +318,7 @@ func test_navigation_routes_around_wall_and_invalidates_changed_geometry() -> vo
 		if not nav.is_navigating:
 			break
 		await wait_physics_frames(1)
-	assert_lte(actor.global_position.distance_to(Vector2(192, 128)), 12.0)
+	assert_lte(actor.global_position.distance_to(goal), actor.movement.arrival_distance if exact else 12.0)
 	var version: int = service.navigation.geometry_revision
 	service.navigation.invalidate_region(Rect2(112, 72, 32, 112))
 	assert_gt(service.navigation.geometry_revision, version)

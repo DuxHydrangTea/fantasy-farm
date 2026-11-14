@@ -1,0 +1,373 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/barrels.png" id="barrels"]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Well.png" id="well"]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
+
+[sub_resource type="RectangleShape2D" id="HayFeet"]
+size = Vector2(52, 10)
+
+[sub_resource type="RectangleShape2D" id="SmallHayFeet"]
+size = Vector2(27, 7)
+
+[sub_resource type="RectangleShape2D" id="WellFeet"]
+size = Vector2(21, 8)
+
+[sub_resource type="RectangleShape2D" id="BarrelFeet"]
+size = Vector2(11, 6)
+
+[sub_resource type="RectangleShape2D" id="BenchFeet"]
+size = Vector2(26, 6)
+
+[sub_resource type="RectangleShape2D" id="CrateFeet"]
+size = Vector2(12, 6)
+
+[node name="BarnGardenDecor" type="Node2D"]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="BarnHayStack" type="StaticBody2D" parent="."]
+position = Vector2(1338, 644)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BarnHayStack"]
+position = Vector2(0, -3)
+shape = SubResource("HayFeet")
+
+[node name="BackBale" type="Sprite2D" parent="BarnHayStack"]
+position = Vector2(-12, -15)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 16)
+
+[node name="FrontBale" type="Sprite2D" parent="BarnHayStack"]
+position = Vector2(10, -8)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 16)
+
+[node name="TopBale" type="Sprite2D" parent="BarnHayStack"]
+position = Vector2(-7, -26)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 16)
+
+[node name="FeedCrate" parent="." instance=ExtResource("crate")]
+position = Vector2(1360, 673)
+
+[node name="FeedCrateFootprint" type="StaticBody2D" parent="."]
+position = Vector2(1360, 671)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="FeedCrateFootprint"]
+position = Vector2(0, -3)
+shape = SubResource("CrateFeet")
+
+[node name="FeedBarrel" type="StaticBody2D" parent="."]
+position = Vector2(1338, 670)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="FeedBarrel"]
+position = Vector2(0, -3)
+shape = SubResource("BarrelFeet")
+
+[node name="Barrel" type="Sprite2D" parent="FeedBarrel"]
+position = Vector2(0, -16)
+texture = ExtResource("barrels")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 32)
+
+[node name="CareWell" type="StaticBody2D" parent="."]
+position = Vector2(1068, 660)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="CareWell"]
+position = Vector2(0, -3)
+shape = SubResource("WellFeet")
+
+[node name="Well" type="Sprite2D" parent="CareWell"]
+position = Vector2(0, -24)
+texture = ExtResource("well")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 48)
+
+[node name="WaterBucket" type="StaticBody2D" parent="."]
+position = Vector2(1093, 666)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="WaterBucket"]
+position = Vector2(0, -3)
+shape = SubResource("BarrelFeet")
+
+[node name="Bucket" type="Sprite2D" parent="WaterBucket"]
+position = Vector2(0, -16)
+texture = ExtResource("barrels")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 32)
+
+[node name="ShadeBench" type="StaticBody2D" parent="."]
+position = Vector2(1093, 856)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="ShadeBench"]
+position = Vector2(0, -3)
+shape = SubResource("BenchFeet")
+
+[node name="Bench" type="Sprite2D" parent="ShadeBench"]
+position = Vector2(0, -16)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="RestBale" type="StaticBody2D" parent="."]
+position = Vector2(1342, 849)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="RestBale"]
+position = Vector2(0, -3)
+shape = SubResource("SmallHayFeet")
+
+[node name="Bale" type="Sprite2D" parent="RestBale"]
+position = Vector2(0, -8)
+texture = ExtResource("hay")
+region_enabled = true
+region_rect = Rect2(16, 0, 32, 16)
+
+[node name="WhiteFlowers00" type="Sprite2D" parent="."]
+position = Vector2(1021, 778)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers01" type="Sprite2D" parent="."]
+position = Vector2(1026, 790)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers02" type="Sprite2D" parent="."]
+position = Vector2(1021, 809)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers03" type="Sprite2D" parent="."]
+position = Vector2(1040, 855)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers04" type="Sprite2D" parent="."]
+position = Vector2(1069, 866)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers05" type="Sprite2D" parent="."]
+position = Vector2(1115, 866)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers06" type="Sprite2D" parent="."]
+position = Vector2(1194, 865)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers07" type="Sprite2D" parent="."]
+position = Vector2(1253, 866)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers08" type="Sprite2D" parent="."]
+position = Vector2(1380, 809)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers09" type="Sprite2D" parent="."]
+position = Vector2(1377, 820)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers10" type="Sprite2D" parent="."]
+position = Vector2(1372, 687)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers11" type="Sprite2D" parent="."]
+position = Vector2(1380, 695)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers12" type="Sprite2D" parent="."]
+position = Vector2(1046, 670)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="YellowFlowers00" type="Sprite2D" parent="."]
+position = Vector2(1034, 852)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers01" type="Sprite2D" parent="."]
+position = Vector2(1119, 858)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers02" type="Sprite2D" parent="."]
+position = Vector2(1187, 863)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers03" type="Sprite2D" parent="."]
+position = Vector2(1261, 863)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers04" type="Sprite2D" parent="."]
+position = Vector2(1370, 693)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="GrazingTuft00" type="Sprite2D" parent="."]
+position = Vector2(1024, 619)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft01" type="Sprite2D" parent="."]
+position = Vector2(1034, 613)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft02" type="Sprite2D" parent="."]
+position = Vector2(1379, 626)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft03" type="Sprite2D" parent="."]
+position = Vector2(1380, 644)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft04" type="Sprite2D" parent="."]
+position = Vector2(1374, 722)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft05" type="Sprite2D" parent="."]
+position = Vector2(1360, 742)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft06" type="Sprite2D" parent="."]
+position = Vector2(1378, 760)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft07" type="Sprite2D" parent="."]
+position = Vector2(1369, 852)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft08" type="Sprite2D" parent="."]
+position = Vector2(1324, 861)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft09" type="Sprite2D" parent="."]
+position = Vector2(1024, 866)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="GrazingTuft10" type="Sprite2D" parent="."]
+position = Vector2(1114, 837)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="LowShrub00" type="Sprite2D" parent="."]
+position = Vector2(1024, 616)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="LowShrub01" type="Sprite2D" parent="."]
+position = Vector2(1379, 746)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="LowShrub02" type="Sprite2D" parent="."]
+position = Vector2(1378, 855)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="LowShrub03" type="Sprite2D" parent="."]
+position = Vector2(1314, 859)
+z_index = -1
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
