@@ -1,14 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=4]
 
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="flowers"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
-[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Ores.png" id="ores"]
-[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barrel.tscn" id="barrel"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="flowers"]
 [ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="ground"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
 
 [sub_resource type="TileSetAtlasSource" id="Soil"]
 texture = ExtResource("ground")
@@ -25,382 +24,312 @@ texture = ExtResource("ground")
 [sub_resource type="TileSet" id="YardTiles"]
 sources/0 = SubResource("Soil")
 
-[node name="BuildingDecor" type="Node2D"]
+[node name="BuildingDecor" type="Node2D" unique_id=311567382]
 y_sort_enabled = true
 texture_filter = 1
 
-[node name="ShopForecourts" type="TileMapLayer" parent="."]
+[node name="ShopForecourts" type="TileMapLayer" parent="." unique_id=1106279032]
 z_index = -2
-tile_map_data = PackedByteArray("AAAmAAwAAAAAAAUAAAAnAAwAAAABAAUAAAAoAAwAAAABAAUAAAApAAwAAAABAAUAAAAqAAwAAAABAAUAAAArAAwAAAABAAUAAAAsAAwAAAABAAUAAAAtAAwAAAABAAUAAAAuAAwAAAABAAUAAAAvAAwAAAABAAUAAAAwAAwAAAABAAUAAAAxAAwAAAABAAUAAAAyAAwAAAABAAUAAAAzAAwAAAACAAUAAAAmAA0AAAAAAAYAAAAnAA0AAAABAAYAAAAoAA0AAAABAAYAAAApAA0AAAABAAYAAAAqAA0AAAABAAYAAAArAA0AAAABAAYAAAAsAA0AAAABAAYAAAAtAA0AAAABAAYAAAAuAA0AAAABAAYAAAAvAA0AAAABAAYAAAAwAA0AAAABAAYAAAAxAA0AAAABAAYAAAAyAA0AAAABAAYAAAAzAA0AAAACAAYAAAAmAA4AAAAAAAcAAAAnAA4AAAABAAcAAAAoAA4AAAABAAcAAAApAA4AAAABAAcAAAAqAA4AAAABAAcAAAArAA4AAAABAAcAAAAsAA4AAAABAAcAAAAtAA4AAAABAAcAAAAuAA4AAAABAAcAAAAvAA4AAAABAAcAAAAwAA4AAAABAAcAAAAxAA4AAAABAAcAAAAyAA4AAAABAAcAAAAzAA4AAAACAAcAAAA9AA0AAAAAAAUAAAA+AA0AAAABAAUAAAA/AA0AAAABAAUAAABAAA0AAAABAAUAAABBAA0AAAABAAUAAABCAA0AAAABAAUAAABDAA0AAAABAAUAAABEAA0AAAABAAUAAABFAA0AAAABAAUAAABGAA0AAAABAAUAAABHAA0AAAACAAUAAAA9AA4AAAAAAAYAAAA+AA4AAAABAAYAAAA/AA4AAAABAAYAAABAAA4AAAABAAYAAABBAA4AAAABAAYAAABCAA4AAAABAAYAAABDAA4AAAABAAYAAABEAA4AAAABAAYAAABFAA4AAAABAAYAAABGAA4AAAABAAYAAABHAA4AAAACAAYAAAA9AA8AAAAAAAcAAAA+AA8AAAABAAcAAAA/AA8AAAABAAcAAABAAA8AAAABAAcAAABBAA8AAAABAAcAAABCAA8AAAABAAcAAABDAA8AAAABAAcAAABEAA8AAAABAAcAAABFAA8AAAABAAcAAABGAA8AAAABAAcAAABHAA8AAAACAAcAAABgAA0AAAAAAAUAAABhAA0AAAABAAUAAABiAA0AAAABAAUAAABjAA0AAAABAAUAAABkAA0AAAABAAUAAABlAA0AAAABAAUAAABmAA0AAAABAAUAAABnAA0AAAABAAUAAABoAA0AAAABAAUAAABpAA0AAAACAAUAAABgAA4AAAAAAAYAAABhAA4AAAABAAYAAABiAA4AAAABAAYAAABjAA4AAAABAAYAAABkAA4AAAABAAYAAABlAA4AAAABAAYAAABmAA4AAAABAAYAAABnAA4AAAABAAYAAABoAA4AAAABAAYAAABpAA4AAAACAAYAAABgAA8AAAAAAAcAAABhAA8AAAABAAcAAABiAA8AAAABAAcAAABjAA8AAAABAAcAAABkAA8AAAABAAcAAABlAA8AAAABAAcAAABmAA8AAAABAAcAAABnAA8AAAABAAcAAABoAA8AAAABAAcAAABpAA8AAAACAAcAAABsAA0AAAAAAAUAAABtAA0AAAABAAUAAABuAA0AAAABAAUAAABvAA0AAAABAAUAAABwAA0AAAABAAUAAABxAA0AAAABAAUAAAByAA0AAAABAAUAAABzAA0AAAABAAUAAAB0AA0AAAABAAUAAAB1AA0AAAACAAUAAABsAA4AAAAAAAYAAABtAA4AAAABAAYAAABuAA4AAAABAAYAAABvAA4AAAABAAYAAABwAA4AAAABAAYAAABxAA4AAAABAAYAAAByAA4AAAABAAYAAABzAA4AAAABAAYAAAB0AA4AAAABAAYAAAB1AA4AAAACAAYAAABsAA8AAAAAAAcAAABtAA8AAAABAAcAAABuAA8AAAABAAcAAABvAA8AAAABAAcAAABwAA8AAAABAAcAAABxAA8AAAABAAcAAAByAA8AAAABAAcAAABzAA8AAAABAAcAAAB0AA8AAAABAAcAAAB1AA8AAAACAAcAAAB1ABUAAAAAAAUAAAB2ABUAAAABAAUAAAB3ABUAAAABAAUAAAB4ABUAAAABAAUAAAB5ABUAAAABAAUAAAB6ABUAAAABAAUAAAB7ABUAAAABAAUAAAB8ABUAAAABAAUAAAB9ABUAAAABAAUAAAB+ABUAAAACAAUAAAB1ABYAAAAAAAYAAAB2ABYAAAABAAYAAAB3ABYAAAABAAYAAAB4ABYAAAABAAYAAAB5ABYAAAABAAYAAAB6ABYAAAABAAYAAAB7ABYAAAABAAYAAAB8ABYAAAABAAYAAAB9ABYAAAABAAYAAAB+ABYAAAACAAYAAAB1ABcAAAAAAAcAAAB2ABcAAAABAAcAAAB3ABcAAAABAAcAAAB4ABcAAAABAAcAAAB5ABcAAAABAAcAAAB6ABcAAAABAAcAAAB7ABcAAAABAAcAAAB8ABcAAAABAAcAAAB9ABcAAAABAAcAAAB+ABcAAAACAAcAAAB1AB8AAAAAAAUAAAB2AB8AAAABAAUAAAB3AB8AAAABAAUAAAB4AB8AAAABAAUAAAB5AB8AAAABAAUAAAB6AB8AAAABAAUAAAB7AB8AAAABAAUAAAB8AB8AAAABAAUAAAB9AB8AAAABAAUAAAB+AB8AAAACAAUAAAB1ACAAAAAAAAYAAAB2ACAAAAABAAYAAAB3ACAAAAABAAYAAAB4ACAAAAABAAYAAAB5ACAAAAABAAYAAAB6ACAAAAABAAYAAAB7ACAAAAABAAYAAAB8ACAAAAABAAYAAAB9ACAAAAABAAYAAAB+ACAAAAACAAYAAAB1ACEAAAAAAAcAAAB2ACEAAAABAAcAAAB3ACEAAAABAAcAAAB4ACEAAAABAAcAAAB5ACEAAAABAAcAAAB6ACEAAAABAAcAAAB7ACEAAAABAAcAAAB8ACEAAAABAAcAAAB9ACEAAAABAAcAAAB+ACEAAAACAAcAAAB0ACsAAAAAAAUAAAB1ACsAAAABAAUAAAB2ACsAAAABAAUAAAB3ACsAAAABAAUAAAB4ACsAAAABAAUAAAB5ACsAAAABAAUAAAB6ACsAAAABAAUAAAB7ACsAAAABAAUAAAB8ACsAAAABAAUAAAB9ACsAAAACAAUAAAB0ACwAAAAAAAYAAAB1ACwAAAABAAYAAAB2ACwAAAABAAYAAAB3ACwAAAABAAYAAAB4ACwAAAABAAYAAAB5ACwAAAABAAYAAAB6ACwAAAABAAYAAAB7ACwAAAABAAYAAAB8ACwAAAABAAYAAAB9ACwAAAACAAYAAAB0AC0AAAAAAAcAAAB1AC0AAAABAAcAAAB2AC0AAAABAAcAAAB3AC0AAAABAAcAAAB4AC0AAAABAAcAAAB5AC0AAAABAAcAAAB6AC0AAAABAAcAAAB7AC0AAAABAAcAAAB8AC0AAAABAAcAAAB9AC0AAAACAAcAAAA=")
+tile_map_data = PackedByteArray("AABBAA0A//////////9CAA0A//////////9DAA0A//////////9EAA0A//////////9FAA0A//////////9GAA0A//////////9HAA0A//////////9BAA4A//////////9CAA4A//////////9DAA4A//////////9EAA4A//////////9FAA4A//////////9GAA4A//////////9HAA4A//////////9BAA8A//////////9CAA8A//////////9DAA8A//////////9EAA8A//////////9FAA8A//////////9GAA8A//////////9HAA8A//////////9gAA0A//////////9hAA0A//////////9iAA0A//////////9jAA0A//////////9kAA0A//////////9lAA0A//////////9mAA0A//////////9nAA0A//////////9oAA0A//////////9pAA0A//////////9gAA4A//////////9hAA4A//////////9iAA4A//////////9jAA4A//////////9kAA4A//////////9lAA4A//////////9mAA4A//////////9nAA4A//////////9oAA4A//////////9pAA4A//////////9gAA8A//////////9hAA8A//////////9iAA8A//////////9jAA8A//////////9kAA8A//////////9lAA8A//////////9mAA8A//////////9nAA8A//////////9oAA8A//////////9pAA8A//////////9sAA0A//////////9tAA0A//////////9uAA0A//////////9vAA0A//////////9wAA0A//////////9xAA0A//////////9yAA0A//////////9zAA0A//////////90AA0A//////////91AA0A//////////9sAA4A//////////9tAA4A//////////9uAA4A//////////9vAA4A//////////9wAA4A//////////9xAA4A//////////9yAA4A//////////9zAA4A//////////90AA4A//////////91AA4A//////////9sAA8A//////////9tAA8A//////////9uAA8A//////////9vAA8A//////////9wAA8A//////////9xAA8A//////////9yAA8A//////////9zAA8A//////////90AA8A//////////91AA8A//////////91ABUA//////////92ABUA//////////93ABUA//////////94ABUA//////////95ABUA//////////96ABUA//////////97ABUA//////////98ABUA//////////99ABUA//////////9+ABUA//////////91ABYA//////////92ABYA//////////93ABYA//////////94ABYA//////////95ABYA//////////96ABYA//////////97ABYA//////////98ABYA//////////99ABYA//////////9+ABYA//////////91ABcA//////////92ABcA//////////93ABcA//////////94ABcA//////////95ABcA//////////96ABcA//////////97ABcA//////////98ABcA//////////99ABcA//////////9+ABcA//////////91AB8A//////////92AB8A//////////93AB8A//////////94AB8A//////////95AB8A//////////96AB8A//////////97AB8A//////////98AB8A//////////99AB8A//////////9+AB8AAAAAAAYAAAB1ACAA//////////92ACAA//////////93ACAA//////////94ACAA//////////95ACAA//////////96ACAA//////////97ACAA//////////98ACAA//////////99ACAA//////////9+ACAAAAAAAAcAAAB1ACEA//////////92ACEA//////////93ACEA//////////94ACEA//////////95ACEA//////////96ACEA//////////97ACEA//////////98ACEA//////////99ACEA//////////9+ACEA//////////90ACsA//////////91ACsA//////////92ACsA//////////93ACsA//////////94ACsA//////////95ACsA//////////96ACsA//////////97ACsA//////////98ACsA//////////99ACsA//////////90ACwA//////////91ACwA//////////92ACwA//////////93ACwA//////////94ACwA//////////95ACwA//////////96ACwA//////////97ACwA//////////98ACwA//////////99ACwA//////////90AC0A//////////91AC0A//////////92AC0A//////////93AC0A//////////94AC0A//////////95AC0A//////////96AC0A//////////97AC0A//////////98AC0A//////////99AC0A//////////9cAAsAAAABAAYAAABdAAsAAAABAAYAAABeAAsAAAACAAYAAABcAAwAAAABAAcAAABdAAwAAAABAAcAAABeAAwAAAACAAcAAABrAAoA//////////9sAAoA//////////9tAAoA//////////9rAAsA//////////9sAAsA//////////9tAAsA//////////9rAAwA//////////9sAAwA//////////9tAAwA//////////9/ABQAAAAAAAUAAACAABQAAAABAAUAAACBABQAAAABAAUAAACCABQAAAACAAUAAAB/ABUAAAAAAAYAAACAABUAAAABAAYAAACBABUAAAABAAYAAACCABUAAAACAAYAAAB/ABYAAAAAAAYAAACAABYAAAABAAYAAACBABYAAAABAAYAAACCABYAAAACAAYAAAB/ABcAAAAAAAcAAACAABcAAAABAAcAAACBABcAAAABAAcAAACCABcAAAACAAcAAAB+AB0AAAAAAAUAAAB/AB0AAAABAAUAAACAAB0AAAABAAUAAACBAB0AAAABAAUAAACCAB0AAAACAAUAAAB+AB4AAAAAAAYAAAB/AB4AAAABAAYAAACAAB4AAAABAAYAAACBAB4AAAABAAYAAACCAB4AAAACAAYAAAB/AB8AAAABAAYAAACAAB8AAAABAAYAAACBAB8AAAABAAYAAACCAB8AAAACAAYAAAB/ACAAAAABAAcAAACAACAAAAABAAcAAACBACAAAAABAAcAAACCACAAAAACAAcAAAB+ACgAAAAAAAUAAAB/ACgAAAABAAUAAACAACgAAAABAAUAAACBACgAAAABAAUAAACCACgAAAACAAUAAAB+ACkAAAAAAAYAAAB/ACkAAAABAAYAAACAACkAAAABAAYAAACBACkAAAABAAYAAACCACkAAAACAAYAAAB+ACoAAAAAAAYAAAB/ACoAAAABAAYAAACAACoAAAABAAYAAACBACoAAAABAAYAAACCACoAAAACAAYAAAB+ACsAAAAAAAYAAAB/ACsAAAABAAYAAACAACsAAAABAAYAAACBACsAAAABAAYAAACCACsAAAACAAYAAAB+ACwAAAAAAAYAAAB/ACwAAAABAAYAAACAACwAAAABAAYAAACBACwAAAABAAYAAACCACwAAAACAAYAAAB+AC0AAAAAAAcAAAB/AC0AAAABAAcAAACAAC0AAAABAAcAAACBAC0AAAABAAcAAACCAC0AAAACAAcAAABbAAoAAAAAAAUAAABcAAoAAAABAAUAAABdAAoAAAABAAUAAABeAAoAAAACAAUAAABbAAsAAAAAAAYAAABbAAwAAAAAAAcAAAB5AAoAAAAAAAUAAAB6AAoAAAABAAUAAAB7AAoAAAABAAUAAAB8AAoAAAABAAUAAAB9AAoAAAACAAUAAAB5AAsAAAAAAAYAAAB6AAsAAAABAAYAAAB7AAsAAAABAAYAAAB8AAsAAAABAAYAAAB9AAsAAAACAAYAAAB5AAwAAAAAAAcAAAB6AAwAAAABAAcAAAB7AAwAAAABAAcAAAB8AAwAAAABAAcAAAB9AAwAAAACAAcAAAA=")
 tile_set = SubResource("YardTiles")
 
-[node name="WarehouseStackA" parent="." instance=ExtResource("crate")]
-position = Vector2(606, 215)
+[node name="SeedShopStockA" type="StaticBody2D" parent="." unique_id=573492764 instance=ExtResource("crate")]
+texture_filter = 1
+position = Vector2(2033, 482)
+metadata/object_id = "crate"
+metadata/object_kind = "crate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/crate_frames.tres"
 
-[node name="WarehouseStackB" parent="." instance=ExtResource("crate")]
-position = Vector2(621, 220)
+[node name="SeedShopStockB" type="StaticBody2D" parent="." unique_id=810188739 instance=ExtResource("crate")]
+texture_filter = 1
+position = Vector2(2052, 493)
+metadata/object_id = "crate"
+metadata/object_kind = "crate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/crate_frames.tres"
 
-[node name="WarehouseStackC" parent="." instance=ExtResource("crate")]
-position = Vector2(606, 231)
+[node name="SeedShopBarrel" type="StaticBody2D" parent="." unique_id=1550694402 instance=ExtResource("barrel")]
+texture_filter = 1
+position = Vector2(2075, 476)
+metadata/object_id = "barrel"
+metadata/object_kind = "barrel"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/barrel_frames.tres"
 
-[node name="SeedDeliveryA" parent="." instance=ExtResource("crate")]
-position = Vector2(972, 230)
+[node name="SmithQuenchBarrel" type="StaticBody2D" parent="." unique_id=1424505128 instance=ExtResource("barrel")]
+texture_filter = 1
+position = Vector2(1954, 182)
+metadata/object_id = "barrel"
+metadata/object_kind = "barrel"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/barrel_frames.tres"
 
-[node name="SeedDeliveryB" parent="." instance=ExtResource("crate")]
-position = Vector2(987, 234)
+[node name="RestaurantBarrel" type="StaticBody2D" parent="." unique_id=1532271468 instance=ExtResource("barrel")]
+texture_filter = 1
+position = Vector2(2069, 330)
+metadata/object_id = "barrel"
+metadata/object_kind = "barrel"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/barrel_frames.tres"
 
-[node name="SeedShopStockA" parent="." instance=ExtResource("crate")]
-position = Vector2(1881, 495)
-
-[node name="SeedShopStockB" parent="." instance=ExtResource("crate")]
-position = Vector2(1896, 500)
-
-[node name="WarehouseBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(831, 221)
-
-[node name="SeedStorageBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(1129, 236)
-
-[node name="SeedShopBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(2013, 498)
-
-[node name="SmithQuenchBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(1737, 227)
-
-[node name="RestaurantBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(2025, 349)
-
-[node name="WarehouseBasket" type="Sprite2D" parent="."]
-position = Vector2(639, 231)
-offset = Vector2(0, -8.0)
+[node name="MarketBasket" type="Sprite2D" parent="." unique_id=553217176]
+position = Vector2(2075, 506)
 texture = ExtResource("basket")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="SeedStorageBasket" type="Sprite2D" parent="."]
-position = Vector2(1004, 238)
-offset = Vector2(0, -8.0)
-texture = ExtResource("basket")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-
-[node name="MarketBasket" type="Sprite2D" parent="."]
-position = Vector2(1907, 502)
-offset = Vector2(0, -8.0)
-texture = ExtResource("basket")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-
-[node name="WarehouseHay" type="Sprite2D" parent="."]
-position = Vector2(850, 227)
-offset = Vector2(0, -8.0)
+[node name="PetShopHayWest" type="Sprite2D" parent="." unique_id=858753494]
+position = Vector2(1506, 200)
 texture = ExtResource("hay")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="PetShopHayWest" type="Sprite2D" parent="."]
-position = Vector2(1538, 229)
-offset = Vector2(0, -8.0)
+[node name="PetShopHayEast" type="Sprite2D" parent="." unique_id=1405395783]
+position = Vector2(1467, 180)
 texture = ExtResource("hay")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
-[node name="PetShopHayEast" type="Sprite2D" parent="."]
-position = Vector2(1678, 239)
-offset = Vector2(0, -8.0)
-texture = ExtResource("hay")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
+[node name="PetFeedCrate" type="StaticBody2D" parent="." unique_id=515258289 instance=ExtResource("crate")]
+texture_filter = 1
+position = Vector2(1486, 185)
+metadata/object_id = "crate"
+metadata/object_kind = "crate"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/crate_frames.tres"
 
-[node name="PetFeedCrate" parent="." instance=ExtResource("crate")]
-position = Vector2(1522, 230)
+[node name="PetFeedBarrel" type="StaticBody2D" parent="." unique_id=183630183 instance=ExtResource("barrel")]
+texture_filter = 1
+position = Vector2(1470, 202)
+metadata/object_id = "barrel"
+metadata/object_kind = "barrel"
+metadata/source_visual = "res://sprite_frames/outdoor_decor/barrel_frames.tres"
 
-[node name="PetFeedBarrel" parent="." instance=ExtResource("barrel")]
-position = Vector2(1694, 234)
-
-[node name="PetWaterBowl" type="Sprite2D" parent="."]
-position = Vector2(1680, 256)
-offset = Vector2(0, -8.0)
+[node name="PetWaterBowl" type="Sprite2D" parent="." unique_id=1317419950]
+position = Vector2(1490, 207)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(0, 288, 16, 16)
 
-[node name="SmithLogPile" type="Sprite2D" parent="."]
-position = Vector2(1746, 245)
-offset = Vector2(0, -8.0)
+[node name="SmithLogPile" type="Sprite2D" parent="." unique_id=1212945179]
+position = Vector2(1965, 202)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(32, 160, 32, 16)
 
-[node name="SmithStone" type="Sprite2D" parent="."]
-position = Vector2(1878, 237)
-offset = Vector2(0, -8.0)
+[node name="SmithStone" type="Sprite2D" parent="." unique_id=1404976107]
+position = Vector2(1999, 195)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 192, 32, 16)
 
-[node name="RestaurantBench" type="Sprite2D" parent="."]
-position = Vector2(1881, 369)
-offset = Vector2(0, -16.0)
+[node name="RestaurantBench" type="Sprite2D" parent="." unique_id=1381456731]
+position = Vector2(2057, 359)
 texture = ExtResource("bench")
+offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
-[node name="RestaurantPicnic" type="Sprite2D" parent="."]
-position = Vector2(1906, 376)
-offset = Vector2(0, -8.0)
+[node name="RestaurantPicnic" type="Sprite2D" parent="." unique_id=1586309258]
+position = Vector2(2084, 373)
 texture = ExtResource("basket")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(16, 0, 16, 16)
 
-[node name="FlowerShopBench" type="Sprite2D" parent="."]
-position = Vector2(1878, 731)
-offset = Vector2(0, -16.0)
+[node name="FlowerShopBench" type="Sprite2D" parent="." unique_id=61680762]
+position = Vector2(2042, 721)
 texture = ExtResource("bench")
+offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
 
-[node name="FlowerPot01" type="Sprite2D" parent="."]
-position = Vector2(601, 247)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot05" type="Sprite2D" parent="." unique_id=1658094669]
+position = Vector2(1450, 202)
 texture = ExtResource("flowers")
-region_enabled = true
-region_rect = Rect2(80, 0, 16, 16)
-
-[node name="FlowerPot02" type="Sprite2D" parent="."]
-position = Vector2(848, 246)
-offset = Vector2(0, -8.0)
-texture = ExtResource("flowers")
-region_enabled = true
-region_rect = Rect2(96, 0, 16, 16)
-
-[node name="FlowerPot03" type="Sprite2D" parent="."]
-position = Vector2(968, 256)
-offset = Vector2(0, -8.0)
-texture = ExtResource("flowers")
-region_enabled = true
-region_rect = Rect2(112, 0, 16, 16)
-
-[node name="FlowerPot04" type="Sprite2D" parent="."]
-position = Vector2(1138, 254)
-offset = Vector2(0, -8.0)
-texture = ExtResource("flowers")
-region_enabled = true
-region_rect = Rect2(128, 0, 16, 16)
-
-[node name="FlowerPot05" type="Sprite2D" parent="."]
-position = Vector2(1519, 252)
-offset = Vector2(0, -8.0)
-texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(80, 16, 16, 16)
 
-[node name="FlowerPot06" type="Sprite2D" parent="."]
-position = Vector2(1709, 252)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot06" type="Sprite2D" parent="." unique_id=1359208880]
+position = Vector2(1506, 177)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(96, 16, 16, 16)
 
-[node name="FlowerPot07" type="Sprite2D" parent="."]
-position = Vector2(1721, 249)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot07" type="Sprite2D" parent="." unique_id=937263295]
+position = Vector2(2016, 199)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(112, 16, 16, 16)
 
-[node name="FlowerPot08" type="Sprite2D" parent="."]
-position = Vector2(1889, 254)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot08" type="Sprite2D" parent="." unique_id=486543503]
+position = Vector2(1941, 200)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(128, 16, 16, 16)
 
-[node name="FlowerPot09" type="Sprite2D" parent="."]
-position = Vector2(1872, 353)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot09" type="Sprite2D" parent="." unique_id=198899820]
+position = Vector2(2040, 337)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(80, 32, 16, 16)
 
-[node name="FlowerPot10" type="Sprite2D" parent="."]
-position = Vector2(2028, 371)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot10" type="Sprite2D" parent="." unique_id=2134994444]
+position = Vector2(2094, 360)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(96, 32, 16, 16)
 
-[node name="FlowerPot11" type="Sprite2D" parent="."]
-position = Vector2(1872, 516)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot11" type="Sprite2D" parent="." unique_id=84214915]
+position = Vector2(2024, 515)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(112, 32, 16, 16)
 
-[node name="FlowerPot12" type="Sprite2D" parent="."]
-position = Vector2(2016, 524)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot12" type="Sprite2D" parent="." unique_id=1461461259]
+position = Vector2(2093, 507)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(128, 32, 16, 16)
 
-[node name="FlowerPot13" type="Sprite2D" parent="."]
-position = Vector2(1862, 657)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot13" type="Sprite2D" parent="." unique_id=1205662222]
+position = Vector2(1908, 658)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(80, 0, 16, 16)
 
-[node name="FlowerPot14" type="Sprite2D" parent="."]
-position = Vector2(1879, 664)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot14" type="Sprite2D" parent="." unique_id=9026551]
+position = Vector2(1908, 681)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(96, 0, 16, 16)
 
-[node name="FlowerPot15" type="Sprite2D" parent="."]
-position = Vector2(1862, 681)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot15" type="Sprite2D" parent="." unique_id=103169344]
+position = Vector2(2022, 654)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(112, 0, 16, 16)
 
-[node name="FlowerPot16" type="Sprite2D" parent="."]
-position = Vector2(1880, 691)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot16" type="Sprite2D" parent="." unique_id=493493867]
+position = Vector2(2040, 667)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(128, 0, 16, 16)
 
-[node name="FlowerPot17" type="Sprite2D" parent="."]
-position = Vector2(2011, 656)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot17" type="Sprite2D" parent="." unique_id=914966681]
+position = Vector2(2060, 653)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(80, 16, 16, 16)
 
-[node name="FlowerPot18" type="Sprite2D" parent="."]
-position = Vector2(2027, 668)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot18" type="Sprite2D" parent="." unique_id=391762573]
+position = Vector2(2078, 669)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(96, 16, 16, 16)
 
-[node name="FlowerPot19" type="Sprite2D" parent="."]
-position = Vector2(2013, 688)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot19" type="Sprite2D" parent="." unique_id=886280279]
+position = Vector2(2060, 689)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(112, 16, 16, 16)
 
-[node name="FlowerPot20" type="Sprite2D" parent="."]
-position = Vector2(2028, 704)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot20" type="Sprite2D" parent="." unique_id=1018584494]
+position = Vector2(2092, 694)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(128, 16, 16, 16)
 
-[node name="FlowerPot21" type="Sprite2D" parent="."]
-position = Vector2(1862, 731)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot21" type="Sprite2D" parent="." unique_id=742288881]
+position = Vector2(2018, 722)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(80, 32, 16, 16)
 
-[node name="FlowerPot22" type="Sprite2D" parent="."]
-position = Vector2(1900, 735)
-offset = Vector2(0, -8.0)
+[node name="FlowerPot22" type="Sprite2D" parent="." unique_id=1967349127]
+position = Vector2(2065, 725)
 texture = ExtResource("flowers")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(96, 32, 16, 16)
 
-[node name="VergeTuft01" type="Sprite2D" parent="."]
-position = Vector2(592, 236)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft05" type="Sprite2D" parent="." unique_id=1406610287]
+position = Vector2(1438, 190)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft02" type="Sprite2D" parent="."]
-position = Vector2(861, 240)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft06" type="Sprite2D" parent="." unique_id=582968725]
+position = Vector2(1451, 170)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft03" type="Sprite2D" parent="."]
-position = Vector2(957, 245)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft07" type="Sprite2D" parent="." unique_id=1764065255]
+position = Vector2(2028, 186)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft04" type="Sprite2D" parent="."]
-position = Vector2(1149, 246)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft08" type="Sprite2D" parent="." unique_id=1891912542]
+position = Vector2(2037, 364)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft05" type="Sprite2D" parent="."]
-position = Vector2(1510, 242)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft09" type="Sprite2D" parent="." unique_id=46575876]
+position = Vector2(2108, 344)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft06" type="Sprite2D" parent="."]
-position = Vector2(1712, 237)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft10" type="Sprite2D" parent="." unique_id=1282138980]
+position = Vector2(2025, 460)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft07" type="Sprite2D" parent="."]
-position = Vector2(1891, 241)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft11" type="Sprite2D" parent="." unique_id=1526988855]
+position = Vector2(2103, 486)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft08" type="Sprite2D" parent="."]
-position = Vector2(1859, 373)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft12" type="Sprite2D" parent="." unique_id=283967999]
+position = Vector2(2008, 722)
 texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)
 
-[node name="VergeTuft09" type="Sprite2D" parent="."]
-position = Vector2(2041, 359)
-offset = Vector2(0, -8.0)
+[node name="VergeTuft13" type="Sprite2D" parent="." unique_id=360600834]
+position = Vector2(2105, 680)
 texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 352, 16, 16)
-
-[node name="VergeTuft10" type="Sprite2D" parent="."]
-position = Vector2(1856, 518)
-offset = Vector2(0, -8.0)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 352, 16, 16)
-
-[node name="VergeTuft11" type="Sprite2D" parent="."]
-position = Vector2(2034, 513)
-offset = Vector2(0, -8.0)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 352, 16, 16)
-
-[node name="VergeTuft12" type="Sprite2D" parent="."]
-position = Vector2(1851, 707)
-offset = Vector2(0, -8.0)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 352, 16, 16)
-
-[node name="VergeTuft13" type="Sprite2D" parent="."]
-position = Vector2(2040, 691)
-offset = Vector2(0, -8.0)
-texture = ExtResource("plants")
+offset = Vector2(0, -8)
 region_enabled = true
 region_rect = Rect2(64, 352, 16, 16)

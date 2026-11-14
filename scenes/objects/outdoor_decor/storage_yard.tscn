@@ -1,0 +1,274 @@
+[gd_scene format=4 uid="uid://cmimnodrbq3kx"]
+
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barrel.tscn" id="barrel"]
+[ext_resource type="Texture2D" uid="uid://cpcyup3fcsw0w" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="PackedScene" uid="uid://uu73t53rgof1" path="res://scenes/trees/medium_birch_tree.tscn" id="birch"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
+[ext_resource type="TileSet" uid="uid://coe4hu76jd1vh" path="res://resources/tilesets/fence.tres" id="fence"]
+[ext_resource type="PackedScene" uid="uid://vgjyw7vjrd6w" path="res://scenes/objects/outdoor_decor/horizontal_gate_right_hinge.tscn" id="gate"]
+[ext_resource type="Texture2D" uid="uid://pheuwdhrtesv" path="res://assets/Tiles/Grass/Grass_Dirt_Edges.png" id="ground"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/street_lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" uid="uid://cw7r3r7qx0koe" path="res://scenes/trees/medium_oak_tree.tscn" id="oak"]
+[ext_resource type="Texture2D" uid="uid://ykk85rxyjr6l" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="outdoor"]
+[ext_resource type="Texture2D" uid="uid://cuk0t4uyh7hle" path="res://assets/Buildings/House_Decor/Planters.png" id="planter"]
+[ext_resource type="PackedScene" uid="uid://chkn2hvalslec" path="res://scenes/trees/medium_spruce_tree.tscn" id="spruce"]
+[ext_resource type="Texture2D" uid="uid://ceilwcld58q26" path="res://assets/Tiles/Grass/Path_Decoration.png" id="tracks"]
+
+[sub_resource type="TileSetAtlasSource" id="Atlas_dirt"]
+texture = ExtResource("ground")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="Atlas_tracks"]
+texture = ExtResource("tracks")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="YardSurface"]
+sources/0 = SubResource("Atlas_dirt")
+sources/1 = SubResource("Atlas_tracks")
+
+[node name="StorageYard" type="Node2D" unique_id=459565697]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="LoadingCourtyard" type="TileMapLayer" parent="." unique_id=2013159891]
+z_index = -3
+tile_map_data = PackedByteArray("AAAYAAEAAAAAAAAAAAAZAAEAAAABAAAAAAAaAAEAAAABAAAAAAAbAAEAAAABAAAAAAAcAAEAAAABAAAAAAAdAAEAAAABAAAAAAAeAAEAAAABAAAAAAAfAAEAAAABAAAAAAAgAAEAAAABAAAAAAAhAAEAAAABAAAAAAAiAAEAAAABAAAAAAAjAAEAAAABAAAAAAAkAAEAAAABAAAAAAAlAAEAAAABAAAAAAAmAAEAAAABAAAAAAAnAAEAAAABAAAAAAAoAAEAAAABAAAAAAApAAEAAAABAAAAAAAqAAEAAAABAAAAAAArAAEAAAABAAAAAAAsAAEAAAABAAAAAAAtAAEAAAABAAAAAAAuAAEAAAABAAAAAAAvAAEAAAABAAAAAAAwAAEAAAABAAAAAAAxAAEAAAABAAAAAAAyAAEAAAABAAAAAAAzAAEAAAABAAAAAAA0AAEAAAABAAAAAAA1AAEAAAABAAAAAAA2AAEAAAABAAAAAAA3AAEAAAACAAAAAAAYAAIAAAAAAAEAAAAZAAIAAAABAAEAAAAaAAIAAAABAAEAAAAbAAIAAAABAAEAAAAcAAIAAAABAAEAAAAdAAIAAAABAAEAAAAeAAIAAAABAAEAAAAfAAIAAAABAAEAAAAgAAIAAAABAAEAAAAhAAIAAAABAAEAAAAiAAIAAAABAAEAAAAjAAIAAAABAAEAAAAkAAIAAAABAAEAAAAlAAIAAAABAAEAAAAmAAIAAAABAAEAAAAnAAIAAAABAAEAAAAoAAIAAAABAAEAAAApAAIAAAABAAEAAAAqAAIAAAABAAEAAAArAAIAAAABAAEAAAAsAAIAAAABAAEAAAAtAAIAAAABAAEAAAAuAAIAAAABAAEAAAAvAAIAAAABAAEAAAAwAAIAAAABAAEAAAAxAAIAAAABAAEAAAAyAAIAAAABAAEAAAAzAAIAAAABAAEAAAA0AAIAAAABAAEAAAA1AAIAAAABAAEAAAA2AAIAAAABAAEAAAA3AAIAAAACAAEAAAAYAAMAAAAAAAEAAAAZAAMAAAABAAEAAAAaAAMAAAABAAEAAAAbAAMAAAABAAEAAAAcAAMAAAABAAEAAAAdAAMAAAABAAEAAAAeAAMAAAABAAEAAAAfAAMAAAABAAEAAAAgAAMAAAABAAEAAAAhAAMAAAABAAEAAAAiAAMAAAABAAEAAAAjAAMAAAABAAEAAAAkAAMAAAABAAEAAAAlAAMAAAABAAEAAAAmAAMAAAABAAEAAAAnAAMAAAABAAEAAAAoAAMAAAABAAEAAAApAAMAAAABAAEAAAAqAAMAAAABAAEAAAArAAMAAAABAAEAAAAsAAMAAAABAAEAAAAtAAMAAAABAAEAAAAuAAMAAAABAAEAAAAvAAMAAAABAAEAAAAwAAMAAAABAAEAAAAxAAMAAAABAAEAAAAyAAMAAAABAAEAAAAzAAMAAAABAAEAAAA0AAMAAAABAAEAAAA1AAMAAAABAAEAAAA2AAMAAAABAAEAAAA3AAMAAAACAAEAAAAYAAQAAAAAAAEAAAAZAAQAAAABAAEAAAAaAAQAAAABAAEAAAAbAAQAAAABAAEAAAAcAAQAAAABAAEAAAAdAAQAAAABAAEAAAAeAAQAAAABAAEAAAAfAAQAAAABAAEAAAAgAAQAAAABAAEAAAAhAAQAAAABAAEAAAAiAAQAAAABAAEAAAAjAAQAAAABAAEAAAAkAAQAAAABAAEAAAAlAAQAAAABAAEAAAAmAAQAAAABAAEAAAAnAAQAAAABAAEAAAAoAAQAAAABAAEAAAApAAQAAAABAAEAAAAqAAQAAAABAAEAAAArAAQAAAABAAEAAAAsAAQAAAABAAEAAAAtAAQAAAABAAEAAAAuAAQAAAABAAEAAAAvAAQAAAABAAEAAAAwAAQAAAABAAEAAAAxAAQAAAABAAEAAAAyAAQAAAABAAEAAAAzAAQAAAABAAEAAAA0AAQAAAABAAEAAAA1AAQAAAABAAEAAAA2AAQAAAABAAEAAAA3AAQAAAACAAEAAAAYAAUAAAAAAAEAAAAZAAUAAAABAAEAAAAaAAUAAAABAAEAAAAbAAUAAAABAAEAAAAcAAUAAAABAAEAAAAdAAUAAAABAAEAAAAeAAUAAAABAAEAAAAfAAUAAAABAAEAAAAgAAUAAAABAAEAAAAhAAUAAAABAAEAAAAiAAUAAAABAAEAAAAjAAUAAAABAAEAAAAkAAUAAAABAAEAAAAlAAUAAAABAAEAAAAmAAUAAAABAAEAAAAnAAUAAAABAAEAAAAoAAUAAAABAAEAAAApAAUAAAABAAEAAAAqAAUAAAABAAEAAAArAAUAAAABAAEAAAAsAAUAAAABAAEAAAAtAAUAAAABAAEAAAAuAAUAAAABAAEAAAAvAAUAAAABAAEAAAAwAAUAAAABAAEAAAAxAAUAAAABAAEAAAAyAAUAAAABAAEAAAAzAAUAAAABAAEAAAA0AAUAAAABAAEAAAA1AAUAAAABAAEAAAA2AAUAAAABAAEAAAA3AAUAAAACAAEAAAAYAAYAAAAAAAEAAAAZAAYAAAABAAEAAAAaAAYAAAABAAEAAAAbAAYAAAABAAEAAAAcAAYAAAABAAEAAAAdAAYAAAABAAEAAAAeAAYAAAABAAEAAAAfAAYAAAABAAEAAAAgAAYAAAABAAEAAAAhAAYAAAABAAEAAAAiAAYAAAABAAEAAAAjAAYAAAABAAEAAAAkAAYAAAABAAEAAAAlAAYAAAABAAEAAAAmAAYAAAABAAEAAAAnAAYAAAABAAEAAAAoAAYAAAABAAEAAAApAAYAAAABAAEAAAAqAAYAAAABAAEAAAArAAYAAAABAAEAAAAsAAYAAAABAAEAAAAtAAYAAAABAAEAAAAuAAYAAAABAAEAAAAvAAYAAAABAAEAAAAwAAYAAAABAAEAAAAxAAYAAAABAAEAAAAyAAYAAAABAAEAAAAzAAYAAAABAAEAAAA0AAYAAAABAAEAAAA1AAYAAAABAAEAAAA2AAYAAAABAAEAAAA3AAYAAAACAAEAAAAYAAcAAAAAAAEAAAAZAAcAAAABAAEAAAAaAAcAAAABAAEAAAAbAAcAAAABAAEAAAAcAAcAAAABAAEAAAAdAAcAAAABAAEAAAAeAAcAAAABAAEAAAAfAAcAAAABAAEAAAAgAAcAAAABAAEAAAAhAAcAAAABAAEAAAAiAAcAAAABAAEAAAAjAAcAAAABAAEAAAAkAAcAAAABAAEAAAAlAAcAAAABAAEAAAAmAAcAAAABAAEAAAAnAAcAAAABAAEAAAAoAAcAAAABAAEAAAApAAcAAAABAAEAAAAqAAcAAAABAAEAAAArAAcAAAABAAEAAAAsAAcAAAABAAEAAAAtAAcAAAABAAEAAAAuAAcAAAABAAEAAAAvAAcAAAABAAEAAAAwAAcAAAABAAEAAAAxAAcAAAABAAEAAAAyAAcAAAABAAEAAAAzAAcAAAABAAEAAAA0AAcAAAABAAEAAAA1AAcAAAABAAEAAAA2AAcAAAABAAEAAAA3AAcAAAACAAEAAAAYAAgAAAAAAAEAAAAZAAgAAAABAAEAAAAaAAgAAAABAAEAAAAbAAgAAAABAAEAAAAcAAgAAAABAAEAAAAdAAgAAAABAAEAAAAeAAgAAAABAAEAAAAfAAgAAAABAAEAAAAgAAgAAAABAAEAAAAhAAgAAAABAAEAAAAiAAgAAAABAAEAAAAjAAgAAAABAAEAAAAkAAgAAAABAAEAAAAlAAgAAAABAAEAAAAmAAgAAAABAAEAAAAnAAgAAAABAAEAAAAoAAgAAAABAAEAAAApAAgAAAABAAEAAAAqAAgAAAABAAEAAAArAAgAAAABAAEAAAAsAAgAAAABAAEAAAAtAAgAAAABAAEAAAAuAAgAAAABAAEAAAAvAAgAAAABAAEAAAAwAAgAAAABAAEAAAAxAAgAAAABAAEAAAAyAAgAAAABAAEAAAAzAAgAAAABAAEAAAA0AAgAAAABAAEAAAA1AAgAAAABAAEAAAA2AAgAAAABAAEAAAA3AAgAAAACAAEAAAAYAAkAAAAAAAEAAAAZAAkAAAABAAEAAAAaAAkAAAABAAEAAAAbAAkAAAABAAEAAAAcAAkAAAABAAEAAAAdAAkAAAABAAEAAAAeAAkAAAABAAEAAAAfAAkAAAABAAEAAAAgAAkAAAABAAEAAAAhAAkAAAABAAEAAAAiAAkAAAABAAEAAAAjAAkAAAABAAEAAAAkAAkAAAABAAEAAAAlAAkAAAABAAEAAAAmAAkAAAABAAEAAAAnAAkAAAABAAEAAAAoAAkAAAABAAEAAAApAAkAAAABAAEAAAAqAAkAAAABAAEAAAArAAkAAAABAAEAAAAsAAkAAAABAAEAAAAtAAkAAAABAAEAAAAuAAkAAAABAAEAAAAvAAkAAAABAAEAAAAwAAkAAAABAAEAAAAxAAkAAAABAAEAAAAyAAkAAAABAAEAAAAzAAkAAAABAAEAAAA0AAkAAAABAAEAAAA1AAkAAAABAAEAAAA2AAkAAAABAAEAAAA3AAkAAAACAAEAAAAYAAoAAAAAAAEAAAAZAAoAAAABAAEAAAAaAAoAAAABAAEAAAAbAAoAAAABAAEAAAAcAAoAAAABAAEAAAAdAAoAAAABAAEAAAAeAAoAAAABAAEAAAAfAAoAAAABAAEAAAAgAAoAAAABAAEAAAAhAAoAAAABAAEAAAAiAAoAAAABAAEAAAAjAAoAAAABAAEAAAAkAAoAAAABAAEAAAAlAAoAAAABAAEAAAAmAAoAAAABAAEAAAAnAAoAAAABAAEAAAAoAAoAAAABAAEAAAApAAoAAAABAAEAAAAqAAoAAAABAAEAAAArAAoAAAABAAEAAAAsAAoAAAABAAEAAAAtAAoAAAABAAEAAAAuAAoAAAABAAEAAAAvAAoAAAABAAEAAAAwAAoAAAABAAEAAAAxAAoAAAABAAEAAAAyAAoAAAABAAEAAAAzAAoAAAABAAEAAAA0AAoAAAABAAEAAAA1AAoAAAABAAEAAAA2AAoAAAABAAEAAAA3AAoAAAACAAEAAAAYAAsAAAAAAAEAAAAZAAsAAAABAAEAAAAaAAsAAAABAAEAAAAbAAsAAAABAAEAAAAcAAsAAAABAAEAAAAdAAsAAAABAAEAAAAeAAsAAAABAAEAAAAfAAsAAAABAAEAAAAgAAsAAAABAAEAAAAhAAsAAAABAAEAAAAiAAsAAAABAAEAAAAjAAsAAAABAAEAAAAkAAsAAAABAAEAAAAlAAsAAAABAAEAAAAmAAsAAAABAAEAAAAnAAsAAAABAAEAAAAoAAsAAAABAAEAAAApAAsAAAABAAEAAAAqAAsAAAABAAEAAAArAAsAAAABAAEAAAAsAAsAAAABAAEAAAAtAAsAAAABAAEAAAAuAAsAAAABAAEAAAAvAAsAAAABAAEAAAAwAAsAAAABAAEAAAAxAAsAAAABAAEAAAAyAAsAAAABAAEAAAAzAAsAAAABAAEAAAA0AAsAAAABAAEAAAA1AAsAAAABAAEAAAA2AAsAAAABAAEAAAA3AAsAAAACAAEAAAAYAAwAAAAAAAIAAAAZAAwAAAABAAIAAAAaAAwAAAABAAIAAAAbAAwAAAABAAIAAAAcAAwAAAABAAIAAAAdAAwAAAABAAIAAAAeAAwAAAABAAIAAAAfAAwAAAABAAIAAAAgAAwAAAABAAIAAAAhAAwAAAABAAIAAAAiAAwAAAABAAIAAAAjAAwAAAABAAIAAAAkAAwAAAABAAIAAAAlAAwAAAABAAIAAAAmAAwAAAABAAIAAAAnAAwAAAABAAIAAAAoAAwAAAABAAIAAAApAAwAAAABAAIAAAAqAAwAAAABAAIAAAArAAwAAAABAAIAAAAsAAwAAAABAAIAAAAtAAwAAAABAAIAAAAuAAwAAAABAAIAAAAvAAwAAAABAAIAAAAwAAwAAAABAAIAAAAxAAwAAAABAAIAAAAyAAwAAAABAAIAAAAzAAwAAAABAAIAAAA0AAwAAAABAAIAAAA1AAwAAAABAAIAAAA2AAwAAAABAAIAAAA3AAwAAAACAAIAAAAhAP3/AAAAAAAAAAAiAP3/AAABAAAAAAAjAP3/AAABAAAAAAAkAP3/AAABAAAAAAAlAP3/AAABAAAAAAAmAP3/AAABAAAAAAAnAP3/AAACAAAAAAAhAP7/AAAAAAEAAAAiAP7/AAABAAEAAAAjAP7/AAABAAEAAAAkAP7/AAABAAEAAAAlAP7/AAABAAEAAAAmAP7/AAABAAEAAAAnAP7/AAACAAEAAAAhAP//AAAAAAEAAAAiAP//AAABAAEAAAAjAP//AAABAAEAAAAkAP//AAABAAEAAAAlAP//AAABAAEAAAAmAP//AAABAAEAAAAnAP//AAACAAEAAAAhAAAAAAAAAAIAAAAiAAAAAAABAAIAAAAjAAAAAAABAAIAAAAkAAAAAAABAAIAAAAlAAAAAAABAAIAAAAmAAAAAAABAAIAAAAnAAAAAAACAAIAAAA=")
+tile_set = SubResource("YardSurface")
+
+[node name="EarthDetails" type="TileMapLayer" parent="." unique_id=187488122]
+modulate = Color(1, 1, 1, 0.52)
+z_index = -2
+tile_map_data = PackedByteArray("AAAbAAkAAQABAAAAAAAdAAkAAQACAAAAAAAhAAkAAQABAAAAAAAiAAkAAQACAAAAAAAkAAkAAQABAAAAAAAlAAkAAQACAAAAAAAmAAkAAQACAAAAAAApAAkAAQAAAAAAAAAqAAkAAQABAAAAAAAsAAkAAQAAAAAAAAAyAAkAAQAAAAAAAAA0AAkAAQACAAAAAAA1AAkAAQAAAAAAAAA2AAkAAQABAAAAAAAaAAoAAQABAAAAAAAbAAoAAQAAAAAAAAAdAAoAAQABAAAAAAAiAAoAAQACAAAAAAAjAAoAAQABAAAAAAAoAAoAAQACAAAAAAArAAoAAQAAAAAAAAAsAAoAAQAAAAAAAAAwAAoAAQAAAAAAAAAzAAoAAQAAAAAAAAA0AAoAAQACAAAAAAA1AAoAAQABAAAAAAAZAAsAAQABAAAAAAAaAAsAAQAAAAAAAAAdAAsAAQABAAAAAAAhAAsAAQAAAAAAAAAjAAsAAQABAAAAAAAlAAsAAQACAAAAAAApAAsAAQACAAAAAAAqAAsAAQACAAAAAAAwAAsAAQACAAAAAAAxAAsAAQAAAAAAAAAzAAsAAQACAAAAAAA1AAsAAQAAAAAAAAA2AAsAAQACAAAAAAA=")
+tile_set = SubResource("YardSurface")
+
+[node name="PerimeterFence" type="TileMapLayer" parent="." unique_id=1572675142]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAXAPz/AQABAAEAAAAYAPz/AQACAAAAAAAZAPz/AQACAAAAAAAaAPz/AQACAAAAAAAbAPz/AQACAAAAAAAcAPz/AQACAAAAAAAdAPz/AQACAAAAAAAeAPz/AQACAAAAAAAfAPz/AQACAAAAAAAgAPz/AQACAAAAAAAhAPz/AQACAAAAAAAiAPz/AQACAAAAAAAjAPz/AQACAAAAAAAkAPz/AQACAAAAAAAlAPz/AQACAAAAAAAmAPz/AQACAAAAAAAnAPz/AQACAAAAAAAoAPz/AQACAAAAAAApAPz/AQACAAAAAAAqAPz/AQACAAAAAAArAPz/AQACAAAAAAAsAPz/AQACAAAAAAAtAPz/AQACAAAAAAAuAPz/AQACAAAAAAAvAPz/AQACAAAAAAAwAPz/AQACAAAAAAAxAPz/AQACAAAAAAAyAPz/AQACAAAAAAAzAPz/AQACAAAAAAA0APz/AQACAAAAAAA1APz/AQACAAAAAAA2APz/AQACAAAAAAA3APz/AQACAAAAAAA4APz/AQADAAEAAAAXAP7/AQAAAAEAAAA4AP7/AQAAAAEAAAAXAP//AQAAAAEAAAA4AP//AQAAAAEAAAAXAAAAAQAAAAEAAAA4AAAAAQAAAAEAAAAXAAEAAQAAAAEAAAA4AAEAAQAAAAEAAAAXAAIAAQAAAAEAAAA4AAIAAQAAAAEAAAAXAAMAAQAAAAEAAAA4AAMAAQAAAAEAAAAXAAQAAQAAAAEAAAA4AAQAAQAAAAEAAAAXAAUAAQAAAAEAAAA4AAUAAQAAAAEAAAAXAAYAAQAAAAEAAAA4AAYAAQAAAAEAAAAXAAcAAQAAAAEAAAA4AAcAAQAAAAEAAAAXAAgAAQAAAAEAAAA4AAgAAQAAAAEAAAAXAAkAAQAAAAEAAAA4AAkAAQAAAAEAAAAXAAoAAQAAAAEAAAA4AAoAAQAAAAEAAAAXAAsAAQAAAAEAAAA4AAsAAQAAAAEAAAAXAAwAAQAAAAEAAAA4AAwAAQAAAAEAAAAXAA0AAQABAAMAAAAYAA0AAQACAAAAAAAZAA0AAQACAAAAAAAaAA0AAQACAAAAAAAbAA0AAQACAAAAAAAcAA0AAQACAAAAAAAdAA0AAQACAAAAAAAhAA0AAQACAAAAAAAiAA0AAQACAAAAAAAjAA0AAQACAAAAAAAkAA0AAQACAAAAAAAlAA0AAQACAAAAAAAmAA0AAQACAAAAAAAnAA0AAQACAAAAAAAoAA0AAQACAAAAAAApAA0AAQACAAAAAAAqAA0AAQACAAAAAAArAA0AAQACAAAAAAAsAA0AAQACAAAAAAAwAA0AAQACAAAAAAAxAA0AAQACAAAAAAAyAA0AAQACAAAAAAAzAA0AAQACAAAAAAA0AA0AAQACAAAAAAA1AA0AAQACAAAAAAA2AA0AAQACAAAAAAA3AA0AAQACAAAAAAA4AA0AAQADAAMAAAAXAP3/AQAAAAEAAAA4AP3/AQAAAAEAAAA=")
+tile_set = ExtResource("fence")
+
+[node name="ProduceEntrance" parent="." unique_id=1482194083 instance=ExtResource("gate")]
+position = Vector2(504, 224)
+
+[node name="SeedEntrance" parent="." unique_id=1629952471 instance=ExtResource("gate")]
+position = Vector2(744, 224)
+
+[node name="ProduceLamp" parent="." unique_id=434087820 instance=ExtResource("lamp")]
+position = Vector2(462, 193)
+
+[node name="SeedLamp" parent="." unique_id=1798181632 instance=ExtResource("lamp")]
+position = Vector2(791, 193)
+
+[node name="AccessLaneLampWest" parent="." unique_id=651076998 instance=ExtResource("lamp")]
+position = Vector2(390, 294)
+
+[node name="AccessLaneLampEast" parent="." unique_id=984759030 instance=ExtResource("lamp")]
+position = Vector2(626, 294)
+
+[node name="ProduceCrateStack" parent="." unique_id=2060309661 instance=ExtResource("crate")]
+position = Vector2(401, 178)
+
+[node name="ProduceCrateSmall" parent="." unique_id=213717690 instance=ExtResource("crate")]
+position = Vector2(423, 185)
+
+[node name="ProduceBarrel" parent="." unique_id=1788481847 instance=ExtResource("barrel")]
+position = Vector2(432, 170)
+
+[node name="SeedCrateStack" parent="." unique_id=2029257545 instance=ExtResource("crate")]
+position = Vector2(845, 177)
+
+[node name="SeedCrateSmall" parent="." unique_id=1530321858 instance=ExtResource("crate")]
+position = Vector2(859, 189)
+
+[node name="SeedBarrel" parent="." unique_id=695677057 instance=ExtResource("barrel")]
+position = Vector2(875, 174)
+
+[node name="CentralBarrel" parent="." unique_id=1481506954 instance=ExtResource("barrel")]
+position = Vector2(642, 177)
+
+[node name="ProduceBasket" type="Sprite2D" parent="." unique_id=725310618]
+position = Vector2(406, 180)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="SeedBasket" type="Sprite2D" parent="." unique_id=507543654]
+position = Vector2(829, 175)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="HerbBox" type="Sprite2D" parent="." unique_id=676933236]
+position = Vector2(622, 182)
+texture = ExtResource("planter")
+region_enabled = true
+region_rect = Rect2(88, 44, 34, 19)
+
+[node name="CornerPlanter" type="Sprite2D" parent="." unique_id=1790099818]
+position = Vector2(876, 185)
+texture = ExtResource("planter")
+region_enabled = true
+region_rect = Rect2(133, 44, 27, 19)
+
+[node name="FernByFence" type="Sprite2D" parent="." unique_id=1189704415]
+position = Vector2(405, 152)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="CornerStone" type="Sprite2D" parent="." unique_id=663330973]
+position = Vector2(385, 191)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="WarehouseVerge" type="Sprite2D" parent="." unique_id=1252253978]
+position = Vector2(383, 164)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="SeedVerge" type="Sprite2D" parent="." unique_id=2037502354]
+position = Vector2(894, 149)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(64, 352, 16, 16)
+
+[node name="SplitWood" type="Sprite2D" parent="." unique_id=256049725]
+position = Vector2(664, 181)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(0, 112, 32, 16)
+
+[node name="RearWestOak" parent="." unique_id=1204625829 instance=ExtResource("oak")]
+position = Vector2(424, -8)
+
+[node name="RearWestBirch" parent="." unique_id=1579640011 instance=ExtResource("birch")]
+position = Vector2(462, -16)
+
+[node name="RearWestShrub" type="Sprite2D" parent="." unique_id=395117154]
+position = Vector2(401, -11)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(48, 144, 16, 16)
+
+[node name="RearWestGroundcover" type="Sprite2D" parent="." unique_id=969641421]
+position = Vector2(448, -3)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="RearWestFlowers" type="Sprite2D" parent="." unique_id=1906665328]
+position = Vector2(413, 5)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="RearWestStone" type="Sprite2D" parent="." unique_id=881749242]
+position = Vector2(479, -5)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="RearFenceGroundcover" type="Sprite2D" parent="." unique_id=863313470]
+position = Vector2(498, -33)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="RearFenceFlowers" type="Sprite2D" parent="." unique_id=245643246]
+position = Vector2(511, -28)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="RearServiceLamp" parent="." unique_id=180012884 instance=ExtResource("lamp")]
+position = Vector2(543, -10)
+
+[node name="RearSupplyCrate" parent="." unique_id=1793385996 instance=ExtResource("crate")]
+position = Vector2(575, -21)
+
+[node name="RearSupplyCrateSmall" parent="." unique_id=1744761342 instance=ExtResource("crate")]
+position = Vector2(585, -10)
+
+[node name="RearSupplyBarrel" parent="." unique_id=1636928551 instance=ExtResource("barrel")]
+position = Vector2(611, -14)
+
+[node name="RearStackedWood" type="Sprite2D" parent="." unique_id=1227530331]
+position = Vector2(602, -29)
+texture = ExtResource("outdoor")
+offset = Vector2(0, -7)
+region_enabled = true
+region_rect = Rect2(16, 192, 16, 32)
+
+[node name="RearSteppingStoneAtPad" type="Sprite2D" parent="." unique_id=1599208515]
+position = Vector2(616, 6)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(96, 112, 16, 16)
+
+[node name="RearSteppingStoneMiddle" type="Sprite2D" parent="." unique_id=1021022067]
+position = Vector2(629, 15)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(112, 112, 16, 16)
+
+[node name="RearSteppingStoneAtYard" type="Sprite2D" parent="." unique_id=11937033]
+position = Vector2(643, 21)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(96, 112, 16, 16)
+
+[node name="RearMiddleBirch" parent="." unique_id=897967831 instance=ExtResource("birch")]
+position = Vector2(756, -17)
+
+[node name="RearMiddleShrub" type="Sprite2D" parent="." unique_id=968858606]
+position = Vector2(779, -6)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(112, 144, 16, 16)
+
+[node name="RearEastSpruce" parent="." unique_id=921102211 instance=ExtResource("spruce")]
+position = Vector2(847, -12)
+
+[node name="RearEastBirch" parent="." unique_id=9927589 instance=ExtResource("birch")]
+position = Vector2(881, -2)
+
+[node name="RearEastShrub" type="Sprite2D" parent="." unique_id=1244385649]
+position = Vector2(829, -14)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="RearEastFenceShrub" type="Sprite2D" parent="." unique_id=674390673]
+position = Vector2(813, -36)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(48, 144, 16, 16)
+
+[node name="RearEastFenceGroundcover" type="Sprite2D" parent="." unique_id=1851980408]
+position = Vector2(826, -38)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="RearEastGroundcover" type="Sprite2D" parent="." unique_id=2043266653]
+position = Vector2(867, 2)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(64, 368, 16, 16)
+
+[node name="RearEastFlowers" type="Sprite2D" parent="." unique_id=294161636]
+position = Vector2(889, 10)
+texture = ExtResource("outdoor")
+region_enabled = true
+region_rect = Rect2(80, 16, 16, 16)

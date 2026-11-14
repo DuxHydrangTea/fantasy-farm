@@ -13,7 +13,7 @@ size = Vector2(60, 22)
 size = Vector2(93, 25)
 
 [sub_resource type="RectangleShape2D" id="DoorArea"]
-size = Vector2(56, 36)
+size = Vector2(80, 48)
 
 [node name="ProduceWarehouse" type="StaticBody2D"]
 texture_filter = 1
@@ -40,7 +40,7 @@ interaction_offset = Vector2(0, 8)
 storage_id = "produce_warehouse"
 
 [node name="InteractionArea" parent="StorageAccess" index="1"]
-position = Vector2(0, 12)
+position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="StorageAccess/InteractionArea" index="0"]
 shape = SubResource("DoorArea")

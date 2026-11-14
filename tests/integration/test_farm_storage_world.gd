@@ -10,6 +10,35 @@ func before_each() -> void:
 	world.tool_upgrades.profile_ready = true
 	await wait_physics_frames(2)
 
+func test_storage_yard_connects_both_doors_to_the_road() -> void:
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	world.player.set_physics_process(false)
+	var navigation: PlayerNavigationComponent = world.player.state.navigation
+	var yard: Node2D = world.get_node("StorageYard")
+	var road: TileMapLayer = world.get_node("Road")
+	var main_road: Vector2 = Vector2(1912, 1253)
+	var entrances: Dictionary[String, String] = {
+		"produce_warehouse": "ProduceEntrance",
+		"farm_supply_storage": "SeedEntrance",
+	}
+	for storage_id: String in entrances:
+		var access: FarmStorageAccess = world.storage_accesses[storage_id]
+		var gate: Node2D = yard.get_node(entrances[storage_id])
+		var door: Vector2 = access.interaction_position() + Vector2(0, 8)
+		var forecourt: Vector2 = gate.global_position + Vector2(0, 26)
+		var junction: Vector2 = Vector2(forecourt.x, main_road.y)
+		assert_ne(road.get_cell_source_id(road.local_to_map(road.to_local(forecourt))), -1, "%s gate meets the paved lane" % storage_id)
+		assert_true(navigation._segment_clear(main_road, junction), "%s lane is reachable from the main road" % storage_id)
+		assert_true(navigation._segment_clear(junction, forecourt), "%s branch fits the player" % storage_id)
+		world.player.global_position = forecourt
+		await wait_physics_frames(2)
+		assert_true(gate.get("is_open"), "%s gate opens from the road" % storage_id)
+		assert_true(navigation._segment_clear(forecourt, door), "%s approach fits the player" % storage_id)
+		world.player.global_position = door
+		await wait_physics_frames(2)
+		assert_true(access.can_reach(world.player), "%s can be used after entering the yard" % storage_id)
+	assert_false(navigation._segment_clear(yard.to_global(Vector2(640, 231)), yard.to_global(Vector2(640, 186))), "Perimeter blocks crossing between gates")
+
 func test_doorways_range_readiness_and_filters() -> void:
 	world.process_mode = Node.PROCESS_MODE_INHERIT
 	world.player.set_physics_process(false)

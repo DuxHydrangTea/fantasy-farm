@@ -22,7 +22,7 @@ size = Vector2(45, 13)
 size = Vector2(26, 12)
 
 [sub_resource type="RectangleShape2D" id="DoorArea"]
-size = Vector2(56, 36)
+size = Vector2(96, 48)
 
 [node name="SeedStorage" type="StaticBody2D"]
 texture_filter = 1
@@ -61,7 +61,7 @@ interaction_offset = Vector2(0, 8)
 storage_id = "farm_supply_storage"
 
 [node name="InteractionArea" parent="StorageAccess" index="1"]
-position = Vector2(0, 12)
+position = Vector2(0, 16)
 
 [node name="CollisionShape2D" parent="StorageAccess/InteractionArea" index="0"]
 shape = SubResource("DoorArea")

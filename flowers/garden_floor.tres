@@ -1,11 +1,9 @@
 [gd_resource type="TileSet" format=3 uid="uid://cwpxdpyx8pbmo"]
 
 [ext_resource type="Texture2D" uid="uid://msianvh7lglu" path="res://assets/Tiles/Pavement_Tiles.png" id="1_vm18v"]
-
-[ext_resource type="Texture2D" path="res://assets/Tiles/Bridge/Bridge_Stone_Horizontal.png" id="slate"]
-[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="soil"]
-
-[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Path_Decoration.png" id="soil_details"]
+[ext_resource type="Texture2D" uid="uid://bov0rsn48ephm" path="res://assets/Tiles/Bridge/Bridge_Stone_Horizontal.png" id="slate"]
+[ext_resource type="Texture2D" uid="uid://ds8jtul5pvs76" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="soil"]
+[ext_resource type="Texture2D" uid="uid://ceilwcld58q26" path="res://assets/Tiles/Grass/Path_Decoration.png" id="soil_details"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yti6c"]
 texture = ExtResource("1_vm18v")
