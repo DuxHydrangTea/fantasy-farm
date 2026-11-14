@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Buildings/Buildings/Tent/Tent_Small.png" id="tent"]
+
+[sub_resource type="RectangleShape2D" id="TentFeet"]
+size = Vector2(36, 18)
+
+[node name="CampTent" type="StaticBody2D"]
+texture_filter = 1
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -36)
+texture = ExtResource("tent")
+
+[node name="Footprint" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("TentFeet")

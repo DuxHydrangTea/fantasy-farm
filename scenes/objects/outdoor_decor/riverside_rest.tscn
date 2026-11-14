@@ -1,0 +1,441 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/camp_tent.tscn" id="9_0kqjw"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Picnic_Blankets.png" id="blanket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Boat.png" id="boat"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Camp_Decor.png" id="camp"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Grass/Grass_Tiles_1.png" id="ground"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/street_lamp.tscn" id="lamp"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+
+[sub_resource type="TileSetAtlasSource" id="GroundAtlas"]
+texture = ExtResource("ground")
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+8:8/0 = 0
+9:8/0 = 0
+10:8/0 = 0
+
+[sub_resource type="TileSet" id="Paths"]
+sources/0 = SubResource("GroundAtlas")
+
+[sub_resource type="RectangleShape2D" id="BenchFeet"]
+size = Vector2(26, 6)
+
+[sub_resource type="RectangleShape2D" id="BoatFeet"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="PostFeet"]
+size = Vector2(6, 4)
+
+[sub_resource type="RectangleShape2D" id="TableFeet"]
+size = Vector2(8, 4)
+
+[sub_resource type="RectangleShape2D" id="RockFeet"]
+size = Vector2(9, 4)
+
+[node name="RiversideRest" type="Node2D" unique_id=119380895]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="GardenPath" type="TileMapLayer" parent="." unique_id=1249247418]
+z_index = -3
+tile_map_data = PackedByteArray("AAAGAAwAAAAAAAUAAAAGAA0AAAAAAAcAAAAHAAoAAAAAAAUAAAAHAAsAAAAAAAYAAAAHAAwAAAABAAkAAAAHAA0AAAABAAcAAAAIAAkAAAAAAAUAAAAIAAoAAAABAAkAAAAIAAsAAAABAAYAAAAIAAwAAAABAAYAAAAIAA0AAAABAAcAAAAJAAgAAAAAAAUAAAAJAAkAAAAAAAgAAAAJAAoAAAACAAYAAAAJAAsAAAACAAYAAAAJAAwAAAAAAAkAAAAJAA0AAAABAAcAAAAKAAgAAAABAAUAAAAKAAkAAAABAAcAAAAKAAwAAAACAAUAAAAKAA0AAAACAAcAAAALAAgAAAABAAUAAAALAAkAAAABAAcAAAAMAAgAAAABAAUAAAAMAAkAAAABAAcAAAANAAgAAAABAAUAAAANAAkAAAABAAcAAAAOAAgAAAABAAUAAAAOAAkAAAABAAcAAAAPAAgAAAABAAUAAAAPAAkAAAABAAcAAAAQAAgAAAABAAUAAAAQAAkAAAABAAcAAAARAAgAAAABAAUAAAARAAkAAAABAAgAAAARAAoAAAAAAAYAAAARAAsAAAAAAAYAAAARAAwAAAAAAAYAAAARAA0AAAAAAAcAAAASAAgAAAACAAUAAAASAAkAAAAAAAkAAAASAAoAAAABAAYAAAASAAsAAAABAAYAAAASAAwAAAABAAYAAAASAA0AAAABAAcAAAATAAkAAAACAAUAAAATAAoAAAACAAYAAAATAAsAAAAAAAkAAAATAAwAAAABAAYAAAATAA0AAAABAAcAAAAUAAsAAAACAAUAAAAUAAwAAAAAAAkAAAAUAA0AAAABAAgAAAAUAA4AAAAAAAcAAAAVAAwAAAACAAUAAAAVAA0AAAACAAYAAAAVAA4AAAACAAcAAAA=")
+tile_set = SubResource("Paths")
+
+[node name="WillowBench" type="StaticBody2D" parent="." unique_id=104708879]
+position = Vector2(112, 212)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="WillowBench" unique_id=1841595533]
+position = Vector2(0, -2)
+shape = SubResource("BenchFeet")
+
+[node name="Bench" type="Sprite2D" parent="WillowBench" unique_id=1059938682]
+position = Vector2(0, -16)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="BirchBench" type="StaticBody2D" parent="." unique_id=27313859]
+position = Vector2(276, 206)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BirchBench" unique_id=1276298476]
+position = Vector2(0, -2)
+shape = SubResource("BenchFeet")
+
+[node name="Bench" type="Sprite2D" parent="BirchBench" unique_id=1153358229]
+position = Vector2(0, -16)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="MooredBoat" type="StaticBody2D" parent="." unique_id=1192198411]
+position = Vector2(70, 164)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="MooredBoat" unique_id=1657947942]
+position = Vector2(0, -2)
+shape = SubResource("BoatFeet")
+
+[node name="Boat" type="Sprite2D" parent="MooredBoat" unique_id=1972299671]
+position = Vector2(0, -24)
+texture = ExtResource("boat")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+
+[node name="NorthMooringPost" type="StaticBody2D" parent="." unique_id=866689121]
+position = Vector2(94, 148)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="NorthMooringPost" unique_id=1437283776]
+position = Vector2(0, -2)
+shape = SubResource("PostFeet")
+
+[node name="Post" type="Sprite2D" parent="NorthMooringPost" unique_id=1978899200]
+position = Vector2(0, -8)
+texture = ExtResource("camp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="MooringRope" type="Line2D" parent="." unique_id=1554781677]
+points = PackedVector2Array(85, 153, 94, 151)
+width = 1.0
+default_color = Color(0.64, 0.4, 0.22, 1)
+
+[node name="PicnicBlanket" type="Sprite2D" parent="." unique_id=1246411857]
+z_index = -1
+position = Vector2(206, 124)
+texture = ExtResource("blanket")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+
+[node name="PicnicBasket" type="Sprite2D" parent="." unique_id=1725931602]
+z_index = -1
+position = Vector2(215, 131)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="FishingRod" type="Sprite2D" parent="." unique_id=319805577]
+z_index = -1
+position = Vector2(105, 164)
+texture = ExtResource("camp")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="PicnicSideTable" type="StaticBody2D" parent="." unique_id=1719966132]
+position = Vector2(228, 148)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicSideTable" unique_id=170299717]
+position = Vector2(0, -2)
+shape = SubResource("TableFeet")
+
+[node name="Stool" type="Sprite2D" parent="PicnicSideTable" unique_id=1265390147]
+position = Vector2(0, -8)
+texture = ExtResource("camp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="PathLantern" type="StaticBody2D" parent="." unique_id=440319000 instance=ExtResource("lamp")]
+texture_filter = 1
+position = Vector2(320, 202)
+metadata/object_id = "street_lamp"
+metadata/object_kind = "street_lamp"
+metadata/source_visual = "res://assets/Outdoor decoration/Lanter_Posts.png"
+
+[node name="RiverLantern" type="StaticBody2D" parent="." unique_id=171859613 instance=ExtResource("lamp")]
+texture_filter = 1
+position = Vector2(112, 188)
+metadata/object_id = "street_lamp"
+metadata/object_kind = "street_lamp"
+metadata/source_visual = "res://assets/Outdoor decoration/Lanter_Posts.png"
+
+[node name="WhiteFlowers00" type="Sprite2D" parent="." unique_id=1071171286]
+z_index = -1
+position = Vector2(128, 196)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers01" type="Sprite2D" parent="." unique_id=836442755]
+z_index = -1
+position = Vector2(134, 202)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers02" type="Sprite2D" parent="." unique_id=1863473330]
+z_index = -1
+position = Vector2(181, 204)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers03" type="Sprite2D" parent="." unique_id=711065750]
+z_index = -1
+position = Vector2(187, 208)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers04" type="Sprite2D" parent="." unique_id=2043627109]
+z_index = -1
+position = Vector2(253, 199)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers05" type="Sprite2D" parent="." unique_id=676293513]
+z_index = -1
+position = Vector2(256, 208)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers06" type="Sprite2D" parent="." unique_id=335507486]
+z_index = -1
+position = Vector2(300, 204)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers07" type="Sprite2D" parent="." unique_id=123009335]
+z_index = -1
+position = Vector2(304, 211)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers08" type="Sprite2D" parent="." unique_id=567299816]
+z_index = -1
+position = Vector2(144, 136)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers09" type="Sprite2D" parent="." unique_id=1587244112]
+z_index = -1
+position = Vector2(145, 144)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers10" type="Sprite2D" parent="." unique_id=1343071426]
+z_index = -1
+position = Vector2(198, 103)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers11" type="Sprite2D" parent="." unique_id=1680819471]
+z_index = -1
+position = Vector2(214, 105)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers12" type="Sprite2D" parent="." unique_id=2032929315]
+z_index = -1
+position = Vector2(132, 126)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="WhiteFlowers13" type="Sprite2D" parent="." unique_id=1960564774]
+z_index = -1
+position = Vector2(122, 132)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers14" type="Sprite2D" parent="." unique_id=406722099]
+z_index = -1
+position = Vector2(334, 183)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="WhiteFlowers15" type="Sprite2D" parent="." unique_id=426179387]
+z_index = -1
+position = Vector2(343, 196)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="YellowFlowers00" type="Sprite2D" parent="." unique_id=60950539]
+z_index = -1
+position = Vector2(127, 189)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers01" type="Sprite2D" parent="." unique_id=1704319466]
+z_index = -1
+position = Vector2(184, 201)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers02" type="Sprite2D" parent="." unique_id=1273875806]
+z_index = -1
+position = Vector2(194, 106)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers03" type="Sprite2D" parent="." unique_id=934485932]
+z_index = -1
+position = Vector2(220, 138)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers04" type="Sprite2D" parent="." unique_id=1064115376]
+z_index = -1
+position = Vector2(253, 204)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="YellowFlowers05" type="Sprite2D" parent="." unique_id=1292436915]
+z_index = -1
+position = Vector2(347, 207)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="SoftGrass00" type="Sprite2D" parent="." unique_id=1794827916]
+z_index = -1
+position = Vector2(106, 120)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass01" type="Sprite2D" parent="." unique_id=443847576]
+z_index = -1
+position = Vector2(102, 134)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass02" type="Sprite2D" parent="." unique_id=569037924]
+z_index = -1
+position = Vector2(102, 198)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass03" type="Sprite2D" parent="." unique_id=1240662081]
+z_index = -1
+position = Vector2(122, 214)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass04" type="Sprite2D" parent="." unique_id=666175655]
+z_index = -1
+position = Vector2(190, 203)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass05" type="Sprite2D" parent="." unique_id=253960808]
+z_index = -1
+position = Vector2(246, 150)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass06" type="Sprite2D" parent="." unique_id=909418239]
+z_index = -1
+position = Vector2(323, 124)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass07" type="Sprite2D" parent="." unique_id=1759026038]
+z_index = -1
+position = Vector2(336, 177)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="SoftGrass08" type="Sprite2D" parent="." unique_id=952085636]
+z_index = -1
+position = Vector2(351, 212)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="LowShrub00" type="Sprite2D" parent="." unique_id=1664397823]
+z_index = -1
+position = Vector2(119, 111)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="LowShrub01" type="Sprite2D" parent="." unique_id=1389517752]
+z_index = -1
+position = Vector2(332, 150)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="LowShrub02" type="Sprite2D" parent="." unique_id=602688582]
+z_index = -1
+position = Vector2(340, 178)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="ShoreRock" type="StaticBody2D" parent="." unique_id=1258045603]
+position = Vector2(108, 122)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="ShoreRock" unique_id=1046523018]
+position = Vector2(0, -2)
+shape = SubResource("RockFeet")
+
+[node name="Rock" type="Sprite2D" parent="ShoreRock" unique_id=315970796]
+position = Vector2(0, -6)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 64, 16, 16)
+
+[node name="LandingRock" type="StaticBody2D" parent="." unique_id=1490260490]
+position = Vector2(96, 218)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="LandingRock" unique_id=1608642733]
+position = Vector2(0, -2)
+shape = SubResource("RockFeet")
+
+[node name="Rock" type="Sprite2D" parent="LandingRock" unique_id=654043067]
+position = Vector2(0, -6)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="CampTent" type="StaticBody2D" parent="." unique_id=509712197 instance=ExtResource("9_0kqjw")]
+texture_filter = 1
+position = Vector2(168, 136)
+collision_mask = 0

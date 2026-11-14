@@ -9,7 +9,7 @@ import subprocess
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='review')
-    parser.add_argument('--area', choices=['coop', 'barn'], default='coop')
+    parser.add_argument('--area', choices=['coop', 'barn', 'riverside'], default='coop')
     parser.add_argument('--godot', default='C:/Godot_v4.7.1-stable_mono_win64/Godot_v4.7.1-stable_mono_win64_console.exe')
     parser.add_argument('--batch', help='Apply a Godot scene_batch JSON file to the real project before capture.')
     args = parser.parse_args()
