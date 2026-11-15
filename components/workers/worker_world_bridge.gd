@@ -272,6 +272,8 @@ func ranch_candidates(row: Dictionary, feed_inventory: InventoryComponent, held:
 				var animal: AnimalActor = reference.get_ref() as AnimalActor
 				if not is_instance_valid(animal) or animal.is_queued_for_deletion() or animal.is_dead() or not animal.health.sick or held.targets.has("animal:" + String(animal.persistent_id)):
 					continue
+				if animal.waterfowl != null and not animal.waterfowl.ready_for_shore_care():
+					continue
 				var point: Vector2 = animal_access_point(worker, animal)
 				if not point.is_finite():
 					world.workers.waiting_reasons[String(row.id)] = "Cannot reach the sick animal. Clear a path to its pen."
@@ -311,7 +313,9 @@ func animal_for(id: String) -> AnimalActor:
 
 ## Kiểm tra đường nhìn từ điểm tiếp cận đến vật nuôi bằng raycast.
 func animal_line_clear(worker: WorkerActor, animal: AnimalActor, point: Vector2) -> bool:
-	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(point, animal.global_position, 1, [worker.get_rid(), animal.get_rid()])
+	if animal.waterfowl != null and animal.waterfowl.pen.is_water(point):
+		return false
+	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(point, animal.global_position, worker.collision_mask, [worker.get_rid(), animal.get_rid()])
 	return worker.get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
 ## Tìm điểm tiếp cận vật nuôi có đường đi và đường nhìn phù hợp.
@@ -324,6 +328,12 @@ func animal_access_point(worker: WorkerActor, animal: AnimalActor) -> Vector2:
 		var point: Vector2 = animal.global_position + toward.rotated(rotation) * 24.0
 		if _stroll_clear(point, worker) and animal_line_clear(worker, animal, point):
 			return point
+	if animal.waterfowl != null:
+		# A narrow bank can have a dry stance closer than the usual care distance.
+		for rotation: float in [0.0, PI * 0.25, -PI * 0.25, PI * 0.5, -PI * 0.5, PI * 0.75, -PI * 0.75, PI]:
+			var point: Vector2 = animal.global_position + toward.rotated(rotation) * 14.0
+			if _stroll_clear(point, worker) and animal_line_clear(worker, animal, point):
+				return point
 	return Vector2.INF
 
 ## Cập nhật mục tiêu chăm sóc vật nuôi đang di chuyển; trả false nếu không còn hợp lệ.
@@ -333,6 +343,8 @@ func refresh_animal_task(row: Dictionary, offline: bool) -> bool:
 	var worker: WorkerActor = world.workers.actor_for(String(row.id))
 	if animal == null or animal.is_dead() or not animal.health.sick or worker == null:
 		return false
+	if animal.waterfowl != null and not animal.waterfowl.ready_for_shore_care():
+		return false
 	var now: float = world.farming.time_manager.now()
 	if not job.has("tracking_started_at"):
 		job["tracking_started_at"] = now
@@ -340,7 +352,10 @@ func refresh_animal_task(row: Dictionary, offline: bool) -> bool:
 		world.workers.blocked_targets[String(row.id) + ":" + String(job.id)] = now + 30.0
 		world.workers.waiting_reasons[String(row.id)] = "Cannot reach the sick animal. Clear a path to its pen."
 		return false
-	if offline or WorkerRole.point(job.point).distance_to(animal.global_position) <= 32.0:
+	var work_point: Vector2 = WorkerRole.point(job.point)
+	if animal.waterfowl == null and offline:
+		return true
+	if work_point.distance_to(animal.global_position) <= 32.0 and (animal.waterfowl == null or animal_line_clear(worker, animal, work_point)):
 		return true
 	var point: Vector2 = animal_access_point(worker, animal)
 	if not point.is_finite():
@@ -424,6 +439,8 @@ func _commit_care(row: Dictionary, task: Dictionary) -> bool:
 	if task.kind == "cure_animal":
 		animal = animal_for(String(task.id))
 		if animal == null or animal.is_dead() or not animal.health.sick or animal.global_position.distance_to(WorkerRole.point(row.position)) > 32.0:
+			return false
+		if animal.waterfowl != null and not animal.waterfowl.ready_for_shore_care():
 			return false
 		var worker: WorkerActor = world.workers.actor_for(String(row.id))
 		if worker == null or not animal_line_clear(worker, animal, WorkerRole.point(row.position)):

@@ -42,7 +42,7 @@ func find_animal() -> AnimalActor:
 		var offset: Vector2 = animal.global_position - player.global_position
 		if offset.length_squared() > distance or offset.normalized().dot(player.animation.facing_vector) < 0.5:
 			continue
-		var ray: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(player.global_position, animal.global_position, 1, [player.get_rid()])
+		var ray: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(player.global_position, animal.global_position, player.collision_mask, [player.get_rid()])
 		if not get_world_2d().direct_space_state.intersect_ray(ray).is_empty():
 			continue
 		distance = offset.length_squared()

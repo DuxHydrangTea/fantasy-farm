@@ -82,6 +82,8 @@ func _ready() -> void:
 			if child is AnimalTrough:
 				trough_levels[child.get_instance_id()] = int(child.stock)
 				child.stock_changed.connect(_trough_changed.bind(child))
+			elif child is AnimalActor:
+				(child as AnimalActor).shore_ready_for_care.connect(_shore_ready_for_care)
 
 		var source: Node2D = Node2D.new()
 		source.name = "WorkerWaterSource"
@@ -573,9 +575,17 @@ func _node_added(node: Node) -> void:
 		return
 	if node is PerennialTree:
 		request_scan("crop")
+	elif node is AnimalActor:
+		var animal: AnimalActor = node as AnimalActor
+		if not animal.shore_ready_for_care.is_connected(_shore_ready_for_care):
+			animal.shore_ready_for_care.connect(_shore_ready_for_care)
 	elif node is ItemPickup:
 		_pending_pickups.append(weakref(node))
 		_flush_pickups.call_deferred()
+
+func _shore_ready_for_care() -> void:
+	bridge.invalidate_ranch()
+	request_scan("crop")
 
 func _flush_pickups() -> void:
 	if not busy and not _catching_up:

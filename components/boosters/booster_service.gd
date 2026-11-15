@@ -36,7 +36,7 @@ func use(farm: FarmingController, cell: Vector2i, animal: AnimalActor, bag: Inve
 				animal.needs.update_at(animal.needs.time_manager.now())
 			if item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE and (actor == null or actor.get_world_2d() != animal.get_world_2d() or actor.global_position.distance_to(animal.global_position) > 32.0):
 				error = "Move closer to the animal."
-			elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE and not actor.get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(actor.global_position, animal.global_position, 1, [actor.get_rid(), animal.get_rid()])).is_empty():
+			elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE and not actor.get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(actor.global_position, animal.global_position, actor.collision_mask, [actor.get_rid(), animal.get_rid()])).is_empty():
 				error = "Move closer to the animal."
 			elif item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE:
 				applied = animal.cure_disease()

@@ -110,6 +110,105 @@ func test_animal_commit_rejects_wall_and_keeps_medicine() -> void:
 	assert_true(animal.health.sick)
 	assert_eq(bag.count_item(&"animal_medicine"), 1)
 
+func test_sick_waterfowl_rest_on_shore_and_worker_can_treat_with_water_collision() -> void:
+	var pen: PondPen = world.get_node("PondPen") as PondPen
+	var blocker: StaticBody2D = StaticBody2D.new()
+	blocker.collision_layer = 1 << 4
+	blocker.collision_mask = 0
+	var water_shape: RectangleShape2D = RectangleShape2D.new()
+	water_shape.size = Vector2(16, 16)
+	var deep_water: Array[Vector2] = []
+	for y: int in range(1, 16):
+		for x: int in range(1, 23):
+			var local: Vector2 = Vector2(x, y) * 16.0 + Vector2(8, 8)
+			if not pen.is_water(pen.to_global(local)):
+				continue
+			var collision: CollisionShape2D = CollisionShape2D.new()
+			collision.shape = water_shape
+			collision.position = local
+			blocker.add_child(collision)
+			deep_water.append(pen.to_global(local))
+	pen.add_child(blocker)
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	await wait_physics_frames(3)
+	assert_true(pen.navigation_ready)
+	var start: Vector2 = Vector2.INF
+	for point: Vector2 in deep_water:
+		if pen.land_route(point).size() >= 4:
+			start = point
+			break
+	assert_true(start.is_finite(), "The fixture uses a pond tile several waypoints from shore")
+	if not start.is_finite():
+		return
+	var duck: AnimalActor = preload("res://scenes/animals/duck.tscn").instantiate() as AnimalActor
+	duck.position = pen.to_local(start)
+	pen.add_child(duck)
+	duck.behaviour.set_focused(true)
+	duck.health.sick = true
+	var row: Dictionary = world.workers.record("crop")
+	var worker: WorkerActor = world.workers.actor_for(String(row.id))
+	var bag: InventoryComponent = world.workers.feed_inventory(String(row.id))
+	bag.add(WorkerWorldBridge.ANIMAL_MEDICINE, 1)
+	world.workers.bridge.invalidate_ranch()
+	assert_false(world.player.state.navigation._point_clear(start), "Player navigation sees the water collision")
+	assert_false(world.workers.bridge._stroll_clear(start, worker), "Worker navigation sees the water collision")
+	assert_eq(duck.collision_mask & blocker.collision_layer, 0)
+	assert_false(world.workers.bridge.ranch_candidates(row, bag).any(func(job: Dictionary) -> bool: return job.kind == "cure_animal" and job.id == String(duck.persistent_id)))
+	row.wake_at = now + 100.0
+	for _frame: int in range(480):
+		await wait_physics_frames(1)
+		if duck.behaviour.current_state == AnimalBehaviourComponent.State.REST:
+			break
+	assert_false(pen.is_water(duck.global_position))
+	assert_true(duck.waterfowl.ready_for_shore_care())
+	assert_lte(float(row.wake_at), now, "Workers rescan when the duck reaches a dry spot")
+	assert_eq(duck.behaviour.current_state, AnimalBehaviourComponent.State.REST)
+	assert_eq(duck.sprite.animation, &"sit_down")
+	assert_false(duck.waterfowl.set_destination(start))
+	assert_false(duck.behaviour.request_behaviour(&"walk"))
+	var goose: AnimalActor = preload("res://scenes/animals/goose.tscn").instantiate() as AnimalActor
+	goose.position = duck.position
+	pen.add_child(goose)
+	goose.health.sick = true
+	await wait_physics_frames(60)
+	assert_eq(goose.collision_mask & blocker.collision_layer, 0)
+	assert_eq(goose.behaviour.current_state, AnimalBehaviourComponent.State.REST)
+	assert_eq(goose.sprite.animation, &"sit_down")
+	assert_false(goose.behaviour.wake())
+	assert_false(goose.waterfowl.set_destination(start))
+	goose.free()
+	var work_point: Vector2 = world.workers.bridge.animal_access_point(worker, duck)
+	assert_true(work_point.is_finite())
+	if not work_point.is_finite():
+		return
+	assert_false(pen.is_water(work_point))
+	var origin: Vector2 = Vector2.INF
+	for direction: Vector2 in [Vector2.UP, Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN]:
+		var point: Vector2 = work_point + direction * 36.0
+		if pen.is_water(point) or not world.workers.bridge._stroll_clear(point, worker):
+			continue
+		worker.global_position = point
+		if world.workers.bridge._stroll_segment_clear(work_point, worker):
+			origin = point
+			break
+	assert_true(origin.is_finite(), "The fixture provides a clear worker starting point on land")
+	if not origin.is_finite():
+		return
+	row.position = WorkerRole.pair(origin)
+	assert_true(world.workers.configure_priority("care_first"))
+	for _frame: int in range(720):
+		now += 1.0 / 60.0
+		world.workers.advance(now, false)
+		await wait_physics_frames(1)
+		if not duck.health.sick:
+			break
+	assert_gt(worker.global_position.distance_to(origin), 5.0, "Worker walked to the patient")
+	assert_false(duck.health.sick)
+	assert_eq(bag.count_item(&"animal_medicine"), 0)
+	duck.behaviour.set_focused(false)
+	await wait_physics_frames(90)
+	assert_true(duck.waterfowl.can_reach(start), "Cured ducks may use water again")
+
 func test_moving_target_replans_and_removed_target_cancels() -> void:
 	var animal: AnimalActor = _animal()
 	var row: Dictionary = world.workers.record("crop")
@@ -298,12 +397,11 @@ func test_worker_restore_releases_old_hold_and_reacquires_from_task() -> void:
 	service.actor_for(row.id).behaviour._physics_process(0.01)
 	assert_true(animal.behaviour._has_care_hold(), "Restored cure task reacquires its patient")
 
-func test_swimming_patient_defers_shore_delivery_only_until_care_releases() -> void:
+func test_swimming_patient_reaches_shore_even_with_a_stale_worker_hold() -> void:
 	var pond: PondPen = world.get_node("PondPen") as PondPen
 	pond.process_mode = Node.PROCESS_MODE_ALWAYS
 	await wait_physics_frames(3)
 	assert_true(pond.navigation_ready)
-	pond.process_mode = Node.PROCESS_MODE_DISABLED
 	var water: Vector2
 	var found: bool = false
 	for cell: Vector2i in pond.water_layer.get_used_cells():
@@ -320,14 +418,15 @@ func test_swimming_patient_defers_shore_delivery_only_until_care_releases() -> v
 	duck.position = pond.to_local(water)
 	pond.add_child(duck)
 	duck.health.sick = true
-	duck.production.restore_state(0.0, 1, false)
 	var row: Dictionary = _focus_patient(duck)
-	for frame: int in range(10):
-		duck.behaviour._physics_process(0.1)
-	assert_eq(duck.global_position, water)
-	assert_false(duck.movement.has_target)
-	assert_eq(duck.production.stored_amount, 1, "Focus preserves eggs while shore travel is paused")
+	assert_false(world.workers.bridge.refresh_animal_task(row, false), "A wet patient is not eligible for treatment")
+	for _frame: int in range(480):
+		await wait_physics_frames(1)
+		if duck.behaviour.current_state == AnimalBehaviourComponent.State.REST:
+			break
+	assert_false(pond.is_water(duck.global_position))
+	assert_eq(duck.behaviour.current_state, AnimalBehaviourComponent.State.REST)
+	assert_true(duck.behaviour._has_care_hold())
 	row.task = {}
-	duck.behaviour._physics_process(0.1)
 	assert_false(duck.behaviour._has_care_hold())
-	assert_true(duck.movement.has_target or duck.product_pickup() != null, "Shore delivery resumes after cancellation")
+	assert_false(duck.behaviour.request_behaviour(&"walk"), "Releasing the hold cannot wake a sick duck")

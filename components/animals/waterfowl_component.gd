@@ -14,6 +14,8 @@ var _next: int = 0
 var destination: Vector2
 var _returning: bool = false
 var _was_swimming: bool = false
+var _recovering: bool = false
+var _seeking_shore: bool = false
 
 ## Gắn actor và ao, đăng ký bộ điều hướng và ánh xạ hoạt ảnh.
 func configure(body: AnimalActor, habitat: PondPen) -> void:
@@ -54,10 +56,12 @@ func refresh_visual() -> void:
 
 ## Kiểm tra có đường đi từ vị trí hiện tại đến điểm đích.
 func can_reach(point: Vector2) -> bool:
-	return not pen.route(actor.global_position, point, actor.definition.can_swim).is_empty()
+	return not requires_shore_rest() and not pen.route(actor.global_position, point, actor.definition.can_swim).is_empty()
 
 ## Tìm đường và đặt waypoint đầu tiên. Trả false nếu không tìm được đường.
 func set_destination(point: Vector2) -> bool:
+	if requires_shore_rest():
+		return false
 	_points = pen.route(actor.global_position, point, actor.definition.can_swim)
 	_next = 0
 	destination = point
@@ -94,6 +98,51 @@ func travel(delta: float) -> void:
 		_next += 1
 		if _next < _points.size():
 			actor.movement.set_target(_points[_next])
+
+func requires_shore_rest() -> bool:
+	return actor.health.sick
+
+func ready_for_shore_care() -> bool:
+	return not _seeking_shore and not pen.is_water(actor.global_position)
+
+## Recovering birds take priority over ordinary activity and care holds.
+func handle_sickness(delta: float) -> bool:
+	if not requires_shore_rest():
+		if _recovering:
+			_recovering = false
+			_seeking_shore = false
+			actor.behaviour.resume_after_shore_rest()
+		return false
+	var on_water: bool = pen.is_water(actor.global_position)
+	var just_reached_shore: bool = not _recovering and not on_water
+	if not _recovering or (on_water and not _seeking_shore):
+		_recovering = true
+		_returning = false
+		_seeking_shore = on_water
+		actor.behaviour.begin_shore_rest(on_water)
+	if _seeking_shore:
+		if not pen.navigation_ready:
+			return true
+		if not actor.movement.has_target and on_water:
+			_points = pen.land_route(actor.global_position)
+			_next = 0
+			if _points.is_empty():
+				return true
+			destination = _points[-1]
+			actor.movement.set_target(_points[0])
+		if actor.movement.has_target:
+			var before: Vector2 = actor.global_position
+			travel(delta)
+			actor.animation.update_facing_direction(actor.global_position - before)
+			actor.animation.play("walk")
+		if actor.movement.has_target or pen.is_water(actor.global_position):
+			return true
+		_seeking_shore = false
+		just_reached_shore = true
+	actor.behaviour.sit_for_treatment()
+	if just_reached_shore:
+		actor.shore_ready_for_care.emit()
+	return true
 
 # Trứng đã hoàn thành dưới nước được giữ ở production stock, chưa sinh ItemPickup.
 # Vịt cần tìm đường lên bờ; đến đất mới chuyển stock sang đống trứng và giải phóng lộ trình.

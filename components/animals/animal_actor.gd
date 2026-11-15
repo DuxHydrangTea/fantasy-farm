@@ -20,6 +20,7 @@ var health: HealthState = HealthState.new()
 var health_badges: Node2D
 ## Phát khi cá thể hết tuổi thọ và được đưa ra khỏi hoạt động.
 signal died
+signal shore_ready_for_care
 ## Hình va chạm actor.
 @export var collision: CollisionShape2D
 ## Node hiển thị thanh nhu cầu.

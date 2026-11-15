@@ -60,6 +60,8 @@ func _physics_process(delta: float) -> void:
 		if current_state != State.IDLE:
 			_enter(State.IDLE)
 		return
+	if wander.traversal != null and wander.traversal.handle_sickness(delta):
+		return
 	var care_held: bool = _has_care_hold()
 	if _focused or care_held:
 		_stop()
@@ -123,7 +125,7 @@ func set_focused(value: bool) -> void:
 	if _focused == value:
 		return
 	_focused = value
-	if value and definition != null:
+	if value and definition != null and not _requires_shore_rest():
 		foraging.cancel()
 		_enter(State.IDLE)
 
@@ -134,7 +136,7 @@ func hold_for_care(owner: Node, is_active: Callable) -> void:
 		return
 	var already_focused: bool = _focused or _has_care_hold()
 	_care_holds[owner.get_instance_id()] = {"owner": weakref(owner), "active": is_active}
-	if not already_focused and definition != null:
+	if not already_focused and definition != null and not _requires_shore_rest():
 		foraging.cancel()
 		_enter(State.IDLE)
 
@@ -157,7 +159,7 @@ func _has_care_hold() -> bool:
 ## Con vật đang nằm cần gọi [method wake] trước. Trả false nếu hành động
 ## không được hỗ trợ hoặc không thể bắt đầu.
 func request_behaviour(action: StringName) -> bool:
-	if _focused or _has_care_hold() or definition == null or not is_instance_valid(wander.pen):
+	if _focused or _has_care_hold() or _requires_shore_rest() or definition == null or not is_instance_valid(wander.pen):
 		return false
 	if current_state != State.IDLE and current_state != State.WALK and current_state != State.FORAGE:
 		return false
@@ -188,13 +190,35 @@ func request_behaviour(action: StringName) -> bool:
 ## Đánh thức từ trạng thái nghỉ hoặc ngủ; trên đất chờ hoạt ảnh đứng dậy.
 ## Trả false nếu hiện không nghỉ hoặc ngủ.
 func wake() -> bool:
-	if current_state != State.REST and current_state != State.SLEEP:
+	if _requires_shore_rest() or (current_state != State.REST and current_state != State.SLEEP):
 		return false
 	if wander.traversal != null and wander.traversal.is_swimming():
 		_enter(State.IDLE)
 		return true
 	_enter(State.STAND_UP)
 	return true
+
+func _requires_shore_rest() -> bool:
+	return wander.traversal != null and wander.traversal.requires_shore_rest()
+
+func begin_shore_rest(on_water: bool) -> void:
+	foraging.cancel()
+	if on_water:
+		_enter(State.IDLE)
+
+func sit_for_treatment() -> void:
+	_sleep_after_lying = false
+	if current_state in [State.LIE_DOWN, State.REST]:
+		return
+	if _can_rest():
+		_enter(State.LIE_DOWN)
+	else:
+		_enter(State.REST)
+		_play(&"idle")
+
+func resume_after_shore_rest() -> void:
+	if not wake():
+		_enter(State.IDLE)
 
 func _choose_behaviour() -> void:
 	if _first_decision:
