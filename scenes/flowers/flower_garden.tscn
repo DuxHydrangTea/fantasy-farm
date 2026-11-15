@@ -50,6 +50,7 @@
 [ext_resource type="Texture2D" path="res://assets/Buildings/House_Decor/Planters.png" id="garden_planters"]
 
 [ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="garden_benches"]
+[ext_resource type="PackedScene" path="res://scenes/flowers/flower_garden_border.tscn" id="garden_border"]
 
 [node name="FlowerGarden" type="Node2D" unique_id=1957728385 node_paths=PackedStringArray("pot_container")]
 y_sort_enabled = true
@@ -70,6 +71,8 @@ tile_set = ExtResource("2_xpb02")
 
 [node name="Decor" type="Node2D" parent="."]
 y_sort_enabled = true
+
+[node name="GardenBorder" parent="Decor" instance=ExtResource("garden_border")]
 
 [node name="CenterStoneFrame" type="Sprite2D" parent="Decor"]
 position = Vector2(192, 128)

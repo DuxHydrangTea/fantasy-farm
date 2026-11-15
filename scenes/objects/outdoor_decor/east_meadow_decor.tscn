@@ -282,7 +282,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 80)
 
 [node name="MeadowOak" type="StaticBody2D" parent="." unique_id=1659541391]
-position = Vector2(2152, 700)
+position = Vector2(2032, 816)
 collision_mask = 0
 
 [node name="Feet" type="CollisionShape2D" parent="MeadowOak" unique_id=1642998667]
@@ -1731,153 +1731,6 @@ texture = ExtResource("plants")
 region_enabled = true
 region_rect = Rect2(96, 32, 16, 16)
 
-[node name="MeadowFlower139" type="Sprite2D" parent="." unique_id=921955645]
-z_index = -1
-position = Vector2(2187, 744)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 16, 16, 16)
-
-[node name="MeadowFlower140" type="Sprite2D" parent="." unique_id=221836042]
-z_index = -1
-position = Vector2(2155, 750)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower141" type="Sprite2D" parent="." unique_id=1695547852]
-z_index = -1
-position = Vector2(2190, 732)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower142" type="Sprite2D" parent="." unique_id=331525772]
-z_index = -1
-position = Vector2(2197, 734)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 0, 16, 16)
-
-[node name="MeadowFlower143" type="Sprite2D" parent="." unique_id=1803418708]
-z_index = -1
-position = Vector2(2187, 741)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 16, 16, 16)
-
-[node name="MeadowFlower144" type="Sprite2D" parent="." unique_id=1417302725]
-z_index = -1
-position = Vector2(2175, 740)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower145" type="Sprite2D" parent="." unique_id=988906131]
-z_index = -1
-position = Vector2(2203, 757)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 0, 16, 16)
-
-[node name="MeadowFlower146" type="Sprite2D" parent="." unique_id=1967996592]
-z_index = -1
-position = Vector2(2208, 752)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower147" type="Sprite2D" parent="." unique_id=250562566]
-z_index = -1
-position = Vector2(2145, 742)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 16, 16, 16)
-
-[node name="MeadowFlower148" type="Sprite2D" parent="." unique_id=1482862039]
-z_index = -1
-position = Vector2(2158, 746)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 0, 16, 16)
-
-[node name="MeadowFlower149" type="Sprite2D" parent="." unique_id=32535590]
-z_index = -1
-position = Vector2(2197, 754)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower150" type="Sprite2D" parent="." unique_id=603589345]
-z_index = -1
-position = Vector2(2189, 732)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower151" type="Sprite2D" parent="." unique_id=386335509]
-z_index = -1
-position = Vector2(2159, 740)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 16, 16, 16)
-
-[node name="MeadowFlower152" type="Sprite2D" parent="." unique_id=1859070476]
-z_index = -1
-position = Vector2(2142, 743)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower153" type="Sprite2D" parent="." unique_id=1069513680]
-z_index = -1
-position = Vector2(2169, 742)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="MeadowFlower154" type="Sprite2D" parent="." unique_id=1442817459]
-z_index = -1
-position = Vector2(2198, 751)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 0, 16, 16)
-
-[node name="MeadowFlower155" type="Sprite2D" parent="." unique_id=1336495888]
-z_index = -1
-position = Vector2(2169, 740)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 16, 16, 16)
-
-[node name="MeadowFlower156" type="Sprite2D" parent="." unique_id=1765949643]
-z_index = -1
-position = Vector2(2171, 746)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(64, 0, 16, 16)
-
-[node name="BedGrass036" type="Sprite2D" parent="." unique_id=1062944932]
-z_index = -1
-position = Vector2(2210, 753)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(96, 32, 16, 16)
-
-[node name="BedGrass037" type="Sprite2D" parent="." unique_id=1967331423]
-z_index = -1
-position = Vector2(2147, 759)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(96, 32, 16, 16)
-
-[node name="BedGrass038" type="Sprite2D" parent="." unique_id=637868774]
-z_index = -1
-position = Vector2(2165, 731)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(96, 32, 16, 16)
-
 [node name="MeadowFlower157" type="Sprite2D" parent="." unique_id=1490607925]
 z_index = -1
 position = Vector2(2255, 399)
@@ -2263,13 +2116,6 @@ texture = ExtResource("plants")
 region_enabled = true
 region_rect = Rect2(64, 64, 16, 16)
 
-[node name="RockPebble4" type="Sprite2D" parent="." unique_id=1428859391]
-z_index = -1
-position = Vector2(2122, 729)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(16, 80, 16, 16)
-
 [node name="BorderRock5" type="StaticBody2D" parent="." unique_id=214320434]
 position = Vector2(2210, 180)
 collision_mask = 0
@@ -2361,13 +2207,6 @@ texture = ExtResource("plants")
 region_enabled = true
 region_rect = Rect2(96, 144, 16, 16)
 
-[node name="LowShrub10" type="Sprite2D" parent="." unique_id=1858951188]
-z_index = -1
-position = Vector2(2140, 718)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 144, 16, 16)
-
 [node name="LowShrub11" type="Sprite2D" parent="." unique_id=383396720]
 z_index = -1
 position = Vector2(2248, 610)
@@ -2388,13 +2227,6 @@ position = Vector2(2124, 488)
 texture = ExtResource("plants")
 region_enabled = true
 region_rect = Rect2(96, 144, 16, 16)
-
-[node name="LowShrub14" type="Sprite2D" parent="." unique_id=1697383233]
-z_index = -1
-position = Vector2(2190, 752)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(80, 144, 16, 16)
 
 [node name="LowShrub15" type="Sprite2D" parent="." unique_id=1222684797]
 z_index = -1
@@ -2462,13 +2294,6 @@ region_rect = Rect2(96, 32, 16, 16)
 [node name="GrassTuft8" type="Sprite2D" parent="." unique_id=1452036509]
 z_index = -1
 position = Vector2(2240, 596)
-texture = ExtResource("plants")
-region_enabled = true
-region_rect = Rect2(96, 32, 16, 16)
-
-[node name="GrassTuft9" type="Sprite2D" parent="." unique_id=1279000793]
-z_index = -1
-position = Vector2(2210, 768)
 texture = ExtResource("plants")
 region_enabled = true
 region_rect = Rect2(96, 32, 16, 16)

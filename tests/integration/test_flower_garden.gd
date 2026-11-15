@@ -58,6 +58,23 @@ func test_grid_is_80_unique_pots_in_four_even_blocks_with_cross_aisle() -> void:
 	assert_eq(_pot_position(Vector2i(0, 1)) - _pot_position(Vector2i.ZERO), Vector2(0, 22))
 	assert_eq(garden.get_node("Floor").get_used_cells().size(), 384)
 
+func test_hedge_border_keeps_the_cross_aisle_and_vine_arch_clear() -> void:
+	var hedge: TileMapLayer = garden.get_node("Decor/GardenBorder/Hedges") as TileMapLayer
+	var arch: Node2D = garden.get_node("Decor/GardenBorder/VineArch") as Node2D
+	assert_eq(hedge.get_used_cells().size(), 54)
+	assert_eq(garden.to_local(arch.global_position).x, 192.0)
+	for cell: Vector2i in hedge.get_used_cells():
+		assert_false(Rect2i(0, 0, 24, 16).has_point(cell), "The hedge lies outside the garden paving")
+		assert_false(cell.y in [7, 8], "Side gaps line up with the cross aisle")
+	await wait_physics_frames(2)
+	var navigation: PlayerNavigationComponent = state.navigation
+	assert_false(navigation._segment_clear(garden.to_global(Vector2(192, -26)), garden.to_global(Vector2(192, 12))), "The north hedge blocks walking through it")
+	for y: float in [54.0, 200.0]:
+		assert_false(navigation._segment_clear(garden.to_global(Vector2(-24, y)), garden.to_global(Vector2(12, y))), "Each west hedge segment blocks walking through it")
+		assert_false(navigation._segment_clear(garden.to_global(Vector2(408, y)), garden.to_global(Vector2(372, y))), "Each east hedge segment blocks walking through it")
+	assert_true(navigation._segment_clear(garden.to_global(Vector2(-24, 128)), garden.to_global(Vector2(408, 128))), "Both side entrances remain open")
+	assert_true(navigation._segment_clear(garden.to_global(Vector2(192, 282)), garden.to_global(Vector2(192, 128))), "Player fits through the vine arch")
+
 func test_focus_only_reaches_pot_in_front_and_not_from_far_away() -> void:
 	interaction.refresh()
 	assert_eq(interaction.focused_pot, pot)

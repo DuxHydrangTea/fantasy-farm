@@ -1,6 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Texture2D" path="res://assets/Buildings/online-assets/buildings/To_convert_the_house.png" id="art"]
+[ext_resource type="Script" path="res://components/landscape/ambient_ground_critter.gd" id="ground_critter"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/cat_frames.tres" id="cat_frames"]
 
 [sub_resource type="RectangleShape2D" id="MainFootprint"]
 size = Vector2(160, 26)
@@ -29,3 +31,18 @@ shape = SubResource("LeftProps")
 [node name="RightProps" type="CollisionShape2D" parent="."]
 position = Vector2(53, 4)
 shape = SubResource("RightProps")
+
+[node name="ShopCat" type="Node2D" parent="."]
+position = Vector2(-42, 26)
+script = ExtResource("ground_critter")
+roam_offset = Vector2(24, 0)
+initial_delay = 5.2
+rest_seconds = 10.0
+walk_speed = 22.0
+shadow_radius = 10.0
+prepare_animation = &"stretch"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="ShopCat"]
+sprite_frames = ExtResource("cat_frames")
+animation = &"idle"
+offset = Vector2(0, -13)

@@ -1,0 +1,129 @@
+[gd_scene format=4]
+
+[ext_resource type="TileSet" path="res://tilesets/water_stone_tile_1.tres" id="hedge_tiles"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/wooden_arch_gate.tscn" id="gate"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+
+[sub_resource type="AtlasTexture" id="VineLeaves"]
+atlas = ExtResource("plants")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WhiteFlowers"]
+atlas = ExtResource("plants")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WhiteFlowersSpread"]
+atlas = ExtResource("plants")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="YellowFlowers"]
+atlas = ExtResource("plants")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="NorthHedgeShape"]
+size = Vector2(412, 12)
+
+[sub_resource type="RectangleShape2D" id="UpperSideHedgeShape"]
+size = Vector2(12, 112)
+
+[sub_resource type="RectangleShape2D" id="LowerSideHedgeShape"]
+size = Vector2(12, 108)
+
+[node name="GardenBorder" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Hedges" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+modulate = Color(0.84, 0.9, 0.84, 1)
+collision_enabled = false
+tile_map_data = PackedByteArray("AAD/////BQABAAEAAAAYAP//BQADAAEAAAAAAP//BQACAAAAAAABAP//BQACAAAAAAACAP//BQACAAAAAAADAP//BQACAAAAAAAEAP//BQACAAAAAAAFAP//BQACAAAAAAAGAP//BQACAAAAAAAHAP//BQACAAAAAAAIAP//BQACAAAAAAAJAP//BQACAAAAAAAKAP//BQACAAAAAAALAP//BQACAAAAAAAMAP//BQACAAAAAAANAP//BQACAAAAAAAOAP//BQACAAAAAAAPAP//BQACAAAAAAAQAP//BQACAAAAAAARAP//BQACAAAAAAASAP//BQACAAAAAAATAP//BQACAAAAAAAUAP//BQACAAAAAAAVAP//BQACAAAAAAAWAP//BQACAAAAAAAXAP//BQACAAAAAAD//wAABQAAAAEAAAD//wEABQAAAAEAAAD//wIABQAAAAEAAAD//wMABQAAAAEAAAD//wQABQAAAAEAAAD//wUABQAAAAEAAAD//woABQAAAAEAAAD//wsABQAAAAEAAAD//wwABQAAAAEAAAD//w0ABQAAAAEAAAD//w4ABQAAAAEAAAD//wYABQAAAAIAAAD//wkABQAAAAAAAAD//w8ABQAAAAIAAAAYAAAABQAAAAEAAAAYAAEABQAAAAEAAAAYAAIABQAAAAEAAAAYAAMABQAAAAEAAAAYAAQABQAAAAEAAAAYAAUABQAAAAEAAAAYAAoABQAAAAEAAAAYAAsABQAAAAEAAAAYAAwABQAAAAEAAAAYAA0ABQAAAAEAAAAYAA4ABQAAAAEAAAAYAAYABQAAAAIAAAAYAAkABQAAAAAAAAAYAA8ABQAAAAIAAAA=")
+tile_set = ExtResource("hedge_tiles")
+
+[node name="HedgeCollision" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="North" type="CollisionShape2D" parent="HedgeCollision"]
+position = Vector2(192, -8)
+shape = SubResource("NorthHedgeShape")
+
+[node name="Northwest" type="CollisionShape2D" parent="HedgeCollision"]
+position = Vector2(-8, 54)
+shape = SubResource("UpperSideHedgeShape")
+
+[node name="Northeast" type="CollisionShape2D" parent="HedgeCollision"]
+position = Vector2(392, 54)
+shape = SubResource("UpperSideHedgeShape")
+
+[node name="Southwest" type="CollisionShape2D" parent="HedgeCollision"]
+position = Vector2(-8, 200)
+shape = SubResource("LowerSideHedgeShape")
+
+[node name="Southeast" type="CollisionShape2D" parent="HedgeCollision"]
+position = Vector2(392, 200)
+shape = SubResource("LowerSideHedgeShape")
+
+[node name="WestFlowerDrift" type="Node2D" parent="."]
+position = Vector2(47, -5)
+
+[node name="White" type="Sprite2D" parent="WestFlowerDrift"]
+texture = SubResource("WhiteFlowers")
+
+[node name="Yellow" type="Sprite2D" parent="WestFlowerDrift"]
+position = Vector2(10, 2)
+texture = SubResource("YellowFlowers")
+
+[node name="WhiteOuter" type="Sprite2D" parent="WestFlowerDrift"]
+position = Vector2(20, 1)
+texture = SubResource("WhiteFlowersSpread")
+flip_h = true
+
+[node name="EastFlowerDrift" type="Node2D" parent="."]
+position = Vector2(315, -5)
+
+[node name="White" type="Sprite2D" parent="EastFlowerDrift"]
+texture = SubResource("WhiteFlowersSpread")
+
+[node name="Yellow" type="Sprite2D" parent="EastFlowerDrift"]
+position = Vector2(10, 2)
+texture = SubResource("YellowFlowers")
+flip_h = true
+
+[node name="WhiteOuter" type="Sprite2D" parent="EastFlowerDrift"]
+position = Vector2(21, -1)
+texture = SubResource("WhiteFlowers")
+flip_h = true
+
+[node name="VineArch" parent="." instance=ExtResource("gate")]
+position = Vector2(192, 266)
+scale = Vector2(0.75, 0.75)
+
+[node name="WestClimber" type="Sprite2D" parent="VineArch"]
+position = Vector2(-25, -9)
+texture = SubResource("VineLeaves")
+
+[node name="WestStem" type="Sprite2D" parent="VineArch"]
+position = Vector2(-23, -20)
+texture = SubResource("VineLeaves")
+flip_h = true
+
+[node name="WestCrown" type="Sprite2D" parent="VineArch"]
+position = Vector2(-24, -33)
+texture = SubResource("WhiteFlowersSpread")
+
+[node name="WestCrownTip" type="Sprite2D" parent="VineArch"]
+position = Vector2(-15, -40)
+texture = SubResource("WhiteFlowers")
+
+[node name="EastClimber" type="Sprite2D" parent="VineArch"]
+position = Vector2(25, -14)
+texture = SubResource("VineLeaves")
+flip_h = true
+
+[node name="EastStem" type="Sprite2D" parent="VineArch"]
+position = Vector2(24, -26)
+texture = SubResource("VineLeaves")
+
+[node name="EastCrown" type="Sprite2D" parent="VineArch"]
+position = Vector2(22, -36)
+texture = SubResource("WhiteFlowersSpread")
+flip_h = true

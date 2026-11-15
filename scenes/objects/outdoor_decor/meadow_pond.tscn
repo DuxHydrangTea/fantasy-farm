@@ -1,0 +1,337 @@
+[gd_scene format=4]
+
+[ext_resource type="PackedScene" path="res://scenes/trees/small_birch_tree.tscn" id="9_w8n1m"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Flowers.png" id="flowers"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Purple_1_Anim.png" id="lily"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Cattail_1_Anim.png" id="reeds"]
+[ext_resource type="TileSet" path="res://tilesets/water_stone_tile_1.tres" id="trail"]
+[ext_resource type="TileSet" path="res://tilesets/meadow_pond_water.tres" id="water"]
+[ext_resource type="Texture2D" path="res://assets/Trees/OakStyle/willow_1.png" id="willow"]
+[ext_resource type="Script" path="res://components/animals/pond_critter.gd" id="critter"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/kapybara_frames.tres" id="capybara"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/albino_kapybara_frames.tres" id="capybara_albino"]
+[ext_resource type="Script" path="res://components/landscape/ambient_ground_critter.gd" id="capybara_roam"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/kapybara_land_frames.tres" id="capybara_land"]
+[ext_resource type="Shader" path="res://shaders/kapybara_water_key.gdshader" id="capybara_key"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/frog_01_frames.tres" id="frog_green"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/frog_02_frames.tres" id="frog_variant"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor_Animations/Water_Decor_Animations/Water_Plants/Lillypad_Green_2_Anim.png" id="frog_pad"]
+
+[sub_resource type="RectangleShape2D" id="WaterRow0"]
+size = Vector2(56, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow1"]
+size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow2"]
+size = Vector2(152, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow3"]
+size = Vector2(152, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow4"]
+size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow5"]
+size = Vector2(104, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow6"]
+size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow7"]
+size = Vector2(152, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow8"]
+size = Vector2(120, 16)
+
+[sub_resource type="RectangleShape2D" id="WaterRow9"]
+size = Vector2(72, 16)
+
+[sub_resource type="RectangleShape2D" id="BenchFeet"]
+size = Vector2(26, 6)
+
+[sub_resource type="RectangleShape2D" id="TreeFeet"]
+size = Vector2(12, 7)
+
+[sub_resource type="ShaderMaterial" id="CapybaraWater"]
+shader = ExtResource("capybara_key")
+
+[node name="MeadowPond" type="Node2D" unique_id=978780588]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-80, -32)
+
+[node name="Water" type="TileMapLayer" parent="." unique_id=1973974037]
+z_index = -1
+tile_map_data = PackedByteArray("AACNADQAAAABAAEAAACMADQAAAABAAEAAACLADQAAAABAAEAAACKADQAAAABAAEAAACJADQAAAABAAEAAACPADMAAAAAAAQAAACOADMAAAABAAEAAACNADMAAAABAAEAAACMADMAAAABAAEAAACLADMAAAABAAEAAACKADMAAAABAAEAAACJADMAAAABAAEAAACIADMAAAABAAEAAACHADMAAAAAAAEAAACQADIA//////////+PADIAAAACAAAAAACOADIAAAABAAAAAACNADIAAAAAAAQAAACMADIAAAABAAEAAACLADIAAAABAAEAAACKADIAAAABAAEAAACJADIAAAABAAEAAACIADIAAAABAAEAAACHADIAAAABAAMAAACGADIAAAAAAAIAAACFADIA//////////+RADEA//////////+QADEA//////////+PADEA//////////+OADEA//////////+NADEAAAACAAEAAACMADEAAAABAAEAAACLADEAAAABAAEAAACKADEAAAABAAEAAACJADEAAAABAAEAAACIADEAAAABAAEAAACHADEAAAABAAEAAACGADEAAAABAAMAAACFADEAAAAAAAIAAACRADAA//////////+QADAA//////////+PADAA//////////+OADAAAAACAAIAAACNADAAAAAAAAMAAACMADAAAAABAAEAAACLADAAAAABAAEAAACKADAAAAABAAEAAACJADAAAAABAAEAAACIADAAAAABAAEAAACHADAAAAABAAEAAACGADAAAAABAAEAAACFADAAAAABAAMAAACEADAAAAAAAAIAAACQAC8A//////////+PAC8A//////////+OAC8AAAACAAEAAACNAC8AAAABAAEAAACMAC8AAAABAAEAAACLAC8AAAABAAEAAACKAC8AAAABAAEAAACJAC8AAAABAAEAAACIAC8AAAABAAEAAACHAC8AAAABAAEAAACGAC8AAAABAAEAAACFAC8AAAABAAEAAACEAC8AAAAAAAEAAACQAC4A//////////+PAC4A//////////+OAC4AAAACAAAAAACNAC4AAAAAAAQAAACMAC4AAAABAAEAAACLAC4AAAABAAEAAACKAC4AAAABAAEAAACJAC4AAAABAAEAAACIAC4AAAABAAEAAACHAC4AAAABAAEAAACGAC4AAAABAAEAAACFAC4AAAABAAQAAACOAC0A//////////+NAC0AAAACAAAAAACMAC0AAAABAAAAAACLAC0AAAAAAAQAAACKAC0AAAABAAEAAACJAC0AAAABAAEAAACIAC0AAAABAAEAAACHAC0AAAABAAQAAACGAC0AAAABAAAAAACMACwA//////////+LACwAAAACAAAAAACKACwAAAABAAAAAACJACwAAAABAAAAAACIACwAAAABAAAAAACNACwA//////////+PAC0A//////////+RAC8A//////////+EADEA//////////+RADIA//////////+GADMA//////////+QADMAAAABAAAAAACIADQAAAABAAMAAACOADQAAAABAAEAAACNADUAAAABAAEAAACMADUAAAABAAEAAACLADUAAAABAAEAAACKADUAAAABAAMAAACJADUAAAABAAIAAACIADUAAAAAAAIAAACHADQAAAAAAAIAAACEADIA//////////+FADMA//////////+GADQA//////////+PADQAAAABAAEAAACHADUA//////////+OADUAAAABAAEAAACRADMAAAACAAAAAACQADQAAAAAAAMAAACPADUAAAAAAAMAAACIADYA//////////+JADYA//////////+KADYAAAAAAAIAAACLADYAAAABAAIAAACMADYAAAABAAIAAACNADYAAAABAAIAAACOADYAAAABAAIAAACHACwAAAAAAAAAAACFAC0AAAAAAAAAAACEAC4AAAAAAAAAAACRADQAAAACAAIAAACQADUAAAACAAIAAACRADUA//////////+PADYAAAACAAIAAACQADYA//////////8=")
+tile_set = ExtResource("water")
+
+[node name="DeepWater" type="StaticBody2D" parent="." unique_id=1478162082]
+collision_mask = 0
+
+[node name="Row0" type="CollisionShape2D" parent="DeepWater" unique_id=68615922]
+position = Vector2(2192, 712)
+shape = SubResource("WaterRow0")
+
+[node name="Row1" type="CollisionShape2D" parent="DeepWater" unique_id=946443602]
+position = Vector2(2192, 728)
+shape = SubResource("WaterRow1")
+
+[node name="Row2" type="CollisionShape2D" parent="DeepWater" unique_id=1756211487]
+position = Vector2(2192, 744)
+shape = SubResource("WaterRow2")
+
+[node name="Row3" type="CollisionShape2D" parent="DeepWater" unique_id=910687105]
+position = Vector2(2192, 760)
+shape = SubResource("WaterRow3")
+
+[node name="Row4" type="CollisionShape2D" parent="DeepWater" unique_id=1165992181]
+position = Vector2(2192, 776)
+shape = SubResource("WaterRow4")
+
+[node name="Row5" type="CollisionShape2D" parent="DeepWater" unique_id=1849876349]
+position = Vector2(2200, 792)
+shape = SubResource("WaterRow5")
+
+[node name="Row6" type="CollisionShape2D" parent="DeepWater" unique_id=1668475315]
+position = Vector2(2224, 808)
+shape = SubResource("WaterRow6")
+
+[node name="Row7" type="CollisionShape2D" parent="DeepWater" unique_id=567741501]
+position = Vector2(2240, 824)
+shape = SubResource("WaterRow7")
+
+[node name="Row8" type="CollisionShape2D" parent="DeepWater" unique_id=1039675527]
+position = Vector2(2240, 840)
+shape = SubResource("WaterRow8")
+
+[node name="Row9" type="CollisionShape2D" parent="DeepWater" unique_id=117468693]
+position = Vector2(2248, 856)
+shape = SubResource("WaterRow9")
+
+[node name="LookoutBench" type="StaticBody2D" parent="." unique_id=94694264]
+position = Vector2(2208, 696)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="LookoutBench" unique_id=1737664589]
+texture = ExtResource("bench")
+offset = Vector2(0, -16)
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="Feet" type="CollisionShape2D" parent="LookoutBench" unique_id=525906133]
+position = Vector2(0, -3)
+shape = SubResource("BenchFeet")
+
+[node name="SouthWillow" type="StaticBody2D" parent="." unique_id=1824215480]
+position = Vector2(2304, 894)
+collision_mask = 0
+
+[node name="Crown" type="Sprite2D" parent="SouthWillow" unique_id=818169524]
+position = Vector2(0, -24)
+texture = ExtResource("willow")
+
+[node name="Feet" type="CollisionShape2D" parent="SouthWillow" unique_id=579292978]
+position = Vector2(0, -2)
+shape = SubResource("TreeFeet")
+
+[node name="Reeds0" type="Sprite2D" parent="." unique_id=1577735860]
+position = Vector2(2168, 760)
+texture = ExtResource("reeds")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Reeds1" type="Sprite2D" parent="." unique_id=989608858]
+position = Vector2(2272, 832)
+texture = ExtResource("reeds")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Reeds2" type="Sprite2D" parent="." unique_id=1826943638]
+position = Vector2(2220, 832)
+texture = ExtResource("reeds")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Reeds3" type="Sprite2D" parent="." unique_id=888099481]
+position = Vector2(2198, 736)
+texture = ExtResource("reeds")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="WaterLily0" type="Sprite2D" parent="." unique_id=1963899132]
+position = Vector2(2192, 770)
+texture = ExtResource("lily")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="WaterLily1" type="Sprite2D" parent="." unique_id=1713928630]
+position = Vector2(2208, 800)
+texture = ExtResource("lily")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="WaterLily2" type="Sprite2D" parent="." unique_id=928232355]
+position = Vector2(2256, 840)
+texture = ExtResource("lily")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="BankRock0" type="Sprite2D" parent="." unique_id=2057948336]
+position = Vector2(2140, 705)
+texture = ExtResource("plants")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="BankRock1" type="Sprite2D" parent="." unique_id=111779870]
+position = Vector2(2278, 785)
+texture = ExtResource("plants")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="BankRock2" type="Sprite2D" parent="." unique_id=1842012897]
+position = Vector2(2195, 860)
+texture = ExtResource("plants")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 80, 16, 16)
+
+[node name="BankFlowers0" type="Sprite2D" parent="." unique_id=785178648]
+position = Vector2(2202, 687)
+texture = ExtResource("flowers")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
+
+[node name="BankFlowers1" type="Sprite2D" parent="." unique_id=1856214634]
+position = Vector2(2290, 772)
+texture = ExtResource("flowers")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 16)
+
+[node name="BankFlowers2" type="Sprite2D" parent="." unique_id=739227877]
+position = Vector2(2170, 858)
+texture = ExtResource("flowers")
+offset = Vector2(0, -8)
+region_enabled = true
+region_rect = Rect2(32, 16, 16, 16)
+
+[node name="LandingTrail" type="TileMapLayer" parent="." unique_id=1972467444]
+z_index = -2
+tile_map_data = PackedByteArray("AACLACsA//////////+LACoA//////////+KACsAAgACAAcAAACKACoAAgACAAYAAACJACsAAgABAAcAAACJACoAAgABAAYAAACJACkAAgABAAYAAACJACgAAgABAAYAAACIACsAAgAAAAcAAACIACoAAgAAAAYAAACIACkAAgAAAAYAAACIACgAAgAAAAYAAACKACkAAgACAAYAAACKACgAAgACAAYAAACKACcAAgACAAUAAACJACcAAgABAAUAAACIACcAAgAAAAUAAAA=")
+tile_set = ExtResource("trail")
+
+[node name="BayBirch" type="StaticBody2D" parent="." unique_id=742103922 instance=ExtResource("9_w8n1m")]
+texture_filter = 1
+position = Vector2(2272, 794)
+
+[node name="Wildlife" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Capybara" type="AnimatedSprite2D" parent="Wildlife"]
+material = SubResource("CapybaraWater")
+position = Vector2(2154, 743)
+sprite_frames = ExtResource("capybara")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="AlbinoCapybara" type="AnimatedSprite2D" parent="Wildlife"]
+material = SubResource("CapybaraWater")
+position = Vector2(2241, 844)
+sprite_frames = ExtResource("capybara_albino")
+animation = &"idle"
+autoplay = "idle"
+frame = 3
+flip_h = true
+
+[node name="NorthBankCapybara" type="Node2D" parent="Wildlife"]
+position = Vector2(2129, 695)
+script = ExtResource("capybara_roam")
+roam_offset = Vector2(24, 1)
+initial_delay = 0.6
+rest_seconds = 3.2
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/NorthBankCapybara"]
+sprite_frames = ExtResource("capybara_land")
+animation = &"idle"
+offset = Vector2(0, -10)
+flip_h = true
+
+[node name="EastBankCapybara" type="Node2D" parent="Wildlife"]
+position = Vector2(2340, 755)
+script = ExtResource("capybara_roam")
+roam_offset = Vector2(-22, 11)
+initial_delay = 1.7
+rest_seconds = 4.2
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/EastBankCapybara"]
+sprite_frames = ExtResource("capybara_land")
+animation = &"idle"
+offset = Vector2(0, -10)
+
+[node name="SouthBankCapybara" type="Node2D" parent="Wildlife"]
+position = Vector2(2166, 881)
+script = ExtResource("capybara_roam")
+roam_offset = Vector2(24, -7)
+initial_delay = 3.1
+rest_seconds = 5.1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/SouthBankCapybara"]
+sprite_frames = ExtResource("capybara_land")
+animation = &"idle"
+offset = Vector2(0, -10)
+flip_h = true
+
+[node name="WestBankFrog" type="Node2D" parent="Wildlife"]
+position = Vector2(2102, 760)
+script = ExtResource("critter")
+roam_offset = Vector2(4, 13)
+initial_delay = 0.4
+rest_seconds = 4.1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/WestBankFrog"]
+sprite_frames = ExtResource("frog_green")
+animation = &"idle_right"
+offset = Vector2(0, -5)
+
+[node name="EastBankFrog" type="Node2D" parent="Wildlife"]
+position = Vector2(2290, 739)
+script = ExtResource("critter")
+roam_offset = Vector2(10, 10)
+initial_delay = 2.1
+rest_seconds = 5.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/EastBankFrog"]
+sprite_frames = ExtResource("frog_green")
+animation = &"idle_right"
+offset = Vector2(0, -5)
+flip_h = true
+
+[node name="LilyFrog" type="Node2D" parent="Wildlife"]
+position = Vector2(2225, 802)
+script = ExtResource("critter")
+initial_delay = 3.0
+rest_seconds = 6.2
+
+[node name="LilyPad" type="Sprite2D" parent="Wildlife/LilyFrog"]
+texture = ExtResource("frog_pad")
+offset = Vector2(0, -2)
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Wildlife/LilyFrog"]
+sprite_frames = ExtResource("frog_variant")
+animation = &"idle_right"
+offset = Vector2(0, -5)

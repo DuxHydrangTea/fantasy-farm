@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Animals/Sparrow/sparrow.png" id="sheet"]
+
+[sub_resource type="AtlasTexture" id="Perch"]
+atlas = ExtResource("sheet")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Peck"]
+atlas = ExtResource("sheet")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Hop"]
+atlas = ExtResource("sheet")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WingsUp"]
+atlas = ExtResource("sheet")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WingsLevel"]
+atlas = ExtResource("sheet")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WingsDown"]
+atlas = ExtResource("sheet")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="WingsRecover"]
+atlas = ExtResource("sheet")
+region = Rect2(96, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{"duration": 23.0, "texture": SubResource("Perch")}, {"duration": 1.0, "texture": SubResource("Peck")}, {"duration": 8.0, "texture": SubResource("Perch")}, {"duration": 1.0, "texture": SubResource("Hop")}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("WingsUp")}, {"duration": 1.0, "texture": SubResource("WingsLevel")}, {"duration": 1.0, "texture": SubResource("WingsDown")}, {"duration": 1.0, "texture": SubResource("WingsRecover")}],
+"loop": true,
+"name": &"fly",
+"speed": 12.0
+}]

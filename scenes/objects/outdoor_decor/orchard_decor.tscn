@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Hay_Bales.png" id="hay"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/crate.tscn" id="crate"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barrel.tscn" id="barrel"]
+[ext_resource type="Script" path="res://components/landscape/ambient_ground_critter.gd" id="ground_critter"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/squirrel_frames.tres" id="squirrel_frames"]
 
 [sub_resource type="TileSetAtlasSource" id="Atlas_soil"]
 texture = ExtResource("ground")
@@ -45,6 +47,34 @@ texture_filter = 1
 z_index = -2
 tile_map_data = PackedByteArray("AAAOAFUAAAAAAAUAAAAPAFUAAAABAAUAAAAQAFUAAAABAAUAAAARAFUAAAABAAUAAAASAFUAAAABAAUAAAATAFUAAAABAAUAAAAUAFUAAAACAAUAAAAOAFYAAAAAAAYAAAAPAFYAAAABAAYAAAAQAFYAAAABAAYAAAARAFYAAAABAAYAAAASAFYAAAABAAYAAAATAFYAAAABAAYAAAAUAFYAAAACAAYAAAAOAFcAAAAAAAcAAAAPAFcAAAABAAcAAAAQAFcAAAABAAcAAAARAFcAAAABAAcAAAASAFcAAAABAAcAAAATAFcAAAABAAcAAAAUAFcAAAACAAcAAAA0AFUAAAAAAAUAAAA1AFUAAAABAAUAAAA2AFUAAAABAAUAAAA3AFUAAAABAAUAAAA4AFUAAAABAAUAAAA5AFUAAAABAAUAAAA6AFUAAAABAAUAAAA7AFUAAAACAAUAAAA0AFYAAAAAAAYAAAA1AFYAAAABAAYAAAA2AFYAAAABAAYAAAA3AFYAAAABAAYAAAA4AFYAAAABAAYAAAA5AFYAAAABAAYAAAA6AFYAAAABAAYAAAA7AFYAAAACAAYAAAA0AFcAAAAAAAcAAAA1AFcAAAABAAcAAAA2AFcAAAABAAcAAAA3AFcAAAABAAcAAAA4AFcAAAABAAcAAAA5AFcAAAABAAcAAAA6AFcAAAABAAcAAAA7AFcAAAACAAcAAAAgAFUAAAAAAAUAAAAhAFUAAAABAAUAAAAiAFUAAAABAAUAAAAjAFUAAAABAAUAAAAkAFUAAAACAAUAAAAgAFYAAAAAAAYAAAAhAFYAAAABAAYAAAAiAFYAAAABAAYAAAAjAFYAAAABAAYAAAAkAFYAAAACAAYAAAAgAFcAAAAAAAcAAAAhAFcAAAABAAcAAAAiAFcAAAABAAcAAAAjAFcAAAABAAcAAAAkAFcAAAACAAcAAAA=")
 tile_set = SubResource("TileSet_paths")
+
+[node name="NortheastSquirrel" type="Node2D" parent="."]
+position = Vector2(953, 975)
+script = ExtResource("ground_critter")
+roam_offset = Vector2(27, 12)
+initial_delay = 1.35
+rest_seconds = 4.8
+walk_speed = 39.0
+shadow_radius = 3.5
+
+[node name="Sprite" type="AnimatedSprite2D" parent="NortheastSquirrel"]
+sprite_frames = ExtResource("squirrel_frames")
+animation = &"idle"
+offset = Vector2(0, -8)
+
+[node name="SouthwestSquirrel" type="Node2D" parent="."]
+position = Vector2(208, 1399)
+script = ExtResource("ground_critter")
+roam_offset = Vector2(-27, 19)
+initial_delay = 2.4
+rest_seconds = 4.2
+walk_speed = 35.0
+shadow_radius = 3.5
+
+[node name="Sprite" type="AnimatedSprite2D" parent="SouthwestSquirrel"]
+sprite_frames = ExtResource("squirrel_frames")
+animation = &"idle"
+offset = Vector2(0, -8)
 
 [node name="OrchardWell" type="StaticBody2D" parent="."]
 position = Vector2(551, 1394)

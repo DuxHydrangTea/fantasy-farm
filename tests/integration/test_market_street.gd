@@ -54,6 +54,70 @@ func test_shop_order_and_storehouse_locations_are_preserved() -> void:
 	assert_eq((world.get_node("Warehouse") as Node2D).position, Vector2(2100,1148))
 	assert_eq((world.get_node("SeedInventory") as Node2D).position, Vector2(2340,1148))
 
+func test_sparrows_perch_until_player_approaches_then_land_farther_away() -> void:
+	var flock: Node2D = world.get_node("StorageYard/Sparrows") as Node2D
+	assert_eq(flock.get_child_count(), 3)
+	assert_true(flock.find_children("*", "CollisionObject2D", true, false).is_empty())
+	world.player.state.set_physics_process(false)
+	world.player.state.navigation.set_physics_process(false)
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	var bird: AnimatedSprite2D = flock.get_node("WestSparrow") as AnimatedSprite2D
+	var origin: Vector2 = bird.position
+	world.player.global_position = bird.global_position + Vector2(0, 96)
+	await wait_physics_frames(18)
+	assert_eq(bird.position, origin)
+	assert_eq(bird.animation, &"idle")
+	world.player.global_position = bird.global_position + bird.approach_offset
+	var flew: bool = false
+	for _frame: int in range(100):
+		await wait_physics_frames(1)
+		flew = flew or (bird.animation == &"fly" and bird.position.y < origin.y)
+		if flew and bird.animation == &"idle":
+			break
+	assert_true(flew, "An approaching player makes the bird take off")
+	assert_eq(bird.animation, &"idle")
+	assert_eq(bird.position, bird.alternate_perches[-1], "Bird lands on the perch farthest from the player")
+
+func test_shop_cat_stretches_and_orchard_squirrels_remain_visible() -> void:
+	var cat: Node2D = world.get_node("PetShop/ShopCat") as Node2D
+	var cat_sprite: AnimatedSprite2D = cat.get_node("Sprite") as AnimatedSprite2D
+	var squirrel: Node2D = world.get_node("OrchardDecor/NortheastSquirrel") as Node2D
+	var squirrel_sprite: AnimatedSprite2D = squirrel.get_node("Sprite") as AnimatedSprite2D
+	var southwest_squirrel: Node2D = world.get_node("OrchardDecor/SouthwestSquirrel") as Node2D
+	for animal: Node2D in [cat, squirrel, southwest_squirrel]:
+		assert_true(animal.find_children("*", "CollisionObject2D", true, false).is_empty())
+	assert_eq(cat_sprite.animation, &"idle")
+	assert_eq(squirrel_sprite.animation, &"idle")
+	var cat_home: Vector2 = cat.position
+	var squirrel_home: Vector2 = squirrel.position
+	var southwest_home: Vector2 = southwest_squirrel.position
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	var stretched: bool = false
+	var ran: bool = false
+	var stayed_visible: bool = true
+	var reached_away: bool = false
+	var southwest_reached_away: bool = false
+	var returned: bool = false
+	var southwest_returned: bool = false
+	for _frame: int in range(540):
+		await wait_physics_frames(1)
+		stretched = stretched or cat_sprite.animation == &"stretch"
+		ran = ran or (squirrel_sprite.animation == &"walk" and squirrel.position.distance_to(squirrel_home) > 1.0)
+		stayed_visible = stayed_visible and squirrel.is_visible_in_tree() and southwest_squirrel.is_visible_in_tree()
+		reached_away = reached_away or squirrel.position.is_equal_approx(squirrel_home + squirrel.roam_offset)
+		southwest_reached_away = southwest_reached_away or southwest_squirrel.position.is_equal_approx(southwest_home + southwest_squirrel.roam_offset)
+		returned = returned or (reached_away and squirrel.position.is_equal_approx(squirrel_home))
+		southwest_returned = southwest_returned or (southwest_reached_away and southwest_squirrel.position.is_equal_approx(southwest_home))
+		if stretched and ran and returned and southwest_returned and cat_sprite.animation == &"idle" and cat.position != cat_home:
+			break
+	assert_true(stretched, "The cat stretches before changing nap spots")
+	assert_eq(cat.position, cat_home + cat.roam_offset)
+	assert_eq(cat_sprite.animation, &"idle")
+	assert_true(ran)
+	assert_true(stayed_visible, "Both squirrels stay visible throughout the round trip")
+	assert_true(returned)
+	assert_true(southwest_returned)
+
 func test_east_square_joins_the_road_with_a_clear_paved_approach() -> void:
 	var road: TileMapLayer = world.get_node("Road") as TileMapLayer
 	var yards: TileMapLayer = world.get_node("BuildingDecor/ShopForecourts") as TileMapLayer

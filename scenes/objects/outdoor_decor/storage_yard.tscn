@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cuk0t4uyh7hle" path="res://assets/Buildings/House_Decor/Planters.png" id="planter"]
 [ext_resource type="PackedScene" uid="uid://chkn2hvalslec" path="res://scenes/trees/medium_spruce_tree.tscn" id="spruce"]
 [ext_resource type="Texture2D" uid="uid://ceilwcld58q26" path="res://assets/Tiles/Grass/Path_Decoration.png" id="tracks"]
+[ext_resource type="Script" path="res://components/landscape/sparrow_perch.gd" id="sparrow"]
+[ext_resource type="SpriteFrames" path="res://sprite_frames/animals/sparrow_frames.tres" id="sparrow_frames"]
 
 [sub_resource type="TileSetAtlasSource" id="Atlas_dirt"]
 texture = ExtResource("ground")
@@ -55,6 +57,39 @@ tile_set = SubResource("YardSurface")
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAXAPz/AQABAAEAAAAYAPz/AQACAAAAAAAZAPz/AQACAAAAAAAaAPz/AQACAAAAAAAbAPz/AQACAAAAAAAcAPz/AQACAAAAAAAdAPz/AQACAAAAAAAeAPz/AQACAAAAAAAfAPz/AQACAAAAAAAgAPz/AQACAAAAAAAhAPz/AQACAAAAAAAiAPz/AQACAAAAAAAjAPz/AQACAAAAAAAkAPz/AQACAAAAAAAlAPz/AQACAAAAAAAmAPz/AQACAAAAAAAnAPz/AQACAAAAAAAoAPz/AQACAAAAAAApAPz/AQACAAAAAAAqAPz/AQACAAAAAAArAPz/AQACAAAAAAAsAPz/AQACAAAAAAAtAPz/AQACAAAAAAAuAPz/AQACAAAAAAAvAPz/AQACAAAAAAAwAPz/AQACAAAAAAAxAPz/AQACAAAAAAAyAPz/AQACAAAAAAAzAPz/AQACAAAAAAA0APz/AQACAAAAAAA1APz/AQACAAAAAAA2APz/AQACAAAAAAA3APz/AQACAAAAAAA4APz/AQADAAEAAAAXAP7/AQAAAAEAAAA4AP7/AQAAAAEAAAAXAP//AQAAAAEAAAA4AP//AQAAAAEAAAAXAAAAAQAAAAEAAAA4AAAAAQAAAAEAAAAXAAEAAQAAAAEAAAA4AAEAAQAAAAEAAAAXAAIAAQAAAAEAAAA4AAIAAQAAAAEAAAAXAAMAAQAAAAEAAAA4AAMAAQAAAAEAAAAXAAQAAQAAAAEAAAA4AAQAAQAAAAEAAAAXAAUAAQAAAAEAAAA4AAUAAQAAAAEAAAAXAAYAAQAAAAEAAAA4AAYAAQAAAAEAAAAXAAcAAQAAAAEAAAA4AAcAAQAAAAEAAAAXAAgAAQAAAAEAAAA4AAgAAQAAAAEAAAAXAAkAAQAAAAEAAAA4AAkAAQAAAAEAAAAXAAoAAQAAAAEAAAA4AAoAAQAAAAEAAAAXAAsAAQAAAAEAAAA4AAsAAQAAAAEAAAAXAAwAAQAAAAEAAAA4AAwAAQAAAAEAAAAXAA0AAQABAAMAAAAYAA0AAQACAAAAAAAZAA0AAQACAAAAAAAaAA0AAQACAAAAAAAbAA0AAQACAAAAAAAcAA0AAQACAAAAAAAdAA0AAQACAAAAAAAhAA0AAQACAAAAAAAiAA0AAQACAAAAAAAjAA0AAQACAAAAAAAkAA0AAQACAAAAAAAlAA0AAQACAAAAAAAmAA0AAQACAAAAAAAnAA0AAQACAAAAAAAoAA0AAQACAAAAAAApAA0AAQACAAAAAAAqAA0AAQACAAAAAAArAA0AAQACAAAAAAAsAA0AAQACAAAAAAAwAA0AAQACAAAAAAAxAA0AAQACAAAAAAAyAA0AAQACAAAAAAAzAA0AAQACAAAAAAA0AA0AAQACAAAAAAA1AA0AAQACAAAAAAA2AA0AAQACAAAAAAA3AA0AAQACAAAAAAA4AA0AAQADAAMAAAAXAP3/AQAAAAEAAAA4AP3/AQAAAAEAAAA=")
 tile_set = ExtResource("fence")
+
+[node name="Sparrows" type="Node2D" parent="."]
+z_index = 2
+
+[node name="WestSparrow" type="AnimatedSprite2D" parent="Sparrows"]
+position = Vector2(392, 209)
+sprite_frames = ExtResource("sparrow_frames")
+animation = &"idle"
+offset = Vector2(0, -6)
+script = ExtResource("sparrow")
+alternate_perches = PackedVector2Array(440, 209, 472, 209)
+approach_offset = Vector2(0, 13)
+
+[node name="CenterSparrow" type="AnimatedSprite2D" parent="Sparrows"]
+position = Vector2(632, 209)
+sprite_frames = ExtResource("sparrow_frames")
+animation = &"idle"
+speed_scale = 0.88
+offset = Vector2(0, -6)
+flip_h = true
+script = ExtResource("sparrow")
+alternate_perches = PackedVector2Array(552, 209, 696, 209)
+approach_offset = Vector2(0, 13)
+
+[node name="RoofSparrow" type="AnimatedSprite2D" parent="Sparrows"]
+position = Vector2(531, 20)
+sprite_frames = ExtResource("sparrow_frames")
+animation = &"idle"
+speed_scale = 1.13
+offset = Vector2(0, -6)
+script = ExtResource("sparrow")
+alternate_perches = PackedVector2Array(577, 20, 611, 20)
+approach_offset = Vector2(0, 137)
 
 [node name="ProduceEntrance" parent="." unique_id=1482194083 instance=ExtResource("sign_gate")]
 position = Vector2(504, 224)
