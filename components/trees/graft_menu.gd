@@ -1,7 +1,10 @@
 class_name GraftMenu
 extends TradeMenu
-## Compare future crops, review a revision-bound quote, then confirm explicitly.
+## Giao diện so sánh hướng ghép cây ăn quả và xác nhận báo giá theo revision.
+
+## Thế giới cung cấp dịch vụ ghép và inventory.
 var world: FarmWorld
+## Cây đang được xem.
 var tree: FruitTree
 @onready var panel: PanelContainer = %Panel
 @onready var title: Label = %Title
@@ -57,6 +60,7 @@ func _cropped(texture: Texture2D) -> Texture2D:
 	_texture_cache[texture] = cropped
 	return cropped
 
+## Mở giao diện cho cây được chọn nếu điều kiện tương tác cho phép.
 func open_tree(target: FruitTree) -> bool:
 	if is_open:
 		return false

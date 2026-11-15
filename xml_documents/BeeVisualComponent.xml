@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BeeVisualComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị ong bay quanh tổ hoặc tới nguồn hoa đã chọn. Ong ẩn khi ngoài màn hình hoặc trú mưa; sản xuất dùng đồng hồ trang trại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="set_sheltered">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt trạng thái trú, cập nhật hiển thị và xử lý.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visibility">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="hive" type="Beehive" setter="" getter="">
+			Tổ sở hữu hiệu ứng.
+		</member>
+		<member name="_bees" type="AnimatedSprite2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_phase" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_on_screen" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_sheltered" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="BEE_COUNT" value="6">
+			Số sprite ong trang trí.
+		</constant>
+		<constant name="ROAM_RADIUS" value="64.0">
+			Bán kính bay khi không có nguồn hoa.
+		</constant>
+	</constants>
+</class>

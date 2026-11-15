@@ -1,14 +1,25 @@
 class_name AnimalBehaviourComponent
 extends Node
 
-## Small state machine adapted from the Godot skill's state-machine template.
-## Owns behaviour decisions; Wander owns targets and Movement owns physics.
+## Máy trạng thái quyết định hành vi của một vật nuôi.
+##
+## Wander quản lý đích, Movement xử lý vật lý, Foraging tìm và dùng máng.
+## Các chuyển động nằm xuống và đứng dậy chờ hoạt ảnh hoàn thành trước khi
+## chuyển trạng thái. Tập trung hoặc giữ để chăm sóc tạm dừng hành vi.
+
+## Phát tên trạng thái trước và sau mỗi chuyển đổi.
 signal state_changed(previous: StringName, current: StringName)
+## Các trạng thái đi lại, nghỉ, ngủ và tìm hoặc dùng nguồn cung cấp.
 enum State { IDLE, WALK, FORAGE, LIE_DOWN, REST, SLEEP_START, SLEEP, STAND_UP, SEEK_RESOURCE, EAT, DRINK }
+## Tên trạng thái tương ứng thứ tự enum.
 const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"forage", &"lie_down", &"rest", &"sleep_start", &"sleep", &"stand_up", &"seek_resource", &"eat", &"drink"]
+## Component di chuyển ngẫu nhiên trong chuồng.
 @export var wander: AnimalWanderComponent
+## Component tìm và nhận thức ăn, nước.
 @export var foraging: AnimalForagingComponent
+## Trạng thái hành vi hiện tại.
 var current_state: State = State.IDLE
+## Cấu hình trọng số, thời gian và hoạt ảnh của loài.
 var definition: AnimalDefinition
 var _remaining: float = 0.0
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -25,6 +36,8 @@ var _care_holds: Dictionary[int, Dictionary] = {}
 func _ready() -> void:
 	wander.animation.action_finished.connect(_on_animation_finished)
 
+## Gắn cấu hình, tiếp quản bước vật lý của Wander và chọn hoạt ảnh hỗ trợ.
+## Trạng thái bắt đầu là IDLE và sẵn sàng đưa ra quyết định đầu tiên.
 func configure(data: AnimalDefinition) -> void:
 	definition = data
 	wander.set_physics_process(false)
@@ -104,6 +117,8 @@ func _physics_process(delta: float) -> void:
 		State.REST, State.SLEEP:
 			wake()
 
+## Bật hoặc tắt trạng thái người chơi đang tập trung vào con vật.
+## Khi bật, hủy tìm máng và chuyển về đứng yên.
 func set_focused(value: bool) -> void:
 	if _focused == value:
 		return
@@ -112,6 +127,8 @@ func set_focused(value: bool) -> void:
 		foraging.cancel()
 		_enter(State.IDLE)
 
+## Giữ con vật đứng yên trong khi một owner thực hiện chăm sóc.
+## Owner được giữ bằng weak reference và predicate xác định giữ còn hiệu lực.
 func hold_for_care(owner: Node, is_active: Callable) -> void:
 	if _care_holds.has(owner.get_instance_id()):
 		return
@@ -121,6 +138,7 @@ func hold_for_care(owner: Node, is_active: Callable) -> void:
 		foraging.cancel()
 		_enter(State.IDLE)
 
+## Bỏ lượt giữ chăm sóc của owner.
 func release_care_hold(owner: Node) -> void:
 	_care_holds.erase(owner.get_instance_id())
 
@@ -135,7 +153,9 @@ func _has_care_hold() -> bool:
 			_care_holds.erase(identity)
 	return not _care_holds.is_empty()
 
-## Upright behaviours can be interrupted. A lying animal must wake() first.
+## Yêu cầu hành vi khi con vật đang đứng và không bị giữ hoặc tập trung.
+## Con vật đang nằm cần gọi [method wake] trước. Trả false nếu hành động
+## không được hỗ trợ hoặc không thể bắt đầu.
 func request_behaviour(action: StringName) -> bool:
 	if _focused or _has_care_hold() or definition == null or not is_instance_valid(wander.pen):
 		return false
@@ -165,6 +185,8 @@ func request_behaviour(action: StringName) -> bool:
 	_first_decision = false
 	return true
 
+## Đánh thức từ trạng thái nghỉ hoặc ngủ; trên đất chờ hoạt ảnh đứng dậy.
+## Trả false nếu hiện không nghỉ hoặc ngủ.
 func wake() -> bool:
 	if current_state != State.REST and current_state != State.SLEEP:
 		return false

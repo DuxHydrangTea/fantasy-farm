@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/landscape/ambient_flutter.gd&quot;" inherits="AnimatedSprite2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiệu ứng bướm bay cong giữa các điểm hoa và lơ lửng khi dừng. Các độ lệch và giới hạn nằm trong tọa độ node cha.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_bounded">
+			<return type="Vector2" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_leg">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_begin_leg">
+			<return type="void" />
+			<param index="0" name="destination" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="radius" type="Vector2" setter="" getter="" default="Vector2(18, 9)">
+			Bán kính giới hạn theo hai trục quanh vị trí ban đầu.
+		</member>
+		<member name="speed" type="float" setter="" getter="" default="0.6">
+			Hệ số tốc độ bay; giá trị không dương dừng cập nhật.
+		</member>
+		<member name="phase" type="float" setter="" getter="" default="0.0">
+			Pha và một phần seed của chuyển động.
+		</member>
+		<member name="flower_stops" type="PackedVector2Array" setter="" getter="" default="PackedVector2Array()">
+			Điểm hoa tương đối vị trí ban đầu; khi thiếu điểm dùng điểm ngẫu nhiên.
+		</member>
+		<member name="_home" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_rng" type="RandomNumberGenerator" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_from" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_to" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_control_a" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_control_b" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_travel_time" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_travel_duration" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_hover_time" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_hover_duration" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_hovering" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_last_stop" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_wing_speed" type="float" setter="" getter="" default="0.6">
+		</member>
+	</members>
+</class>

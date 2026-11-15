@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmClock" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Đồng hồ chung cho mô phỏng trang trại. Chế độ phiên tiến theo delta, còn chế độ đồng hồ hệ thống hỗ trợ mô phỏng offline và nguồn thời gian thay thế trong kiểm thử.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="begin_session">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="freeze_gaps" type="bool" default="true" />
+			<description>
+				Bắt đầu dòng thời gian phiên tại timestamp và đặt lại mốc mô phỏng tạm. Khi freeze_gaps bật, mỗi frame chỉ cộng tối đa 0,25 giây.
+			</description>
+		</method>
+		<method name="use_wall_clock">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Chuyển sang nguồn đồng hồ hệ thống và đặt sàn timestamp ban đầu.
+			</description>
+		</method>
+		<method name="now">
+			<return type="float" />
+			<description>
+				Trả mốc mô phỏng tạm nếu có, tiếp theo là thời gian phiên hoặc đồng hồ hệ thống. Trong chế độ hệ thống, kết quả không lùi so với mốc đã thấy trong phiên.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Phát before_tick rồi tick với cùng timestamp.
+			</description>
+		</method>
+		<method name="advance_floor">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Nâng sàn thời gian hệ thống lên timestamp hữu hạn không âm nếu lớn hơn sàn cũ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="refresh_interval" type="float" setter="" getter="" default="0.1">
+			Khoảng tối thiểu giữa các lần phát tick, tính bằng giây.
+		</member>
+		<member name="clock_source" type="Callable" setter="@clock_source_setter" getter="" default="&lt;unknown&gt;">
+			Nguồn timestamp; gán nguồn mới chuyển đồng hồ sang chế độ hệ thống.
+		</member>
+		<member name="simulation_timestamp" type="float" setter="" getter="" default="-1.0">
+			Mốc mô phỏng tạm thời; giá trị âm cho phép now dùng đồng hồ phiên hoặc hệ thống.
+		</member>
+		<member name="_last_timestamp" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_poll_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_session_mode" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_session_timestamp" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_freeze_gaps" type="bool" setter="" getter="" default="true">
+		</member>
+	</members>
+	<signals>
+		<signal name="tick">
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Phát thời điểm hiện tại sau [signal before_tick].
+			</description>
+		</signal>
+		<signal name="before_tick">
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Phát trước tick để các hệ thống ưu tiên chốt thời gian.
+			</description>
+		</signal>
+	</signals>
+</class>

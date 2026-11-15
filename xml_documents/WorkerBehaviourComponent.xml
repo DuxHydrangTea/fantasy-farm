@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerBehaviourComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều khiển actor theo công việc từ WorkerService hoặc tuần tra độc lập. Công việc dùng bộ điều hướng chung; khi chữa bệnh, component giữ vật nuôi đứng yên bằng tham chiếu yếu và tự nhả khi công việc không còn hiệu lực.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_release_care_target">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_care_focus_active">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync_care_target">
+			<return type="void" />
+			<param index="0" name="actor" type="WorkerActor" />
+			<param index="1" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_request_navigation">
+			<return type="void" />
+			<param index="0" name="actor" type="WorkerActor" />
+			<param index="1" name="goal" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_navigate">
+			<return type="void" />
+			<param index="0" name="actor" type="WorkerActor" />
+			<param index="1" name="goal" type="Vector2" />
+			<param index="2" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_step">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_arrived">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_advance_waypoint">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="begin_patrol">
+			<return type="void" />
+			<param index="0" name="at" type="Vector2" />
+			<description>
+				Bắt đầu tuần tra từ điểm gần vị trí đã cho nhất.
+			</description>
+		</method>
+		<method name="_step_work">
+			<return type="void" />
+			<param index="0" name="actor" type="WorkerActor" />
+			<param index="1" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_badge">
+			<return type="void" />
+			<param index="0" name="actor" type="WorkerActor" />
+			<param index="1" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="movement" type="MovementComponent" setter="" getter="">
+			Component di chuyển.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Component hoạt ảnh.
+		</member>
+		<member name="patrol_points" type="Vector2[]" setter="" getter="" default="[]">
+			Các điểm tuần tra độc lập.
+		</member>
+		<member name="patrol_wait_seconds" type="float" setter="" getter="" default="0.6">
+			Thời gian chờ giữa các điểm tuần tra.
+		</member>
+		<member name="stuck_seconds" type="float" setter="" getter="" default="2.0">
+			Thời gian bị kẹt trước khi bỏ qua điểm tuần tra.
+		</member>
+		<member name="current_goal" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+			Điểm tuần tra hiện tại.
+		</member>
+		<member name="has_goal" type="bool" setter="" getter="" default="false">
+			Cho biết đang theo một điểm tuần tra.
+		</member>
+		<member name="waypoint_index" type="int" setter="" getter="" default="0">
+			Chỉ số điểm tuần tra hiện tại.
+		</member>
+		<member name="_blocked_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_wait_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_badge_elapsed" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_navigation" type="WorkerNavigation" setter="" getter="">
+		</member>
+		<member name="_care_target" type="WeakRef" setter="" getter="">
+		</member>
+		<member name="_path_to_work_point" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

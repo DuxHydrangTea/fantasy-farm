@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalTypes" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Các loại vật nuôi được dùng chung trong dữ liệu và logic game.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<constants>
+		<constant name="CHICKEN" value="0" enum="Species">
+		</constant>
+		<constant name="DUCK" value="1" enum="Species">
+		</constant>
+		<constant name="COW" value="2" enum="Species">
+		</constant>
+		<constant name="SHEEP" value="3" enum="Species">
+		</constant>
+		<constant name="PIG" value="4" enum="Species">
+		</constant>
+		<constant name="GOOSE" value="5" enum="Species">
+		</constant>
+		<constant name="HORSE" value="6" enum="Species">
+		</constant>
+	</constants>
+</class>

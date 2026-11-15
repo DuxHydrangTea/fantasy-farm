@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerActor" inherits="CharacterBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Actor vật lý của công nhân với component di chuyển, hoạt ảnh và hành vi. Công nhân được thuê dùng WorkerService để quản lý vai trò, giỏ và dòng thời gian công việc online/offline. Actor còn hỗ trợ tuần tra thử nghiệm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply_definition">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="configure_patrol">
+			<return type="void" />
+			<param index="0" name="points" type="Vector2[]" />
+			<description>
+				Gán bản sao các điểm tuần tra và bắt đầu từ vị trí hiện tại.
+			</description>
+		</method>
+		<method name="_place_badge">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="show_status">
+			<return type="void" />
+			<param index="0" name="number" type="int" />
+			<param index="1" name="texture" type="Texture2D" />
+			<param index="2" name="attention" type="bool" />
+			<description>
+				Cập nhật số, biểu tượng công việc và màu nhấn cho nhãn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="definition" type="WorkerDefinition" setter="" getter="">
+			Cấu hình hình ảnh và tốc độ công nhân.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định của cá thể.
+		</member>
+		<member name="worker_service" type="WorkerService" setter="" getter="">
+			Dịch vụ quản lý công nhân được thuê.
+		</member>
+		<member name="worker_role" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã vai trò công việc.
+		</member>
+		<member name="basket" type="InventoryComponent" setter="" getter="">
+			Inventory riêng của công nhân.
+		</member>
+		<member name="badge" type="Label" setter="" getter="">
+			Nhãn số công nhân và trạng thái chú ý.
+		</member>
+		<member name="sprite" type="AnimatedSprite2D" setter="" getter="">
+			Sprite hoạt ảnh.
+		</member>
+		<member name="collision" type="CollisionShape2D" setter="" getter="">
+			Hình va chạm.
+		</member>
+		<member name="movement" type="MovementComponent" setter="" getter="">
+			Component di chuyển.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Component hoạt ảnh.
+		</member>
+		<member name="behaviour" type="WorkerBehaviourComponent" setter="" getter="">
+			Component hành vi.
+		</member>
+		<member name="care_action" type="Node2D" setter="" getter="">
+			Hiệu ứng dụng cụ chăm sóc.
+		</member>
+		<member name="task_icon" type="Sprite2D" setter="" getter="">
+			Biểu tượng công việc cạnh nhãn.
+		</member>
+	</members>
+</class>

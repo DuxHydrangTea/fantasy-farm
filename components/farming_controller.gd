@@ -1,5 +1,8 @@
 class_name FarmingController
 extends Node
+## Điều phối đất canh tác, cây trồng, độ ẩm và các thao tác gieo, tưới, chăm sóc, thu hoạch.
+## Đồng bộ thay đổi với lịch sinh trưởng, thời tiết, đất mở khóa và hệ thống lưu.
+
 @export var ground: TileMapLayer
 
 const CROP_SCENE: PackedScene = preload("res://scenes/crops/crop.tscn")
@@ -41,6 +44,7 @@ var _area_busy: bool = false
 var _layers_dirty: bool = true
 var _farming_layers: Array[TileMapLayer] = []
 
+## Cho biết có cây trồng được quản lý trên đồng.
 func has_planted_crops() -> bool:
 	return not _crops.is_empty()
 
@@ -56,9 +60,11 @@ func _ready() -> void:
 	if time_manager != null:
 		time_manager.tick.connect(_refresh_crops)
 
+## Đổi tọa độ thế giới sang ô của lớp đất canh tác.
 func world_to_cell(world_position: Vector2) -> Vector2i:
 	return farmland.local_to_map(farmland.to_local(world_position))
 
+## Trả trạng thái đất ướt, đất khô hoặc chưa cày tại ô.
 func get_soil_state(cell: Vector2i) -> Soil:
 	if _has_terrain(wet_soil, cell, wet_terrain_set, wet_terrain):
 		return Soil.WET
@@ -66,19 +72,24 @@ func get_soil_state(cell: Vector2i) -> Soil:
 		return Soil.DRY
 	return Soil.UNTILLED
 
+## Kiểm tra ô chưa cày và các ràng buộc canh tác cho nhân vật.
 func can_till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return get_soil_state(cell) == Soil.UNTILLED and _allowed(cell, &"can_till", actor)
 
+## Kiểm tra ô đất khô có thể được tưới.
 func can_water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return get_soil_state(cell) == Soil.DRY and _allowed(cell, &"can_water", actor)
 
+## Kiểm tra ô đã cày, chưa có cây và được phép trồng.
 func can_plant(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return get_crop(cell) == null and get_soil_state(cell) != Soil.UNTILLED and _allowed(cell, &"can_plant", actor)
 
+## Lấy cây tại ô, hoặc null nếu không có node hợp lệ.
 func get_crop(cell: Vector2i) -> Crop:
 	var crop: Crop = _crops.get(cell) as Crop
 	return crop if is_instance_valid(crop) else null
 
+## Trồng hạt từ ô túi sau khi kiểm tra điều kiện và số lượng; trả kết quả.
 func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor: PhysicsBody2D = null) -> bool:
 	if _area_busy or inventory == null or time_manager == null or not can_plant(cell, actor):
 		return false
@@ -107,10 +118,12 @@ func plant(cell: Vector2i, inventory: InventoryComponent, slot_index: int, actor
 	action_committed.emit(&"plant", 1)
 	return true
 
+## Tính số lượng thu hoạch theo cây, độ màu mỡ và tình trạng.
 func harvest_amount(cell: Vector2i) -> int:
 	var crop: Crop = get_crop(cell)
 	return crop.conditions.amount(fertility.amount(cell,crop.definition.harvest_amount)) if crop != null else 0
 
+## Đồng bộ cây rồi kiểm tra độ chín, vùng đất và sản phẩm hợp lệ.
 func can_harvest(cell: Vector2i) -> bool:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null or (land != null and not land.is_unlocked(cell)):
@@ -126,6 +139,7 @@ func can_harvest(cell: Vector2i) -> bool:
 # 3) Cộng đồ đúng một lần, gỡ cây khỏi dữ liệu/lịch lớn, rồi phát sự kiện cho phần hình ảnh.
 # Nếu bỏ kiểm tra sức chứa, có thể mất cây khi chưa nhận đủ nông sản; nếu bỏ khóa, có thể nhân đôi.
 # Cây mờ đi và icon bay về sau đó chỉ là trình bày, không được cộng thêm phần thưởng ở cuối hiệu ứng.
+## Thu hoạch vào kho khi cây chín và kho đủ sức chứa; trả kết quả.
 func harvest(cell: Vector2i, inventory: InventoryComponent) -> bool:
 	if _harvesting or inventory == null or not can_harvest(cell):
 		return false
@@ -169,16 +183,20 @@ func _schedule_crop(crop: Crop) -> void:
 	if not crop.is_mature():
 		_growth.schedule(crop, crop.planted_at + float(crop.stage + 1) / 3.0 * (crop.matures_at - crop.planted_at))
 
+## Hủy sự kiện sinh trưởng đã lên lịch của cây.
 func unschedule_crop(crop: Crop) -> void:
 	_growth.cancel(crop)
 
+## Hủy lịch cũ và lập lại sự kiện sinh trưởng theo trạng thái cây.
 func reschedule_crop(crop: Crop) -> void:
 	_growth.cancel(crop)
 	_schedule_crop(crop)
 
+## Trả các ô đang có cây được quản lý.
 func crop_cells() -> Array[Vector2i]:
 	return _crops.keys()
 
+## Ghi trạng thái đất và độ ẩm thành danh sách phục vụ lưu game.
 func capture_soil() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	if farmland == null or farmland.tile_set == null:
@@ -203,9 +221,11 @@ func capture_soil() -> Array[Dictionary]:
 					result.append({"cell": [cell.x, cell.y], "state": Soil.DRY, "moisture": 0.0})
 	return result
 
+## Kiểm tra terrain đất khô và ướt hợp lệ trước khi khôi phục.
 func can_restore_soil() -> bool:
 	return _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) and _valid_terrain(wet_soil, wet_terrain_set, wet_terrain)
 
+## Xóa trạng thái cây và lịch cũ, sau đó khôi phục dữ liệu đất.
 func restore_soil(records: Array) -> void:
 	# Retiring visuals have already left the logical crop dictionary.
 	for child: Node in get_parent().get_children():
@@ -236,6 +256,7 @@ func restore_soil(records: Array) -> void:
 	if not wet.is_empty():
 		wet_soil.set_cells_terrain_connect(wet, wet_terrain_set, wet_terrain, false)
 
+## Tạo lại cây tại ô từ định nghĩa, thời gian sinh trưởng và trạng thái chăm sóc đã lưu.
 func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, deadline: float, progress: float, now: float, fertilized: bool = false, pollination_reduction: float = 0.0, watered: bool = false, root_boost: bool = false, condition_data: Dictionary = {}) -> void:
 	var crop: Crop = CROP_SCENE.instantiate() as Crop
 	crop.time_manager = time_manager
@@ -248,15 +269,18 @@ func restore_crop(cell: Vector2i, definition: CropDefinition, planted: float, de
 	if apiary != null:
 		apiary.invalidate_sources()
 
+## Kiểm tra ô có được đánh dấu bị đối tượng chiếm dụng.
 func cell_is_occupied(cell: Vector2i) -> bool:
 	return _occupied.has(cell)
 
+## Đánh dấu hoặc giải phóng ô bị đối tượng chiếm dụng.
 func set_cell_occupied(cell: Vector2i, occupied: bool) -> void:
 	if occupied:
 		_occupied[cell] = true
 	else:
 		_occupied.erase(cell)
 
+## Cày một ô hợp lệ thành đất khô và phát sự kiện thay đổi.
 func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	if _area_busy or not _valid_terrain(dry_soil, dry_terrain_set, dry_terrain) or not can_till(cell, actor):
 		return false
@@ -267,6 +291,7 @@ func till(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	action_committed.emit(&"till", 1)
 	return true
 
+## Tưới một ô đất khô hợp lệ, đồng bộ thời tiết và cập nhật độ ẩm.
 func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	if _area_busy:
 		return false
@@ -291,9 +316,11 @@ func water(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 func _layer_cell(layer: TileMapLayer, cell: Vector2i) -> Vector2i:
 	return layer.local_to_map(layer.to_local(farmland.to_global(farmland.map_to_local(cell))))
 
+## Cho biết một thao tác theo vùng đang được áp dụng.
 func is_area_busy() -> bool:
 	return _area_busy
 
+## Áp dụng thao tác công cụ trên nhiều ô; trả số ô thay đổi và số hạt tiêu thụ.
 func apply_area(action: StringName, targets: Array[Vector2i], inventory: InventoryComponent = null, slot: int = -1, seed: ItemDefinition = null, actor: PhysicsBody2D = null, shared: bool = false) -> Dictionary:
 	var result: Dictionary = {"changed": 0, "seed_spent": 0}
 	if _area_busy or targets.is_empty() or targets.size() > ToolUpgradeState.MAX_LEVEL * ToolUpgradeState.MAX_LEVEL or FarmingAreaPolicy.tool_for(action).is_empty() or time_manager == null:
@@ -417,6 +444,7 @@ func _allowed(cell: Vector2i, permission: StringName, actor: PhysicsBody2D) -> b
 		query.exclude = [actor.get_rid()]
 	return farmland.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
+## Kiểm tra lớp bản đồ phủ có cản canh tác tại ô.
 func is_farming_blocked_by_overlay(cell: Vector2i) -> bool:
 	var center: Vector2 = farmland.to_global(farmland.map_to_local(cell))
 	if _layers_dirty:
@@ -433,6 +461,7 @@ func is_farming_blocked_by_overlay(cell: Vector2i) -> bool:
 			return true
 	return false
 
+## Trả lý do không thể bón phân tại ô, hoặc chuỗi rỗng khi hợp lệ.
 func fertilizer_error(cell: Vector2i, actor: PhysicsBody2D = null, sync_apiary: bool = true) -> String:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null:
@@ -443,6 +472,7 @@ func fertilizer_error(cell: Vector2i, actor: PhysicsBody2D = null, sync_apiary: 
 		apiary.sync()
 	return crop.fertilizer_error(time_manager.now())
 
+## Bón phân cho cây hợp lệ và cập nhật lịch sinh trưởng.
 func fertilize(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	if not fertilizer_error(cell, actor).is_empty():
 		return false
@@ -452,7 +482,7 @@ func fertilize(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	_schedule_crop(crop)
 	return true
 
-## Batch only already-open planting cells; rain never touches locked weeds/borders.
+## Tưới theo lô các ô canh tác đã mở; mưa không tác động vùng cỏ và biên còn khóa.
 func rain_water() -> void:
 	var dry: Array[Vector2i] = []
 	var wet: Array[Vector2i] = []
@@ -481,6 +511,7 @@ func rain_water() -> void:
 	for cell: Vector2i in changed:
 		soil_changed.emit(cell, Soil.DRY, Soil.WET)
 
+## Giảm thời gian ẩm và làm khô các ô đã hết độ ẩm.
 func evaporate_soil(seconds: float) -> void:
 	if seconds <= 0.0:
 		return
@@ -499,6 +530,7 @@ func evaporate_soil(seconds: float) -> void:
 		if not defer_soil_edges:
 			flush_soil_edges()
 
+## Cập nhật lại đường nối terrain của các ô ướt đang chờ.
 func flush_soil_edges() -> void:
 	if not _soil_edges_dirty:
 		return
@@ -511,6 +543,7 @@ func _initialize_quality(cell: Vector2i, crop: Crop) -> void:
 	if float(_moisture.get(cell, 0)) > 0.0 or (weather != null and weather.weather_at(time_manager.now()) == WeatherSchedule.Weather.RAIN):
 		crop.mark_watered()
 
+## Trả lý do không thể dùng thuốc kích rễ hoặc chuỗi rỗng.
 func root_error(cell: Vector2i, actor: PhysicsBody2D = null) -> String:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null:
@@ -519,17 +552,21 @@ func root_error(cell: Vector2i, actor: PhysicsBody2D = null) -> String:
 		return "This plot is unavailable."
 	return crop.root_error()
 
+## Dùng thuốc kích rễ khi cây và ô hợp lệ.
 func apply_root(cell: Vector2i, actor: PhysicsBody2D = null) -> bool:
 	return root_error(cell, actor).is_empty() and get_crop(cell).apply_root()
 
+## Cho biết ô có mục tiêu cây lâu năm dùng được bằng công cụ.
 func has_tree_tool_target(cell: Vector2i) -> bool:
 	return trees != null and trees.tool_target(cell) != null
 
+## Kiểm tra có thể cày đất hoặc đào cây tại ô.
 func can_tool(cell: Vector2i, actor: PhysicsBody2D = null, inventory: InventoryComponent = null) -> bool:
 	if can_till(cell, actor):
 		return true
 	return actor is FarmPlayer and trees != null and trees.can_dig(cell, inventory)
 
+## Trả lý do không thể xử lý sâu hoặc cỏ, hoặc chuỗi rỗng.
 func care_error(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> String:
 	var crop: Crop = get_crop(cell)
 	if crop == null or time_manager == null or not _allowed(cell, &"can_plant", actor):
@@ -541,6 +578,7 @@ func care_error(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null) -> Str
 	crop.refresh(time_manager.now())
 	return "" if (crop.conditions.pests if pests else crop.conditions.weeds) else "This crop does not need that treatment."
 
+## Xử lý sâu hoặc cỏ của cây hợp lệ và tùy chọn hiển thị hiệu ứng.
 func treat_crop(cell: Vector2i, pests: bool, actor: PhysicsBody2D = null, show_effect: bool = true) -> bool:
 	if not care_error(cell, pests, actor).is_empty():
 		return false

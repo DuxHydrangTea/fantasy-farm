@@ -1,11 +1,21 @@
 class_name PenUpgradeService
 extends RefCounted
-## Commit coins, level and effective capacity before notifying observers.
+## Điều phối báo giá và giao dịch nâng cấp sức chứa chuồng.
+##
+## Tiền, cấp và sức chứa được cập nhật trước khi phát signal để các bên
+## quan sát thấy trạng thái nhất quán. Nếu không ghi được cấp, tiền được hoàn lại.
+
+## Phát sau khi giao dịch thành công để yêu cầu lưu game.
 signal save_requested
+## Thế giới sở hữu các chuồng được quản lý.
 var world: FarmWorld
+## Ví dùng để thanh toán.
 var wallet: WalletComponent
+## Trạng thái cấp và khóa giao dịch.
 var state: PenUpgradeState = PenUpgradeState.new()
+## Bảng giá và ánh xạ mã chuồng.
 var catalog: PenUpgradeCatalog = PenUpgradeState.CATALOG
+## Cho biết profile đã sẵn sàng cho phép nâng cấp.
 var profile_ready: bool = false
 
 func _init(farm: FarmWorld) -> void:
@@ -13,15 +23,19 @@ func _init(farm: FarmWorld) -> void:
 	wallet = world.player.wallet
 	apply_capacities()
 
+## Kiểm tra chuồng còn hợp lệ, là con trực tiếp của thế giới và có mã trong catalog.
 func managed(pen: AnimalPen) -> bool:
 	return is_instance_valid(pen) and is_instance_valid(world) and pen.get_parent() == world and catalog.pen_kinds.has(String(pen.persistent_id))
 
+## Áp dụng sức chứa từ trạng thái nâng cấp cho mọi chuồng được quản lý.
 func apply_capacities() -> void:
 	for node: Node in world.get_children():
 		var pen: AnimalPen = node as AnimalPen
 		if managed(pen):
 			pen.capacity = state.capacity(pen.persistent_id)
 
+## Khôi phục cấp chuồng hợp lệ và cập nhật sức chứa thực tế.
+## Trả false nếu trạng thái từ chối dữ liệu hoặc đang có giao dịch.
 func restore(data: Dictionary) -> bool:
 	if not state.restore(data):
 		return false
@@ -31,6 +45,9 @@ func restore(data: Dictionary) -> bool:
 func _failure(code: String, message: String, offer: Dictionary = {}) -> Dictionary:
 	return offer.merged({"ok":false, "code":code, "error":message}, true)
 
+## Báo cấp, sức chứa hiện tại, sức chứa kế tiếp và giá cho chuồng.
+## Kết quả lỗi có [code]ok[/code] false, mã [code]code[/code] và [code]error[/code].
+## Các điều kiện gồm catalog, profile, giới hạn cấp, giao dịch khác và số dư.
 func quote(pen: AnimalPen) -> Dictionary:
 	if not catalog.valid() or not managed(pen) or not pen.is_inside_tree() or pen.is_queued_for_deletion() or not is_instance_valid(wallet):
 		return _failure("unavailable", "Pen upgrades are unavailable.")
@@ -47,6 +64,9 @@ func quote(pen: AnimalPen) -> Dictionary:
 		return _failure("insufficient_coins", "Not enough coins.", offer)
 	return offer
 
+## Mua nâng cấp sau khi kiểm tra lại báo giá và cấp, giá người gọi đã thấy.
+## Khi thành công trả sức chứa và giá, phát thay đổi ví, cấp và yêu cầu lưu.
+## Nếu cấp hoặc giá đã đổi, trả lỗi stale_offer để người gọi cập nhật báo giá.
 func purchase(pen: AnimalPen, expected_level: int, expected_price: int) -> Dictionary:
 	var offer: Dictionary = quote(pen)
 	if not offer.ok:

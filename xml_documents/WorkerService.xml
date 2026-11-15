@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerService" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối nhân công trên dòng thời gian sự kiện chung cho mọi vai trò. Quản lý hồ sơ, nhiệm vụ đặt trước và mô phỏng trực tuyến lẫn ngoại tuyến.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="reservations">
+			<return type="Dictionary" />
+			<param index="0" name="except_id" type="String" default="&quot;&quot;" />
+			<description>
+				Tạo ảnh chụp các ô, mục tiêu và vật phẩm do nhân công khác đặt trước; [param except_id] loại người đang xét.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="records_for">
+			<return type="Dictionary[]" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="employed_only" type="bool" default="false" />
+			<description>
+				Trả hồ sơ của vai trò; [param employed_only] chỉ giữ người đang được thuê.
+			</description>
+		</method>
+		<method name="record_for">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tìm hồ sơ theo mã nhân công; trả từ điển rỗng nếu không tồn tại.
+			</description>
+		</method>
+		<method name="record">
+			<return type="Dictionary" />
+			<param index="0" name="key" type="String" />
+			<description>
+				Tra theo mã hoặc vai trò; với vai trò ưu tiên người đang được thuê.
+			</description>
+		</method>
+		<method name="actor_for">
+			<return type="WorkerActor" />
+			<param index="0" name="key" type="String" />
+			<description>
+				Lấy node nhân công theo mã hoặc vai trò, hoặc [code]null[/code] khi chưa có.
+			</description>
+		</method>
+		<method name="bag_for">
+			<return type="InventoryComponent" />
+			<param index="0" name="key" type="String" />
+			<description>
+				Lấy túi nhân công; trả [code]null[/code] nếu node không còn hợp lệ.
+			</description>
+		</method>
+		<method name="worker_number">
+			<return type="int" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Trả số vị trí của nhân công, hoặc 0 nếu không tìm thấy.
+			</description>
+		</method>
+		<method name="task_duration">
+			<return type="float" />
+			<param index="0" name="job" type="Dictionary" />
+			<param index="1" name="actor" type="WorkerActor" />
+			<description>
+				Trả thời lượng riêng của nhiệm vụ, mặc định theo định nghĩa nhân công.
+			</description>
+		</method>
+		<method name="target_key">
+			<return type="String" />
+			<param index="0" name="job" type="Dictionary" />
+			<description>
+				Tạo khóa mục tiêu chuẩn hóa để phát hiện nhiệm vụ tranh cùng đối tượng.
+			</description>
+		</method>
+		<method name="target_available">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="job" type="Dictionary" />
+			<description>
+				Kiểm tra mục tiêu và các ô có bị nhân công khác đặt trước không.
+			</description>
+		</method>
+		<method name="reserved_items">
+			<return type="int" />
+			<param index="0" name="item_id" type="String" />
+			<param index="1" name="except_id" type="String" default="&quot;&quot;" />
+			<description>
+				Đếm vật phẩm được các nhiệm vụ đang chạy giữ chỗ, trừ nhân công chỉ định.
+			</description>
+		</method>
+		<method name="next_slot">
+			<return type="int" />
+			<param index="0" name="role" type="String" />
+			<description>
+				Tìm vị trí trống đầu tiên của vai trò; trả 0 khi đã đủ giới hạn.
+			</description>
+		</method>
+		<method name="spawn_point">
+			<return type="Vector2" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="zone" type="String" />
+			<param index="2" name="except_id" type="String" default="&quot;&quot;" />
+			<description>
+				Chọn vị trí gần nhà; nhân công trồng trọt thử ô lân cận để tránh chồng nhau.
+			</description>
+		</method>
+		<method name="output_inventory">
+			<return type="InventoryComponent" />
+			<description>
+				Trả kho nhận nông sản của trang trại.
+			</description>
+		</method>
+		<method name="feed_inventory">
+			<return type="InventoryComponent" />
+			<param index="0" name="key" type="String" />
+			<description>
+				Trả kho vật tư trang trại dùng làm nguồn cấp.
+			</description>
+		</method>
+		<method name="_warehouse_changed">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_drain_legacy_products">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_drain_archived_baskets">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="available">
+			<return type="bool" />
+			<description>
+				Kiểm tra thế giới sẵn sàng và kho không bận.
+			</description>
+		</method>
+		<method name="unlock_error">
+			<return type="String" />
+			<param index="0" name="role" type="String" />
+			<description>
+				Trả thông báo khi chưa đủ điều kiện mở nhân công, hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="hire">
+			<return type="String" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="zone" type="String" default="&quot;&quot;" />
+			<description>
+				Thuê hoặc thuê lại sau khi đồng bộ thời gian; kiểm tra giới hạn, tiền công và lượt dùng thử.
+			</description>
+		</method>
+		<method name="dismiss">
+			<return type="String" />
+			<param index="0" name="role" type="String" />
+			<description>
+				Cho nhân công nghỉ sau khi đồng bộ mô phỏng.
+			</description>
+		</method>
+		<method name="set_active">
+			<return type="String" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="active" type="bool" />
+			<description>
+				Bật hoặc tạm dừng nhân công và đồng bộ nhiệm vụ.
+			</description>
+		</method>
+		<method name="transfer">
+			<return type="int" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="customer" type="InventoryComponent" />
+			<param index="2" name="deposit" type="bool" />
+			<param index="3" name="supplies" type="bool" />
+			<description>
+				Chuyển sản phẩm còn trong túi nhân công về kho khi có thể.
+			</description>
+		</method>
+		<method name="_spawn">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="pay_daily_wage">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="day" type="int" />
+			<description>
+				Xử lý tiền công theo ngày và cập nhật trạng thái thuê.
+			</description>
+		</method>
+		<method name="blocked">
+			<return type="void" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Thử vị trí thay thế khi nhân công bị chặn, sau đó tạm chặn mục tiêu.
+			</description>
+		</method>
+		<method name="_before_tick">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="settle">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Đồng bộ các sự kiện nhân công tới thời điểm yêu cầu.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="bool" />
+			<param index="0" name="until" type="float" />
+			<param index="1" name="offline" type="bool" default="true" />
+			<param index="2" name="budget_usec" type="int" default="0" />
+			<description>
+				Chạy bộ lập lịch tới thời điểm đích trong ngân sách sự kiện cho phép.
+			</description>
+		</method>
+		<method name="prepare_simulation_event">
+			<return type="void" />
+			<param index="0" name="offline" type="bool" />
+			<description>
+				Chuẩn bị trạng thái thế giới tại thời điểm của sự kiện mô phỏng.
+			</description>
+		</method>
+		<method name="advance_async">
+			<return type="void" />
+			<param index="0" name="until" type="float" />
+			<param index="1" name="budget_usec" type="int" default="32000" />
+			<description>
+				Đồng bộ ngoại tuyến theo từng đợt, nhường khung hình và phát tiến độ.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Đóng gói hồ sơ, túi đồ và mốc thời gian để ghi bản lưu.
+			</description>
+		</method>
+		<method name="is_saved_task_target_valid">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="land_blocks" type="int" />
+			<description>
+				Kiểm tra mục tiêu nhiệm vụ lưu còn hợp lệ với thế giới hiện tại.
+			</description>
+		</method>
+		<method name="sync_after_restore">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Đồng bộ node và trạng thái phụ thuộc sau khi khôi phục.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<description>
+				Khôi phục hồ sơ và tạo lại nhân công từ dữ liệu lưu.
+			</description>
+		</method>
+		<method name="request_scan">
+			<return type="void" />
+			<param index="0" name="role" type="String" />
+			<description>
+				Yêu cầu nhân công thuộc vai trò kiểm tra lại công việc có thể nhận.
+			</description>
+		</method>
+		<method name="_crop_treated">
+			<return type="void" />
+			<param index="0" name="_cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_node_added">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_flush_pickups">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_drain_pickups">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_pickup_added">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_pen_produce_changed">
+			<return type="void" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<description>
+			</description>
+		</method>
+		<method name="_trough_changed">
+			<return type="void" />
+			<param index="0" name="stock" type="int" />
+			<param index="1" name="trough" type="AnimalTrough" />
+			<description>
+			</description>
+		</method>
+		<method name="running">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Cho biết hồ sơ hiện đủ điều kiện thực hiện nhiệm vụ hay không.
+			</description>
+		</method>
+		<method name="configure_priority">
+			<return type="bool" />
+			<param index="0" name="mode" type="String" />
+			<description>
+				Cập nhật ưu tiên công việc và yêu cầu tìm lại nhiệm vụ.
+			</description>
+		</method>
+		<method name="_resume_task">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="configure_crop">
+			<return type="String" />
+			<param index="0" name="plant" type="bool" />
+			<param index="1" name="fertilizer" type="bool" />
+			<param index="2" name="pause" type="bool" />
+			<description>
+				Cập nhật tự gieo, tự bón và tạm dừng sau khi đồng bộ; trả lỗi hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="_soil_changed">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="_old" type="int" />
+			<param index="2" name="current" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_crop_planted">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="_crop" type="Crop" />
+			<description>
+			</description>
+		</method>
+		<method name="_crop_harvested">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="configure_wait_for_care">
+			<return type="bool" />
+			<param index="0" name="enabled" type="bool" />
+			<description>
+				Đổi tùy chọn chờ chăm sóc trước thu hoạch, hủy nhiệm vụ cũ và quét lại.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="bridge" type="WorkerWorldBridge" setter="" getter="">
+		</member>
+		<member name="records" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="actors" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="trial_used" type="String[]" setter="" getter="" default="[]">
+		</member>
+		<member name="next_order" type="int" setter="" getter="" default="1">
+		</member>
+		<member name="simulated_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="blocked_targets" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="waiting_reasons" type="Dictionary[String, String]" setter="" getter="" default="{}">
+		</member>
+		<member name="trough_levels" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="pen_produce_levels" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="legacy_pending" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="crop_automation" type="CropAutomationState" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_pending_pickups" type="WeakRef[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_catching_up" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="upgrades" type="WorkerUpgradeState" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_shop" type="WorkerUpgradeService" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="legacy_baskets" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="crop_policy" type="CropWorkerPolicy" setter="" getter="">
+		</member>
+		<member name="navigation" type="WorkerNavigationSystem" setter="" getter="">
+		</member>
+		<member name="_scheduler" type="WorkerScheduler" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_syncing_offline" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="profiling" type="bool" setter="" getter="" default="false">
+			Opt-in counters for the isolated rendered benchmark.
+		</member>
+		<member name="scheduler_usec" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="commit_usec" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="commit_max_usec" type="int" setter="" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="wage_paid">
+			<description>
+			</description>
+		</signal>
+		<signal name="changed">
+			<description>
+			</description>
+		</signal>
+		<signal name="catch_up_progress">
+			<param index="0" name="fraction" type="float" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="SCENES" value="{&quot;crop&quot;: &lt;Object&gt;}">
+		</constant>
+		<constant name="DEFINITIONS" value="{&quot;crop&quot;: &lt;Object&gt;}">
+		</constant>
+	</constants>
+</class>

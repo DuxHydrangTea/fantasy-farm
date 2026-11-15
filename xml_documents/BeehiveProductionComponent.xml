@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BeehiveProductionComponent" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tích lũy công việc cho tối đa một mẻ mật đang làm hoặc đã sẵn sàng. Nguồn hoa được tính theo công việc đã đóng góp trong mẻ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="seconds" type="float" />
+			<param index="1" name="source" type="String" />
+			<param index="2" name="recipe" type="String" default="&quot;mixed&quot;" />
+			<description>
+				Cộng thời gian sản xuất theo nguồn và hệ số, giới hạn tại một mẻ. Khi đủ công việc, xác định sản phẩm và dừng tích lũy đến khi được thu.
+			</description>
+		</method>
+		<method name="dominant_source">
+			<return type="String" />
+			<description>
+				Chọn nguồn đóng góp nhiều nhất nếu đạt tỉ lệ đặc sản, hoặc chuỗi rỗng. Khi đóng góp bằng nhau, dùng mã nguồn theo thứ tự chữ.
+			</description>
+		</method>
+		<method name="expected_item">
+			<return type="ItemDefinition" />
+			<description>
+				Xác định vật phẩm của mẻ từ công thức vườn hoặc nguồn đóng góp chủ đạo.
+			</description>
+		</method>
+		<method name="batch_amount">
+			<return type="int" />
+			<description>
+				Mẻ cũ cho một đơn vị; mẻ mới dùng số lượng trong cấu hình.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="ItemDefinition" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Thu trọn mẻ vào túi nếu đủ chỗ, trả vật phẩm đã thu hoặc null. Trạng thái tổ được xóa trước khi inventory phát signal để tránh thu lặp.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Chụp tiến độ, đóng góp, mã sản phẩm và cờ mẻ cũ để lưu.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="definition" type="BeehiveDefinition" setter="" getter="">
+			Quy tắc tốc độ, ngưỡng đặc sản và sản phẩm.
+		</member>
+		<member name="work" type="float" setter="" getter="" default="0.0">
+			Công việc đã tích lũy trong mẻ, tính bằng giây cơ sở.
+		</member>
+		<member name="contributions" type="Dictionary" setter="" getter="" default="{}">
+			Công việc đóng góp theo mã nguồn hoa.
+		</member>
+		<member name="ready_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm hoàn thành đang chờ thu, hoặc null.
+		</member>
+		<member name="legacy_batch" type="bool" setter="" getter="" default="false">
+			Mẻ được chuyển từ dữ liệu cũ và dùng quy tắc cũ.
+		</member>
+		<member name="batch_recipe" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã công thức đã chốt khi bắt đầu mẻ trong chế độ vườn.
+		</member>
+		<member name="garden_mode" type="bool" setter="" getter="" default="false">
+			Sử dụng công thức bố trí hoa trong vườn.
+		</member>
+		<member name="pause_new_batches" type="bool" setter="" getter="" default="false">
+			Tạm dừng khởi đầu mẻ mới nhưng cho phép mẻ đang làm tiếp tục.
+		</member>
+		<member name="_collecting" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

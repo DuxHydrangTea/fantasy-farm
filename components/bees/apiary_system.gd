@@ -1,18 +1,30 @@
 class_name ApiarySystem
 extends Node
-## Farm-scoped clock orchestration. Sweep bloom/deadline boundaries, including offline.
+## Điều phối tổ ong, nguồn hoa và thưởng thụ phấn theo đồng hồ trang trại.
+## Khoảng mô phỏng được chia tại ranh giới thời tiết, hoa nở và cây chín để
+## xử lý cả tiến trình offline. Mỗi nguồn hoa được phân cho một tổ phù hợp.
+
+## Bộ điều khiển cây trồng và thời tiết.
 var farming: FarmingController
+## Thế giới chứa tổ ong và vườn.
 var world: FarmWorld
+## Đồng hồ trang trại.
 var clock: FarmClock
+## Quy tắc dùng chung cho tổ ong.
 var definition: BeehiveDefinition = preload("res://resources/bees/beehive.tres")
+## Các tổ đang có trong thế giới.
 var hives: Array[Beehive] = []
+## Các vườn hoa thuộc thế giới.
 var gardens: Array[FlowerGarden] = []
+## Mốc thời gian đã xử lý gần nhất.
 var last_at: float = 0.0
+## Ngăn mô phỏng trong lúc khôi phục dữ liệu.
 var loading: bool = true
 var _advancing: bool = false
 var _placing: bool = false
 var _boosted: Array[Crop] = []
 var _weather_at: float = 0.0
+## Bộ chọn tổ theo hình học và slot cố định.
 const Assignment = preload("res://components/bees/pollination_assignment.gd")
 var _owner_signature: Array = []
 var _owners: Dictionary = {}
@@ -41,10 +53,12 @@ func _ready() -> void:
 	farming.crop_planted.connect(invalidate_sources)
 	farming.crop_harvested.connect(invalidate_sources)
 
+## Tiến mô phỏng đến thời gian hiện tại của đồng hồ.
 func sync() -> void:
 	if clock != null:
 		advance(clock.now())
 
+## Đánh dấu cache nguồn hoa cần dựng lại sau khi cây hoặc vườn thay đổi.
 func invalidate_sources(_cell: Vector2i = Vector2i.ZERO, _crop: Crop = null) -> void:
 	_flowers_dirty = true
 	_source_revision += 1
@@ -108,9 +122,11 @@ func _nearby_crops(radius_squared: float) -> Array[Crop]:
 				break
 	return _nearby
 
+## Bán kính thụ phấn tại thời điểm, có tính hệ số thời tiết.
 func effective_radius(timestamp: float) -> float:
 	return definition.radius * (farming.weather.radius_multiplier(timestamp) if farming.weather != null else 1.0)
 
+## Kiểm tra lịch thời tiết đang mưa tại thời điểm.
 func raining(timestamp: float) -> bool:
 	return farming.weather != null and farming.weather.weather_at(timestamp) == WeatherManager.Weather.RAIN
 
@@ -158,6 +174,8 @@ func _assign(sources: Array[Dictionary], timestamp: float) -> void:
 	for hive: Beehive in hives:
 		hive.pollination.resolve(hive.global_position, definition, hive.production.legacy_batch)
 
+## Tiến cây và tổ đến timestamp, cập nhật nguồn hoa, mật và giảm thời gian chín.
+## Không tiến lùi và bỏ qua lời gọi lồng nhau hoặc khi đang tải.
 func advance(timestamp: float) -> void:
 	if loading or _advancing:
 		return
@@ -233,6 +251,7 @@ func _update_boosted(next: Array[Crop], timestamp: float) -> void:
 			farming.unschedule_crop(crop)
 	_boosted = next
 
+## Kiểm tra điểm cây được thụ phấn theo thời tiết đã xử lý gần nhất.
 func crop_is_pollinated(point: Vector2) -> bool:
 	var radius_squared: float = pow(effective_radius(_weather_at), 2)
 	return _point_is_pollinated(point, radius_squared)
@@ -243,9 +262,12 @@ func _point_is_pollinated(point: Vector2, radius_squared: float) -> bool:
 			return true
 	return false
 
+## Làm tròn vị trí toàn cục về tâm ô farmland.
 func snap_position(point: Vector2) -> Vector2:
 	return farming.farmland.to_global(farming.farmland.map_to_local(farming.world_to_cell(point)))
 
+## Kiểm tra đất mở, nền, vật cản và quy tắc vườn cho vị trí đặt tổ.
+## Trả chuỗi rỗng nếu hợp lệ; chế độ restoring dùng các ngoại lệ va chạm khi tải.
 func placement_error(point: Vector2, columns: int = -1, restoring: bool = false, legacy_garden: bool = false) -> String:
 	if not restoring and world.honey_garden != null and world.honey_garden.garden() != null and Rect2(Vector2.ZERO,FlowerGarden.SIZE).has_point(world.honey_garden.garden().to_local(point)):
 		return "Use the three fixed garden hives."
@@ -286,6 +308,8 @@ func placement_error(point: Vector2, columns: int = -1, restoring: bool = false,
 			return "This space is blocked."
 	return ""
 
+## Kiểm tra vị trí và ô túi, đồng bộ thời gian rồi đặt tổ và tiêu một vật phẩm.
+## Thành công trả actor tổ; thất bại trả thông báo lỗi.
 func place(point: Vector2, player: FarmPlayer, slot: int) -> Dictionary:
 	if _placing or loading or player == null or player.selection.is_menu_open() or player.state.current_state in [StateComponent.State.TOOL,StateComponent.State.WATER]:
 		return {"ok":false,"error":"Hive placement is unavailable."}
@@ -307,6 +331,7 @@ func place(point: Vector2, player: FarmPlayer, slot: int) -> Dictionary:
 	player.state.navigation.invalidate_cache()
 	return {"ok":true,"hive":hive}
 
+## Tạo tổ và đăng ký ô chiếm; nơi gọi chịu trách nhiệm kiểm tra trước vị trí.
 func create_hive(point: Vector2, id: StringName) -> Beehive:
 	var hive: Beehive = Beehive.new()
 	hive.definition = definition
@@ -318,6 +343,7 @@ func create_hive(point: Vector2, id: StringName) -> Beehive:
 	farming.set_cell_occupied(farming.world_to_cell(point),true)
 	return hive
 
+## Ngừng mô phỏng, xóa cache nguồn và loại các tổ hiện tại trước khi khôi phục.
 func begin_restore() -> void:
 	loading = true
 	invalidate_sources()
@@ -336,6 +362,7 @@ func begin_restore() -> void:
 	hives.clear()
 	_boosted.clear()
 
+## Dựng tổ từ bản ghi đã kiểm tra, rồi tiến từ thời điểm lưu đến now.
 func restore(rows: Array, saved_at: float, now: float) -> void:
 	for row: Dictionary in rows:
 		var hive: Beehive = create_hive(world.to_global(Vector2(row.position[0],row.position[1])),StringName(row.id))

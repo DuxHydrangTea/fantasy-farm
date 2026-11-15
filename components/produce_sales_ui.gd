@@ -1,6 +1,7 @@
 class_name ProduceSalesUI
 extends TradeMenu
-## Quality-scoped selling view; all inventory and coin mutations stay in the service.
+## Giao diện bán nông sản theo chất lượng; dịch vụ bán chịu trách nhiệm thay đổi kho và tiền.
+
 @export var catalog: ProducePriceCatalog
 @onready var panel: PanelContainer = %Panel
 @onready var body: VBoxContainer = %Body
@@ -163,6 +164,7 @@ func _order_warning() -> String:
 		return tr("Sell all also sells items requested by your orders. Deliver them at the order board first if you want to keep them.")
 	return ""
 
+## Chốt số lượng nhập và yêu cầu dịch vụ bán nông sản.
 func sell_quantity() -> void:
 	if not is_open:
 		return
@@ -170,6 +172,7 @@ func sell_quantity() -> void:
 	# The service rechecks stock and wallet after the entered text is committed.
 	_show_result(service.sell(selected, int(quantity.value)))
 
+## Yêu cầu bán toàn bộ khi menu đang mở.
 func sell_all() -> void:
 	if is_open:
 		_show_result(service.sell_all())

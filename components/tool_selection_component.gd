@@ -1,5 +1,7 @@
 class_name ToolSelectionComponent
 extends Node
+## Quản lý lựa chọn thanh công cụ, nguồn hạt trong kho và trạng thái các menu loại trừ nhau.
+## Revision thay đổi khi lựa chọn đổi để thao tác đang diễn ra không tiêu nhầm vật phẩm.
 
 signal selection_changed(index: int, tool: StringName)
 signal inventory_visibility_changed(open: bool)
@@ -20,6 +22,7 @@ var storage_service: FarmStorageService
 var storage_seed_id: StringName = &""
 var revision: int = 0
 
+## Chọn mã hạt trong kho hoặc bỏ chọn; tăng revision để vô hiệu thao tác cũ.
 func select_storage_seed(id: StringName) -> bool:
 	if not id.is_empty() and (storage_service == null or storage_service.seed_item(id) == null):
 		return false
@@ -28,9 +31,11 @@ func select_storage_seed(id: StringName) -> bool:
 	_on_inventory_changed()
 	return true
 
+## Trả nguồn kho đang được dùng để gieo hạt.
 func planting_inventory() -> InventoryComponent:
 	return storage_service.inventory("farm_supply_storage") if uses_storage_seeds() else inventory
 
+## Kiểm tra lựa chọn hiện tại là hạt trồng được và có dịch vụ kho.
 func uses_storage_seeds() -> bool:
 	var item: ItemDefinition = get_selected_item()
 	return storage_service != null and item != null and item.item_type == ItemDefinition.ItemType.SEED and item.crop is CropDefinition
@@ -46,6 +51,7 @@ func _ready() -> void:
 			inventory.add(starting_feed, starting_feed_amount)
 	inventory.changed.connect(_on_inventory_changed)
 
+## Đổi trạng thái túi nếu không có menu xung đột.
 func set_inventory_open(open: bool) -> void:
 	if open and (shop_open or objectives_open):
 		return
@@ -53,6 +59,7 @@ func set_inventory_open(open: bool) -> void:
 		inventory_open = open
 		inventory_visibility_changed.emit(open)
 
+## Đổi trạng thái cửa hàng nếu không có menu xung đột.
 func set_shop_open(open: bool) -> void:
 	if open and (inventory_open or objectives_open):
 		return
@@ -60,9 +67,11 @@ func set_shop_open(open: bool) -> void:
 		shop_open = open
 		shop_visibility_changed.emit(open)
 
+## Cho biết túi, cửa hàng hoặc mục tiêu đang mở.
 func is_menu_open() -> bool:
 	return inventory_open or shop_open or objectives_open
 
+## Đổi trạng thái menu mục tiêu nếu không có menu xung đột.
 func set_objectives_open(open: bool) -> void:
 	if open and (inventory_open or shop_open):
 		return
@@ -70,6 +79,7 @@ func set_objectives_open(open: bool) -> void:
 		objectives_open = open
 		objectives_visibility_changed.emit(open)
 
+## Trả hạt từ kho hoặc vật phẩm ở ô đang chọn.
 func get_selected_item() -> ItemDefinition:
 	if not storage_seed_id.is_empty() and storage_service != null:
 		return storage_service.seed_item(storage_seed_id)
@@ -79,6 +89,7 @@ func _on_inventory_changed() -> void:
 	var item: ItemDefinition = get_selected_item()
 	selection_changed.emit(selected_index, item.item_id if item != null else &"")
 
+## Chọn ô thanh công cụ hoặc -1 để bỏ chọn; trả false nếu ngoài phạm vi.
 func select_slot(index: int) -> bool:
 	if index < -1 or index >= HOTBAR_SIZE:
 		return false
@@ -89,18 +100,20 @@ func select_slot(index: int) -> bool:
 		_on_inventory_changed()
 	return true
 
-## User input toggles a slot; programmatic select_slot remains idempotent.
+## Bật hoặc bỏ chọn khi người chơi nhấn cùng ô; select_slot chỉ đặt lựa chọn.
 func toggle_slot(index: int) -> bool:
 	if index < 0 or index >= HOTBAR_SIZE:
 		return false
 	return select_slot(-1 if index == selected_index and storage_seed_id.is_empty() else index)
 
+## Chuyển lựa chọn theo bước và quay vòng ở hai đầu thanh.
 func cycle_selection(step: int) -> void:
 	if selected_index < 0:
 		select_slot(0 if step >= 0 else HOTBAR_SIZE - 1)
 	else:
 		select_slot(posmod(selected_index + step, HOTBAR_SIZE))
 
+## Suy ra hành động từ loại vật phẩm được chọn.
 func get_selected_action() -> StringName:
 	var item: ItemDefinition = get_selected_item()
 	if item != null and item.item_type == ItemDefinition.ItemType.PLACEABLE:
@@ -113,6 +126,7 @@ func get_selected_action() -> StringName:
 		return &"water" if item.tool_type == ItemDefinition.ToolType.WATERING_CAN else &"tool"
 	return &""
 
+## Trả tên vật phẩm và chất lượng hoặc nhãn tay trống, ô trống.
 func get_selected_name() -> String:
 	var item: ItemDefinition = get_selected_item()
 	return ItemQuality.item_name(item, inventory.slot(selected_index).tiers) if item != null else tr("Empty hands") if selected_index < 0 else tr("Empty slot")

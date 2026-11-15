@@ -1,22 +1,35 @@
 class_name HoneyGardenSystem
 extends Node
-## Owns the fixed garden layout, atomic legacy conversion, repairs and journal.
+## Điều phối bố cục tổ ong cố định, chuyển đổi vườn cũ, sửa tổ và nhật ký mật.
+## Chuyển đổi chỉ bắt đầu sau khi kiểm tra xong vị trí, các mẻ cũ và sức chứa túi.
+
+## Phát khi trạng thái vườn, tổ hoặc khám phá thay đổi.
 signal changed
+## Hình học vườn hoa.
 const Layout = preload("res://scripts/flower_garden_layout.gd")
+## Các ô trung tâm xác định công thức hoa quanh ba tổ.
 const CENTERS: Array[Vector2i] = [Vector2i(1,2), Vector2i(1,6), Vector2i(8,2)]
 # Physical hives sit on the path below the beds; CENTERS only defines flower recipes.
+## Vị trí vật lý của ba tổ trên lối đi trong tọa độ vườn.
 const HIVE_POSITIONS: Array[Vector2] = [Vector2(64, 280), Vector2(192, 280), Vector2(320, 280)]
+## Thế giới chứa vườn và các hệ thống giao dịch.
 var world: FarmWorld
+## Cho biết chuyển đổi bố cục cũ đã hoàn tất.
 var migrated: bool = false
+## Mã công thức mật đã được khám phá qua nấu ăn.
 var discoveries: Array[String] = []
+## Khóa thao tác vườn.
 var busy: bool = false
+## Thông báo nguồn hiện tại cho giao diện.
 var notice: String = ""
 var _elapsed: float = 0.0
 var _notice_label: Label
 
+## Tạo dữ liệu lưu ban đầu chưa chuyển đổi và chưa có khám phá.
 static func fresh() -> Dictionary:
 	return {"migrated":false, "discoveries":[]}
 
+## Kiểm tra cấu trúc và mã khám phá hợp lệ, không trùng.
 static func valid(data: Variant) -> bool:
 	if not data is Dictionary or data.size() != 2 or not data.get("migrated") is bool or not data.get("discoveries") is Array:
 		return false
@@ -41,16 +54,20 @@ func _ready() -> void:
 		_notice_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		garden().add_child(_notice_label)
 
+## Lấy vườn đầu tiên trong hệ thống ong, hoặc null.
 func garden() -> FlowerGarden:
 	return world.apiary.gardens[0] if not world.apiary.gardens.is_empty() else null
 
+## Kiểm tra tổ thuộc slot vườn hoặc nằm trong biên hình học vườn.
 func inside(hive: Beehive) -> bool:
 	var area: FlowerGarden = garden()
 	return area != null and ((hive.garden_slot >= 0 and hive.garden_id == String(area.persistent_id)) or Rect2(Vector2.ZERO, FlowerGarden.SIZE).has_point(area.to_local(hive.global_position)))
 
+## Tọa độ toàn cục của vị trí vật lý tổ theo slot.
 func center_point(slot: int) -> Vector2:
 	return garden().to_global(HIVE_POSITIONS[slot])
 
+## Tìm slot sở hữu ô hoa lân cận trung tâm, hoặc -1 nếu không thuộc.
 func owner_slot(cell: Vector2i) -> int:
 	for slot: int in range(3):
 		var offset: Vector2i = cell - CENTERS[slot]
@@ -58,14 +75,17 @@ func owner_slot(cell: Vector2i) -> int:
 			return slot
 	return -1
 
+## Ngăn tổ vườn cũ bắt đầu mẻ mới trong khi chờ chuyển đổi.
 func prepare_waiting() -> void:
 	# This runs before catch-up too: draining a batch must never start another.
 	for hive: Beehive in world.apiary.hives:
 		hive.production.pause_new_batches = not migrated and inside(hive)
 
+## Sao chép trạng thái chuyển đổi và danh sách khám phá để lưu.
 func capture() -> Dictionary:
 	return {"migrated":migrated, "discoveries":discoveries.duplicate()}
 
+## Khôi phục dữ liệu đã kiểm tra và giải phóng các ô trung tâm.
 func restore(data: Dictionary) -> void:
 	migrated = data.migrated
 	discoveries.assign(data.discoveries)
@@ -91,6 +111,8 @@ func _process(delta: float) -> void:
 			_notice_label.text = tr(notice)
 			_notice_label.visible = not notice.is_empty()
 
+## Thử chuyển các tổ cũ vào ba vị trí cố định sau khi các mẻ cũ được thu.
+## Nếu bị chặn hoặc túi không đủ chỗ nhận tổ dư, giữ nguyên và báo lý do chờ.
 func try_migrate() -> bool:
 	if migrated:
 		return true
@@ -152,6 +174,7 @@ func try_migrate() -> bool:
 	_lock(false)
 	return true
 
+## Chọn công thức từ các nguồn hoa đã nở quanh slot của tổ tại timestamp.
 func recipe_for(hive: Beehive, sources: Array[Dictionary], timestamp: float) -> String:
 	var blooms: Dictionary = {}
 	for source: Dictionary in sources:
@@ -159,6 +182,7 @@ func recipe_for(hive: Beehive, sources: Array[Dictionary], timestamp: float) -> 
 			blooms[source.cell - CENTERS[hive.garden_slot]] = source.type
 	return HoneyComboCatalog.resolve(blooms)
 
+## Kiểm tra hệ thống sẵn sàng và người chơi tiếp cận được tổ; trả lỗi hoặc rỗng.
 func access_error(hive: Beehive) -> String:
 	if busy or not world.tool_upgrades.profile_ready or world.workers.busy or world.storages.busy or world.apiary.loading or world.apiary._advancing or world.cooking.busy or world.wood_market.busy or world.tool_upgrade_state.is_busy():
 		return "Bee journal is unavailable."
@@ -166,6 +190,8 @@ func access_error(hive: Beehive) -> String:
 		return "Move closer to the hive."
 	return ""
 
+## Đồng bộ công nhân và ong, rồi sửa tổ vườn bằng 15 gỗ thường và 500 xu.
+## Trả chuỗi rỗng khi thành công hoặc thông báo lỗi.
 func repair(hive: Beehive) -> String:
 	var error: String = access_error(hive)
 	if not error.is_empty():
@@ -195,6 +221,7 @@ func repair(hive: Beehive) -> String:
 	_lock(false)
 	return ""
 
+## Đồng bộ và thu trọn mẻ mật vào túi, trả lỗi nếu chưa sẵn sàng hoặc túi không đủ.
 func collect(hive: Beehive) -> String:
 	var error: String = access_error(hive)
 	if not error.is_empty():

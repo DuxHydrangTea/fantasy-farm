@@ -1,13 +1,23 @@
 class_name OrderService
 extends RefCounted
-## Deterministic rotation and atomic full delivery. No timers or offline rerolls.
+## Quản lý ba ô đơn hàng xoay vòng xác định và giao hàng toàn bộ.
+## Đơn không tự đổi theo thời gian hoặc khi mô phỏng offline.
+
+## Phát sau khi các ô đơn hoặc dữ liệu hoàn thành thay đổi.
 signal changed
+## Catalog đơn hiện hành mặc định.
 const DEFAULT_CATALOG: OrderCatalog = preload("res://resources/orders/farm_orders.tres")
+## Catalog giá dùng để tính mức thưởng giao hoàn hảo.
 const SALE_PRICES: ProducePriceCatalog = preload("res://resources/shops/produce_prices.tres")
+## Phần trăm giá bán tối thiểu được trả cho giao hàng hoàn hảo.
 const PERFECT_SALE_PERCENT: int = 110
+## Catalog định nghĩa đơn.
 var catalog: OrderCatalog
+## Túi chứa hàng giao.
 var inventory: InventoryComponent
+## Ví nhận thưởng.
 var wallet: WalletComponent
+## Hàm kiểm tra đơn có nguồn sản phẩm trong thế giới.
 var eligibility: Callable
 var _data: Dictionary = OrderSaveSchema.fresh()
 var _busy: bool = false
@@ -19,13 +29,16 @@ func _init(bag: InventoryComponent, purse: WalletComponent, available: Callable,
 	eligibility = available
 	catalog = definitions
 
+## Điền các ô trống khi bảng chưa được khởi tạo.
 func initialize() -> void:
 	if not _data.initialized:
 		fill_empty()
 
+## Tạo bản sao sâu trạng thái bảng đơn để lưu.
 func capture() -> Dictionary:
 	return _data.duplicate(true)
 
+## Kiểm tra và khôi phục bảng đơn; điền ô nếu dữ liệu chưa khởi tạo.
 func restore(data: Dictionary) -> bool:
 	if _busy or not OrderSaveSchema.valid(data, catalog):
 		return false
@@ -61,6 +74,8 @@ func _fill(index: int) -> void:
 		_data.cursor = (next + 1) % catalog.entries.size()
 		return
 
+## Điền các ô trống bằng đơn đủ điều kiện theo con trỏ xoay vòng.
+## Một mẫu không xuất hiện đồng thời ở nhiều ô.
 func fill_empty() -> void:
 	if _busy:
 		return
@@ -78,10 +93,15 @@ func _index(serial: int) -> int:
 			return index
 	return -1
 
+## Tìm định nghĩa của đơn đang hoạt động theo serial, hoặc null.
 func definition(serial: int) -> OrderDefinition:
 	var index: int = _index(serial)
 	return catalog.find(StringName(_data.slots[index].template)) if index >= 0 else null
 
+## Tính kế hoạch giao đầy đủ và phần thưởng mà không thay đổi túi hoặc đơn.
+## Giao thường dùng cấp thường; giao hoàn hảo dùng bạc trước vàng và thưởng
+## ít nhất 110% tổng giá bán các vật phẩm theo chất lượng.
+## Trả lỗi nếu thiếu hàng, thiếu giá hoặc ví không còn đủ chỗ.
 func quote(serial: int, perfect: bool = false) -> Dictionary:
 	var entry: OrderDefinition = definition(serial)
 	if entry == null:
@@ -113,6 +133,8 @@ func quote(serial: int, perfect: bool = false) -> Dictionary:
 		return {"ok":false,"error":"Your wallet has reached its coin limit."}
 	return {"ok":true,"coins":coins,"perfect":perfect,"serial":serial,"rows":rows,"sale_coins":sale_coins}
 
+## Kiểm tra lại kế hoạch, trừ hàng, cộng xu, thay đơn và phát thông báo.
+## Nếu truyền expected, kế hoạch phải khớp bản xem trước để tránh giao nhầm cấp.
 func deliver(serial: int, perfect: bool = false, expected: Dictionary = {}) -> Dictionary:
 	if _busy:
 		return {"ok":false,"error":"A trade is in progress."}
@@ -136,6 +158,7 @@ func deliver(serial: int, perfect: bool = false, expected: Dictionary = {}) -> D
 	_busy = false
 	return plan
 
+## Bỏ đơn đang hoạt động và thử chọn đơn thay thế theo vòng xoay.
 func abandon(serial: int) -> Dictionary:
 	if _busy or _index(serial) < 0:
 		return {"ok": false, "error": "This order has changed. Select it again."}
@@ -147,6 +170,7 @@ func abandon(serial: int) -> Dictionary:
 	_busy = false
 	return {"ok": true}
 
+## Cho biết túi có ít nhất một vật phẩm thuộc các đơn đang hoạt động ở bất kỳ cấp nào.
 func requested_in_bag() -> bool:
 	for row: Dictionary in _data.slots:
 		if row.is_empty():

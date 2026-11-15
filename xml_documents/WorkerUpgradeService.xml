@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerUpgradeService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Báo giá và mua nâng cấp công nhân bằng xu.
+	</brief_description>
+	<description>
+		Trước khi thanh toán, dịch vụ chốt mô phỏng và kiểm tra lại báo giá vì việc chốt có thể trả lương hoặc kích hoạt callback làm thay đổi trạng thái.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="track" type="String" />
+			<description>
+				Trả báo giá có hướng, cấp hiện tại, cấp kế tiếp và giá. Trường [code]ok[/code] false và [code]error[/code] mô tả trường hợp hướng không hợp lệ, đã tối đa, công nhân không sẵn sàng hoặc không đủ xu.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="track" type="String" />
+			<param index="1" name="expected_level" type="int" />
+			<param index="2" name="expected_price" type="int" />
+			<description>
+				Mua nâng cấp nếu cấp và giá vẫn khớp báo giá người gọi đã thấy. Chốt thời gian công nhân, kiểm tra lại, trừ xu rồi tăng cấp trước khi phát signal. Trả dictionary lỗi khi điều kiện thay đổi hoặc thanh toán thất bại.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="workers" type="WorkerService" setter="" getter="">
+			Dịch vụ công nhân sở hữu trạng thái nâng cấp và thế giới.
+		</member>
+		<member name="purchasing" type="bool" setter="" getter="" default="false">
+			Cho biết giao dịch mua đang được xử lý.
+		</member>
+	</members>
+	<signals>
+		<signal name="purchased">
+			<param index="0" name="track" type="String" />
+			<param index="1" name="level" type="int" />
+			<param index="2" name="price" type="int" />
+			<description>
+				Phát sau khi trừ tiền và tăng cấp, gồm hướng, cấp mới và giá.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CATALOG" value="&lt;Object&gt;">
+			Danh mục giá nâng cấp công nhân.
+		</constant>
+	</constants>
+</class>

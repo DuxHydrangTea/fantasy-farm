@@ -1,6 +1,7 @@
 class_name MobileLayout
 extends RefCounted
-## Screen measurements shared by HUDs. UI units on touch screens are CSS/device points.
+## Cung cấp chế độ cảm ứng, tỉ lệ điểm và vùng an toàn cho HUD; số đo web được cache ngắn hạn.
+
 static var _web_checked_at: int = -1000
 static var _web: Dictionary = {}
 
@@ -12,6 +13,7 @@ static func _web_metrics() -> Dictionary:
 		_web = decoded if decoded is Dictionary else {}
 	return _web
 
+## Kiểm tra chế độ cảm ứng, ưu tiên metadata override của viewport.
 static func is_touch(viewport: Viewport) -> bool:
 	if bool(viewport.get_meta(&"touch_ui_override", false)):
 		return true
@@ -19,6 +21,7 @@ static func is_touch(viewport: Viewport) -> bool:
 		return bool(viewport.get_meta(&"touch_layout"))
 	return bool(_web_metrics().get("touch", false)) if OS.has_feature("web") else OS.has_feature("mobile") or DisplayServer.is_touchscreen_available()
 
+## Trả tỉ lệ điểm thiết bị, tối thiểu 1, hoặc metadata override nếu có.
 static func point_scale(viewport: Viewport) -> float:
 	if viewport.has_meta(&"ui_point_scale"):
 		return maxf(1.0, float(viewport.get_meta(&"ui_point_scale")))
@@ -26,6 +29,8 @@ static func point_scale(viewport: Viewport) -> float:
 		return maxf(1.0, float(_web_metrics().get("pixel_ratio", 1.0)))
 	return maxf(1.0, DisplayServer.screen_get_scale()) if OS.has_feature("mobile") else 1.0
 
+## Trả khoảng chừa trái, trên, phải, dưới theo đơn vị điểm giao diện.
+## Metadata viewport được ưu tiên; thiết bị không cảm ứng trả giá trị 0.
 static func safe_insets(viewport: Viewport) -> Vector4:
 	if viewport.has_meta(&"safe_insets"):
 		return viewport.get_meta(&"safe_insets") as Vector4
@@ -42,6 +47,7 @@ static func safe_insets(viewport: Viewport) -> Vector4:
 	var scale: float = point_scale(viewport)
 	return Vector4(safe.position.x - window.position.x, safe.position.y - window.position.y, window.end.x - safe.end.x, window.end.y - safe.end.y) / scale
 
+## Duyệt node và con để đảm bảo nút có kích thước tối thiểu 48×48.
 static func prepare_buttons(node: Node) -> void:
 	if node is BaseButton:
 		var button: BaseButton = node as BaseButton

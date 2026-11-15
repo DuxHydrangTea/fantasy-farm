@@ -1,8 +1,13 @@
 extends Node2D
-## Same slow, fading pixel particles as crop quality, tinted healing red.
+## Hiệu ứng hạt pixel màu đỏ mờ dần khi chữa vật nuôi.
+
+## Thời gian phát hạt tính bằng giây.
 const EMISSION_SECONDS: float = 1.5
+## Thời gian tồn tại node hiệu ứng tính bằng giây.
 const DURATION: float = 3.0
+## Thời gian đã chạy.
 var elapsed: float = 0.0
+## Bộ phát hạt được tạo khi node sẵn sàng.
 var particles: GPUParticles2D
 
 func _ready() -> void:

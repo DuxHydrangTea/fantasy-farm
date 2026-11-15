@@ -1,10 +1,14 @@
 class_name FarmStorageSaveSchema
 extends RefCounted
+## Tạo và kiểm tra dữ liệu lưu của kho nông sản và kho vật tư.
+
+## Các định nghĩa kho được hỗ trợ, ánh xạ theo mã ổn định.
 const DEFINITIONS: Dictionary = {
 	"produce_warehouse": preload("res://resources/storage/produce_warehouse.tres"),
 	"farm_supply_storage": preload("res://resources/storage/farm_supply_storage.tres")
 }
 
+## Tạo các kho rỗng theo số ô và giới hạn chồng trong resource cấu hình.
 static func fresh() -> Dictionary:
 	var result: Dictionary = {}
 	for id: String in DEFINITIONS:
@@ -15,6 +19,8 @@ static func fresh() -> Dictionary:
 		result[id] = {"slot_count": definition.slot_count, "stack_cap": definition.stack_cap, "slots": slots}
 	return result
 
+## Kiểm tra đủ kho, cấu trúc ô, chất lượng và loại vật phẩm kho cho phép.
+## Số lượng trong mỗi ô phải phù hợp giới hạn của vật phẩm và kho.
 static func valid(data: Variant, catalog: SaveCatalog) -> bool:
 	if not data is Dictionary or data.size() != DEFINITIONS.size():
 		return false

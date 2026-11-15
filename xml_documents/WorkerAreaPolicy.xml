@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerAreaPolicy" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lập kế hoạch thao tác nhiều ô cho công nhân theo cấp công cụ.
+	</brief_description>
+	<description>
+		Mỗi lần xác nhận chỉ xử lý một ô, tạo ranh giới để bộ lập lịch có thể kiểm tra lại trạng thái thế giới và tài nguyên trước ô tiếp theo.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="task_cells" qualifiers="static">
+			<return type="Vector2i[]" />
+			<param index="0" name="job" type="Dictionary" />
+			<description>
+				Trả về các ô chưa xử lý từ [code]cursor[/code], hoặc ô đơn của công việc.
+			</description>
+		</method>
+		<method name="item_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="job" type="Dictionary" />
+			<description>
+				Số vật phẩm cần giữ chỗ cho công việc, tối thiểu một. Công việc làm đất và gieo hạt tính theo số ô còn lại.
+			</description>
+		</method>
+		<method name="footprint" qualifiers="static">
+			<return type="Vector2i[]" />
+			<param index="0" name="anchor" type="Vector2i" />
+			<param index="1" name="width" type="int" />
+			<description>
+				Tạo vùng vuông quanh ô neo cho công cụ có chiều rộng đã cho. Với chiều rộng 3, ô neo nằm giữa. Các ô được xếp theo khoảng cách bình phương đến neo, sau đó theo tọa độ y và x để thứ tự ổn định.
+			</description>
+		</method>
+		<method name="eligible" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="job" type="Dictionary" />
+			<param index="3" name="cell" type="Vector2i" />
+			<param index="4" name="at_commit" type="bool" default="false" />
+			<description>
+				Kiểm tra ô đã mở khóa, đường nhìn không bị chặn và điều kiện của loại việc. Khi [param at_commit] bật, dùng vị trí thực của công nhân và yêu cầu công nhân cách điểm thực hiện tối đa 3 đơn vị trước khi kiểm tra đường nhìn.
+			</description>
+		</method>
+		<method name="expand" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="job" type="Dictionary" />
+			<description>
+				Mở rộng công việc tại chỗ theo cấp công cụ và các ô đủ điều kiện. Với việc làm đất hoặc gieo hạt, số ô còn bị giới hạn bởi vật phẩm chưa được giữ chỗ. Nếu không tìm được ô, giữ nguyên mục tiêu đơn ban đầu.
+			</description>
+		</method>
+		<method name="commit_next" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="job" type="Dictionary" />
+			<description>
+				Thử thực hiện ô tại con trỏ và tăng con trỏ sau khi giao dịch hoàn tất. Kiểm tra lại trạng thái công nhân, giữ chỗ và điều kiện ô trước khi giao cho cầu nối thế giới. Ô bị từ chối vẫn được bỏ qua khi con trỏ tiến lên.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="TOOLS" value="{&quot;harvest&quot;: &quot;harvest&quot;, &quot;plant&quot;: &quot;sowing&quot;, &quot;till&quot;: &quot;hoe&quot;, &quot;water_crop&quot;: &quot;watering&quot;}">
+			Ánh xạ loại việc sang mã nâng cấp công cụ quyết định kích thước vùng.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerSaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo và kiểm tra dữ liệu lưu của hệ thống công nhân.
+	</brief_description>
+	<description>
+		Việc kiểm tra bao gồm cấu hình tự động trồng, nâng cấp, danh sách công nhân, kho vật phẩm, thời điểm mô phỏng và công việc đang thực hiện. Tham số legacy cho phép cấu trúc và giới hạn của dữ liệu phiên bản cũ.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo trạng thái công nhân mới với bộ đếm và cấu hình mặc định.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="saved_at" type="float" />
+			<param index="3" name="legacy" type="bool" default="false" />
+			<description>
+				Kiểm tra cấu trúc và tính nhất quán của trạng thái công nhân đã lưu. [param catalog] xác định các vật phẩm và cây được phép. [param saved_at] giới hạn các mốc thời gian. Chế độ [param legacy] chấp nhận dữ liệu cũ.
+			</description>
+		</method>
+		<method name="migrate_team" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Chuyển dữ liệu đội nhân công cũ sang cấu trúc hiện tại và sắp xếp thứ tự thuê.
+			</description>
+		</method>
+	</methods>
+</class>

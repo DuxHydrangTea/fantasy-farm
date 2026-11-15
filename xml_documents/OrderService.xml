@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OrderService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý ba ô đơn hàng xoay vòng xác định và giao hàng toàn bộ. Đơn không tự đổi theo thời gian hoặc khi mô phỏng offline.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<param index="1" name="purse" type="WalletComponent" />
+			<param index="2" name="available" type="Callable" />
+			<param index="3" name="definitions" type="OrderCatalog" default="&lt;Object&gt;" />
+			<description>
+			</description>
+		</method>
+		<method name="initialize">
+			<return type="void" />
+			<description>
+				Điền các ô trống khi bảng chưa được khởi tạo.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao sâu trạng thái bảng đơn để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Kiểm tra và khôi phục bảng đơn; điền ô nếu dữ liệu chưa khởi tạo.
+			</description>
+		</method>
+		<method name="_fill">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="fill_empty">
+			<return type="void" />
+			<description>
+				Điền các ô trống bằng đơn đủ điều kiện theo con trỏ xoay vòng. Một mẫu không xuất hiện đồng thời ở nhiều ô.
+			</description>
+		</method>
+		<method name="_index">
+			<return type="int" />
+			<param index="0" name="serial" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="definition">
+			<return type="OrderDefinition" />
+			<param index="0" name="serial" type="int" />
+			<description>
+				Tìm định nghĩa của đơn đang hoạt động theo serial, hoặc null.
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="serial" type="int" />
+			<param index="1" name="perfect" type="bool" default="false" />
+			<description>
+				Tính kế hoạch giao đầy đủ và phần thưởng mà không thay đổi túi hoặc đơn. Giao thường dùng cấp thường; giao hoàn hảo dùng bạc trước vàng và thưởng ít nhất 110% tổng giá bán các vật phẩm theo chất lượng. Trả lỗi nếu thiếu hàng, thiếu giá hoặc ví không còn đủ chỗ.
+			</description>
+		</method>
+		<method name="deliver">
+			<return type="Dictionary" />
+			<param index="0" name="serial" type="int" />
+			<param index="1" name="perfect" type="bool" default="false" />
+			<param index="2" name="expected" type="Dictionary" default="{}" />
+			<description>
+				Kiểm tra lại kế hoạch, trừ hàng, cộng xu, thay đơn và phát thông báo. Nếu truyền expected, kế hoạch phải khớp bản xem trước để tránh giao nhầm cấp.
+			</description>
+		</method>
+		<method name="abandon">
+			<return type="Dictionary" />
+			<param index="0" name="serial" type="int" />
+			<description>
+				Bỏ đơn đang hoạt động và thử chọn đơn thay thế theo vòng xoay.
+			</description>
+		</method>
+		<method name="requested_in_bag">
+			<return type="bool" />
+			<description>
+				Cho biết túi có ít nhất một vật phẩm thuộc các đơn đang hoạt động ở bất kỳ cấp nào.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="OrderCatalog" setter="" getter="">
+			Catalog định nghĩa đơn.
+		</member>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+			Túi chứa hàng giao.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví nhận thưởng.
+		</member>
+		<member name="eligibility" type="Callable" setter="" getter="">
+			Hàm kiểm tra đơn có nguồn sản phẩm trong thế giới.
+		</member>
+		<member name="_data" type="Dictionary" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát sau khi các ô đơn hoặc dữ liệu hoàn thành thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="DEFAULT_CATALOG" value="&lt;Object&gt;">
+			Catalog đơn hiện hành mặc định.
+		</constant>
+		<constant name="SALE_PRICES" value="&lt;Object&gt;">
+			Catalog giá dùng để tính mức thưởng giao hoàn hảo.
+		</constant>
+		<constant name="PERFECT_SALE_PERCENT" value="110">
+			Phần trăm giá bán tối thiểu được trả cho giao hàng hoàn hảo.
+		</constant>
+	</constants>
+</class>

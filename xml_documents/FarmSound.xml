@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmSound" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Phát âm thanh theo sự kiện trình bày bằng pool voice có giới hạn. Các sự kiện có cooldown theo nhóm và biến thể liên tiếp được thay đổi khi có thể.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="apply_volumes">
+			<return type="void" />
+			<description>
+				Áp các mức âm lượng đã lưu cho bus Master, SFX, UI, Ambience và Music.
+			</description>
+		</method>
+		<method name="_set_volume">
+			<return type="void" />
+			<param index="0" name="bus" type="StringName" />
+			<param index="1" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_group">
+			<return type="StringName" />
+			<param index="0" name="event" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_cooldown">
+			<return type="int" />
+			<param index="0" name="group" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="play">
+			<return type="bool" />
+			<param index="0" name="event" type="StringName" />
+			<description>
+				Phát một biến thể của sự kiện nếu có trong catalog, hết cooldown và còn voice. Trả false nếu không phát được; âm đang chạy không bị cắt để nhường voice.
+			</description>
+		</method>
+		<method name="collection_event" qualifiers="static">
+			<return type="StringName" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="fallback" type="StringName" default="&amp;&quot;item_pickup&quot;" />
+			<description>
+				Chọn sự kiện âm thanh thu thập theo mã sản phẩm, hoặc dùng fallback.
+			</description>
+		</method>
+		<method name="result">
+			<return type="void" />
+			<param index="0" name="result_data" type="Dictionary" />
+			<param index="1" name="success" type="StringName" />
+			<description>
+				Phát sự kiện thành công hoặc âm lỗi sức chứa/tài nguyên theo kết quả thao tác.
+			</description>
+		</method>
+		<method name="_node_added">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_bind_button">
+			<return type="void" />
+			<param index="0" name="reference" type="WeakRef" />
+			<description>
+			</description>
+		</method>
+		<method name="_button_pressed">
+			<return type="void" />
+			<param index="0" name="reference" type="WeakRef" />
+			<description>
+			</description>
+		</method>
+		<method name="_button_feedback">
+			<return type="void" />
+			<param index="0" name="event" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="stop_all">
+			<return type="void" />
+			<description>
+				Dừng mọi voice và xóa thời điểm cooldown.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_sfx_players" type="AudioStreamPlayer[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_last" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_variant" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="clock" type="Callable" setter="" getter="" default="&lt;anonymous lambda&gt;">
+			Đồng hồ mili giây dùng để kiểm tra cooldown, có thể thay trong kiểm thử.
+		</member>
+	</members>
+	<signals>
+		<signal name="sound_played">
+			<param index="0" name="event" type="StringName" />
+			<param index="1" name="stream" type="AudioStream" />
+			<description>
+				Phát sự kiện và stream được chọn sau khi bắt đầu phát âm thanh.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="VOICES" value="12">
+			Số AudioStreamPlayer trong pool.
+		</constant>
+		<constant name="CATALOG" value="{&amp;&quot;coin_receive&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;coin_spend&quot;: [&lt;Object&gt;], &amp;&quot;error_capacity&quot;: [&lt;Object&gt;], &amp;&quot;error_resources&quot;: [&lt;Object&gt;], &amp;&quot;footstep_dirt&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;footstep_grass&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;footstep_stone&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;harvest_crop&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;harvest_flower&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;harvest_fruit&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;item_pickup&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;objective_complete&quot;: [&lt;Object&gt;], &amp;&quot;order_delivered&quot;: [&lt;Object&gt;], &amp;&quot;reward_claim&quot;: [&lt;Object&gt;], &amp;&quot;sow_seed&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;storage_deposit&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;storage_withdraw&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;till_soil&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;], &amp;&quot;ui_click&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;ui_close&quot;: [&lt;Object&gt;], &amp;&quot;ui_open&quot;: [&lt;Object&gt;], &amp;&quot;ui_tab&quot;: [&lt;Object&gt;, &lt;Object&gt;], &amp;&quot;water_crop&quot;: [&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;]}">
+			Danh mục âm thanh chính.
+		</constant>
+		<constant name="P1_CATALOG" value="{&amp;&quot;animal_care&quot;: [&lt;Object&gt;], &amp;&quot;animal_chicken&quot;: [&lt;Object&gt;], &amp;&quot;animal_cow&quot;: [&lt;Object&gt;], &amp;&quot;animal_duck&quot;: [&lt;Object&gt;], &amp;&quot;animal_goose&quot;: [&lt;Object&gt;], &amp;&quot;animal_horse&quot;: [&lt;Object&gt;], &amp;&quot;animal_pig&quot;: [&lt;Object&gt;], &amp;&quot;animal_sheep&quot;: [&lt;Object&gt;], &amp;&quot;bees_loop&quot;: [&lt;Object&gt;], &amp;&quot;collect_dish&quot;: [&lt;Object&gt;], &amp;&quot;collect_egg&quot;: [&lt;Object&gt;], &amp;&quot;collect_honey&quot;: [&lt;Object&gt;], &amp;&quot;collect_milk&quot;: [&lt;Object&gt;], &amp;&quot;collect_truffle&quot;: [&lt;Object&gt;], &amp;&quot;collect_wool&quot;: [&lt;Object&gt;], &amp;&quot;cook_ready&quot;: [&lt;Object&gt;], &amp;&quot;cook_start&quot;: [&lt;Object&gt;], &amp;&quot;feed_trough&quot;: [&lt;Object&gt;], &amp;&quot;fertilize_crop&quot;: [&lt;Object&gt;], &amp;&quot;graft_tree&quot;: [&lt;Object&gt;], &amp;&quot;kitchen_loop&quot;: [&lt;Object&gt;], &amp;&quot;land_clear&quot;: [&lt;Object&gt;], &amp;&quot;repair_hive&quot;: [&lt;Object&gt;], &amp;&quot;spray_crop&quot;: [&lt;Object&gt;], &amp;&quot;stump_dig&quot;: [&lt;Object&gt;], &amp;&quot;tree_chop&quot;: [&lt;Object&gt;], &amp;&quot;tree_fall&quot;: [&lt;Object&gt;], &amp;&quot;upgrade_complete&quot;: [&lt;Object&gt;], &amp;&quot;water_trough&quot;: [&lt;Object&gt;], &amp;&quot;weed_remove&quot;: [&lt;Object&gt;], &amp;&quot;worker_hire&quot;: [&lt;Object&gt;], &amp;&quot;worker_wage&quot;: [&lt;Object&gt;]}">
+			Danh mục âm thanh bổ sung.
+		</constant>
+	</constants>
+</class>

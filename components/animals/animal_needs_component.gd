@@ -1,22 +1,39 @@
 class_name AnimalNeedsComponent
 extends Node
+## Theo dõi độ no và nước của một vật nuôi theo thời gian thực và offline.
+##
+## Mỗi khoảng thời gian được chia tại ranh giới thay đổi thời tiết. Signal
+## [signal time_advanced] cung cấp số giây còn đủ cả thức ăn lẫn nước cho
+## các hệ thống tính sản xuất dựa trên khoảng thời gian đó.
 
+## Phát khi một trong hai chỉ số thay đổi, với giá trị trong khoảng 0–100.
 signal changed(satiety: float, hydration: float)
-## Eligible time is measured BEFORE depletion, including partial last intervals.
+## Phát sau mỗi bước thời gian với mốc cuối, thời lượng và số giây đủ nhu cầu.
+## Thời gian đủ nhu cầu tính trước khi trừ no và nước, kể cả phần cuối lẻ.
 signal time_advanced(timestamp: float, elapsed: float, supplied_seconds: float)
+## Đồng hồ game, mặc định dùng TimeManager khi node sẵn sàng.
 @export var time_manager: FarmClock
+## Độ no hiện tại theo phần trăm.
 var satiety: float = 100.0
+## Lượng nước hiện tại theo phần trăm.
 var hydration: float = 100.0
+## Số giây để cạn độ no từ 100 xuống 0.
 var satiety_depletion_seconds: float = 600.0
+## Số giây cơ sở để cạn lượng nước từ 100 xuống 0.
 var hydration_depletion_seconds: float = 600.0
 var _updated_at: float = 0.0
 var _active: bool = true
+## Lịch thời tiết điều chỉnh tốc độ tiêu thụ nước và chia bước thời gian.
 var weather: WeatherSchedule
+## Chuồng có thể xử lý mô phỏng offline cho một khoảng gián đoạn dài.
 var pen: AnimalPen
 
+## Trả về mốc thời gian đã tính nhu cầu gần nhất.
 func updated_at() -> float:
 	return _updated_at
 
+## Áp dụng một bước đã tính bởi mô phỏng offline và phát thời gian được cung cấp.
+## Khi component đã ngừng hoạt động, bước này được bỏ qua.
 func apply_offline_step(timestamp: float, elapsed: float, supplied: float, food: float, water: float) -> void:
 	if not _active:
 		return
@@ -31,11 +48,13 @@ func _ready() -> void:
 		_updated_at = time_manager.now()
 		time_manager.tick.connect(update_at)
 
+## Đặt thời gian cạn thức ăn và nước, mỗi giá trị tối thiểu một giây.
 func configure(food_seconds: float, water_seconds: float) -> void:
 	satiety_depletion_seconds = maxf(1.0, food_seconds)
 	hydration_depletion_seconds = maxf(1.0, water_seconds)
 
-## Set a baseline without crediting the interval twice; update_at applies catch-up.
+## Khôi phục chỉ số và mốc thời gian mà không tự tính lại khoảng thời gian cũ.
+## Gọi [method update_at] để tính phần thời gian tiếp theo.
 func restore_state(food: float, water: float, timestamp: float) -> void:
 	_updated_at = timestamp
 	_set_values(food, water)
@@ -47,6 +66,9 @@ func restore_state(food: float, water: float, timestamp: float) -> void:
 # Ví dụ offline 600 giây nhưng nước chỉ đủ 60 giây: chỉ 60 giây được xét sinh sản phẩm.
 # Nếu bỏ giới hạn này, vật nuôi đói/khát vẫn tạo sản phẩm suốt thời gian offline.
 # Nếu tính sau khi trừ no/nước, khoảng cuối vừa hết nước có thể mất phần sản xuất hợp lệ.
+## Cập nhật đến timestamp, tính lượng no và nước còn lại theo từng khoảng thời tiết.
+## Nếu chuồng xử lý được khoảng offline dài, giao việc cho mô phỏng của chuồng.
+## Mốc thời gian không tiến lên thì không tạo thêm thời gian sản xuất.
 func update_at(timestamp: float) -> void:
 	if not _active:
 		return
@@ -63,6 +85,8 @@ func update_at(timestamp: float) -> void:
 		_set_values(satiety - elapsed * 100.0 / satiety_depletion_seconds, hydration - elapsed * water_rate * 100.0 / hydration_depletion_seconds)
 		time_advanced.emit(end, elapsed, supplied)
 
+## Chốt thời gian cũ rồi tăng độ no bằng lượng không âm, giới hạn tại 100.
+## Trả về mức tăng thực tế, hoặc 0 nếu vật nuôi đã ngừng hoạt động.
 func feed(amount: float) -> float:
 	_sync()
 	if not _active:
@@ -71,6 +95,8 @@ func feed(amount: float) -> float:
 	_set_values(satiety + maxf(0.0, amount), hydration)
 	return satiety - before
 
+## Chốt thời gian cũ rồi tăng lượng nước bằng lượng không âm, giới hạn tại 100.
+## Trả về mức tăng thực tế, hoặc 0 nếu vật nuôi đã ngừng hoạt động.
 func drink(amount: float) -> float:
 	_sync()
 	if not _active:
@@ -79,7 +105,7 @@ func drink(amount: float) -> float:
 	_set_values(satiety, hydration + maxf(0.0, amount))
 	return hydration - before
 
-## Prevent a late trough callback from feeding an actor retired during _sync().
+## Ngừng cập nhật và nhận thức ăn, nước sau khi actor được đưa ra khỏi hoạt động.
 func deactivate() -> void:
 	_active = false
 

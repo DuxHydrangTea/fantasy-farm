@@ -1,16 +1,27 @@
 class_name WeatherManager
 extends Node
-## The farm's single weather authority. Visual fades do not change simulation time.
+## Điều phối thời tiết của trang trại và tác động của nó theo thời gian mô phỏng.
+## Hiệu ứng chuyển màu chỉ thay đổi hiển thị; thời gian mô phỏng do đồng hồ quản lý.
+
+## Tên enum thời tiết dùng chung từ lịch.
 const Weather = WeatherSchedule.Weather
+## Phát khi trạng thái thời tiết hiện tại thay đổi.
 signal weather_changed(weather: int)
+## Thế giới chịu tác động thời tiết.
 var world: FarmWorld
+## Lịch thời tiết xác định và các lần thay đổi thủ công.
 var schedule: WeatherSchedule = WeatherSchedule.new()
+## Thời tiết đã áp dụng gần nhất.
 var current_weather: WeatherSchedule.Weather = Weather.SUNNY
+## Điều khiển ánh sáng ngày đêm.
 var day_night: DayNightComponent
+## Điều khiển hiệu ứng thời tiết.
 var effects: WeatherEffects
+## Giao diện đồng hồ và thời tiết.
 var hud: WeatherHUD
+## Mốc mô phỏng đã xử lý gần nhất.
 var last_at: float = 0.0
-## Debug lighting preview only; never change the simulation clock or save timestamps.
+## Giờ xem thử ánh sáng trong bản debug; -1 dùng thời gian thực của mô phỏng.
 var debug_hour: int = -1
 var _rain_day: int = -9223372036854775807
 var _rain_columns: int = -1
@@ -30,6 +41,9 @@ func _ready() -> void:
 	world.farming.time_manager.tick.connect(advance)
 	advance(last_at)
 
+## Tiến thời tiết đến mốc yêu cầu, không lùi trước [member last_at].
+## Chia khoảng tại ranh giới thời tiết để tính bay hơi đất, áp dụng mưa,
+## cập nhật hiệu ứng và phát signal khi thời tiết đổi.
 func advance(timestamp: float, refresh_visuals: bool = true) -> void:
 	if _advancing:
 		return
@@ -61,6 +75,9 @@ func _apply_rain(timestamp: float) -> void:
 		_rain_columns = columns
 		world.farming.rain_water()
 
+## Đổi thời tiết thủ công cho phần còn lại của ngày hiện tại.
+## Chốt tác động của khoảng cũ lên đất, đàn ong và vật nuôi trước khi ghi
+## mốc thay đổi, sau đó cập nhật hiệu ứng tại cùng thời điểm.
 func set_weather(next_weather: WeatherSchedule.Weather) -> void:
 	if _advancing or next_weather < Weather.SUNNY or next_weather > Weather.WINDY:
 		return
@@ -80,17 +97,20 @@ func set_weather(next_weather: WeatherSchedule.Weather) -> void:
 	advance(timestamp)
 	world.apiary.advance(timestamp)
 
+## Khôi phục lịch đã kiểm tra và đặt lại mốc xử lý cùng cache tưới mưa.
 func restore(data: Dictionary, timestamp: float) -> void:
 	schedule.restore(data)
 	last_at = timestamp
 	_rain_day = -9223372036854775807
 	_rain_columns = -1
 
+## Trả thời điểm dùng để hiển thị, thay giờ bằng giờ xem thử nếu debug đang bật.
 func display_timestamp(timestamp: float) -> float:
 	if debug_hour < 0:
 		return timestamp
 	return timestamp - fposmod(timestamp + WeatherSchedule.UTC_OFFSET, 86400.0) + debug_hour * 3600.0
 
+## Đặt giờ xem thử từ 0 đến 23 hoặc -1 để tắt, chỉ áp dụng trong bản debug.
 func set_debug_hour(hour: int) -> void:
 	if not OS.is_debug_build() or hour < -1 or hour > 23:
 		return

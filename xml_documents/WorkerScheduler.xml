@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerScheduler" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tiến dòng thời gian công nhân theo sự kiện với ngân sách xử lý mỗi frame. Bộ lập lịch lưu vị trí dừng để tiếp tục cùng sự kiện và công nhân ở lần gọi sau.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="reset_checkpoint">
+			<return type="void" />
+			<description>
+				Xóa sự kiện đang mở và trạng thái công việc online còn chờ.
+			</description>
+		</method>
+		<method name="before_tick">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+				Tiến công nhân trước các hệ thống khác khi đồng hồ đã đi ít nhất 0,25 giây. Khoảng gián đoạn trên năm giây được xử lý theo đường offline nếu không có sự kiện đang dở.
+			</description>
+		</method>
+		<method name="advance_online">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+				Tiến công nhân trong phần ngân sách còn lại của frame hiện tại.
+			</description>
+		</method>
+		<method name="has_pending_work">
+			<return type="bool" />
+			<description>
+				Cho biết còn sự kiện đang mở hoặc công việc online chưa xử lý xong.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="bool" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="clock" type="FarmClock" />
+			<param index="2" name="weather" type="WeatherSchedule" />
+			<param index="3" name="until" type="float" />
+			<param index="4" name="offline" type="bool" />
+			<param index="5" name="budget_usec" type="int" />
+			<param index="6" name="started" type="int" />
+			<description>
+				Tiến mô phỏng đến [param until], trả true khi đã xử lý hết. Khi hết ngân sách hoặc một công nhân cần tiếp tục truy vấn, trả false và lưu con trỏ. Lần sau tiếp tục cùng sự kiện và công nhân, kể cả tại điểm cuối. Thứ tự công nhân theo thứ tự thuê; mốc tiếp theo xét bình minh, hoàn thành công việc và thời điểm thức dậy.
+			</description>
+		</method>
+		<method name="_advance_worker">
+			<return type="bool" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="day" type="int" />
+			<param index="3" name="offline" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_finish_due_task">
+			<return type="void" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="actor" type="WorkerActor" />
+			<param index="3" name="offline" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_assign_task">
+			<return type="bool" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="actor" type="WorkerActor" />
+			<param index="3" name="offline" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_choose_task">
+			<return type="Dictionary" />
+			<param index="0" name="team" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="candidates" type="Dictionary[]" />
+			<param index="3" name="held" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_event_open" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_event_row" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_budget_frame" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_budget_spent_usec" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_online_pending" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="ONLINE_BUDGET_USEC" value="2000">
+			Ngân sách xử lý online mỗi frame, tính bằng micro giây.
+		</constant>
+	</constants>
+</class>

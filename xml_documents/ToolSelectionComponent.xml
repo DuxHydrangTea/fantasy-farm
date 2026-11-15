@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolSelectionComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý lựa chọn thanh công cụ, nguồn hạt trong kho và trạng thái các menu loại trừ nhau. Revision thay đổi khi lựa chọn đổi để thao tác đang diễn ra không tiêu nhầm vật phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="select_storage_seed">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Chọn mã hạt trong kho hoặc bỏ chọn; tăng revision để vô hiệu thao tác cũ.
+			</description>
+		</method>
+		<method name="planting_inventory">
+			<return type="InventoryComponent" />
+			<description>
+				Trả nguồn kho đang được dùng để gieo hạt.
+			</description>
+		</method>
+		<method name="uses_storage_seeds">
+			<return type="bool" />
+			<description>
+				Kiểm tra lựa chọn hiện tại là hạt trồng được và có dịch vụ kho.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_inventory_open">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+				Đổi trạng thái túi nếu không có menu xung đột.
+			</description>
+		</method>
+		<method name="set_shop_open">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+				Đổi trạng thái cửa hàng nếu không có menu xung đột.
+			</description>
+		</method>
+		<method name="is_menu_open">
+			<return type="bool" />
+			<description>
+				Cho biết túi, cửa hàng hoặc mục tiêu đang mở.
+			</description>
+		</method>
+		<method name="set_objectives_open">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+				Đổi trạng thái menu mục tiêu nếu không có menu xung đột.
+			</description>
+		</method>
+		<method name="get_selected_item">
+			<return type="ItemDefinition" />
+			<description>
+				Trả hạt từ kho hoặc vật phẩm ở ô đang chọn.
+			</description>
+		</method>
+		<method name="_on_inventory_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="select_slot">
+			<return type="bool" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Chọn ô thanh công cụ hoặc -1 để bỏ chọn; trả false nếu ngoài phạm vi.
+			</description>
+		</method>
+		<method name="toggle_slot">
+			<return type="bool" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Bật hoặc bỏ chọn khi người chơi nhấn cùng ô; select_slot chỉ đặt lựa chọn.
+			</description>
+		</method>
+		<method name="cycle_selection">
+			<return type="void" />
+			<param index="0" name="step" type="int" />
+			<description>
+				Chuyển lựa chọn theo bước và quay vòng ở hai đầu thanh.
+			</description>
+		</method>
+		<method name="get_selected_action">
+			<return type="StringName" />
+			<description>
+				Suy ra hành động từ loại vật phẩm được chọn.
+			</description>
+		</method>
+		<method name="get_selected_name">
+			<return type="String" />
+			<description>
+				Trả tên vật phẩm và chất lượng hoặc nhãn tay trống, ô trống.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+		</member>
+		<member name="starting_seeds" type="ItemDefinition[]" setter="" getter="" default="[]">
+		</member>
+		<member name="starting_feed" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="starting_feed_amount" type="int" setter="" getter="" default="5">
+		</member>
+		<member name="starting_seed_amount" type="int" setter="" getter="" default="24">
+		</member>
+		<member name="selected_index" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="inventory_open" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="shop_open" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="objectives_open" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="storage_service" type="FarmStorageService" setter="" getter="">
+		</member>
+		<member name="storage_seed_id" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="revision" type="int" setter="" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="selection_changed">
+			<param index="0" name="index" type="int" />
+			<param index="1" name="tool" type="StringName" />
+			<description>
+			</description>
+		</signal>
+		<signal name="inventory_visibility_changed">
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</signal>
+		<signal name="shop_visibility_changed">
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</signal>
+		<signal name="objectives_visibility_changed">
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="HOTBAR_SIZE" value="6">
+		</constant>
+	</constants>
+</class>

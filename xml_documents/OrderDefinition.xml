@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OrderDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình một đơn đặt nông sản với mã ổn định dùng trong dữ liệu lưu.
+	</brief_description>
+	<description>
+		Các mảng [member items] và [member amounts] tương ứng theo chỉ số. Dữ liệu lưu giữ mã đơn, còn tên, nội dung và phần thưởng lấy từ resource.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra mã, tên, phần thưởng và các dòng nông sản hợp lệ. Mỗi mã vật phẩm chỉ xuất hiện một lần, số lượng nằm trong khoảng 1–32.000.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="order_id" type="StringName" setter="" getter="">
+			Mã nhận diện đơn ổn định.
+		</member>
+		<member name="title" type="String" setter="" getter="">
+			Tên hiển thị của đơn.
+		</member>
+		<member name="items" type="ItemDefinition[]" setter="" getter="" default="[]">
+			Một hoặc hai loại nông sản cần giao.
+		</member>
+		<member name="amounts" type="int[]" setter="" getter="" default="[]">
+			Số lượng yêu cầu tương ứng với từng mục trong [member items].
+		</member>
+		<member name="reward_coins" type="int" setter="" getter="" default="1">
+			Phần thưởng bằng xu khi hoàn thành.
+		</member>
+	</members>
+</class>

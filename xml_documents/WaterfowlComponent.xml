@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WaterfowlComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều hướng vật nuôi trong ao và đưa sản phẩm cần đẻ trên đất vào bờ.
+	</brief_description>
+	<description>
+		Component nối với hệ thống đi lang thang và ánh xạ hoạt ảnh bơi theo vị trí.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="body" type="AnimalActor" />
+			<param index="1" name="habitat" type="PondPen" />
+			<description>
+				Gắn actor và ao, đăng ký bộ điều hướng và ánh xạ hoạt ảnh.
+			</description>
+		</method>
+		<method name="is_swimming">
+			<return type="bool" />
+			<description>
+				Kiểm tra con vật có khả năng bơi và đang đứng trên nước.
+			</description>
+		</method>
+		<method name="map_action">
+			<return type="String" />
+			<param index="0" name="action" type="String" />
+			<description>
+				Đổi hoạt ảnh đi, ngủ hoặc đứng sang hoạt ảnh bơi tương ứng khi ở nước.
+			</description>
+		</method>
+		<method name="refresh_visual">
+			<return type="void" />
+			<description>
+				Cập nhật vị trí hiển thị khi chuyển giữa nước và đất. Vật không biết bơi được đưa về đất gần nhất nếu đang ở nước.
+			</description>
+		</method>
+		<method name="can_reach">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Kiểm tra có đường đi từ vị trí hiện tại đến điểm đích.
+			</description>
+		</method>
+		<method name="set_destination">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Tìm đường và đặt waypoint đầu tiên. Trả false nếu không tìm được đường.
+			</description>
+		</method>
+		<method name="distance_remaining">
+			<return type="float" />
+			<description>
+				Tính tổng chiều dài còn lại từ vị trí hiện tại qua các waypoint.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Xóa đường đi và dừng chuyển động.
+			</description>
+		</method>
+		<method name="travel">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Di chuyển đến waypoint tiếp theo, hủy đường nếu waypoint hiện tại bị chặn.
+			</description>
+		</method>
+		<method name="handle_laying">
+			<return type="bool" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Đưa vật nuôi mang sản phẩm cần đẻ trên đất từ nước lên bờ. Sản phẩm được giữ trong kho của actor cho đến khi lên đất. Trả true khi thao tác lên bờ đang chiếm quyền xử lý hành vi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="actor" type="AnimalActor" setter="" getter="">
+			Vật nuôi được điều khiển.
+		</member>
+		<member name="pen" type="PondPen" setter="" getter="">
+			Ao cung cấp truy vấn địa hình và đường đi.
+		</member>
+		<member name="_points" type="PackedVector2Array" setter="" getter="" default="PackedVector2Array()">
+		</member>
+		<member name="_next" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="destination" type="Vector2" setter="" getter="">
+			Điểm đích cuối của đường đi hiện tại.
+		</member>
+		<member name="_returning" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_was_swimming" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

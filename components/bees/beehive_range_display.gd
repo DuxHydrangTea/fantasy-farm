@@ -1,10 +1,18 @@
 class_name BeehiveRangeDisplay
 extends Node2D
+## Vẽ vùng ảnh hưởng hoặc các ô hoa lân cận để xem trước vị trí tổ ong.
+
+## Bán kính vùng tròn.
 var radius: float = 80.0
+## Chọn màu thể hiện vị trí hợp lệ hay bị từ chối.
 var allowed: bool = true
+## Vẽ thêm khung diện tích tổ tại tâm.
 var footprint: bool = false
+## Dùng chế độ vẽ các chậu lân cận thay cho hình tròn.
 var garden_grid: bool = false
+## Ô tổ trong lưới vườn hoa.
 var garden_cell: Vector2i = Vector2i.ZERO
+## Vườn cung cấp các chậu lân cận.
 var garden: FlowerGarden
 
 func _draw() -> void:

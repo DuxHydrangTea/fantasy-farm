@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlantation" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý vùng trồng cây ăn quả, cây gỗ và vòng đời các cây trong thế giới. Ô lưu ổn định được ánh xạ sang các hàng hiển thị so le. Tiến trình cây được chia theo ranh giới thời tiết để tính nhất quán khi chơi và offline.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="region_for" qualifiers="static">
+			<return type="Rect2i" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Trả vùng ô tương ứng loại cây.
+			</description>
+		</method>
+		<method name="valid_cell" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Kiểm tra ô thuộc lưới trồng hợp lệ và chừa khoảng cách tán với biên vùng.
+			</description>
+		</method>
+		<method name="_column_spacing">
+			<return type="float" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+			</description>
+		</method>
+		<method name="point_for">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Chuyển ô lưu thành vị trí toàn cục, áp dụng độ lệch hàng so le.
+			</description>
+		</method>
+		<method name="cell_for">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Chuyển điểm toàn cục sang ô farmland.
+			</description>
+		</method>
+		<method name="planting_cell">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Tìm ô trồng gần điểm toàn cục theo hàng so le của loại cây.
+			</description>
+		</method>
+		<method name="in_region">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Kiểm tra điểm nằm trong vùng logic của một trong hai khu trồng.
+			</description>
+		</method>
+		<method name="can_place">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="definition" type="TreeDefinition" />
+			<param index="2" name="check_physics" type="bool" default="true" />
+			<description>
+				Kiểm tra định nghĩa, ô hợp lệ đã mở, đất và tùy chọn va chạm tại vị trí trồng.
+			</description>
+		</method>
+		<method name="plant">
+			<return type="PerennialTree" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="slot" type="int" />
+			<param index="3" name="expected" type="ItemDefinition" />
+			<param index="4" name="now" type="float" />
+			<description>
+				Kiểm tra cây giống trong ô túi và vị trí, tạo cây rồi tiêu một cây giống. Trả null nếu điều kiện không đạt.
+			</description>
+		</method>
+		<method name="create_tree">
+			<return type="PerennialTree" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="definition" type="TreeDefinition" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Dựng cây theo loại, đăng ký ô chiếm và làm mới cache điều hướng. Nơi gọi chịu trách nhiệm kiểm tra tính hợp lệ của dữ liệu trước.
+			</description>
+		</method>
+		<method name="remove_tree">
+			<return type="void" />
+			<param index="0" name="tree" type="PerennialTree" />
+			<description>
+				Bỏ cây khỏi chỉ mục và ô chiếm, đồng thời vô hiệu cache điều hướng.
+			</description>
+		</method>
+		<method name="drop_item">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="count" type="int" />
+			<param index="2" name="point" type="Vector2" />
+			<description>
+				Tạo đống vật phẩm tại vị trí toàn cục với hiệu ứng nảy ngắn.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Tiến tất cả cây đến mốc thời gian, chia khoảng theo thời tiết và tác động ong. Các mẻ quả đã đầy và cây gỗ đã lớn chỉ cập nhật mốc thời gian.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Array" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Đồng bộ cây đến now rồi tạo danh sách bản ghi lưu.
+			</description>
+		</method>
+		<method name="reset">
+			<return type="void" />
+			<description>
+				Xóa các cây hiện tại và giải phóng các ô được đánh dấu chiếm.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="rows" type="Array" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Thay các cây hiện tại bằng bản ghi đã kiểm tra, rồi tiến đến now.
+			</description>
+		</method>
+		<method name="tool_target">
+			<return type="TimberTree" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Lấy cây gỗ còn hợp lệ tại ô công cụ, hoặc null.
+			</description>
+		</method>
+		<method name="can_dig">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<description>
+				Kiểm tra có thể đào gốc hoặc nhổ cây gỗ non tại ô bằng inventory đã cho.
+			</description>
+		</method>
+		<method name="is_busy">
+			<return type="bool" />
+			<description>
+				Cho biết đang đặt cây hoặc một cây đang thực hiện giao dịch.
+			</description>
+		</method>
+		<method name="setup_plot_upgrades">
+			<return type="void" />
+			<description>
+				Tạo hiển thị ô và hai bảng quản lý nâng cấp khu cây.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa cây, đất và các hệ thống liên quan.
+		</member>
+		<member name="trees" type="Dictionary[Vector2i, PerennialTree]" setter="" getter="" default="{}">
+			Ánh xạ ô lưu sang cây hiện có.
+		</member>
+		<member name="definitions" type="Dictionary[StringName, TreeDefinition]" setter="" getter="" default="{}">
+			Các định nghĩa cây tra theo mã.
+		</member>
+		<member name="_placing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="tool_cells" type="Dictionary[Vector2i, TimberTree]" setter="" getter="" default="{}">
+			Ánh xạ ô công cụ tại vị trí hiển thị sang cây gỗ.
+		</member>
+	</members>
+	<signals>
+		<signal name="harvest_yielded">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="drop_height" type="float" />
+			<description>
+				Phát khi cây ăn quả giao sản phẩm thành công vào inventory.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="FRUIT_REGION" value="Rect2i(10, 58, 53, 30)">
+			Vùng ô trồng cây ăn quả.
+		</constant>
+		<constant name="TIMBER_REGION" value="Rect2i(66, 58, 52, 30)">
+			Vùng ô trồng cây lấy gỗ.
+		</constant>
+	</constants>
+</class>

@@ -1,8 +1,13 @@
 class_name TreePlotPreview
 extends Control
-## Read-only map of the actual 17 columns × 9 rows; no planting commands.
+## Bản xem trước chỉ đọc của 17 cột và 9 hàng ô trồng cây.
+## Màu phân biệt ô mở, ô khóa và hình cây đang có.
+
+## Thế giới cung cấp cây đã trồng.
 var world: FarmWorld
+## Loại khu trồng được xem.
 var kind: TreeDefinition.Kind
+## Số ô đã mở để xác định số cột hiển thị.
 var capacity: int = 9
 
 func _ready() -> void:

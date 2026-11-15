@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ProduceSaleService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bán nông sản theo bảng giá và cấp chất lượng được chọn. Chuẩn bị toàn bộ nội dung túi sau giao dịch trước khi ghi ví và inventory.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="prices" type="ProducePriceCatalog" />
+			<param index="1" name="purse" type="WalletComponent" />
+			<param index="2" name="bag" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+		<method name="quantity">
+			<return type="int" />
+			<param index="0" name="entry" type="ProducePrice" />
+			<description>
+				Đếm số nông sản trong túi khớp mục giá và cấp hiện tại.
+			</description>
+		</method>
+		<method name="owned_entries">
+			<return type="ProducePrice[]" />
+			<description>
+				Liệt kê các mục giá hợp lệ có hàng trong túi ở cấp hiện tại.
+			</description>
+		</method>
+		<method name="_matches">
+			<return type="bool" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="entry" type="ProducePrice" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="entry" type="ProducePrice" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Chuẩn bị báo giá cho số lượng một loại, bao gồm các ô dự kiến sau giao dịch.
+			</description>
+		</method>
+		<method name="quote_all">
+			<return type="Dictionary" />
+			<description>
+				Chuẩn bị báo giá bán tất cả nông sản có giá ở cấp hiện tại.
+			</description>
+		</method>
+		<method name="sell">
+			<return type="Dictionary" />
+			<param index="0" name="entry" type="ProducePrice" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Kiểm tra và bán một loại với số lượng yêu cầu, trả kết quả và tổng tiền.
+			</description>
+		</method>
+		<method name="sell_all">
+			<return type="Dictionary" />
+			<description>
+				Kiểm tra và bán mọi nông sản có giá ở cấp hiện tại.
+			</description>
+		</method>
+		<method name="_prepare">
+			<return type="Dictionary" />
+			<param index="0" name="entry" type="ProducePrice" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="all_produce" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_commit">
+			<return type="Dictionary" />
+			<param index="0" name="plan" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="ProducePriceCatalog" setter="" getter="">
+			Bảng giá nông sản.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví nhận tiền bán.
+		</member>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+			Túi chứa nông sản cần bán.
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="tier" type="int" setter="" getter="" default="0">
+			Cấp chất lượng áp dụng cho báo giá và giao dịch.
+		</member>
+	</members>
+	<signals>
+		<signal name="sold">
+			<param index="0" name="quantity" type="int" />
+			<param index="1" name="total" type="int" />
+			<description>
+				Phát tổng số lượng và số xu của giao dịch thành công.
+			</description>
+		</signal>
+	</signals>
+</class>

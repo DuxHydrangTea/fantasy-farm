@@ -1,6 +1,7 @@
 class_name ToolRangeUI
 extends CanvasLayer
-## One shared PC/touch selector, driven by profile state and the action policy.
+## Bộ chọn phạm vi công cụ dùng chung cho chuột và cảm ứng, dựa trên cấp nâng cấp và chính sách thao tác.
+
 var world: FarmWorld
 var root: Control
 var button: Button
@@ -26,9 +27,11 @@ func _ready() -> void:
 		InputMap.action_add_event(&"cycle_tool_area", key)
 	_process(0.0)
 
+## Kiểm tra có thể đổi phạm vi công cụ trong trạng thái và bố cục hiện tại.
 func can_cycle() -> bool:
 	return not get_tree().paused and not (MobileLayout.is_touch(get_viewport()) and root.size.y > root.size.x) and not world.player.selection.is_menu_open() and world.player.state.current_state not in [StateComponent.State.TOOL, StateComponent.State.WATER] and not world.player.farming_actions.upgrade_kind().is_empty()
 
+## Chuyển vòng phạm vi đã chọn của công cụ hiện tại.
 func cycle() -> void:
 	if not can_cycle():
 		return

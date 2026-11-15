@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopInteraction" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tìm điểm bán hàng hoặc biển mở rộng đất gần người chơi và điều phối menu tương tác.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="nearest_merchant">
+			<return type="ShopMerchant" />
+			<description>
+				Tìm thương nhân gần nhất đang hiển thị và trong tầm tương tác.
+			</description>
+		</method>
+		<method name="try_interact">
+			<return type="bool" />
+			<description>
+				Mở cửa hàng hoặc biển đất gần hơn nếu không có menu đang mở; trả kết quả mở.
+			</description>
+		</method>
+		<method name="close_for_load">
+			<return type="void" />
+			<description>
+				Đóng menu giao dịch đang hoạt động trước khi tải dữ liệu.
+			</description>
+		</method>
+		<method name="nearest_land_sign">
+			<return type="LandExpansionComponent" />
+			<description>
+				Tìm biển mở rộng đất gần nhất có thể tương tác.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="active_shop" type="TradeMenu" setter="" getter="">
+		</member>
+	</members>
+</class>

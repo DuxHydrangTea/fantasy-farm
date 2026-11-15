@@ -1,23 +1,33 @@
 class_name AnimalForagingComponent
 extends Node
-## Species-independent supply selection, reservations, travel and consumption.
-## Behaviour owns the animation/state transitions; Needs owns food/water values.
+## Chọn máng, giữ chỗ, đi tới và nhận thức ăn hoặc nước cho vật nuôi.
+## Behaviour quản lý trạng thái và hoạt ảnh; Needs quản lý các chỉ số no, nước.
+
+## Phát khi đã nhận được khẩu phần, kèm loại máng và vật phẩm thức ăn.
 signal serving_consumed(kind: int, item: ItemDefinition)
+## Kết quả một bước di chuyển đến máng.
 enum Travel { MOVING, ARRIVED, FAILED }
+## Cấu hình loài và ngưỡng tìm thức ăn, nước.
 var definition: AnimalDefinition
+## Component quản lý độ no và nước.
 var needs: AnimalNeedsComponent
+## Component di chuyển và thông tin chuồng.
 var wander: AnimalWanderComponent
+## Máng đã chọn và giữ chỗ.
 var target: AnimalTrough
+## Chỉ số vị trí tiếp cận đã giữ trong máng.
 var target_slot: int = -1
 var _retry_remaining: float = 0.0
 var _travel_remaining: float = 0.0
 var _blocked: Dictionary[int, float] = {}
 
+## Gắn cấu hình và các component cần thiết trước khi tìm nguồn.
 func configure(data: AnimalDefinition, needs_component: AnimalNeedsComponent, wander_component: AnimalWanderComponent) -> void:
 	definition = data
 	needs = needs_component
 	wander = wander_component
 
+## Giảm thời gian chờ thử lại và thời gian tạm chặn các máng thất bại.
 func advance(delta: float) -> void:
 	_retry_remaining = maxf(0.0, _retry_remaining - delta)
 	for identity: int in _blocked.keys():
@@ -25,9 +35,11 @@ func advance(delta: float) -> void:
 		if _blocked[identity] <= 0.0:
 			_blocked.erase(identity)
 
+## Kiểm tra độ no hoặc nước đã tới ngưỡng tìm nguồn.
 func has_need() -> bool:
 	return definition != null and (needs.satiety <= definition.food_seek_threshold or needs.hydration <= definition.water_seek_threshold)
 
+## Trả thứ tự loại máng cần tìm; khi cần cả hai, ưu tiên chỉ số thấp hơn.
 func priority_kinds() -> Array[int]:
 	var kinds: Array[int] = []
 	if needs.hydration <= definition.water_seek_threshold:
@@ -44,6 +56,9 @@ func priority_kinds() -> Array[int]:
 # Phải kiểm tra cả điểm đến lẫn tuyến đường: máng gần nhất sau tường không phải lựa chọn hợp lệ.
 # Khoảng nghỉ thử lại và danh sách nguồn vừa thất bại giúp tránh chạy lại tìm kiếm nặng mỗi frame;
 # đây là lựa chọn tối ưu có thể chỉnh, nhưng cần giữ kiểm tra đường và đặt chỗ trước khi đi.
+## Tìm điểm tiếp cận gần nhất đi tới được trong các máng cùng chuồng, theo ưu tiên.
+## Giữ chỗ trước khi đặt đường đi. Nguồn vừa thất bại tạm thời được bỏ qua.
+## Trả true nếu đã giữ chỗ và bắt đầu đi.
 func try_begin() -> bool:
 	if definition == null or not is_instance_valid(wander.pen) or _retry_remaining > 0.0 or not has_need():
 		return false
@@ -76,9 +91,12 @@ func try_begin() -> bool:
 			return true
 	return false
 
+## Kiểm tra máng còn tồn tại, còn cung cấp được và actor vẫn giữ vị trí tiếp cận.
 func target_is_valid() -> bool:
 	return is_instance_valid(target) and not target.is_queued_for_deletion() and is_instance_valid(wander.pen) and target.pen == wander.pen and target.can_supply(definition) and target.owns_slot(wander.movement.body, target_slot) and target_slot >= 0 and target_slot < target.access_offsets.size() and wander.pen.contains_world(target.access_position(target_slot), wander.margin)
 
+## Đi một bước đến vị trí đã giữ, cập nhật hoạt ảnh và trả trạng thái di chuyển.
+## Thất bại nếu mục tiêu thay đổi, đường bị mất hoặc hết thời gian đi.
 func step(delta: float) -> Travel:
 	if not target_is_valid():
 		return Travel.FAILED
@@ -105,6 +123,7 @@ func step(delta: float) -> Travel:
 	wander.animation.play("walk" if not displacement.is_zero_approx() else "idle")
 	return Travel.MOVING
 
+## Nhận khẩu phần từ máng hợp lệ và trả mức nhu cầu thực tế được phục hồi.
 func finish() -> float:
 	if not target_is_valid():
 		return 0.0
@@ -115,6 +134,7 @@ func finish() -> float:
 		serving_consumed.emit(kind, item)
 	return restored
 
+## Nhả chỗ, xóa mục tiêu và dừng di chuyển. Khi thất bại, tạm tránh máng đó.
 func cancel(failed: bool = false) -> void:
 	if is_instance_valid(target):
 		if failed:

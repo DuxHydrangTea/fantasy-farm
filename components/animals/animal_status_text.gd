@@ -1,10 +1,13 @@
 class_name AnimalStatusText
 extends RefCounted
-## Read-only presentation shared by the field inspector and animal resale details.
-## Focus/rest/sleep and stored output do not pause the production clock.
+## Tạo chuỗi trạng thái chỉ đọc cho bảng thông tin và chi tiết bán vật nuôi.
+## Nghỉ, ngủ và sản phẩm đang tồn không tự dừng đồng hồ sản xuất.
+
+## Kiểm tra actor còn trong cây scene, còn sống và có dữ liệu cần thiết.
 func is_available(animal: AnimalActor) -> bool:
 	return is_instance_valid(animal) and not animal.is_queued_for_deletion() and animal.is_inside_tree() and animal.definition != null and not animal.is_dead() and animal.growth != null and not animal.growth.is_dead()
 
+## Định dạng khoảng thời gian không âm thành chuỗi đã dịch theo ngày, giờ, phút hoặc giây.
 func remaining(seconds: float) -> String:
 	var total: int = ceili(maxf(0.0, seconds))
 	if total >= 86400:
@@ -15,18 +18,22 @@ func remaining(seconds: float) -> String:
 		return tr("{minutes}m {seconds}s").format({"minutes": total / 60, "seconds": total % 60})
 	return tr("{seconds}s").format({"seconds": total})
 
+## Mô tả trạng thái trưởng thành hoặc thời gian còn lại.
 func maturity(animal: AnimalActor) -> String:
 	var result: String = tr("Adult") if animal.growth.is_adult() else tr("Matures in {time}").format({"time": remaining(animal.growth.seconds_until_adult())})
 	return result
 
+## Mô tả số lượng, tên sản phẩm và thời gian một chu kỳ sản xuất.
 func recipe(definition: AnimalProductionDefinition) -> String:
 	if definition == null or not definition.is_valid():
 		return tr("No produce configured")
 	return tr("Yield: {amount} {item} / {time}").format({"amount": GameText.grouped_integer(definition.production_amount), "item": tr(definition.production_item.display_name), "time": remaining(definition.production_seconds)})
 
+## Mô tả thời gian sống còn lại.
 func lifetime(animal: AnimalActor) -> String:
 	return tr("Life left: {time}").format({"time": remaining(animal.growth.seconds_until_death())})
 
+## Hiển thị phần trăm tiến độ sản xuất và trạng thái thuốc đang chờ.
 func produce(animal: AnimalActor) -> String:
 	var definition: AnimalProductionDefinition = animal.production.definition
 	if definition == null or not definition.is_valid():
@@ -35,6 +42,7 @@ func produce(animal: AnimalActor) -> String:
 
 	return result + " · " + tr("Tonic") if animal.production.tonic_pending else result
 
+## Giải thích trạng thái sản xuất dựa trên tuổi, thức ăn, nước, bệnh và thời tiết.
 func production_state(animal: AnimalActor) -> String:
 	if not is_available(animal):
 		return tr("Animal unavailable")
@@ -61,6 +69,7 @@ func production_state(animal: AnimalActor) -> String:
 			return tr("Producing · Water use -25%")
 	return tr("Producing")
 
+## Ghép các dòng tuổi, tuổi thọ, tiến độ và trạng thái sản xuất.
 func summary(animal: AnimalActor) -> String:
 	if not is_available(animal):
 		return tr("Animal unavailable")

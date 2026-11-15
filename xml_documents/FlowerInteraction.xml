@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FlowerInteraction" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối trồng, tưới và thu hoa chậu qua trạng thái công cụ của người chơi. Chốt mục tiêu khi bắt đầu thao tác và chỉ thực hiện một lần tại frame tác động.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_reachable">
+			<return type="bool" />
+			<param index="0" name="pot" type="FlowerPot" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Tìm chậu gần nhất theo hướng, cập nhật trạng thái nhắm và nhãn hướng dẫn. Khi có thao tác đang chờ, giữ chậu mục tiêu nếu còn trong tầm.
+			</description>
+		</method>
+		<method name="prepare_action">
+			<return type="StringName" />
+			<param index="0" name="requested" type="StringName" />
+			<description>
+				Chọn hành động thu, tưới hoặc gieo cho chậu đang nhắm. Trả chuỗi rỗng nếu không có chậu, blocked nếu có chậu nhưng không làm được.
+			</description>
+		</method>
+		<method name="_on_state_changed">
+			<return type="void" />
+			<param index="0" name="_previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_frame_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pot_harvested">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="host" type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="prepare_target">
+			<return type="StringName" />
+			<param index="0" name="pot" type="FlowerPot" />
+			<description>
+				Chuẩn bị thu hoạch một chậu cụ thể nếu trong tầm và đã chín. Trả blocked khi không thể thực hiện.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+			Lựa chọn vật phẩm và inventory của người chơi.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Component hoạt ảnh cung cấp frame tác động và hướng nhìn.
+		</member>
+		<member name="state" type="StateComponent" setter="" getter="">
+			Máy trạng thái công cụ người chơi.
+		</member>
+		<member name="impact_frame" type="int" setter="" getter="" default="3">
+			Frame dự kiến để thực hiện thao tác, được AnimationComponent kẹp vào clip.
+		</member>
+		<member name="focused_pot" type="FlowerPot" setter="" getter="">
+			Chậu đang được nhắm.
+		</member>
+		<member name="_pending" type="FlowerPot" setter="" getter="">
+		</member>
+		<member name="_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_seed" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="_slot" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="prompt" type="Label" setter="" getter="">
+			Nhãn hướng dẫn tương tác.
+		</member>
+	</members>
+	<signals>
+		<signal name="harvest_yielded">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="host" type="Node2D" />
+			<description>
+				Chuyển tiếp vật phẩm, số lượng, vị trí, túi và vườn sau thu hoạch.
+			</description>
+		</signal>
+	</signals>
+</class>

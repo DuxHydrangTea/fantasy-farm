@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FertileSoil" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Xác định ô đất màu mỡ từ tọa độ bằng bố cục xác định theo phiên bản.
+	</brief_description>
+	<description>
+		Bố cục phiên bản 1 đã cố định để kết quả nhất quán với dữ liệu đã lưu. Bố cục mới cần nhánh phiên bản riêng và phương án chuyển dữ liệu.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid_version" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<description>
+				Kiểm tra giá trị phiên bản là số nguyên hoặc số thực bằng 1.
+			</description>
+		</method>
+		<method name="is_fertile">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Kiểm tra ô nằm trong vùng đất và thuộc tập ô màu mỡ của bố cục hiện tại. Phiên bản 1 băm tọa độ và chọn các giá trị có phần dư nhỏ hơn 18 trên 100.
+			</description>
+		</method>
+		<method name="amount">
+			<return type="int" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="base" type="int" />
+			<description>
+				Tính sản lượng từ [param base]. Ô màu mỡ cho ít nhất thêm một đơn vị và thông thường bằng 1,5 lần sản lượng cơ sở sau khi làm tròn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="layout_version" type="int" setter="" getter="" default="1">
+			Phiên bản bố cục hiện áp dụng khi tính ô màu mỡ.
+		</member>
+	</members>
+	<constants>
+		<constant name="CURRENT_VERSION" value="1">
+			Phiên bản bố cục dùng cho dữ liệu mới.
+		</constant>
+	</constants>
+</class>

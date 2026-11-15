@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalProductionComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Theo dõi tiến độ và lượng sản phẩm chờ thu của một vật nuôi. Actor cung cấp thời gian đủ điều kiện và quyết định cách chuyển sản phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="data" type="AnimalProductionDefinition" />
+			<description>
+				Gắn cấu hình mới và đặt lại tiến độ, sản phẩm tồn và trạng thái thuốc.
+			</description>
+		</method>
+		<method name="progress_ratio">
+			<return type="float" />
+			<description>
+				Tỉ lệ tiến độ trên thời gian chu kỳ, hoặc 0 nếu cấu hình không hợp lệ.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="progress" type="float" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="pending" type="bool" default="false" />
+			<description>
+				Khôi phục tiến độ, lượng tồn và thuốc chờ từ dữ liệu đã kiểm tra. Phát [signal stock_changed] sau khi khôi phục.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="int" />
+			<param index="0" name="eligible_seconds" type="float" />
+			<description>
+				Cộng thời gian đủ điều kiện, hoàn thành các chu kỳ và giữ phần thời gian dư. Trả về số sản phẩm mới, đồng thời cộng vào tồn và phát signal tương ứng. Thuốc chờ chỉ áp dụng cho chu kỳ đầu tiên, với 50% cơ hội thêm một sản phẩm.
+			</description>
+		</method>
+		<method name="take_output">
+			<return type="int" />
+			<param index="0" name="amount" type="int" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Lấy tối đa [param amount] sản phẩm đang tồn và trả về số thực lấy. Khi [param notify] bật, phát thay đổi tồn nếu có sản phẩm được lấy.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Chuyển sản phẩm đang lưu vào kho và trả số lượng được nhận.
+			</description>
+		</method>
+		<method name="apply_tonic">
+			<return type="bool" />
+			<description>
+				Đặt thuốc cho chu kỳ hoàn thành tiếp theo nếu chưa có thuốc chờ và cấu hình hợp lệ. Trả về true khi áp dụng thành công.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="definition" type="AnimalProductionDefinition" setter="" getter="">
+			Cấu hình loại sản phẩm và chu kỳ sản xuất.
+		</member>
+		<member name="progress_seconds" type="float" setter="" getter="" default="0.0">
+			Phần thời gian đã tích lũy trong chu kỳ hiện tại, tính bằng giây.
+		</member>
+		<member name="stored_amount" type="int" setter="" getter="" default="0">
+			Lượng sản phẩm đã hoàn thành và chưa lấy đi.
+		</member>
+		<member name="tonic_pending" type="bool" setter="" getter="" default="false">
+			Cho biết thuốc tăng sản phẩm đang chờ chu kỳ hoàn thành tiếp theo.
+		</member>
+		<member name="bonus_roll" type="Callable" setter="" getter="" default="&lt;anonymous lambda&gt;">
+			Hàm trả số ngẫu nhiên dùng để quyết định thưởng thuốc, có thể thay khi kiểm thử.
+		</member>
+		<member name="_collecting" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="produced">
+			<param index="0" name="amount" type="int" />
+			<description>
+				Phát số lượng sản phẩm vừa hoàn thành.
+			</description>
+		</signal>
+		<signal name="stock_changed">
+			<param index="0" name="amount" type="int" />
+			<description>
+				Phát tổng lượng sản phẩm đang chờ thu sau khi thay đổi.
+			</description>
+		</signal>
+	</signals>
+</class>

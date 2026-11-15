@@ -68,6 +68,9 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/coop_garden_decor.tscn" id="88_7cjgt"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/barn_garden_decor.tscn" id="89_xio4k"]
 [ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/riverside_rest.tscn" id="90_h0yb0"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/east_meadow_decor.tscn" id="91_v2gse"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/world_boundary.tscn" id="92_labkd"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/meadow_rest_details.tscn" id="93_ygtcd"]
 [ext_resource type="PackedScene" path="res://scenes/characters/blacksmith_merchant.tscn" id="blacksmith_merchant"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/online_farm/tool_upgrade_store.tscn" id="blacksmith_shop"]
 [ext_resource type="Script" path="res://components/cooking/chef_merchant.gd" id="chef_script"]
@@ -5851,6 +5854,18 @@ y_sort_enabled = true
 texture_filter = 1
 
 [node name="RiversideRest" type="Node2D" parent="." unique_id=1809126923 instance=ExtResource("90_h0yb0")]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="EastMeadowDecor" type="Node2D" parent="." unique_id=819239738 instance=ExtResource("91_v2gse")]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="WorldBoundary" type="Node2D" parent="." unique_id=1494221360 instance=ExtResource("92_labkd")]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="MeadowRestDetails" type="Node2D" parent="." unique_id=1847624877 instance=ExtResource("93_ygtcd")]
 y_sort_enabled = true
 texture_filter = 1
 

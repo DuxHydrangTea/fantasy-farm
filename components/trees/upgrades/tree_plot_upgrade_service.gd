@@ -1,17 +1,27 @@
 class_name TreePlotUpgradeService
 extends RefCounted
-## Commit coins, level and effective capacity before notifying observers.
+## Báo giá và mua mở rộng khu trồng cây ăn quả hoặc cây lấy gỗ.
+## Tiền và cấp được cập nhật trước khi phát signal; tiền được hoàn lại nếu
+## không thể ghi cấp sau khi trừ tiền.
+
+## Phát sau khi mua thành công để yêu cầu lưu.
 signal save_requested
+## Thế giới chứa các hệ thống có thể đang giao dịch.
 var world: FarmWorld
+## Ví dùng để thanh toán.
 var wallet: WalletComponent
+## Trạng thái cấp và khóa giao dịch.
 var state: TreePlotUpgradeState = TreePlotUpgradeState.new()
+## Danh mục giá nâng cấp.
 var catalog: TreePlotUpgradeCatalog = TreePlotUpgradeState.CATALOG
+## Cho biết profile đã sẵn sàng.
 var profile_ready: bool = false
 
 func _init(farm: FarmWorld) -> void:
 	world = farm
 	wallet = world.player.wallet
 
+## Khôi phục trạng thái hợp lệ và thông báo thay đổi cho cả hai loại khu.
 func restore(data: Dictionary) -> bool:
 	if not state.restore(data):
 		return false
@@ -22,6 +32,9 @@ func restore(data: Dictionary) -> bool:
 func _failure(code: String, message: String, offer: Dictionary = {}) -> Dictionary:
 	return offer.merged({"ok":false, "code":code, "error":message}, true)
 
+## Báo cấp, sức chứa hiện tại, sức chứa tiếp theo và giá.
+## Kết quả lỗi có mã và thông báo khi dữ liệu không sẵn sàng, đạt cấp tối đa,
+## hệ thống đang bận hoặc số dư không đủ.
 func quote(kind: TreeDefinition.Kind) -> Dictionary:
 	if not catalog.valid() or kind not in [TreeDefinition.Kind.FRUIT, TreeDefinition.Kind.TIMBER] or not is_instance_valid(world) or not world.is_inside_tree() or not is_instance_valid(wallet):
 		return _failure("unavailable", "Tree plot upgrades are unavailable.")
@@ -38,6 +51,8 @@ func quote(kind: TreeDefinition.Kind) -> Dictionary:
 		return _failure("insufficient_coins", "Not enough coins.", offer)
 	return offer
 
+## Kiểm tra lại báo giá, trừ xu và tăng cấp nếu cấp và giá dự kiến còn khớp.
+## Phát thay đổi ví, cấp và yêu cầu lưu sau khi giao dịch thành công.
 func purchase(kind: TreeDefinition.Kind, expected_level: int, expected_price: int) -> Dictionary:
 	var offer: Dictionary = quote(kind)
 	if not offer.ok:

@@ -1,8 +1,13 @@
 class_name ChefMerchant
 extends ShopMerchant
-## Uses the existing E/click, mobile and modal merchant integration.
+## Điểm tương tác đầu bếp dùng cơ chế merchant để mở menu nấu ăn.
+## Hiển thị trạng thái hàng đợi và món sẵn sàng phía trên nhân vật.
+
+## Khung trạng thái nấu.
 var cooking_status: PanelContainer
+## Nhãn tên món, tiến độ và số món sẵn sàng.
 var cooking_label: Label
+## Thanh tiến độ món đầu hàng đợi.
 var cooking_progress: ProgressBar
 var _world: FarmWorld
 var _status_elapsed: float = 0.0
@@ -66,6 +71,8 @@ func _process(delta: float) -> void:
 		_status_elapsed = 0.0
 		refresh_cooking_status()
 
+## Đồng bộ hàng đợi đến thời gian hiện tại và cập nhật nhãn, thanh tiến độ.
+## Ẩn trạng thái khi profile chưa sẵn sàng hoặc menu/bong bóng đang hiện.
 func refresh_cooking_status() -> void:
 	if _world == null or _world.tool_upgrades == null or not _world.tool_upgrades.profile_ready:
 		cooking_status.hide()

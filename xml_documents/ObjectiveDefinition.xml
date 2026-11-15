@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình mục tiêu có mã ổn định và chuỗi nguồn để bản địa hóa.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="objective_id" type="StringName" setter="" getter="">
+			Mã nhận diện mục tiêu.
+		</member>
+		<member name="title" type="String" setter="" getter="">
+			Chuỗi nguồn của tiêu đề.
+		</member>
+		<member name="description" type="String" setter="" getter="">
+			Chuỗi nguồn mô tả mục tiêu.
+		</member>
+		<member name="condition" type="StringName" setter="" getter="">
+			Mã điều kiện được hệ thống mục tiêu theo dõi.
+		</member>
+		<member name="required" type="int" setter="" getter="" default="1">
+			Mức tiến độ cần đạt.
+		</member>
+		<member name="reward_coins" type="int" setter="" getter="" default="25">
+			Số xu thưởng.
+		</member>
+		<member name="state_condition" type="bool" setter="" getter="" default="false">
+			Cho biết điều kiện dựa trên trạng thái thay vì số lần xảy ra sự kiện.
+		</member>
+	</members>
+</class>

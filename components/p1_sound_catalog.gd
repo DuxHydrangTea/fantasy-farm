@@ -1,5 +1,6 @@
 extends RefCounted
-## CC0 recordings and foley; provenance: assets/sound/p1/manifest.json.
+## Danh mục âm thanh động vật và hiệu ứng bổ sung; nguồn được ghi trong manifest âm thanh P1.
+
 const CLIPS: Dictionary = {
 	&"animal_chicken": [preload("res://assets/sound/p1/animal_chicken.wav")],
 	&"animal_duck": [preload("res://assets/sound/p1/animal_duck.wav")],

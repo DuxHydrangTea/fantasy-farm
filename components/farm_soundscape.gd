@@ -1,11 +1,19 @@
 class_name FarmSoundscape
 extends Node2D
-## A fixed pool, independent of herd size. Distances use the player's feet.
+## Âm thanh môi trường vị trí cho vật nuôi, ong, bếp và hành động công nhân.
+## Dùng pool cố định và tính khoảng cách từ chân người chơi.
+
+## Bán kính nghe tiếng vật nuôi.
 const RADIUS: float = 240.0
+## Mức cơ sở của tiếng gọi vật nuôi theo dB.
 const CALL_VOLUME_DB: float = 9.0
+## Mã âm thanh theo thứ tự enum loài vật nuôi.
 const CALLS: Array[StringName] = [&"animal_chicken", &"animal_duck", &"animal_cow", &"animal_sheep", &"animal_pig", &"animal_goose", &"animal_horse"]
+## Thế giới cung cấp người nghe và nguồn âm.
 var world: FarmWorld
+## Pool voice vị trí cho tiếng vật nuôi.
 var voices: Array[AudioStreamPlayer2D] = []
+## Tham chiếu yếu đến actor đang dùng từng voice.
 var sources: Array[WeakRef] = []
 var _schedule: Dictionary = {}
 var _elapsed: float = 0.0
@@ -15,6 +23,7 @@ var _bee: AudioStreamPlayer2D
 var _kitchen: AudioStreamPlayer2D
 var _chef: WeakRef
 
+## Hệ số âm lượng giảm theo khoảng cách, bằng 0 ngoài bán kính.
 static func distance_gain(distance: float, radius: float = RADIUS) -> float:
 	return pow(clampf(1.0 - distance / radius, 0.0, 1.0), 1.6)
 
@@ -49,6 +58,7 @@ func _loop(event: StringName) -> AudioStreamWAV:
 	stream.loop_end = int(stream.get_length() * stream.mix_rate)
 	return stream
 
+## Kiểm tra vật nuôi còn sống, hiển thị, thuộc thế giới và không đang ngủ.
 func eligible(animal: AnimalActor) -> bool:
 	return is_instance_valid(animal) and not animal.is_queued_for_deletion() and not animal._retired and not animal.is_dead() and animal.is_visible_in_tree() and world.is_ancestor_of(animal) and animal.definition != null and animal.behaviour != null and animal.behaviour.current_state not in [AnimalBehaviourComponent.State.SLEEP, AnimalBehaviourComponent.State.SLEEP_START]
 

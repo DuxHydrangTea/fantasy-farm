@@ -1,5 +1,8 @@
 extends Control
-## Keep the first scene small; the farm's assets load while this screen renders.
+## Màn hình trung gian tải scene trang trại bằng ResourceLoader bất đồng bộ.
+## Màn hình được vẽ trước khi yêu cầu tải và cho phép quay lại nếu tải thất bại.
+
+## Đường dẫn scene trang trại cần tải.
 const WORLD_PATH: String = "res://world/main_world.tscn"
 @onready var _status: Label = $Center/Column/Status
 @onready var _progress: ProgressBar = $Center/Column/Progress

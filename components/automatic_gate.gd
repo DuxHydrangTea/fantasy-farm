@@ -1,10 +1,15 @@
 extends StaticBody2D
-## Opens for nearby farm players; separate radii prevent flickering at the edge.
+## Tự mở cổng khi người chơi đến gần và đóng khi người chơi rời xa.
+## Hai khoảng cách mở và đóng riêng giúp tránh đổi trạng thái liên tục ở rìa.
 
+## Khoảng cách mở cổng.
 @export_range(8.0, 256.0, 1.0) var open_distance: float = 48.0
+## Khoảng cách đóng cổng, tối thiểu bằng khoảng mở khi tính trạng thái.
 @export_range(8.0, 256.0, 1.0) var close_distance: float = 64.0
 
+## Sprite chứa hoạt ảnh mở, đóng và trạng thái tĩnh.
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+## Trạng thái mục tiêu hiện tại của cổng.
 var is_open: bool = false
 
 func _ready() -> void:

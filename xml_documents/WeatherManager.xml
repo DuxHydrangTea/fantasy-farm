@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WeatherManager" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối thời tiết của trang trại và tác động của nó theo thời gian mô phỏng. Hiệu ứng chuyển màu chỉ thay đổi hiển thị; thời gian mô phỏng do đồng hồ quản lý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="refresh_visuals" type="bool" default="true" />
+			<description>
+				Tiến thời tiết đến mốc yêu cầu, không lùi trước [member last_at]. Chia khoảng tại ranh giới thời tiết để tính bay hơi đất, áp dụng mưa, cập nhật hiệu ứng và phát signal khi thời tiết đổi.
+			</description>
+		</method>
+		<method name="_apply_rain">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_weather">
+			<return type="void" />
+			<param index="0" name="next_weather" type="int" enum="WeatherSchedule.Weather" />
+			<description>
+				Đổi thời tiết thủ công cho phần còn lại của ngày hiện tại. Chốt tác động của khoảng cũ lên đất, đàn ong và vật nuôi trước khi ghi mốc thay đổi, sau đó cập nhật hiệu ứng tại cùng thời điểm.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+				Khôi phục lịch đã kiểm tra và đặt lại mốc xử lý cùng cache tưới mưa.
+			</description>
+		</method>
+		<method name="display_timestamp">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Trả thời điểm dùng để hiển thị, thay giờ bằng giờ xem thử nếu debug đang bật.
+			</description>
+		</method>
+		<method name="set_debug_hour">
+			<return type="void" />
+			<param index="0" name="hour" type="int" />
+			<description>
+				Đặt giờ xem thử từ 0 đến 23 hoặc -1 để tắt, chỉ áp dụng trong bản debug.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chịu tác động thời tiết.
+		</member>
+		<member name="schedule" type="WeatherSchedule" setter="" getter="" default="&lt;unknown&gt;">
+			Lịch thời tiết xác định và các lần thay đổi thủ công.
+		</member>
+		<member name="current_weather" type="int" setter="" getter="" enum="WeatherSchedule.Weather" default="0">
+			Thời tiết đã áp dụng gần nhất.
+		</member>
+		<member name="day_night" type="DayNightComponent" setter="" getter="">
+			Điều khiển ánh sáng ngày đêm.
+		</member>
+		<member name="effects" type="WeatherEffects" setter="" getter="">
+			Điều khiển hiệu ứng thời tiết.
+		</member>
+		<member name="hud" type="WeatherHUD" setter="" getter="">
+			Giao diện đồng hồ và thời tiết.
+		</member>
+		<member name="last_at" type="float" setter="" getter="" default="0.0">
+			Mốc mô phỏng đã xử lý gần nhất.
+		</member>
+		<member name="debug_hour" type="int" setter="" getter="" default="-1">
+			Giờ xem thử ánh sáng trong bản debug; -1 dùng thời gian thực của mô phỏng.
+		</member>
+		<member name="_rain_day" type="int" setter="" getter="" default="-9223372036854775807">
+		</member>
+		<member name="_rain_columns" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_advancing" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="weather_changed">
+			<param index="0" name="weather" type="int" />
+			<description>
+				Phát khi trạng thái thời tiết hiện tại thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="Weather" value="{&quot;CLOUDY&quot;: 2, &quot;RAIN&quot;: 1, &quot;SUNNY&quot;: 0, &quot;WINDY&quot;: 3}">
+			Tên enum thời tiết dùng chung từ lịch.
+		</constant>
+	</constants>
+</class>

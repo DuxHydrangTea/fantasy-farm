@@ -1,10 +1,16 @@
 class_name VisualValueRow
 extends HBoxContainer
-## Presentation only: actual item textures and numeric values, with named tooltips.
+## Hàng giao diện hiển thị biểu tượng, giá trị và tooltip tên hoặc chất lượng.
+
+## Biểu tượng xu dùng cho giá trị tiền.
 const COIN: Texture2D = preload("res://assets/Icons/currency/gold_coin.png")
+## Huy hiệu chất lượng bạc.
 const SILVER: Texture2D = preload("res://assets/Icons/quality/badge_silver.png")
+## Huy hiệu chất lượng vàng.
 const GOLD: Texture2D = preload("res://assets/Icons/quality/badge_gold.png")
+## Ô hiển thị biểu tượng chính.
 var icon: TextureRect
+## Nhãn hiển thị số lượng hoặc mô tả.
 var value: Label
 
 func _init() -> void:
@@ -18,6 +24,7 @@ func _init() -> void:
 	value.add_theme_font_size_override("font_size", 16)
 	add_child(value)
 
+## Tạo TextureRect giữ tỉ lệ ảnh, dùng lọc nearest và kích thước tối thiểu.
 static func make_icon(texture: Texture2D, pixels: int = 24) -> TextureRect:
 	var image: TextureRect = TextureRect.new()
 	image.texture = texture
@@ -29,6 +36,8 @@ static func make_icon(texture: Texture2D, pixels: int = 24) -> TextureRect:
 	image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return image
 
+## Đặt biểu tượng xu trước nhãn có sẵn bằng cách chuyển nhãn vào một hàng mới.
+## Metadata trên nhãn ngăn việc bọc lặp lại khi gọi nhiều lần.
 static func money(label: Label) -> void:
 	if label.has_meta(&"coin_row"):
 		return
@@ -47,12 +56,15 @@ static func money(label: Label) -> void:
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.set_meta(&"coin_row", row)
 
+## Tạo một hàng cùng node cha và đặt ngay trước nhãn đã cho.
 static func before(label: Label) -> VisualValueRow:
 	var row: VisualValueRow = VisualValueRow.new()
 	label.get_parent().add_child(row)
 	label.get_parent().move_child(row, label.get_index())
 	return row
 
+## Hiển thị biểu tượng, nội dung và tên đã dịch của vật phẩm.
+## Cấp dương hiển thị huy hiệu chất lượng. Vật phẩm null ẩn toàn bộ hàng.
 func show_item(item: ItemDefinition, text: String, tier: int = -1) -> void:
 	icon.texture = item.icon if item != null else null
 	value.text = text
@@ -72,12 +84,15 @@ func show_item(item: ItemDefinition, text: String, tier: int = -1) -> void:
 		tooltip_text += " · " + ItemQuality.label(tier)
 	visible = item != null
 
+## Hiển thị số xu có phân nhóm chữ số cùng tooltip đã dịch.
 func show_coins(amount: int) -> void:
 	icon.texture = COIN
 	value.text = GameText.grouped_integer(amount)
 	tooltip_text = TranslationServer.translate("{coins} coins").format({"coins": value.text})
 	show()
 
+## Hiển thị sản phẩm và số lượng mỗi chu kỳ với chuỗi thời gian đã định dạng.
+## Cấu hình thiếu hoặc không hợp lệ sẽ ẩn hàng.
 func show_production(definition: AnimalProductionDefinition, duration: String) -> void:
 	if definition == null or not definition.is_valid():
 		hide()

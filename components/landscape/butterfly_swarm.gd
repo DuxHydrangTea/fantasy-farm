@@ -1,6 +1,10 @@
 extends Node2D
-## A fixed population with no spawning timers, physics, navigation or save state.
+## Tạo đàn bướm trang trí với số lượng cố định khi scene sẵn sàng.
+## Đàn không dùng vật lý, điều hướng gameplay hoặc dữ liệu lưu.
+
+## Script của từng con bướm.
 const ROAMER: Script = preload("res://components/landscape/butterfly_roamer.gd")
+## Các bộ hoạt ảnh màu bướm có thể chọn.
 const COLORS: Array[SpriteFrames] = [
 	preload("res://sprite_frames/animals/butterfly_01_frames.tres"),
 	preload("res://sprite_frames/animals/butterfly_02_frames.tres"),
@@ -10,12 +14,17 @@ const COLORS: Array[SpriteFrames] = [
 	preload("res://sprite_frames/animals/butterfly_06_frames.tres"),
 	preload("res://sprite_frames/animals/butterfly_07_frames.tres"),
 	preload("res://sprite_frames/animals/butterfly_08_frames.tres")]
+## Số cá thể tạo khi khởi tạo.
 @export_range(1, 128, 1) var population: int = 48
+## Giới hạn vùng bay.
 @export var roam_bounds: Rect2 = Rect2(24, 32, 2496, 1640)
+## Vùng vườn hoa để bướm ghé.
 @export var garden_bounds: Rect2 = Rect2(1432, 296, 368, 256)
+## Thời gian ghé vườn, tính bằng giây.
 @export var garden_visit_seconds: float = 30.0
+## Thời gian chờ sau mỗi lượt ghé.
 @export var garden_cooldown_seconds: float = 300.0
-## Zero randomizes on each launch. A nonzero value allows reproducible previews.
+## Seed bằng 0 chọn ngẫu nhiên mỗi lần chạy; giá trị khác 0 cho preview lặp lại.
 @export var random_seed: int = 0
 
 func _ready() -> void:

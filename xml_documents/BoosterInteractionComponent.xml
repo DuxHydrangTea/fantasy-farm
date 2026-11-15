@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BoosterInteractionComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Xử lý lựa chọn, mục tiêu và phản hồi khi người chơi dùng vật phẩm chăm sóc cây hoặc vật nuôi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="selected_booster">
+			<return type="ItemDefinition" />
+			<description>
+				Trả vật phẩm tăng cường đang chọn nếu đúng loại.
+			</description>
+		</method>
+		<method name="find_animal">
+			<return type="AnimalActor" />
+			<description>
+				Tìm vật nuôi gần người chơi để áp dụng vật phẩm.
+			</description>
+		</method>
+		<method name="prepare_action">
+			<return type="StringName" />
+			<description>
+				Xác định và chuẩn bị hành động dùng vật phẩm tăng cường theo mục tiêu.
+			</description>
+		</method>
+		<method name="click_medicine">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Thử dùng thuốc lên vật nuôi gần điểm nhấp; trả liệu nhấp đã được xử lý.
+			</description>
+		</method>
+		<method name="_use_medicine">
+			<return type="void" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_state_changed">
+			<return type="void" />
+			<param index="0" name="_old" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_frame_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="feedback_source">
+			<return type="String" />
+			<description>
+				Trả thông báo còn hiệu lực cho ô đang chọn, hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="feedback_expires_at">
+			<return type="int" />
+			<description>
+				Trả thời điểm hết hạn thông báo theo đồng hồ hệ thống, hoặc 0.
+			</description>
+		</method>
+		<method name="prepare_weeding">
+			<return type="void" />
+			<param index="0" name="crop" type="Crop" />
+			<description>
+				Chuẩn bị động tác nhổ cỏ cho cây và chốt ô vật phẩm.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="service" type="BoosterService" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_crop" type="Crop" setter="" getter="">
+		</member>
+		<member name="_weeding" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_weed_crop" type="Crop" setter="" getter="">
+		</member>
+		<member name="_animal" type="AnimalActor" setter="" getter="">
+		</member>
+		<member name="_cell" type="Vector2i" setter="" getter="">
+		</member>
+		<member name="_item" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="_slot" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_pending" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_feedback" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_feedback_until" type="int" setter="@_feedback_until_setter" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="feedback_changed">
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="HealingEffect" value="&lt;Object&gt;">
+		</constant>
+		<constant name="CareBubble" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassChunkIndex" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chỉ mục CPU chia các instance cỏ thành chunk và nhóm theo thứ tự vẽ. Được dựng lại khi dữ liệu hoặc transform đổi, phục vụ tra cứu vùng nhìn thấy.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="build">
+			<return type="void" />
+			<param index="0" name="values" type="Dictionary[]" />
+			<param index="1" name="catalog" type="GrassSourceCatalog" />
+			<param index="2" name="size_pixels" type="int" />
+			<param index="3" name="into_sort_space" type="Transform2D" />
+			<description>
+				Dựng chỉ mục từ mẫu, catalog, kích thước chunk và transform sang không gian sắp xếp. Cỏ cao giữ tọa độ chân Y chính xác để sắp thứ tự với actor.
+			</description>
+		</method>
+		<method name="coordinate">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Tọa độ chunk chứa điểm.
+			</description>
+		</method>
+		<method name="cell_rect">
+			<return type="Rect2i" />
+			<param index="0" name="area" type="Rect2" />
+			<param index="1" name="margin" type="float" />
+			<description>
+				Vùng tọa độ chunk bao phủ hình chữ nhật sau khi thêm extent và margin.
+			</description>
+		</method>
+		<method name="lookup">
+			<return type="Vector2i[]" />
+			<param index="0" name="area" type="Rect2i" />
+			<description>
+				Liệt kê các chunk có dữ liệu trong vùng tọa độ đã cho.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="chunks" type="Dictionary" setter="" getter="" default="{}">
+			Các chunk theo tọa độ, chứa nhóm và số instance.
+		</member>
+		<member name="chunk_size" type="int" setter="" getter="" default="256">
+			Kích thước chunk theo pixel trong không gian sắp xếp.
+		</member>
+		<member name="extent" type="float" setter="" getter="" default="0.0">
+			Độ vươn lớn nhất của hình cỏ khỏi gốc, dùng mở rộng vùng tra cứu.
+		</member>
+		<member name="total_instances" type="int" setter="" getter="" default="0">
+			Tổng số instance đầu vào.
+		</member>
+	</members>
+</class>

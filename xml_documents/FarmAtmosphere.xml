@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmAtmosphere" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Trộn âm thanh môi trường và nhạc nền theo giờ và thời tiết. Hai voice nhạc crossfade; âm lượng chuyển dần theo delta khi mục tiêu thay đổi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="music_for_hour" qualifiers="static">
+			<return type="StringName" />
+			<param index="0" name="hour" type="float" />
+			<description>
+				Chọn mã nhạc ngày, chạng vạng hoặc đêm theo giờ modulo 24.
+			</description>
+		</method>
+		<method name="environment_targets" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="hour" type="float" />
+			<param index="1" name="weather" type="int" />
+			<param index="2" name="strength" type="float" />
+			<description>
+				Tính mức mục tiêu cho chim, dế và mưa theo giờ, thời tiết và cường độ.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_voice">
+			<return type="AudioStreamPlayer" />
+			<param index="0" name="label" type="String" />
+			<param index="1" name="bus" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_loop">
+			<return type="AudioStreamOggVorbis" />
+			<param index="0" name="key" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="advance_mix">
+			<return type="void" />
+			<param index="0" name="hour" type="float" />
+			<param index="1" name="weather" type="int" />
+			<param index="2" name="strength" type="float" />
+			<param index="3" name="delta" type="float" />
+			<description>
+				Tiến mức môi trường và crossfade nhạc theo delta; giảm nhạc khi trời mưa.
+			</description>
+		</method>
+		<method name="_request_music">
+			<return type="void" />
+			<param index="0" name="key" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply">
+			<return type="void" />
+			<param index="0" name="voice" type="AudioStreamPlayer" />
+			<param index="1" name="gain" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp thời gian và thời tiết.
+		</member>
+		<member name="environment" type="Dictionary[StringName, AudioStreamPlayer]" setter="" getter="" default="{}">
+			Các voice môi trường theo mã.
+		</member>
+		<member name="environment_weights" type="Dictionary[StringName, float]" setter="" getter="" default="{}">
+			Mức gain hiện tại của từng loop môi trường.
+		</member>
+		<member name="music_voices" type="AudioStreamPlayer[]" setter="" getter="" default="[]">
+			Hai voice dùng để chuyển nhạc.
+		</member>
+		<member name="music_weights" type="float[]" setter="" getter="" default="[...]">
+			Mức gain nội suy của hai voice.
+		</member>
+		<member name="music_keys" type="StringName[]" setter="" getter="" default="[...]">
+			Mã bản nhạc đang gắn với từng voice.
+		</member>
+		<member name="music_target" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			Mã nhạc được yêu cầu hiện tại.
+		</member>
+		<member name="_music_index" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_music_weather_gain" type="float" setter="" getter="" default="1.0">
+		</member>
+	</members>
+	<constants>
+		<constant name="CATALOG" value="{&amp;&quot;birds_day&quot;: &lt;Object&gt;, &amp;&quot;crickets_night&quot;: &lt;Object&gt;, &amp;&quot;music_day&quot;: &lt;Object&gt;, &amp;&quot;music_night&quot;: &lt;Object&gt;, &amp;&quot;music_twilight&quot;: &lt;Object&gt;, &amp;&quot;rain_loop&quot;: &lt;Object&gt;}">
+			Các bản nhạc và loop môi trường.
+		</constant>
+		<constant name="ENV_FADE" value="3.0">
+			Thời gian chuyển mức môi trường tính bằng giây.
+		</constant>
+		<constant name="MUSIC_FADE" value="5.0">
+			Thời gian crossfade nhạc tính bằng giây.
+		</constant>
+		<constant name="MUSIC_GAIN" value="0.55">
+			Mức gain cơ sở của nhạc.
+		</constant>
+	</constants>
+</class>

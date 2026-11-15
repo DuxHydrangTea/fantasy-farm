@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Crop" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Một cây trồng trên đồng, giữ tiến độ, chất lượng và tình trạng sâu cỏ. Tiến độ tính từ mốc trồng và hạn chín, có thể cập nhật trực tiếp sau offline.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_status_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt hiển thị tiến độ khi được tập trung, đồng bộ thời gian trước khi hiện.
+			</description>
+		</method>
+		<method name="react">
+			<return type="void" />
+			<param index="0" name="degrees" type="float" default="5.0" />
+			<param index="1" name="direction" type="float" default="1.0" />
+			<description>
+				Phát hiệu ứng nghiêng nếu cây chưa bắt đầu biến mất.
+			</description>
+		</method>
+		<method name="play_sprout">
+			<return type="void" />
+			<description>
+				Phát hiệu ứng xuất hiện của cây mới mọc.
+			</description>
+		</method>
+		<method name="retire_after_harvest">
+			<return type="void" />
+			<description>
+				Bắt đầu hiệu ứng biến mất sau khi gameplay đã bỏ cây khỏi ô. Node tự xóa khi hiệu ứng hoàn tất, hoặc xóa ngay nếu không có motion.
+			</description>
+		</method>
+		<method name="_on_motion_finished">
+			<return type="void" />
+			<param index="0" name="effect" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="is_retiring">
+			<return type="bool" />
+			<description>
+				Cho biết cây đang chờ kết thúc hiệu ứng sau thu hoạch.
+			</description>
+		</method>
+		<method name="get_status_sprite">
+			<return type="Node2D" />
+			<description>
+				Trả sprite dùng để neo phần hiển thị trạng thái.
+			</description>
+		</method>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="crop" type="CropDefinition" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+				Khởi tạo cây mới, tình trạng ngẫu nhiên và hạn chín từ thời điểm trồng.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Tính tiến độ không lùi, cập nhật tình trạng, ảnh và thanh tiến độ. Phát matured khi cây chuyển từ chưa chín sang chín.
+			</description>
+		</method>
+		<method name="is_mature">
+			<return type="bool" />
+			<description>
+				Cho biết tiến độ đã đạt 1.
+			</description>
+		</method>
+		<method name="restore_progress">
+			<return type="void" />
+			<param index="0" name="crop" type="CropDefinition" />
+			<param index="1" name="planted" type="float" />
+			<param index="2" name="deadline" type="float" />
+			<param index="3" name="earned" type="float" />
+			<param index="4" name="timestamp" type="float" />
+			<param index="5" name="was_fertilized" type="bool" default="false" />
+			<param index="6" name="bee_reduction" type="float" default="0.0" />
+			<param index="7" name="was_watered" type="bool" default="false" />
+			<param index="8" name="was_root_boosted" type="bool" default="false" />
+			<param index="9" name="condition_data" type="Dictionary" default="{}" />
+			<description>
+				Khôi phục các mốc, tiến độ và trạng thái chăm sóc đã kiểm tra rồi cập nhật đến timestamp. Nếu thiếu tình trạng cũ, dùng trạng thái tương thích của ConditionState.
+			</description>
+		</method>
+		<method name="fertilizer_error">
+			<return type="String" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Đồng bộ tiến độ rồi trả lý do không bón được, hoặc chuỗi rỗng nếu hợp lệ. Phân bón chỉ dùng một lần trước khi cây đạt 50% tiến độ.
+			</description>
+		</method>
+		<method name="apply_fertilizer">
+			<return type="bool" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Bón phân và rút ngắn hạn chín theo 20% thời gian cơ sở đã điều chỉnh.
+			</description>
+		</method>
+		<method name="harvest_tier">
+			<return type="int" />
+			<description>
+				Cấp thu hoạch: thường 0, đã tưới 1, đã tưới và dùng Root Tonic là 2.
+			</description>
+		</method>
+		<method name="mark_watered">
+			<return type="void" />
+			<description>
+				Đánh dấu đã tưới và cập nhật hiệu ứng chất lượng.
+			</description>
+		</method>
+		<method name="root_error">
+			<return type="String" />
+			<description>
+				Trả lý do không dùng được Root Tonic hoặc chuỗi rỗng nếu hợp lệ.
+			</description>
+		</method>
+		<method name="apply_root">
+			<return type="bool" />
+			<description>
+				Dùng Root Tonic sau khi tưới, cập nhật chất lượng và hiệu ứng.
+			</description>
+		</method>
+		<method name="_update_quality">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_create_quality_particles">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="condition_summary">
+			<return type="String" />
+			<description>
+				Tạo chuỗi mô tả các tình trạng sâu bệnh và cỏ dại hiện tại.
+			</description>
+		</method>
+		<method name="_update_condition_visuals">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_visible_tops" type="Dictionary[Texture2D, float]" setter="" getter="" default="{}">
+			Cache đỉnh phần ảnh nhìn thấy theo texture giai đoạn dùng chung.
+		</member>
+		<member name="_quality_material" type="ParticleProcessMaterial" setter="" getter="">
+		</member>
+		<member name="_quality_texture" type="ImageTexture" setter="" getter="">
+		</member>
+		<member name="_silver_texture" type="ImageTexture" setter="" getter="">
+		</member>
+		<member name="conditions" type="&quot;components/crop_condition_state.gd&quot;" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái sâu và cỏ của cây.
+		</member>
+		<member name="condition_badges" type="Node2D" setter="" getter="">
+			Node biểu tượng tình trạng.
+		</member>
+		<member name="definition" type="CropDefinition" setter="" getter="">
+			Định nghĩa loại cây dùng chung.
+		</member>
+		<member name="planted_at" type="float" setter="" getter="" default="0.0">
+			Timestamp trồng.
+		</member>
+		<member name="matures_at" type="float" setter="" getter="" default="0.0">
+			Timestamp dự kiến chín sau các điều chỉnh.
+		</member>
+		<member name="progress" type="float" setter="" getter="" default="0.0">
+			Tiến độ sinh trưởng từ 0 đến 1.
+		</member>
+		<member name="stage" type="int" setter="" getter="" default="0">
+			Chỉ số ảnh giai đoạn từ 0 đến 3.
+		</member>
+		<member name="watered" type="bool" setter="" getter="" default="false">
+			Đã được tưới ít nhất một lần.
+		</member>
+		<member name="root_boost" type="bool" setter="" getter="" default="false">
+			Đã dùng Root Tonic.
+		</member>
+		<member name="quality_particles" type="GPUParticles2D" setter="" getter="">
+			Hạt hiệu ứng hiển thị chất lượng.
+		</member>
+		<member name="_displayed_quality" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="fertilized" type="bool" setter="" getter="" default="false">
+			Đã dùng phân bón.
+		</member>
+		<member name="pollination_reduction" type="float" setter="" getter="" default="0.0">
+			Tổng thời gian giảm bởi thụ phấn, dùng để tính lại hạn khi bón phân.
+		</member>
+		<member name="time_manager" type="FarmClock" setter="" getter="">
+			Đồng hồ dùng để cập nhật khi xem trạng thái.
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite cây theo giai đoạn.
+		</member>
+		<member name="progress_bar" type="ProgressBar" setter="" getter="">
+			Thanh tiến độ.
+		</member>
+		<member name="progress_frame" type="Control" setter="" getter="">
+			Khung chứa thanh tiến độ.
+		</member>
+		<member name="motion" type="VisualMotionComponent" setter="" getter="">
+			Component hiệu ứng chuyển động hình ảnh.
+		</member>
+		<member name="_retiring" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="conditions_changed">
+			<description>
+				Phát khi tình trạng cây được thay đổi bởi nơi điều phối.
+			</description>
+		</signal>
+		<signal name="matured">
+			<description>
+				Phát khi tiến độ lần đầu đạt trưởng thành.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="ConditionState" value="&lt;Object&gt;">
+			Script trạng thái sâu bệnh và cỏ dại.
+		</constant>
+		<constant name="Badges" value="&lt;Object&gt;">
+			Script hiển thị biểu tượng tình trạng.
+		</constant>
+	</constants>
+</class>

@@ -1,6 +1,7 @@
 class_name FarmStorageSlot
 extends Button
-## Presentation only: transfer commands always go through FarmStorageService.
+## Ô giao diện hiển thị vật phẩm, số lượng và chất lượng; dịch vụ kho thực hiện chuyển vật phẩm.
+
 var item: ItemDefinition
 var amount: int = 0
 var tiers: Array = [0, 0, 0]
@@ -45,6 +46,7 @@ func _ready() -> void:
 	add_child(_badge)
 	refresh()
 
+## Cập nhật biểu tượng, số lượng và huy hiệu chất lượng từ dữ liệu ô.
 func refresh() -> void:
 	_icon.texture = item.icon if item != null else null
 	_count.text = str(amount) if item != null and amount > 1 else ""

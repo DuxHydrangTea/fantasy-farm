@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CookingMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện nhà bếp khai báo trong scene; các lệnh sử dụng hàng đợi chế biến của trang trại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_recipes">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_ingredients">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select">
+			<return type="void" />
+			<param index="0" name="recipe" type="CookingRecipe" />
+			<description>
+			</description>
+		</method>
+		<method name="_filter">
+			<return type="void" />
+			<param index="0" name="cookable" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_available">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_maximum_for">
+			<return type="int" />
+			<param index="0" name="recipe" type="CookingRecipe" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_maximum">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_quantity_changed">
+			<return type="void" />
+			<param index="0" name="_value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_duration">
+			<return type="String" />
+			<param index="0" name="seconds" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_economy_text">
+			<return type="String" />
+			<param index="0" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_queue">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_cook">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="summary" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="details" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="cook_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="collect_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quantity" type="SpinBox" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="browse" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="ingredient_list" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="product_icon" type="TextureRect" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="product_name" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="progress" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="recipe_buttons" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="selected" type="CookingRecipe" setter="" getter="" default="&lt;Object&gt;">
+		</member>
+		<member name="_ingredient_counts" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_cookable_only" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_refreshing" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="PRICE_CATALOG" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

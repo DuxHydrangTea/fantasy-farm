@@ -1,5 +1,6 @@
 extends TradeMenu
-## Widget sync and ConfigFile persistence follow the Godot settings-menu template.
+## Menu cài đặt ngôn ngữ, kích thước giao diện và âm lượng, đồng bộ tùy chọn với ConfigFile.
+
 var player: FarmPlayer
 var panel: PanelContainer
 var language_choice: OptionButton
@@ -105,6 +106,7 @@ func _ready() -> void:
 	_fit()
 	_apply_volume()
 
+## Đồng bộ lựa chọn và mở cài đặt nếu không có menu khác.
 func show_settings() -> void:
 	if player.selection.is_menu_open():
 		return

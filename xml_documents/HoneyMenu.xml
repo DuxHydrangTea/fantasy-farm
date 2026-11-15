@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HoneyMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện nhật ký ong, thu mật theo lô và sửa tổ; nội dung có thể cuộn trên màn hình cảm ứng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_label">
+			<return type="Label" />
+			<param index="0" name="parent" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="parent" type="Node" />
+			<param index="1" name="callback" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="_build">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open_hive">
+			<return type="bool" />
+			<param index="0" name="target" type="Beehive" />
+			<description>
+				Mở menu cho tổ ong khi kiểm tra quyền truy cập thành công.
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_repair">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="hive" type="Beehive" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="title" type="Label" setter="" getter="">
+		</member>
+		<member name="summary" type="Label" setter="" getter="">
+		</member>
+		<member name="repair_button" type="Button" setter="" getter="">
+		</member>
+		<member name="harvest_button" type="Button" setter="" getter="">
+		</member>
+		<member name="status" type="Label" setter="" getter="">
+		</member>
+		<member name="browse" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="content" type="VBoxContainer" setter="" getter="">
+		</member>
+		<member name="recipe_rows" type="HBoxContainer[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+	</members>
+</class>

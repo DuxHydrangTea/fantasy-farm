@@ -1,12 +1,16 @@
 class_name ObjectiveSaveSchema
 extends RefCounted
+## Tạo và kiểm tra tiến độ mục tiêu theo thứ tự trong catalog.
 
+## Tạo một dòng tiến độ bằng 0 và chưa nhận thưởng cho mỗi mục tiêu.
 static func fresh(catalog: ObjectiveCatalog) -> Dictionary:
 	var steps: Array = []
 	for definition: ObjectiveDefinition in catalog.steps:
 		steps.append({"id": String(definition.objective_id), "progress": 0, "claimed": false})
 	return {"steps": steps, "tracked_id": "", "hud_collapsed": false}
 
+## Kiểm tra catalog, thứ tự và mã mục tiêu, tiến độ, thưởng và mục được theo dõi.
+## Sau mục đầu tiên chưa nhận thưởng, các mục sau phải chưa có tiến độ.
 static func valid(data: Variant, catalog: ObjectiveCatalog) -> bool:
 	if not catalog.is_valid() or not data is Dictionary or data.size() != 3 or not data.get("steps") is Array or data.steps.size() != catalog.steps.size():
 		return false

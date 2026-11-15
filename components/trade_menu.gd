@@ -1,6 +1,7 @@
 class_name TradeMenu
 extends CanvasLayer
-## Shared modal lifecycle for buying and selling; views own their own commands.
+## Vòng đời chung của menu giao dịch dạng modal; lớp giao diện con cung cấp nội dung và lệnh.
+
 signal visit_started
 signal models_changed
 @export var root: Control
@@ -20,6 +21,7 @@ func _ready() -> void:
 	_slide.configure(self, ^"offset:y", root)
 	close_button.pressed.connect(close)
 
+## Mở menu cho người chơi nếu chưa có menu khác và giữ tham chiếu người bán.
 func open(owner_npc: ShopMerchant, player: FarmPlayer) -> bool:
 	if is_open or player.selection.is_menu_open():
 		return false
@@ -45,6 +47,7 @@ func _wallet_changed(_balance: int) -> void:
 func _inventory_changed() -> void:
 	models_changed.emit()
 
+## Đóng menu, tùy chọn lời cảm ơn và giải phóng khóa tương tác.
 func close(show_thanks: bool = true) -> void:
 	if not is_open:
 		return

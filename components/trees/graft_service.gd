@@ -1,11 +1,19 @@
 class_name GraftService
 extends RefCounted
-## Manual strategy command. Settle old worker time before changing the next crop.
+## Điều phối chọn hướng ghép và thu hoạch thủ công cho cây ăn quả.
+## Chốt thời gian công nhân trước khi thay đổi hoặc thu hoạch cây.
+
+## Phát khi lựa chọn ghép hoặc thu hoạch được xử lý.
 signal changed
+## Mã sáp ghép dùng khi đổi hướng đã chọn.
 const WAX: StringName = &"grafting_wax"
+## Thế giới chứa cây, người chơi và các giao dịch liên quan.
 var world: FarmWorld
+## Cho biết dịch vụ đang xử lý thao tác.
 var busy: bool = false
 
+## Trả thông báo lỗi nếu hệ thống bận, cây không hợp lệ, ngoài tầm hoặc chưa lớn.
+## Trả chuỗi rỗng khi có thể thao tác.
 func access_error(tree: FruitTree) -> String:
 	if busy or world == null or not world.tool_upgrades.profile_ready or world.workers.busy or world.storages.busy or world.wood_market.busy or world.cooking.busy or world.tool_upgrade_state.is_busy():
 		return "Grafting is unavailable."
@@ -17,6 +25,8 @@ func access_error(tree: FruitTree) -> String:
 		return "Wait until the tree is mature."
 	return ""
 
+## Kiểm tra hướng ghép và tính lượng sáp cần cùng revision hiện tại của cây.
+## Lần chọn đầu miễn phí; đổi lựa chọn sau đó cần một sáp.
 func quote(tree: FruitTree, direction: int) -> Dictionary:
 	var error: String = access_error(tree)
 	if not error.is_empty():
@@ -29,6 +39,8 @@ func quote(tree: FruitTree, direction: int) -> Dictionary:
 	var cost: int = 0 if tree.active_graft == FruitTree.Graft.NONE and tree.pending_graft == FruitTree.Graft.NONE else 1
 	return {"ok": world.player.selection.inventory.count_item(WAX) >= cost, "error": "Not enough Grafting Wax in your bag." if world.player.selection.inventory.count_item(WAX) < cost else "", "wax": cost, "revision": tree.graft_revision}
 
+## Chọn hướng ghép chờ áp dụng sau khi chốt công nhân và kiểm tra revision.
+## Trả chuỗi rỗng khi thành công, hoặc thông báo lỗi.
 func choose(tree: FruitTree, direction: int, expected_revision: int) -> String:
 	var error: String = access_error(tree)
 	if not error.is_empty():
@@ -53,6 +65,8 @@ func choose(tree: FruitTree, direction: int, expected_revision: int) -> String:
 	_lock(false)
 	return ""
 
+## Thu hoạch vào túi sau khi đồng bộ và kiểm tra lại quyền truy cập.
+## Trả chuỗi rỗng khi thành công, hoặc lý do không thu được.
 func collect(tree: FruitTree) -> String:
 	var error: String = access_error(tree)
 	if not error.is_empty():
@@ -72,6 +86,7 @@ func _lock(value: bool) -> void:
 	world.workers.busy = value
 	world.storages.busy = value
 
+## Đếm số đơn hiện hành có yêu cầu sản phẩm thu hoạch thường của cây.
 func order_demand(tree: FruitTree) -> int:
 	var count: int = 0
 	for row: Dictionary in world.orders.service.capture().slots:
@@ -85,6 +100,7 @@ func order_demand(tree: FruitTree) -> int:
 					break
 	return count
 
+## Đếm công thức nấu có sử dụng vật phẩm thu hoạch chất lượng sao của cây.
 func kitchen_demand(tree: FruitTree) -> int:
 	var count: int = 0
 	for recipe: CookingRecipe in ChefCooking.RECIPES:

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CoopAppearance" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn và cập nhật hình ảnh biến thể công trình trong editor và khi chạy game. Setter của variant cập nhật sprite nếu node hình ảnh đã sẵn sàng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_sprite">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite nhận hình ảnh của công trình.
+		</member>
+		<member name="appearance_override" type="Texture2D" setter="@appearance_override_setter" getter="">
+			Texture thay thế tùy chọn, được ưu tiên khi cập nhật hình ảnh.
+		</member>
+		<member name="variant" type="Variant" setter="@variant_setter" getter="" default="0">
+			Biến thể hình ảnh đang chọn; thay đổi sẽ cập nhật sprite.
+		</member>
+	</members>
+	<constants>
+		<constant name="BASE_BLACK_FRAME_1" value="0" enum="Variant">
+		</constant>
+		<constant name="BASE_BLACK_FRAME_2" value="1" enum="Variant">
+		</constant>
+		<constant name="BASE_BLACK_FRAME_3" value="2" enum="Variant">
+		</constant>
+		<constant name="BASE_BLUE_FRAME_1" value="3" enum="Variant">
+		</constant>
+		<constant name="BASE_BLUE_FRAME_2" value="4" enum="Variant">
+		</constant>
+		<constant name="BASE_BLUE_FRAME_3" value="5" enum="Variant">
+		</constant>
+		<constant name="BASE_RED_FRAME_1" value="6" enum="Variant">
+		</constant>
+		<constant name="BASE_RED_FRAME_2" value="7" enum="Variant">
+		</constant>
+		<constant name="BASE_RED_FRAME_3" value="8" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLACK_FRAME_1" value="9" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLACK_FRAME_2" value="10" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLACK_FRAME_3" value="11" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLUE_FRAME_1" value="12" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLUE_FRAME_2" value="13" enum="Variant">
+		</constant>
+		<constant name="GREEN_BLUE_FRAME_3" value="14" enum="Variant">
+		</constant>
+		<constant name="GREEN_RED_FRAME_1" value="15" enum="Variant">
+		</constant>
+		<constant name="GREEN_RED_FRAME_2" value="16" enum="Variant">
+		</constant>
+		<constant name="GREEN_RED_FRAME_3" value="17" enum="Variant">
+		</constant>
+		<constant name="RED_BLACK_FRAME_1" value="18" enum="Variant">
+		</constant>
+		<constant name="RED_BLACK_FRAME_2" value="19" enum="Variant">
+		</constant>
+		<constant name="RED_BLACK_FRAME_3" value="20" enum="Variant">
+		</constant>
+		<constant name="RED_BLUE_FRAME_1" value="21" enum="Variant">
+		</constant>
+		<constant name="RED_BLUE_FRAME_2" value="22" enum="Variant">
+		</constant>
+		<constant name="RED_BLUE_FRAME_3" value="23" enum="Variant">
+		</constant>
+		<constant name="RED_RED_FRAME_1" value="24" enum="Variant">
+		</constant>
+		<constant name="RED_RED_FRAME_2" value="25" enum="Variant">
+		</constant>
+		<constant name="RED_RED_FRAME_3" value="26" enum="Variant">
+		</constant>
+		<constant name="VARIANTS" value="{0: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 1: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 2: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 3: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 4: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 5: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 6: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 7: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 8: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 9: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 10: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 11: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 12: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 13: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 14: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 15: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 16: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 17: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 18: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 19: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 20: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 21: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 22: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 23: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 24: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 25: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 26: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}}">
+			Bảng ánh xạ biến thể sang texture và thông tin frame tương ứng.
+		</constant>
+	</constants>
+</class>

@@ -1,14 +1,24 @@
 class_name TreePlantation
 extends Node
-## Stable saved cells map to staggered rows in both tree regions.
+## Quản lý vùng trồng cây ăn quả, cây gỗ và vòng đời các cây trong thế giới.
+## Ô lưu ổn định được ánh xạ sang các hàng hiển thị so le. Tiến trình cây
+## được chia theo ranh giới thời tiết để tính nhất quán khi chơi và offline.
+
+## Phát khi cây ăn quả giao sản phẩm thành công vào inventory.
 @warning_ignore("unused_signal") # FruitTree phát sau khi giao dịch nhận quả đã thành công.
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, drop_height: float)
+## Vùng ô trồng cây ăn quả.
 const FRUIT_REGION: Rect2i = Rect2i(10, 58, 53, 30)
+## Vùng ô trồng cây lấy gỗ.
 const TIMBER_REGION: Rect2i = Rect2i(66, 58, 52, 30)
+## Thế giới chứa cây, đất và các hệ thống liên quan.
 var world: FarmWorld
+## Ánh xạ ô lưu sang cây hiện có.
 var trees: Dictionary[Vector2i, PerennialTree] = {}
+## Các định nghĩa cây tra theo mã.
 var definitions: Dictionary[StringName, TreeDefinition] = {}
 var _placing: bool = false
+## Ánh xạ ô công cụ tại vị trí hiển thị sang cây gỗ.
 var tool_cells: Dictionary[Vector2i, TimberTree] = {}
 
 func _ready() -> void:
@@ -22,9 +32,11 @@ func _ready() -> void:
 			definitions[definition.tree_id] = definition
 	world.farming.time_manager.tick.connect(advance)
 
+## Trả vùng ô tương ứng loại cây.
 static func region_for(kind: TreeDefinition.Kind) -> Rect2i:
 	return FRUIT_REGION if kind == TreeDefinition.Kind.FRUIT else TIMBER_REGION
 
+## Kiểm tra ô thuộc lưới trồng hợp lệ và chừa khoảng cách tán với biên vùng.
 static func valid_cell(cell: Vector2i, kind: TreeDefinition.Kind) -> bool:
 	var region: Rect2i = region_for(kind)
 	# 48 px giữa hai gốc, lùi tán khỏi đường viền khu đất.
@@ -38,6 +50,7 @@ func _column_spacing(kind: TreeDefinition.Kind) -> float:
 	# past the old edge. Whole local pixels keep the pixel art crisp.
 	return floorf((columns - 1) * old_step / (columns - 0.5))
 
+## Chuyển ô lưu thành vị trí toàn cục, áp dụng độ lệch hàng so le.
 func point_for(cell: Vector2i) -> Vector2:
 	var farmland: TileMapLayer = world.farming.farmland
 	var local: Vector2 = farmland.map_to_local(cell)
@@ -50,9 +63,11 @@ func point_for(cell: Vector2i) -> Vector2:
 		local.x += column * (spacing - farmland.tile_set.tile_size.x * 3.0) + posmod(row, 2) * spacing * 0.5
 	return farmland.to_global(local)
 
+## Chuyển điểm toàn cục sang ô farmland.
 func cell_for(point: Vector2) -> Vector2i:
 	return world.farming.world_to_cell(point)
 
+## Tìm ô trồng gần điểm toàn cục theo hàng so le của loại cây.
 func planting_cell(point: Vector2, kind: TreeDefinition.Kind) -> Vector2i:
 	var origin: Vector2i = region_for(kind).position + Vector2i(2, 3)
 	var row: int = roundi(float(cell_for(point).y - origin.y) / 3.0)
@@ -64,10 +79,12 @@ func planting_cell(point: Vector2, kind: TreeDefinition.Kind) -> Vector2i:
 	var column: int = roundi((local.x - farmland.map_to_local(row_cell).x - offset) / spacing)
 	return row_cell + Vector2i(column * 3, 0)
 
+## Kiểm tra điểm nằm trong vùng logic của một trong hai khu trồng.
 func in_region(point: Vector2) -> bool:
 	var cell: Vector2i = cell_for(point)
 	return FRUIT_REGION.has_point(cell) or TIMBER_REGION.has_point(cell)
 
+## Kiểm tra định nghĩa, ô hợp lệ đã mở, đất và tùy chọn va chạm tại vị trí trồng.
 func can_place(cell: Vector2i, definition: TreeDefinition, check_physics: bool = true) -> bool:
 	if definition == null or not definition.is_valid() or not valid_cell(cell, definition.kind) or trees.has(cell) or world.tree_plot_upgrades == null or not TreePlotUpgradeState.allows(world.tree_plot_upgrades.state.capture(), cell, definition.kind):
 		return false
@@ -86,6 +103,8 @@ func can_place(cell: Vector2i, definition: TreeDefinition, check_physics: bool =
 			return false
 	return true
 
+## Kiểm tra cây giống trong ô túi và vị trí, tạo cây rồi tiêu một cây giống.
+## Trả null nếu điều kiện không đạt.
 func plant(cell: Vector2i, bag: InventoryComponent, slot: int, expected: ItemDefinition, now: float) -> PerennialTree:
 	if _placing or bag == null or expected == null or bag.get_slot_item(slot) != expected or bag.get_slot_count(slot) < 1 or not expected.crop is TreeDefinition:
 		return null
@@ -98,6 +117,8 @@ func plant(cell: Vector2i, bag: InventoryComponent, slot: int, expected: ItemDef
 	_placing = false
 	return tree
 
+## Dựng cây theo loại, đăng ký ô chiếm và làm mới cache điều hướng.
+## Nơi gọi chịu trách nhiệm kiểm tra tính hợp lệ của dữ liệu trước.
 func create_tree(cell: Vector2i, definition: TreeDefinition, now: float) -> PerennialTree:
 	var tree: PerennialTree
 	if definition.kind == TreeDefinition.Kind.FRUIT:
@@ -118,6 +139,7 @@ func create_tree(cell: Vector2i, definition: TreeDefinition, now: float) -> Pere
 	world.player.state.navigation.invalidate_cache()
 	return tree
 
+## Bỏ cây khỏi chỉ mục và ô chiếm, đồng thời vô hiệu cache điều hướng.
 func remove_tree(tree: PerennialTree) -> void:
 	if tree is TimberTree:
 		tool_cells.erase(world.farming.world_to_cell(tree.global_position))
@@ -125,6 +147,7 @@ func remove_tree(tree: PerennialTree) -> void:
 	world.farming.set_cell_occupied(tree.cell, false)
 	world.player.state.navigation.invalidate_cache()
 
+## Tạo đống vật phẩm tại vị trí toàn cục với hiệu ứng nảy ngắn.
 func drop_item(item: ItemDefinition, count: int, point: Vector2) -> void:
 	var pile: ItemPickup = ItemPickup.create()
 	pile.item = item
@@ -135,6 +158,8 @@ func drop_item(item: ItemDefinition, count: int, point: Vector2) -> void:
 	tween.tween_property(pile.sprite, "position:y", pile.sprite.position.y - 8, 0.12)
 	tween.tween_property(pile.sprite, "position:y", pile.sprite.position.y, 0.16)
 
+## Tiến tất cả cây đến mốc thời gian, chia khoảng theo thời tiết và tác động ong.
+## Các mẻ quả đã đầy và cây gỗ đã lớn chỉ cập nhật mốc thời gian.
 func advance(now: float) -> void:
 	# All trees at one cursor share the weather interval. Keep this cache local
 	# so hive moves, repairs and weather edits are visible on the next call.
@@ -163,6 +188,7 @@ func advance(now: float) -> void:
 				break
 			cursor = boundary
 
+## Đồng bộ cây đến now rồi tạo danh sách bản ghi lưu.
 func capture(now: float) -> Array:
 	advance(now)
 	var rows: Array = []
@@ -170,6 +196,7 @@ func capture(now: float) -> Array:
 		rows.append(tree.capture())
 	return rows
 
+## Xóa các cây hiện tại và giải phóng các ô được đánh dấu chiếm.
 func reset() -> void:
 	tool_cells.clear()
 	for tree: PerennialTree in trees.values().duplicate():
@@ -177,6 +204,7 @@ func reset() -> void:
 		tree.free()
 	trees.clear()
 
+## Thay các cây hiện tại bằng bản ghi đã kiểm tra, rồi tiến đến now.
 func restore(rows: Array, now: float) -> void:
 	reset()
 	for row: Dictionary in rows:
@@ -185,16 +213,19 @@ func restore(rows: Array, now: float) -> void:
 		tree.restore_state(row)
 	advance(now)
 
+## Lấy cây gỗ còn hợp lệ tại ô công cụ, hoặc null.
 func tool_target(cell: Vector2i) -> TimberTree:
 	var tree: TimberTree = tool_cells.get(cell) as TimberTree
 	return tree if is_instance_valid(tree) and not tree.removed else null
 
+## Kiểm tra có thể đào gốc hoặc nhổ cây gỗ non tại ô bằng inventory đã cho.
 func can_dig(cell: Vector2i, bag: InventoryComponent) -> bool:
 	var tree: TimberTree = tool_target(cell)
 	if tree == null or tree._busy or bag == null:
 		return false
 	return tree.stump or (not tree.is_mature() and bag.capacity_for(tree.definition.planting_item()) > 0)
 
+## Cho biết đang đặt cây hoặc một cây đang thực hiện giao dịch.
 func is_busy() -> bool:
 	if _placing:
 		return true
@@ -203,6 +234,7 @@ func is_busy() -> bool:
 			return true
 	return false
 
+## Tạo hiển thị ô và hai bảng quản lý nâng cấp khu cây.
 func setup_plot_upgrades() -> void:
 	var display: TreePlotDisplay = TreePlotDisplay.new()
 	display.plantation = self

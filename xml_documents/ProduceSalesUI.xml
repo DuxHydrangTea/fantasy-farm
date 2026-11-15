@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ProduceSalesUI" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện bán nông sản theo chất lượng; dịch vụ bán chịu trách nhiệm thay đổi kho và tiền.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_index">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_quantity_changed">
+			<return type="void" />
+			<param index="0" name="_value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_coins">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_rebuild_rows">
+			<return type="void" />
+			<param index="0" name="rows" type="ProducePrice[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_maximum">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_maximum">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_order_warning">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="sell_quantity">
+			<return type="void" />
+			<description>
+				Chốt số lượng nhập và yêu cầu dịch vụ bán nông sản.
+			</description>
+		</method>
+		<method name="sell_all">
+			<return type="void" />
+			<description>
+				Yêu cầu bán toàn bộ khi menu đang mở.
+			</description>
+		</method>
+		<method name="_show_result">
+			<return type="void" />
+			<param index="0" name="result" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit_rows">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_choose_tier">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="ProducePriceCatalog" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="body" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="heading" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="balance_label" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="items" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="details" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quantity" type="SpinBox" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="sell_quantity_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="sell_all_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="browse" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="service" type="ProduceSaleService" setter="" getter="">
+		</member>
+		<member name="selected" type="ProducePrice" setter="" getter="">
+		</member>
+		<member name="quality_tabs" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="row_buttons" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_rows" type="ProducePrice[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_refreshing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_tier" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="ROW_SCENE" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

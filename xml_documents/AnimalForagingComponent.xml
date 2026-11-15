@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalForagingComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn máng, giữ chỗ, đi tới và nhận thức ăn hoặc nước cho vật nuôi. Behaviour quản lý trạng thái và hoạt ảnh; Needs quản lý các chỉ số no, nước.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="data" type="AnimalDefinition" />
+			<param index="1" name="needs_component" type="AnimalNeedsComponent" />
+			<param index="2" name="wander_component" type="AnimalWanderComponent" />
+			<description>
+				Gắn cấu hình và các component cần thiết trước khi tìm nguồn.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Giảm thời gian chờ thử lại và thời gian tạm chặn các máng thất bại.
+			</description>
+		</method>
+		<method name="has_need">
+			<return type="bool" />
+			<description>
+				Kiểm tra độ no hoặc nước đã tới ngưỡng tìm nguồn.
+			</description>
+		</method>
+		<method name="priority_kinds">
+			<return type="int[]" />
+			<description>
+				Trả thứ tự loại máng cần tìm; khi cần cả hai, ưu tiên chỉ số thấp hơn.
+			</description>
+		</method>
+		<method name="try_begin">
+			<return type="bool" />
+			<description>
+				Tìm điểm tiếp cận gần nhất đi tới được trong các máng cùng chuồng, theo ưu tiên. Giữ chỗ trước khi đặt đường đi. Nguồn vừa thất bại tạm thời được bỏ qua. Trả true nếu đã giữ chỗ và bắt đầu đi.
+			</description>
+		</method>
+		<method name="target_is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra máng còn tồn tại, còn cung cấp được và actor vẫn giữ vị trí tiếp cận.
+			</description>
+		</method>
+		<method name="step">
+			<return type="int" enum="AnimalForagingComponent.Travel" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Đi một bước đến vị trí đã giữ, cập nhật hoạt ảnh và trả trạng thái di chuyển. Thất bại nếu mục tiêu thay đổi, đường bị mất hoặc hết thời gian đi.
+			</description>
+		</method>
+		<method name="finish">
+			<return type="float" />
+			<description>
+				Nhận khẩu phần từ máng hợp lệ và trả mức nhu cầu thực tế được phục hồi.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<param index="0" name="failed" type="bool" default="false" />
+			<description>
+				Nhả chỗ, xóa mục tiêu và dừng di chuyển. Khi thất bại, tạm tránh máng đó.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_path_is_clear">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="definition" type="AnimalDefinition" setter="" getter="">
+			Cấu hình loài và ngưỡng tìm thức ăn, nước.
+		</member>
+		<member name="needs" type="AnimalNeedsComponent" setter="" getter="">
+			Component quản lý độ no và nước.
+		</member>
+		<member name="wander" type="AnimalWanderComponent" setter="" getter="">
+			Component di chuyển và thông tin chuồng.
+		</member>
+		<member name="target" type="AnimalTrough" setter="" getter="">
+			Máng đã chọn và giữ chỗ.
+		</member>
+		<member name="target_slot" type="int" setter="" getter="" default="-1">
+			Chỉ số vị trí tiếp cận đã giữ trong máng.
+		</member>
+		<member name="_retry_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_travel_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_blocked" type="Dictionary[int, float]" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<signals>
+		<signal name="serving_consumed">
+			<param index="0" name="kind" type="int" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<description>
+				Phát khi đã nhận được khẩu phần, kèm loại máng và vật phẩm thức ăn.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="MOVING" value="0" enum="Travel">
+		</constant>
+		<constant name="ARRIVED" value="1" enum="Travel">
+		</constant>
+		<constant name="FAILED" value="2" enum="Travel">
+		</constant>
+	</constants>
+</class>

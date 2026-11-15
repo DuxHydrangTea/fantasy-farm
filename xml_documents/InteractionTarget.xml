@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InteractionTarget" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Đại diện ngắn hạn có kiểu cho một mục tiêu tương tác trong scene. Loại mục tiêu quyết định kiểm tra, vị trí và nhãn hành động.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="target" type="Node2D" />
+			<param index="1" name="type" type="int" enum="InteractionTarget.Kind" />
+			<param index="2" name="customer" type="FarmPlayer" />
+			<description>
+			</description>
+		</method>
+		<method name="valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra node còn tồn tại, hiển thị và đủ điều kiện riêng theo loại.
+			</description>
+		</method>
+		<method name="priority">
+			<return type="int" />
+			<description>
+				Trả thứ tự ưu tiên khi nhiều mục tiêu cùng khả dụng; số nhỏ được chọn trước.
+			</description>
+		</method>
+		<method name="reach">
+			<return type="float" />
+			<description>
+				Khoảng cách tương tác tối đa theo loại mục tiêu.
+			</description>
+		</method>
+		<method name="point">
+			<return type="Vector2" />
+			<description>
+				Tọa độ toàn cục dùng làm điểm tương tác, có xử lý riêng cho cây trồng.
+			</description>
+		</method>
+		<method name="sprite">
+			<return type="Node2D" />
+			<description>
+				Lấy node hình ảnh dùng để kiểm tra điểm nhấp, hoặc null nếu không có.
+			</description>
+		</method>
+		<method name="reachable_from">
+			<return type="bool" />
+			<param index="0" name="position" type="Vector2" />
+			<param index="1" name="facing" type="bool" default="false" />
+			<description>
+				Kiểm tra hiệu lực, khoảng cách, hướng nhìn tùy chọn và đường nhìn đến mục tiêu. Cây trồng còn phải nằm ở ô liền kề đúng hướng; kho có kiểm tra tầm riêng.
+			</description>
+		</method>
+		<method name="action_text">
+			<return type="String" />
+			<description>
+				Tạo nhãn hành động đã dịch dựa trên loại và trạng thái hiện tại của mục tiêu.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="node" type="Node2D" setter="" getter="">
+			Node mục tiêu.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="InteractionTarget.Kind">
+			Loại mục tiêu xác định cách tương tác.
+		</member>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi thực hiện tương tác.
+		</member>
+		<member name="product" type="ItemDefinition" setter="" getter="">
+			Sản phẩm được chọn trên điểm thu chuồng, nếu có.
+		</member>
+	</members>
+	<constants>
+		<constant name="MERCHANT" value="0" enum="Kind">
+		</constant>
+		<constant name="LAND" value="1" enum="Kind">
+		</constant>
+		<constant name="TROUGH" value="2" enum="Kind">
+		</constant>
+		<constant name="ANIMAL" value="3" enum="Kind">
+		</constant>
+		<constant name="CROP" value="4" enum="Kind">
+		</constant>
+		<constant name="FLOWER" value="5" enum="Kind">
+		</constant>
+		<constant name="BEEHIVE" value="6" enum="Kind">
+		</constant>
+		<constant name="TREE" value="7" enum="Kind">
+		</constant>
+		<constant name="ORDER_BOARD" value="8" enum="Kind">
+		</constant>
+		<constant name="PEN_BOARD" value="9" enum="Kind">
+		</constant>
+		<constant name="TREE_PLOT_BOARD" value="10" enum="Kind">
+		</constant>
+	</constants>
+</class>

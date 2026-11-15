@@ -1,16 +1,22 @@
 @tool
 class_name PondPen
 extends AnimalPen
-## Cardinal 16px routes derived from the actual painted water and static physics.
-## Two graphs keep land-only birds out of water without blocking swimming birds.
+## Chuồng ao có hai lưới đường đi cho vật chỉ đi đất và vật có thể bơi.
+## Ô nước lấy từ TileMap thực, vật cản lấy từ truy vấn vật lý tĩnh.
+
+## Layer chứa tile nước.
 @export var water_layer: TileMapLayer
+## Mã nguồn tile nước.
 @export var water_source: int = 1
+## Mã terrain nước.
 @export var water_terrain: int = 1
+## Cho biết hai đồ thị đã được dựng xong.
 var navigation_ready: bool = false
 var _land: AStarGrid2D
 var _amphibious: AStarGrid2D
 var _dry_points: Array[Vector2i] = []
 var _navigation_frames: int = 2
+## Kích thước ô lưới đường đi.
 const CELL: float = 16.0
 
 func _ready() -> void:
@@ -24,6 +30,7 @@ func _physics_process(_delta: float) -> void:
 		rebuild_navigation()
 		set_physics_process(false)
 
+## Kiểm tra điểm toàn cục thuộc tile nước đã cấu hình.
 func is_water(point: Vector2) -> bool:
 	if water_layer == null:
 		return false
@@ -31,6 +38,7 @@ func is_water(point: Vector2) -> bool:
 	var data: TileData = water_layer.get_cell_tile_data(cell)
 	return water_layer.get_cell_source_id(cell) == water_source and data != null and data.terrain == water_terrain
 
+## Lên lịch dựng lại đồ thị sau hai frame vật lý khi vừa tải.
 func rebuild_after_load() -> void:
 	navigation_ready = false
 	_navigation_frames = 2
@@ -49,6 +57,7 @@ func _grid() -> AStarGrid2D:
 # vịt bơi được dùng amphibious. Ô nước lấy từ TileMap thật, không từ màu ảnh hiển thị.
 # Nếu dùng một đồ thị cho mọi loài, hoặc ngỗng đi xuống nước, hoặc vịt không thể qua ao.
 # Quyền đi là quy tắc gameplay cần giữ; có thể thay hai lưới bằng đồ thị khác có cùng ràng buộc.
+## Dựng lại lưới đất và lưới lưỡng cư từ biên chuồng, nước và vật cản.
 func rebuild_navigation() -> void:
 	_land = _grid()
 	_amphibious = _grid()
@@ -88,6 +97,8 @@ func _nearest_cell(point: Vector2, grid: AStarGrid2D) -> Vector2i:
 				best = cell
 	return best
 
+## Tìm đường lưới bốn hướng đến đích toàn cục theo khả năng bơi.
+## Trả mảng rỗng nếu đồ thị chưa sẵn sàng, đích không hợp lệ hoặc không có đường.
 func route(from: Vector2, to: Vector2, swimming: bool) -> PackedVector2Array:
 	var result: PackedVector2Array = PackedVector2Array()
 	if not navigation_ready or not contains_world(to, 10) or (not swimming and is_water(to)):
@@ -108,6 +119,7 @@ func route(from: Vector2, to: Vector2, swimming: bool) -> PackedVector2Array:
 		result.append(to)
 	return result
 
+## Tìm điểm đất đi được gần nhất, hoặc vị trí bờ dự phòng khi chưa có đồ thị.
 func closest_land(point: Vector2) -> Vector2:
 	if navigation_ready:
 		var cell: Vector2i = _nearest_cell(point, _land)
@@ -117,6 +129,7 @@ func closest_land(point: Vector2) -> Vector2:
 	# the fisherman house. Normal movement waits for physics-backed navigation.
 	return to_global(Vector2(56, 56))
 
+## Tìm đường bơi tới điểm đất gần nhất đi tới được, hoặc mảng rỗng.
 func land_route(from: Vector2) -> PackedVector2Array:
 	var best: PackedVector2Array = PackedVector2Array()
 	var distance: float = INF

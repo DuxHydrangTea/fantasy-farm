@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalCard" inherits="PanelContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Thẻ chỉ đọc hiển thị chân dung, nhu cầu và sản xuất của một vật nuôi. Sprite chân dung chạy độc lập với hoạt ảnh của actor trong thế giới.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_style_bar" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="bar" type="ProgressBar" />
+			<param index="1" name="color" type="Color" />
+			<description>
+			</description>
+		</method>
+		<method name="set_compact">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Chọn bố cục gọn hoặc đầy đủ và điều chỉnh kích thước các thành phần.
+			</description>
+		</method>
+		<method name="_place_portrait">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc lại trạng thái actor còn hợp lệ và cập nhật thông tin thẻ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animal" type="AnimalActor" setter="" getter="">
+			Vật nuôi được hiển thị.
+		</member>
+		<member name="caption" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="food" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="water" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="food_text" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="water_text" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="produce" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="preview" type="AnimatedSprite2D" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="portrait" type="Control" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="display_id" type="String" setter="" getter="">
+			Mã ngắn hiển thị cạnh tên vật nuôi.
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_text" type="AnimalStatusText" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="production_row" type="VisualValueRow" setter="" getter="">
+			Hàng biểu tượng sản phẩm và số lượng theo chu kỳ.
+		</member>
+	</members>
+</class>

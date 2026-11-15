@@ -1,6 +1,7 @@
 class_name FarmSeedPicker
 extends TradeMenu
-## A source selector, independent of the player's six physical hotbar slots.
+## Giao diện chọn hạt từ kho, độc lập với sáu ô thanh công cụ vật lý của người chơi.
+
 var world: FarmWorld
 var hud: Control
 var launcher: Button
@@ -91,6 +92,7 @@ func _fit() -> void:
 	panel.size = Vector2(minf(680, root.size.x - 24), minf(560, root.size.y - 24))
 	panel.position = (root.size - panel.size) * 0.5
 
+## Mở danh sách hạt nếu game và dịch vụ kho sẵn sàng.
 func open_picker() -> void:
 	if not get_tree().paused and world.storages.available() and not world.storages.busy:
 		super.open(null, world.player)

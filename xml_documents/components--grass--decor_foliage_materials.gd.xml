@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/grass/decor_foliage_materials.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Gắn shader gió và tương tác cho sprite, tile cây cỏ trang trí phù hợp. Material được chia sẻ theo vùng atlas; vị trí và thứ tự vẽ gốc được giữ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="install">
+			<return type="void" />
+			<param index="0" name="root" type="Node" />
+			<param index="1" name="converted_layer" type="TileMapLayer" default="null" />
+			<description>
+				Khôi phục lần cài trước rồi quét sprite và TileMapLayer dưới root. Bỏ qua layer đã chuyển sang batch cỏ và node có material riêng.
+			</description>
+		</method>
+		<method name="_install_layer">
+			<return type="void" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<description>
+			</description>
+		</method>
+		<method name="_tree_texture">
+			<return type="bool" />
+			<param index="0" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_eligible">
+			<return type="bool" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="region" type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_material">
+			<return type="ShaderMaterial" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="region" type="Rect2i" />
+			<param index="2" name="axis" type="Vector2" default="Vector2(1, 1)" />
+			<description>
+			</description>
+		</method>
+		<method name="sync_from">
+			<return type="void" />
+			<param index="0" name="effect" type="ShaderMaterial" />
+			<description>
+				Đồng bộ các tham số gió và actor thay đổi vào material đã tạo.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<description>
+				Khôi phục material sprite và TileSet chỉ khi chúng vẫn là bản đã cài.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="materials" type="ShaderMaterial[]" setter="" getter="" default="[]">
+			Danh sách material đã tạo.
+		</member>
+		<member name="sprite_count" type="int" setter="" getter="" default="0">
+			Số sprite được gắn material.
+		</member>
+		<member name="tile_count" type="int" setter="" getter="" default="0">
+			Số loại tile được gắn material.
+		</member>
+		<member name="_cache" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_images" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_previous" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_sprites" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_layers" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader chuyển động cây cỏ.
+		</constant>
+		<constant name="DATA" value="&lt;Object&gt;">
+			Dữ liệu nhận diện vùng cỏ trong atlas.
+		</constant>
+		<constant name="FLOWERS" value="&quot;res://assets/Outdoor decoration/Flowers.png&quot;">
+			Texture hoa trang trí.
+		</constant>
+		<constant name="KEYS" value="Array[StringName]([&amp;&quot;wind_strength&quot;, &amp;&quot;wind_direction&quot;, &amp;&quot;use_test_time&quot;, &amp;&quot;test_time&quot;, &amp;&quot;actor_count&quot;, &amp;&quot;actor_segments&quot;, &amp;&quot;actor_parameters&quot;, &amp;&quot;interaction_clock&quot;])">
+			Các shader parameter đồng bộ từ nguồn tương tác cỏ.
+		</constant>
+	</constants>
+</class>

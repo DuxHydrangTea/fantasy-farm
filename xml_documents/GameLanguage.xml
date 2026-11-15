@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameLanguage" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Thiết lập ngôn ngữ giao diện khi autoload vào scene tree.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_language">
+			<return type="bool" />
+			<param index="0" name="language" type="String" />
+			<description>
+				Đổi locale nếu được hỗ trợ và cập nhật thuộc tính lang trên web. Trả false khi mã ngôn ngữ không nằm trong danh sách.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="DEFAULT_LANGUAGE" value="&quot;vi&quot;">
+			Ngôn ngữ mặc định.
+		</constant>
+		<constant name="SUPPORTED_LANGUAGES" value="PackedStringArray(&quot;en&quot;, &quot;vi&quot;)">
+			Các locale cho phép chọn.
+		</constant>
+	</constants>
+</class>

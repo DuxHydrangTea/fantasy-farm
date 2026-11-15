@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmDebugCommands" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Đăng ký và thực thi lệnh debug tác động lên thế giới trang trại. Kết quả dùng từ điển thành công hoặc lỗi để bảng điều khiển hiển thị.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="_bind">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="usage" type="String" />
+			<param index="2" name="description" type="String" />
+			<param index="3" name="handler" type="Callable" />
+			<param index="4" name="write" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="ok">
+			<return type="Dictionary" />
+			<param index="0" name="value" type="Variant" default="&quot;OK&quot;" />
+			<description>
+				Tạo kết quả lệnh thành công với giá trị tùy chọn.
+			</description>
+		</method>
+		<method name="fail">
+			<return type="Dictionary" />
+			<param index="0" name="message" type="String" />
+			<description>
+				Tạo kết quả lỗi kèm thông báo.
+			</description>
+		</method>
+		<method name="resources">
+			<return type="SaveCatalog" />
+			<description>
+				Lấy hoặc khởi tạo danh mục tài nguyên cho các lệnh.
+			</description>
+		</method>
+		<method name="execute">
+			<return type="Dictionary" />
+			<param index="0" name="line" type="String" />
+			<description>
+				Phân tích và thực thi một dòng lệnh debug; trả từ điển kết quả.
+			</description>
+		</method>
+		<method name="_help">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_clear">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_find">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_pos">
+			<return type="Dictionary" />
+			<param index="0" name="_args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_inspect">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_integer">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="minimum" type="int" />
+			<param index="2" name="maximum" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_money">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_quality">
+			<return type="int" />
+			<param index="0" name="args" type="Array" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_add">
+			<return type="Dictionary" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<param index="1" name="id" type="String" />
+			<param index="2" name="amount" type="Variant" />
+			<param index="3" name="tier" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_give">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_storage_id">
+			<return type="String" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_storage">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_tp">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_time">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_weather">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_crop">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_land">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_animals">
+			<return type="AnimalActor[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_animal_target">
+			<return type="AnimalActor" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_animal_info">
+			<return type="Dictionary" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_animal">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_worker_row">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_worker">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_upgrade">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_objective">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_orders">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_perf">
+			<return type="Dictionary" />
+			<param index="0" name="args" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="suggestions">
+			<return type="String[]" />
+			<param index="0" name="line" type="String" />
+			<description>
+				Trả các đường dẫn lệnh bắt đầu bằng tiền tố đã nhập.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="registry" type="DebugCommandRegistry" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="catalog" type="SaveCatalog" setter="" getter="">
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="clear_requested">
+			<description>
+			</description>
+		</signal>
+		<signal name="perf_changed">
+			<param index="0" name="enabled" type="bool" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

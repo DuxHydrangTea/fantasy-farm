@@ -1,6 +1,7 @@
 class_name InventoryUI
 extends CanvasLayer
-## Signal-driven inventory; containers own layout, InventoryComponent owns all moves.
+## Giao diện túi đồ cập nhật theo tín hiệu; InventoryComponent thực hiện các thao tác chuyển vật phẩm.
+
 @export var close_button: BaseButton
 @export var selection: ToolSelectionComponent
 @export var root: Control
@@ -122,6 +123,7 @@ func _refresh_wallet(balance: int) -> void:
 	wallet_label.text = tr("{coins} coins").format({"coins": FarmUI.compact_number(balance) if root.size.x < 640 else GameText.grouped_integer(balance)})
 	wallet_label.tooltip_text = tr("{coins} coins").format({"coins": GameText.grouped_integer(balance)})
 
+## Mở túi hoặc đảo ngược hoạt ảnh đóng đang chạy.
 func open() -> void:
 	if _closing:
 		_slide.stop()
@@ -129,6 +131,7 @@ func open() -> void:
 		return
 	selection.set_inventory_open(true)
 
+## Chạy hoạt ảnh đóng rồi cập nhật trạng thái túi.
 func close() -> void:
 	if selection.inventory_open and not _closing:
 		_closing = true

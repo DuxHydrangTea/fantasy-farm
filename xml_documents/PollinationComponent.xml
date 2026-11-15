@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PollinationComponent" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn nguồn hoa đại diện từ các nguồn đã được phân cho một tổ. Ưu tiên hệ số mật, sau đó số lượng, khoảng cách và mã nguồn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="resolve">
+			<return type="void" />
+			<param index="0" name="origin" type="Vector2" />
+			<param index="1" name="rules" type="BeehiveDefinition" default="null" />
+			<param index="2" name="legacy" type="bool" default="false" />
+			<description>
+				Tính lại nguồn đại diện quanh origin. Khi legacy bật, mọi loại có cùng thứ hạng tốc độ và được phân giải bằng số lượng, khoảng cách và mã.
+			</description>
+		</method>
+		<method name="active">
+			<return type="bool" />
+			<description>
+				Cho biết đã chọn được nguồn có mã không rỗng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sources" type="Dictionary[]" setter="" getter="" default="[]">
+			Các nguồn đã phân cho tổ, mỗi bản ghi có type, name và point.
+		</member>
+		<member name="source_id" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã nguồn được chọn, rỗng khi không có nguồn.
+		</member>
+		<member name="source_name" type="String" setter="" getter="" default="&quot;&quot;">
+			Tên nguồn được chọn.
+		</member>
+		<member name="source_point" type="Vector2" setter="" getter="">
+			Vị trí nguồn gần nhất thuộc loại được chọn.
+		</member>
+		<member name="source_count" type="int" setter="" getter="" default="0">
+			Số nguồn cùng loại được chọn.
+		</member>
+	</members>
+</class>

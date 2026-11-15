@@ -1,6 +1,7 @@
 class_name HelpUI
 extends TradeMenu
-## Container-based help adapted from the skill HUD/menu templates.
+## Menu hướng dẫn người chơi, hiển thị các chủ đề và hỗ trợ khởi đầu.
+
 var world: FarmWorld
 var support: StarterSupport
 var panel: PanelContainer
@@ -109,6 +110,7 @@ func _fit() -> void:
 	if is_open:
 		content.text = GuideContent.topic(selected_topic, world.objectives.progress, MobileLayout.is_touch(get_viewport()))
 
+## Mở menu hướng dẫn cho người chơi hiện tại.
 func open_help() -> void:
 	open(null, world.player)
 

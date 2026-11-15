@@ -1,12 +1,21 @@
 class_name ItemGainPopup
 extends Node2D
-## Disposable world-space feedback: text and actual item icon, never input.
+## Popup tạm trong thế giới hiển thị số vật phẩm nhận hoặc thông báo.
+## Popup bay lên, mờ dần và tự xóa; không nhận input.
+
+## Định nghĩa vật phẩm để lấy biểu tượng.
 var item: ItemDefinition
+## Số lượng hiển thị.
 var amount: int = 0
+## Thông điệp nguồn tùy chọn thay cho số lượng.
 var message: String = ""
+## Thời gian đã hiển thị, tính bằng giây.
 var age: float = 0.0
+## Nhãn nội dung.
 var label: Label
+## Biểu tượng vật phẩm.
 var icon: TextureRect
+## Hàng chứa nhãn và biểu tượng.
 var row: HBoxContainer
 var _origin: Vector2
 var _delay: float = 0.0
@@ -39,19 +48,23 @@ func _ready() -> void:
 	_origin = position
 	_refresh()
 
+## Cộng số lượng vào popup hiện có và cập nhật nhãn.
 func add_amount(count: int) -> void:
 	amount += count
 	_refresh()
 
+## Đặt popup tại vị trí toàn cục và ghi lại gốc chuyển động.
 func place_world(at: Vector2) -> void:
 	global_position = at
 	global_scale = Vector2.ONE
 	_origin = position
 
+## Dời vị trí và gốc chuyển động lên để tránh chồng popup.
 func shift_up(distance: float) -> void:
 	_origin.y -= distance
 	position.y -= distance
 
+## Hoãn hiển thị và đếm tuổi popup theo số giây không âm.
 func start_after(seconds: float) -> void:
 	_delay = maxf(0.0, seconds)
 	visible = _delay == 0.0

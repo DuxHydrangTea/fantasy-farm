@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenDashboard" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện quản lý chuồng hiển thị danh sách vật nuôi, máng và nâng cấp sức chứa.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_coins">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_summary">
+			<return type="void" />
+			<param index="0" name="animals" type="AnimalActor[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_building_icon">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_level">
+			<return type="String" />
+			<param index="0" name="kind" type="int" enum="AnimalTrough.Kind" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật danh sách vật nuôi, mức máng và báo giá nâng cấp.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_upgrade">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_purchase_upgrade">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="board" type="PenBoard" setter="" getter="">
+			Bảng tương tác và chuồng đang được xem.
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="heading" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="overview" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="grid" type="GridContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="scroll" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_box" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_info" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_feedback" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="empty" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="balance_label" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="food_meter" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="water_meter" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_upgrade_offer" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_upgrade_cooldown_until" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="cards" type="Dictionary[int, AnimalCard]" setter="" getter="" default="{}">
+			Các thẻ vật nuôi theo instance ID.
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

@@ -1,12 +1,20 @@
 class_name InteractionPresenter
 extends CanvasLayer
-## Context badge for the current interaction target.
+## Hiển thị nhãn hành động và phím tương tác gần mục tiêu hiện tại.
+## Khi nhắm tổ ong, presenter cũng hiển thị phạm vi của tổ.
+
+## Người chơi và cấu hình input đang sử dụng.
 var player: FarmPlayer
+## Bộ cung cấp texture và biên hình ảnh của mục tiêu.
 var resolver: InteractionResolver
+## Control gốc của HUD.
 var root: Control
+## Khung nhãn hành động.
 var badge: PanelContainer
+## Nhãn mô tả hành động và phản hồi.
 var label: Label
 var _range: BeehiveRangeDisplay
+## Nhãn phím tương tác, ẩn khi đi đến mục tiêu hoặc dùng màn hình cảm ứng.
 var keycap: Label
 var _hotbar: HotbarUI
 var _shown_node: Node2D
@@ -59,6 +67,7 @@ func _ready() -> void:
 	row.add_child(label)
 	clear()
 
+## Ẩn nhãn và phạm vi tổ ong, đồng thời hủy hiệu ứng xuất hiện.
 func clear() -> void:
 	_shown_node = null
 	_shown_kind = -1
@@ -70,6 +79,8 @@ func clear() -> void:
 	if is_instance_valid(badge):
 		badge.hide()
 
+## Cập nhật nhãn cho mục tiêu hợp lệ, trạng thái đang đi và phản hồi tùy chọn.
+## Khi mục tiêu không hợp lệ hoặc menu mở, ẩn phần trình bày.
 func show_target(target: InteractionTarget, walking: bool, feedback: String = "") -> void:
 	if target == null or not target.valid() or player.selection.is_menu_open():
 		clear()

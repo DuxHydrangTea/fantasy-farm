@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="VisualMotionComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo chuyển động trình bày cho Sprite2D, AnimatedSprite2D hoặc Node2D hình ảnh. Pivot nằm trong tọa độ node cha của hình ảnh. Transform ban đầu được giữ để khôi phục sau hiệu ứng và không dùng node vật lý làm target.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply_pose">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_kill_motion">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_restore_pose">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="reset">
+			<return type="void" />
+			<description>
+				Dừng tween, khôi phục tư thế ban đầu và xóa trạng thái tập trung, biến mất.
+			</description>
+		</method>
+		<method name="is_animating">
+			<return type="bool" />
+			<description>
+				Cho biết tween hiệu ứng hiện còn đang chạy.
+			</description>
+		</method>
+		<method name="_can_animate">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_motion">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_complete">
+			<return type="void" />
+			<param index="0" name="effect" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="set_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Đặt trạng thái tập trung; khi chuyển từ không tập trung sang tập trung thì rung nhẹ.
+			</description>
+		</method>
+		<method name="react">
+			<return type="void" />
+			<param index="0" name="degrees" type="float" default="-1.0" />
+			<param index="1" name="direction" type="float" default="1.0" />
+			<description>
+				Phát hiệu ứng nghiêng qua lại quanh pivot. Góc âm dùng góc mặc định; dấu của direction chọn hướng nghiêng ban đầu.
+			</description>
+		</method>
+		<method name="play_appear">
+			<return type="void" />
+			<description>
+				Phát hiệu ứng co giãn xuất hiện và signal bắt đầu, kết thúc.
+			</description>
+		</method>
+		<method name="play_disappear">
+			<return type="void" />
+			<description>
+				Phát hiệu ứng co giãn và mờ dần, sau đó phát signal hoàn thành.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="target" type="Node2D" setter="" getter="">
+			Node hình ảnh chịu hiệu ứng.
+		</member>
+		<member name="pivot" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+			Tâm xoay và co giãn trong tọa độ cha của target.
+		</member>
+		<member name="wind_material" type="ShaderMaterial" setter="" getter="">
+			Material gió tùy chọn, được khôi phục material cũ khi component rời cây.
+		</member>
+		<member name="reaction_degrees" type="float" setter="" getter="" default="5.0">
+			Góc nghiêng phản ứng mặc định, tính bằng độ.
+		</member>
+		<member name="focus_degrees" type="float" setter="" getter="" default="2.5">
+			Góc phản ứng khi bắt đầu được tập trung, tính bằng độ.
+		</member>
+		<member name="reaction_duration" type="float" setter="" getter="" default="0.37">
+			Thời gian phản ứng, tính bằng giây.
+		</member>
+		<member name="appear_duration" type="float" setter="" getter="" default="0.25">
+			Thời gian xuất hiện, tính bằng giây.
+		</member>
+		<member name="disappear_duration" type="float" setter="" getter="" default="0.16">
+			Thời gian biến mất, tính bằng giây.
+		</member>
+		<member name="appear_scale" type="Vector2" setter="" getter="" default="Vector2(0.65, 0.65)">
+			Tỉ lệ ban đầu của hiệu ứng xuất hiện.
+		</member>
+		<member name="appear_overshoot" type="Vector2" setter="" getter="" default="Vector2(0.9, 1.1)">
+			Tỉ lệ vượt quá trước khi trở về bình thường.
+		</member>
+		<member name="disappear_scale" type="Vector2" setter="" getter="" default="Vector2(1.15, 0.45)">
+			Tỉ lệ cuối của hiệu ứng biến mất.
+		</member>
+		<member name="_motion" type="Tween" setter="" getter="">
+		</member>
+		<member name="_rest_transform" type="Transform2D" setter="" getter="">
+		</member>
+		<member name="_rest_alpha" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_rest_material" type="Material" setter="" getter="">
+		</member>
+		<member name="_focused" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_disappearing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_captured" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_bend" type="float" setter="@_bend_setter" getter="" default="0.0">
+		</member>
+		<member name="_stretch" type="Vector2" setter="@_stretch_setter" getter="" default="Vector2(1, 1)">
+		</member>
+	</members>
+	<signals>
+		<signal name="effect_started">
+			<param index="0" name="effect" type="StringName" />
+			<description>
+				Phát tên hiệu ứng khi bắt đầu.
+			</description>
+		</signal>
+		<signal name="effect_finished">
+			<param index="0" name="effect" type="StringName" />
+			<description>
+				Phát tên hiệu ứng khi tween hoàn thành.
+			</description>
+		</signal>
+	</signals>
+</class>

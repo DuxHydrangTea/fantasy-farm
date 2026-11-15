@@ -1,9 +1,15 @@
 class_name ObjectiveTracker
 extends Node
-## World-owned commit adapters. No inventory-delta inference or UI dependencies.
+## Kết nối các sự kiện gameplay của thế giới với ObjectiveProgress.
+## Tiến độ được ghi từ sự kiện đã commit và truy vấn trạng thái, không suy ra
+## từ thay đổi inventory.
+
+## Thế giới cung cấp ví và sự kiện gameplay.
 var world: FarmWorld
+## Mô hình tiến độ mục tiêu.
 var progress: ObjectiveProgress
 
+## Tạo mô hình một lần và kết nối hành động, bán hàng, mở đất và bộ hẹn giờ.
 func setup() -> void:
 	if progress != null:
 		return

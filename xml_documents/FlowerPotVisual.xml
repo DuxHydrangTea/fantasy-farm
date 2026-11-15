@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FlowerPotVisual" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị hai lớp chậu và cây hoa, giữ các biến đổi vị trí do scene và editor quản lý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="apply_definition">
+			<return type="void" />
+			<param index="0" name="value" type="PotDefinition" />
+			<description>
+				Đổi định nghĩa chậu và kết nối tín hiệu thay đổi tài nguyên.
+			</description>
+		</method>
+		<method name="_apply_pot">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="show_plant">
+			<return type="void" />
+			<param index="0" name="texture" type="Texture2D" />
+			<description>
+				Đổi texture cây và ẩn lớp cây khi không có texture.
+			</description>
+		</method>
+		<method name="status_sprite">
+			<return type="Node2D" />
+			<description>
+				Trả sprite cây đang hiện hoặc sprite chậu làm điểm neo trạng thái.
+			</description>
+		</method>
+		<method name="_clear_bounds">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="bounds_in">
+			<return type="Rect2" />
+			<param index="0" name="reference" type="Node2D" />
+			<description>
+				Tính bao hình các lớp đang hiển thị trong hệ tọa độ node tham chiếu.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pot_sprite" type="Sprite2D" setter="" getter="">
+		</member>
+		<member name="plant_socket" type="Node2D" setter="" getter="">
+		</member>
+		<member name="plant_offset" type="Node2D" setter="" getter="">
+		</member>
+		<member name="flower" type="Sprite2D" setter="" getter="">
+		</member>
+		<member name="_pot" type="PotDefinition" setter="" getter="">
+		</member>
+		<member name="_bounds" type="Dictionary[Texture2D, Rect2]" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

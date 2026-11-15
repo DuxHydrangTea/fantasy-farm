@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện quản lý nhân công theo vai trò, gửi lệnh tới WorkerService thay vì sửa actor trực tiếp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_style_worker_tabs">
+			<return type="void" />
+			<param index="0" name="tabs" type="TabContainer" />
+			<description>
+			</description>
+		</method>
+		<method name="_flush_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_portrait">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_portrait">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_storage_changed">
+			<return type="void" />
+			<param index="0" name="_id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_money">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_selected_row">
+			<return type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_worker_title">
+			<return type="String" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_worker">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_worker_id">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_roster_task">
+			<return type="String" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_team">
+			<return type="void" />
+			<param index="0" name="rows" type="Dictionary[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_task_text">
+			<return type="String" />
+			<param index="0" name="service" type="WorkerService" />
+			<param index="1" name="row" type="Dictionary" />
+			<param index="2" name="employed" type="bool" />
+			<param index="3" name="paused" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_supplies">
+			<return type="void" />
+			<param index="0" name="service" type="WorkerService" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_legacy">
+			<return type="void" />
+			<param index="0" name="service" type="WorkerService" />
+			<description>
+			</description>
+		</method>
+		<method name="_hire">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_auto_plant">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_auto_fertilize">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_crop_pause">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_configure_crop">
+			<return type="void" />
+			<param index="0" name="plant" type="bool" />
+			<param index="1" name="fertilizer" type="bool" />
+			<param index="2" name="pause" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_dismiss">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_cancel_dismiss">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" default="true" />
+			<description>
+				Hủy xác nhận cho nghỉ đang chờ rồi đóng menu nhân công.
+			</description>
+		</method>
+		<method name="_deposit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_withdraw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_transfer">
+			<return type="void" />
+			<param index="0" name="deposit" type="bool" />
+			<param index="1" name="supplies" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_wait_for_care">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_priority_selected">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="role" type="String" setter="" getter="" default="&quot;crop&quot;">
+		</member>
+		<member name="selected_worker_id" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="team_list" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_team_ids" type="String[]" setter="" getter="" default="[]">
+		</member>
+		<member name="team_summary" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="info" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="hire_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="dismiss_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="collect_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="deposit_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="withdraw_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="auto_plant_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="auto_fertilize_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="pause_crop_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="preview" type="AnimatedSprite2D" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="portrait" type="Control" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirmation" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirm_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="cancel_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="wait_care_button" type="Button" setter="" getter="">
+		</member>
+		<member name="upgrade_view" type="WorkerUpgradeView" setter="" getter="">
+		</member>
+		<member name="priority_choice" type="OptionButton" setter="" getter="">
+		</member>
+		<member name="_confirm" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_dismiss_id" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_refresh_queued" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="TITLES" value="{&quot;crop&quot;: &quot;Worker&quot;}">
+		</constant>
+		<constant name="DESCRIPTIONS" value="{&quot;crop&quot;: &quot;Waters, harvests and tends crops, orchards and animal pens.&quot;}">
+		</constant>
+		<constant name="TASKS" value="{&quot;cure_animal&quot;: &quot;Treating an animal&quot;, &quot;feed&quot;: &quot;Refilling feed&quot;, &quot;fertilize&quot;: &quot;Fertilizing crops&quot;, &quot;fetch_water&quot;: &quot;Fetching water&quot;, &quot;fruit&quot;: &quot;Harvesting&quot;, &quot;harvest&quot;: &quot;Harvesting&quot;, &quot;patrol&quot;: &quot;Patrolling the work area&quot;, &quot;pen_collect&quot;: &quot;Collecting pen produce&quot;, &quot;pickup&quot;: &quot;Collecting produce&quot;, &quot;plant&quot;: &quot;Planting crops&quot;, &quot;till&quot;: &quot;Tilling soil&quot;, &quot;treat_pests&quot;: &quot;Treating pests&quot;, &quot;treat_weeds&quot;: &quot;Treating weeds&quot;, &quot;water&quot;: &quot;Watering&quot;, &quot;water_crop&quot;: &quot;Watering&quot;, &quot;water_trough&quot;: &quot;Refilling water&quot;}">
+		</constant>
+	</constants>
+</class>

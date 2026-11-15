@@ -1,19 +1,34 @@
 class_name GrassChunkRenderer
 extends RefCounted
-## Bounded GPU cache. Leaves are sibling CanvasItem RIDs under the actor sort root.
+## Cache GPU giới hạn cho các chunk cỏ trong và quanh vùng nhìn.
+## Các CanvasItem được gắn cùng sort root với actor; chunk không hoạt động
+## cũ nhất được giải phóng khi cần chỗ cho chunk mới.
+
+## Các chunk đang được cấp phát.
 var resident: Dictionary = {}
+## Tọa độ chunk đang hoạt động trong vùng chọn.
 var active: Array[Vector2i] = []
+## Số chunk đã dựng.
 var builds: int = 0
+## Số chunk đã giải phóng.
 var releases: int = 0
+## Tổng số batch đã cấp phát.
 var allocated_leaves: int = 0
+## Tổng số batch đã giải phóng.
 var freed_leaves: int = 0
+## Tổng instance đang lưu trên GPU.
 var instances: int = 0
+## Số lần chọn vùng.
 var lookups: int = 0
+## Lỗi của lần chọn gần nhất.
 var last_error: String = ""
+## Mesh thay thế tùy chọn cho renderer con.
 var mesh_override: Mesh
 var _clock: int = 0
 var _shown: bool = true
 
+## Chọn và cấp phát đầy đủ các chunk trong vùng theo các giới hạn đã cho.
+## Nếu vùng hoặc dữ liệu vượt ngân sách, xóa cache và trả false cùng last_error.
 func select(index: GrassChunkIndex, region: Rect2i, parent: RID, catalog: GrassSourceCatalog, material: ShaderMaterial, margin: float, max_chunks: int, max_instances: int, max_batches: int = 2048) -> bool:
 	lookups += 1
 	# Reject pathological zoom BEFORE enumerating a huge empty world rectangle.
@@ -83,6 +98,7 @@ func _release(key: Vector2i) -> void:
 	resident.erase(key)
 	releases += 1
 
+## Bật hoặc tắt hiển thị các chunk đang hoạt động.
 func show_field(shown: bool) -> void:
 	_shown = shown
 	_update_visibility()
@@ -92,16 +108,19 @@ func _update_visibility() -> void:
 		for leaf: GrassPocRenderer in chunk.leaves:
 			RenderingServer.canvas_item_set_visible(leaf.canvas, _shown and bool(chunk.active))
 
+## Cập nhật biên culling cho mọi batch đang lưu.
 func update_bounds(margin: float) -> void:
 	for chunk: Dictionary in resident.values():
 		for leaf: GrassPocRenderer in chunk.leaves:
 			leaf.update_bounds(margin)
 
+## Giải phóng mọi chunk và xóa danh sách đang hoạt động.
 func clear() -> void:
 	for key: Vector2i in resident.keys():
 		_release(key)
 	active.clear()
 
+## Trả bộ đếm cấp phát, chunk, instance và lỗi để kiểm tra.
 func stats() -> Dictionary:
 	return {"resident_chunks": resident.size(), "active_chunks": active.size(), "resident_instances": instances,
 		"live_leaves": allocated_leaves - freed_leaves, "builds": builds, "releases": releases,

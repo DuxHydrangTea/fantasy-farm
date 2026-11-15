@@ -1,5 +1,7 @@
 class_name ObjectiveUI
 extends CanvasLayer
+## HUD và menu mục tiêu cập nhật theo mô hình tiến độ, phối hợp khóa menu dùng chung.
+
 signal help_requested
 ## Signal-driven HUD adapted from the skill HUD template; one shared modal lock.
 var model: ObjectiveProgress
@@ -204,6 +206,7 @@ func _input(event: InputEvent) -> void:
 			close()
 			get_viewport().set_input_as_handled()
 
+## Mở bảng mục tiêu nếu chưa có menu khác.
 func open() -> void:
 	if selection.is_menu_open():
 		return
@@ -213,6 +216,7 @@ func open() -> void:
 	rows[inspected].grab_focus()
 	list_scroll.call_deferred("ensure_control_visible", rows[inspected])
 
+## Phát hoạt ảnh đóng và giải phóng khóa menu mục tiêu.
 func close() -> void:
 	if selection.objectives_open and not _closing:
 		_closing = true
@@ -236,6 +240,7 @@ func _other_menu(_value: bool) -> void:
 	hud.visible = not selection.is_menu_open()
 	hud_card.visible = hud.visible
 
+## Chọn chỉ số mục tiêu trong phạm vi hợp lệ rồi cập nhật.
 func inspect(index: int) -> void:
 	inspected = clampi(index, 0, rows.size() - 1)
 	refresh()
@@ -272,6 +277,7 @@ func _status(index: int, data: Dictionary) -> String:
 		return tr("Locked")
 	return tr("Ready to claim") if model.ready_to_claim() else tr("In progress")
 
+## Đọc tiến độ và cập nhật HUD, danh sách cùng trạng thái nhận thưởng.
 func refresh() -> void:
 	var data: Dictionary = model.capture()
 	var ready_id: String = String(model.active().objective_id) if model.ready_to_claim() else ""

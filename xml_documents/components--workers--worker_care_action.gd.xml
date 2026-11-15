@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/workers/worker_care_action.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vẽ hoạt ảnh dụng cụ chăm sóc dạng pixel cho công nhân. Đây là hiệu ứng trình bày; commit công việc và tiêu vật tư do hệ thống khác xử lý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="show_action">
+			<return type="void" />
+			<param index="0" name="action" type="String" />
+			<param index="1" name="facing" type="Vector2" />
+			<description>
+				Chọn hành động và hướng; hành động rỗng ẩn hiệu ứng.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="kind" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã hành động đang hiển thị.
+		</member>
+		<member name="elapsed" type="float" setter="" getter="" default="0.0">
+			Thời gian hiệu ứng đã chạy.
+		</member>
+		<member name="direction" type="Vector2" setter="" getter="" default="Vector2(1, 0)">
+			Hướng dụng cụ.
+		</member>
+	</members>
+</class>

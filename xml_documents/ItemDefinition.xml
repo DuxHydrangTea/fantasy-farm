@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Định nghĩa dùng chung của một loại vật phẩm trong inventory.
+	</brief_description>
+	<description>
+		Các trường chuyên biệt cho công cụ, hạt giống, thức ăn và booster được diễn giải theo [member item_type] bởi hệ thống sử dụng vật phẩm.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_stack_limit">
+			<return type="int" />
+			<description>
+				Trả về 1 cho công cụ và cuốc, còn lại dùng max_stack với tối thiểu là 1.
+			</description>
+		</method>
+		<method name="matches">
+			<return type="bool" />
+			<param index="0" name="other" type="Resource" />
+			<description>
+				Kiểm tra resource khác là ItemDefinition có cùng mã không rỗng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="item_id" type="StringName" setter="" getter="">
+			Mã ổn định dùng để so sánh vật phẩm và lưu dữ liệu.
+		</member>
+		<member name="star_fruit" type="bool" setter="" getter="" default="false">
+			Đánh dấu biến thể quả chất lượng sao.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="description" type="String" setter="" getter="">
+			Mô tả hiển thị.
+		</member>
+		<member name="booster_kind" type="int" setter="" getter="" enum="ItemDefinition.BoosterKind" default="0">
+			Loại booster khi vật phẩm thuộc nhóm BOOSTER.
+		</member>
+		<member name="icon" type="Texture2D" setter="" getter="">
+			Biểu tượng hiển thị.
+		</member>
+		<member name="show_world_quantity" type="bool" setter="" getter="" default="true">
+			Cho phép hiển thị số lượng cạnh vật phẩm trong thế giới.
+		</member>
+		<member name="item_type" type="int" setter="" getter="" enum="ItemDefinition.ItemType" default="0">
+			Nhóm của vật phẩm.
+		</member>
+		<member name="tool_type" type="int" setter="" getter="" enum="ItemDefinition.ToolType" default="0">
+			Loại công cụ khi vật phẩm là công cụ.
+		</member>
+		<member name="crop" type="Resource" setter="" getter="">
+			Định nghĩa cây trồng liên quan đến hạt giống, nếu có.
+		</member>
+		<member name="max_stack" type="int" setter="" getter="" default="99">
+			Số lượng tối đa một chồng đối với vật phẩm có thể xếp chồng.
+		</member>
+		<member name="food_units_per_item" type="int" setter="" getter="" default="300">
+			Số đơn vị thức ăn được cung cấp bởi một vật phẩm thức ăn.
+		</member>
+	</members>
+	<constants>
+		<constant name="TOOL" value="0" enum="ItemType">
+		</constant>
+		<constant name="SEED" value="1" enum="ItemType">
+		</constant>
+		<constant name="PRODUCE" value="2" enum="ItemType">
+		</constant>
+		<constant name="FEED" value="3" enum="ItemType">
+		</constant>
+		<constant name="HOE" value="4" enum="ItemType">
+		</constant>
+		<constant name="BOOSTER" value="5" enum="ItemType">
+		</constant>
+		<constant name="PLACEABLE" value="6" enum="ItemType">
+		</constant>
+		<constant name="MATERIAL" value="7" enum="ItemType">
+		</constant>
+		<constant name="FERTILIZER" value="0" enum="BoosterKind">
+		</constant>
+		<constant name="ANIMAL_TONIC" value="1" enum="BoosterKind">
+		</constant>
+		<constant name="ROOT_TONIC" value="2" enum="BoosterKind">
+		</constant>
+		<constant name="PESTICIDE" value="3" enum="BoosterKind">
+		</constant>
+		<constant name="ANIMAL_MEDICINE" value="4" enum="BoosterKind">
+		</constant>
+		<constant name="HERBICIDE" value="5" enum="BoosterKind">
+		</constant>
+		<constant name="HOE" value="0" enum="ToolType">
+		</constant>
+		<constant name="WATERING_CAN" value="1" enum="ToolType">
+		</constant>
+		<constant name="AXE" value="2" enum="ToolType">
+		</constant>
+	</constants>
+</class>

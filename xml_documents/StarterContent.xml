@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StarterContent" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối trạng thái nội dung khởi đầu và mở vườn hoa một lần trong runtime. Các preview được thiết kế trong editor được giữ riêng khỏi khởi tạo game.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="prepare">
+			<return type="void" />
+			<description>
+				Xóa actor preview trong chuồng ao và khóa các vườn trước khi bắt đầu runtime.
+			</description>
+		</method>
+		<method name="setup">
+			<return type="void" />
+			<description>
+				Theo dõi thay đổi đất, áp khóa hiện tại và kiểm tra điều kiện mở.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Mở vườn và khôi phục vật tư khởi đầu một lần sau khi mua thêm đất. Cờ mở được ghi trước khi tạo pickup để callback lưu thấy trạng thái nhất quán.
+			</description>
+		</method>
+		<method name="begin_restore">
+			<return type="void" />
+			<param index="0" name="unlocked" type="bool" />
+			<description>
+				Tạm ngưng kiểm tra tự động và áp trạng thái mở từ dữ liệu lưu.
+			</description>
+		</method>
+		<method name="finish_restore">
+			<return type="void" />
+			<description>
+				Kết thúc khôi phục và kiểm tra lại điều kiện mở.
+			</description>
+		</method>
+		<method name="_apply_lock">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_gardens">
+			<return type="FlowerGarden[]" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa đất, chuồng ao và vườn hoa.
+		</member>
+		<member name="flower_garden_unlocked" type="bool" setter="" getter="" default="false">
+			Cho biết phần thưởng mở vườn hoa đã được kích hoạt.
+		</member>
+		<member name="_restoring" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

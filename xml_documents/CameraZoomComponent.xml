@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CameraZoomComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều khiển zoom camera bằng con lăn và cử chỉ pinch. Giới hạn zoom theo kích thước viewport và biên camera, chuyển mượt tới đích.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_limits">
+			<return type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_check_constraints">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_minimum_zoom">
+			<return type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_clamp_zoom">
+			<return type="float" />
+			<param index="0" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_viewport_size_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="pinch">
+			<return type="void" />
+			<param index="0" name="ratio" type="float" />
+			<description>
+				Nhân zoom đích với tỉ lệ pinch dương hữu hạn nếu menu không mở.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="camera" type="Camera2D" setter="" getter="">
+			Camera được điều khiển.
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+			Lựa chọn để kiểm tra menu đang mở.
+		</member>
+		<member name="min_zoom" type="float" setter="" getter="" default="1.0">
+			Zoom nhỏ nhất do cấu hình.
+		</member>
+		<member name="max_zoom" type="float" setter="" getter="" default="8.0">
+			Zoom lớn nhất do cấu hình.
+		</member>
+		<member name="zoom_step" type="float" setter="" getter="" default="1.15">
+			Hệ số nhân hoặc chia mỗi nấc con lăn.
+		</member>
+		<member name="zoom_speed" type="float" setter="" getter="" default="12.0">
+			Tốc độ nội suy tới zoom đích.
+		</member>
+		<member name="_target_zoom" type="float" setter="" getter="" default="1.2">
+		</member>
+		<member name="_last_limits" type="Rect2i" setter="" getter="">
+		</member>
+		<member name="_last_min_zoom" type="float" setter="" getter="">
+		</member>
+		<member name="_last_max_zoom" type="float" setter="" getter="">
+		</member>
+	</members>
+</class>

@@ -9,7 +9,7 @@ import subprocess
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', default='review')
-    parser.add_argument('--area', choices=['coop', 'barn', 'riverside'], default='coop')
+    parser.add_argument('--area', choices=['coop', 'barn', 'riverside', 'east'], default='coop')
     parser.add_argument('--godot', default='C:/Godot_v4.7.1-stable_mono_win64/Godot_v4.7.1-stable_mono_win64_console.exe')
     parser.add_argument('--batch', help='Apply a Godot scene_batch JSON file to the real project before capture.')
     args = parser.parse_args()
@@ -54,9 +54,28 @@ def main():
         startup.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         startup.wShowWindow = 0
     if args.batch:
+        # Windows limits command lines to 32 KB; tile batches are often larger.
+        # Read the structured batch from disk in Godot instead of inlining JSON.
+        runner = root / '.godot/scene_batch_file_runner.gd'
+        runner.write_text('''extends SceneTree
+func _initialize() -> void:
+    call_deferred("run_batch")
+func run_batch() -> void:
+    var arguments: PackedStringArray = OS.get_cmdline_user_args()
+    var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(arguments[0]))
+    if not data is Dictionary:
+        push_error("Invalid scene batch JSON")
+        quit(1)
+        return
+    var operation: RefCounted = load(arguments[1]).new()
+    await operation.execute(data)
+    var utilities: Script = load(arguments[2])
+    quit(1 if utilities.had_errors else 0)
+''', encoding='utf-8')
         result = subprocess.run([args.godot, '--headless', '--path', str(stage), '--script',
-                                 str(root / '.agents/skills/godot/scripts/core/dispatcher.gd'), 'scene_batch',
-                                 Path(args.batch).read_text(encoding='utf-8')], capture_output=True, text=True,
+                                 str(runner), '--', str(Path(args.batch).resolve()),
+                                 str(root / '.agents/skills/godot/scripts/scene/scene_batch.gd'),
+                                 str(root / '.agents/skills/godot/scripts/core/utils.gd')], capture_output=True, text=True,
                                 encoding='utf-8', errors='replace', timeout=90, startupinfo=startup)
         (output / 'batch.log').write_text(result.stdout + result.stderr, encoding='utf-8')
         if result.returncode or 'ERROR:' in result.stdout + result.stderr:

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FlowerPot" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chậu hoa cố định lưu trạng thái gieo, tưới, lớn và thu hoạch. Đồng hồ sinh trưởng bắt đầu từ lần tưới đầu tiên. Chậu có chế độ xem trước trong editor và đồng bộ đàn ong trước các thay đổi ảnh hưởng nguồn hoa.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="is_mature">
+			<return type="bool" />
+			<description>
+				Kiểm tra chậu mở khóa, có hoa và tiến độ đã đạt 1.
+			</description>
+		</method>
+		<method name="is_locked">
+			<return type="bool" />
+			<description>
+				Kiểm tra chậu được dành riêng hoặc nội dung khởi đầu của vườn còn khóa.
+			</description>
+		</method>
+		<method name="can_plant">
+			<return type="bool" />
+			<param index="0" name="seed" type="ItemDefinition" />
+			<description>
+				Kiểm tra chậu trống, mở khóa và hạt giống có định nghĩa hoa hợp lệ.
+			</description>
+		</method>
+		<method name="plant">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<param index="1" name="index" type="int" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Gieo một hạt từ ô túi sau khi đồng bộ ong và kiểm tra điều kiện. Thiết lập trạng thái trước khi trừ hạt và phát signal.
+			</description>
+		</method>
+		<method name="can_water">
+			<return type="bool" />
+			<description>
+				Kiểm tra hoa đã gieo và chưa được tưới bắt đầu sinh trưởng.
+			</description>
+		</method>
+		<method name="water">
+			<return type="bool" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Bắt đầu đồng hồ sinh trưởng một lần, không sớm hơn thời điểm gieo.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Cập nhật tiến độ không lùi và ảnh trong năm giai đoạn đến thời điểm now.
+			</description>
+		</method>
+		<method name="harvest">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Thu hoa chín nếu túi chứa đủ mẻ, phát số thực nhận và xóa hoa khỏi chậu.
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Đồng bộ ong rồi xóa hoa và đặt lại trạng thái chậu.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="flower" type="FlowerDefinition" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Khôi phục trạng thái đã kiểm tra và cập nhật tiến độ đến now.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Cập nhật đến now rồi tạo bản ghi lưu của hoa đang trồng.
+			</description>
+		</method>
+		<method name="set_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<param index="1" name="allowed" type="bool" default="true" />
+			<description>
+				Cập nhật dấu nhắm và màu cho biết thao tác có được phép.
+			</description>
+		</method>
+		<method name="set_status_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Cập nhật trạng thái xem thông tin và hiệu ứng hình ảnh.
+			</description>
+		</method>
+		<method name="get_status_sprite">
+			<return type="Node2D" />
+			<description>
+				Trả sprite dùng neo thông tin trạng thái.
+			</description>
+		</method>
+		<method name="get_visual_rect">
+			<return type="Rect2" />
+			<description>
+				Trả biên hình chậu và cây trong tọa độ chậu.
+			</description>
+		</method>
+		<method name="apply_editor_preview">
+			<return type="void" />
+			<description>
+				Áp hình chậu và giai đoạn hoa xem trước trong editor.
+			</description>
+		</method>
+		<method name="_refresh_for_focus">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_status_visibility">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_visual">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync_bees">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="garden" type="FlowerGarden" setter="" getter="">
+			Vườn chứa chậu.
+		</member>
+		<member name="pot_definition" type="PotDefinition" setter="@pot_definition_setter" getter="" default="&lt;Object&gt;">
+			Cấu hình hình ảnh chậu.
+		</member>
+		<member name="visual" type="FlowerPotVisual" setter="" getter="">
+			Bộ trình bày hình chậu và cây.
+		</member>
+		<member name="preview_flower" type="FlowerDefinition" setter="@preview_flower_setter" getter="">
+			Loài hoa xem trước trong editor.
+		</member>
+		<member name="preview_stage" type="int" setter="@preview_stage_setter" getter="" default="4">
+			Giai đoạn xem trước trong editor.
+		</member>
+		<member name="reserved" type="bool" setter="" getter="" default="false">
+			Ô được dành riêng và không nhận thao tác trồng, tưới hoặc thu.
+		</member>
+		<member name="cell" type="Vector2i" setter="@cell_setter" getter="">
+			Tọa độ ô ổn định của chậu trong vườn.
+		</member>
+		<member name="definition" type="FlowerDefinition" setter="" getter="">
+			Định nghĩa hoa đang trồng, null nếu chậu trống.
+		</member>
+		<member name="planted_at" type="float" setter="" getter="" default="0.0">
+			Timestamp gieo.
+		</member>
+		<member name="growth_started_at" type="float" setter="" getter="" default="-1.0">
+			Timestamp tưới lần đầu, -1 khi chưa bắt đầu lớn.
+		</member>
+		<member name="matures_at" type="float" setter="" getter="" default="0.0">
+			Timestamp chín dự kiến.
+		</member>
+		<member name="progress" type="float" setter="" getter="" default="0.0">
+			Tiến độ từ 0 đến 1.
+		</member>
+		<member name="stage" type="int" setter="" getter="" default="0">
+			Chỉ số ảnh trong năm giai đoạn.
+		</member>
+		<member name="_focused" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_status_focused" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_harvesting" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite cây dự phòng.
+		</member>
+		<member name="motion" type="VisualMotionComponent" setter="" getter="">
+			Hiệu ứng chuyển động hình ảnh.
+		</member>
+		<member name="marker" type="Sprite2D" setter="" getter="">
+			Dấu chỉ vị trí đang được nhắm.
+		</member>
+		<member name="progress_frame" type="TextureRect" setter="" getter="">
+			Khung thanh tiến độ.
+		</member>
+		<member name="bar" type="ProgressBar" setter="" getter="">
+			Thanh tiến độ sinh trưởng.
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi nội dung hoặc trạng thái chậu thay đổi.
+			</description>
+		</signal>
+		<signal name="harvest_yielded">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<description>
+				Phát vật phẩm thực thu, số lượng, vị trí và túi nhận.
+			</description>
+		</signal>
+	</signals>
+</class>

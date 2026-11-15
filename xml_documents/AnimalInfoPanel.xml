@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalInfoPanel" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng thông tin vật nuôi trong tọa độ màn hình. Mục tiêu dưới chuột được ưu tiên hơn mục tiêu theo hướng nhìn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="inspect">
+			<return type="void" />
+			<param index="0" name="target" type="AnimalActor" />
+			<description>
+				Chọn vật nuôi và cập nhật bảng.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc trạng thái hiện tại hoặc ẩn bảng nếu vật nuôi không còn hợp lệ.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="root" type="Control" setter="" getter="">
+			Root giao diện được UIScaleComponent điều chỉnh.
+		</member>
+		<member name="title" type="Label" setter="" getter="">
+			Nhãn tên và mã vật nuôi.
+		</member>
+		<member name="maturity_label" type="Label" setter="" getter="">
+			Nhãn trưởng thành.
+		</member>
+		<member name="lifetime_label" type="Label" setter="" getter="">
+			Nhãn tuổi thọ còn lại.
+		</member>
+		<member name="produce_label" type="Label" setter="" getter="">
+			Nhãn tiến độ sản phẩm.
+		</member>
+		<member name="progress" type="ProgressBar" setter="" getter="">
+			Thanh tiến độ sản xuất.
+		</member>
+		<member name="state_label" type="Label" setter="" getter="">
+			Nhãn trạng thái sản xuất.
+		</member>
+		<member name="animal" type="AnimalActor" setter="" getter="">
+			Vật nuôi đang được xem.
+		</member>
+		<member name="_text" type="AnimalStatusText" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="production_row" type="VisualValueRow" setter="" getter="">
+			Hàng biểu tượng và thông tin sản phẩm theo chu kỳ.
+		</member>
+	</members>
+</class>

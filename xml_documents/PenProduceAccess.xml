@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenProduceAccess" inherits="PhysicsBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điểm tương tác thu sản phẩm của chuồng qua phím hoặc nhấp chuột. Bộ phân giải tương tác dùng hình tòa nhà để xác định mục tiêu hiển thị.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_sprite">
+			<return type="Node2D" />
+			<description>
+				Lấy Sprite2D của tòa nhà nếu tòa nhà còn hợp lệ.
+			</description>
+		</method>
+		<method name="interaction_action_text">
+			<return type="String" />
+			<description>
+				Trả về nhãn hành động đã dịch theo chế độ thu.
+			</description>
+		</method>
+		<method name="open_shop">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Xử lý giao diện tương tác chung bằng thao tác thu sản phẩm.
+			</description>
+		</method>
+		<method name="product_at">
+			<return type="ItemDefinition" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Trả về sản phẩm tại vị trí toàn cục trên bảng, hoặc null.
+			</description>
+		</method>
+		<method name="collect_product">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<param index="1" name="product" type="ItemDefinition" default="null" />
+			<description>
+				Đồng bộ thời gian rồi chuyển sản phẩm từ kho chuồng vào túi người chơi. Có thể lọc theo sản phẩm. Trả false nếu ngoài tầm hoặc menu đang mở, còn lại hiển thị kết quả và trả true kể cả khi kho trống hoặc túi đầy.
+			</description>
+		</method>
+		<method name="_present_result">
+			<return type="void" />
+			<param index="0" name="moved" type="int" />
+			<param index="1" name="has_stock" type="bool" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pen" type="AnimalPen" setter="" getter="">
+			Chuồng sở hữu kho sản phẩm.
+		</member>
+		<member name="building" type="Node2D" setter="" getter="">
+			Tòa nhà được dùng làm hình tương tác.
+		</member>
+		<member name="default_product" type="ItemDefinition" setter="" getter="">
+			Sản phẩm đại diện khi kho trống.
+		</member>
+		<member name="choose_product" type="bool" setter="" getter="" default="false">
+			Cho phép chọn từng sản phẩm trên bảng trạng thái.
+		</member>
+		<member name="badge" type="PanelContainer" setter="" getter="">
+			Bảng trạng thái sản phẩm được tạo khi node sẵn sàng.
+		</member>
+	</members>
+</class>

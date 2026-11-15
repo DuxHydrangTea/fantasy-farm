@@ -57,13 +57,6 @@ func _units(kind: AnimalTrough.Kind) -> float:
 			total += (child as AnimalTrough).available_units()
 	return total
 
-func _output(data: Dictionary, row: Dictionary) -> int:
-	var total: int = int(row.production_stock)
-	for pile: Dictionary in data.pickups:
-		if pile.id == row.pickup:
-			total += int(pile.amount)
-	return total
-
 func test_load_six_hours_shares_stock_and_repeated_save_load_does_not_duplicate() -> void:
 	_cow("cow_a")
 	_cow("cow_b")
@@ -74,13 +67,15 @@ func test_load_six_hours_shares_stock_and_repeated_save_load_does_not_duplicate(
 	assert_almost_eq(_units(AnimalTrough.Kind.WATER), 2370.0, 0.00001)
 	var after: Dictionary = _capture()
 	assert_eq(after.animals.size(), 2)
+	assert_eq(barn.produce_storage.count(), 200)
 	for row: Dictionary in after.animals:
-		assert_eq(_output(after, row), 100)
+		assert_eq(row.production_stock, 0)
 		assert_almost_eq(float(row.production_progress), 7200.0, 0.00001)
 		assert_eq(row.satiety, 100.0)
 	assert_true(adapter.restore(after, timestamp).ok)
 	assert_eq(_capture().animals, after.animals)
 	assert_eq(_capture().troughs, after.troughs)
+	assert_eq(_capture().pen_produce, after.pen_produce)
 	assert_true(SaveSchema.validate(_capture(), adapter.catalog).ok)
 
 func test_runtime_resume_and_refill_cannot_feed_the_past() -> void:
@@ -123,25 +118,22 @@ func test_maturity_crossing_only_credits_adult_time() -> void:
 	timestamp += 43200
 	assert_true(adapter.restore(data, timestamp).ok)
 	var after: Dictionary = _capture()
-	assert_eq(_output(after, after.animals[0]), 100)
+	assert_eq(barn.produce_storage.count(), 100)
 	assert_almost_eq(float(after.animals[0].production_progress), 0.0, 0.00001)
 	assert_almost_eq(_units(AnimalTrough.Kind.FOOD), 2370.0, 0.00001)
 
-func test_death_drops_completed_output_and_capture_includes_new_pile() -> void:
+func test_death_keeps_completed_output_in_pen_stock() -> void:
 	var actor: AnimalActor = _cow("old_cow", 1209600.0 - 1800.0)
 	actor.production.progress_seconds = 13000.0
 	timestamp += 7200
 	var after: Dictionary = _capture()
 	assert_eq(after.animals.size(), 0)
 	assert_almost_eq(_units(AnimalTrough.Kind.FOOD), 2398.75, 0.00001)
-	var milk: int = 0
-	for row: Dictionary in after.pickups:
-		if row.item == "cow_milk":
-			milk += int(row.amount)
-	assert_eq(milk, 100)
+	assert_eq(barn.produce_storage.count(), 100)
+	assert_false(after.pickups.any(func(row: Dictionary) -> bool: return row.item == "cow_milk"))
 	assert_true(SaveSchema.validate(after, adapter.catalog).ok)
 	assert_true(adapter.restore(after, timestamp).ok)
-	assert_eq(_capture().pickups, after.pickups)
+	assert_eq(_capture().pen_produce, after.pen_produce)
 
 func test_fractional_consumption_survives_many_short_save_cycles() -> void:
 	_cow("cow_a")
@@ -216,13 +208,12 @@ func test_all_seven_adult_species_produce_24_hours_and_use_60_units_each() -> vo
 	var after: Dictionary = _capture()
 	assert_eq(after.animals.size(), 7)
 	for row: Dictionary in after.animals:
-		var definition: AnimalDefinition = adapter.catalog.animals[row.animal]
-		var batches: int = floori(86400.0 / definition.production.production_seconds)
-		assert_eq(_output(after, row), batches * definition.production.production_amount, String(row.animal))
+		assert_eq(row.production_stock, 0)
 	var food_left: float = 0.0
 	var water_left: float = 0.0
 	for pen: Node in world.get_children():
 		if pen is AnimalPen:
+			assert_between(int((pen as AnimalPen).produce_storage.count()), 1, 3000)
 			for station: Node in pen.get_children():
 				if station is AnimalTrough:
 					if (station as AnimalTrough).kind == AnimalTrough.Kind.FOOD:
@@ -246,9 +237,8 @@ func test_buy_after_suspension_does_not_make_newborn_consume_in_the_past() -> vo
 	var data: Dictionary = _capture()
 	assert_eq(data.animals.size(), 2)
 	assert_almost_eq(_units(AnimalTrough.Kind.FOOD), 2385.0, 0.00001)
+	assert_eq(barn.produce_storage.count(), 100)
 	for row: Dictionary in data.animals:
-		if row.id == "existing_cow":
-			assert_eq(_output(data, row), 100)
-		else:
+		if row.id != "existing_cow":
 			assert_eq(float(row.age), 0.0)
-			assert_eq(_output(data, row), 0)
+			assert_eq(row.production_stock, 0)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BeehiveRangeDisplay" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vẽ vùng ảnh hưởng hoặc các ô hoa lân cận để xem trước vị trí tổ ong.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="radius" type="float" setter="" getter="" default="80.0">
+			Bán kính vùng tròn.
+		</member>
+		<member name="allowed" type="bool" setter="" getter="" default="true">
+			Chọn màu thể hiện vị trí hợp lệ hay bị từ chối.
+		</member>
+		<member name="footprint" type="bool" setter="" getter="" default="false">
+			Vẽ thêm khung diện tích tổ tại tâm.
+		</member>
+		<member name="garden_grid" type="bool" setter="" getter="" default="false">
+			Dùng chế độ vẽ các chậu lân cận thay cho hình tròn.
+		</member>
+		<member name="garden_cell" type="Vector2i" setter="" getter="" default="Vector2i(0, 0)">
+			Ô tổ trong lưới vườn hoa.
+		</member>
+		<member name="garden" type="FlowerGarden" setter="" getter="">
+			Vườn cung cấp các chậu lân cận.
+		</member>
+	</members>
+</class>

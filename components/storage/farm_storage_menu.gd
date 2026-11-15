@@ -1,6 +1,7 @@
 class_name FarmStorageMenu
 extends TradeMenu
-## Selection uses stable item IDs; the service owns all inventory mutations.
+## Giao diện kho dùng mã vật phẩm ổn định; mọi thay đổi kho thông qua FarmStorageService.
+
 var storage_id: String
 var service: FarmStorageService
 @onready var panel: PanelContainer = %Panel
@@ -262,6 +263,7 @@ func _save() -> void:
 	if service != null and SaveManager.adapter != null and SaveManager.adapter.world == service.world and SaveManager.writes_enabled and not SaveManager.busy:
 		SaveManager.save_game()
 
+## Ngắt tín hiệu kho đang theo dõi rồi đóng menu.
 func close(show_thanks: bool = true) -> void:
 	if is_open and is_instance_valid(service) and service.changed.is_connected(_storage_changed):
 		service.changed.disconnect(_storage_changed)

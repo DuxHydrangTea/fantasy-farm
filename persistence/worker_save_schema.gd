@@ -1,8 +1,18 @@
 class_name WorkerSaveSchema
 extends RefCounted
+## Tạo và kiểm tra dữ liệu lưu của hệ thống công nhân.
+##
+## Việc kiểm tra bao gồm cấu hình tự động trồng, nâng cấp, danh sách công nhân,
+## kho vật phẩm, thời điểm mô phỏng và công việc đang thực hiện. Tham số legacy
+## cho phép cấu trúc và giới hạn của dữ liệu phiên bản cũ.
+
+## Tạo trạng thái công nhân mới với bộ đếm và cấu hình mặc định.
 static func fresh() -> Dictionary:
 	return {"rows": [], "trial_used": [], "next_order": 1, "simulated_at": 0.0, "crop_automation": CropAutomationState.fresh(), "upgrades": WorkerUpgradeState.fresh(), "legacy_baskets": []}
 
+## Kiểm tra cấu trúc và tính nhất quán của trạng thái công nhân đã lưu.
+## [param catalog] xác định các vật phẩm và cây được phép. [param saved_at]
+## giới hạn các mốc thời gian. Chế độ [param legacy] chấp nhận dữ liệu cũ.
 static func valid(data: Variant, catalog: SaveCatalog, saved_at: float, legacy: bool = false) -> bool:
 	if not data is Dictionary or data.size() not in ([5, 7] if legacy else [7]) or not data.get("rows") is Array or data.rows.size() > (15 if legacy else int(WorkerRole.LIMITS.crop)) or not data.get("trial_used") is Array or data.trial_used.size() > 3 or not SaveSchema.number(data.get("next_order"), 1, 1000000000, true) or not SaveSchema.number(data.get("simulated_at"), 0, saved_at):
 		return false
@@ -73,9 +83,9 @@ static func valid(data: Variant, catalog: SaveCatalog, saved_at: float, legacy: 
 					seen[cell] = true
 			if task.has("tracking_started_at") and not SaveSchema.number(task.tracking_started_at, 0, saved_at):
 				return false
-			if not task.get("kind") is String or not task.kind in ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"] or not task.get("id") is String or not SaveSchema.vector(task.get("point")) or not SaveSchema.vector(task.get("base_point")) or not SaveSchema.number(task.get("attempt"), 0, 4, true) or not SaveSchema.number(task.get("work_at")) or not SaveSchema.number(task.get("finish_at"), float(task.work_at)):
+			if not task.get("kind") is String or not task.kind in ["fruit", "harvest", "water_crop", "pickup", "pen_collect", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"] or not task.get("id") is String or not SaveSchema.vector(task.get("point")) or not SaveSchema.vector(task.get("base_point")) or not SaveSchema.number(task.get("attempt"), 0, 4, true) or not SaveSchema.number(task.get("work_at")) or not SaveSchema.number(task.get("finish_at"), float(task.work_at)):
 				return false
-			var allowed: Array = ["fruit", "harvest", "water_crop", "pickup", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"]
+			var allowed: Array = ["fruit", "harvest", "water_crop", "pickup", "pen_collect", "feed", "fetch_water", "water_trough", "patrol", "till", "plant", "fertilize", "treat_pests", "treat_weeds", "cure_animal"]
 			if not task.kind in allowed:
 				return false
 			if task.kind in ["fruit", "harvest", "water_crop", "till", "plant", "fertilize", "treat_pests", "treat_weeds"] and not SaveSchema.vector(task.get("cell"), true):
@@ -119,6 +129,7 @@ static func valid(data: Variant, catalog: SaveCatalog, saved_at: float, legacy: 
 			return false
 	return true
 
+## Chuyển dữ liệu đội nhân công cũ sang cấu trúc hiện tại và sắp xếp thứ tự thuê.
 static func migrate_team(data: Dictionary) -> Dictionary:
 	var result: Dictionary = data.duplicate(true)
 	var rows: Array = result.rows

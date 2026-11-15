@@ -1,6 +1,7 @@
 class_name FarmPlayer
 extends CharacterBody2D
-## Scene-owned references; keep gameplay in the existing components.
+## Nhân vật người chơi sở hữu các tham chiếu tới thành phần di chuyển, hoạt ảnh, tương tác và giao diện.
+
 @export var animation: AnimationComponent
 @export var state: StateComponent
 @export var selection: ToolSelectionComponent

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FlowerGarden" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý các chậu hoa được đặt sẵn, lịch sinh trưởng và dữ liệu lưu của vườn. Các cây từ bố cục cũ không có ô tương ứng được giữ trong hàng đợi khôi phục.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_configuration_warnings">
+			<return type="PackedStringArray" />
+			<description>
+			</description>
+		</method>
+		<method name="_register_pots">
+			<return type="void" />
+			<param index="0" name="parent" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="set_starter_content_locked">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Đổi trạng thái khóa vườn, cập nhật nguồn ong và thông báo trên scene. Khi mở khóa, thử khôi phục hoa cũ đang chờ vào chậu trống.
+			</description>
+		</method>
+		<method name="add_starter_flowers">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Thêm các hoa khởi đầu một lần, kể cả save cũ chưa có cờ này. Chậu đang có hoa được giữ nguyên và hoa đã thu không tự xuất hiện lại.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Tiến đàn ong trước rồi cập nhật các chậu đến hạn chuyển giai đoạn.
+			</description>
+		</method>
+		<method name="_schedule_pot">
+			<return type="void" />
+			<param index="0" name="pot" type="FlowerPot" />
+			<description>
+			</description>
+		</method>
+		<method name="_pot_changed">
+			<return type="void" />
+			<param index="0" name="pot" type="FlowerPot" />
+			<description>
+			</description>
+		</method>
+		<method name="restore_flower">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="flower" type="FlowerDefinition" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Khôi phục hoa vào ô tương ứng hoặc giữ bản ghi cũ để đặt sau nếu không có ô.
+			</description>
+		</method>
+		<method name="restore_legacy_flowers">
+			<return type="void" />
+			<description>
+				Đặt các hoa cũ đang chờ vào chậu trống không dành riêng khi vườn đã mở.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Chụp hoa trong chậu và hoa cũ đang chờ, cùng mã vườn và cờ nội dung khởi đầu.
+			</description>
+		</method>
+		<method name="reset">
+			<return type="void" />
+			<description>
+				Xóa lịch, hàng đợi cũ và nội dung các chậu, đặt lại cờ hoa khởi đầu.
+			</description>
+		</method>
+		<method name="restore_initial_supplies">
+			<return type="void" />
+			<description>
+				Tạo lại các đống vật phẩm ban đầu đã ghi nhận nếu vườn không bị khóa.
+			</description>
+		</method>
+		<method name="focused_pot">
+			<return type="FlowerPot" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="facing" type="Vector2" />
+			<description>
+				Tìm chậu không dành riêng gần nhất trong tầm và phía trước điểm nhìn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pot_container" type="Node2D" setter="" getter="">
+			Node chứa các chậu được thiết kế trong scene.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="" default="&amp;&quot;flower_garden_01&quot;">
+			Mã ổn định của vườn trong dữ liệu lưu.
+		</member>
+		<member name="time_manager" type="FarmClock" setter="" getter="">
+			Đồng hồ trang trại; dùng TimeManager nếu chưa được gán.
+		</member>
+		<member name="apiary" type="ApiarySystem" setter="" getter="">
+			Hệ thống ong cần đồng bộ khi hoa thay đổi.
+		</member>
+		<member name="pots" type="Dictionary[Vector2i, FlowerPot]" setter="" getter="" default="{}">
+			Ánh xạ tọa độ ô sang chậu trong scene.
+		</member>
+		<member name="_growth" type="GrowthSchedule" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="starter_flowers_added" type="bool" setter="" getter="" default="false">
+			Cho biết hoa khởi đầu đã được xử lý một lần.
+		</member>
+		<member name="starter_content_locked" type="bool" setter="" getter="" default="false">
+			Khóa nội dung vườn cho đến khi đáp ứng điều kiện mở.
+		</member>
+		<member name="_lock_notice" type="Label" setter="" getter="">
+		</member>
+		<member name="_initial_supplies" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_legacy_flowers" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="Layout" value="&lt;Object&gt;">
+			Hình học bốn khối chậu và chuyển đổi tọa độ cũ.
+		</constant>
+		<constant name="SIZE" value="Vector2(384, 256)">
+			Kích thước vùng hiển thị vườn.
+		</constant>
+	</constants>
+</class>

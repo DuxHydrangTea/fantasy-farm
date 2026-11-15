@@ -1,10 +1,18 @@
 class_name WeatherHUD
 extends CanvasLayer
+## HUD hiển thị đồng hồ và công cụ xem thử thời gian, thời tiết trong bản debug.
+
+## Bộ quản lý cung cấp thời gian và trạng thái thời tiết.
 var manager: WeatherManager
+## Nhãn hiển thị đồng hồ.
 var label: Label
+## Bảng công cụ debug khi được tạo.
 var debug_bar: PanelContainer
+## Nút mở bảng debug.
 var debug_toggle: Button
+## Các nút chọn giờ xem thử.
 var time_buttons: Array[Button] = []
+## Các nút chọn thời tiết.
 var weather_buttons: Array[Button] = []
 var _debug_title: Label
 var _time_title: Label
@@ -144,6 +152,7 @@ func _refresh_debug_bar() -> void:
 		weather_buttons[kind].text = titles[kind]
 		weather_buttons[kind].set_pressed_no_signal(manager.current_weather == kind)
 
+## Cập nhật đồng hồ và trạng thái giao diện theo thời điểm hiển thị.
 func refresh(timestamp: float) -> void:
 	_last_timestamp = timestamp
 	var minutes: int = floori(fposmod(timestamp + WeatherSchedule.UTC_OFFSET, 86400.0) / 60.0)

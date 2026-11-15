@@ -1,6 +1,7 @@
 class_name HoneyMenu
 extends TradeMenu
-## Shared bee journal, batch collection and repairs; scrollable on touch screens.
+## Giao diện nhật ký ong, thu mật theo lô và sửa tổ; nội dung có thể cuộn trên màn hình cảm ứng.
+
 var world: FarmWorld
 var hive: Beehive
 var panel: PanelContainer
@@ -88,6 +89,7 @@ func _build() -> void:
 	status = _label(content)
 	harvest_button = _button(body, _collect)
 
+## Mở menu cho tổ ong khi kiểm tra quyền truy cập thành công.
 func open_hive(target: Beehive) -> bool:
 	if not world.honey_garden.access_error(target).is_empty():
 		return false

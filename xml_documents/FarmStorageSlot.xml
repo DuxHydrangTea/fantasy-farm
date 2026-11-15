@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmStorageSlot" inherits="Button" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Ô giao diện hiển thị vật phẩm, số lượng và chất lượng; dịch vụ kho thực hiện chuyển vật phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật biểu tượng, số lượng và huy hiệu chất lượng từ dữ liệu ô.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="item" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="amount" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="tiers" type="Array" setter="" getter="" default="[...]">
+		</member>
+		<member name="_icon" type="TextureRect" setter="" getter="">
+		</member>
+		<member name="_count" type="Label" setter="" getter="">
+		</member>
+		<member name="_badge" type="TextureRect" setter="" getter="">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreeInteraction" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối tương tác với cây lâu năm; hái quả ngay còn công cụ chốt mục tiêu tới khung hình tác động.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="dig_targets">
+			<return type="Vector2i[]" />
+			<description>
+				Trả bản sao danh sách ô mục tiêu đã chốt cho động tác đào.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="plantation">
+			<return type="TreePlantation" />
+			<description>
+				Lấy hệ thống vườn cây từ thế giới chứa người chơi.
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="prepare_action">
+			<return type="StringName" />
+			<param index="0" name="requested" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Giải mục tiêu hiện tại và chuẩn bị hành động phù hợp với cây.
+			</description>
+		</method>
+		<method name="prepare_target">
+			<return type="StringName" />
+			<param index="0" name="tree" type="PerennialTree" />
+			<param index="1" name="requested" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Kiểm tra khoảng cách, trạng thái cây và công cụ trước khi chốt thao tác.
+			</description>
+		</method>
+		<method name="_state_changed">
+			<return type="void" />
+			<param index="0" name="_previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="harvest_now">
+			<return type="bool" />
+			<description>
+				Thu hoạch cây ăn quả đã chọn và xóa mục tiêu đang chờ.
+			</description>
+		</method>
+		<method name="_impact">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="pending" type="PerennialTree" setter="" getter="">
+		</member>
+		<member name="_cell" type="Vector2i" setter="" getter="">
+		</member>
+		<member name="_item" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="_slot" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_dig_targets" type="Vector2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_selection_revision" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="marker" type="Sprite2D" setter="" getter="">
+		</member>
+	</members>
+</class>

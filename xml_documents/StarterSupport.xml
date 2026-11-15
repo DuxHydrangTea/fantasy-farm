@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StarterSupport" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kiểm tra và cấp một hạt giống hỗ trợ một lần cho profile gặp khó khăn. Chỉ cấp khi người chơi không đủ tiền mua hạt và không còn hạt, nông sản hoặc cây đang trồng có thể dùng để phục hồi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<description>
+				Kiểm tra điều kiện hỗ trợ, các kho, cây trên đồng và sức chứa túi. Trả ok hoặc thông báo giải thích điều kiện chưa đạt.
+			</description>
+		</method>
+		<method name="claim">
+			<return type="Dictionary" />
+			<description>
+				Kiểm tra lại điều kiện rồi cấp hạt qua TutorialProgress.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới được kiểm tra nguồn phục hồi.
+		</member>
+	</members>
+	<constants>
+		<constant name="SEED" value="&lt;Object&gt;">
+			Hạt giống cà rốt được cấp.
+		</constant>
+	</constants>
+</class>

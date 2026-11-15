@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Beehive" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Node tổ ong kết nối trạng thái sản xuất, thụ phấn và hiệu ứng hiển thị.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh_visual">
+			<return type="void" />
+			<description>
+				Chọn ảnh tổ đầy hoặc thường và màu theo trạng thái sửa.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Đồng bộ đàn ong rồi thu trọn mẻ vào túi; phát sự kiện thu hoạch nếu thành công.
+			</description>
+		</method>
+		<method name="action_text">
+			<return type="String" />
+			<description>
+				Tạo nhãn đã dịch về nhật ký, sửa chữa, tiến độ mật và điều kiện thời tiết.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản ghi lưu gồm sản xuất, mã tổ, vị trí và thông tin slot vườn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định để lưu tổ.
+		</member>
+		<member name="apiary" type="ApiarySystem" setter="" getter="">
+			Hệ thống ong điều phối thời gian và nguồn hoa.
+		</member>
+		<member name="definition" type="BeehiveDefinition" setter="" getter="">
+			Cấu hình dùng chung của tổ.
+		</member>
+		<member name="production" type="BeehiveProductionComponent" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái mẻ mật.
+		</member>
+		<member name="pollination" type="PollinationComponent" setter="" getter="" default="&lt;unknown&gt;">
+			Nguồn thụ phấn đại diện.
+		</member>
+		<member name="garden_id" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã vườn cố định nếu tổ thuộc bố cục vườn mật.
+		</member>
+		<member name="garden_slot" type="int" setter="" getter="" default="-1">
+			Chỉ số slot vườn, -1 cho tổ tự do.
+		</member>
+		<member name="repaired" type="bool" setter="" getter="" default="true">
+			Cho biết tổ vườn đã được sửa.
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite tổ.
+		</member>
+		<member name="range_display" type="BeehiveRangeDisplay" setter="" getter="">
+			Hiển thị phạm vi hoặc ô vườn.
+		</member>
+		<member name="bees" type="BeeVisualComponent" setter="" getter="">
+			Hiệu ứng ong bay.
+		</member>
+	</members>
+</class>

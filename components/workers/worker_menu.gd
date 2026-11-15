@@ -1,6 +1,7 @@
 class_name WorkerMenu
 extends TradeMenu
-## Role-specific view over WorkerService; portraits and controls never mutate actors.
+## Giao diện quản lý nhân công theo vai trò, gửi lệnh tới WorkerService thay vì sửa actor trực tiếp.
+
 var role: String = "crop"
 var selected_worker_id: String = ""
 var world: FarmWorld
@@ -484,6 +485,7 @@ func _cancel_dismiss() -> void:
 	confirmation.hide()
 	(%Page as VBoxContainer).show()
 
+## Hủy xác nhận cho nghỉ đang chờ rồi đóng menu nhân công.
 func close(show_thanks: bool = true) -> void:
 	if is_node_ready():
 		_cancel_dismiss()

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ProducePriceCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Danh mục giá bán nông sản, tra cứu theo mã vật phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Yêu cầu danh mục có ít nhất một mục hợp lệ và không lặp mã vật phẩm.
+			</description>
+		</method>
+		<method name="find">
+			<return type="ProducePrice" />
+			<param index="0" name="item_id" type="StringName" />
+			<description>
+				Tìm mục giá hợp lệ đầu tiên có mã [param item_id], hoặc trả về null.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="entries" type="ProducePrice[]" setter="" getter="" default="[]">
+			Các mức giá được cấu hình cho danh mục.
+		</member>
+	</members>
+</class>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/farm_settings.gd&quot;" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Menu cài đặt ngôn ngữ, kích thước giao diện và âm lượng, đồng bộ tùy chọn với ConfigFile.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="show_settings">
+			<return type="void" />
+			<description>
+				Đồng bộ lựa chọn và mở cài đặt nếu không có menu khác.
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_language_changed">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_size_changed">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_volume_changed">
+			<return type="void" />
+			<param index="0" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply_volume">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_audio_changed">
+			<return type="void" />
+			<param index="0" name="value" type="float" />
+			<param index="1" name="key" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_store">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_persist">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_finish_close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="language_choice" type="OptionButton" setter="" getter="">
+		</member>
+		<member name="size_choice" type="OptionButton" setter="" getter="">
+		</member>
+		<member name="volume" type="HSlider" setter="" getter="">
+		</member>
+		<member name="volume_label" type="Label" setter="" getter="">
+		</member>
+		<member name="audio_sliders" type="Dictionary[StringName, HSlider]" setter="" getter="" default="{}">
+		</member>
+		<member name="audio_labels" type="Dictionary[StringName, Label]" setter="" getter="" default="{}">
+		</member>
+		<member name="heading" type="Label" setter="" getter="">
+		</member>
+		<member name="language_label" type="Label" setter="" getter="">
+		</member>
+		<member name="size_label" type="Label" setter="" getter="">
+		</member>
+		<member name="status" type="Label" setter="" getter="">
+		</member>
+		<member name="_syncing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_save_timer" type="Timer" setter="" getter="">
+		</member>
+		<member name="_dirty" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="preferences_path" type="String" setter="" getter="" default="&quot;user://ui_preferences.cfg&quot;">
+		</member>
+	</members>
+	<constants>
+		<constant name="AUDIO_CAPTIONS" value="{&amp;&quot;ambience&quot;: &quot;Ambience volume: {value}%&quot;, &amp;&quot;effects&quot;: &quot;Effects volume: {value}%&quot;, &amp;&quot;interface&quot;: &quot;Interface sounds: {value}%&quot;, &amp;&quot;music&quot;: &quot;Music volume: {value}%&quot;}">
+		</constant>
+	</constants>
+</class>

@@ -1,6 +1,7 @@
 class_name PerennialTree
 extends StaticBody2D
-## Timestamp là nguồn sự thật; tween chỉ thay đổi hình ảnh.
+## Lớp cơ sở cây lâu năm dùng các mốc thời gian làm trạng thái sinh trưởng; tween chỉ thay đổi hình ảnh.
+
 const TREE_WIND: ShaderMaterial = preload("res://resources/effects/tree_wind_48.tres")
 static var _wind_materials: Dictionary[Texture2D, ShaderMaterial] = {}
 static var _visible_bounds: Dictionary[Texture2D, Rect2i] = {}
@@ -40,6 +41,7 @@ func _ready() -> void:
 	add_child(motion)
 	update_visual()
 
+## Khởi tạo mốc trồng và đặt lại trạng thái sinh trưởng.
 func initialize(now: float) -> void:
 	planted_at = now
 	last_at = now
@@ -48,6 +50,7 @@ func initialize(now: float) -> void:
 	stage = 0
 	removed = false
 
+## Cập nhật thời gian và giai đoạn phát triển rồi làm mới hình ảnh.
 func refresh(now: float, _fruit_rate: float = 1.0) -> void:
 	last_at = maxf(last_at, now)
 	if growth_started_at >= 0.0:
@@ -55,14 +58,17 @@ func refresh(now: float, _fruit_rate: float = 1.0) -> void:
 		stage = mini(2, int(floor(progress * 2.0)))
 	update_visual()
 
+## Kiểm tra cây chưa bị xóa và đã tới hạn trưởng thành.
 func is_mature() -> bool:
 	return not removed and growth_started_at >= 0.0 and last_at >= matures_at
 
+## Chọn texture theo giai đoạn từ định nghĩa cây.
 func update_visual() -> void:
 	if sprite == null or definition == null:
 		return
 	set_texture(definition.stage_textures[stage])
 
+## Đổi texture và căn hình cây theo phần ảnh thực sự hiển thị.
 func set_texture(texture: Texture2D) -> void:
 	if sprite.texture == texture:
 		return
@@ -84,6 +90,7 @@ func set_texture(texture: Texture2D) -> void:
 		_wind_materials[texture] = wind
 	sprite.material = _wind_materials[texture]
 
+## Lấy và cache hình chữ nhật pixel không trong suốt của texture.
 static func visible_bounds(texture: Texture2D) -> Rect2i:
 	# Textures are shared and immutable. A GPU readback at every tree refresh
 	# or offline harvest stalls the visible game even when simulation yields.
@@ -91,17 +98,21 @@ static func visible_bounds(texture: Texture2D) -> Rect2i:
 		_visible_bounds[texture] = texture.get_image().get_used_rect()
 	return _visible_bounds[texture]
 
+## Trả sprite dùng làm điểm neo hiển thị trạng thái.
 func get_status_sprite() -> Node2D:
 	return sprite
 
+## Bật hoặc tắt hiệu ứng tập trung trên cây chưa bị xóa.
 func set_status_focused(value: bool) -> void:
 	if is_instance_valid(motion):
 		motion.set_focused(value and not removed)
 
+## Phát phản ứng chuyển động khi cây được tác động.
 func react() -> void:
 	if motion != null:
 		motion.react()
 
+## Đánh dấu cây bị xóa và gỡ khỏi hệ thống vườn cây.
 func retire() -> void:
 	removed = true
 	if plantation != null:
@@ -109,12 +120,15 @@ func retire() -> void:
 	if is_inside_tree():
 		queue_free()
 
+## Trả tên hiển thị của cây cho tương tác.
 func action_text(_item: ItemDefinition) -> String:
 	return definition.display_name
 
+## Đóng gói định danh, ô và mốc sinh trưởng để lưu.
 func capture() -> Dictionary:
 	return {"tree": String(definition.tree_id), "cell": [cell.x, cell.y], "planted_at": planted_at, "growth_started_at": growth_started_at, "matures_at": matures_at, "last_at": last_at}
 
+## Khôi phục các mốc sinh trưởng từ bản ghi đã kiểm tra.
 func restore_state(row: Dictionary) -> void:
 	planted_at = float(row.planted_at)
 	growth_started_at = float(row.growth_started_at)

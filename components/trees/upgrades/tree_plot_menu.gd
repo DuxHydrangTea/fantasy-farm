@@ -1,5 +1,9 @@
 class_name TreePlotMenu
 extends TradeMenu
+## Giao diện xem sức chứa và mua mở rộng khu trồng cây.
+## Báo giá được làm mới từ dịch vụ, còn thao tác mua kiểm tra lại giá và cấp.
+
+## Bảng mở giao diện và xác định loại khu cây.
 var board: TreePlotBoard
 @onready var panel: PanelContainer = %Panel
 @onready var heading: Label = %Heading
@@ -64,6 +68,7 @@ func _visit() -> void:
 func _coins(value: int) -> String:
 	return GameText.grouped_integer(value)
 
+## Cập nhật báo giá, số ô và trạng thái điều khiển từ mô hình hiện tại.
 func refresh() -> void:
 	if not is_open:
 		return

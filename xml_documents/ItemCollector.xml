@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemCollector" inherits="Area2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cảm biến tìm vật phẩm rơi trong vùng hút và chuyển chúng vào inventory.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_area_entered">
+			<return type="void" />
+			<param index="0" name="area" type="Area2D" />
+			<description>
+			</description>
+		</method>
+		<method name="can_accept">
+			<return type="bool" />
+			<param index="0" name="pickup" type="ItemPickup" />
+			<description>
+				Kiểm tra đống đồ còn hợp lệ và túi còn sức chứa cho ít nhất một đơn vị.
+			</description>
+		</method>
+		<method name="_collect_overlaps">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+			Inventory nhận đồ; có thể lấy từ inventory_source khi để trống.
+		</member>
+		<member name="inventory_source" type="ToolSelectionComponent" setter="" getter="">
+			Component cung cấp inventory nếu không gán trực tiếp.
+		</member>
+		<member name="attraction_radius" type="float" setter="" getter="" default="48.0">
+			Bán kính phát hiện và bắt đầu hút.
+		</member>
+		<member name="_collecting" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="item_acquired">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Phát vật phẩm và số lượng thực nhận khi đống đồ bay đến nơi.
+			</description>
+		</signal>
+	</signals>
+</class>

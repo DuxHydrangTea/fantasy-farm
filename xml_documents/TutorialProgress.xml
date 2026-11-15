@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TutorialProgress" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lưu tùy chọn hiển thị hướng dẫn và việc đã dùng hỗ trợ khởi đầu. Tiến độ hoàn thành nhiệm vụ gameplay thuộc ObjectiveProgress.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao sâu dữ liệu để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Kiểm tra và khôi phục dữ liệu khi không có thao tác đang chạy.
+			</description>
+		</method>
+		<method name="set_enabled">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt hướng dẫn; khi bật, xóa cờ đã bỏ qua.
+			</description>
+		</method>
+		<method name="skip">
+			<return type="void" />
+			<description>
+				Tắt và đánh dấu hướng dẫn đã bị bỏ qua.
+			</description>
+		</method>
+		<method name="seen">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Kiểm tra người chơi đã xem hướng dẫn có mã này.
+			</description>
+		</method>
+		<method name="mark_seen">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Ghi mã hướng dẫn hợp lệ chưa được xem và phát changed.
+			</description>
+		</method>
+		<method name="grant_support">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<param index="1" name="seed_item" type="ItemDefinition" />
+			<description>
+				Cấp một hạt giống hỗ trợ tối đa một lần nếu túi còn chỗ. Hoàn tác cờ đã dùng nếu túi không nhận đủ vật phẩm.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_data" type="Dictionary" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi dữ liệu hướng dẫn thay đổi.
+			</description>
+		</signal>
+	</signals>
+</class>

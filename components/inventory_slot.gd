@@ -1,5 +1,8 @@
 class_name InventorySlot
 extends TextureButton
+## Nút hiển thị một ô kho, gồm biểu tượng, số lượng, chất lượng và trạng thái chọn.
+## Trên thiết bị chuột có thể kéo thả giữa các ô cùng kho nếu dữ liệu nguồn còn hợp lệ.
+
 var _selection_frame: TextureRect
 const NORMAL: Texture2D = preload("res://resources/ui/hotbar_slot.tres")
 const SELECTED: Texture2D = preload("res://resources/ui/hotbar_selected.tres")
@@ -120,6 +123,7 @@ func _ready() -> void:
 	inventory.changed.connect(refresh)
 	refresh()
 
+## Đọc lại ô kho và cập nhật biểu tượng, số lượng, huy hiệu chất lượng cùng chú giải.
 func refresh() -> void:
 	var item: ItemDefinition = inventory.get_slot_item(slot_index)
 	var count: int = inventory.get_slot_count(slot_index)
@@ -153,6 +157,7 @@ func refresh() -> void:
 	if item != null and not item.description.is_empty():
 		tooltip_text += "\n" + tr(item.description)
 
+## Áp dụng màu, viền và bóng chung cho nhãn số lượng.
 static func style_count(label: Label) -> void:
 	label.add_theme_color_override("font_color", Color(1, 0.95, 0.80))
 	label.add_theme_color_override("font_outline_color", Color(0.20, 0.10, 0.06))
@@ -229,6 +234,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if _can_drop_data(_at_position, data):
 		inventory.move_slot(data.slot, slot_index)
 
+## Cập nhật hình thức chọn mà không phát tín hiệu nhấn.
 func set_selected(value: bool) -> void:
 	set_pressed_no_signal(value)
 	_refresh_hotbar_frame()

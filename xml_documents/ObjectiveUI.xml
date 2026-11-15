@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveUI" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		HUD và menu mục tiêu cập nhật theo mô hình tiến độ, phối hợp khóa menu dùng chung.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="parent" type="Node" />
+			<param index="1" name="callback" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_page">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="open">
+			<return type="void" />
+			<description>
+				Mở bảng mục tiêu nếu chưa có menu khác.
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<description>
+				Phát hoạt ảnh đóng và giải phóng khóa menu mục tiêu.
+			</description>
+		</method>
+		<method name="_visibility">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_other_menu">
+			<return type="void" />
+			<param index="0" name="_value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="inspect">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Chọn chỉ số mục tiêu trong phạm vi hợp lệ rồi cập nhật.
+			</description>
+		</method>
+		<method name="_track">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_collapse">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_claim_tracked">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_claim">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_restored">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_status">
+			<return type="String" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc tiến độ và cập nhật HUD, danh sách cùng trạng thái nhận thưởng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="model" type="ObjectiveProgress" setter="" getter="">
+			Signal-driven HUD adapted from the skill HUD template; one shared modal lock.
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="hud" type="HBoxContainer" setter="" getter="">
+		</member>
+		<member name="hud_button" type="Button" setter="" getter="">
+		</member>
+		<member name="collapse_button" type="Button" setter="" getter="">
+		</member>
+		<member name="help_button" type="Button" setter="" getter="">
+		</member>
+		<member name="overlay" type="ColorRect" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="heading" type="Label" setter="" getter="">
+		</member>
+		<member name="close_button" type="Button" setter="" getter="">
+		</member>
+		<member name="list_scroll" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="list_box" type="VBoxContainer" setter="" getter="">
+		</member>
+		<member name="rows" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="detail" type="Label" setter="" getter="">
+		</member>
+		<member name="claim_button" type="Button" setter="" getter="">
+		</member>
+		<member name="track_button" type="Button" setter="" getter="">
+		</member>
+		<member name="notice" type="Label" setter="" getter="">
+		</member>
+		<member name="inspected" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_ready_id" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_reward" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_completion" type="Timer" setter="" getter="">
+		</member>
+		<member name="_slide" type="Node" setter="" getter="">
+		</member>
+		<member name="_closing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="hud_card" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="hud_reward" type="Label" setter="" getter="">
+		</member>
+		<member name="hud_claim" type="Button" setter="" getter="">
+		</member>
+		<member name="hud_caption" type="Label" setter="" getter="">
+		</member>
+		<member name="hud_progress" type="ProgressBar" setter="" getter="">
+		</member>
+	</members>
+	<signals>
+		<signal name="help_requested">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

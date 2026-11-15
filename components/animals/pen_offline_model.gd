@@ -1,9 +1,16 @@
 class_name PenOfflineModel
 extends RefCounted
-## Continuous shared supply, split only at stock/body/death/weather/arrival boundaries.
-## Units may be fractional here; the scene bridge preserves them beside integer stock.
+## Mô hình thuần mô phỏng nhu cầu và nguồn cung chung của một chuồng theo thời gian.
+## Các khoảng được chia tại mốc hết máng, cạn nhu cầu, hết tuổi thọ, thay đổi
+## thời tiết hoặc con vật bắt đầu tham gia. Đơn vị nguồn cung có thể là số lẻ.
+
+## Ngưỡng sai số dùng cho so sánh mốc và số lượng gần 0.
 const EPSILON: float = 0.000001
 
+## Mô phỏng bản sao đàn vật nuôi và máng từ start đến until.
+## Bổ sung thiếu hụt theo tỉ lệ để không ưu tiên con đứng trước trong mảng.
+## Trả animals, troughs, các steps theo con vật và updated_at. Mỗi step ghi
+## thời lượng đủ cả thức ăn lẫn nước để hệ thống khác tính sản xuất.
 static func advance(animals: Array[Dictionary], troughs: Array[Dictionary], start: float, until: float, weather: WeatherSchedule = null) -> Dictionary:
 	var herd: Array[Dictionary] = animals.duplicate(true)
 	var supplies: Array[Dictionary] = troughs.duplicate(true)

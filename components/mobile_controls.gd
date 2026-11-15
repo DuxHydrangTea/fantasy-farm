@@ -1,6 +1,7 @@
 class_name MobileControls
 extends CanvasLayer
-## Touch input adapter. State/navigation/resolver own all gameplay decisions.
+## Điều khiển cảm ứng chuyển thao tác vào hệ thống trạng thái, điều hướng và tương tác của người chơi.
+
 var player: FarmPlayer
 var root: Control
 var joystick: Control
@@ -98,11 +99,13 @@ func _process(_delta: float) -> void:
 	var target: InteractionTarget = player.interactions.focused
 	interact_button.disabled = busy or target == null or not target.valid()
 
+## Chuyển vòng giữa tự động, bật và tắt điều khiển cảm ứng.
 func cycle_mode() -> void:
 	_mode = (_mode + 1) % 3
 	get_viewport().set_meta(&"touch_ui_override", _mode == 1)
 	reset_input()
 
+## Trả nhãn chế độ điều khiển cảm ứng đã dịch.
 func mode_text() -> String:
 	return tr("Touch controls: {mode}").format({"mode": tr(["Auto", "On", "Off"][_mode])})
 
@@ -238,6 +241,7 @@ func _menu_changed(open: bool) -> void:
 		reset_input()
 	_process(0.0)
 
+## Hủy cử chỉ và đưa các đầu vào cảm ứng về trạng thái nghỉ.
 func reset_input() -> void:
 	_mouse_joystick = false
 	ui_scroll.cancel()

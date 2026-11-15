@@ -1,13 +1,24 @@
 class_name WorkerBehaviourComponent
 extends Node
-## Follows service tasks with shared navigation and handles standalone patrols.
+## Điều khiển actor theo công việc từ WorkerService hoặc tuần tra độc lập.
+## Công việc dùng bộ điều hướng chung; khi chữa bệnh, component giữ vật nuôi
+## đứng yên bằng tham chiếu yếu và tự nhả khi công việc không còn hiệu lực.
+
+## Component di chuyển.
 @export var movement: MovementComponent
+## Component hoạt ảnh.
 @export var animation: AnimationComponent
+## Các điểm tuần tra độc lập.
 var patrol_points: Array[Vector2] = []
+## Thời gian chờ giữa các điểm tuần tra.
 var patrol_wait_seconds: float = 0.6
+## Thời gian bị kẹt trước khi bỏ qua điểm tuần tra.
 var stuck_seconds: float = 2.0
+## Điểm tuần tra hiện tại.
 var current_goal: Vector2 = Vector2.ZERO
+## Cho biết đang theo một điểm tuần tra.
 var has_goal: bool = false
+## Chỉ số điểm tuần tra hiện tại.
 var waypoint_index: int = 0
 var _blocked_elapsed: float = 0.0
 var _wait_remaining: float = 0.0
@@ -126,6 +137,7 @@ func _advance_waypoint() -> void:
 	_wait_remaining = 0.0
 	movement.set_target(current_goal)
 
+## Bắt đầu tuần tra từ điểm gần vị trí đã cho nhất.
 func begin_patrol(at: Vector2) -> void:
 	if patrol_points.is_empty():
 		return
@@ -222,6 +234,6 @@ func _update_badge(actor: WorkerActor, row: Dictionary) -> void:
 			"plant": icon = preload("res://items/seeds/carrot_seed.tres").icon
 			"fertilize": icon = preload("res://items/boosters/crop_fertilizer.tres").icon
 			"feed": icon = preload("res://items/feeds/livestock_feed.tres").icon
-			"harvest", "fruit", "pickup": icon = preload("res://crops/field/wheat/wheat.tres").harvest_item.icon
+			"harvest", "fruit", "pickup", "pen_collect": icon = preload("res://crops/field/wheat/wheat.tres").harvest_item.icon
 	var attention: bool = not actor.worker_service.running(row) or ((kind.is_empty() or kind == "patrol") and actor.worker_service.waiting_reasons.has(String(row.id)))
 	actor.show_status(actor.worker_service.worker_number(String(actor.persistent_id)), icon, attention)

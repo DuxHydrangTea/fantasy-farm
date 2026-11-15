@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/interaction/plant_focus_effect.gd&quot;" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lớp sáng bán trong suốt theo texture và biến dạng gió của cây được nhắm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="setup">
+			<return type="void" />
+			<param index="0" name="plant" type="Node2D" />
+			<description>
+				Tạo lớp sáng làm con của sprite cây và đồng bộ hình ảnh ban đầu.
+			</description>
+		</method>
+		<method name="set_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Làm hiện hoặc mờ lớp sáng; tiếp tục đồng bộ trong thời gian hiệu ứng.
+			</description>
+		</method>
+		<method name="_stop_if_unfocused">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="source" type="Node2D" setter="" getter="">
+			Sprite nguồn cần theo dõi.
+		</member>
+		<member name="overlay" type="Sprite2D" setter="" getter="">
+			Sprite lớp sáng.
+		</member>
+		<member name="material" type="ShaderMaterial" setter="" getter="">
+			Material của lớp sáng.
+		</member>
+		<member name="_focused" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_fade" type="Tween" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader dùng cho lớp sáng.
+		</constant>
+		<constant name="PARAMETERS" value="Array[StringName]([&amp;&quot;plant_height&quot;, &amp;&quot;amplitude&quot;, &amp;&quot;speed&quot;, &amp;&quot;anchor_visible_root&quot;, &amp;&quot;ground_y&quot;])">
+			Các tham số được sao chép từ shader gió của nguồn.
+		</constant>
+	</constants>
+</class>

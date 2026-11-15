@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BoosterService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Áp dụng vật phẩm tăng cường cho cây hoặc vật nuôi và chỉ tiêu vật phẩm khi thành công. Đồng bộ vật nuôi trước khi dùng thuốc để hiệu ứng không tính ngược vào thời gian ngoại tuyến.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="use">
+			<return type="Dictionary" />
+			<param index="0" name="farm" type="FarmingController" />
+			<param index="1" name="cell" type="Vector2i" />
+			<param index="2" name="animal" type="AnimalActor" />
+			<param index="3" name="bag" type="InventoryComponent" />
+			<param index="4" name="slot" type="int" />
+			<param index="5" name="item" type="ItemDefinition" />
+			<param index="6" name="actor" type="PhysicsBody2D" />
+			<description>
+				Kiểm tra ô túi vẫn chứa booster đã chọn rồi áp dụng theo loại. Thuốc thú y còn kiểm tra khoảng cách và đường nhìn đến vật nuôi. Trả ok true khi áp dụng và tiêu một đơn vị, hoặc ok false cùng lỗi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

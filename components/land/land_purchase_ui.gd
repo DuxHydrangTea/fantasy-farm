@@ -1,6 +1,7 @@
 class_name LandPurchaseUI
 extends TradeMenu
-## Small modal adapted from the skill pause-menu skeleton and shared TradeMenu.
+## Hộp thoại xác nhận mua đất sử dụng vòng đời menu giao dịch chung.
+
 var expansion: LandExpansionComponent
 var description: Label
 var status: Label
@@ -66,6 +67,7 @@ func _fit() -> void:
 	if MobileLayout.is_touch(get_viewport()):
 		MobileLayout.prepare_buttons(root)
 
+## Mở đề nghị mua đất và chốt số khối hiện tại để kiểm tra khi xác nhận.
 func open_offer(player: FarmPlayer) -> bool:
 	if not super.open(null, player):
 		return false

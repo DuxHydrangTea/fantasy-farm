@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ChefCooking" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hàng đợi nấu tuần tự thuộc trang trại, độc lập scene đầu bếp và giao diện. Món hoàn thành chờ nhận vẫn chiếm sức chứa cho đến khi được chuyển vào túi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="find" qualifiers="static">
+			<return type="CookingRecipe" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tìm công thức theo mã, hoặc null nếu không có.
+			</description>
+		</method>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu lưu hàng đợi rỗng.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="saved_at" type="float" />
+			<description>
+				Kiểm tra cấu trúc, sức chứa, mã công thức và thứ tự thời điểm hoàn thành.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Chuyển các món đến hạn sang ready, tùy chọn phát signal hoàn thành. Thời gian không lùi và thao tác bị bỏ qua khi đang bận.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Cập nhật đến now rồi sao chép dữ liệu hàng đợi và món chờ nhận để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Khôi phục dữ liệu đã kiểm tra rồi tiến đến now mà không phát thông báo.
+			</description>
+		</method>
+		<method name="quote">
+			<return type="String" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="inventory" type="InventoryComponent" />
+			<param index="3" name="wallet" type="WalletComponent" default="null" />
+			<description>
+				Kiểm tra công thức, sức chứa, xu và nguyên liệu đúng cấp chất lượng. Trả chuỗi rỗng khi có thể bắt đầu, hoặc thông báo lỗi.
+			</description>
+		</method>
+		<method name="start">
+			<return type="String" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="inventory" type="InventoryComponent" />
+			<param index="3" name="now" type="float" />
+			<param index="4" name="wallet" type="WalletComponent" default="null" />
+			<description>
+				Đồng bộ thời gian, tiêu nguyên liệu và xu rồi thêm các món vào hàng đợi tuần tự. Trả chuỗi rỗng khi thành công, hoặc thông báo lỗi.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Chuyển các món đã xong có thể chứa vào túi, trả số món thực nhận. Các món không vừa vẫn chờ nhận.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="queue" type="Dictionary[]" setter="" getter="" default="[]">
+			Các món đang chờ theo thứ tự hoàn thành, mỗi dòng có mã công thức và finish_at.
+		</member>
+		<member name="ready" type="String[]" setter="" getter="" default="[]">
+			Mã công thức của các món đã nấu xong chờ nhận.
+		</member>
+		<member name="updated_at" type="float" setter="" getter="" default="0.0">
+			Timestamp đã cập nhật gần nhất.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Khóa giao dịch nấu hoặc thu.
+		</member>
+	</members>
+	<signals>
+		<signal name="batch_completed">
+			<description>
+				Phát khi ít nhất một món trong hàng đợi hoàn thành.
+			</description>
+		</signal>
+		<signal name="changed">
+			<description>
+				Phát khi hàng đợi hoặc danh sách món sẵn sàng thay đổi.
+			</description>
+		</signal>
+		<signal name="crafted">
+			<param index="0" name="recipe_id" type="String" />
+			<description>
+				Phát mã công thức sau khi nhận một món.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CAPACITY" value="20">
+			Tổng số món đang nấu và chờ nhận tối đa.
+		</constant>
+		<constant name="RECIPES" value="Array[CookingRecipe]([&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;])">
+			Các công thức được game cung cấp.
+		</constant>
+	</constants>
+</class>

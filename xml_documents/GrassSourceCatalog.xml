@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassSourceCatalog" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Catalog cỏ được dựng từ dữ liệu đã bake và atlas khung hình.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="size">
+			<return type="int" />
+			<description>
+				Số loại trong catalog.
+			</description>
+		</method>
+		<method name="source">
+			<return type="Dictionary" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Lấy mô tả loại theo chỉ số hợp lệ.
+			</description>
+		</method>
+		<method name="local_bounds">
+			<return type="Rect2" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Biên khung cỏ trong tọa độ gốc, căn theo root_y của loại.
+			</description>
+		</method>
+		<method name="atlas_region">
+			<return type="Rect2i" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="frame" type="int" />
+			<description>
+				Vùng atlas của loại và frame hợp lệ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="texture" type="Texture2D" setter="" getter="" default="&lt;unknown&gt;">
+			Texture atlas.
+		</member>
+		<member name="types" type="Dictionary[]" setter="" getter="" default="[]">
+			Danh sách mô tả loại cỏ.
+		</member>
+	</members>
+	<constants>
+		<constant name="DATA" value="&lt;Object&gt;">
+			Dữ liệu các loại cỏ.
+		</constant>
+		<constant name="ATLAS_PATH" value="&quot;res://resources/grass/grass_poc_atlas.png&quot;">
+			Đường dẫn atlas dùng để vẽ.
+		</constant>
+		<constant name="FRAME_SIZE" value="16">
+			Cạnh ô khung hình trong atlas.
+		</constant>
+		<constant name="FRAME_COUNT" value="8">
+			Số khung hình mỗi loại.
+		</constant>
+	</constants>
+</class>

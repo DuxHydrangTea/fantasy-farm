@@ -1,14 +1,21 @@
 class_name WaterfowlComponent
 extends Node
-## Habitat traversal and shore delivery, attached only inside a PondPen.
+## Điều hướng vật nuôi trong ao và đưa sản phẩm cần đẻ trên đất vào bờ.
+##
+## Component nối với hệ thống đi lang thang và ánh xạ hoạt ảnh bơi theo vị trí.
+
+## Vật nuôi được điều khiển.
 var actor: AnimalActor
+## Ao cung cấp truy vấn địa hình và đường đi.
 var pen: PondPen
 var _points: PackedVector2Array = PackedVector2Array()
 var _next: int = 0
+## Điểm đích cuối của đường đi hiện tại.
 var destination: Vector2
 var _returning: bool = false
 var _was_swimming: bool = false
 
+## Gắn actor và ao, đăng ký bộ điều hướng và ánh xạ hoạt ảnh.
 func configure(body: AnimalActor, habitat: PondPen) -> void:
 	actor = body
 	pen = habitat
@@ -16,9 +23,11 @@ func configure(body: AnimalActor, habitat: PondPen) -> void:
 	actor.animation.action_mapper = map_action
 	actor.animation.play("idle", true)
 
+## Kiểm tra con vật có khả năng bơi và đang đứng trên nước.
 func is_swimming() -> bool:
 	return actor.definition.can_swim and pen.is_water(actor.global_position)
 
+## Đổi hoạt ảnh đi, ngủ hoặc đứng sang hoạt ảnh bơi tương ứng khi ở nước.
 func map_action(action: String) -> String:
 	if not is_swimming():
 		return action
@@ -26,6 +35,8 @@ func map_action(action: String) -> String:
 		return "swim"
 	return "swim_sleep" if action == "sleep" else "swim_idle"
 
+## Cập nhật vị trí hiển thị khi chuyển giữa nước và đất.
+## Vật không biết bơi được đưa về đất gần nhất nếu đang ở nước.
 func refresh_visual() -> void:
 	if not pen.navigation_ready:
 		return
@@ -41,9 +52,11 @@ func refresh_visual() -> void:
 		actor.sprite.position.y = texture.get_height() * 0.5 - used.end.y
 		actor.needs_display.position.y = actor.sprite.position.y - texture.get_height() * 0.5 + used.position.y - 18.0
 
+## Kiểm tra có đường đi từ vị trí hiện tại đến điểm đích.
 func can_reach(point: Vector2) -> bool:
 	return not pen.route(actor.global_position, point, actor.definition.can_swim).is_empty()
 
+## Tìm đường và đặt waypoint đầu tiên. Trả false nếu không tìm được đường.
 func set_destination(point: Vector2) -> bool:
 	_points = pen.route(actor.global_position, point, actor.definition.can_swim)
 	_next = 0
@@ -54,6 +67,7 @@ func set_destination(point: Vector2) -> bool:
 	actor.movement.set_target(_points[_next])
 	return true
 
+## Tính tổng chiều dài còn lại từ vị trí hiện tại qua các waypoint.
 func distance_remaining() -> float:
 	var distance: float = 0.0
 	var before: Vector2 = actor.global_position
@@ -62,12 +76,14 @@ func distance_remaining() -> float:
 		before = _points[index]
 	return distance
 
+## Xóa đường đi và dừng chuyển động.
 func cancel() -> void:
 	_points.clear()
 	_next = 0
 	actor.movement.cancel_target()
 	actor.movement.stop()
 
+## Di chuyển đến waypoint tiếp theo, hủy đường nếu waypoint hiện tại bị chặn.
 func travel(delta: float) -> void:
 	actor.movement.move_to_target(delta)
 	if not actor.movement.has_target:
@@ -83,6 +99,9 @@ func travel(delta: float) -> void:
 # Vịt cần tìm đường lên bờ; đến đất mới chuyển stock sang đống trứng và giải phóng lộ trình.
 # Nếu chỉ tạo pickup ngay khi đủ chu kỳ, trứng sẽ rơi dưới ao. Nếu chỉ xóa phần đã đẻ
 # trước khi tìm được bờ, đường đi thất bại có thể làm mất sản phẩm.
+## Đưa vật nuôi mang sản phẩm cần đẻ trên đất từ nước lên bờ.
+## Sản phẩm được giữ trong kho của actor cho đến khi lên đất. Trả true khi
+## thao tác lên bờ đang chiếm quyền xử lý hành vi.
 func handle_laying(delta: float) -> bool:
 	if not actor.definition.eggs_on_land or actor.production.stored_amount <= 0:
 		return false

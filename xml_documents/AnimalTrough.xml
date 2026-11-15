@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalTrough" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Máng thức ăn hoặc nước có sức chứa hữu hạn và các vị trí phục vụ có giữ chỗ. Đồng bộ thời gian chuồng trước khi thay đổi tồn kho để mô phỏng offline không dùng nguồn cung mới cho khoảng thời gian trước đó.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="feed_items_needed">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Số gói nguyên có thể nạp vừa vào chỗ trống và hiện có trong inventory.
+			</description>
+		</method>
+		<method name="refill_from_inventory">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Đồng bộ chuồng rồi nạp các gói nguyên vừa chỗ, trả số đơn vị thêm.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="portion_size">
+			<return type="int" />
+			<param index="0" name="data" type="AnimalDefinition" />
+			<description>
+				Số đơn vị một khẩu phần theo loài và loại máng, tối thiểu 1.
+			</description>
+		</method>
+		<method name="can_supply">
+			<return type="bool" />
+			<param index="0" name="data" type="AnimalDefinition" />
+			<description>
+				Kiểm tra nguồn cung, khẩu phần và loài được phép.
+			</description>
+		</method>
+		<method name="available_units">
+			<return type="float" />
+			<description>
+				Tồn khả dụng thực tế sau khi trừ phần lẻ đã tiêu offline.
+			</description>
+		</method>
+		<method name="restore_offline_stock">
+			<return type="void" />
+			<param index="0" name="units" type="float" />
+			<description>
+				Khôi phục số đơn vị có thể lẻ bằng tồn nguyên và phần đã tiêu.
+			</description>
+		</method>
+		<method name="_sync_pen">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="access_position">
+			<return type="Vector2" />
+			<param index="0" name="slot" type="int" />
+			<description>
+				Vị trí tiếp cận toàn cục của slot hợp lệ.
+			</description>
+		</method>
+		<method name="slot_available">
+			<return type="bool" />
+			<param index="0" name="slot" type="int" />
+			<param index="1" name="animal" type="Node2D" default="null" />
+			<description>
+				Kiểm tra slot trống hoặc đã thuộc chính con vật, dọn tham chiếu hết hiệu lực.
+			</description>
+		</method>
+		<method name="claim">
+			<return type="bool" />
+			<param index="0" name="animal" type="Node2D" />
+			<param index="1" name="slot" type="int" />
+			<param index="2" name="data" type="AnimalDefinition" />
+			<description>
+				Giữ một slot cho con vật còn hợp lệ nếu máng còn phục vụ được. Chưa trừ nguồn cung tại bước này.
+			</description>
+		</method>
+		<method name="owns_slot">
+			<return type="bool" />
+			<param index="0" name="animal" type="Node2D" />
+			<param index="1" name="slot" type="int" />
+			<description>
+				Kiểm tra con vật đang giữ slot.
+			</description>
+		</method>
+		<method name="release">
+			<return type="void" />
+			<param index="0" name="animal" type="Node2D" />
+			<description>
+				Nhả mọi slot của con vật và các tham chiếu đã hết hiệu lực.
+			</description>
+		</method>
+		<method name="serve">
+			<return type="float" />
+			<param index="0" name="animal" type="Node2D" />
+			<param index="1" name="needs" type="AnimalNeedsComponent" />
+			<param index="2" name="data" type="AnimalDefinition" />
+			<param index="3" name="slot" type="int" />
+			<description>
+				Phục vụ vật nuôi tại vị trí hợp lệ và trả lượng đã cấp sau khi đồng bộ chuồng.
+			</description>
+		</method>
+		<method name="refill">
+			<return type="int" />
+			<param index="0" name="units" type="int" />
+			<description>
+				Đồng bộ chuồng rồi thêm số đơn vị không âm trong sức chứa, trả số thực thêm.
+			</description>
+		</method>
+		<method name="_update_visual">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="can_refill_to_full">
+			<return type="bool" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Kiểm tra máng thức ăn còn chỗ và có gói hoặc thức ăn dư để nạp.
+			</description>
+		</method>
+		<method name="refill_to_full">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Nạp tối đa đến đầy, giữ phần dư từ gói trong feed_reserve và trả số đã thêm.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite thể hiện máng đầy hoặc rỗng.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định trong dữ liệu lưu.
+		</member>
+		<member name="consumed_fraction" type="float" setter="" getter="" default="0.0">
+			Phần lẻ của đơn vị tồn cuối đã tiêu bởi mô phỏng offline.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="AnimalTrough.Kind" default="1">
+			Loại máng hiện tại.
+		</member>
+		<member name="pen" type="AnimalPen" setter="" getter="">
+			Chuồng sở hữu máng.
+		</member>
+		<member name="capacity" type="int" setter="" getter="" default="120">
+			Sức chứa tối đa theo đơn vị nguồn cung.
+		</member>
+		<member name="stock" type="int" setter="@stock_setter" getter="" default="120">
+			Số đơn vị nguyên hiển thị, được kẹp trong sức chứa.
+		</member>
+		<member name="restoration_per_unit" type="float" setter="" getter="" default="40.0">
+			Lượng nhu cầu phục hồi từ một đơn vị.
+		</member>
+		<member name="serving_seconds" type="float" setter="" getter="" default="1.5">
+			Thời gian dùng một khẩu phần tính bằng giây.
+		</member>
+		<member name="allowed_species" type="int[]" setter="" getter="" default="[]">
+			Các loài được phép dùng; mảng rỗng cho phép mọi loài.
+		</member>
+		<member name="access_offsets" type="Vector2[]" setter="" getter="" default="[...]">
+			Các vị trí tiếp cận tương đối với máng.
+		</member>
+		<member name="full_texture" type="Texture2D" setter="" getter="">
+			Ảnh máng có nguồn cung.
+		</member>
+		<member name="empty_texture" type="Texture2D" setter="" getter="">
+			Ảnh máng trống.
+		</member>
+		<member name="feed_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm thức ăn dùng để nạp máng.
+		</member>
+		<member name="water_per_use" type="int" setter="" getter="" default="30">
+			Số đơn vị nước thêm mỗi lần dùng.
+		</member>
+		<member name="_occupants" type="Dictionary[int, WeakRef]" setter="" getter="" default="{}">
+		</member>
+		<member name="_refilling" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="feed_reserve" type="int" setter="" getter="" default="0">
+			Thức ăn dư từ gói đã mở, dùng cho lần nạp sau.
+		</member>
+	</members>
+	<signals>
+		<signal name="stock_changed">
+			<param index="0" name="amount" type="int" />
+			<description>
+				Phát số lượng tồn nguyên khi thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="FOOD" value="0" enum="Kind">
+		</constant>
+		<constant name="WATER" value="1" enum="Kind">
+		</constant>
+	</constants>
+</class>

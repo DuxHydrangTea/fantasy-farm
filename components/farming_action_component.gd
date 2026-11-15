@@ -1,5 +1,7 @@
 class_name FarmingActionComponent
 extends Node
+## Kết nối động tác nông nghiệp của người chơi với ô đất và kho vật phẩm.
+## Mục tiêu và nguồn hạt được chốt lúc bắt đầu; thay đổi thế giới chỉ xảy ra ở khung hình va chạm.
 
 @export var animation: AnimationComponent
 @export var state: StateComponent
@@ -47,9 +49,11 @@ func _on_state_changed(_previous: StringName, current: StringName) -> void:
 		_selection_revision = state.tool_selection.revision
 		_plant_source = state.tool_selection.planting_inventory()
 
+## Trả bộ điều khiển nông trại nếu tham chiếu còn hợp lệ.
 func get_farming_controller() -> FarmingController:
 	return farming if is_instance_valid(farming) else null
 
+## Trả ô đã chốt khi đang thao tác hoặc ô phía trước người chơi.
 func get_focused_cell() -> Vector2i:
 	if get_farming_controller() == null:
 		return Vector2i.ZERO
@@ -61,6 +65,7 @@ func _cell_ahead() -> Vector2i:
 	var actor: Node2D = get_parent() as Node2D
 	return farming.world_to_cell(actor.global_position) + Vector2i(animation.facing_vector)
 
+## Xác định loại công cụ dùng để tính diện tích nâng cấp cho hành động.
 func upgrade_kind(action: StringName = &"") -> StringName:
 	var chosen: StringName = action if not action.is_empty() else state.active_action if state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] else state.get_selected_tool_action()
 	var item: ItemDefinition = state.tool_selection.get_selected_item() if state.tool_selection != null else null
@@ -70,6 +75,7 @@ func upgrade_kind(action: StringName = &"") -> StringName:
 		return &""
 	return FarmingAreaPolicy.tool_for(chosen)
 
+## Trả các ô bị tác động theo hướng nhìn và cấp công cụ; có thể dùng danh sách đã chốt.
 func target_cells(action: StringName = &"", frozen: bool = true) -> Array[Vector2i]:
 	if frozen and state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] and not _targets.is_empty():
 		return _targets.duplicate()
@@ -77,6 +83,7 @@ func target_cells(action: StringName = &"", frozen: bool = true) -> Array[Vector
 	var size: int = upgrades.selected_size(kind) if upgrades != null and not kind.is_empty() else 1
 	return FarmingAreaPolicy.cells(farming.world_to_cell((get_parent() as Node2D).global_position), Vector2i(animation.facing_vector), size)
 
+## Đánh giá trước kết quả hành động trên các ô mà chưa áp dụng thay đổi.
 func preview() -> Array[Dictionary]:
 	var action: StringName = get_action() if state.current_state in [StateComponent.State.TOOL, StateComponent.State.WATER] else state.get_selected_tool_action()
 	var selection: ToolSelectionComponent = state.tool_selection
@@ -120,5 +127,6 @@ func _area_sound(action: StringName) -> void:
 	if int(last_result.get("changed", 0)) > 0:
 		Sound.play(&"till_soil" if action == &"tool" else &"water_crop" if action == &"water" else &"sow_seed")
 
+## Trả hành động đã chốt hoặc hành động hiện tại của máy trạng thái.
 func get_action() -> StringName:
 	return _action if not _action.is_empty() else state.active_action

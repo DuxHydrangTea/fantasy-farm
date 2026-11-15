@@ -1,5 +1,7 @@
 class_name WorkerBoard
 extends ShopMerchant
+## Điểm tương tác mở bảng quản lý nhân công theo vai trò hoặc theo một nhân công cụ thể.
+
 @export_enum("crop") var role: String = "crop"
 @export var worker_access: bool = false
 var worker_id: String = ""
@@ -27,11 +29,13 @@ func _ready() -> void:
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(label)
 
+## Trả sprite nhân công khi bảng gắn trên nhân công, còn lại dùng sprite mặc định.
 func interaction_sprite() -> Node2D:
 	if worker_access and get_parent() is WorkerActor:
 		return (get_parent() as WorkerActor).sprite
 	return super.interaction_sprite()
 
+## Tạo nhãn số thứ tự và công việc hoặc trạng thái nghỉ của nhân công.
 func interaction_action_text() -> String:
 	if worker_access and get_parent() is WorkerActor:
 		var actor: WorkerActor = get_parent() as WorkerActor

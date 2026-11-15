@@ -1,16 +1,25 @@
 class_name FlowerInteraction
 extends Node2D
+## Điều phối trồng, tưới và thu hoa chậu qua trạng thái công cụ của người chơi.
+## Chốt mục tiêu khi bắt đầu thao tác và chỉ thực hiện một lần tại frame tác động.
+
+## Chuyển tiếp vật phẩm, số lượng, vị trí, túi và vườn sau thu hoạch.
 signal harvest_yielded(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D)
-## One locked target and one impact per action, sharing the player's tool states.
+## Lựa chọn vật phẩm và inventory của người chơi.
 @export var selection: ToolSelectionComponent
+## Component hoạt ảnh cung cấp frame tác động và hướng nhìn.
 @export var animation: AnimationComponent
+## Máy trạng thái công cụ người chơi.
 @export var state: StateComponent
+## Frame dự kiến để thực hiện thao tác, được AnimationComponent kẹp vào clip.
 @export var impact_frame: int = 3
+## Chậu đang được nhắm.
 var focused_pot: FlowerPot
 var _pending: FlowerPot
 var _action: StringName = &""
 var _seed: ItemDefinition
 var _slot: int = -1
+## Nhãn hướng dẫn tương tác.
 @export var prompt: Label
 
 func _ready() -> void:
@@ -26,6 +35,8 @@ func _physics_process(_delta: float) -> void:
 func _reachable(pot: FlowerPot) -> bool:
 	return is_instance_valid(pot) and pot.global_position.distance_to((get_parent() as Node2D).global_position) <= 28.0
 
+## Tìm chậu gần nhất theo hướng, cập nhật trạng thái nhắm và nhãn hướng dẫn.
+## Khi có thao tác đang chờ, giữ chậu mục tiêu nếu còn trong tầm.
 func refresh() -> void:
 	if is_instance_valid(focused_pot):
 		focused_pot.set_focused(false)
@@ -58,6 +69,8 @@ func refresh() -> void:
 		prompt.text = tr("{flower} · {percent}%").format({"flower": tr(pot.definition.display_name), "percent": int(pot.progress * 100)})
 	prompt.visible = not (get_parent() is FarmPlayer and (get_parent() as FarmPlayer).interactions != null and (get_parent() as FarmPlayer).interactions.focused != null)
 
+## Chọn hành động thu, tưới hoặc gieo cho chậu đang nhắm.
+## Trả chuỗi rỗng nếu không có chậu, blocked nếu có chậu nhưng không làm được.
 func prepare_action(requested: StringName) -> StringName:
 	refresh()
 	_pending = null
@@ -109,6 +122,8 @@ func _on_frame_changed() -> void:
 func _on_pot_harvested(item: ItemDefinition, amount: int, at: Vector2, inventory: InventoryComponent, host: Node2D) -> void:
 	harvest_yielded.emit(item, amount, at, inventory, host)
 
+## Chuẩn bị thu hoạch một chậu cụ thể nếu trong tầm và đã chín.
+## Trả blocked khi không thể thực hiện.
 func prepare_target(pot: FlowerPot) -> StringName:
 	_action = &""
 	_pending = null

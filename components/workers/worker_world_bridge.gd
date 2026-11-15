@@ -1,6 +1,8 @@
 class_name WorkerWorldBridge
 extends RefCounted
-## Scene/API boundary; scheduling policy and persisted tasks contain only primitives.
+## Cầu nối bộ lập lịch nhân công với thế giới, kho, chuồng và cây trồng.
+## Nhiệm vụ lưu dữ liệu nguyên thủy; bridge tra node và thực hiện thay đổi khi đến thời điểm.
+
 signal action_presented(kind: StringName, point: Vector2)
 const STROLL_ATTEMPTS: int = 2
 const STROLL_MIN_DISTANCE: float = 48.0
@@ -37,6 +39,7 @@ func _init(scene: FarmWorld) -> void:
 	world = scene
 	stroll_rng.randomize()
 
+## Liệt kê các chuồng hiện là con trực tiếp của thế giới.
 func pens() -> Array[AnimalPen]:
 	var result: Array[AnimalPen] = []
 	for node: Node in world.get_children():
@@ -44,6 +47,7 @@ func pens() -> Array[AnimalPen]:
 			result.append(node as AnimalPen)
 	return result
 
+## Tìm chuồng theo mã lưu ổn định, sử dụng cache tham chiếu yếu.
 func pen_for(id: String) -> AnimalPen:
 	var cached_ref: WeakRef = _pen_cache.get(id) as WeakRef
 	var cached: AnimalPen = cached_ref.get_ref() as AnimalPen if cached_ref != null else null
@@ -55,6 +59,7 @@ func pen_for(id: String) -> AnimalPen:
 			return pen
 	return null
 
+## Tính vị trí nhà của vai trò và vùng; chuồng ao chọn vị trí trên đất.
 func home(role: String, zone: String = "") -> Vector2:
 	if role == "ranch":
 		var pen: AnimalPen = pen_for(zone)
@@ -64,11 +69,13 @@ func home(role: String, zone: String = "") -> Vector2:
 	var cell: Vector2i = TreePlantation.FRUIT_REGION.position + Vector2i(1, 4) if role == "orchard" else LandExpansionState.block_rect(0).position + Vector2i.ONE
 	return world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
 
+## Điểm mở rộng kiểm tra vùng làm việc; hiện cho phép mọi vị trí.
 func zone_contains(row: Dictionary, point: Vector2, columns: int = -1) -> bool:
 	# One worker type works everywhere: farm, plantation and pens. Kept as a
 	# hook so save preflight and target checks share a single call site.
 	return true
 
+## Đồng bộ thời tiết, cây trồng và chuồng tới mốc thời gian mô phỏng.
 func sync(timestamp: float, offline: bool = true) -> void:
 	invalidate_ranch()
 	world.weather.advance(timestamp, not offline)
@@ -79,10 +86,12 @@ func sync(timestamp: float, offline: bool = true) -> void:
 		for pen: AnimalPen in pens():
 			pen.advance_offline(timestamp, true)
 
+## Đánh dấu cache cây và thời điểm thức dậy cần tính lại.
 func invalidate_crops() -> void:
 	_crop_cells_dirty = true
 	_wake_at = -INF
 
+## Đánh dấu cache nhu cầu chuồng và thời điểm thức dậy cần tính lại.
 func invalidate_ranch() -> void:
 	_ranch_dirty = true
 	_wake_at = -INF
@@ -119,6 +128,7 @@ func _trough_point(row: Dictionary, pen: AnimalPen, trough: AnimalTrough) -> Var
 			distance = next_distance
 	return best
 
+## Tìm các nhiệm vụ khả thi theo vai trò, kho và mục tiêu đã đặt trước.
 func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Dictionary]:
 	var output_inventory: InventoryComponent = world.workers.output_inventory()
 	# No inventory writes occur during this query. Share the slot scan across
@@ -196,6 +206,18 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 		missing.append("No animal medicine in supply storage. Buy it at the animal shop.")
 	if not missing.is_empty():
 		world.workers.waiting_reasons[String(row.id)] = "\n".join(missing)
+	for pen: AnimalPen in pens():
+		if not pen.produce_storage_enabled or not is_instance_valid(pen.produce_access) or pen.produce_storage.count() == 0:
+			continue
+		var can_collect: bool = false
+		for stock: Dictionary in pen.produce_storage.products.values():
+			if _capacity(output_inventory, stock.item, capacities) > 0:
+				can_collect = true
+				break
+		if can_collect:
+			tasks.append(_task("pen_collect", String(pen.persistent_id), pen.produce_access.global_position, 3 if world.workers.crop_automation.auto_plant else 2))
+		else:
+			storage_waiting[row.role] = true
 	for node: Node in world.get_tree().get_nodes_in_group(&"item_pickups"):
 		var pile: ItemPickup = node as ItemPickup
 		if pile == null or not world.is_ancestor_of(pile) or pile.is_queued_for_deletion() or pile.is_attracting() or pile.item == null or pile.item.item_type != ItemDefinition.ItemType.PRODUCE or pile.amount <= 0:
@@ -216,6 +238,7 @@ func candidates(row: Dictionary, feed_inventory: InventoryComponent) -> Array[Di
 		tasks.append(opening)
 	return tasks
 
+## Tìm nhiệm vụ chuồng, dùng cache nhu cầu vật nuôi và vật tư.
 func ranch_candidates(row: Dictionary, feed_inventory: InventoryComponent, held: Dictionary = {}) -> Array[Dictionary]:
 	var tasks: Array[Dictionary] = []
 	if held.is_empty():
@@ -273,6 +296,7 @@ func ranch_candidates(row: Dictionary, feed_inventory: InventoryComponent, held:
 		tasks.append(_task(kind, String(trough.persistent_id), point, 0 if trough.stock == 0 else 1))
 	return tasks
 
+## Tìm vật nuôi theo mã lưu, dùng cache tham chiếu yếu khi hợp lệ.
 func animal_for(id: String) -> AnimalActor:
 	var ref: WeakRef = _animals_by_id.get(id) as WeakRef
 	var animal: AnimalActor = ref.get_ref() as AnimalActor if ref != null else null
@@ -285,10 +309,12 @@ func animal_for(id: String) -> AnimalActor:
 				return child as AnimalActor
 	return null
 
+## Kiểm tra đường nhìn từ điểm tiếp cận đến vật nuôi bằng raycast.
 func animal_line_clear(worker: WorkerActor, animal: AnimalActor, point: Vector2) -> bool:
 	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(point, animal.global_position, 1, [worker.get_rid(), animal.get_rid()])
 	return worker.get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 
+## Tìm điểm tiếp cận vật nuôi có đường đi và đường nhìn phù hợp.
 func animal_access_point(worker: WorkerActor, animal: AnimalActor) -> Vector2:
 	var toward: Vector2 = (worker.global_position - animal.global_position).normalized()
 	if toward.is_zero_approx():
@@ -300,6 +326,7 @@ func animal_access_point(worker: WorkerActor, animal: AnimalActor) -> Vector2:
 			return point
 	return Vector2.INF
 
+## Cập nhật mục tiêu chăm sóc vật nuôi đang di chuyển; trả false nếu không còn hợp lệ.
 func refresh_animal_task(row: Dictionary, offline: bool) -> bool:
 	var job: Dictionary = row.task
 	var animal: AnimalActor = animal_for(String(job.id))
@@ -334,6 +361,7 @@ func _capacity(inventory: InventoryComponent, item: ItemDefinition, cache: Dicti
 		cache[key] = inventory.capacity_for(item, tier)
 	return int(cache[key])
 
+## Thực hiện nhiệm vụ lên thế giới và phát hiệu ứng trình bày khi thành công.
 func commit(row: Dictionary, feed_inventory: InventoryComponent, task: Dictionary) -> bool:
 	var kind: StringName = StringName(task.kind)
 	var point: Vector2 = WorkerRole.point(task.get("point", row.get("position", [0, 0])))
@@ -348,7 +376,7 @@ func _commit(row: Dictionary, _feed_inventory: InventoryComponent, task: Diction
 		return _commit_care(row, task)
 	if task.kind in ["till", "plant", "fertilize"]:
 		return row.role == "crop" and world.workers.crop_policy.commit(row, task)
-	if task.kind in ["fruit", "harvest", "pickup"]:
+	if task.kind in ["fruit", "harvest", "pickup", "pen_collect"]:
 		if world.storages.busy:
 			return false
 		world.storages.busy = true
@@ -426,6 +454,11 @@ func _commit_care(row: Dictionary, task: Dictionary) -> bool:
 
 func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task: Dictionary) -> bool:
 	match String(task.kind):
+		"pen_collect":
+			var pen: AnimalPen = pen_for(String(task.id))
+			if pen == null or not is_instance_valid(pen.produce_access) or not zone_contains(row, pen.produce_access.global_position):
+				return false
+			return pen.collect_stored_produce(output_inventory, world.farming.time_manager.now()) > 0
 		"fruit":
 			var tree: FruitTree = world.trees.trees.get(Vector2i(int(task.cell[0]), int(task.cell[1]))) as FruitTree
 			return tree != null and tree.harvest(output_inventory)
@@ -441,6 +474,7 @@ func _commit_output(row: Dictionary, output_inventory: InventoryComponent, task:
 					return pile.item != null and world.storages.definition("produce_warehouse").accepts(pile.item) and pile.collect(output_inventory) > 0
 	return false
 
+## Tính thời điểm tiếp theo nhân công cần kiểm tra công việc.
 func next_wake(row: Dictionary, feed_inventory: InventoryComponent, now: float) -> float:
 	if _wake_at == now and _wake_inventory == feed_inventory:
 		return _wake_value
@@ -513,10 +547,9 @@ func _ranch_pen_boundary(pen: AnimalPen, bag: InventoryComponent, now: float) ->
 			next = minf(next, now + maxf(0.25, (float(supply.stock) - float(trough.capacity - units)) / rate))
 	return next
 
-## A short, swept-clear idle walk. No map-wide path search for idle wandering.
-## The rng is re-seeded per call from worker id + position so the single-jump
-## and stepwise simulations propose identical candidates from the same state,
-## regardless of when the scan lands on the timeline.
+## Tìm điểm đi dạo gần có lối đi thông thoáng, không tìm đường trên toàn bản đồ.
+## Seed lấy từ mã và vị trí nhân công để mô phỏng nhảy thời gian và từng bước
+## đề xuất cùng điểm khi bắt đầu từ cùng trạng thái.
 func world_stroll_point(row: Dictionary, actor: WorkerActor) -> Vector2:
 	if actor == null:
 		return Vector2.INF
@@ -567,11 +600,13 @@ func _stroll_segment_clear(point: Vector2, actor: WorkerActor) -> bool:
 	query.motion = point - actor.global_position
 	return actor.get_world_2d().direct_space_state.cast_motion(query)[0] >= 0.9999
 
+## Tạo thời gian nghỉ xác định từ nhân công và vị trí hiện tại.
 func rest_seconds(row: Dictionary) -> float:
 	var origin: Vector2 = WorkerRole.point(row.position)
 	stroll_rng.seed = hash("%s|rest|%.3f|%.3f" % [String(row.id), origin.x, origin.y])
 	return stroll_rng.randf_range(2.0, 3.0)
 
+## Chọn điểm đi dạo hoặc giữ nguyên vị trí nếu không tìm được.
 func patrol_point(row: Dictionary) -> Vector2:
 	var stroll: Vector2 = world_stroll_point(row, world.workers.actor_for(String(row.id)))
 	if stroll.is_finite():

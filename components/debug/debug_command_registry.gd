@@ -1,11 +1,14 @@
 class_name DebugCommandRegistry
 extends RefCounted
-## Explicit command allowlist. No expressions, script paths or eval.
+## Danh sách lệnh debug được đăng ký tường minh, không thực thi biểu thức hoặc đường dẫn script tùy ý.
+
 var commands: Dictionary = {}
 
+## Đăng ký đường dẫn lệnh, cách dùng, mô tả, handler và quyền ghi.
 func register(path: String, usage: String, description: String, handler: Callable, write: bool = false) -> void:
 	commands[path] = {"usage": usage, "description": description, "handler": handler, "write": write}
 
+## Phân tích dòng bắt đầu bằng dấu / thành token hoặc trả lỗi cú pháp.
 static func parse(line: String) -> Dictionary:
 	line = line.strip_edges()
 	if not line.begins_with("/"):
@@ -46,6 +49,7 @@ static func parse(line: String) -> Dictionary:
 		return {"ok": false, "error": "Enter /help for available commands."}
 	return {"ok": true, "tokens": tokens}
 
+## Tìm tiền tố lệnh dài nhất và trả handler cùng đối số còn lại.
 func resolve(tokens: Array) -> Dictionary:
 	for length: int in range(tokens.size(), 0, -1):
 		var path: String = " ".join(tokens.slice(0, length)).to_lower()
@@ -53,6 +57,7 @@ func resolve(tokens: Array) -> Dictionary:
 			return commands[path].merged({"path": path, "args": tokens.slice(length)})
 	return {}
 
+## Tạo danh sách trợ giúp đã sắp xếp, có thể lọc theo tiền tố.
 func help_text(prefix: String = "") -> String:
 	var lines: PackedStringArray = []
 	var paths: Array = commands.keys()

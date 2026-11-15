@@ -1,11 +1,19 @@
 class_name GrassChunkIndex
 extends RefCounted
-## CPU authoring index, built once per dataset/transform edit, never per frame.
+## Chỉ mục CPU chia các instance cỏ thành chunk và nhóm theo thứ tự vẽ.
+## Được dựng lại khi dữ liệu hoặc transform đổi, phục vụ tra cứu vùng nhìn thấy.
+
+## Các chunk theo tọa độ, chứa nhóm và số instance.
 var chunks: Dictionary = {}
+## Kích thước chunk theo pixel trong không gian sắp xếp.
 var chunk_size: int = 256
+## Độ vươn lớn nhất của hình cỏ khỏi gốc, dùng mở rộng vùng tra cứu.
 var extent: float = 0.0
+## Tổng số instance đầu vào.
 var total_instances: int = 0
 
+## Dựng chỉ mục từ mẫu, catalog, kích thước chunk và transform sang không gian sắp xếp.
+## Cỏ cao giữ tọa độ chân Y chính xác để sắp thứ tự với actor.
 func build(values: Array[Dictionary], catalog: GrassSourceCatalog, size_pixels: int, into_sort_space: Transform2D) -> void:
 	chunks.clear()
 	extent = 0.0
@@ -36,14 +44,17 @@ func build(values: Array[Dictionary], catalog: GrassSourceCatalog, size_pixels: 
 			var offset: Vector2 = pose.basis_xform(point)
 			extent = maxf(extent, maxf(absf(offset.x), absf(offset.y)))
 
+## Tọa độ chunk chứa điểm.
 func coordinate(point: Vector2) -> Vector2i:
 	return Vector2i(floori(point.x / float(chunk_size)), floori(point.y / float(chunk_size)))
 
+## Vùng tọa độ chunk bao phủ hình chữ nhật sau khi thêm extent và margin.
 func cell_rect(area: Rect2, margin: float) -> Rect2i:
 	var expanded: Rect2 = area.grow(extent + maxf(0.0, margin))
 	var first: Vector2i = coordinate(expanded.position)
 	return Rect2i(first, coordinate(expanded.end) - first + Vector2i.ONE)
 
+## Liệt kê các chunk có dữ liệu trong vùng tọa độ đã cho.
 func lookup(area: Rect2i) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	for y: int in range(area.position.y, area.end.y):

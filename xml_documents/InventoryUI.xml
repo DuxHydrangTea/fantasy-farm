@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventoryUI" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện túi đồ cập nhật theo tín hiệu; InventoryComponent thực hiện các thao tác chuyển vật phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit_panel">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_cycle_touch_mode">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_move">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_assign_hotbar">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_wallet">
+			<return type="void" />
+			<param index="0" name="balance" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="open">
+			<return type="void" />
+			<description>
+				Mở túi hoặc đảo ngược hoạt ảnh đóng đang chạy.
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<description>
+				Chạy hoạt ảnh đóng rồi cập nhật trạng thái túi.
+			</description>
+		</method>
+		<method name="_on_visibility_changed">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_inspect_slot">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_filters">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply_filter">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_actions">
+			<return type="void" />
+			<param index="0" name="compact" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_slot_before">
+			<return type="bool" />
+			<param index="0" name="a" type="InventorySlot" />
+			<param index="1" name="b" type="InventorySlot" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_details">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_type_label">
+			<return type="String" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync_slots">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="close_button" type="BaseButton" setter="" getter="">
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="grid" type="GridContainer" setter="" getter="">
+		</member>
+		<member name="details" type="Label" setter="" getter="">
+		</member>
+		<member name="capacity" type="Label" setter="" getter="">
+		</member>
+		<member name="wallet_label" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="item_icon" type="TextureRect" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="item_name" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="item_type" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quality_panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="move_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="assign_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="touch_mode_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_sidebar" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_actions" type="BoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_info" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_hint" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_scroll" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_quality_rows" type="Label[]" setter="" getter="" default="[...]">
+		</member>
+		<member name="buttons" type="InventorySlot[]" setter="" getter="" default="[]">
+		</member>
+		<member name="inspected_index" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_wallet" type="WalletComponent" setter="" getter="">
+		</member>
+		<member name="_moving_from" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_assigning_hotbar" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_slide" type="Node" setter="" getter="">
+		</member>
+		<member name="_closing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="search" type="LineEdit" setter="" getter="">
+		</member>
+		<member name="item_filter" type="OptionButton" setter="" getter="">
+		</member>
+		<member name="empty_results" type="Label" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="FILTER_TYPES" value="Array[int]([-1, 0, 1, 2, 3, 5, 6, 7])">
+		</constant>
+		<constant name="FILTER_TITLES" value="Array[String]([&quot;All items&quot;, &quot;Tool&quot;, &quot;Seed&quot;, &quot;Produce&quot;, &quot;Feed&quot;, &quot;Booster&quot;, &quot;Placeable&quot;, &quot;Material&quot;])">
+		</constant>
+	</constants>
+</class>

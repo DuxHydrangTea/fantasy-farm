@@ -1,10 +1,18 @@
 extends "res://components/landscape/ambient_flutter.gd"
-## Independent cosmetic visitor. Time is active gameplay seconds, unaffected by FPS.
+## Bướm trang trí bay khắp vùng và thỉnh thoảng ghé vườn hoa.
+## Thời gian ghé và chờ được tính theo giây gameplay đang chạy.
+
+## Trạng thái bay tự do, ghé vườn hoặc rời vườn.
 enum FlightState { ROAM, GARDEN, LEAVING }
+## Giới hạn vùng bay.
 @export var roam_bounds: Rect2 = Rect2(24, 32, 2496, 1640)
+## Vùng vườn hoa có thể ghé.
 @export var garden_bounds: Rect2 = Rect2(1432, 296, 368, 256)
+## Thời gian mỗi lượt ghé, tính bằng giây.
 @export var garden_visit_seconds: float = 30.0
+## Thời gian chờ sau lượt ghé trước khi có thể ghé lại.
 @export var garden_cooldown_seconds: float = 300.0
+## Trạng thái bay hiện tại.
 var flight_state: FlightState = FlightState.ROAM
 var _visit_until: float = 0.0
 var _cooldown_until: float = 0.0

@@ -1,9 +1,15 @@
 class_name BeehivePlacementComponent
 extends Node2D
-## Placement input adapter and world preview; inventory/world mutations stay in ApiarySystem.
+## Nhận input đặt tổ ong và hiển thị vị trí, phạm vi xem trước.
+## ApiarySystem thực hiện kiểm tra và thay đổi inventory, thế giới.
+
+## Phát khi thời hạn phản hồi thay đổi.
 signal feedback_changed
+## Người chơi đặt tổ.
 var player: FarmPlayer
+## Hiển thị phạm vi và tính hợp lệ của vị trí.
 var range_display: BeehiveRangeDisplay
+## Ảnh tổ xem trước.
 var ghost: Sprite2D
 var _feedback: String = ""
 var _feedback_until: int = 0:
@@ -22,10 +28,12 @@ func _ready() -> void:
 	range_display.add_child(ghost)
 	range_display.hide()
 
+## Lấy hệ thống ong từ bộ điều khiển ruộng, hoặc null.
 func apiary() -> ApiarySystem:
 	var farm: FarmingController = player.farming_actions.get_farming_controller()
 	return farm.apiary if farm != null else null
 
+## Kiểm tra người chơi đang chọn vật phẩm tổ ong.
 func selected() -> bool:
 	var item: ItemDefinition = player.selection.get_selected_item()
 	return apiary() != null and item == apiary().definition.hive_item
@@ -43,11 +51,13 @@ func _process(_delta: float) -> void:
 	range_display.queue_redraw()
 	range_display.show()
 
+## Điểm đặt toàn cục: phía trước người chơi trên cảm ứng, vị trí chuột trên desktop.
 func action_point() -> Vector2:
 	if MobileLayout.is_touch(get_viewport()) or (player.mobile_controls != null and player.mobile_controls.root.visible):
 		return player.global_position + player.animation.facing_vector * 32.0
 	return get_global_mouse_position()
 
+## Xử lý yêu cầu đặt tại điểm nếu tổ ong đang được chọn, kèm phản hồi.
 func click(point: Vector2) -> bool:
 	if not selected():
 		return false
@@ -57,6 +67,7 @@ func click(point: Vector2) -> bool:
 	_feedback_until = Time.get_ticks_msec()+2000
 	return true
 
+## Trả phản hồi nguồn còn hạn hoặc hướng dẫn đặt tổ theo thiết bị.
 func feedback_source() -> String:
 	if Time.get_ticks_msec() < _feedback_until:
 		return _feedback
@@ -64,5 +75,6 @@ func feedback_source() -> String:
 		return ""
 	return "Tap nearby ground or press Use to place. Select another slot to cancel." if MobileLayout.is_touch(get_viewport()) else "Left-click nearby ground to place. Select another slot to cancel."
 
+## Thời điểm hết hạn phản hồi theo ticks mili giây, hoặc 0 nếu không có.
 func feedback_expires_at() -> int:
 	return _feedback_until if not _feedback.is_empty() else 0

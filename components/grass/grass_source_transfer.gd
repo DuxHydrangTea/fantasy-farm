@@ -1,13 +1,24 @@
 class_name GrassSourceTransfer
 extends RefCounted
-## Transaction over exact, validated cells. Never hide a mixed TileMapLayer.
+## Chuyển các ô cỏ phù hợp từ TileMapLayer sang mẫu cho bộ vẽ GPU.
+## Chỉ xóa ô đã kiểm tra chính xác; ô chồng với nội dung cùng hàng được giữ
+## trong TileMap để bảo toàn thứ tự vẽ. Có thể khôi phục các ô đã chuyển.
+
+## Dữ liệu nhận diện các tile cỏ gốc.
 const DATA = preload("res://resources/grass/farm_grass_data.gd")
+## Đường dẫn texture nguồn được phép chuyển.
 const SOURCE: String = "res://assets/Outdoor decoration/Outdoor_Decor.png"
+## Các ô đã chọn kèm tham chiếu yếu đến layer và dữ liệu gốc.
 var records: Array[Dictionary] = []
+## Cho biết các ô đã được tạm xóa khỏi TileMap.
 var suppressed: bool = false
+## Số ô không khôi phục vì đã được sửa bên ngoài.
 var restore_conflicts: int = 0
+## Số ô được giữ lại do yêu cầu TileMap hoặc chồng nội dung khác.
 var retained_overlaps: int = 0
 
+## Khôi phục đợt trước, chọn các ô phù hợp trong vùng và trả mẫu cho bộ vẽ.
+## Vùng rỗng chọn toàn bộ layer; các tile có vật lý hoặc cấu hình riêng bị giữ lại.
 func prepare(layer: TileMapLayer, root: Node2D, region: Rect2 = Rect2()) -> Array[Dictionary]:
 	restore()
 	records.clear()
@@ -122,6 +133,8 @@ func _plain_visual(tile: TileData, tiles: TileSet) -> bool:
 			return false
 	return true
 
+## Kiểm tra toàn bộ ô vẫn khớp bản ghi trước khi xóa chúng khỏi layer.
+## Trả false nếu một ô đã thay đổi và không xóa ô nào.
 func suppress() -> bool:
 	if suppressed:
 		return true
@@ -136,6 +149,7 @@ func suppress() -> bool:
 	suppressed = true
 	return true
 
+## Khôi phục các ô còn trống; giữ thay đổi bên ngoài và đếm xung đột.
 func restore() -> void:
 	if not suppressed:
 		return

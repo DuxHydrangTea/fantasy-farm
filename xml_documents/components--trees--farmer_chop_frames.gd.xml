@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/trees/farmer_chop_frames.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Ghép hoạt ảnh chặt rìu cho trang phục Farmer Bob từ các lớp ảnh hiện có. Kết quả được cache và tạo từ bản sao SpriteFrames nguồn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="for_player" qualifiers="static">
+			<return type="SpriteFrames" />
+			<param index="0" name="source" type="SpriteFrames" />
+			<description>
+				Trả bản sao có clip chặt cho bộ Farmer Bob, hoặc nguồn nguyên vẹn nếu khác. Các lần gọi sau tái sử dụng bộ frame đã ghép.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_cached_frames" type="SpriteFrames" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="BOB_FRAMES" value="&quot;res://sprite_frames/character/farmer_bob_frames.tres&quot;">
+			Đường dẫn bộ frame Farmer Bob được hỗ trợ.
+		</constant>
+		<constant name="BODY_LAYERS" value="Array[String]([&quot;res://assets/Player/Player_Base/Player_Base_animations.png&quot;, &quot;res://assets/Player/Legs/Farmer_Pants/Farmer_Pants_1_Blue.png&quot;, &quot;res://assets/Player/Chest/Farmer_Shirt/Farmer_Shirt_1_Blue.png&quot;, &quot;res://assets/Player/Feet/Shoes_1_Brown.png&quot;, &quot;res://assets/Player/Head/Hair_1/Hair_1_Brown.png&quot;, &quot;res://assets/Player/Accessories/Farmer_Hat_1.png&quot;])">
+			Các lớp cơ thể và trang phục được ghép theo thứ tự.
+		</constant>
+		<constant name="AXE_LAYER" value="&quot;res://assets/Player/Tools/Iron/Iron_Tools.png&quot;">
+			Ảnh công cụ rìu.
+		</constant>
+		<constant name="HANDS_LAYER" value="&quot;res://assets/Player/Hands/Hands_1_Bare.png&quot;">
+			Ảnh bàn tay.
+		</constant>
+		<constant name="DIRECTIONS" value="Array[String]([&quot;down&quot;, &quot;right&quot;, &quot;up&quot;])">
+			Các hướng có clip riêng; hướng trái được xử lý bằng lật ảnh.
+		</constant>
+	</constants>
+</class>

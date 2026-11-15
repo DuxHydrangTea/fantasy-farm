@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolUpgradeShopView" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Thành phần giao diện nâng cấp công cụ tái sử dụng; dịch vụ nâng cấp chịu trách nhiệm giao dịch.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="view" type="ShopUI" />
+			<param index="1" name="service" type="ToolUpgradeService" />
+			<param index="2" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="build">
+			<return type="void" />
+			<description>
+				Tạo các thẻ nâng cấp rồi cập nhật giao diện.
+			</description>
+		</method>
+		<method name="select">
+			<return type="void" />
+			<param index="0" name="tool" type="StringName" />
+			<description>
+				Chọn loại công cụ và cập nhật báo giá.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc báo giá và cập nhật chi tiết, nút mua.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="void" />
+			<description>
+				Gửi giao dịch theo báo giá hiện tại và cập nhật kết quả.
+			</description>
+		</method>
+		<method name="_save_progress">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="shop" type="ShopUI" setter="" getter="">
+		</member>
+		<member name="upgrades" type="ToolUpgradeService" setter="" getter="">
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="selected" type="StringName" setter="" getter="" default="&amp;&quot;hoe&quot;">
+		</member>
+		<member name="_quote" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<constants>
+		<constant name="ICONS" value="{&amp;&quot;hoe&quot;: &lt;Object&gt;, &amp;&quot;sowing&quot;: &lt;Object&gt;, &amp;&quot;watering_can&quot;: &lt;Object&gt;}">
+		</constant>
+		<constant name="TITLES" value="{&amp;&quot;hoe&quot;: &quot;Hoe&quot;, &amp;&quot;sowing&quot;: &quot;Sowing&quot;, &amp;&quot;watering_can&quot;: &quot;Watering Can&quot;}">
+		</constant>
+	</constants>
+</class>

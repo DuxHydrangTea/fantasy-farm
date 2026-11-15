@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/pen_produce_system.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Gắn điểm thu sản phẩm vào các chuồng và tòa nhà tương ứng trong thế giới. Mỗi chuồng sở hữu bộ đệm sản phẩm và điểm tương tác riêng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="world" type="Node2D" />
+			<description>
+				Tìm chuồng và tòa nhà đã biết, bật kho và tạo điểm thu cho từng cặp tồn tại. Chuồng bò cho phép chọn sản phẩm trên bảng trạng thái.
+			</description>
+		</method>
+	</methods>
+</class>

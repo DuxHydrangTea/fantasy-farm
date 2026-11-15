@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimationComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn và phát hoạt ảnh theo hành động và hướng nhìn của nhân vật. Hỗ trợ sprite một hướng, lật ảnh, hoạt ảnh dự phòng và ánh xạ hành động.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="impact_reached">
+			<return type="bool" />
+			<param index="0" name="requested_frame" type="int" />
+			<description>
+				Kiểm tra sprite đã tới frame tác động; frame yêu cầu được kẹp vào clip. Trả false nếu sprite, bộ khung hoặc hoạt ảnh không có frame.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="play">
+			<return type="void" />
+			<param index="0" name="action" type="String" />
+			<param index="1" name="force_restart" type="bool" default="false" />
+			<description>
+				Phát hành động theo hướng hiện tại, dùng hoạt ảnh dự phòng nếu thiếu clip. Khi [param force_restart] bật, dừng và phát lại ngay cả khi clip đang chạy.
+			</description>
+		</method>
+		<method name="_warn_once">
+			<return type="Variant" />
+			<param index="0" name="animation_name" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_animation_finished">
+			<return type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="update_facing_direction">
+			<return type="bool" />
+			<param index="0" name="dir" type="Vector2" />
+			<description>
+				Cập nhật hướng nhìn theo thành phần trội của vector và trả true nếu hướng đổi. Vector 0 giữ nguyên hướng. Khi hai thành phần bằng nhau, ưu tiên giữ hướng cũ.
+			</description>
+		</method>
+		<method name="face">
+			<return type="void" />
+			<param index="0" name="dir" type="Vector2" />
+			<description>
+				Đổi hướng nhìn và phát lại hành động hiện tại nếu hướng thay đổi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animated_sprite" type="AnimatedSprite2D" setter="" getter="">
+			Sprite được điều khiển.
+		</member>
+		<member name="fallback_animation" type="StringName" setter="" getter="" default="&amp;&quot;idle_down&quot;">
+			Hoạt ảnh dùng khi không tìm thấy hành động theo hướng.
+		</member>
+		<member name="flip_left" type="bool" setter="" getter="" default="true">
+			Cho phép dùng ảnh hướng phải và lật để thể hiện hướng trái.
+		</member>
+		<member name="single_direction" type="bool" setter="" getter="" default="false">
+			Dùng bộ ảnh một hướng và lật ngang theo hướng nhìn.
+		</member>
+		<member name="single_direction_faces_left" type="bool" setter="" getter="" default="true">
+			Hướng nhìn gốc của ảnh một hướng.
+		</member>
+		<member name="facing_direction" type="StringName" setter="" getter="" default="&amp;&quot;down&quot;">
+			Tên hướng nhìn hiện tại.
+		</member>
+		<member name="current_action" type="String" setter="" getter="" default="&quot;&quot;">
+			Hành động logic đang phát.
+		</member>
+		<member name="action_mapper" type="Callable" setter="" getter="">
+			Hàm tùy chọn đổi hành động hiển thị; signal hoàn tất vẫn dùng hành động gốc.
+		</member>
+		<member name="_warned" type="Dictionary[StringName, bool]" setter="" getter="" default="{}">
+		</member>
+		<member name="facing_vector" type="Vector2" setter="" getter="@facing_vector_getter">
+			Vector đơn vị của hướng nhìn hiện tại.
+		</member>
+	</members>
+	<signals>
+		<signal name="action_finished">
+			<param index="0" name="action" type="String" />
+			<description>
+				Phát hành động logic khi hoạt ảnh hiện tại kết thúc.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="DIR_VECTORS" value="Dictionary[StringName, Vector2]({&amp;&quot;down&quot;: Vector2(0, 1), &amp;&quot;left&quot;: Vector2(-1, 0), &amp;&quot;right&quot;: Vector2(1, 0), &amp;&quot;up&quot;: Vector2(0, -1)})">
+			Vector đơn vị tương ứng từng tên hướng.
+		</constant>
+	</constants>
+</class>

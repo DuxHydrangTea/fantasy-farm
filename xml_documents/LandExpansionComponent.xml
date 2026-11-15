@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LandExpansionComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Trình bày vùng đất mở rộng và tương tác mua; trạng thái sở hữu và giá nằm trong LandExpansionState.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_position">
+			<return type="Vector2" />
+			<description>
+				Tính vị trí biển tương tác ở cạnh khối đất tiếp theo.
+			</description>
+		</method>
+		<method name="can_interact">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Kiểm tra người chơi, trạng thái mở đất, hiển thị và khoảng cách.
+			</description>
+		</method>
+		<method name="open_purchase">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Mở đề nghị mua khi người chơi có thể tương tác.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="expected_blocks" type="int" />
+			<description>
+				Mua khối kế tiếp với số khối dự kiến để phát hiện dữ liệu cũ; trả kết quả.
+			</description>
+		</method>
+		<method name="_reveal_rows">
+			<return type="void" />
+			<param index="0" name="count" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_finish_reveal">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_state_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="reset_presentation">
+			<return type="void" />
+			<description>
+				Dừng hiệu ứng và đặt lại trạng thái trình bày khi tải lại.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw_cover">
+			<return type="void" />
+			<param index="0" name="cells" type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="set_grass_effect">
+			<return type="void" />
+			<param index="0" name="effect" type="ShaderMaterial" />
+			<description>
+				Cài hoặc xóa hiệu ứng vật liệu cỏ cho vùng đất.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="state" type="LandExpansionState" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="farming" type="FarmingController" setter="" getter="">
+		</member>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="menu" type="LandPurchaseUI" setter="" getter="">
+		</member>
+		<member name="sign" type="Sprite2D" setter="" getter="">
+		</member>
+		<member name="prompt" type="Label" setter="" getter="">
+		</member>
+		<member name="_reveal_block" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_revealed_rows" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="grass_cover" type="LandGrassCover" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_clearing" type="Tween" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="DECOR" value="&lt;Object&gt;">
+		</constant>
+		<constant name="WEED_REGIONS" value="Array[Rect2]([Rect2(64, 336, 16, 16), Rect2(64, 352, 16, 16)])">
+		</constant>
+		<constant name="SIGNS" value="&lt;Object&gt;">
+		</constant>
+		<constant name="REACH" value="32.0">
+		</constant>
+	</constants>
+</class>

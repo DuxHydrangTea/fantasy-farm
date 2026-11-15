@@ -1,43 +1,84 @@
 class_name FarmWorld
 extends Node2D
-## MainWorld composition root. References are serialized in the scene.
+## Node gốc lắp ghép các hệ thống gameplay của trang trại.
+##
+## Player và FarmingController được gán trong scene. Các hệ thống đất, thời tiết,
+## ong và cây được nối khi vào cây; dịch vụ phụ thuộc ví người chơi được tạo
+## khi scene sẵn sàng.
+
+## Người chơi trong scene.
 @export var player: FarmPlayer
+## Bộ điều khiển đất và cây trồng trong scene.
 @export var farming: FarmingController
+## Hiệu ứng môi trường.
 var atmosphere: FarmAtmosphere
+## Âm thanh môi trường.
 var soundscape: FarmSoundscape
+## Mở rộng đất.
 var land: LandExpansionComponent
+## Hệ thống tổ ong và thụ phấn.
 var apiary: ApiarySystem
+## Thời tiết và ngày đêm.
 var weather: WeatherManager
+## Quản lý khu cây lâu năm.
 var trees: TreePlantation
+## Theo dõi mục tiêu.
 var objectives: ObjectiveTracker
+## Giao diện mục tiêu.
 var objective_ui: ObjectiveUI
+## Bảng đơn hàng.
 var orders: OrderBoard
+## Trạng thái hướng dẫn.
 var tutorial: TutorialProgress = TutorialProgress.new()
+## Giao diện trợ giúp.
 var help_ui: HelpUI
+## Gợi ý hướng dẫn theo tiến độ.
 var tutorial_hints: TutorialHints
+## Các bảng quản lý chuồng đã đăng ký.
 var pen_boards: Array[PenBoard] = []
+## Dịch vụ nâng cấp khu cây.
 var tree_plot_upgrades: TreePlotUpgradeService
+## Dịch vụ nâng cấp chuồng.
 var pen_upgrades: PenUpgradeService
+## Điều phối nội dung khởi đầu.
 var starter_content: StarterContent
+## Giao diện chọn hạt từ kho.
 var seed_picker: FarmSeedPicker
+## Dịch vụ kho trang trại.
 var storages: FarmStorageService
+## Ánh xạ mã kho sang điểm mở kho.
 var storage_accesses: Dictionary = {}
+## Dịch vụ công nhân.
 var workers: WorkerService
+## Dịch vụ ghép cây ăn quả.
 var grafting: GraftService = GraftService.new()
+## Điều phối vườn mật ong.
 var honey_garden: HoneyGardenSystem
+## Giao diện mật ong.
 var honey_menu: HoneyMenu
+## Giao diện ghép cây.
 var graft_menu: GraftMenu
+## Hạn mức mua gỗ.
 var wood_market: WoodMarket = WoodMarket.new()
+## Hàng đợi nấu ăn.
 var cooking: ChefCooking = ChefCooking.new()
+## Trạng thái nâng cấp công cụ.
 var tool_upgrade_state: ToolUpgradeState = ToolUpgradeState.new()
+## Dịch vụ mua nâng cấp công cụ.
 var tool_upgrades: ToolUpgradeService
+## Danh mục giá nâng cấp công cụ.
 @export var tool_upgrade_catalog: ToolUpgradeCatalog = preload("res://resources/tools/upgrades.tres")
+## Hệ thống cỏ trang trại.
 var grass: FarmGrassField
+## Bật cỏ GPU khi cấu hình hệ thống cỏ.
 @export var gpu_grass_enabled: bool = true
+## Bật actor tuần tra thử nghiệm trong bản debug.
 @export var debug_worker_enabled: bool = false
+## Actor tuần tra thử nghiệm nếu được bật.
 var debug_worker: WorkerActor
+## Vị trí bảng đơn trong tọa độ thế giới.
 @export var order_board_position: Vector2 = Vector2(1664, 248)
-## Authored window/gate anchors in world-local pixels, independent of sprite names.
+## Các điểm đèn cửa sổ và cổng trong tọa độ cục bộ thế giới.
 @export var night_light_positions: Array[Vector2] = [Vector2(1350, 308), Vector2(1183, 622), Vector2(1740, 172), Vector2(1666, 622), Vector2(1010, 274), Vector2(1384, 274), Vector2(1480, 274)]
 
 func _enter_tree() -> void:
@@ -46,6 +87,7 @@ func _enter_tree() -> void:
 
 	if is_instance_valid(land):
 		return
+	preload("res://components/animals/pen_produce_system.gd").new().configure(self)
 	starter_content = StarterContent.new(self)
 	starter_content.prepare()
 	weather = WeatherManager.new()
@@ -168,9 +210,7 @@ func _ready() -> void:
 		console.name = "DebugConsole"
 		add_child(console)
 
-## M0 patrol demo: one orchard hand walking the fruit region ring.
-## Waypoints hug the authored plantation border so the body, movement and
-## stuck-skip behaviour are verifiable on the real map before any role logic.
+## Tạo công nhân debug tuần tra quanh khu cây ăn quả để kiểm tra chuyển động.
 func _spawn_debug_orchard_worker() -> WorkerActor:
 	var worker: WorkerActor = (preload("res://scenes/workers/crop_worker.tscn") as PackedScene).instantiate() as WorkerActor
 	worker.name = "OrchardWorkerM0"

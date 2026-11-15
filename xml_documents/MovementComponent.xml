@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="MovementComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Di chuyển CharacterBody2D cha bằng gia tốc, ma sát và đích tùy chọn. Hỗ trợ tìm đường vòng ngắn quanh vật cản bằng kiểm tra va chạm của body.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="move">
+			<return type="void" />
+			<param index="0" name="dir" type="Vector2" />
+			<param index="1" name="delta" type="float" />
+			<param index="2" name="speed_limit" type="float" default="-1.0" />
+			<description>
+				Cập nhật vận tốc theo hướng, gia tốc hoặc ma sát rồi gọi move_and_slide. Giới hạn tốc độ âm dùng tốc độ cấu hình; giá trị không âm đặt thêm trần.
+			</description>
+		</method>
+		<method name="move_with_avoidance">
+			<return type="void" />
+			<param index="0" name="dir" type="Vector2" />
+			<param index="1" name="delta" type="float" />
+			<param index="2" name="speed_limit" type="float" default="-1.0" />
+			<param index="3" name="goal" type="Vector2" default="Vector2(inf, inf)" />
+			<description>
+				Di chuyển theo hướng và thử lệch sang bên khi đường phía trước bị chặn. Nếu có [param goal], giữ hướng vòng qua góc đến khi đường thẳng tới đích thông.
+			</description>
+		</method>
+		<method name="_find_detour">
+			<return type="void" />
+			<param index="0" name="origin" type="Vector2" />
+			<param index="1" name="forward" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_can_sweep">
+			<return type="bool" />
+			<param index="0" name="origin" type="Vector2" />
+			<param index="1" name="motion" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_move_along_detour">
+			<return type="void" />
+			<param index="0" name="remaining" type="Vector2" />
+			<param index="1" name="strength" type="float" />
+			<param index="2" name="delta" type="float" />
+			<param index="3" name="speed_limit" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="clear_detour">
+			<return type="void" />
+			<description>
+				Xóa trạng thái đường vòng và thời gian chờ thử lại.
+			</description>
+		</method>
+		<method name="set_target">
+			<return type="void" />
+			<param index="0" name="world_position" type="Vector2" />
+			<description>
+				Đặt đích toàn cục và đặt lại thời gian bị chặn.
+			</description>
+		</method>
+		<method name="cancel_target">
+			<return type="void" />
+			<description>
+				Hủy đích hiện tại và đặt lại thời gian bị chặn.
+			</description>
+		</method>
+		<method name="target_direction">
+			<return type="Vector2" />
+			<description>
+				Hướng đơn vị đến đích, hoặc vector 0 khi không có đích hay đã tới.
+			</description>
+		</method>
+		<method name="move_to_target">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<param index="1" name="avoid_obstacles" type="bool" default="false" />
+			<description>
+				Di chuyển một bước đến đích, tùy chọn tránh vật cản. Giới hạn tốc độ bước cuối để không vượt đích; hủy đích khi đến nơi hoặc bị chặn liên tục 0,2 giây để nơi gọi có thể lập kế hoạch lại.
+			</description>
+		</method>
+		<method name="stop">
+			<return type="void" />
+			<description>
+				Xóa đường vòng và đặt vận tốc body về 0.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="speed" type="float" setter="" getter="" default="150.0">
+			Tốc độ tối đa theo đơn vị thế giới mỗi giây.
+		</member>
+		<member name="acceleration" type="float" setter="" getter="" default="1200.0">
+			Gia tốc khi có hướng di chuyển.
+		</member>
+		<member name="friction" type="float" setter="" getter="" default="1600.0">
+			Tốc độ giảm vận tốc khi không có hướng.
+		</member>
+		<member name="arrival_distance" type="float" setter="" getter="" default="2.0">
+			Khoảng cách tới đích được xem là đã đến.
+		</member>
+		<member name="body" type="CharacterBody2D" setter="" getter="">
+			CharacterBody2D cha, được xác định khi node sẵn sàng.
+		</member>
+		<member name="has_target" type="bool" setter="" getter="" default="false">
+			Cho biết có đích di chuyển đang hoạt động.
+		</member>
+		<member name="target_position" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+			Tọa độ toàn cục của đích.
+		</member>
+		<member name="_blocked_time" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_detour_direction" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+		<member name="_detour_side" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+		<member name="_detour_waypoint" type="Vector2" setter="" getter="" default="Vector2(inf, inf)">
+		</member>
+		<member name="_detour_rounding_corner" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_detour_retry_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+	<constants>
+		<constant name="DETOUR_STEP" value="8.0">
+			Bước thử dịch ngang khi tìm đường vòng.
+		</constant>
+		<constant name="DETOUR_STEPS" value="16">
+			Số bước dịch ngang tối đa mỗi phía.
+		</constant>
+		<constant name="DETOUR_LOOKAHEAD" value="10.0">
+			Khoảng kiểm tra trước theo hướng di chuyển.
+		</constant>
+		<constant name="DETOUR_FORWARD_CLEARANCE" value="24.0">
+			Khoảng trống phía trước cần có tại điểm vòng.
+		</constant>
+		<constant name="DETOUR_RETRY_DELAY" value="0.2">
+			Thời gian chờ trước khi thử lại tìm đường vòng, tính bằng giây.
+		</constant>
+	</constants>
+</class>

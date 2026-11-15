@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GraftMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện so sánh hướng ghép cây ăn quả và xác nhận báo giá theo revision.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_cropped">
+			<return type="Texture2D" />
+			<param index="0" name="texture" type="Texture2D" />
+			<description>
+			</description>
+		</method>
+		<method name="open_tree">
+			<return type="bool" />
+			<param index="0" name="target" type="FruitTree" />
+			<description>
+				Mở giao diện cho cây được chọn nếu điều kiện tương tác cho phép.
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_clear_review">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_direction">
+			<return type="void" />
+			<param index="0" name="direction" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_show_review">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_future_item">
+			<return type="ItemDefinition" />
+			<param index="0" name="direction" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_future_amount">
+			<return type="int" />
+			<param index="0" name="direction" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_output_text">
+			<return type="String" />
+			<param index="0" name="direction" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_choice">
+			<return type="void" />
+			<param index="0" name="button" type="Button" />
+			<param index="1" name="card" type="PanelContainer" />
+			<param index="2" name="direction" type="int" />
+			<param index="3" name="quote" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_review">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_confirm_choice">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_choose">
+			<return type="void" />
+			<param index="0" name="direction" type="int" />
+			<param index="1" name="expected_revision" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp dịch vụ ghép và inventory.
+		</member>
+		<member name="tree" type="FruitTree" setter="" getter="">
+			Cây đang được xem.
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="title" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="summary" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="yield_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quality_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="harvest_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirm_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="browse" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="content" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_revision" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_selected_direction" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_review_revision" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_offer" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_selected_style" type="StyleBoxFlat" setter="" getter="">
+		</member>
+		<member name="_texture_cache" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

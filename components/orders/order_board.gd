@@ -1,9 +1,14 @@
 class_name OrderBoard
 extends StaticBody2D
-## Separate board, using the shared click/E/touch interaction and modal lifecycle.
+## Bảng đơn hàng tương tác bằng phím, nhấp hoặc cảm ứng qua bộ tương tác chung.
+
+## Thế giới cung cấp túi, ví và nguồn sản phẩm.
 var world: FarmWorld
+## Dịch vụ quản lý các đơn.
 var service: OrderService
+## Giao diện bảng đơn.
 var menu: OrderUI
+## Sprite dùng cho tương tác.
 var sprite: Sprite2D
 var _availability: OrderAvailability
 
@@ -34,6 +39,7 @@ func _ready() -> void:
 	menu.board = self
 	add_child(menu)
 
+## Mở bảng nếu đúng người chơi, bảng đang hiển thị và trong khoảng 32 đơn vị.
 func open_board(customer: FarmPlayer) -> bool:
 	if customer != world.player or customer.global_position.distance_to(global_position) > 32 or not is_visible_in_tree():
 		return false

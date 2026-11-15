@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemQuality" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quy tắc chất lượng vật phẩm, thứ tự chọn cấp và cách hiển thị, định giá. Mỗi chồng thông thường có một cấp; định nghĩa vật phẩm vẫn được dùng chung.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="exact" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="tier" type="int" default="0" />
+			<description>
+				Tạo chế độ chỉ chấp nhận đúng một cấp chất lượng.
+			</description>
+		</method>
+		<method name="tier_set" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="allowed" type="Array" />
+			<param index="1" name="high_first" type="bool" default="false" />
+			<description>
+				Tạo chế độ chấp nhận tập cấp đã cho, với thứ tự ưu tiên tùy chọn.
+			</description>
+		</method>
+		<method name="order" qualifiers="static">
+			<return type="int[]" />
+			<param index="0" name="mode" type="Dictionary" />
+			<description>
+				Kiểm tra chế độ và trả các cấp theo thứ tự ưu tiên, hoặc mảng rỗng nếu sai.
+			</description>
+		</method>
+		<method name="supported" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="tier" type="int" />
+			<description>
+				Kiểm tra cấp nằm trong 0–2 và vật phẩm hỗ trợ cấp đó. Cấp cao chỉ dành cho nông sản không phải biến thể star_fruit.
+			</description>
+		</method>
+		<method name="valid_tiers" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="amount" type="int" />
+			<description>
+				Kiểm tra ba số lượng nguyên không âm, cấp được hỗ trợ và tổng bằng amount.
+			</description>
+		</method>
+		<method name="label" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="tier" type="int" />
+			<description>
+				Tên chất lượng đã dịch; cấp ngoài phạm vi được kẹp vào 0–2.
+			</description>
+		</method>
+		<method name="summary" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="tiers" type="Array" />
+			<description>
+				Định dạng số lượng ở cả ba cấp thành một dòng.
+			</description>
+		</method>
+		<method name="color" qualifiers="static">
+			<return type="Color" />
+			<param index="0" name="tier" type="int" />
+			<description>
+				Màu hiển thị cho cấp chất lượng.
+			</description>
+		</method>
+		<method name="unit_price" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="price" type="int" />
+			<param index="1" name="tier" type="int" />
+			<description>
+				Giá một đơn vị sau hệ số 1, 1,8 hoặc 3,5 và làm tròn.
+			</description>
+		</method>
+		<method name="stack_tier" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="tiers" type="Array" />
+			<description>
+				Cấp đầu tiên có số lượng dương, hoặc 0 nếu chồng rỗng.
+			</description>
+		</method>
+		<method name="homogeneous" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="tiers" type="Array" />
+			<description>
+				Kiểm tra mảng có tối đa một cấp có số lượng dương.
+			</description>
+		</method>
+		<method name="item_name" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="tiers" type="Array" />
+			<description>
+				Tên vật phẩm đã dịch, thêm nhãn chất lượng cho nông sản phù hợp.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="NORMAL" value="0" enum="Tier">
+		</constant>
+		<constant name="SILVER" value="1" enum="Tier">
+		</constant>
+		<constant name="GOLD" value="2" enum="Tier">
+		</constant>
+	</constants>
+</class>

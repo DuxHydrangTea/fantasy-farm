@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmSoundscape" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Âm thanh môi trường vị trí cho vật nuôi, ong, bếp và hành động công nhân. Dùng pool cố định và tính khoảng cách từ chân người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="distance_gain" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="distance" type="float" />
+			<param index="1" name="radius" type="float" default="240.0" />
+			<description>
+				Hệ số âm lượng giảm theo khoảng cách, bằng 0 ngoài bán kính.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_voice">
+			<return type="AudioStreamPlayer2D" />
+			<param index="0" name="radius" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_loop">
+			<return type="AudioStreamWAV" />
+			<param index="0" name="event" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="eligible">
+			<return type="bool" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Kiểm tra vật nuôi còn sống, hiển thị, thuộc thế giới và không đang ngủ.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_place">
+			<return type="bool" />
+			<param index="0" name="voice" type="AudioStreamPlayer2D" />
+			<param index="1" name="point" type="Vector2" />
+			<param index="2" name="volume_db" type="float" default="0.0" />
+			<description>
+			</description>
+		</method>
+		<method name="_scan_animals">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_scan">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_dish_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_worker_action">
+			<return type="void" />
+			<param index="0" name="kind" type="StringName" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp người nghe và nguồn âm.
+		</member>
+		<member name="voices" type="AudioStreamPlayer2D[]" setter="" getter="" default="[]">
+			Pool voice vị trí cho tiếng vật nuôi.
+		</member>
+		<member name="sources" type="WeakRef[]" setter="" getter="" default="[]">
+			Tham chiếu yếu đến actor đang dùng từng voice.
+		</member>
+		<member name="_schedule" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_scan_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_next_call" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_bee" type="AudioStreamPlayer2D" setter="" getter="">
+		</member>
+		<member name="_kitchen" type="AudioStreamPlayer2D" setter="" getter="">
+		</member>
+		<member name="_chef" type="WeakRef" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="RADIUS" value="240.0">
+			Bán kính nghe tiếng vật nuôi.
+		</constant>
+		<constant name="CALL_VOLUME_DB" value="9.0">
+			Mức cơ sở của tiếng gọi vật nuôi theo dB.
+		</constant>
+		<constant name="CALLS" value="Array[StringName]([&amp;&quot;animal_chicken&quot;, &amp;&quot;animal_duck&quot;, &amp;&quot;animal_cow&quot;, &amp;&quot;animal_sheep&quot;, &amp;&quot;animal_pig&quot;, &amp;&quot;animal_goose&quot;, &amp;&quot;animal_horse&quot;])">
+			Mã âm thanh theo thứ tự enum loài vật nuôi.
+		</constant>
+	</constants>
+</class>

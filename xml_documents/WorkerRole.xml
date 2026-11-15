@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerRole" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quy tắc thuần cho vai trò, tiền công và lựa chọn công việc công nhân. Ứng viên được chọn theo độ ưu tiên, khoảng cách rồi mã mục tiêu ổn định.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="task_caption" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="task" type="Dictionary" />
+			<param index="1" name="position" type="Vector2" />
+			<description>
+				Tạo chuỗi nguồn mô tả công việc hoặc trạng thái chờ, nghỉ.
+			</description>
+		</method>
+		<method name="apply_priorities" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="tasks" type="Dictionary[]" />
+			<param index="1" name="mode" type="String" />
+			<description>
+				Điều chỉnh độ ưu tiên tại chỗ theo chế độ chăm sóc hoặc thu hoạch trước.
+			</description>
+		</method>
+		<method name="point" qualifiers="static">
+			<return type="Vector2" />
+			<param index="0" name="coordinates" type="Array" />
+			<description>
+				Chuyển mảng hai tọa độ thành Vector2.
+			</description>
+		</method>
+		<method name="pair" qualifiers="static">
+			<return type="Array" />
+			<param index="0" name="value" type="Vector2" />
+			<description>
+				Chuyển Vector2 thành mảng hai số dùng trong dữ liệu lưu và công việc.
+			</description>
+		</method>
+		<method name="choose" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="candidates" type="Dictionary[]" />
+			<param index="1" name="origin" type="Vector2" />
+			<description>
+				Chọn công việc tốt nhất và trả bản sao sâu, hoặc dictionary rỗng.
+			</description>
+		</method>
+		<method name="target_key" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="job" type="Dictionary" />
+			<description>
+				Tạo khóa giữ chỗ theo loại mục tiêu; tuần tra và việc rỗng không có khóa.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="ROLES" value="Array[String]([&quot;crop&quot;])">
+			Các vai trò đang hỗ trợ.
+		</constant>
+		<constant name="LIMITS" value="{&quot;crop&quot;: 3}">
+			Giới hạn số công nhân theo vai trò.
+		</constant>
+		<constant name="WAGES" value="{&quot;crop&quot;: 2800}">
+			Tiền công theo vai trò.
+		</constant>
+		<constant name="PRIORITY_MODES" value="Array[String]([&quot;balanced&quot;, &quot;care_first&quot;, &quot;harvest_first&quot;])">
+			Các chế độ ưu tiên có thể chọn.
+		</constant>
+		<constant name="TASK_CAPTIONS" value="{&quot;cure_animal&quot;: &quot;Treating an animal&quot;, &quot;feed&quot;: &quot;Refilling feed&quot;, &quot;fertilize&quot;: &quot;Fertilizing crops&quot;, &quot;fetch_water&quot;: &quot;Fetching water&quot;, &quot;fruit&quot;: &quot;Harvesting&quot;, &quot;harvest&quot;: &quot;Harvesting&quot;, &quot;patrol&quot;: &quot;Patrolling the work area&quot;, &quot;pen_collect&quot;: &quot;Collecting pen produce&quot;, &quot;pickup&quot;: &quot;Collecting produce&quot;, &quot;plant&quot;: &quot;Planting crops&quot;, &quot;till&quot;: &quot;Tilling soil&quot;, &quot;treat_pests&quot;: &quot;Treating pests&quot;, &quot;treat_weeds&quot;: &quot;Treating weeds&quot;, &quot;water&quot;: &quot;Watering&quot;, &quot;water_crop&quot;: &quot;Watering&quot;, &quot;water_trough&quot;: &quot;Refilling water&quot;}">
+			Chuỗi nguồn mô tả các loại công việc.
+		</constant>
+	</constants>
+</class>

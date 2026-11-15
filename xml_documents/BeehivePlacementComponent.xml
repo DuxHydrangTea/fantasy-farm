@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BeehivePlacementComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Nhận input đặt tổ ong và hiển thị vị trí, phạm vi xem trước. ApiarySystem thực hiện kiểm tra và thay đổi inventory, thế giới.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="apiary">
+			<return type="ApiarySystem" />
+			<description>
+				Lấy hệ thống ong từ bộ điều khiển ruộng, hoặc null.
+			</description>
+		</method>
+		<method name="selected">
+			<return type="bool" />
+			<description>
+				Kiểm tra người chơi đang chọn vật phẩm tổ ong.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="action_point">
+			<return type="Vector2" />
+			<description>
+				Điểm đặt toàn cục: phía trước người chơi trên cảm ứng, vị trí chuột trên desktop.
+			</description>
+		</method>
+		<method name="click">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Xử lý yêu cầu đặt tại điểm nếu tổ ong đang được chọn, kèm phản hồi.
+			</description>
+		</method>
+		<method name="feedback_source">
+			<return type="String" />
+			<description>
+				Trả phản hồi nguồn còn hạn hoặc hướng dẫn đặt tổ theo thiết bị.
+			</description>
+		</method>
+		<method name="feedback_expires_at">
+			<return type="int" />
+			<description>
+				Thời điểm hết hạn phản hồi theo ticks mili giây, hoặc 0 nếu không có.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi đặt tổ.
+		</member>
+		<member name="range_display" type="BeehiveRangeDisplay" setter="" getter="">
+			Hiển thị phạm vi và tính hợp lệ của vị trí.
+		</member>
+		<member name="ghost" type="Sprite2D" setter="" getter="">
+			Ảnh tổ xem trước.
+		</member>
+		<member name="_feedback" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_feedback_until" type="int" setter="@_feedback_until_setter" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="feedback_changed">
+			<description>
+				Phát khi thời hạn phản hồi thay đổi.
+			</description>
+		</signal>
+	</signals>
+</class>

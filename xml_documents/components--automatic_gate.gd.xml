@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/automatic_gate.gd&quot;" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tự mở cổng khi người chơi đến gần và đóng khi người chơi rời xa. Hai khoảng cách mở và đóng riêng giúp tránh đổi trạng thái liên tục ở rìa.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_proximity">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_open">
+			<return type="void" />
+			<param index="0" name="opened" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_animation_finished">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="open_distance" type="float" setter="" getter="" default="48.0">
+			Khoảng cách mở cổng.
+		</member>
+		<member name="close_distance" type="float" setter="" getter="" default="64.0">
+			Khoảng cách đóng cổng, tối thiểu bằng khoảng mở khi tính trạng thái.
+		</member>
+		<member name="sprite" type="AnimatedSprite2D" setter="" getter="" default="&lt;unknown&gt;">
+			Sprite chứa hoạt ảnh mở, đóng và trạng thái tĩnh.
+		</member>
+		<member name="is_open" type="bool" setter="" getter="" default="false">
+			Trạng thái mục tiêu hiện tại của cổng.
+		</member>
+	</members>
+</class>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện xem sức chứa và mua mở rộng khu trồng cây. Báo giá được làm mới từ dịch vụ, còn thao tác mua kiểm tra lại giá và cấp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_coins">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật báo giá, số ô và trạng thái điều khiển từ mô hình hiện tại.
+			</description>
+		</method>
+		<method name="_purchase">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="board" type="TreePlotBoard" setter="" getter="">
+			Bảng mở giao diện và xác định loại khu cây.
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="heading" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="overview" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="information" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="feedback" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="upgrade_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="scroll" type="ScrollContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="plot_preview" type="TreePlotPreview" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="balance_label" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_offer" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_cooldown_until" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

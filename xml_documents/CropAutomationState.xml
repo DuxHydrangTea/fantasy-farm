@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CropAutomationState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình tự động trồng và lịch sử ô của công nhân, được lưu dưới dạng dữ liệu cơ bản. Ô đã chuẩn bị được gắn với công nhân để tiếp tục giữa các bước làm đất và gieo.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu mặc định chưa bật tự động hóa.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Chuyển trạng thái sang cấu trúc lưu ổn định, sắp xếp công nhân và ô.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục dữ liệu đã kiểm tra, hỗ trợ bản ghi cũ có một ô chuẩn bị.
+			</description>
+		</method>
+		<method name="remember">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="crop" type="Crop" />
+			<description>
+				Ghi cây vừa trồng vào lịch sử và bỏ ô khỏi danh sách chuẩn bị.
+			</description>
+		</method>
+		<method name="forget_crop">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Xóa thông tin cây hiện tại của ô và bỏ giữ ô chuẩn bị.
+			</description>
+		</method>
+		<method name="owns">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="crop" type="Crop" />
+			<description>
+				Kiểm tra cây còn khớp mã và thời điểm trồng đã ghi tại ô.
+			</description>
+		</method>
+		<method name="prepared_cells">
+			<return type="Vector2i[]" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Trả danh sách ô đã chuẩn bị cho công nhân, hỗ trợ biểu diễn cũ một Vector2i.
+			</description>
+		</method>
+		<method name="prepared_for">
+			<return type="Vector2i" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Trả ô chuẩn bị đầu tiên, hoặc (-1, -1) nếu không có.
+			</description>
+		</method>
+		<method name="add_prepared">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="cell" type="Vector2i" />
+			<description>
+				Ghi ô chuẩn bị cho công nhân nếu chưa có trong danh sách.
+			</description>
+		</method>
+		<method name="clear_prepared">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Bỏ ô chuẩn bị khỏi mọi công nhân.
+			</description>
+		</method>
+		<method name="remove_prepared">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="cell" type="Vector2i" />
+			<description>
+				Bỏ một ô khỏi danh sách của công nhân và xóa danh sách nếu rỗng.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="saved_at" type="float" />
+			<description>
+				Kiểm tra cấu hình, revision, lịch sử và ô chuẩn bị trong dữ liệu lưu. Ô chuẩn bị không được trùng; mã cây và thời điểm phải hợp lệ theo catalog.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="revision" type="int" setter="" getter="" default="0">
+			Revision dùng phát hiện công việc được lập theo cấu hình cũ.
+		</member>
+		<member name="auto_plant" type="bool" setter="" getter="" default="false">
+			Bật tự động làm đất và gieo.
+		</member>
+		<member name="auto_fertilize" type="bool" setter="" getter="" default="false">
+			Bật tự động bón phân.
+		</member>
+		<member name="paused" type="bool" setter="" getter="" default="false">
+			Tạm dừng tự động hóa.
+		</member>
+		<member name="wait_for_care" type="bool" setter="" getter="" default="true">
+			Chờ chăm sóc cây bị ảnh hưởng trước khi thu.
+		</member>
+		<member name="priority_mode" type="String" setter="" getter="" default="&quot;balanced&quot;">
+			Chế độ ưu tiên công việc.
+		</member>
+		<member name="prepared" type="Dictionary" setter="" getter="" default="{}">
+			Các ô đã chuẩn bị theo mã công nhân.
+		</member>
+		<member name="sequence" type="int" setter="" getter="" default="0">
+			Số thứ tự tăng khi ghi nhận lần trồng.
+		</member>
+		<member name="plots" type="Dictionary[Vector2i, Dictionary]" setter="" getter="" default="{}">
+			Lịch sử ô theo tọa độ, gồm thứ tự gần nhất, mã cây và thời điểm gieo.
+		</member>
+	</members>
+</class>

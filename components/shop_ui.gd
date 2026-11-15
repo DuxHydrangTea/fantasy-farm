@@ -1,5 +1,7 @@
 class_name ShopUI
 extends TradeMenu
+## Giao diện cửa hàng cho danh mục vật phẩm, vật nuôi và nâng cấp của thương nhân.
+
 const UPGRADES: int = ShopOffer.Category.UPGRADES
 var upgrade_view: ToolUpgradeShopView
 var _normal_hint: String
@@ -95,6 +97,7 @@ func _build_species_tabs() -> void:
 		_species_tabs[species] = tab
 	_species_scroll.hide()
 
+## Chuyển tab loài vật trong danh mục động vật.
 func show_animal_species(species: int) -> void:
 	if category != ShopOffer.Category.ANIMAL or not _species_tabs.has(species):
 		return
@@ -151,6 +154,7 @@ func _process(delta: float) -> void:
 	else:
 		_refresh()
 
+## Chuyển danh mục hợp lệ của thương nhân và làm mới lựa chọn.
 func show_category(value: int) -> void:
 	if merchant != null and value not in merchant.catalog.category_ids:
 		return
@@ -255,6 +259,7 @@ func _card(texture: Texture2D, title: String, cost: int, key: Variant, callback:
 	_buttons[key] = button
 	_price_labels[key] = price
 
+## Chọn mặt hàng động vật thuộc danh mục hiện tại.
 func select_animal_offer(offer: AnimalShopOffer) -> void:
 	if category != ShopOffer.Category.ANIMAL or not merchant.catalog.animal_offers.has(offer):
 		return
@@ -264,10 +269,12 @@ func select_animal_offer(offer: AnimalShopOffer) -> void:
 func _select_animal_card(handle: WeakRef) -> void:
 	select_animal(handle.get_ref() as AnimalActor)
 
+## Chọn vật nuôi để hiển thị và giao dịch.
 func select_animal(animal: AnimalActor) -> void:
 	selected_animal = animal
 	_refresh()
 
+## Chọn mặt hàng hợp lệ thuộc danh mục và cửa hàng hiện tại.
 func select_offer(offer: ShopOffer) -> void:
 	if offer == null or offer.category != category or not merchant.catalog.offers.has(offer):
 		return
@@ -373,6 +380,7 @@ func _refresh_animal_sale() -> void:
 	details.text += "\n" + _animal_text.summary(animal)
 	status.text = tr("Sell the selected animal for coins. Its produce stays on the farm.")
 
+## Thực hiện giao dịch của lựa chọn hiện tại khi cửa hàng đang mở.
 func purchase() -> void:
 	if not is_open:
 		return
@@ -422,6 +430,7 @@ func _refresh_language() -> void:
 func _coins(amount: int) -> String:
 	return GameText.grouped_integer(amount)
 
+## Cập nhật biểu tượng, tên và mô tả ngắn của sản phẩm.
 func present_product(texture: Texture2D, title: String, subtitle: String) -> void:
 	product_icon.texture = texture
 	product_icon.get_parent().visible = texture != null

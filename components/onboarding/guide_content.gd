@@ -1,7 +1,10 @@
 class_name GuideContent
 extends RefCounted
-## Localizable instructions indexed by the existing objective IDs, not new counters.
+## Nội dung trợ giúp có thể dịch, liên kết với mã mục tiêu hiện có.
+
+## Các chủ đề được hiển thị trong giao diện trợ giúp.
 const TOPICS: Array[String] = ["Current step", "Controls", "Bag and trading", "Time and animals", "Orders", "Getting unstuck"]
+## Hướng dẫn ngắn theo mã mục tiêu.
 const SHORT: Dictionary = {
 	"first_soil": "Move to bare farmland. Select the hoe and use it once.",
 	"first_seed": "Deposit crop seeds at supply storage. Choose Stored seeds and use them on prepared soil.",
@@ -13,6 +16,7 @@ const SHORT: Dictionary = {
 	"first_trough_water": "Select the watering can. Interact with a water trough.",
 	"first_expansion": "Visit the land sign and confirm the next block."
 }
+## Hướng dẫn chi tiết theo mã mục tiêu.
 const DETAILS: Dictionary = {
 	"first_soil": "Use the first unlocked farmland block at the top right. Stand beside an untilled tile and face it. Select the hoe, then use it. Previously prepared unlocked soil also counts.",
 	"first_seed": "Deposit crop seeds at the farm supply storage building. Open Stored seeds (G on keyboard), choose a variety, then face prepared empty farmland and use it. Only planting after this step unlocks counts.",
@@ -25,9 +29,11 @@ const DETAILS: Dictionary = {
 	"first_expansion": "Find the sign at the next locked farmland block. Approach and interact to see the price, then confirm if you can afford it. Existing ownership of two blocks also counts."
 }
 
+## Chuỗi nguồn hướng dẫn điều khiển phù hợp cảm ứng hoặc bàn phím, chuột.
 static func controls(touch: bool) -> String:
 	return "Move with the left joystick or tap the ground. Tap a hotbar slot to select it, then tap Use. Face a target and tap Interact, or tap the target itself. Pinch with two fingers to zoom. Swipe lists and help text to scroll. Play in landscape." if touch else "Move with WASD, arrow keys or a left click on the ground. Select slots 1–6 with number keys or the mouse. Use the selected item with Space or right click. Interact with E or click a target. Open Bag with Tab or I, Objectives with J, and Help with H. Scroll lists with the wheel."
 
+## Nội dung đã dịch cho mục tiêu hiện hành và gợi ý input tương ứng.
 static func current(goals: ObjectiveProgress, touch: bool) -> String:
 	var step: ObjectiveDefinition = goals.active()
 	if step == null:
@@ -37,6 +43,7 @@ static func current(goals: ObjectiveProgress, touch: bool) -> String:
 	var input_tip: String = "Tap a hotbar slot, then Use. Tap Interact for nearby targets." if touch else "Select a hotbar slot, then press Space to use it. Press E for nearby targets."
 	return text + "\n\n" + TranslationServer.translate(input_tip)
 
+## Trả nội dung đã dịch của chủ đề theo chỉ số, mặc định là hướng dẫn phục hồi.
 static func topic(index: int, goals: ObjectiveProgress, touch: bool) -> String:
 	match index:
 		0: return current(goals, touch)

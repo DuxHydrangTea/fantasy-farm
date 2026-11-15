@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotUpgradeCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng giá nâng cấp ô trồng cây ăn quả và cây lấy gỗ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra đủ hai nhóm, mỗi nhóm có 16 giá nguyên hữu hạn tăng nghiêm ngặt.
+			</description>
+		</method>
+		<method name="price">
+			<return type="int" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<param index="1" name="level" type="int" />
+			<description>
+				Trả về giá tại cấp được yêu cầu, hoặc 0 nếu cấp ngoài mảng giá.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="prices" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ mã loại cây sang mảng 16 mức giá tăng dần.
+		</member>
+	</members>
+</class>

@@ -1,6 +1,9 @@
 class_name PlayerAudioFeedback
 extends Node
-## Actual displacement, not input intent: blocked walking and teleports stay silent.
+## Phát tiếng bước chân theo quãng đường thực tế và loại mặt đất.
+## Đứng bị chặn, mở menu hoặc dịch chuyển xa không phát bước chân.
+
+## Người chơi cung cấp vị trí và trạng thái.
 var player: FarmPlayer
 var _previous: Vector2
 var _distance: float = 0.0
@@ -15,6 +18,8 @@ func _inventory_visibility(open: bool) -> void:
 func _physics_process(_delta: float) -> void:
 	advance_position(player.global_position)
 
+## Tích lũy quãng đường và phát một bước sau mỗi 18 đơn vị di chuyển.
+## Chuyển động trên 48 đơn vị trong một bước được xem là dịch chuyển xa.
 func advance_position(point: Vector2) -> void:
 	var moved: float = _previous.distance_to(point)
 	_previous = point
@@ -28,6 +33,8 @@ func advance_position(point: Vector2) -> void:
 		_distance = fmod(_distance, 18.0)
 		Sound.play(surface_event(point))
 
+## Chọn sự kiện bước chân đất, đá hoặc cỏ bằng cách kiểm tra các layer tại điểm.
+## Đất canh tác đã xử lý được ưu tiên khi các layer chồng lên nhau.
 func surface_event(point: Vector2) -> StringName:
 	var farm: FarmingController = player.farming_actions.get_farming_controller()
 	if farm == null or farm.farmland == null:

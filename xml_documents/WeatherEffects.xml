@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WeatherEffects" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vẽ hiệu ứng mưa, bóng mây và gió, đồng thời điều khiển âm thanh gió. Vị trí hiệu ứng được tính trong tọa độ thế giới; chỉ các ô nhìn thấy được vẽ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_atlas">
+			<return type="AtlasTexture" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="rect" type="Rect2" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="transition_to">
+			<return type="void" />
+			<param index="0" name="next" type="int" />
+			<description>
+				Làm mờ hiệu ứng hiện tại, đổi loại thời tiết rồi tăng dần hiệu ứng mới. Một chuyển đổi đang chạy sẽ bị hủy trước khi bắt đầu chuyển đổi mới.
+			</description>
+		</method>
+		<method name="_finish_transition">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_activate">
+			<return type="void" />
+			<param index="0" name="next" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="weather_tint">
+			<return type="Color" />
+			<description>
+				Trả màu môi trường nội suy theo thời tiết đang vẽ và cường độ hiện tại.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_visible_cells">
+			<return type="Rect2i" />
+			<param index="0" name="spacing" type="Vector2" />
+			<param index="1" name="drift" type="Vector2" />
+			<param index="2" name="padding" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_cloud_point">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_wind_point">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_rain_point">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_splash_point">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa camera và cảnh được vẽ.
+		</member>
+		<member name="active_weather" type="int" setter="" getter="" default="0">
+			Loại thời tiết đang được vẽ.
+		</member>
+		<member name="strength" type="float" setter="" getter="" default="0.0">
+			Cường độ hiển thị trong khoảng chuyển hiệu ứng.
+		</member>
+		<member name="wind_audio" type="AudioStreamPlayer" setter="" getter="">
+			Nguồn âm thanh gió trên bus Ambience.
+		</member>
+		<member name="_tween" type="Tween" setter="" getter="">
+		</member>
+		<member name="_phase" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_rain" type="AtlasTexture" setter="" getter="">
+		</member>
+		<member name="_splashes" type="AtlasTexture[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_clouds" type="AtlasTexture[]" setter="" getter="" default="[]">
+		</member>
+	</members>
+	<constants>
+		<constant name="RAIN" value="&lt;Object&gt;">
+			Texture giọt mưa.
+		</constant>
+		<constant name="SPLASH" value="&lt;Object&gt;">
+			Texture các khung giọt mưa chạm đất.
+		</constant>
+		<constant name="CLOUDS" value="&lt;Object&gt;">
+			Texture atlas bóng mây.
+		</constant>
+		<constant name="CLOUD_SPACING" value="Vector2(176, 132)">
+			Khoảng cách lưới hiệu ứng mây.
+		</constant>
+		<constant name="WIND_SPACING" value="Vector2(128, 112)">
+			Khoảng cách lưới hiệu ứng gió.
+		</constant>
+		<constant name="RAIN_SPACING" value="Vector2(48, 48)">
+			Khoảng cách lưới giọt mưa.
+		</constant>
+		<constant name="SPLASH_SPACING" value="Vector2(96, 96)">
+			Khoảng cách lưới hiệu ứng mưa chạm đất.
+		</constant>
+	</constants>
+</class>

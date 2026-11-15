@@ -1,13 +1,28 @@
 class_name FarmGrassField
 extends GrassChunkField
-## Whole-map world adapter. The sole added node; transfer/feed/materials are data.
+## Gắn bộ vẽ chunk cỏ GPU vào thế giới trang trại.
+## Kiểm tra tài nguyên và ngân sách trước khi thay các ô gốc. Khi lỗi hoặc tắt,
+## khôi phục TileMap và material ban đầu; cỏ trang trí còn lại dùng shader riêng.
+
+## Shader cỏ có ánh sáng cho trang trại.
 const LIT_SHADER: Shader = preload("res://shaders/grass_farm.gdshader")
+## Dữ liệu loại cỏ và vùng atlas.
 const FARM_DATA = preload("res://resources/grass/farm_grass_data.gd")
+## Script gắn hiệu ứng cho cây cỏ trang trí khác.
+const DECOR_MATERIALS = preload("res://components/grass/decor_foliage_materials.gd")
+## Thế giới chứa layer nguồn, thời tiết và đất.
 var world: FarmWorld
+## Giao dịch chuyển ô TileMap sang mẫu GPU.
 var transfer: GrassSourceTransfer = GrassSourceTransfer.new()
+## Material cho cỏ cần giữ trong TileMap.
 var tile_materials: GrassTileMaterials = GrassTileMaterials.new()
+## Material cho cây cỏ trang trí.
+var decor_materials: RefCounted = DECOR_MATERIALS.new()
+## Cho biết chuyển đổi đã hoàn tất và đang hiển thị.
 var active: bool = false
+## Trạng thái chuyển đổi được yêu cầu.
 var wanted: bool = true
+## Lý do dùng lại hiển thị gốc gần nhất.
 var fallback_reason: String = ""
 var _last_wind: float = -1.0
 
@@ -47,6 +62,8 @@ func _after_restore() -> void:
 	# A short save/load teleport must not be interpreted as ordinary walking.
 	interactions.reset_all_motion()
 
+## Kiểm tra renderer, atlas, số loại và các uniform cần thiết.
+## Trả chuỗi rỗng nếu có thể thử chuyển đổi, hoặc lý do không thể.
 func render_preflight() -> String:
 	if DisplayServer.get_name() == "headless":
 		return "Headless renderer: authored grass retained"
@@ -64,6 +81,8 @@ func render_preflight() -> String:
 		return "Grass shader schema unavailable"
 	return ""
 
+## Bật hoặc tắt chuyển đổi cỏ GPU.
+## Khi bật, kiểm tra và dựng dữ liệu trước khi xóa ô nguồn; lỗi sẽ khôi phục.
 func set_conversion(value: bool) -> bool:
 	wanted = value
 	if not value:
@@ -86,6 +105,7 @@ func set_conversion(value: bool) -> bool:
 		_fallback("TileMap grass material unavailable")
 		return false
 	active = true
+	decor_materials.install(world, world.get_node("TinyDecor") as TileMapLayer)
 	if is_instance_valid(world.land):
 		world.land.set_grass_effect(effect)
 	fallback_reason = ""
@@ -93,9 +113,11 @@ func set_conversion(value: bool) -> bool:
 	sync_tile_materials()
 	return true
 
+## Đồng bộ tham số gió và actor sang cỏ TileMap, trang trí và lớp phủ đất.
 func sync_tile_materials() -> void:
 	if active:
 		tile_materials.sync_from(effect)
+		decor_materials.sync_from(effect)
 		if is_instance_valid(world.land):
 			world.land.grass_cover.sync_from(effect)
 
@@ -106,6 +128,7 @@ func _fallback(reason: String) -> void:
 	renderer.clear()
 	_last_region = Rect2i(0, 0, -1, -1)
 	tile_materials.restore()
+	decor_materials.restore()
 	transfer.restore()
 	active = false
 	fallback_reason = reason
@@ -136,6 +159,7 @@ func _exit_tree() -> void:
 	if is_instance_valid(world.objectives) and world.objectives.progress.restored.is_connected(_after_restore):
 		world.objectives.progress.restored.disconnect(_after_restore)
 	tile_materials.restore()
+	decor_materials.restore()
 	transfer.restore()
 	active = false
 	super._exit_tree()

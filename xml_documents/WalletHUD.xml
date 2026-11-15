@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WalletHUD" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		HUD góc trên bên phải hiển thị số dư và nút mở cài đặt. Số xu cập nhật theo signal của ví và tooltip cập nhật khi đổi ngôn ngữ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<param index="0" name="balance" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví được gắn trước khi node sẵn sàng.
+		</member>
+		<member name="label" type="Label" setter="" getter="">
+			Nhãn số xu rút gọn.
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+			Khung số xu chứa tooltip giá trị đầy đủ.
+		</member>
+	</members>
+</class>

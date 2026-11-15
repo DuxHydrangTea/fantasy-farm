@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolUpgradeOffer" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình một cấp nâng cấp công cụ và điều kiện mua tương ứng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="tool" type="StringName" setter="" getter="">
+			Mã công cụ được nâng cấp.
+		</member>
+		<member name="target_level" type="int" setter="" getter="" default="2">
+			Cấp nhận được sau khi mua.
+		</member>
+		<member name="price" type="int" setter="" getter="" default="30000">
+			Chi phí bằng xu.
+		</member>
+		<member name="required_purchased_columns" type="int" setter="" getter="" default="1">
+			Số cột đất đã mua cần đạt trước khi nâng cấp.
+		</member>
+		<member name="wood_cost" type="int" setter="" getter="" default="0">
+			Số gỗ cần thêm để mua nâng cấp.
+		</member>
+	</members>
+</class>

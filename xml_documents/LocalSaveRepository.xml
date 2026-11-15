@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LocalSaveRepository" inherits="SaveRepository" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Backend lưu profile bằng JSON trên filesystem cục bộ.
+	</brief_description>
+	<description>
+		File tạm được kiểm tra trước khi thay file chính, bản chính hợp lệ được xoay thành backup và revision giúp phát hiện xung đột. SHA-256 phát hiện hỏng dữ liệu; checksum không xác thực người chỉnh sửa file.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="folder" type="String" default="&quot;user://saves&quot;" />
+			<param index="1" name="resources" type="SaveCatalog" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="path">
+			<return type="String" />
+			<param index="0" name="profile" type="String" />
+			<description>
+				Tạo đường dẫn file chính của profile.
+			</description>
+		</method>
+		<method name="read_profile">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<description>
+				Đọc và kiểm tra file chính, thử backup nếu file chính thiếu hoặc hỏng. File phiên bản tương lai được trả lỗi thay vì lùi về backup. Khi cả hai file chưa tồn tại, trả profile chưa có dữ liệu với revision 0.
+			</description>
+		</method>
+		<method name="_read">
+			<return type="Dictionary" />
+			<param index="0" name="file_path" type="String" />
+			<param index="1" name="profile" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_validate_raw">
+			<return type="Dictionary" />
+			<param index="0" name="raw" type="Dictionary" />
+			<param index="1" name="profile" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_read_raw">
+			<return type="Dictionary" />
+			<param index="0" name="file_path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="write_profile">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<param index="1" name="snapshot" type="Dictionary" />
+			<param index="2" name="expected_revision" type="int" />
+			<description>
+				Kiểm tra snapshot và revision, ghi file tạm, xác minh rồi thay file chính. Bản chính hợp lệ được giữ làm backup. Trả dictionary thành công hoặc lỗi.
+			</description>
+		</method>
+		<method name="_uses_worker_threads">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_run_io">
+			<return type="Dictionary" />
+			<param index="0" name="work" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="_primitive">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="depth" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="write_profile_async">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<param index="1" name="snapshot" type="Dictionary" />
+			<param index="2" name="expected_revision" type="int" />
+			<param index="3" name="pre_validated" type="bool" default="false" />
+			<description>
+				Ghi bất đồng bộ từ bản sao sâu của snapshot, kiểm tra revision và hash file. Việc kiểm tra resource chạy trên main thread; IO và JSON có thể chạy trên thread riêng. Trên web, IO chạy sau khi nhường một frame. Kiểm tra hash giúp phát hiện thay đổi giữa lúc đọc và ghi nhưng không tạo khóa nguyên tử giữa nhiều process.
+			</description>
+		</method>
+		<method name="_commit_io">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<param index="1" name="snapshot" type="Dictionary" />
+			<param index="2" name="expected_hash" type="String" />
+			<param index="3" name="primary_valid" type="bool" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="directory" type="String" setter="" getter="" default="&quot;user://saves&quot;">
+			Thư mục chứa file profile.
+		</member>
+		<member name="catalog" type="SaveCatalog" setter="" getter="">
+			Catalog dùng để kiểm tra các mã resource trong snapshot.
+		</member>
+		<member name="_async_busy" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="worker_operations" type="int" setter="" getter="" default="0">
+			Số tác vụ IO đã khởi động bằng thread.
+		</member>
+	</members>
+	<constants>
+		<constant name="MAX_BYTES" value="8388608">
+			Giới hạn kích thước file đầu vào theo byte.
+		</constant>
+	</constants>
+</class>

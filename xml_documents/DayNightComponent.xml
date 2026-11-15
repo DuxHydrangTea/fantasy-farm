@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="DayNightComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều chỉnh màu môi trường, đèn và đom đóm theo thời gian trong ngày. Màu được áp dụng cho thế giới; HUD trên CanvasLayer giữ màu riêng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="daylight_color" qualifiers="static">
+			<return type="Color" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Nội suy màu ánh sáng theo giờ UTC+7 qua các mốc bình minh, ban ngày và chiều tối.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="weather_tint" type="Color" />
+			<description>
+				Cập nhật màu môi trường từ giờ và màu thời tiết, rồi chỉnh độ sáng các đèn.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp vị trí đèn và vườn hoa.
+		</member>
+		<member name="ambient" type="CanvasModulate" setter="" getter="">
+			Node điều chỉnh màu môi trường.
+		</member>
+		<member name="lights" type="PointLight2D[]" setter="" getter="" default="[]">
+			Các đèn được điều chỉnh độ sáng theo trời tối.
+		</member>
+		<member name="darkness" type="float" setter="" getter="" default="0.0">
+			Mức tối hiện tại trong khoảng 0–1.
+		</member>
+		<member name="_phase" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_firefly_material" type="CanvasItemMaterial" setter="" getter="">
+		</member>
+	</members>
+</class>

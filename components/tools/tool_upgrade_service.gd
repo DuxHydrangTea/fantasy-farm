@@ -1,6 +1,7 @@
 class_name ToolUpgradeService
 extends RefCounted
-## Transactions shared by vendors. Both models commit before observers run.
+## Thực hiện giao dịch nâng cấp công cụ giữa kho, ví và trạng thái nâng cấp trước khi thông báo người quan sát.
+
 signal purchased(tool: StringName, level: int, price: int)
 var inventory: InventoryComponent
 var world: FarmWorld
@@ -20,6 +21,7 @@ func _init(progress: ToolUpgradeState, coins: WalletComponent, ownership: LandEx
 func _failure(code: String, error: String, offer: Dictionary = {}) -> Dictionary:
 	return offer.merged({"ok": false, "code": code, "error": error}, true)
 
+## Tính điều kiện và chi phí cấp tiếp theo của công cụ; trả báo giá hoặc lỗi.
 func quote(tool: StringName) -> Dictionary:
 	if state == null or not is_instance_valid(wallet) or land == null or catalog == null:
 		return _failure("unavailable", "Tool upgrades are unavailable.")
@@ -46,6 +48,7 @@ func quote(tool: StringName) -> Dictionary:
 		return _failure("insufficient_wood", "Not enough wood in your warehouse and bag.", result)
 	return result
 
+## Mua theo cấp và chi phí dự kiến, từ chối báo giá đã cũ.
 func purchase(tool: StringName, expected_level: int, expected_price: int, expected_wood: int = -1) -> Dictionary:
 	var offer: Dictionary = quote(tool)
 	if not offer.ok:
@@ -86,6 +89,7 @@ func purchase(tool: StringName, expected_level: int, expected_price: int, expect
 	_end_purchase()
 	return {"ok": true, "tool": String(tool), "level": state.level(tool), "price": offer.price, "wood_cost": offer.wood_cost}
 
+## Liệt kê các kho hợp lệ dùng làm nguồn gỗ.
 func wood_sources() -> Array[InventoryComponent]:
 	var result: Array[InventoryComponent] = []
 	if world != null and world.storages != null:
@@ -94,6 +98,7 @@ func wood_sources() -> Array[InventoryComponent]:
 		result.append(inventory)
 	return result
 
+## Cộng tổng gỗ trong các nguồn có thể dùng.
 func wood_owned() -> int:
 	var total: int = 0
 	for bag: InventoryComponent in wood_sources():

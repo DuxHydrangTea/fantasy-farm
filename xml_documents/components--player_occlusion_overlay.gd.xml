@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/player_occlusion_overlay.gd&quot;" inherits="AnimatedSprite2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo mask che khuất người chơi từ các sprite và tile tiền cảnh thực tế. SubViewport trong suốt được cập nhật trước khi vẽ; UI và màu màn hình không tham gia vào mask.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_mask">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_next_sprite">
+			<return type="Sprite2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_in_front">
+			<return type="bool" />
+			<param index="0" name="visual" type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_effective_z">
+			<return type="int" />
+			<param index="0" name="item" type="CanvasItem" />
+			<description>
+			</description>
+		</method>
+		<method name="_opacity">
+			<return type="float" />
+			<param index="0" name="item" type="CanvasItem" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw_tree_tiles">
+			<return type="void" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="area" type="Rect2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="source" type="AnimatedSprite2D" setter="" getter="">
+			Sprite hoạt ảnh người chơi được sao chép.
+		</member>
+		<member name="tree_layer_names" type="StringName[]" setter="" getter="" default="[...]">
+			Tên TileMapLayer cây cần đưa vào mask.
+		</member>
+		<member name="_mask_view" type="SubViewport" setter="" getter="">
+		</member>
+		<member name="_sprites" type="Sprite2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_tree_layers" type="TileMapLayer[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_pool" type="Sprite2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_used" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_refresh_timer" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_world" type="Node2D" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="MASK_SIZE" value="Vector2i(64, 96)">
+			Kích thước viewport mask quanh người chơi.
+		</constant>
+	</constants>
+</class>

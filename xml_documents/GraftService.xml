@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GraftService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối chọn hướng ghép và thu hoạch thủ công cho cây ăn quả. Chốt thời gian công nhân trước khi thay đổi hoặc thu hoạch cây.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="access_error">
+			<return type="String" />
+			<param index="0" name="tree" type="FruitTree" />
+			<description>
+				Trả thông báo lỗi nếu hệ thống bận, cây không hợp lệ, ngoài tầm hoặc chưa lớn. Trả chuỗi rỗng khi có thể thao tác.
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="tree" type="FruitTree" />
+			<param index="1" name="direction" type="int" />
+			<description>
+				Kiểm tra hướng ghép và tính lượng sáp cần cùng revision hiện tại của cây. Lần chọn đầu miễn phí; đổi lựa chọn sau đó cần một sáp.
+			</description>
+		</method>
+		<method name="choose">
+			<return type="String" />
+			<param index="0" name="tree" type="FruitTree" />
+			<param index="1" name="direction" type="int" />
+			<param index="2" name="expected_revision" type="int" />
+			<description>
+				Chọn hướng ghép chờ áp dụng sau khi chốt công nhân và kiểm tra revision. Trả chuỗi rỗng khi thành công, hoặc thông báo lỗi.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="String" />
+			<param index="0" name="tree" type="FruitTree" />
+			<description>
+				Thu hoạch vào túi sau khi đồng bộ và kiểm tra lại quyền truy cập. Trả chuỗi rỗng khi thành công, hoặc lý do không thu được.
+			</description>
+		</method>
+		<method name="_lock">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="order_demand">
+			<return type="int" />
+			<param index="0" name="tree" type="FruitTree" />
+			<description>
+				Đếm số đơn hiện hành có yêu cầu sản phẩm thu hoạch thường của cây.
+			</description>
+		</method>
+		<method name="kitchen_demand">
+			<return type="int" />
+			<param index="0" name="tree" type="FruitTree" />
+			<description>
+				Đếm công thức nấu có sử dụng vật phẩm thu hoạch chất lượng sao của cây.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa cây, người chơi và các giao dịch liên quan.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Cho biết dịch vụ đang xử lý thao tác.
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi lựa chọn ghép hoặc thu hoạch được xử lý.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="WAX" value="&amp;&quot;grafting_wax&quot;">
+			Mã sáp ghép dùng khi đổi hướng đã chọn.
+		</constant>
+	</constants>
+</class>

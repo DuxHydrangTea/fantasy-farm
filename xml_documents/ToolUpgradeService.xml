@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolUpgradeService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Thực hiện giao dịch nâng cấp công cụ giữa kho, ví và trạng thái nâng cấp trước khi thông báo người quan sát.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="progress" type="ToolUpgradeState" />
+			<param index="1" name="coins" type="WalletComponent" />
+			<param index="2" name="ownership" type="LandExpansionState" />
+			<param index="3" name="offers" type="ToolUpgradeCatalog" />
+			<description>
+			</description>
+		</method>
+		<method name="_failure">
+			<return type="Dictionary" />
+			<param index="0" name="code" type="String" />
+			<param index="1" name="error" type="String" />
+			<param index="2" name="offer" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="tool" type="StringName" />
+			<description>
+				Tính điều kiện và chi phí cấp tiếp theo của công cụ; trả báo giá hoặc lỗi.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="tool" type="StringName" />
+			<param index="1" name="expected_level" type="int" />
+			<param index="2" name="expected_price" type="int" />
+			<param index="3" name="expected_wood" type="int" default="-1" />
+			<description>
+				Mua theo cấp và chi phí dự kiến, từ chối báo giá đã cũ.
+			</description>
+		</method>
+		<method name="wood_sources">
+			<return type="InventoryComponent[]" />
+			<description>
+				Liệt kê các kho hợp lệ dùng làm nguồn gỗ.
+			</description>
+		</method>
+		<method name="wood_owned">
+			<return type="int" />
+			<description>
+				Cộng tổng gỗ trong các nguồn có thể dùng.
+			</description>
+		</method>
+		<method name="_restore_wood">
+			<return type="void" />
+			<param index="0" name="bags" type="InventoryComponent[]" />
+			<param index="1" name="snapshots" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_end_purchase">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="state" type="ToolUpgradeState" setter="" getter="">
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+		</member>
+		<member name="land" type="LandExpansionState" setter="" getter="">
+		</member>
+		<member name="catalog" type="ToolUpgradeCatalog" setter="" getter="">
+		</member>
+		<member name="profile_ready" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="purchasing_enabled" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="purchased">
+			<param index="0" name="tool" type="StringName" />
+			<param index="1" name="level" type="int" />
+			<param index="2" name="price" type="int" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

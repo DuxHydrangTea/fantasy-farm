@@ -1,6 +1,9 @@
 class_name FertileSoilOverlay
 extends Node2D
-## One batched drawing node for every fertile tile, below actors and crops.
+## Vẽ dấu đất màu mỡ đã mở bằng một node phía dưới actor và cây trồng.
+## Dấu sáng hơn khi người chơi chọn hạt giống cây trồng và không mở menu.
+
+## Thế giới cung cấp đất, trạng thái mở khóa và lựa chọn của người chơi.
 var world: FarmWorld
 var _bright: bool = false
 

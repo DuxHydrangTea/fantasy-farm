@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ApiarySystem" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối tổ ong, nguồn hoa và thưởng thụ phấn theo đồng hồ trang trại. Khoảng mô phỏng được chia tại ranh giới thời tiết, hoa nở và cây chín để xử lý cả tiến trình offline. Mỗi nguồn hoa được phân cho một tổ phù hợp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="sync">
+			<return type="void" />
+			<description>
+				Tiến mô phỏng đến thời gian hiện tại của đồng hồ.
+			</description>
+		</method>
+		<method name="invalidate_sources">
+			<return type="void" />
+			<param index="0" name="_cell" type="Vector2i" default="Vector2i(0, 0)" />
+			<param index="1" name="_crop" type="Crop" default="null" />
+			<description>
+				Đánh dấu cache nguồn hoa cần dựng lại sau khi cây hoặc vườn thay đổi.
+			</description>
+		</method>
+		<method name="_flowers">
+			<return type="Dictionary[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_nearby_crops">
+			<return type="Crop[]" />
+			<param index="0" name="radius_squared" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="effective_radius">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Bán kính thụ phấn tại thời điểm, có tính hệ số thời tiết.
+			</description>
+		</method>
+		<method name="raining">
+			<return type="bool" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Kiểm tra lịch thời tiết đang mưa tại thời điểm.
+			</description>
+		</method>
+		<method name="_assign">
+			<return type="void" />
+			<param index="0" name="sources" type="Dictionary[]" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Tiến cây và tổ đến timestamp, cập nhật nguồn hoa, mật và giảm thời gian chín. Không tiến lùi và bỏ qua lời gọi lồng nhau hoặc khi đang tải.
+			</description>
+		</method>
+		<method name="_update_boosted">
+			<return type="void" />
+			<param index="0" name="next" type="Crop[]" />
+			<param index="1" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="crop_is_pollinated">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Kiểm tra điểm cây được thụ phấn theo thời tiết đã xử lý gần nhất.
+			</description>
+		</method>
+		<method name="_point_is_pollinated">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="radius_squared" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="snap_position">
+			<return type="Vector2" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Làm tròn vị trí toàn cục về tâm ô farmland.
+			</description>
+		</method>
+		<method name="placement_error">
+			<return type="String" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="columns" type="int" default="-1" />
+			<param index="2" name="restoring" type="bool" default="false" />
+			<param index="3" name="legacy_garden" type="bool" default="false" />
+			<description>
+				Kiểm tra đất mở, nền, vật cản và quy tắc vườn cho vị trí đặt tổ. Trả chuỗi rỗng nếu hợp lệ; chế độ restoring dùng các ngoại lệ va chạm khi tải.
+			</description>
+		</method>
+		<method name="place">
+			<return type="Dictionary" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="player" type="FarmPlayer" />
+			<param index="2" name="slot" type="int" />
+			<description>
+				Kiểm tra vị trí và ô túi, đồng bộ thời gian rồi đặt tổ và tiêu một vật phẩm. Thành công trả actor tổ; thất bại trả thông báo lỗi.
+			</description>
+		</method>
+		<method name="create_hive">
+			<return type="Beehive" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="id" type="StringName" />
+			<description>
+				Tạo tổ và đăng ký ô chiếm; nơi gọi chịu trách nhiệm kiểm tra trước vị trí.
+			</description>
+		</method>
+		<method name="begin_restore">
+			<return type="void" />
+			<description>
+				Ngừng mô phỏng, xóa cache nguồn và loại các tổ hiện tại trước khi khôi phục.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="rows" type="Array" />
+			<param index="1" name="saved_at" type="float" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Dựng tổ từ bản ghi đã kiểm tra, rồi tiến từ thời điểm lưu đến now.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="farming" type="FarmingController" setter="" getter="">
+			Bộ điều khiển cây trồng và thời tiết.
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa tổ ong và vườn.
+		</member>
+		<member name="clock" type="FarmClock" setter="" getter="">
+			Đồng hồ trang trại.
+		</member>
+		<member name="definition" type="BeehiveDefinition" setter="" getter="" default="&lt;Object&gt;">
+			Quy tắc dùng chung cho tổ ong.
+		</member>
+		<member name="hives" type="Beehive[]" setter="" getter="" default="[]">
+			Các tổ đang có trong thế giới.
+		</member>
+		<member name="gardens" type="FlowerGarden[]" setter="" getter="" default="[]">
+			Các vườn hoa thuộc thế giới.
+		</member>
+		<member name="last_at" type="float" setter="" getter="" default="0.0">
+			Mốc thời gian đã xử lý gần nhất.
+		</member>
+		<member name="loading" type="bool" setter="" getter="" default="true">
+			Ngăn mô phỏng trong lúc khôi phục dữ liệu.
+		</member>
+		<member name="_advancing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_placing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_boosted" type="Crop[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_weather_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_owner_signature" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="_owners" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_flowers_dirty" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_source_revision" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_nearby_signature" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="_nearby" type="Crop[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_crop_points" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_source_nodes" type="Node2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_source_cells" type="Vector2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_source_rows" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_assigned_sources" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_assigned_signature" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="_assigned_from" type="float" setter="" getter="" default="inf">
+		</member>
+		<member name="_assigned_until" type="float" setter="" getter="" default="inf_neg">
+		</member>
+	</members>
+	<constants>
+		<constant name="Assignment" value="&lt;Object&gt;">
+			Bộ chọn tổ theo hình học và slot cố định.
+		</constant>
+	</constants>
+</class>

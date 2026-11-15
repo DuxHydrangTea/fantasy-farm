@@ -1,20 +1,31 @@
 class_name SaveSchema
 extends RefCounted
-## Primitive-only, versioned DTO boundary shared by disk and future HTTP backends.
-const VERSION: int = 42
+## Biên dữ liệu lưu có phiên bản, dùng chung cho backend cục bộ và backend khác.
+## Snapshot dùng dữ liệu cơ bản và mã resource được kiểm tra qua SaveCatalog.
+## Các phiên bản cũ được chuyển tuần tự trước khi xác thực cấu trúc hiện hành.
+
+## Phiên bản schema hiện hành.
+const VERSION: int = 43
+## Script kiểm tra và chuyển trạng thái sâu cỏ.
 const CropConditions = preload("res://components/crop_condition_state.gd")
+## Script kiểm tra trạng thái bệnh vật nuôi.
 const AnimalHealth = preload("res://components/animals/animal_health_state.gd")
+## Bố cục vườn hoa và ánh xạ tọa độ cũ.
 const FlowerLayout = preload("res://scripts/flower_garden_layout.gd")
 
+## Tạo kết quả lỗi có mã, chuỗi nguồn và giá trị để định dạng sau khi dịch.
 static func failure(message: String, code: String = "invalid", values: Dictionary = {}) -> Dictionary:
 	return {"ok": false, "code": code, "error": message, "error_values": values}
 
+## Kiểm tra số hữu hạn trong khoảng đóng; integer yêu cầu giá trị nguyên.
 static func number(value: Variant, low: float = 0.0, high: float = 1.0e12, integer: bool = false) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and float(value) >= low and float(value) <= high and (not integer or float(value) == floor(float(value)))
 
+## Kiểm tra mảng hai tọa độ hữu hạn trong giới hạn; integral yêu cầu tọa độ nguyên.
 static func vector(value: Variant, integral: bool = false) -> bool:
 	return value is Array and value.size() == 2 and number(value[0], -1000000, 1000000, integral) and number(value[1], -1000000, 1000000, integral)
 
+## Kiểm tra chuỗi định danh hợp lệ, độ dài từ 1 đến 100 ký tự.
 static func identifier(value: Variant) -> bool:
 	return value is String and value.length() > 0 and value.length() <= 100 and value.is_valid_identifier()
 
@@ -24,6 +35,9 @@ static func identifier(value: Variant) -> bool:
 # duplicate(true) trước khi migrate để caller/backup vẫn giữ nguyên bản đầu vào nếu kiểm tra thất bại.
 # Các Resource chỉ được tìm bằng ID trong catalog cho phép; không load đường dẫn tùy ý từ file.
 # Nếu bỏ validation, dữ liệu lỗi/không tương thích có thể đi vào scene rồi làm mất trạng thái đang chơi.
+## Chuyển tuần tự snapshot cũ và kiểm tra toàn bộ dữ liệu theo schema hiện tại.
+## Trả snapshot đã kiểm tra hoặc lỗi có mã. Phiên bản mới hơn game bị từ chối;
+## các bước chuyển tạo bản sao sâu trước khi thay đổi dữ liệu đầu vào.
 static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 	if not data is Dictionary:
 		return failure("Save data is not an object.")
@@ -377,6 +391,10 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		if not _migrate_farmland(data, catalog):
 			return failure("Invalid legacy farmland state.")
 		data.version = 42
+	if data.get("version") == 42:
+		data = data.duplicate(true)
+		data["pen_produce"] = [] # Legacy piles are moved by the scene adapter.
+		data.version = 43
 	if data.get("version") != VERSION or data.get("world_id") != "main_world" or not identifier(data.get("profile_id")) or not number(data.get("revision"), 1, 1.0e12, true) or not number(data.get("saved_at")):
 		return failure("Invalid save header or version.")
 	if data.has("wall_saved_at") and not number(data.wall_saved_at):
@@ -465,6 +483,8 @@ static func validate(data: Variant, catalog: SaveCatalog) -> Dictionary:
 		for row: Variant in data.animals + data.troughs:
 			if not row is Dictionary or not pen_ids.has(row.get("pen")):
 				return failure("An animal or trough does not belong to a declared pen.")
+	if not preload("res://persistence/pen_produce_save_schema.gd").valid(data.get("pen_produce"), catalog, data.get("animal_pens", [])):
+		return failure("Invalid pen produce storage.")
 	var player: Variant = data.get("player")
 	if not player is Dictionary or not vector(player.get("position")) or not ["left", "right", "up", "down"].has(player.get("facing")) or not number(player.get("selected_slot"), -1, 5, true):
 		return failure("Invalid player data.")

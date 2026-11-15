@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventoryComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Inventory theo ô với giới hạn chồng và chất lượng vật phẩm.
+	</brief_description>
+	<description>
+		Mỗi ô gồm resource item, tổng count và ba số lượng tiers. Các chồng đang dùng chỉ chứa một cấp chất lượng. Hàm thêm và chuyển trả số lượng thực tế, giúp nơi gọi giữ lại phần không vừa.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="stack_limit_for">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+				Giới hạn chồng thực tế sau khi xét cấu hình inventory và vật phẩm.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ensure_slots">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="slot">
+			<return type="Dictionary" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Trả bản sao sâu của ô, hoặc ô rỗng nếu chỉ số ngoài phạm vi.
+			</description>
+		</method>
+		<method name="get_slot_item">
+			<return type="ItemDefinition" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Lấy vật phẩm trong ô, hoặc null nếu ô rỗng hay chỉ số không hợp lệ.
+			</description>
+		</method>
+		<method name="get_slot_count">
+			<return type="int" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Lấy số lượng trong ô, hoặc 0 nếu chỉ số không hợp lệ.
+			</description>
+		</method>
+		<method name="is_empty_slot">
+			<return type="bool" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Kiểm tra ô không có vật phẩm; chỉ số ngoài phạm vi cũng được xem là rỗng.
+			</description>
+		</method>
+		<method name="replace_slots">
+			<return type="bool" />
+			<param index="0" name="stacks" type="Dictionary[]" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Kiểm tra toàn bộ danh sách rồi thay nội dung trong một bước. Yêu cầu đúng số ô, số lượng và cấp chất lượng hợp lệ. Tùy chọn phát changed.
+			</description>
+		</method>
+		<method name="add">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="tier" type="int" default="0" />
+			<param index="3" name="notify" type="bool" default="true" />
+			<description>
+				Thêm tối đa số lượng yêu cầu, gộp chồng cùng mã và cấp trước khi dùng ô trống. Trả số lượng thực nhận; nơi gọi phải giữ lại phần dư nếu inventory đầy.
+			</description>
+		</method>
+		<method name="consume">
+			<return type="int[]" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="mode" type="Dictionary" default="{}" />
+			<param index="3" name="notify" type="bool" default="true" />
+			<description>
+				Lấy tối đa số lượng yêu cầu theo thứ tự cấp trong mode. Mode rỗng chỉ lấy cấp thường. Trả mảng số lượng đã lấy ở từng cấp.
+			</description>
+		</method>
+		<method name="remove">
+			<return type="int" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="notify" type="bool" default="true" />
+			<description>
+				Lấy vật phẩm cấp thường theo mã và trả số thực lấy.
+			</description>
+		</method>
+		<method name="remove_from_slot">
+			<return type="int" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="notify" type="bool" default="true" />
+			<param index="3" name="tier" type="int" default="0" />
+			<description>
+				Lấy tối đa số lượng ở cấp chỉ định từ một ô, trả số thực lấy.
+			</description>
+		</method>
+		<method name="transfer_slot_to">
+			<return type="int" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="target" type="InventoryComponent" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="notify" type="bool" default="true" />
+			<description>
+				Chuyển tối đa số lượng từ một ô sang inventory khác và trả số thực chuyển. Cập nhật cả hai phía trước khi phát signal, giữ lại phần đích không nhận được.
+			</description>
+		</method>
+		<method name="count">
+			<return type="int" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="tier" type="int" default="0" />
+			<description>
+				Đếm vật phẩm theo mã và cấp; cấp -1 đếm mọi cấp.
+			</description>
+		</method>
+		<method name="has">
+			<return type="bool" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="tier" type="int" default="0" />
+			<description>
+				Kiểm tra inventory có ít nhất số lượng không âm theo mã và cấp.
+			</description>
+		</method>
+		<method name="capacity_for">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="tier" type="int" default="0" />
+			<description>
+				Tính sức chứa còn lại cho vật phẩm và cấp, gồm chồng tương thích và ô trống.
+			</description>
+		</method>
+		<method name="report_capacity_blocked">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="requested" type="int" />
+			<param index="2" name="tier" type="int" default="0" />
+			<description>
+				Phát capacity_blocked khi sức chứa thực tế ít hơn số lượng yêu cầu.
+			</description>
+		</method>
+		<method name="count_item">
+			<return type="int" />
+			<param index="0" name="item_id" type="StringName" />
+			<param index="1" name="tier" type="int" default="0" />
+			<description>
+				Tổng số vật phẩm theo mã và cấp; cấp -1 cộng mọi cấp.
+			</description>
+		</method>
+		<method name="move_slot">
+			<return type="bool" />
+			<param index="0" name="source" type="int" />
+			<param index="1" name="target" type="int" />
+			<description>
+				Gộp hai ô cùng vật phẩm và cấp nếu còn chỗ, hoặc hoán đổi hai ô. Trả false khi chỉ số sai, ô nguồn rỗng hoặc chồng đích đã đầy.
+			</description>
+		</method>
+		<method name="restore_slots">
+			<return type="bool" />
+			<param index="0" name="stacks" type="Dictionary[]" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Đổi số ô để khôi phục dữ liệu lưu, rồi thay các ô sau khi kiểm tra. Nếu dữ liệu không hợp lệ, khôi phục số ô trước đó và trả false.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="slot_count" type="int" setter="" getter="" default="64">
+			Số ô trong inventory.
+		</member>
+		<member name="starting_tools" type="bool" setter="" getter="" default="true">
+			Tạo cuốc và bình tưới trong các ô đầu khi khởi tạo.
+		</member>
+		<member name="stack_cap" type="int" setter="" getter="" default="0">
+			Trần bổ sung cho số lượng mỗi chồng; 0 dùng giới hạn của vật phẩm.
+		</member>
+		<member name="_slots" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát sau khi nội dung thay đổi nếu thao tác bật thông báo.
+			</description>
+		</signal>
+		<signal name="capacity_blocked">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="requested" type="int" />
+			<param index="2" name="available" type="int" />
+			<description>
+				Phát khi sức chứa cho vật phẩm và cấp được yêu cầu không đủ.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="DEFAULT_SLOT_COUNT" value="64">
+			Số ô mặc định của túi mới.
+		</constant>
+		<constant name="LEGACY_SLOT_COUNT" value="24">
+			Số ô của túi phiên bản cũ.
+		</constant>
+		<constant name="HOE" value="&lt;Object&gt;">
+			Cuốc ban đầu.
+		</constant>
+		<constant name="WATER" value="&lt;Object&gt;">
+			Bình tưới ban đầu.
+		</constant>
+	</constants>
+</class>

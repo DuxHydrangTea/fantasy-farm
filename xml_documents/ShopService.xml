@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Báo giá và thực hiện mua vật phẩm trong cửa hàng. Chuẩn bị toàn bộ nội dung túi trước khi ghi ví và inventory, đồng thời phối hợp giới hạn mua gỗ hằng ngày khi lựa chọn là gỗ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="stock" type="ShopCatalog" />
+			<param index="1" name="purse" type="WalletComponent" />
+			<param index="2" name="bag" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="offer" type="ShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<description>
+				Kiểm tra lựa chọn, số lượng 1–99, tiền, sức chứa và giới hạn gỗ. Trả tổng giá hoặc lỗi giải thích vì sao không mua được.
+			</description>
+		</method>
+		<method name="buy">
+			<return type="Dictionary" />
+			<param index="0" name="offer" type="ShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<description>
+				Kiểm tra lại báo giá và mua toàn bộ số lượng yêu cầu. Giao dịch chặn gọi lồng nhau và khôi phục ví, túi nếu bước commit thất bại.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="ShopCatalog" setter="" getter="">
+			Catalog các lựa chọn được phép mua.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví thanh toán.
+		</member>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+			Túi nhận vật phẩm.
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới tùy chọn để kiểm tra giao dịch khác và giới hạn mua gỗ.
+		</member>
+	</members>
+	<signals>
+		<signal name="purchased">
+			<param index="0" name="offer" type="ShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<param index="2" name="total" type="int" />
+			<description>
+				Phát lựa chọn, số lượng và tổng giá sau khi mua thành công.
+			</description>
+		</signal>
+	</signals>
+</class>

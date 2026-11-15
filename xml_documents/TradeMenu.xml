@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TradeMenu" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vòng đời chung của menu giao dịch dạng modal; lớp giao diện con cung cấp nội dung và lệnh.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open">
+			<return type="bool" />
+			<param index="0" name="owner_npc" type="ShopMerchant" />
+			<param index="1" name="player" type="FarmPlayer" />
+			<description>
+				Mở menu cho người chơi nếu chưa có menu khác và giữ tham chiếu người bán.
+			</description>
+		</method>
+		<method name="_wallet_changed">
+			<return type="void" />
+			<param index="0" name="_balance" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_inventory_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" default="true" />
+			<description>
+				Đóng menu, tùy chọn lời cảm ơn và giải phóng khóa tương tác.
+			</description>
+		</method>
+		<method name="_finish_close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="close_button" type="Button" setter="" getter="">
+		</member>
+		<member name="merchant" type="ShopMerchant" setter="" getter="">
+		</member>
+		<member name="customer" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="bought_this_visit" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="is_open" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_closing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_slide" type="Node" setter="" getter="">
+		</member>
+	</members>
+	<signals>
+		<signal name="visit_started">
+			<description>
+			</description>
+		</signal>
+		<signal name="models_changed">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

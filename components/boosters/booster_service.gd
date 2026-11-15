@@ -1,8 +1,13 @@
 class_name BoosterService
 extends RefCounted
-## Commands synchronize old time, validate, then consume exactly one item on success.
+## Áp dụng vật phẩm tăng cường cho cây hoặc vật nuôi và chỉ tiêu vật phẩm khi thành công.
+## Đồng bộ vật nuôi trước khi dùng thuốc để hiệu ứng không tính ngược vào thời gian ngoại tuyến.
+
 var _busy: bool = false
 
+## Kiểm tra ô túi vẫn chứa booster đã chọn rồi áp dụng theo loại.
+## Thuốc thú y còn kiểm tra khoảng cách và đường nhìn đến vật nuôi.
+## Trả ok true khi áp dụng và tiêu một đơn vị, hoặc ok false cùng lỗi.
 func use(farm: FarmingController, cell: Vector2i, animal: AnimalActor, bag: InventoryComponent, slot: int, item: ItemDefinition, actor: PhysicsBody2D) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A booster is being applied."}

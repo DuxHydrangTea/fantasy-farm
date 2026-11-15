@@ -1,6 +1,7 @@
 class_name BoosterInteractionComponent
 extends Node2D
-## Player-side input/presentation adapter. StateComponent owns the tool animation.
+## Xử lý lựa chọn, mục tiêu và phản hồi khi người chơi dùng vật phẩm chăm sóc cây hoặc vật nuôi.
+
 signal feedback_changed
 const HealingEffect = preload("res://components/animals/animal_healing_effect.gd")
 const CareBubble = preload("res://components/animals/animal_care_bubble.gd")
@@ -25,10 +26,12 @@ func _ready() -> void:
 	player.animation.animated_sprite.frame_changed.connect(_frame_changed)
 	player.animation.animated_sprite.animation_changed.connect(_frame_changed, CONNECT_DEFERRED)
 
+## Trả vật phẩm tăng cường đang chọn nếu đúng loại.
 func selected_booster() -> ItemDefinition:
 	var item: ItemDefinition = player.selection.get_selected_item()
 	return item if item != null and item.item_type == ItemDefinition.ItemType.BOOSTER else null
 
+## Tìm vật nuôi gần người chơi để áp dụng vật phẩm.
 func find_animal() -> AnimalActor:
 	var nearest: AnimalActor
 	var distance: float = 32.0 * 32.0
@@ -46,6 +49,7 @@ func find_animal() -> AnimalActor:
 		nearest = animal
 	return nearest
 
+## Xác định và chuẩn bị hành động dùng vật phẩm tăng cường theo mục tiêu.
 func prepare_action() -> StringName:
 	_weeding = false
 	_pending = &""
@@ -64,6 +68,7 @@ func prepare_action() -> StringName:
 	feedback_changed.emit()
 	return _pending
 
+## Thử dùng thuốc lên vật nuôi gần điểm nhấp; trả liệu nhấp đã được xử lý.
 func click_medicine(point: Vector2) -> bool:
 	var item: ItemDefinition = selected_booster()
 	if item == null or item.booster_kind != ItemDefinition.BoosterKind.ANIMAL_MEDICINE or player.interactions == null:
@@ -140,14 +145,17 @@ func _frame_changed() -> void:
 		_feedback = ("Animal cured!" if _item.booster_kind == ItemDefinition.BoosterKind.ANIMAL_MEDICINE else "Pests removed!" if _item.booster_kind == ItemDefinition.BoosterKind.PESTICIDE else "Booster applied!") if result.ok else String(result.error)
 	_feedback_until = Time.get_ticks_msec() + 1800
 
+## Trả thông báo còn hiệu lực cho ô đang chọn, hoặc chuỗi rỗng.
 func feedback_source() -> String:
 	if Time.get_ticks_msec() >= _feedback_until or player.selection.selected_index != _slot:
 		return ""
 	return _feedback
 
+## Trả thời điểm hết hạn thông báo theo đồng hồ hệ thống, hoặc 0.
 func feedback_expires_at() -> int:
 	return _feedback_until if player.selection.selected_index == _slot and not _feedback.is_empty() else 0
 
+## Chuẩn bị động tác nhổ cỏ cho cây và chốt ô vật phẩm.
 func prepare_weeding(crop: Crop) -> void:
 	_weeding = true
 	_weed_crop = crop

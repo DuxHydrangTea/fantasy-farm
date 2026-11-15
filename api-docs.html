@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fantasy Farm · API Reference</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f8faf6;
+            --surface: #fff;
+            --ink: #263b30;
+            --muted: #718177;
+            --line: #e1eae0;
+            --accent: #397352;
+            --soft: #e9f3e8;
+            --code: #f3f7f1
+        }
+
+        html[data-theme=dark] {
+            color-scheme: dark;
+            --bg: #141d18;
+            --surface: #1b2820;
+            --ink: #e5eee3;
+            --muted: #a2b3a4;
+            --line: #334438;
+            --accent: #9dd7aa;
+            --soft: #273e2e;
+            --code: #243229
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 14px/1.6 system-ui, -apple-system, Segoe UI, sans-serif
+        }
+
+        button,
+        input {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        header {
+            height: 68px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 28px;
+            position: sticky;
+            top: 0;
+            z-index: 4
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 230px
+        }
+
+        .mark {
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            background: #387550;
+            color: white;
+            font-size: 20px
+        }
+
+        .brand strong {
+            display: block;
+            line-height: 1.2
+        }
+
+        .brand small {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+
+        .search {
+            position: relative;
+            flex: 1;
+            max-width: 470px
+        }
+
+        .search input {
+            width: 100%;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            color: var(--ink);
+            border-radius: 9px;
+            padding: 10px 13px
+        }
+
+        .shortcut {
+            position: absolute;
+            right: 10px;
+            top: 9px;
+            color: var(--muted);
+            font-size: 11px
+        }
+
+        .actions {
+            margin-left: auto;
+            display: flex;
+            gap: 8px
+        }
+
+        .btn {
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            background: var(--surface);
+            color: var(--ink);
+            padding: 8px 12px
+        }
+
+        .btn:hover {
+            background: var(--soft)
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr) 210px;
+            max-width: 1700px;
+            margin: auto
+        }
+
+        aside {
+            position: sticky;
+            top: 68px;
+            height: calc(100vh - 68px);
+            overflow: auto
+        }
+
+        .sidebar {
+            border-right: 1px solid var(--line);
+            padding: 25px 16px
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+
+        .sidehead {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px 13px
+        }
+
+        .count {
+            color: var(--muted)
+        }
+
+        #nav a {
+            display: block;
+            padding: 7px 10px;
+            border-radius: 7px;
+            color: var(--ink);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        #nav a:hover,
+        #nav a.active {
+            background: var(--soft);
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        #nav a.active {
+            font-weight: 700
+        }
+
+        .main {
+            min-width: 0;
+            padding: 45px clamp(24px, 5vw, 78px) 90px
+        }
+
+        .content {
+            max-width: 880px;
+            margin: auto
+        }
+
+        .crumb {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 26px
+        }
+
+        .pill {
+            display: inline-block;
+            background: var(--soft);
+            color: var(--accent);
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase
+        }
+
+        h1 {
+            font-size: clamp(32px, 4vw, 46px);
+            letter-spacing: -.04em;
+            line-height: 1.15;
+            margin: 12px 0
+        }
+
+        h2 {
+            font-size: 23px;
+            letter-spacing: -.025em;
+            margin: 50px 0 16px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 12px
+        }
+
+        h3 {
+            font-size: 16px;
+            margin: 0 0 10px
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 16px;
+            max-width: 720px
+        }
+
+        .inherit {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 11px;
+            background: var(--surface);
+            padding: 18px 20px;
+            margin: 12px 0;
+            scroll-margin-top: 95px
+        }
+
+        .card p {
+            margin: 10px 0 0
+        }
+
+        .signature {
+            font: 13px/1.7 ui-monospace, Consolas, monospace;
+            overflow-wrap: anywhere;
+            color: var(--accent)
+        }
+
+        code {
+            font-family: ui-monospace, Consolas, monospace;
+            background: var(--code);
+            padding: 2px 5px;
+            border-radius: 4px
+        }
+
+        .meta {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px
+        }
+
+        .copy {
+            float: right;
+            border: 0;
+            background: none;
+            color: var(--muted);
+            font-size: 16px
+        }
+
+        .toc {
+            padding: 37px 18px;
+            border-left: 1px solid var(--line)
+        }
+
+        .toc a {
+            display: block;
+            padding: 4px 0;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .toc a.active {
+            color: var(--accent);
+            font-weight: 700
+        }
+
+        .empty {
+            padding: 40px;
+            border: 1px dashed var(--line);
+            border-radius: 14px;
+            margin-top: 30px
+        }
+
+        .empty h2 {
+            border: 0;
+            margin: 0;
+            padding: 0
+        }
+
+        .notice {
+            font-size: 12px;
+            color: var(--muted);
+            padding: 12px 10px
+        }
+
+        .internal {
+            display: block;
+            padding: 12px 10px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .mobile {
+            display: none
+        }
+
+        .error {
+            color: #bb5d50
+        }
+
+        .results {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 12px 30px #0002;
+            max-height: 60vh;
+            overflow: auto
+        }
+
+        .results:empty {
+            display: none
+        }
+
+        .results button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px 14px;
+            border: 0;
+            border-bottom: 1px solid var(--line);
+            background: transparent;
+            color: var(--ink)
+        }
+
+        .results button:hover,
+        .results button:focus {
+            background: var(--soft)
+        }
+
+        .results small {
+            display: block;
+            color: var(--muted)
+        }
+
+        @media(max-width:1100px) {
+            .layout {
+                grid-template-columns: 240px minmax(0, 1fr)
+            }
+
+            .toc {
+                display: none
+            }
+        }
+
+        @media(max-width:700px) {
+            header {
+                padding: 0 14px;
+                gap: 8px
+            }
+
+            .brand {
+                min-width: 0
+            }
+
+            .brand div:not(.mark) {
+                display: none
+            }
+
+            .shortcut {
+                display: none
+            }
+
+            .actions .label {
+                display: none
+            }
+
+            .mobile {
+                display: inline-block
+            }
+
+            .layout {
+                display: block
+            }
+
+            .sidebar {
+                display: none;
+                position: fixed;
+                top: 68px;
+                left: 0;
+                z-index: 3;
+                width: min(300px, 85vw);
+                background: var(--surface);
+                box-shadow: 10px 0 30px #0002
+            }
+
+            .sidebar.open {
+                display: block
+            }
+
+            .main {
+                padding: 30px 20px 70px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header><button class="btn mobile" id="menu" aria-label="Mở mục lục">☰</button>
+        <div class="brand">
+            <div class="mark">✳</div>
+            <div><strong>Fantasy Farm</strong><small>Developer reference</small></div>
+        </div>
+        <div class="search"><input id="search" placeholder="Tìm class, method, property..." autocomplete="off"
+                aria-label="Tìm tài liệu"><span class="shortcut">Ctrl K</span>
+            <div id="results" class="results"></div>
+        </div>
+        <div class="actions"><button id="theme" class="btn" aria-label="Đổi giao diện">◐</button><button id="pick"
+                class="btn">↥ <span class="label">Nạp XML</span></button><input id="files" type="file" accept=".xml"
+                webkitdirectory multiple hidden></div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidehead"><span class="eyebrow">Tài liệu API</span><span class="count" id="count">0</span></div>
+            <nav id="nav" aria-label="Danh sách tài liệu"></nav><label class="internal"><input type="checkbox"
+                    id="internal"> Hiện thành viên nội bộ</label>
+            <div class="notice" id="status">Đang tải tài liệu...</div>
+        </aside>
+        <main class="main">
+            <div class="content" id="content"></div>
+        </main>
+        <aside class="toc"><span class="eyebrow">Trong bài viết</span>
+            <nav id="toc"></nav>
+        </aside>
+    </div>
+    <script>
+        'use strict';
+        const $ = s => document.querySelector(s), state = { docs: [], current: null, observer: null }; const key = 'fantasy-farm-api-docs-v1'; let saved = {}; try { saved = JSON.parse(localStorage.getItem(key) || '{}') } catch { }; let timer; function save() { try { localStorage.setItem(key, JSON.stringify(saved)) } catch { } }; function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd') }; function el(tag, text, cls) { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (cls) n.className = cls; return n } function parse(name, text) { const xml = new DOMParser().parseFromString(text, 'application/xml'); if (xml.querySelector('parsererror') || xml.documentElement.tagName !== 'class') throw Error('XML không hợp lệ'); const root = xml.documentElement; return { file: name, name: root.getAttribute('name') || name, root, search: norm(root.textContent + ' ' + root.getAttribute('name')) } } function title(d) { return d.name.replace(/^"|"$/g, '') }; function children(n, sel) { return [...n.querySelectorAll(sel)] } function text(n, sel) { return n.querySelector(sel)?.textContent.trim() || '' } function isInternal(n) { return (n.getAttribute('name') || '').startsWith('_') }; function idFor(type, node, i) { return type + ':' + node.getAttribute('name') + ':' + i } function link(doc, member) { const p = new URLSearchParams({ doc: doc.file }); if (member) p.set('member', member); return '#' + p.toString() }; function getRoute() { return new URLSearchParams(location.hash.slice(1)) } function navigate(doc, member) { location.hash = link(doc, member) } function markup(parent, value) { const re = /\[(code|method|member|signal|constant|param)(?:\s+([^\]]+))?\](?:([^]*?)\[\/\1\])?/g; let last = 0, m; while ((m = re.exec(value))) { parent.append(document.createTextNode(value.slice(last, m.index))); let label = m[2] || m[3] || ''; let n = el('code', label); if (m[2] && ['method', 'member', 'signal', 'constant'].includes(m[1])) { let target = label.split('.').pop(); let a = el('a'); a.href = link(state.current, m[1] + ':' + target + ':0'); a.append(n); n = a } parent.append(n); last = re.lastIndex } parent.append(document.createTextNode(value.slice(last))) }
+        function nav() { const list = $('#nav'); list.replaceChildren(); state.docs.forEach(d => { let a = el('a', title(d), state.current === d ? 'active' : ''); a.href = link(d); if (state.current === d) a.setAttribute('aria-current', 'page'); list.append(a) }); $('#count').textContent = state.docs.length; $('#nav .active')?.scrollIntoView({ block: 'nearest' }) }
+        function render(doc, member, restore = false) { state.current = doc; nav(); $('#sidebar').classList.remove('open'); let c = $('#content'); c.replaceChildren(); $('#toc').replaceChildren(); c.append(el('div', 'DOCUMENTATION  /  ' + title(doc), 'crumb'), el('span', 'Class reference', 'pill'), el('h1', title(doc))); let inh = doc.root.getAttribute('inherits'); if (inh) c.append(el('div', 'HẾ THỪA  ' + inh, 'inherit')); let brief = text(doc.root, 'brief_description'); if (brief) { let p = el('p', undefined, 'lead'); markup(p, brief); c.append(p) } let desc = text(doc.root, ':scope > description'); if (desc) { let p = el('p'); markup(p, desc); c.append(p) } const sections = [['members > member', 'Properties', 'member'], ['methods > method', 'Methods', 'method'], ['signals > signal', 'Signals', 'signal'], ['constants > constant', 'Constants', 'constant'], ['tutorials > link', 'Tutorials', 'tutorial']]; for (const [selector, label, type] of sections) { let nodes = children(doc.root, selector).filter(n => $('#internal').checked || !isInternal(n)); if (!nodes.length) continue; let section = el('section'); section.id = 'section-' + type; section.append(el('h2', label)); let toc = el('a', label); toc.href = '#'; toc.onclick = e => { e.preventDefault(); section.scrollIntoView({ behavior: 'smooth' }) }; $('#toc').append(toc); nodes.forEach((n, i) => { let card = el('article', undefined, 'card'); card.id = idFor(type, n, i); let copy = el('button', '↗', 'copy'); copy.title = 'Sao chép liên kết'; copy.setAttribute('aria-label', 'Sao chép liên kết'); copy.onclick = () => { navigator.clipboard?.writeText(new URL(link(doc, card.id), location.href).href); copy.textContent = '✓' }; card.append(copy); let name = n.getAttribute('name') || n.textContent.trim(); let params = children(n, ':scope > param').map(p => p.getAttribute('name') + ': ' + p.getAttribute('type') + (p.hasAttribute('default') ? ' = ' + p.getAttribute('default') : '')); let sig = type === 'method' || type === 'signal' ? name + '(' + params.join(', ') + ')' + (n.querySelector('return') ? ' → ' + n.querySelector('return').getAttribute('type') : '') : name + (n.getAttribute('type') ? ' : ' + n.getAttribute('type') : '') + (n.hasAttribute('value') ? ' = ' + n.getAttribute('value') : ''); card.append(el('div', sig, 'signature')); if (n.hasAttribute('default')) card.append(el('div', 'Mặc định: ' + n.getAttribute('default'), 'meta')); let description = type === 'member' || type === 'constant' ? n.textContent.trim() : text(n, ':scope > description'); if (description) { let p = el('p'); markup(p, description); card.append(p) } section.append(card) }); c.append(section) } saved.lastDocument = doc.file; save(); requestAnimationFrame(() => { if (member) { let target = document.getElementById(member); if (target) target.scrollIntoView(); else if (restore) window.scrollTo(0, saved.scrollOffset || 0) } else if (restore) window.scrollTo(0, saved.scrollOffset || 0); else window.scrollTo(0, 0) }) }
+        function route(restore = false) { let r = getRoute(), file = r.get('doc') || (restore ? saved.lastDocument : null), d = state.docs.find(x => x.file === file); if (d) render(d, r.get('member'), restore && !r.get('doc')); else { state.current = null; nav(); $('#toc').replaceChildren(); let c = $('#content'); c.replaceChildren(el('div', 'FANTASY FARM  /  API REFERENCE', 'crumb'), el('span', 'Tài liệu dự án', 'pill'), el('h1', 'Khám phá mã nguồn.'), el('p', 'Tìm hiểu các class, thuộc tính và phương thức trong Fantasy Farm.', 'lead')); let box = el('div', undefined, 'empty'); box.append(el('h2', state.docs.length ? 'Chọn một tài liệu' : 'Bắt đầu đọc tài liệu'), el('p', state.docs.length ? 'Chọn một class trong danh sách hoặc tìm kiếm ở phía trên.' : 'Chọn thư mục xml_documents để nạp tài liệu từ máy của bạn.')); let b = el('button', 'Nạp thư mục XML', 'btn'); b.onclick = () => $('#files').click(); box.append(b); c.append(box) } }
+        async function load(entries, source) { let docs = [], bad = 0; for (const [name, read] of entries) { try { docs.push(parse(name, await read())) } catch { bad++ } } state.docs = docs.sort((a, b) => title(a).localeCompare(title(b), 'vi')); $('#status').textContent = state.docs.length + ' tài liệu · ' + source + (bad ? ' · ' + bad + ' file lỗi' : ''); route(true) }
+        $('#pick').onclick = () => $('#files').click(); $('#files').onchange = async e => { let files = [...e.target.files].filter(f => f.name.toLowerCase().endsWith('.xml')); await load(files.map(f => [f.name, () => f.text()]), 'đã nạp'); try { let db = await new Promise((resolve, reject) => { let req = indexedDB.open('fantasy-farm-docs', 1); req.onupgradeneeded = () => req.result.createObjectStore('files'); req.onsuccess = () => resolve(req.result); req.onerror = reject }); let tx = db.transaction('files', 'readwrite'); tx.objectStore('files').put(await Promise.all(files.map(async f => [f.name, await f.text()])), 'xml') } catch { } };
+        async function init() { try { let res = await fetch('xml_documents/manifest.json'); if (!res.ok) throw Error(); let names = await res.json(); await load(names.map(name => [name, async () => { let r = await fetch('xml_documents/' + encodeURIComponent(name)); if (!r.ok) throw Error(); return r.text() }]), 'localhost'); return } catch { } try { let db = await new Promise((resolve, reject) => { let req = indexedDB.open('fantasy-farm-docs', 1); req.onupgradeneeded = () => req.result.createObjectStore('files'); req.onsuccess = () => resolve(req.result); req.onerror = reject }); let data = await new Promise((resolve, reject) => { let r = db.transaction('files').objectStore('files').get('xml'); r.onsuccess = () => resolve(r.result); r.onerror = reject }); if (data?.length) { await load(data.map(([n, t]) => [n, () => Promise.resolve(t)]), 'bản lưu'); return } } catch { } $('#status').textContent = 'Chưa nạp tài liệu'; route(true) }
+        window.addEventListener('hashchange', () => route()); window.addEventListener('scroll', () => { if (!state.current) return; clearTimeout(timer); timer = setTimeout(() => { saved.scrollOffset = Math.round(window.scrollY); save(); let sections = [...document.querySelectorAll('#content section')]; let current = sections.filter(s => s.getBoundingClientRect().top < 130).pop();[...$('#toc').children].forEach((a, i) => a.classList.toggle('active', sections[i] === current)) }, 150) }, { passive: true }); $('#internal').checked = !!saved.showInternal; $('#internal').onchange = () => { saved.showInternal = $('#internal').checked; save(); if (state.current) render(state.current, getRoute().get('member')) }; $('#menu').onclick = () => $('#sidebar').classList.toggle('open'); function applyTheme() { let dark = saved.theme === 'dark' || (!saved.theme && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.dataset.theme = dark ? 'dark' : 'light' } $('#theme').onclick = () => { saved.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; save(); applyTheme() }; applyTheme(); document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#search').focus() } if (e.key === 'Escape') { $('#results').replaceChildren(); $('#search').blur() } });
+        $('#search').oninput = () => { let q = norm($('#search').value.trim()), out = $('#results'); out.replaceChildren(); if (!q) return; let hits = []; for (let d of state.docs) { let name = norm(title(d)); if (name.includes(q)) hits.push({ d, label: title(d), score: name === q ? 0 : name.startsWith(q) ? 1 : 2 }); for (let [sel, type] of [['methods > method', 'method'], ['members > member', 'member'], ['signals > signal', 'signal'], ['constants > constant', 'constant']]) children(d.root, sel).filter(n => $('#internal').checked || !isInternal(n)).forEach((n, i) => { let name = n.getAttribute('name') || ''; if (norm(name).includes(q) || norm(n.textContent).includes(q)) hits.push({ d, label: name, member: idFor(type, n, i), score: norm(name).includes(q) ? 3 : 4 }) }); if (!hits.some(h => h.d === d) && d.search.includes(q)) hits.push({ d, label: title(d), score: 5 }) } hits.sort((a, b) => a.score - b.score || a.label.localeCompare(b.label)); if (!hits.length) { out.append(el('div', 'Không tìm thấy kết quả', 'notice')); return } hits.slice(0, 30).forEach(h => { let b = el('button', h.label); b.append(el('small', title(h.d) + (h.member ? ' · ' + h.member.split(':')[0] : ''))); b.onclick = () => { out.replaceChildren(); $('#search').value = ''; navigate(h.d, h.member) }; out.append(b) }) }; init();
+    </script>
+</body>
+
+</html>

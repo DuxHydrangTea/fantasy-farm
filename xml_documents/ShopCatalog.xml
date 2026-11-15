@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Dữ liệu hiển thị cửa hàng và các danh sách hàng bán.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="display_name" type="String" setter="" getter="" default="&quot;LAI BUON\&apos;S SHOP&quot;">
+			Tên cửa hàng hiển thị cho người chơi.
+		</member>
+		<member name="category_ids" type="int[]" setter="" getter="" default="[...]">
+			Các mã danh mục được hiển thị.
+		</member>
+		<member name="offers" type="ShopOffer[]" setter="" getter="" default="[]">
+			Các lựa chọn mua vật phẩm.
+		</member>
+		<member name="animal_offers" type="AnimalShopOffer[]" setter="" getter="" default="[]">
+			Các lựa chọn mua vật nuôi.
+		</member>
+	</members>
+</class>

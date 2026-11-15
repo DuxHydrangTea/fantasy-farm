@@ -1,6 +1,8 @@
 class_name PenStatus
 extends RefCounted
-## Read-only pen membership and capacity-weighted trough levels.
+## Các truy vấn chỉ đọc phục vụ giao diện quản lý chuồng.
+
+## Liệt kê vật nuôi còn hợp lệ thuộc chuồng, sắp xếp theo mã ổn định.
 static func members(pen: AnimalPen) -> Array[AnimalActor]:
 	var result: Array[AnimalActor] = []
 	var status: AnimalStatusText = AnimalStatusText.new()
@@ -13,6 +15,9 @@ static func members(pen: AnimalPen) -> Array[AnimalActor]:
 	result.sort_custom(func(a: AnimalActor, b: AnimalActor) -> bool: return String(a.persistent_id) < String(b.persistent_id))
 	return result
 
+## Cộng tồn kho và sức chứa các máng cùng loại thuộc chuồng.
+## Trả [code]stock[/code], [code]capacity[/code] và phần trăm lượng khả dụng
+## trên tổng sức chứa. Khi không có sức chứa, phần trăm bằng 0.
 static func troughs(pen: AnimalPen, kind: AnimalTrough.Kind) -> Dictionary:
 	var stock: int = 0
 	var capacity: int = 0
@@ -25,6 +30,7 @@ static func troughs(pen: AnimalPen, kind: AnimalTrough.Kind) -> Dictionary:
 			capacity += trough.capacity
 	return {"stock": stock, "capacity": capacity, "percent": 100.0 * available / capacity if capacity > 0 else 0.0}
 
+## Trả tiêu đề đã dịch theo loại ao, chuồng gà hoặc chuồng gia súc.
 static func title(pen: AnimalPen) -> String:
 	if pen is PondPen:
 		return TranslationServer.translate("Pond management")
@@ -32,5 +38,6 @@ static func title(pen: AnimalPen) -> String:
 		return TranslationServer.translate("Coop management")
 	return TranslationServer.translate("Livestock management")
 
+## Tạo chuỗi sáu chữ số từ hash của mã ổn định để hiển thị ngắn.
 static func short_id(actor: AnimalActor) -> String:
 	return "%06d" % (String(actor.persistent_id).hash() % 1000000)

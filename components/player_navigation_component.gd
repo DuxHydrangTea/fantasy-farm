@@ -1,6 +1,7 @@
 class_name PlayerNavigationComponent
 extends Node
-## Approach a clicked focus point using the player's real collision footprint.
+## Tìm đường để người chơi tiếp cận điểm nhấp hoặc mục tiêu tương tác.
+## Lưới điều hướng dùng kích thước va chạm thực của nhân vật và cache các ô đã kiểm tra.
 
 signal focus_finished(reached: bool)
 signal focus_cancelled
@@ -66,6 +67,7 @@ func _geometry_changed(node: Node) -> void:
 # Thêm/xóa công trình hoặc đổi TileMap phải vô hiệu hóa cache để A* không dùng đường cũ.
 # Ô chưa dò lại được xem là bị chặn (bảo thủ): không suy đoán rằng nơi chưa biết chắc đi được.
 # Nếu bỏ bước này, player có thể liên tục chọn đường xuyên qua vật vừa được đặt.
+## Xóa cache ô điều hướng để xây dựng lại khi cần.
 func invalidate_cache() -> void:
 	_invalidate_pending = false
 	_sampled.clear()
@@ -76,6 +78,7 @@ func invalidate_cache() -> void:
 	if has_focus and is_navigating:
 		_needs_path = true
 
+## Vô hiệu các ô điều hướng giao với vùng thế giới đã thay đổi.
 func invalidate_region(world_rect: Rect2) -> void:
 	if _grid == null:
 		return
@@ -98,6 +101,7 @@ func _physics_process(_delta: float) -> void:
 			_sample(cell)
 			left -= 1
 
+## Yêu cầu tìm đường đến điểm với khoảng cách tiếp cận mặc định.
 func request_focus(point: Vector2) -> void:
 	_request(point, interaction_distance, Callable())
 
@@ -119,6 +123,7 @@ func _request(point: Vector2, reach: float, validator: Callable) -> void:
 	_replans = 0
 	_blocked_cells.clear()
 
+## Hủy mục tiêu, đường đi và yêu cầu tương tác đang chờ.
 func cancel() -> void:
 	_interaction_goal = Callable()
 	focus_cancelled.emit()
@@ -132,6 +137,7 @@ func cancel() -> void:
 	_blocked_cells.clear()
 	movement.cancel_target()
 
+## Di chuyển theo đường tới mục tiêu trong bước thời gian delta.
 func move(delta: float) -> void:
 	if not has_focus:
 		return
@@ -463,5 +469,6 @@ func _smooth_path(origin: Vector2) -> void:
 		next_index = chosen + 1
 	_path = smoothed
 
+## Tìm đường đến gần mục tiêu và kiểm tra lại bằng validator khi tới nơi.
 func request_interaction(point: Vector2, reach: float, validator: Callable) -> void:
 	_request(point, maxf(8.0, reach), validator)

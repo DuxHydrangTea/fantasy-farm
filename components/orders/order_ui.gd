@@ -1,6 +1,7 @@
 class_name OrderUI
 extends TradeMenu
-## Scene-authored order board; quotes and confirmations retain the exact tier plan.
+## Bảng đơn hàng khai báo trong scene; giao dịch giữ nguyên kế hoạch số lượng và chất lượng đã báo giá.
+
 var board: OrderBoard
 @onready var panel: PanelContainer = %Panel
 @onready var heading: Label = %Heading
@@ -277,6 +278,7 @@ func _cancel() -> void:
 	confirmation.hide()
 	(confirmation.get_meta(&"body") as Control).show()
 
+## Hủy thao tác đơn hàng đang chờ rồi đóng menu.
 func close(show_thanks: bool = true) -> void:
 	_cancel()
 	super.close(show_thanks)

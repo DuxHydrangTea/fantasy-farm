@@ -1,6 +1,9 @@
 @tool
 extends StaticBody2D
+## Chọn và cập nhật hình ảnh biến thể công trình trong editor và khi chạy game.
+## Setter của variant cập nhật sprite nếu node hình ảnh đã sẵn sàng.
 
+## Các biến thể hình ảnh được cấu hình cho công trình.
 enum Variant {
 	LIMESTONE_BLACK,
 	LIMESTONE_BLUE,
@@ -26,6 +29,7 @@ enum Variant {
 	RESTAURANT_KITCHEN,
 }
 
+## Bảng ánh xạ biến thể sang texture và thông tin frame tương ứng.
 const VARIANT_TEXTURES = {
 	Variant.LIMESTONE_BLACK: preload("res://assets/Buildings/Buildings/Houses/Limestone/House_1_Limestone_Base_Black.png"),
 	Variant.LIMESTONE_BLUE: preload("res://assets/Buildings/Buildings/Houses/Limestone/House_1_Limestone_Base_Blue.png"),
@@ -51,6 +55,7 @@ const VARIANT_TEXTURES = {
 	Variant.RESTAURANT_KITCHEN: preload("res://assets/Buildings/Extracted/VillageSet/restaurant_kitchen.png"),
 }
 
+## Biến thể hình ảnh đang chọn; thay đổi sẽ cập nhật sprite.
 @export var variant: Variant = Variant.LIMESTONE_BLACK:
 	set(value):
 		variant = value

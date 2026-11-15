@@ -1,6 +1,7 @@
 class_name FarmDebugConsole
 extends CanvasLayer
-## F1 modal; tree pause stops gameplay hotkeys, while this layer remains active.
+## Bảng điều khiển debug mở bằng F1, tạm dừng game trong khi giao diện vẫn nhận đầu vào.
+
 var world: FarmWorld
 var commands: FarmDebugCommands
 var panel: PanelContainer
@@ -70,6 +71,7 @@ func _write(text: String) -> void:
 	var content: String = output.text + text
 	output.text = content.right(48000) if content.length() > 64000 else content
 
+## Mở hoặc đóng bảng lệnh khi không bị menu hay lệnh bận ngăn.
 func set_open(value: bool) -> void:
 	if value == is_open or (commands.busy and not value): return
 	if value and world.player.selection.is_menu_open(): return
@@ -112,6 +114,7 @@ func _input(event: InputEvent) -> void:
 func _suggest(text: String) -> void:
 	hints.text = "  ·  ".join(commands.suggestions(text).slice(0, 5)) if not text.is_empty() else ""
 
+## Lưu lịch sử và gửi dòng lệnh không rỗng đến bộ thực thi.
 func submit(line: String) -> void:
 	if commands.busy or line.strip_edges().is_empty(): return
 	if history.is_empty() or history.back() != line: history.append(line)

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TutorialHints" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị gợi ý hướng dẫn ngắn tùy chọn; nội dung đầy đủ nằm trong menu trợ giúp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_menu">
+			<return type="void" />
+			<param index="0" name="_open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật gợi ý theo mục tiêu hiện tại khi node và bộ đếm đã sẵn sàng.
+			</description>
+		</method>
+		<method name="_seen">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="button" type="Button" setter="" getter="">
+		</member>
+		<member name="label" type="Label" setter="" getter="">
+		</member>
+		<member name="_timer" type="Timer" setter="" getter="">
+		</member>
+		<member name="_shown_id" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+</class>

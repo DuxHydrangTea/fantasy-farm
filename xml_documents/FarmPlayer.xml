@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmPlayer" inherits="CharacterBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Nhân vật người chơi sở hữu các tham chiếu tới thành phần di chuyển, hoạt ảnh, tương tác và giao diện.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+		</member>
+		<member name="state" type="StateComponent" setter="" getter="">
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+		</member>
+		<member name="camera" type="Camera2D" setter="" getter="">
+		</member>
+		<member name="farming_actions" type="FarmingActionComponent" setter="" getter="">
+		</member>
+		<member name="context_bars" type="ContextBarsComponent" setter="" getter="">
+		</member>
+		<member name="hive_placement" type="BeehivePlacementComponent" setter="" getter="">
+		</member>
+		<member name="interactions" type="PlayerInteractionComponent" setter="" getter="">
+		</member>
+		<member name="boosters" type="BoosterInteractionComponent" setter="" getter="">
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+		</member>
+		<member name="shop_interaction" type="ShopInteraction" setter="" getter="">
+		</member>
+		<member name="item_feedback" type="ItemGainFeedback" setter="" getter="">
+		</member>
+		<member name="tree_interaction" type="TreeInteraction" setter="" getter="">
+		</member>
+		<member name="mobile_controls" type="MobileControls" setter="" getter="">
+		</member>
+		<member name="tool_range_ui" type="ToolRangeUI" setter="" getter="">
+		</member>
+		<member name="audio_feedback" type="PlayerAudioFeedback" setter="" getter="">
+		</member>
+	</members>
+</class>

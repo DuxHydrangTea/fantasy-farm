@@ -1,12 +1,21 @@
 class_name PollinationComponent
 extends RefCounted
-## One flower belongs to one nearest hive. This view chooses the dominant species.
+## Chọn nguồn hoa đại diện từ các nguồn đã được phân cho một tổ.
+## Ưu tiên hệ số mật, sau đó số lượng, khoảng cách và mã nguồn.
+
+## Các nguồn đã phân cho tổ, mỗi bản ghi có type, name và point.
 var sources: Array[Dictionary] = []
+## Mã nguồn được chọn, rỗng khi không có nguồn.
 var source_id: String = ""
+## Tên nguồn được chọn.
 var source_name: String = ""
+## Vị trí nguồn gần nhất thuộc loại được chọn.
 var source_point: Vector2
+## Số nguồn cùng loại được chọn.
 var source_count: int = 0
 
+## Tính lại nguồn đại diện quanh origin. Khi legacy bật, mọi loại có cùng
+## thứ hạng tốc độ và được phân giải bằng số lượng, khoảng cách và mã.
 func resolve(origin: Vector2, rules: BeehiveDefinition = null, legacy: bool = false) -> void:
 	source_id = ""
 	source_name = ""
@@ -31,5 +40,6 @@ func resolve(origin: Vector2, rules: BeehiveDefinition = null, legacy: bool = fa
 			distance = candidate
 			priority = rank
 
+## Cho biết đã chọn được nguồn có mã không rỗng.
 func active() -> bool:
 	return not source_id.is_empty()

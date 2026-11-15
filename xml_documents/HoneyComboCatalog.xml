@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HoneyComboCatalog" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Xác định loại mật từ hoa quanh tổ ong theo thứ tự ưu tiên công thức.
+	</brief_description>
+	<description>
+		Công thức lai được xét trước công thức một loài. Các cặp đối diện được biểu diễn bằng tọa độ tương đối trái dấu quanh tâm tổ.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="resolve" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="blooms" type="Dictionary" />
+			<description>
+				Chọn mã công thức từ ánh xạ tọa độ tương đối sang mã loài hoa đang nở. Công thức lai cần hai cặp đối diện của hai loài quy định. Nếu không khớp, công thức một loài cần ít nhất bốn hoa cùng loài. Trường hợp còn lại dùng mixed.
+			</description>
+		</method>
+		<method name="item" qualifiers="static">
+			<return type="ItemDefinition" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Lấy vật phẩm mật theo mã, trả về null nếu mã không có trong bảng.
+			</description>
+		</method>
+		<method name="instruction" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tạo hướng dẫn đã dịch cho công thức, hoặc thông báo mật hỗn hợp nếu mã lạ.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="IDS" value="Array[String]([&quot;hybrid_01_06&quot;, &quot;hybrid_02_07&quot;, &quot;hybrid_03_08&quot;, &quot;mono_06&quot;, &quot;mono_07&quot;])">
+			Mã công thức theo thứ tự ưu tiên.
+		</constant>
+		<constant name="PAIRS" value="Array[Vector2i]([Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, -1)])">
+			Một đầu của mỗi trục đối diện trong tám ô lân cận.
+		</constant>
+		<constant name="ITEMS" value="{&quot;hybrid_01_06&quot;: &lt;Object&gt;, &quot;hybrid_02_07&quot;: &lt;Object&gt;, &quot;hybrid_03_08&quot;: &lt;Object&gt;, &quot;mixed&quot;: &lt;Object&gt;, &quot;mono_06&quot;: &lt;Object&gt;, &quot;mono_07&quot;: &lt;Object&gt;}">
+			Resource mật tương ứng với mã công thức, gồm cả mật hỗn hợp.
+		</constant>
+		<constant name="FLOWER_NAMES" value="Array[String]([&quot;Rose&quot;, &quot;Carnation&quot;, &quot;Orchid&quot;, &quot;Lavender&quot;, &quot;Bluebell&quot;, &quot;Hydrangea&quot;, &quot;Marigold&quot;, &quot;Sunflower&quot;, &quot;Lily of the Valley&quot;, &quot;Blue Lotus&quot;])">
+			Tên nguồn dùng khi dịch hướng dẫn bố trí hoa.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OrderBoard" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng đơn hàng tương tác bằng phím, nhấp hoặc cảm ứng qua bộ tương tác chung.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open_board">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Mở bảng nếu đúng người chơi, bảng đang hiển thị và trong khoảng 32 đơn vị.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp túi, ví và nguồn sản phẩm.
+		</member>
+		<member name="service" type="OrderService" setter="" getter="">
+			Dịch vụ quản lý các đơn.
+		</member>
+		<member name="menu" type="OrderUI" setter="" getter="">
+			Giao diện bảng đơn.
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite dùng cho tương tác.
+		</member>
+		<member name="_availability" type="OrderAvailability" setter="" getter="">
+		</member>
+	</members>
+</class>

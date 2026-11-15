@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalPen" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chuồng giới hạn vùng sống, loài và sức chứa, đồng thời sở hữu kho sản phẩm. Mô phỏng offline được tạo khi cần để đồng bộ cả đàn trước các thay đổi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="advance_offline">
+			<return type="bool" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="force" type="bool" default="false" />
+			<description>
+				Tiến mô phỏng cả đàn đến timestamp, tùy chọn buộc xử lý khoảng ngắn.
+			</description>
+		</method>
+		<method name="sync_before_change">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Chốt trạng thái đàn đến timestamp trước khi thay đổi chuồng hoặc nguồn cung.
+			</description>
+		</method>
+		<method name="collect_stored_produce">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<param index="1" name="timestamp" type="float" />
+			<param index="2" name="item_id" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Đồng bộ rồi thu sản phẩm từ kho vào túi, tùy chọn lọc mã; trả số thực chuyển.
+			</description>
+		</method>
+		<method name="allowed_bounds">
+			<return type="Rect2" />
+			<param index="0" name="margin" type="float" default="0.0" />
+			<description>
+				Biên cục bộ sau khi lùi vào margin không âm, không thu quá tâm.
+			</description>
+		</method>
+		<method name="contains_world">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="margin" type="float" default="0.0" />
+			<description>
+				Kiểm tra điểm toàn cục nằm trong biên sau khi trừ margin, có dung sai số thực.
+			</description>
+		</method>
+		<method name="clamp_world">
+			<return type="Vector2" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="margin" type="float" default="0.0" />
+			<description>
+				Kẹp điểm toàn cục vào biên chuồng sau khi trừ margin.
+			</description>
+		</method>
+		<method name="sample_world">
+			<return type="Vector2" />
+			<param index="0" name="rng" type="RandomNumberGenerator" />
+			<param index="1" name="margin" type="float" default="0.0" />
+			<description>
+				Lấy điểm ngẫu nhiên toàn cục trong biên sau khi trừ margin.
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="weather" type="WeatherSchedule" setter="" getter="">
+			Lịch thời tiết dùng trong mô phỏng nhu cầu.
+		</member>
+		<member name="offline_simulation" type="PenOfflineSimulation" setter="" getter="">
+			Cầu nối mô phỏng offline của chuồng.
+		</member>
+		<member name="produce_storage" type="RefCounted" setter="" getter="" default="&lt;unknown&gt;">
+			Bộ đệm sản phẩm dùng chung.
+		</member>
+		<member name="produce_access" type="Node2D" setter="" getter="">
+			Điểm tương tác thu sản phẩm.
+		</member>
+		<member name="produce_storage_enabled" type="bool" setter="" getter="" default="false">
+			Bật lưu và thu sản phẩm qua kho chung.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định của chuồng trong save.
+		</member>
+		<member name="accepted_species" type="int[]" setter="" getter="" enum="AnimalTypes.Species[]" default="[]">
+			Các loài được phép mua vào chuồng. Đổi sức chứa không tự xóa con vật hiện có.
+		</member>
+		<member name="capacity" type="int" setter="" getter="" default="30">
+			Số vật nuôi tối đa khi thêm mới.
+		</member>
+		<member name="bounds" type="Rect2" setter="@bounds_setter" getter="" default="Rect2(0, 0, 384, 256)">
+			Biên vùng di chuyển trong tọa độ cục bộ chuồng.
+		</member>
+	</members>
+	<constants>
+		<constant name="ProduceStorage" value="&lt;Object&gt;">
+			Script kho sản phẩm chuồng.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalShopOffer" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Một lựa chọn mua vật nuôi và quy tắc tính giá bán lại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra định nghĩa vật nuôi hợp lệ và giá trong khoảng 1–1.000.000 xu.
+			</description>
+		</method>
+		<method name="resale_price">
+			<return type="int" />
+			<param index="0" name="adult" type="bool" />
+			<description>
+				Giá bán lại bằng 75% giá mua cho con trưởng thành, 50% cho con non. Giá được làm tròn xuống và luôn ít nhất một xu.
+			</description>
+		</method>
+		<method name="icon">
+			<return type="Texture2D" />
+			<description>
+				Lấy khung đầu của hoạt ảnh đứng nhìn xuống khi dữ liệu hợp lệ, nếu không trả null.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animal" type="AnimalDefinition" setter="" getter="">
+			Định nghĩa vật nuôi được giao dịch.
+		</member>
+		<member name="price" type="int" setter="" getter="" default="160">
+			Giá mua bằng xu.
+		</member>
+	</members>
+</class>

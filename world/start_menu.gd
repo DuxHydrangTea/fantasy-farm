@@ -1,14 +1,25 @@
 extends Control
-## Adapted from the Godot main_menu template; profile selection precedes world loading.
+## Menu khởi động để tiếp tục, tạo hoặc chọn trang trại trước khi tải thế giới.
+
+## Phát mã profile và cờ profile mới khi người chơi yêu cầu mở trang trại.
 signal profile_requested(id: String, is_new: bool)
+## Cho phép chuyển scene khi bắt đầu; có thể tắt để kiểm thử menu.
 @export var navigate_on_launch: bool = true
+## Khung nội dung chính thay đổi kích thước theo cửa sổ.
 @onready var card: PanelContainer = %Card
+## Nút tiếp tục profile hợp lệ gần nhất.
 @onready var continue_button: Button = %Continue
+## Nút mở trang tạo trang trại.
 @onready var new_button: Button = %NewGame
+## Nút mở danh sách trang trại đã lưu.
 @onready var games_button: Button = %SavedGames
+## Nút thoát game.
 @onready var quit_button: Button = %Quit
+## Ô nhập tên trang trại mới.
 @onready var farm_name: LineEdit = %FarmName
+## Danh sách profile được dựng khi mở trang đã lưu.
 @onready var saves_list: VBoxContainer = %SavesList
+## Nhãn báo lỗi hoặc trạng thái thao tác.
 @onready var status: Label = %Status
 var _latest: String = ""
 var _launching: bool = false

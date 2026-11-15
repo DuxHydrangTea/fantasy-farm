@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CropWorkerPolicy" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tìm và thực hiện công việc làm đất, gieo và bón phân cho công nhân. Cache địa hình giới hạn trong vùng mở; tìm kiếm có thể nhường khi hết deadline và tiếp tục ở lần lập lịch sau. Các ô, vật tư đã giữ được loại khỏi lựa chọn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="cancel_searches">
+			<return type="void" />
+			<description>
+				Xóa các tìm kiếm đang dở của công nhân.
+			</description>
+		</method>
+		<method name="_keep_best">
+			<return type="void" />
+			<param index="0" name="ranked" type="Array" />
+			<param index="1" name="entry" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_rank_before">
+			<return type="bool" />
+			<param index="0" name="a" type="Array" />
+			<param index="1" name="b" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="scene" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="invalidate">
+			<return type="void" />
+			<description>
+				Vô hiệu cache địa hình và hủy tìm kiếm dở.
+			</description>
+		</method>
+		<method name="soil_changed">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="state" type="int" />
+			<description>
+				Cập nhật trạng thái đất trong cache và hủy tìm kiếm dở.
+			</description>
+		</method>
+		<method name="first_item">
+			<return type="ItemDefinition" />
+			<param index="0" name="fertilizer" type="bool" default="false" />
+			<param index="1" name="worker_id" type="String" default="&quot;&quot;" />
+			<description>
+				Tìm hạt giống hoặc phân bón đầu tiên còn khả dụng trong kho sau khi trừ giữ chỗ.
+			</description>
+		</method>
+		<method name="_cache">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="task">
+			<return type="Dictionary" />
+			<param index="0" name="kind" type="String" />
+			<param index="1" name="cell" type="Vector2i" />
+			<param index="2" name="priority" type="int" />
+			<param index="3" name="item" type="ItemDefinition" default="null" />
+			<description>
+				Tạo mô tả công việc tại ô với vị trí toàn cục và revision cấu hình hiện tại.
+			</description>
+		</method>
+		<method name="planting_task">
+			<return type="Dictionary" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Tìm việc gieo hoặc làm đất cho công nhân theo hạt, ô chuẩn bị và mức ưu tiên. Trả dictionary rỗng khi chưa có việc hoặc khi cần tiếp tục truy vấn ở lượt sau.
+			</description>
+		</method>
+		<method name="fertilizer_task">
+			<return type="Dictionary" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="crop" type="Crop" />
+			<param index="2" name="item" type="ItemDefinition" default="null" />
+			<param index="3" name="sync_apiary" type="bool" default="true" />
+			<param index="4" name="worker_id" type="String" default="&quot;crop&quot;" />
+			<description>
+				Tạo việc bón phân cho cây do tự động hóa quản lý nếu đủ điều kiện.
+			</description>
+		</method>
+		<method name="commit">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="job" type="Dictionary" />
+			<description>
+				Kiểm tra lại khóa, revision, công nhân, ô và vật tư rồi thực hiện công việc. Khi bón thất bại sau khi lấy phân, khôi phục các ô kho từ bản chụp.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp ruộng, kho và dịch vụ công nhân.
+		</member>
+		<member name="cells" type="Vector2i[]" setter="" getter="" default="[]">
+			Các ô có thể trồng trong cache.
+		</member>
+		<member name="soils" type="Dictionary[Vector2i, int]" setter="" getter="" default="{}">
+			Trạng thái đất đã cache theo ô.
+		</member>
+		<member name="points" type="Dictionary[Vector2i, Vector2]" setter="" getter="" default="{}">
+			Vị trí toàn cục đã cache theo ô.
+		</member>
+		<member name="cached_columns" type="int" setter="" getter="" default="-1">
+			Số khối mở tại lần dựng cache gần nhất.
+		</member>
+		<member name="waiting" type="String" setter="" getter="" default="&quot;&quot;">
+			Lý do chờ để trình bày cho người chơi.
+		</member>
+		<member name="deadline_usec" type="int" setter="" getter="" default="0">
+			Hạn thời gian tìm kiếm theo ticks micro giây, 0 không giới hạn.
+		</member>
+		<member name="query_pending" type="bool" setter="" getter="" default="false">
+			Cho biết tìm kiếm đã nhường và cần tiếp tục.
+		</member>
+		<member name="_searches" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

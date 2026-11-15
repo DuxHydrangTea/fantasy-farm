@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PlayerInteractionComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối tương tác bằng phím và nhấp chuột của người chơi.
+	</brief_description>
+	<description>
+		Mục tiêu được nhấp ngoài tầm được giữ trong [member pending] trong lúc điều hướng. Khi đến nơi, component kiểm tra lại mục tiêu và tầm trước khi thực hiện để tránh hành động với trạng thái đã thay đổi.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Chọn mục tiêu cần hiển thị và cập nhật presenter, ẩn mục tiêu khi mở menu.
+			</description>
+		</method>
+		<method name="press">
+			<return type="bool" />
+			<description>
+				Hủy điều hướng và thực hiện mục tiêu có thể chạm tới theo hướng nhìn. Trả true cả khi không có mục tiêu để đánh dấu input đã được xử lý.
+			</description>
+		</method>
+		<method name="click">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Xử lý điểm nhấp toàn cục. Thực hiện ngay nếu trong tầm, nếu không thì điều hướng đến mục tiêu. Trả false khi không nhấp trúng mục tiêu nào.
+			</description>
+		</method>
+		<method name="_navigate">
+			<return type="void" />
+			<param index="0" name="target" type="InteractionTarget" />
+			<description>
+			</description>
+		</method>
+		<method name="_cancelled">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_arrived">
+			<return type="void" />
+			<param index="0" name="reached" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_complete_click">
+			<return type="void" />
+			<param index="0" name="generation" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="execute">
+			<return type="bool" />
+			<param index="0" name="target" type="InteractionTarget" />
+			<param index="1" name="_requested" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Thực hiện hành động theo loại mục tiêu sau khi kiểm tra menu, trạng thái và tầm. Có thể mở bảng, thu sản phẩm hoặc chuẩn bị hành động công cụ tương ứng. Trả false khi điều kiện chung không đạt hoặc loại mục tiêu không được xử lý.
+			</description>
+		</method>
+		<method name="feedback_source">
+			<return type="String" />
+			<description>
+				Trả thông điệp nguồn còn hiệu lực, hoặc chuỗi rỗng sau khi hết hạn.
+			</description>
+		</method>
+		<method name="feedback_expires_at">
+			<return type="int" />
+			<description>
+				Trả thời điểm hết hạn theo ticks mili giây, hoặc 0 khi không có phản hồi.
+			</description>
+		</method>
+		<method name="_crop_lost">
+			<return type="void" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi thực hiện tương tác.
+		</member>
+		<member name="resolver" type="InteractionResolver" setter="" getter="">
+			Bộ tìm và xếp hạng mục tiêu.
+		</member>
+		<member name="presenter" type="InteractionPresenter" setter="" getter="">
+			Bộ hiển thị mục tiêu và phản hồi.
+		</member>
+		<member name="focused" type="InteractionTarget" setter="" getter="">
+			Mục tiêu hiện được hiển thị.
+		</member>
+		<member name="pending" type="InteractionTarget" setter="" getter="">
+			Mục tiêu đã nhấp đang chờ người chơi đi đến.
+		</member>
+		<member name="_generation" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_feedback" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_feedback_until" type="int" setter="@_feedback_until_setter" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="feedback_changed">
+			<description>
+				Phát khi thời hạn hoặc nội dung phản hồi tương tác thay đổi.
+			</description>
+		</signal>
+	</signals>
+</class>

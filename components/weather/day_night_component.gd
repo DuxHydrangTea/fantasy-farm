@@ -1,13 +1,20 @@
 class_name DayNightComponent
 extends Node2D
-## World-only tint. HUD CanvasLayers keep their original colors.
+## Điều chỉnh màu môi trường, đèn và đom đóm theo thời gian trong ngày.
+## Màu được áp dụng cho thế giới; HUD trên CanvasLayer giữ màu riêng.
+
+## Thế giới cung cấp vị trí đèn và vườn hoa.
 var world: FarmWorld
+## Node điều chỉnh màu môi trường.
 var ambient: CanvasModulate
+## Các đèn được điều chỉnh độ sáng theo trời tối.
 var lights: Array[PointLight2D] = []
+## Mức tối hiện tại trong khoảng 0–1.
 var darkness: float = 0.0
 var _phase: float = 0.0
 var _firefly_material: CanvasItemMaterial
 
+## Nội suy màu ánh sáng theo giờ UTC+7 qua các mốc bình minh, ban ngày và chiều tối.
 static func daylight_color(timestamp: float) -> Color:
 	var hour: float = fposmod(timestamp + WeatherSchedule.UTC_OFFSET, 86400.0) / 3600.0
 	var stops: Array[float] = [0.0, 4.5, 5.0, 7.0, 16.5, 18.5, 19.0, 24.0]
@@ -64,6 +71,7 @@ func _ready() -> void:
 			node.texture = glow
 			lights.append(node)
 
+## Cập nhật màu môi trường từ giờ và màu thời tiết, rồi chỉnh độ sáng các đèn.
 func refresh(timestamp: float, weather_tint: Color) -> void:
 	var daylight: Color = daylight_color(timestamp)
 	ambient.color = daylight * weather_tint

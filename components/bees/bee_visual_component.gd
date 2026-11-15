@@ -1,14 +1,20 @@
 class_name BeeVisualComponent
 extends Node2D
-## Cosmetic only. Hidden bees stop processing; production is owned by the farm clock.
+## Hiển thị ong bay quanh tổ hoặc tới nguồn hoa đã chọn.
+## Ong ẩn khi ngoài màn hình hoặc trú mưa; sản xuất dùng đồng hồ trang trại.
+
+## Số sprite ong trang trí.
 const BEE_COUNT: int = 6
+## Bán kính bay khi không có nguồn hoa.
 const ROAM_RADIUS: float = 64.0
+## Tổ sở hữu hiệu ứng.
 var hive: Beehive
 var _bees: Array[AnimatedSprite2D] = []
 var _phase: float = 0.0
 var _on_screen: bool = false
 var _sheltered: bool = false
 
+## Bật hoặc tắt trạng thái trú, cập nhật hiển thị và xử lý.
 func set_sheltered(value: bool) -> void:
 	if _sheltered == value:
 		return

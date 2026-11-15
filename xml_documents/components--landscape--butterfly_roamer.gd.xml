@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/landscape/butterfly_roamer.gd&quot;" inherits="&quot;components/landscape/ambient_flutter.gd&quot;" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bướm trang trí bay khắp vùng và thỉnh thoảng ghé vườn hoa. Thời gian ghé và chờ được tính theo giây gameplay đang chạy.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_bounded">
+			<return type="Vector2" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_random_point">
+			<return type="Vector2" />
+			<param index="0" name="area" type="Rect2" />
+			<description>
+			</description>
+		</method>
+		<method name="_roam_destination">
+			<return type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_leg">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_begin_leg">
+			<return type="void" />
+			<param index="0" name="destination" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_enter_garden">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_leave_garden">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_destination">
+			<return type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="roam_bounds" type="Rect2" setter="" getter="" default="Rect2(24, 32, 2496, 1640)">
+			Giới hạn vùng bay.
+		</member>
+		<member name="garden_bounds" type="Rect2" setter="" getter="" default="Rect2(1432, 296, 368, 256)">
+			Vùng vườn hoa có thể ghé.
+		</member>
+		<member name="garden_visit_seconds" type="float" setter="" getter="" default="30.0">
+			Thời gian mỗi lượt ghé, tính bằng giây.
+		</member>
+		<member name="garden_cooldown_seconds" type="float" setter="" getter="" default="300.0">
+			Thời gian chờ sau lượt ghé trước khi có thể ghé lại.
+		</member>
+		<member name="flight_state" type="int" setter="" getter="" enum="&quot;components/landscape/butterfly_roamer.gd&quot;.FlightState" default="0">
+			Trạng thái bay hiện tại.
+		</member>
+		<member name="_visit_until" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_cooldown_until" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_resume_target" type="Vector2" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="ROAM" value="0" enum="FlightState">
+		</constant>
+		<constant name="GARDEN" value="1" enum="FlightState">
+		</constant>
+		<constant name="LEAVING" value="2" enum="FlightState">
+		</constant>
+	</constants>
+</class>

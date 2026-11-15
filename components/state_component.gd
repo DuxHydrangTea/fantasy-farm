@@ -1,11 +1,14 @@
 class_name StateComponent
 extends Node
+## Máy trạng thái điều khiển di chuyển, dùng công cụ và tưới của người chơi.
+## Ưu tiên tương tác theo ngữ cảnh và khóa điều khiển khi menu hoặc hoạt ảnh thao tác đang mở.
 
 # Component adaptation of the Godot skill's state-machine and top-down templates.
 signal state_changed(previous: StringName, current: StringName)
 
 enum State { IDLE, WALK, TOOL, WATER }
 const STATE_NAMES: Array[StringName] = [&"idle", &"walk", &"tool", &"water"]
+const ChopFrames = preload("res://components/trees/farmer_chop_frames.gd")
 
 @export var movement: MovementComponent
 @export var animation: AnimationComponent
@@ -37,6 +40,7 @@ var touch_direction: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	assert(movement != null and animation != null, "StateComponent requires movement and animation components")
+	animation.animated_sprite.sprite_frames = ChopFrames.for_player(animation.animated_sprite.sprite_frames)
 	animation.action_finished.connect(_on_action_finished)
 	if tool_selection != null:
 		tool_selection.inventory_visibility_changed.connect(_on_inventory_visibility_changed)
@@ -119,6 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	click_world(movement.body.get_canvas_transform().affine_inverse() * click.position)
 	get_viewport().set_input_as_handled()
 
+## Chuyển lượt nhấp qua đặt tổ ong, thuốc, tương tác rồi yêu cầu di chuyển nếu chưa được xử lý.
 func click_world(point: Vector2) -> void:
 	if tool_selection.is_menu_open() or current_state in [State.TOOL, State.WATER]:
 		return
@@ -131,15 +136,18 @@ func click_world(point: Vector2) -> void:
 	if navigation != null:
 		navigation.request_focus(point)
 
+## Xếp yêu cầu dùng vật phẩm khi không bị menu hoặc động tác khóa.
 func request_use() -> void:
 	if not tool_selection.is_menu_open() and current_state not in [State.TOOL, State.WATER]:
 		_use_requested = true
 
+## Thử tương tác gần nhất, nếu không có thì xếp yêu cầu thu hoạch.
 func request_interaction() -> void:
 	if not tool_selection.is_menu_open() and current_state not in [State.TOOL, State.WATER]:
 		if interactions == null or not interactions.press():
 			_harvest_requested = true
 
+## Xóa yêu cầu, hướng cảm ứng và hủy đường đi hiện tại.
 func cancel_input() -> void:
 	_use_requested = false
 	_harvest_requested = false
@@ -149,6 +157,7 @@ func cancel_input() -> void:
 	movement.cancel_target()
 	movement.stop()
 
+## Trả hành động của công cụ được chọn, hoặc tên rỗng khi thiếu bộ chọn.
 func get_selected_tool_action() -> StringName:
 	return tool_selection.get_selected_action() if tool_selection != null else &""
 
@@ -157,6 +166,7 @@ func get_selected_tool_action() -> StringName:
 # không có nghĩa được rơi xuống nhánh cuốc đất bên dưới nó. Bỏ phân biệt này có thể làm
 # player vừa muốn cho ăn thất bại lại cuốc ô đất hoặc tưới sai đối tượng.
 # Khóa khi mở menu/đang làm động tác giữ UI và animation khỏi tiêu vật phẩm ngoài ý muốn.
+## Chọn đối tượng tương tác theo ngữ cảnh rồi bắt đầu hoạt ảnh phù hợp; trả liệu đầu vào đã được xử lý.
 func use_selected_tool(requested_action: StringName = &"") -> bool:
 	if tool_selection != null and tool_selection.is_menu_open():
 		return false
@@ -219,11 +229,13 @@ func _on_inventory_visibility_changed(open: bool) -> void:
 		movement.stop()
 		transition_to(State.IDLE)
 
+## Hủy điều khiển cũ và đưa người chơi về trạng thái đứng yên sau khi tải.
 func reset_after_load() -> void:
 	cancel_input()
 	active_action = &""
 	transition_to(State.IDLE)
 
+## Chuyển trạng thái và phát tín hiệu khi có thay đổi.
 func transition_to(next_state: State) -> void:
 	if _initialized and next_state == current_state:
 		return
@@ -239,8 +251,11 @@ func transition_to(next_state: State) -> void:
 		movement.stop()
 	if current_state != State.WALK:
 		_update_dust(false)
-	animation.play(STATE_NAMES[current_state], true)
+	animation.play(_animation_action(), true)
 	state_changed.emit(previous, STATE_NAMES[current_state])
+
+func _animation_action() -> StringName:
+	return &"chop" if current_state == State.TOOL and active_action == &"tree_chop" else STATE_NAMES[current_state]
 
 func _update_dust(emitting: bool) -> void:
 	if dust_particles == null:
@@ -261,7 +276,7 @@ func _movement_direction() -> Vector2:
 func _on_action_finished(action: String) -> void:
 	if current_state != State.TOOL and current_state != State.WATER:
 		return
-	if action != String(STATE_NAMES[current_state]):
+	if action != String(_animation_action()):
 		return
 	var direction: Vector2 = _movement_direction()
 	animation.update_facing_direction(direction)

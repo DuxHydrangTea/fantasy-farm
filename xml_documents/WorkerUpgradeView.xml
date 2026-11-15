@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerUpgradeView" inherits="VBoxContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện nâng cấp đội nhân công; các thay đổi được gửi qua dịch vụ mua nâng cấp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="service" type="WorkerUpgradeService" />
+			<description>
+				Đọc báo giá từng nhánh từ dịch vụ và cập nhật nút, chi tiết nâng cấp.
+			</description>
+		</method>
+		<method name="_purchase">
+			<return type="void" />
+			<param index="0" name="track" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="shop" type="WorkerUpgradeService" setter="" getter="">
+		</member>
+		<member name="buttons" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="details" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="reasons" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="offers" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="message" type="Label" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="CAPTIONS" value="{&quot;harvest&quot;: &quot;Worker harvesting&quot;, &quot;hoe&quot;: &quot;Worker hoe&quot;, &quot;sowing&quot;: &quot;Worker sowing&quot;, &quot;speed&quot;: &quot;Work speed&quot;, &quot;watering&quot;: &quot;Worker watering&quot;}">
+		</constant>
+	</constants>
+</class>

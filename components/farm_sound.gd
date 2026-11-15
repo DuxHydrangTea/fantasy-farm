@@ -1,14 +1,20 @@
 class_name FarmSound
 extends Node
-## Bounded voice pool adapted from the Godot skill's audio_manager template.
-## Presentation only. No wallet/inventory-delta inference, including during loads.
+## Phát âm thanh theo sự kiện trình bày bằng pool voice có giới hạn.
+## Các sự kiện có cooldown theo nhóm và biến thể liên tiếp được thay đổi khi có thể.
+
+## Phát sự kiện và stream được chọn sau khi bắt đầu phát âm thanh.
 signal sound_played(event: StringName, stream: AudioStream)
+## Số AudioStreamPlayer trong pool.
 const VOICES: int = 12
+## Danh mục âm thanh chính.
 const CATALOG: Dictionary = preload("res://components/p0_sound_catalog.gd").CLIPS
+## Danh mục âm thanh bổ sung.
 const P1_CATALOG: Dictionary = preload("res://components/p1_sound_catalog.gd").CLIPS
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _last: Dictionary = {}
 var _variant: Dictionary = {}
+## Đồng hồ mili giây dùng để kiểm tra cooldown, có thể thay trong kiểm thử.
 var clock: Callable = func() -> int: return Time.get_ticks_msec()
 
 func _ready() -> void:
@@ -28,6 +34,7 @@ func _ready() -> void:
 		_sfx_players.append(voice)
 	get_tree().node_added.connect(_node_added)
 
+## Áp các mức âm lượng đã lưu cho bus Master, SFX, UI, Ambience và Music.
 func apply_volumes() -> void:
 	_set_volume(&"Master", FarmUI.master_volume)
 	_set_volume(&"SFX", FarmUI.effects_volume)
@@ -57,6 +64,8 @@ func _group(event: StringName) -> StringName:
 func _cooldown(group: StringName) -> int:
 	return 2000 if group == &"wages" else 700 if group == &"errors" else 220 if group == &"steps" else 130 if group == &"harvest" else 120 if group == &"item_pickup" else 70
 
+## Phát một biến thể của sự kiện nếu có trong catalog, hết cooldown và còn voice.
+## Trả false nếu không phát được; âm đang chạy không bị cắt để nhường voice.
 func play(event: StringName) -> bool:
 	if (not CATALOG.has(event) and not P1_CATALOG.has(event)) or not is_inside_tree():
 		return false
@@ -87,6 +96,7 @@ func play(event: StringName) -> bool:
 	sound_played.emit(event, voice.stream)
 	return true
 
+## Chọn sự kiện âm thanh thu thập theo mã sản phẩm, hoặc dùng fallback.
 static func collection_event(item_id: StringName, fallback: StringName = &"item_pickup") -> StringName:
 	if item_id in [&"chicken_egg", &"duck_egg", &"goose_egg"]:
 		return &"collect_egg"
@@ -100,6 +110,7 @@ static func collection_event(item_id: StringName, fallback: StringName = &"item_
 		return &"collect_honey"
 	return fallback
 
+## Phát sự kiện thành công hoặc âm lỗi sức chứa/tài nguyên theo kết quả thao tác.
 func result(result_data: Dictionary, success: StringName) -> void:
 	if result_data.get("ok", false):
 		play(success)
@@ -134,6 +145,7 @@ func _button_pressed(reference: WeakRef) -> void:
 func _button_feedback(event: StringName) -> void:
 	play(event)
 
+## Dừng mọi voice và xóa thời điểm cooldown.
 func stop_all() -> void:
 	for voice: AudioStreamPlayer in _sfx_players:
 		voice.stop()

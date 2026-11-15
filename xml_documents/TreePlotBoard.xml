@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotBoard" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng tương tác mở giao diện mở rộng khu trồng cây theo loại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open_board">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Mở bảng nếu đúng người chơi, bảng hiển thị và khoảng cách không quá 32.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới sở hữu bảng.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="TreeDefinition.Kind">
+			Loại khu cây mà bảng quản lý.
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite bảng dùng cho tương tác.
+		</member>
+		<member name="menu" type="TreePlotMenu" setter="" getter="">
+			Giao diện mở rộng được tạo khi sẵn sàng.
+		</member>
+	</members>
+</class>

@@ -1,16 +1,28 @@
 class_name CropWorkerPolicy
 extends RefCounted
-## Queries only on scheduler events. Terrain cache is bounded to the open field.
+## Tìm và thực hiện công việc làm đất, gieo và bón phân cho công nhân.
+## Cache địa hình giới hạn trong vùng mở; tìm kiếm có thể nhường khi hết deadline
+## và tiếp tục ở lần lập lịch sau. Các ô, vật tư đã giữ được loại khỏi lựa chọn.
+
+## Thế giới cung cấp ruộng, kho và dịch vụ công nhân.
 var world: FarmWorld
+## Các ô có thể trồng trong cache.
 var cells: Array[Vector2i] = []
+## Trạng thái đất đã cache theo ô.
 var soils: Dictionary[Vector2i, int] = {}
+## Vị trí toàn cục đã cache theo ô.
 var points: Dictionary[Vector2i, Vector2] = {}
+## Số khối mở tại lần dựng cache gần nhất.
 var cached_columns: int = -1
+## Lý do chờ để trình bày cho người chơi.
 var waiting: String = ""
+## Hạn thời gian tìm kiếm theo ticks micro giây, 0 không giới hạn.
 var deadline_usec: int = 0
+## Cho biết tìm kiếm đã nhường và cần tiếp tục.
 var query_pending: bool = false
 var _searches: Dictionary = {}
 
+## Xóa các tìm kiếm đang dở của công nhân.
 func cancel_searches() -> void:
 	_searches.clear()
 
@@ -37,14 +49,17 @@ func _rank_before(a: Array, b: Array) -> bool:
 func _init(scene: FarmWorld) -> void:
 	world = scene
 
+## Vô hiệu cache địa hình và hủy tìm kiếm dở.
 func invalidate() -> void:
 	cached_columns = -1
 	cancel_searches()
 
+## Cập nhật trạng thái đất trong cache và hủy tìm kiếm dở.
 func soil_changed(cell: Vector2i, state: int) -> void:
 	soils[cell] = state
 	cancel_searches()
 
+## Tìm hạt giống hoặc phân bón đầu tiên còn khả dụng trong kho sau khi trừ giữ chỗ.
 func first_item(fertilizer: bool = false, worker_id: String = "") -> ItemDefinition:
 	var bag: InventoryComponent = world.storages.inventory("farm_supply_storage")
 	var held: Dictionary = world.workers.reservations(worker_id)
@@ -76,6 +91,7 @@ func _cache() -> void:
 			points[cell] = layer.to_global(layer.map_to_local(cell))
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
 
+## Tạo mô tả công việc tại ô với vị trí toàn cục và revision cấu hình hiện tại.
 func task(kind: String, cell: Vector2i, priority: int, item: ItemDefinition = null) -> Dictionary:
 	var point: Vector2 = world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell))
 	var result: Dictionary = {"kind": kind, "id": "%d_%d" % [cell.x, cell.y], "point": WorkerRole.pair(point), "priority": priority, "cell": [cell.x, cell.y], "revision": world.workers.crop_automation.revision}
@@ -83,6 +99,8 @@ func task(kind: String, cell: Vector2i, priority: int, item: ItemDefinition = nu
 		result["item"] = String(item.item_id)
 	return result
 
+## Tìm việc gieo hoặc làm đất cho công nhân theo hạt, ô chuẩn bị và mức ưu tiên.
+## Trả dictionary rỗng khi chưa có việc hoặc khi cần tiếp tục truy vấn ở lượt sau.
 func planting_task(row: Dictionary) -> Dictionary:
 	waiting = ""
 	query_pending = false
@@ -141,6 +159,7 @@ func planting_task(row: Dictionary) -> Dictionary:
 	waiting = "No reachable empty plot is available."
 	return {}
 
+## Tạo việc bón phân cho cây do tự động hóa quản lý nếu đủ điều kiện.
 func fertilizer_task(cell: Vector2i, crop: Crop, item: ItemDefinition = null, sync_apiary: bool = true, worker_id: String = "crop") -> Dictionary:
 	var settings: CropAutomationState = world.workers.crop_automation
 	if not settings.auto_fertilize or not settings.owns(cell, crop) or crop.fertilized:
@@ -161,6 +180,8 @@ func fertilizer_task(cell: Vector2i, crop: Crop, item: ItemDefinition = null, sy
 	result["planted_at"] = crop.planted_at
 	return result
 
+## Kiểm tra lại khóa, revision, công nhân, ô và vật tư rồi thực hiện công việc.
+## Khi bón thất bại sau khi lấy phân, khôi phục các ô kho từ bản chụp.
 func commit(row: Dictionary, job: Dictionary) -> bool:
 	var settings: CropAutomationState = world.workers.crop_automation
 	var service: WorkerService = world.workers

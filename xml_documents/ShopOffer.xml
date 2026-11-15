@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopOffer" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Một mặt hàng được hiển thị trong danh mục cửa hàng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm gắn với lựa chọn trong cửa hàng.
+		</member>
+		<member name="price" type="int" setter="" getter="" default="10">
+			Giá theo xu.
+		</member>
+		<member name="category" type="int" setter="" getter="" enum="ShopOffer.Category" default="0">
+			Nhóm của lựa chọn trong giao diện cửa hàng.
+		</member>
+	</members>
+	<constants>
+		<constant name="CROP" value="0" enum="Category">
+		</constant>
+		<constant name="FEED" value="1" enum="Category">
+		</constant>
+		<constant name="FLOWER" value="2" enum="Category">
+		</constant>
+		<constant name="ANIMAL" value="3" enum="Category">
+		</constant>
+		<constant name="SELL_ANIMAL" value="4" enum="Category">
+		</constant>
+		<constant name="UPGRADES" value="5" enum="Category">
+		</constant>
+		<constant name="TOOLS" value="6" enum="Category">
+		</constant>
+	</constants>
+</class>

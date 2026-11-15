@@ -1,17 +1,30 @@
 class_name WeatherEffects
 extends Node2D
-## Cloud/wind paths stay in world space; only visible grid cells are drawn.
+## Vẽ hiệu ứng mưa, bóng mây và gió, đồng thời điều khiển âm thanh gió.
+## Vị trí hiệu ứng được tính trong tọa độ thế giới; chỉ các ô nhìn thấy được vẽ.
+
+## Texture giọt mưa.
 const RAIN: Texture2D = preload("res://assets/Weather effects/Rain_Drop.png")
+## Texture các khung giọt mưa chạm đất.
 const SPLASH: Texture2D = preload("res://assets/Weather effects/Rain_Drop_Impact.png")
+## Texture atlas bóng mây.
 const CLOUDS: Texture2D = preload("res://assets/Weather effects/Clouds.png")
 # Roughly twice as many cloud shadows per world area during cloudy weather.
+## Khoảng cách lưới hiệu ứng mây.
 const CLOUD_SPACING: Vector2 = Vector2(176, 132)
+## Khoảng cách lưới hiệu ứng gió.
 const WIND_SPACING: Vector2 = Vector2(128, 112)
+## Khoảng cách lưới giọt mưa.
 const RAIN_SPACING: Vector2 = Vector2(48, 48)
+## Khoảng cách lưới hiệu ứng mưa chạm đất.
 const SPLASH_SPACING: Vector2 = Vector2(96, 96)
+## Thế giới chứa camera và cảnh được vẽ.
 var world: FarmWorld
+## Loại thời tiết đang được vẽ.
 var active_weather: int = WeatherManager.Weather.SUNNY
+## Cường độ hiển thị trong khoảng chuyển hiệu ứng.
 var strength: float = 0.0
+## Nguồn âm thanh gió trên bus Ambience.
 var wind_audio: AudioStreamPlayer
 var _tween: Tween
 var _phase: float = 0.0
@@ -43,6 +56,8 @@ func _ready() -> void:
 	add_child(wind_audio)
 	set_process(false)
 
+## Làm mờ hiệu ứng hiện tại, đổi loại thời tiết rồi tăng dần hiệu ứng mới.
+## Một chuyển đổi đang chạy sẽ bị hủy trước khi bắt đầu chuyển đổi mới.
 func transition_to(next: int) -> void:
 	set_process(true)
 	if _tween != null and _tween.is_valid():
@@ -69,6 +84,7 @@ func _activate(next: int) -> void:
 	else:
 		wind_audio.stop()
 
+## Trả màu môi trường nội suy theo thời tiết đang vẽ và cường độ hiện tại.
 func weather_tint() -> Color:
 	var target: Color = Color(0.7, 0.75, 0.82) if active_weather == WeatherManager.Weather.RAIN else Color(0.93, 0.95, 0.98) if active_weather == WeatherManager.Weather.CLOUDY else Color.WHITE
 	return Color.WHITE.lerp(target, strength)

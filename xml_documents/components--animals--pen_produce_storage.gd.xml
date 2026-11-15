@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/pen_produce_storage.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bộ đệm sản phẩm dùng chung với sức chứa hữu hạn. Hệ thống sản xuất xử lý lượng vượt sức chứa. Lấy hàng thất bại giữ hàng lại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="count">
+			<return type="int" />
+			<description>
+				Tính tổng số đơn vị của tất cả các loại sản phẩm.
+			</description>
+		</method>
+		<method name="free_space">
+			<return type="int" />
+			<description>
+				Số chỗ trống còn lại, tối thiểu bằng 0.
+			</description>
+		</method>
+		<method name="deposit">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Gửi tối đa số lượng yêu cầu vào chỗ trống và trả về số thực nhận. Phát [signal changed] khi có sản phẩm được nhận.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<param index="1" name="item_id" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Chuyển sản phẩm sang inventory, tùy chọn lọc theo mã vật phẩm. Trả về số đơn vị chuyển được. Sản phẩm không vừa được giữ lại và các signal chỉ phát sau khi cả hai phía đã được cập nhật.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Array" />
+			<description>
+				Tạo danh sách dữ liệu lưu gồm mã vật phẩm và số lượng, sắp xếp theo mã.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="rows" type="Array" />
+			<param index="1" name="items" type="Dictionary" />
+			<description>
+				Thay nội dung bằng các bản ghi đã kiểm tra và tra resource trong [param items]. Phát [signal changed] sau khi hoàn tất.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="capacity" type="int" setter="" getter="" default="3000">
+			Tổng số đơn vị có thể chứa.
+		</member>
+		<member name="products" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ mã vật phẩm sang bản ghi gồm resource item và số lượng amount.
+		</member>
+		<member name="_collecting" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi nội dung bộ đệm thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="DEFAULT_CAPACITY" value="3000">
+			Sức chứa mặc định tính theo tổng số đơn vị sản phẩm.
+		</constant>
+	</constants>
+</class>

@@ -1,16 +1,27 @@
 class_name AnimalInfoPanel
 extends CanvasLayer
-## One screen-space inspector. Mouse-over animal takes priority over facing focus.
+## Bảng thông tin vật nuôi trong tọa độ màn hình.
+## Mục tiêu dưới chuột được ưu tiên hơn mục tiêu theo hướng nhìn.
+
+## Root giao diện được UIScaleComponent điều chỉnh.
 @export var root: Control
+## Nhãn tên và mã vật nuôi.
 @export var title: Label
+## Nhãn trưởng thành.
 @export var maturity_label: Label
+## Nhãn tuổi thọ còn lại.
 @export var lifetime_label: Label
+## Nhãn tiến độ sản phẩm.
 @export var produce_label: Label
+## Thanh tiến độ sản xuất.
 @export var progress: ProgressBar
+## Nhãn trạng thái sản xuất.
 @export var state_label: Label
+## Vật nuôi đang được xem.
 var animal: AnimalActor
 var _text: AnimalStatusText = AnimalStatusText.new()
 var _elapsed: float = 0.0
+## Hàng biểu tượng và thông tin sản phẩm theo chu kỳ.
 var production_row: VisualValueRow
 
 func _ready() -> void:
@@ -30,10 +41,12 @@ func _fit_layout() -> void:
 	for caption: Label in [maturity_label, lifetime_label, produce_label, state_label]:
 		caption.add_theme_font_size_override("font_size", 18 if touch else 20)
 
+## Chọn vật nuôi và cập nhật bảng.
 func inspect(target: AnimalActor) -> void:
 	animal = target
 	refresh()
 
+## Đọc trạng thái hiện tại hoặc ẩn bảng nếu vật nuôi không còn hợp lệ.
 func refresh() -> void:
 	if not is_instance_valid(animal) or not _text.is_available(animal):
 		animal = null

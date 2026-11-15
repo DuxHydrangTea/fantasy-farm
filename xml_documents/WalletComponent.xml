@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WalletComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý số xu nguyên của người chơi, được lưu dưới dạng giá trị nguyên.
+	</brief_description>
+	<description>
+		Số dư hợp lệ nằm trong khoảng từ 0 đến [constant MAX_COINS]. Các thao tác thành công có thể phát [signal changed] để giao diện và hệ thống khác cập nhật.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="set_balance">
+			<return type="bool" />
+			<param index="0" name="value" type="int" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Đặt số dư thành [param value], trả về [code]false[/code] nếu vượt giới hạn. Khi [param notify] là [code]true[/code], phát [signal changed] nếu giá trị đổi.
+			</description>
+		</method>
+		<method name="credit">
+			<return type="bool" />
+			<param index="0" name="amount" type="int" />
+			<description>
+				Cộng [param amount] xu dương vào ví. Trả về [code]false[/code] nếu số tiền không dương hoặc làm vượt giới hạn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="balance" type="int" setter="" getter="" default="10000">
+			Số xu hiện tại. Dùng [method set_balance] để kiểm tra giới hạn và thông báo.
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="balance" type="int" />
+			<description>
+				Phát sau khi số dư thực sự thay đổi và thông báo được bật.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="STARTING_COINS" value="10000">
+			Số xu ban đầu của ví mới.
+		</constant>
+		<constant name="MAX_COINS" value="1000000000">
+			Giới hạn trên của số dư ví.
+		</constant>
+	</constants>
+</class>

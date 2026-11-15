@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmingAreaPolicy" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tính cùng vùng thao tác và điều kiện ô cho xem trước và lúc công cụ tác động.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="tool_for" qualifiers="static">
+			<return type="StringName" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+				Ánh xạ hành động sang mã công cụ quyết định kích thước vùng.
+			</description>
+		</method>
+		<method name="cells" qualifiers="static">
+			<return type="Vector2i[]" />
+			<param index="0" name="origin" type="Vector2i" />
+			<param index="1" name="facing" type="Vector2i" />
+			<param index="2" name="size" type="int" />
+			<description>
+				Tạo vùng vuông phía trước ô gốc theo hướng lưới. Trả mảng rỗng nếu kích thước ngoài cấp hỗ trợ hoặc hướng không phải trục đơn vị.
+			</description>
+		</method>
+		<method name="evaluate" qualifiers="static">
+			<return type="Dictionary[]" />
+			<param index="0" name="farm" type="FarmingController" />
+			<param index="1" name="action" type="StringName" />
+			<param index="2" name="targets" type="Vector2i[]" />
+			<param index="3" name="inventory" type="InventoryComponent" default="null" />
+			<param index="4" name="slot" type="int" default="-1" />
+			<param index="5" name="actor" type="PhysicsBody2D" default="null" />
+			<param index="6" name="planting_seed" type="ItemDefinition" default="null" />
+			<param index="7" name="shared" type="bool" default="false" />
+			<description>
+				Đánh giá từng ô theo hành động và lượng hạt giống khả dụng. Mỗi kết quả có cell, valid cho điều kiện địa hình và ready khi còn đủ vật tư. Chế độ shared lấy hạt theo mã trong cả inventory thay vì ô đang chọn.
+			</description>
+		</method>
+	</methods>
+</class>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerNavigation" inherits="PlayerNavigationComponent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều hướng riêng cho công nhân thông qua WorkerNavigationSystem. Hỗ trợ đích chính xác hoặc phạm vi tương tác, kiểm tra waypoint và lập lại đường khi đoạn đường bị chặn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="request_focus">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Yêu cầu đi đến phạm vi tương tác quanh điểm.
+			</description>
+		</method>
+		<method name="request_worker_goal">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="exact" type="bool" />
+			<description>
+				Hủy đường cũ và yêu cầu hệ thống lập đường đến đích với chế độ đã chọn. Yêu cầu trùng với đích và chế độ hiện tại được bỏ qua.
+			</description>
+		</method>
+		<method name="_in_focus_range">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Hủy yêu cầu trong hệ thống và xóa trạng thái điều hướng hiện tại.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="accept_path">
+			<return type="void" />
+			<param index="0" name="path" type="PackedVector2Array" />
+			<description>
+				Nhận đường đã lập và gộp các đoạn cùng hướng, giữ các điểm đổi hướng. Đường rỗng kết thúc điều hướng.
+			</description>
+		</method>
+		<method name="move">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Đi theo waypoint, định kỳ kiểm tra đoạn đường và yêu cầu lập lại nếu bị chặn.
+			</description>
+		</method>
+		<method name="_retry">
+			<return type="void" />
+			<param index="0" name="waypoint" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="system" type="WorkerNavigationSystem" setter="" getter="">
+			Bộ lập kế hoạch đường dùng chung của công nhân.
+		</member>
+		<member name="exact_goal" type="bool" setter="" getter="" default="false">
+			Yêu cầu đến sát đích theo arrival_distance thay vì phạm vi tương tác.
+		</member>
+		<member name="_check_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_checked_waypoint" type="Vector2" setter="" getter="" default="Vector2(inf, inf)">
+		</member>
+	</members>
+</class>

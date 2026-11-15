@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ContextBarsComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối trạng thái nhắm và hover để hiện thông tin cây, chậu và vật nuôi. Tìm cây dưới chuột qua các ô lân cận thay vì quét toàn bộ ruộng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh_at">
+			<return type="void" />
+			<param index="0" name="mouse_world" type="Vector2" />
+			<param index="1" name="pointer_inside" type="bool" default="true" />
+			<description>
+				Tính mục tiêu theo hướng và vị trí chuột toàn cục, bật/tắt hiệu ứng tương ứng. Khi menu mở, xóa các mục tiêu đang hiện.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_animal_focus">
+			<return type="void" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_plant_focused">
+			<return type="void" />
+			<param index="0" name="target" type="Node2D" />
+			<param index="1" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_focused_target">
+			<return type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_hovered_target">
+			<return type="Node2D" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_sprite_bounds">
+			<return type="Rect2" />
+			<param index="0" name="sprite" type="Node2D" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="mouse_padding" type="float" setter="" getter="" default="5.0">
+			Khoảng đệm khi kiểm tra chuột trên ảnh.
+		</member>
+		<member name="refresh_interval" type="float" setter="" getter="" default="0.05">
+			Khoảng giữa các lần làm mới theo vật lý.
+		</member>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi đang nhắm.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Component cung cấp hướng nhìn.
+		</member>
+		<member name="actions" type="FarmingActionComponent" setter="" getter="">
+			Component hành động cung cấp ô đất đang nhắm.
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+			Lựa chọn và trạng thái menu.
+		</member>
+		<member name="trough_interaction" type="TroughInteractionComponent" setter="" getter="">
+			Tương tác máng có thể ưu tiên hơn cây.
+		</member>
+		<member name="flower_interaction" type="FlowerInteraction" setter="" getter="">
+			Tương tác chậu hoa.
+		</member>
+		<member name="_visible" type="Node2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_bounds" type="Dictionary[Texture2D, Rect2]" setter="" getter="" default="{}">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_focused_animal" type="AnimalActor" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="PlantFocusEffect" value="&lt;Object&gt;">
+			Script hiệu ứng sáng khi nhắm.
+		</constant>
+	</constants>
+</class>

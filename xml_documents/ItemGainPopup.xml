@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemGainPopup" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Popup tạm trong thế giới hiển thị số vật phẩm nhận hoặc thông báo. Popup bay lên, mờ dần và tự xóa; không nhận input.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="add_amount">
+			<return type="void" />
+			<param index="0" name="count" type="int" />
+			<description>
+				Cộng số lượng vào popup hiện có và cập nhật nhãn.
+			</description>
+		</method>
+		<method name="place_world">
+			<return type="void" />
+			<param index="0" name="at" type="Vector2" />
+			<description>
+				Đặt popup tại vị trí toàn cục và ghi lại gốc chuyển động.
+			</description>
+		</method>
+		<method name="shift_up">
+			<return type="void" />
+			<param index="0" name="distance" type="float" />
+			<description>
+				Dời vị trí và gốc chuyển động lên để tránh chồng popup.
+			</description>
+		</method>
+		<method name="start_after">
+			<return type="void" />
+			<param index="0" name="seconds" type="float" />
+			<description>
+				Hoãn hiển thị và đếm tuổi popup theo số giây không âm.
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_center_row">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="item" type="ItemDefinition" setter="" getter="">
+			Định nghĩa vật phẩm để lấy biểu tượng.
+		</member>
+		<member name="amount" type="int" setter="" getter="" default="0">
+			Số lượng hiển thị.
+		</member>
+		<member name="message" type="String" setter="" getter="" default="&quot;&quot;">
+			Thông điệp nguồn tùy chọn thay cho số lượng.
+		</member>
+		<member name="age" type="float" setter="" getter="" default="0.0">
+			Thời gian đã hiển thị, tính bằng giây.
+		</member>
+		<member name="label" type="Label" setter="" getter="">
+			Nhãn nội dung.
+		</member>
+		<member name="icon" type="TextureRect" setter="" getter="">
+			Biểu tượng vật phẩm.
+		</member>
+		<member name="row" type="HBoxContainer" setter="" getter="">
+			Hàng chứa nhãn và biểu tượng.
+		</member>
+		<member name="_origin" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_delay" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+</class>

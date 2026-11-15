@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="UIScaleComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều chỉnh tỉ lệ CanvasLayer và kích thước ảo của root cho desktop và cảm ứng. Vùng an toàn được trừ khỏi kích thước khả dụng; input theo transform canvas.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="attach" qualifiers="static">
+			<return type="UIScaleComponent" />
+			<param index="0" name="layer" type="CanvasLayer" />
+			<param index="1" name="control" type="Control" />
+			<description>
+				Áp theme, tạo component và gắn vào layer để quản lý control gốc.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_check_stretch">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Tính lại tỉ lệ canvas, vùng an toàn và kích thước ảo theo viewport hiện tại. Phát layout_changed khi bố cục hoặc chế độ cảm ứng thay đổi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="canvas" type="CanvasLayer" setter="" getter="">
+			Canvas được điều chỉnh tỉ lệ.
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+			Control gốc được đặt kích thước và vị trí theo vùng an toàn.
+		</member>
+		<member name="_last_view_size" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_last_screen_scale" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_last_insets" type="Vector4" setter="" getter="">
+		</member>
+		<member name="_last_point_scale" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="_last_touch" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="layout_changed">
+			<param index="0" name="virtual_size" type="Vector2" />
+			<description>
+				Phát kích thước ảo sau khi bố cục hoặc chế độ thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="MINIMUM_VIEW" value="Vector2(480, 270)">
+			Kích thước ảo nhỏ nhất dùng để giới hạn mức phóng trên desktop.
+		</constant>
+		<constant name="MAX_DESKTOP_COMPENSATION" value="4.0">
+			Hệ số bù stretch tối đa trên desktop.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmStorageDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình kho và loại vật phẩm được phép cất trong kho.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="accepts">
+			<return type="bool" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+				Kiểm tra vật phẩm có mã hợp lệ và thuộc nhóm kho cho phép. Kho vật tư nhận thức ăn, hạt giống cây trồng hợp lệ và các booster phân bón, thuốc trừ sâu, thuốc thú y hoặc thuốc diệt cỏ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="storage_id" type="StringName" setter="" getter="">
+			Mã nhận diện kho.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên kho hiển thị.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="FarmStorageDefinition.Kind" default="0">
+			Nhóm kho quyết định quy tắc nhận vật phẩm.
+		</member>
+		<member name="slot_count" type="int" setter="" getter="" default="128">
+			Số ô lưu trữ.
+		</member>
+		<member name="stack_cap" type="int" setter="" getter="" default="0">
+			Giới hạn số lượng mỗi chồng, giá trị 0 được chuyển cho hệ thống inventory.
+		</member>
+	</members>
+	<constants>
+		<constant name="PRODUCE" value="0" enum="Kind">
+		</constant>
+		<constant name="SUPPLIES" value="1" enum="Kind">
+		</constant>
+	</constants>
+</class>

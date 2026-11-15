@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CropDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Dữ liệu dùng chung cho một loại cây trồng và sản phẩm thu hoạch.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra thời gian dương và đủ bốn ảnh giai đoạn khác null.
+			</description>
+		</method>
+		<method name="has_valid_harvest">
+			<return type="bool" />
+			<description>
+				Kiểm tra sản phẩm là ItemDefinition loại nông sản và số lượng dương.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="crop_id" type="StringName" setter="" getter="">
+			Mã nhận diện loại cây trồng.
+		</member>
+		<member name="stage_textures" type="Texture2D[]" setter="" getter="" default="[]">
+			Bốn ảnh của các giai đoạn sinh trưởng.
+		</member>
+		<member name="growth_seconds" type="float" setter="" getter="" default="1200.0">
+			Thời gian sinh trưởng tính bằng giây.
+		</member>
+		<member name="harvest_item" type="Resource" setter="" getter="">
+			Resource vật phẩm thu hoạch, được kiểm tra riêng bởi [method has_valid_harvest].
+		</member>
+		<member name="harvest_amount" type="int" setter="" getter="" default="1">
+			Số lượng vật phẩm thu được.
+		</member>
+	</members>
+</class>

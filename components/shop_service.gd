@@ -1,11 +1,19 @@
 class_name ShopService
 extends RefCounted
-## Narrow purchase command. Stage the entire bag before committing either model.
+## Báo giá và thực hiện mua vật phẩm trong cửa hàng.
+## Chuẩn bị toàn bộ nội dung túi trước khi ghi ví và inventory, đồng thời
+## phối hợp giới hạn mua gỗ hằng ngày khi lựa chọn là gỗ.
+
+## Phát lựa chọn, số lượng và tổng giá sau khi mua thành công.
 signal purchased(offer: ShopOffer, quantity: int, total: int)
+## Catalog các lựa chọn được phép mua.
 var catalog: ShopCatalog
+## Ví thanh toán.
 var wallet: WalletComponent
+## Túi nhận vật phẩm.
 var inventory: InventoryComponent
 var _busy: bool = false
+## Thế giới tùy chọn để kiểm tra giao dịch khác và giới hạn mua gỗ.
 var world: FarmWorld
 
 func _init(stock: ShopCatalog, purse: WalletComponent, bag: InventoryComponent) -> void:
@@ -13,6 +21,8 @@ func _init(stock: ShopCatalog, purse: WalletComponent, bag: InventoryComponent) 
 	wallet = purse
 	inventory = bag
 
+## Kiểm tra lựa chọn, số lượng 1–99, tiền, sức chứa và giới hạn gỗ.
+## Trả tổng giá hoặc lỗi giải thích vì sao không mua được.
 func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 	if offer == null or catalog == null or not catalog.offers.has(offer) or offer.item == null or offer.item.item_id.is_empty() or offer.price < 1 or offer.price > 1000000 or quantity < 1 or quantity > 99:
 		return {"ok": false, "error": "Invalid item or quantity."}
@@ -37,6 +47,8 @@ func quote(offer: ShopOffer, quantity: int) -> Dictionary:
 # Nếu chỉ inventory.add rồi trừ tổng giá, túi gần đầy có thể nhận một phần nhưng bị tính tiền cả gói.
 # _busy chặn listener của changed/purchased gọi Mua lồng nhau trong lúc đang commit.
 # Đây là lệnh đồng bộ trên main thread; sau này online vẫn cần giao dịch nguyên tử ở server.
+## Kiểm tra lại báo giá và mua toàn bộ số lượng yêu cầu.
+## Giao dịch chặn gọi lồng nhau và khôi phục ví, túi nếu bước commit thất bại.
 func buy(offer: ShopOffer, quantity: int) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}

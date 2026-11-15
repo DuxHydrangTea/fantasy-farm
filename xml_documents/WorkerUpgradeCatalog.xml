@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerUpgradeCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng giá bằng xu cho các hướng nâng cấp công nhân.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="price">
+			<return type="int" />
+			<param index="0" name="track" type="String" />
+			<param index="1" name="current" type="int" />
+			<description>
+				Lấy giá tiếp theo từ hướng và cấp hiện tại, trả về -1 khi hết mảng giá. Hướng tốc độ dùng cấp làm chỉ số, các hướng công cụ dùng cấp trừ một. Tên hướng khác các công cụ được liệt kê dùng bảng giá tốc độ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="speed_prices" type="int[]" setter="" getter="" default="[...]">
+			Giá các cấp tăng tốc.
+		</member>
+		<member name="hoe_prices" type="int[]" setter="" getter="" default="[...]">
+			Giá nâng cấp cuốc.
+		</member>
+		<member name="sowing_prices" type="int[]" setter="" getter="" default="[...]">
+			Giá nâng cấp gieo hạt.
+		</member>
+		<member name="watering_prices" type="int[]" setter="" getter="" default="[...]">
+			Giá nâng cấp tưới nước.
+		</member>
+		<member name="harvest_prices" type="int[]" setter="" getter="" default="[...]">
+			Giá nâng cấp thu hoạch.
+		</member>
+	</members>
+</class>

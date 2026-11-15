@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="EconomySaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chuyển dữ liệu kinh tế từ phiên bản 15 sang 16. Bảo toàn đơn đã phát hành, các mốc thời gian và lượng thức ăn được giữ lại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="migrate" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Chuyển dữ liệu tại chỗ, kiểm tra đơn cũ rồi điều chỉnh con trỏ theo catalog mới. Trả dictionary có [code]ok[/code] hoặc lỗi từ SaveSchema. Khi lỗi, dữ liệu đầu vào có thể đã được thay đổi một phần.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="NEW_TROUGHS" value="Array[Dictionary]([{&quot;id&quot;: &quot;barn_feedtrough_02&quot;, &quot;position&quot;: [...], &quot;source&quot;: &quot;placed_1563140842&quot;}, {&quot;id&quot;: &quot;barn_watertrough_02&quot;, &quot;position&quot;: [...], &quot;source&quot;: &quot;placed_203535476&quot;}, {&quot;id&quot;: &quot;pond_feedtrough_02&quot;, &quot;position&quot;: [...], &quot;source&quot;: &quot;pond_feedtrough&quot;}, {&quot;id&quot;: &quot;pond_watertrough_02&quot;, &quot;position&quot;: [...], &quot;source&quot;: &quot;pond_watertrough&quot;}])">
+			Các máng mới được tạo từ chuồng của máng nguồn nếu máng nguồn tồn tại.
+		</constant>
+		<constant name="FOOD_IDS" value="Array[String]([&quot;placed_2042315591&quot;, &quot;placed_144181841&quot;, &quot;placed_1563140842&quot;, &quot;barn_feedtrough_02&quot;, &quot;pond_feedtrough&quot;, &quot;pond_feedtrough_02&quot;])">
+			Mã các máng thức ăn cần gộp lượng dự trữ cũ vào stock.
+		</constant>
+	</constants>
+</class>

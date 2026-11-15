@@ -1,6 +1,7 @@
 class_name FarmUI
 extends RefCounted
-## Shared presentation tokens; cached per source skin, never edits a theme asset.
+## Các kiểu dáng và tùy chọn giao diện dùng chung; cache theme theo tài nguyên nguồn.
+
 const INK: Color = Color("402919")
 const MUTED: Color = Color("80664b")
 const GOOD: Color = Color("456338")
@@ -16,6 +17,7 @@ static var language: String = "vi"
 static var _preferences_loaded: bool = false
 const PREFERENCES: String = "user://ui_preferences.cfg"
 
+## Đọc tùy chọn giao diện, ngôn ngữ và âm thanh một lần.
 static func load_preferences() -> void:
 	if _preferences_loaded:
 		return
@@ -32,6 +34,7 @@ static func load_preferences() -> void:
 	var locale: String = String(config.get_value("ui", "language", "vi"))
 	language = locale if locale in ["en", "vi"] else "vi"
 
+## Ghi tùy chọn hiện tại vào tệp cấu hình; trả mã lỗi Godot.
 static func save_preferences(path: String = PREFERENCES) -> Error:
 	var config: ConfigFile = ConfigFile.new()
 	config.set_value("ui", "scale", ui_scale)
@@ -43,6 +46,7 @@ static func save_preferences(path: String = PREFERENCES) -> Error:
 	config.set_value("audio", "music", music_volume)
 	return config.save(path)
 
+## Áp dụng theme dùng chung cho gốc giao diện và cache theme.
 static func apply(root: Control) -> void:
 	root.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	var source: Theme = root.theme if root.theme != null else preload("res://resources/ui/game_theme.tres")
@@ -103,6 +107,7 @@ static func apply(root: Control) -> void:
 		_themes[key] = skin
 	root.theme = _themes[key] as Theme
 
+## Định dạng số lớn có hậu tố triệu hoặc tỷ.
 static func compact_number(value: int) -> String:
 	if value < 1000000:
 		return GameText.grouped_integer(value)
@@ -115,7 +120,7 @@ static func compact_number(value: int) -> String:
 		number = number.replace(".", ",")
 	return number + suffix
 
-## Vector geometry stays sharp at every UI scale; sprites keep nearest filtering.
+## Tạo hộp vector sắc nét ở các tỉ lệ giao diện; sprite vẫn dùng lọc điểm gần nhất.
 static func box(color: Color, radius: int = 14, padding: int = 16, border: Color = Color("dccba9")) -> StyleBoxFlat:
 	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = color
@@ -161,6 +166,7 @@ static func _cozy_theme(skin: Theme) -> void:
 		var color_name: String = "font_color" if state == "normal" else "font_" + state + "_color"
 		skin.set_color(color_name, "PrimaryAction", Color("fff8e9"))
 
+## Áp dụng kiểu bảng thoại không chặn chuột.
 static func speech(panel: PanelContainer) -> void:
 	apply(panel)
 	panel.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR

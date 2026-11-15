@@ -1,15 +1,25 @@
 class_name ContextBarsComponent
 extends Node2D
-## Plant hover and facing focus for plants and animals.
-## Crop hover uses cell lookup, avoiding a scan through every planted field tile.
+## Điều phối trạng thái nhắm và hover để hiện thông tin cây, chậu và vật nuôi.
+## Tìm cây dưới chuột qua các ô lân cận thay vì quét toàn bộ ruộng.
+
+## Khoảng đệm khi kiểm tra chuột trên ảnh.
 @export var mouse_padding: float = 5.0
+## Khoảng giữa các lần làm mới theo vật lý.
 @export var refresh_interval: float = 0.05
+## Người chơi đang nhắm.
 @export var player: FarmPlayer
+## Component cung cấp hướng nhìn.
 @export var animation: AnimationComponent
+## Component hành động cung cấp ô đất đang nhắm.
 @export var actions: FarmingActionComponent
+## Lựa chọn và trạng thái menu.
 @export var selection: ToolSelectionComponent
+## Tương tác máng có thể ưu tiên hơn cây.
 @export var trough_interaction: TroughInteractionComponent
+## Tương tác chậu hoa.
 @export var flower_interaction: FlowerInteraction
+## Script hiệu ứng sáng khi nhắm.
 const PlantFocusEffect = preload("res://components/interaction/plant_focus_effect.gd")
 var _visible: Array[Node2D] = []
 var _bounds: Dictionary[Texture2D, Rect2] = {}
@@ -23,6 +33,8 @@ func _physics_process(delta: float) -> void:
 	_elapsed = 0.0
 	refresh_at(get_global_mouse_position(), get_viewport().get_visible_rect().has_point(get_viewport().get_mouse_position()))
 
+## Tính mục tiêu theo hướng và vị trí chuột toàn cục, bật/tắt hiệu ứng tương ứng.
+## Khi menu mở, xóa các mục tiêu đang hiện.
 func refresh_at(mouse_world: Vector2, pointer_inside: bool = true) -> void:
 	var animal: AnimalActor
 	if not selection.is_menu_open() and player.boosters != null:

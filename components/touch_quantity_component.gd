@@ -1,13 +1,20 @@
 class_name TouchQuantityComponent
 extends Node
-## Large +/- controls avoid a phone keyboard and tiny SpinBox arrows.
+## Thêm nút tăng giảm lớn cho SpinBox khi dùng giao diện cảm ứng.
+
+## SpinBox được điều khiển.
 var quantity: SpinBox
+## Root phát signal resize để cập nhật bố cục.
 var layout_root: Control
+## Nút giảm số lượng.
 var decrease: Button
+## Nút tăng số lượng.
 var increase: Button
+## Giữ nút hiển thị cả khi không ở chế độ cảm ứng.
 var always_show_buttons: bool = false
 var _empty_arrows: ImageTexture
 
+## Tạo và gắn component cho SpinBox, với root dùng để theo dõi resize.
 static func attach(spin: SpinBox, ui_root: Control, always_buttons: bool = false) -> void:
 	var component: TouchQuantityComponent = TouchQuantityComponent.new()
 	component.always_show_buttons = always_buttons
@@ -15,6 +22,7 @@ static func attach(spin: SpinBox, ui_root: Control, always_buttons: bool = false
 	component.layout_root = ui_root
 	spin.add_child(component)
 
+## Làm mới mọi TouchQuantityComponent là con của SpinBox.
 static func refresh_for(spin: SpinBox) -> void:
 	for child: Node in spin.get_children():
 		if child is TouchQuantityComponent:
@@ -51,6 +59,7 @@ func _step(direction: int) -> void:
 func _value_changed(_value: float) -> void:
 	refresh()
 
+## Cập nhật hiển thị, trạng thái nút và bàn phím theo chế độ cảm ứng và giá trị.
 func refresh() -> void:
 	var touch: bool = MobileLayout.is_touch(get_viewport())
 	decrease.visible = (touch or always_show_buttons) and quantity.visible

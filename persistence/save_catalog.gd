@@ -1,11 +1,19 @@
 class_name SaveCatalog
 extends RefCounted
-## Only shipped resources enter this allowlist. Never load a path from save JSON.
+## Danh mục resource có sẵn trong game dùng để kiểm tra và khôi phục save.
+## Các mã trong JSON được đối chiếu với danh mục thay vì tải đường dẫn từ save.
+
+## Mã vật phẩm sang ItemDefinition.
 var items: Dictionary = {}
+## Mã cây trồng sang CropDefinition.
 var crops: Dictionary = {}
+## Mã vật nuôi sang AnimalDefinition.
 var animals: Dictionary = {}
+## Mã skin vật nuôi sang đường dẫn SpriteFrames đã quét.
 var skins: Dictionary = {}
+## Mã hoa sang FlowerDefinition.
 var flowers: Dictionary = {}
+## Mã cây sang TreeDefinition.
 var trees: Dictionary = {}
 
 func _init() -> void:
@@ -47,13 +55,17 @@ func _scan_items(folder: String) -> void:
 		elif file.ends_with("/"):
 			_scan_items(folder + "/" + file.trim_suffix("/"))
 
+## Lấy mã skin từ tên file resource, bỏ hậu tố _frames.tres.
 func skin_id(frames: SpriteFrames) -> String:
 	return frames.resource_path.get_file().trim_suffix("_frames.tres") if frames != null else ""
 
+## Kiểm tra skin rỗng hoặc skin đã biết phù hợp mã loài.
+## Gà còn chấp nhận các skin rooster.
 func valid_skin(animal: String, skin: String) -> bool:
 	if skin.is_empty():
 		return true
 	return skins.has(skin) and (skin == animal or skin.begins_with(animal + "_") or (animal == "chicken" and (skin == "rooster" or skin.begins_with("rooster_"))))
 
+## Tải SpriteFrames theo mã đã biết, trả null nếu mã không có trong catalog.
 func load_skin(id: String) -> SpriteFrames:
 	return load(skins[id]) as SpriteFrames if skins.has(id) else null

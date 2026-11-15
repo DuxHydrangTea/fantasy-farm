@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalTradeService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Mua bán vật nuôi sống cho trang trại của người chơi.
+	</brief_description>
+	<description>
+		Vật nuôi mua được thêm trực tiếp vào chuồng phù hợp. Trước khi giao dịch, dịch vụ kiểm tra sức chứa, vị trí trống, ví và đồng bộ thời gian chuồng.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="stock" type="ShopCatalog" />
+			<param index="1" name="purse" type="WalletComponent" />
+			<param index="2" name="farm_root" type="Node" />
+			<param index="3" name="time_source" type="FarmClock" />
+			<description>
+			</description>
+		</method>
+		<method name="_pens">
+			<return type="AnimalPen[]" />
+			<description>
+			</description>
+		</method>
+		<method name="owned_animals">
+			<return type="AnimalActor[]" />
+			<description>
+				Liệt kê vật nuôi còn sống là con trực tiếp của các chuồng trong trang trại.
+			</description>
+		</method>
+		<method name="_alive">
+			<return type="bool" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_offer_for">
+			<return type="AnimalShopOffer" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_owns">
+			<return type="bool" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+			</description>
+		</method>
+		<method name="quote_sell">
+			<return type="Dictionary" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Báo giá bán lại [param animal] mà chưa thực hiện giao dịch. Trả ok và total tính bằng xu, hoặc ok false và error nếu không thể bán.
+			</description>
+		</method>
+		<method name="sell">
+			<return type="Dictionary" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Đồng bộ nhu cầu rồi kiểm tra lại và bán vật nuôi còn thuộc trang trại. Cộng tiền và đưa actor ra khỏi hoạt động trước khi thông báo; hoàn tiền nếu không thể đưa actor ra khỏi hoạt động.
+			</description>
+		</method>
+		<method name="quote_buy">
+			<return type="Dictionary" />
+			<param index="0" name="offer" type="AnimalShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<description>
+				Kiểm tra lựa chọn mua, số lượng 1–99, tiền và chuồng có đủ vị trí an toàn. Thành công trả tổng giá, chuồng và các vị trí dự kiến.
+			</description>
+		</method>
+		<method name="buy">
+			<return type="Dictionary" />
+			<param index="0" name="offer" type="AnimalShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<description>
+				Đồng bộ chuồng, kiểm tra báo giá rồi tạo vật nuôi mới và trừ tiền. Thành công trả số lượng, tổng tiền và các actor vừa tạo.
+			</description>
+		</method>
+		<method name="_spawn_positions">
+			<return type="Vector2[]" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<param index="1" name="data" type="AnimalDefinition" />
+			<param index="2" name="count" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="ShopCatalog" setter="" getter="">
+			Danh mục lựa chọn mua vật nuôi.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví thanh toán hoặc nhận tiền.
+		</member>
+		<member name="farm" type="Node" setter="" getter="">
+			Node trang trại chứa các chuồng.
+		</member>
+		<member name="clock" type="FarmClock" setter="" getter="">
+			Đồng hồ dùng để đồng bộ trạng thái trước giao dịch.
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="purchased">
+			<param index="0" name="offer" type="AnimalShopOffer" />
+			<param index="1" name="quantity" type="int" />
+			<param index="2" name="total" type="int" />
+			<description>
+				Phát lựa chọn mua, số lượng và tổng giá sau giao dịch.
+			</description>
+		</signal>
+		<signal name="sold">
+			<param index="0" name="animal_id" type="StringName" />
+			<param index="1" name="total" type="int" />
+			<description>
+				Phát mã cá thể và số xu sau khi bán.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="ACTOR_PATH" value="&quot;res://scenes/animals/animal.tscn&quot;">
+			Đường dẫn scene actor được tải khi mua.
+		</constant>
+	</constants>
+</class>

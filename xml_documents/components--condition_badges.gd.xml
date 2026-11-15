@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/condition_badges.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bong bóng trong thế giới hiển thị các tình trạng đang có theo thứ tự cố định. Gốc node là đầu đuôi bong bóng; nơi gọi đặt gốc phía trên đối tượng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="visual_rect">
+			<return type="Rect2" />
+			<description>
+				Biên phần bong bóng đang hiển thị, hoặc vùng rỗng khi ẩn.
+			</description>
+		</method>
+		<method name="_ensure_visuals">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_statuses">
+			<return type="void" />
+			<param index="0" name="pests" type="bool" />
+			<param index="1" name="weeds" type="bool" />
+			<param index="2" name="sick" type="bool" />
+			<param index="3" name="hungry" type="bool" default="false" />
+			<param index="4" name="thirsty" type="bool" default="false" />
+			<description>
+				Cập nhật tập tình trạng và bố cục biểu tượng. Chỉ phát hiệu ứng xuất hiện khi chuyển từ không có sang có tình trạng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="active_statuses" type="StringName[]" setter="" getter="" default="[]">
+			Các mã trạng thái hiện đang hiển thị.
+		</member>
+		<member name="_icons" type="Sprite2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_visual" type="Node2D" setter="" getter="">
+		</member>
+		<member name="_background" type="Sprite2D" setter="" getter="">
+		</member>
+		<member name="_entrance" type="Tween" setter="" getter="">
+		</member>
+		<member name="_mask" type="int" setter="" getter="" default="-1">
+		</member>
+	</members>
+	<constants>
+		<constant name="STATUS_KEYS" value="Array[StringName]([&amp;&quot;weeds&quot;, &amp;&quot;pests&quot;, &amp;&quot;sick&quot;, &amp;&quot;hungry&quot;, &amp;&quot;thirsty&quot;])">
+			Các mã trạng thái theo thứ tự biểu tượng.
+		</constant>
+		<constant name="TEXTURES" value="Array[Texture2D]([&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;])">
+			Texture biểu tượng theo thứ tự STATUS_KEYS.
+		</constant>
+		<constant name="PANELS" value="Array[Texture2D]([&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;])">
+			Texture nền tương ứng số biểu tượng từ một đến năm.
+		</constant>
+	</constants>
+</class>

@@ -1,12 +1,19 @@
 class_name GrassPocRenderer
 extends RefCounted
-## G1 single-batch renderer. Chunking and actor Y-sort belong to G2.
+## Tạo một batch MultiMesh cỏ và CanvasItem từ danh sách mẫu.
+## Phân chunk và thứ tự Y-sort do GrassChunkRenderer và GrassChunkIndex quản lý.
+
+## RID CanvasItem được cấp phát.
 var canvas: RID
+## MultiMesh chứa transform và dữ liệu riêng từng instance.
 var instances: MultiMesh
+## Biên hình học cục bộ của batch.
 var bounds: Rect2
 var _material: ShaderMaterial
 var _texture: Texture2D
 
+## Giải phóng batch cũ rồi dựng batch mới dưới CanvasItem cha.
+## Mỗi mẫu chứa loại, transform và pha tùy chọn; mesh rỗng dùng quad 16×16.
 func build(parent: RID, catalog: GrassSourceCatalog, samples: Array[Dictionary], effect: ShaderMaterial, geometry: Mesh = null) -> void:
 	clear()
 	if samples.is_empty():
@@ -43,10 +50,12 @@ func build(parent: RID, catalog: GrassSourceCatalog, samples: Array[Dictionary],
 	RenderingServer.canvas_item_set_material(canvas, effect.get_rid())
 	RenderingServer.canvas_item_add_multimesh(canvas, instances.get_rid(), catalog.texture.get_rid())
 
+## Đặt custom rect để culling bao gồm khoảng dự phòng cho hiệu ứng.
 func update_bounds(margin: float) -> void:
 	if canvas.is_valid():
 		RenderingServer.canvas_item_set_custom_rect(canvas, true, bounds.grow(margin))
 
+## Giải phóng RID và tham chiếu tài nguyên batch.
 func clear() -> void:
 	if canvas.is_valid():
 		RenderingServer.free_rid(canvas)

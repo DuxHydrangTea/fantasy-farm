@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerNavigationSystem" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lập đường đi dùng chung cho công nhân với cache ô và cạnh theo hình va chạm. Các tìm kiếm được xử lý luân phiên trong ngân sách thời gian, truy vấn vật lý và số bước mở rộng chung cho mỗi frame vật lý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_connect_tiles">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="reset">
+			<return type="void" />
+			<description>
+				Xóa mọi tìm kiếm và cache, đặt lại con trỏ và tăng revision hình học.
+			</description>
+		</method>
+		<method name="_geometry_removed">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="reset_cache">
+			<return type="void" />
+			<description>
+				Xóa cache và khởi động lại các tìm kiếm còn có đích sau khi địa hình thay đổi.
+			</description>
+		</method>
+		<method name="_geometry_changed">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="invalidate_region">
+			<return type="void" />
+			<param index="0" name="area" type="Rect2" />
+			<description>
+				Xóa các ô và cạnh cache giao vùng thay đổi, rồi khởi động lại tìm kiếm bị ảnh hưởng.
+			</description>
+		</method>
+		<method name="_restart_jobs">
+			<return type="void" />
+			<param index="0" name="area" type="Rect2" default="Rect2(0, 0, 0, 0)" />
+			<description>
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<param index="0" name="nav" type="WorkerNavigation" />
+			<description>
+				Xóa các yêu cầu tìm đường đang chờ của navigator.
+			</description>
+		</method>
+		<method name="request">
+			<return type="void" />
+			<param index="0" name="nav" type="WorkerNavigation" />
+			<description>
+				Thay yêu cầu cũ bằng một tìm kiếm mới theo hình va chạm và lưới của navigator.
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="pump">
+			<return type="void" />
+			<description>
+				Xử lý các tìm kiếm luân phiên một lần mỗi frame vật lý đến khi hết ngân sách.
+			</description>
+		</method>
+		<method name="_clear">
+			<return type="bool" />
+			<param index="0" name="job" type="Dictionary" />
+			<param index="1" name="nav" type="WorkerNavigation" />
+			<param index="2" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_edge_clear">
+			<return type="bool" />
+			<param index="0" name="job" type="Dictionary" />
+			<param index="1" name="nav" type="WorkerNavigation" />
+			<param index="2" name="from" type="Vector2i" />
+			<param index="3" name="to" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_expand">
+			<return type="bool" />
+			<param index="0" name="job" type="Dictionary" />
+			<param index="1" name="nav" type="WorkerNavigation" />
+			<description>
+			</description>
+		</method>
+		<method name="_failed">
+			<return type="bool" />
+			<param index="0" name="nav" type="WorkerNavigation" />
+			<description>
+			</description>
+		</method>
+		<method name="_heuristic">
+			<return type="float" />
+			<param index="0" name="nav" type="WorkerNavigation" />
+			<param index="1" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_push">
+			<return type="void" />
+			<param index="0" name="heap" type="Array" />
+			<param index="1" name="entry" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_pop">
+			<return type="Array" />
+			<param index="0" name="heap" type="Array" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa địa hình và vật cản.
+		</member>
+		<member name="caches" type="Dictionary" setter="" getter="" default="{}">
+			Cache tính đi được và cạnh cho từng hình va chạm và cấu hình lưới.
+		</member>
+		<member name="jobs" type="Dictionary[]" setter="" getter="" default="[]">
+			Các tìm kiếm đang chờ hoàn thành.
+		</member>
+		<member name="cursor" type="int" setter="" getter="" default="0">
+			Vị trí luân phiên trong danh sách tìm kiếm.
+		</member>
+		<member name="queries_last_step" type="int" setter="" getter="" default="0">
+			Số truy vấn của lượt xử lý gần nhất.
+		</member>
+		<member name="expansions_last_step" type="int" setter="" getter="" default="0">
+			Số bước mở rộng của lượt gần nhất.
+		</member>
+		<member name="total_queries" type="int" setter="" getter="" default="0">
+			Tổng truy vấn vật lý từ khi hệ thống hoạt động.
+		</member>
+		<member name="completed_paths" type="int" setter="" getter="" default="0">
+			Số đường hoàn thành thành công.
+		</member>
+		<member name="failed_paths" type="int" setter="" getter="" default="0">
+			Số đường tìm thất bại.
+		</member>
+		<member name="geometry_revision" type="int" setter="" getter="" default="0">
+			Revision tăng khi hình học thay đổi hoặc cache bị xóa.
+		</member>
+		<member name="_pumped_frame" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_static_areas" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="profiling" type="bool" setter="" getter="" default="false">
+			Bật đo thời gian xử lý bộ tìm đường.
+		</member>
+		<member name="profile_usec" type="int" setter="" getter="" default="0">
+			Tổng thời gian đã đo tính bằng micro giây.
+		</member>
+		<member name="profile_max_usec" type="int" setter="" getter="" default="0">
+			Thời gian lớn nhất của một lượt đo, tính bằng micro giây.
+		</member>
+	</members>
+	<constants>
+		<constant name="QUERY_BUDGET" value="96">
+			Số truy vấn vật lý tối đa cho một lượt xử lý.
+		</constant>
+		<constant name="EXPANSION_BUDGET" value="384">
+			Số bước mở rộng tìm đường tối đa cho một lượt.
+		</constant>
+		<constant name="TIME_BUDGET_USEC" value="1500">
+			Ngân sách thời gian một lượt, tính bằng micro giây.
+		</constant>
+		<constant name="DIRECTIONS" value="Array[Vector2i]([Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)])">
+			Các hướng lưới được xét khi mở rộng.
+		</constant>
+	</constants>
+</class>

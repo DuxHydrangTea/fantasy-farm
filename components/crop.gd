@@ -1,32 +1,56 @@
 class_name Crop
 extends Node2D
-## Shared stage textures have identical opaque bounds across crop instances.
+## Một cây trồng trên đồng, giữ tiến độ, chất lượng và tình trạng sâu cỏ.
+## Tiến độ tính từ mốc trồng và hạn chín, có thể cập nhật trực tiếp sau offline.
+
+## Cache đỉnh phần ảnh nhìn thấy theo texture giai đoạn dùng chung.
 static var _visible_tops: Dictionary[Texture2D, float] = {}
 static var _quality_material: ParticleProcessMaterial
 static var _quality_texture: ImageTexture
 static var _silver_texture: ImageTexture
 
+## Script trạng thái sâu bệnh và cỏ dại.
 const ConditionState = preload("res://components/crop_condition_state.gd")
+## Script hiển thị biểu tượng tình trạng.
 const Badges = preload("res://components/condition_badges.gd")
+## Trạng thái sâu và cỏ của cây.
 var conditions: ConditionState = ConditionState.new()
+## Node biểu tượng tình trạng.
 var condition_badges: Node2D
+## Phát khi tình trạng cây được thay đổi bởi nơi điều phối.
 signal conditions_changed
+## Phát khi tiến độ lần đầu đạt trưởng thành.
 signal matured
+## Định nghĩa loại cây dùng chung.
 var definition: CropDefinition
+## Timestamp trồng.
 var planted_at: float = 0.0
+## Timestamp dự kiến chín sau các điều chỉnh.
 var matures_at: float = 0.0
+## Tiến độ sinh trưởng từ 0 đến 1.
 var progress: float = 0.0
+## Chỉ số ảnh giai đoạn từ 0 đến 3.
 var stage: int = 0
+## Đã được tưới ít nhất một lần.
 var watered: bool = false
+## Đã dùng Root Tonic.
 var root_boost: bool = false
+## Hạt hiệu ứng hiển thị chất lượng.
 var quality_particles: GPUParticles2D
 var _displayed_quality: int = 0
+## Đã dùng phân bón.
 var fertilized: bool = false
+## Tổng thời gian giảm bởi thụ phấn, dùng để tính lại hạn khi bón phân.
 var pollination_reduction: float = 0.0
+## Đồng hồ dùng để cập nhật khi xem trạng thái.
 var time_manager: FarmClock
+## Sprite cây theo giai đoạn.
 @export var sprite: Sprite2D
+## Thanh tiến độ.
 @export var progress_bar: ProgressBar
+## Khung chứa thanh tiến độ.
 @export var progress_frame: Control
+## Component hiệu ứng chuyển động hình ảnh.
 @export var motion: VisualMotionComponent
 var _retiring: bool = false
 
@@ -39,6 +63,7 @@ func _ready() -> void:
 	if is_instance_valid(motion):
 		motion.effect_finished.connect(_on_motion_finished)
 
+## Bật hoặc tắt hiển thị tiến độ khi được tập trung, đồng bộ thời gian trước khi hiện.
 func set_status_focused(value: bool) -> void:
 	if _retiring:
 		progress_frame.hide()
@@ -50,16 +75,20 @@ func set_status_focused(value: bool) -> void:
 	progress_frame.visible = value and definition != null
 	_update_quality()
 
+## Phát hiệu ứng nghiêng nếu cây chưa bắt đầu biến mất.
 func react(degrees: float = 5.0, direction: float = 1.0) -> void:
 	if not _retiring and is_instance_valid(motion):
 		motion.react(degrees, direction)
 
+## Phát hiệu ứng xuất hiện của cây mới mọc.
 func play_sprout() -> void:
 	if not _retiring and is_instance_valid(motion):
 		motion.play_appear()
 
 # Gameplay removes the crop before this cosmetic animation begins.
 # The component reports completion; only the crop owns its lifetime.
+## Bắt đầu hiệu ứng biến mất sau khi gameplay đã bỏ cây khỏi ô.
+## Node tự xóa khi hiệu ứng hoàn tất, hoặc xóa ngay nếu không có motion.
 func retire_after_harvest() -> void:
 	_retiring = true
 	if condition_badges != null:
@@ -78,12 +107,15 @@ func _on_motion_finished(effect: StringName) -> void:
 	if _retiring and effect == &"disappear":
 		queue_free()
 
+## Cho biết cây đang chờ kết thúc hiệu ứng sau thu hoạch.
 func is_retiring() -> bool:
 	return _retiring
 
+## Trả sprite dùng để neo phần hiển thị trạng thái.
 func get_status_sprite() -> Node2D:
 	return sprite
 
+## Khởi tạo cây mới, tình trạng ngẫu nhiên và hạn chín từ thời điểm trồng.
 func configure(crop: CropDefinition, timestamp: float) -> void:
 	conditions.configure()
 	progress = 0.0
@@ -102,6 +134,8 @@ func configure(crop: CropDefinition, timestamp: float) -> void:
 # nhảy thẳng đến kết quả sau offline, không cần giả lập từng frame đã bỏ lỡ.
 # stage = floor(progress * 3) cho 4 stage 0..3: stage cuối chỉ đạt khi progress = 1.
 # Nhân 4 ở đây sẽ cho hình chín từ 75% thời gian dù luật thu hoạch vẫn yêu cầu 100%.
+## Tính tiến độ không lùi, cập nhật tình trạng, ảnh và thanh tiến độ.
+## Phát matured khi cây chuyển từ chưa chín sang chín.
 func refresh(timestamp: float) -> void:
 	if definition == null:
 		return
@@ -128,9 +162,12 @@ func refresh(timestamp: float) -> void:
 	if not was_ready and is_mature():
 		matured.emit()
 
+## Cho biết tiến độ đã đạt 1.
 func is_mature() -> bool:
 	return progress >= 1.0
 
+## Khôi phục các mốc, tiến độ và trạng thái chăm sóc đã kiểm tra rồi cập nhật đến timestamp.
+## Nếu thiếu tình trạng cũ, dùng trạng thái tương thích của ConditionState.
 func restore_progress(crop: CropDefinition, planted: float, deadline: float, earned: float, timestamp: float, was_fertilized: bool = false, bee_reduction: float = 0.0, was_watered: bool = false, was_root_boosted: bool = false, condition_data: Dictionary = {}) -> void:
 	conditions.restore(condition_data if not condition_data.is_empty() else ConditionState.legacy())
 	definition = crop
@@ -143,6 +180,8 @@ func restore_progress(crop: CropDefinition, planted: float, deadline: float, ear
 	root_boost = was_root_boosted
 	refresh(timestamp)
 
+## Đồng bộ tiến độ rồi trả lý do không bón được, hoặc chuỗi rỗng nếu hợp lệ.
+## Phân bón chỉ dùng một lần trước khi cây đạt 50% tiến độ.
 func fertilizer_error(timestamp: float) -> String:
 	if _retiring or definition == null:
 		return "No crop to fertilize."
@@ -153,6 +192,7 @@ func fertilizer_error(timestamp: float) -> String:
 		return "Fertilizer requires growth below 50%."
 	return ""
 
+## Bón phân và rút ngắn hạn chín theo 20% thời gian cơ sở đã điều chỉnh.
 func apply_fertilizer(timestamp: float) -> bool:
 	if not fertilizer_error(timestamp).is_empty():
 		return false
@@ -163,13 +203,16 @@ func apply_fertilizer(timestamp: float) -> bool:
 	react(7.0)
 	return true
 
+## Cấp thu hoạch: thường 0, đã tưới 1, đã tưới và dùng Root Tonic là 2.
 func harvest_tier() -> int:
 	return 2 if watered and root_boost else 1 if watered else 0
 
+## Đánh dấu đã tưới và cập nhật hiệu ứng chất lượng.
 func mark_watered() -> void:
 	watered = true
 	_update_quality()
 
+## Trả lý do không dùng được Root Tonic hoặc chuỗi rỗng nếu hợp lệ.
 func root_error() -> String:
 	if _retiring or definition == null:
 		return "No crop to fertilize."
@@ -177,6 +220,7 @@ func root_error() -> String:
 		return "Water this crop before applying Root Tonic."
 	return "Root Tonic was already applied to this crop." if root_boost else ""
 
+## Dùng Root Tonic sau khi tưới, cập nhật chất lượng và hiệu ứng.
 func apply_root() -> bool:
 	if not root_error().is_empty():
 		return false
@@ -244,6 +288,7 @@ func _create_quality_particles() -> void:
 	quality_particles.process_material = _quality_material
 	add_child(quality_particles)
 
+## Tạo chuỗi mô tả các tình trạng sâu bệnh và cỏ dại hiện tại.
 func condition_summary() -> String:
 	var labels: PackedStringArray = []
 	if conditions.pests:

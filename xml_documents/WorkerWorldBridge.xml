@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerWorldBridge" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cầu nối bộ lập lịch nhân công với thế giới, kho, chuồng và cây trồng. Nhiệm vụ lưu dữ liệu nguyên thủy; bridge tra node và thực hiện thay đổi khi đến thời điểm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="scene" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="pens">
+			<return type="AnimalPen[]" />
+			<description>
+				Liệt kê các chuồng hiện là con trực tiếp của thế giới.
+			</description>
+		</method>
+		<method name="pen_for">
+			<return type="AnimalPen" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tìm chuồng theo mã lưu ổn định, sử dụng cache tham chiếu yếu.
+			</description>
+		</method>
+		<method name="home">
+			<return type="Vector2" />
+			<param index="0" name="role" type="String" />
+			<param index="1" name="zone" type="String" default="&quot;&quot;" />
+			<description>
+				Tính vị trí nhà của vai trò và vùng; chuồng ao chọn vị trí trên đất.
+			</description>
+		</method>
+		<method name="zone_contains">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="point" type="Vector2" />
+			<param index="2" name="columns" type="int" default="-1" />
+			<description>
+				Điểm mở rộng kiểm tra vùng làm việc; hiện cho phép mọi vị trí.
+			</description>
+		</method>
+		<method name="sync">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="offline" type="bool" default="true" />
+			<description>
+				Đồng bộ thời tiết, cây trồng và chuồng tới mốc thời gian mô phỏng.
+			</description>
+		</method>
+		<method name="invalidate_crops">
+			<return type="void" />
+			<description>
+				Đánh dấu cache cây và thời điểm thức dậy cần tính lại.
+			</description>
+		</method>
+		<method name="invalidate_ranch">
+			<return type="void" />
+			<description>
+				Đánh dấu cache nhu cầu chuồng và thời điểm thức dậy cần tính lại.
+			</description>
+		</method>
+		<method name="_task">
+			<return type="Dictionary" />
+			<param index="0" name="kind" type="String" />
+			<param index="1" name="id" type="String" />
+			<param index="2" name="point" type="Vector2" />
+			<param index="3" name="priority" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_trough_point">
+			<return type="Variant" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="pen" type="AnimalPen" />
+			<param index="2" name="trough" type="AnimalTrough" />
+			<description>
+			</description>
+		</method>
+		<method name="candidates">
+			<return type="Dictionary[]" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="feed_inventory" type="InventoryComponent" />
+			<description>
+				Tìm các nhiệm vụ khả thi theo vai trò, kho và mục tiêu đã đặt trước.
+			</description>
+		</method>
+		<method name="ranch_candidates">
+			<return type="Dictionary[]" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="feed_inventory" type="InventoryComponent" />
+			<param index="2" name="held" type="Dictionary" default="{}" />
+			<description>
+				Tìm nhiệm vụ chuồng, dùng cache nhu cầu vật nuôi và vật tư.
+			</description>
+		</method>
+		<method name="animal_for">
+			<return type="AnimalActor" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tìm vật nuôi theo mã lưu, dùng cache tham chiếu yếu khi hợp lệ.
+			</description>
+		</method>
+		<method name="animal_line_clear">
+			<return type="bool" />
+			<param index="0" name="worker" type="WorkerActor" />
+			<param index="1" name="animal" type="AnimalActor" />
+			<param index="2" name="point" type="Vector2" />
+			<description>
+				Kiểm tra đường nhìn từ điểm tiếp cận đến vật nuôi bằng raycast.
+			</description>
+		</method>
+		<method name="animal_access_point">
+			<return type="Vector2" />
+			<param index="0" name="worker" type="WorkerActor" />
+			<param index="1" name="animal" type="AnimalActor" />
+			<description>
+				Tìm điểm tiếp cận vật nuôi có đường đi và đường nhìn phù hợp.
+			</description>
+		</method>
+		<method name="refresh_animal_task">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="offline" type="bool" />
+			<description>
+				Cập nhật mục tiêu chăm sóc vật nuôi đang di chuyển; trả false nếu không còn hợp lệ.
+			</description>
+		</method>
+		<method name="_capacity">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="cache" type="Dictionary" />
+			<param index="3" name="tier" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="commit">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="feed_inventory" type="InventoryComponent" />
+			<param index="2" name="task" type="Dictionary" />
+			<description>
+				Thực hiện nhiệm vụ lên thế giới và phát hiệu ứng trình bày khi thành công.
+			</description>
+		</method>
+		<method name="_commit">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="_feed_inventory" type="InventoryComponent" />
+			<param index="2" name="task" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_commit_care">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="task" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_commit_output">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="output_inventory" type="InventoryComponent" />
+			<param index="2" name="task" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="next_wake">
+			<return type="float" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="feed_inventory" type="InventoryComponent" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Tính thời điểm tiếp theo nhân công cần kiểm tra công việc.
+			</description>
+		</method>
+		<method name="_ranch_boundary">
+			<return type="float" />
+			<param index="0" name="_record" type="Dictionary" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="now" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_ranch_pen_boundary">
+			<return type="float" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="now" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="world_stroll_point">
+			<return type="Vector2" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="actor" type="WorkerActor" />
+			<description>
+				Tìm điểm đi dạo gần có lối đi thông thoáng, không tìm đường trên toàn bản đồ. Seed lấy từ mã và vị trí nhân công để mô phỏng nhảy thời gian và từng bước đề xuất cùng điểm khi bắt đầu từ cùng trạng thái.
+			</description>
+		</method>
+		<method name="_stroll_clear">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="actor" type="WorkerActor" />
+			<description>
+			</description>
+		</method>
+		<method name="_stroll_segment_clear">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="actor" type="WorkerActor" />
+			<description>
+			</description>
+		</method>
+		<method name="rest_seconds">
+			<return type="float" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Tạo thời gian nghỉ xác định từ nhân công và vị trí hiện tại.
+			</description>
+		</method>
+		<method name="patrol_point">
+			<return type="Vector2" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Chọn điểm đi dạo hoặc giữ nguyên vị trí nếu không tìm được.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="present_care_effects" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="crop_care_waiting" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="storage_waiting" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_animals_by_id" type="Dictionary[String, WeakRef]" setter="" getter="" default="{}">
+		</member>
+		<member name="_pen_cache" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_trough_point_cache" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_cached_crop_cells" type="Vector2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_crop_cache_time" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_crop_cells_dirty" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_trough_cache_revision" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="trough_physics_queries" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_ranch_demands" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_sick_animals" type="WeakRef[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_ranch_missing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_ranch_dirty" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_ranch_inventory" type="InventoryComponent" setter="" getter="">
+		</member>
+		<member name="_wake_at" type="float" setter="" getter="" default="inf_neg">
+		</member>
+		<member name="_wake_value" type="float" setter="" getter="" default="inf">
+		</member>
+		<member name="_wake_inventory" type="InventoryComponent" setter="" getter="">
+		</member>
+		<member name="stroll_rng" type="RandomNumberGenerator" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+	</members>
+	<signals>
+		<signal name="action_presented">
+			<param index="0" name="kind" type="StringName" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="STROLL_ATTEMPTS" value="2">
+		</constant>
+		<constant name="STROLL_MIN_DISTANCE" value="48.0">
+		</constant>
+		<constant name="STROLL_MAX_DISTANCE" value="128.0">
+		</constant>
+		<constant name="CROP_CACHE_LIFETIME" value="5.0">
+		</constant>
+		<constant name="ANIMAL_MEDICINE" value="&lt;Object&gt;">
+		</constant>
+		<constant name="PESTICIDE" value="&lt;Object&gt;">
+		</constant>
+		<constant name="HERBICIDE" value="&lt;Object&gt;">
+		</constant>
+		<constant name="HealingEffect" value="&lt;Object&gt;">
+		</constant>
+		<constant name="CareBubble" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

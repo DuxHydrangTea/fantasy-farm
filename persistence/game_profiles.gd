@@ -1,6 +1,9 @@
 class_name GameProfiles
 extends RefCounted
-## Lightweight profile index. Full game validation stays in LocalSaveRepository.
+## Quản lý chỉ mục profile và thông tin tóm tắt để chọn trang trại.
+## Kiểm tra toàn bộ dữ liệu game được thực hiện bởi LocalSaveRepository.
+
+## Thư mục chứa chỉ mục và các file profile.
 var directory: String
 
 func _init(folder: String = "user://saves") -> void:
@@ -21,6 +24,8 @@ func _store(data: ConfigFile) -> Error:
 		return error
 	return DirAccess.rename_absolute(path + ".tmp", path)
 
+## Tạo mã profile ngẫu nhiên và lưu tên sau khi bỏ khoảng trắng, tối đa 48 ký tự.
+## Trả dictionary gồm trạng thái, mã và thông báo lỗi.
 func create_profile(title: String) -> Dictionary:
 	var data: ConfigFile = _index()
 	var id: String = "farm_" + Crypto.new().generate_random_bytes(12).hex_encode()
@@ -33,6 +38,7 @@ func create_profile(title: String) -> Dictionary:
 	var error: Error = _store(data)
 	return {"ok": error == OK, "id": id, "error": "Unable to create the farm." if error != OK else ""}
 
+## Ghi profile vừa chơi và thời điểm hệ thống vào chỉ mục.
 func mark_played(id: String) -> Error:
 	if not id.is_valid_identifier():
 		return ERR_INVALID_PARAMETER
@@ -68,6 +74,8 @@ func _summary(path: String, id: String) -> Dictionary:
 			return {}
 	return {"coins": int(payload.coins), "land_blocks": int(payload.get("land_blocks", 1)), "version": int(payload.get("version", 0))}
 
+## Liệt kê profile từ file chính hoặc backup, kèm tên và tóm tắt số xu, đất.
+## Thử backup khi không đọc được tóm tắt chính; sắp xếp lần chơi gần nhất trước.
 func list_profiles() -> Array[Dictionary]:
 	var data: ConfigFile = _index()
 	var ids: Dictionary = {}
@@ -95,6 +103,8 @@ func list_profiles() -> Array[Dictionary]:
 		return a.last_played > b.last_played if a.last_played != b.last_played else String(a.id) < String(b.id))
 	return rows
 
+## Trả profile hợp lệ được ghi là chơi gần nhất, hoặc profile hợp lệ đầu tiên.
+## Trả chuỗi rỗng khi không có profile hợp lệ.
 func latest_profile() -> String:
 	var rows: Array[Dictionary] = list_profiles()
 	var last: String = String(_index().get_value("session", "last_profile", ""))

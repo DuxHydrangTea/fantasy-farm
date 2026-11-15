@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LandExpansionState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý mở rộng đất theo từng khối có đường đi phân cách. Các khối mở theo thứ tự zíc zắc từ góc trên bên phải. Giao dịch cập nhật ví và số khối trước khi phát signal để bên quan sát thấy trạng thái nhất quán.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="block_rect" qualifiers="static">
+			<return type="Rect2i" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Trả vùng ô của khối theo thứ tự mở, hoặc Rect2i rỗng nếu chỉ số ngoài phạm vi.
+			</description>
+		</method>
+		<method name="from_legacy_cell" qualifiers="static">
+			<return type="Vector2i" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Chuyển tọa độ bố cục cũ sang bố cục có đường đi; ô ngoài vùng cũ giữ nguyên.
+			</description>
+		</method>
+		<method name="_expand_legacy_axis" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="value" type="int" />
+			<param index="1" name="origin" type="int" />
+			<param index="2" name="starts" type="int[]" />
+			<param index="3" name="ends" type="int[]" />
+			<description>
+			</description>
+		</method>
+		<method name="block_index" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Tìm chỉ số khối chứa ô, trả -1 cho ô ngoài các khối, gồm cả đường đi.
+			</description>
+		</method>
+		<method name="legacy_block_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="columns" type="int" />
+			<description>
+				Suy ra số khối tương ứng số cột đất đã mở trong dữ liệu cũ.
+			</description>
+		</method>
+		<method name="cell_is_open" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="blocks" type="int" />
+			<description>
+				Kiểm tra ô thuộc khối đã mở; ô ngoài khối được xem là mở để đi lại. Quyền canh tác trên đường còn do TileData kiểm tra riêng.
+			</description>
+		</method>
+		<method name="is_unlocked">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Kiểm tra ô theo số khối đang mở.
+			</description>
+		</method>
+		<method name="is_complete">
+			<return type="bool" />
+			<description>
+				Cho biết đã mở hết các khối.
+			</description>
+		</method>
+		<method name="next_block">
+			<return type="Rect2i" />
+			<description>
+				Vùng của khối được mua tiếp theo; trả vùng rỗng khi đã mở hết.
+			</description>
+		</method>
+		<method name="next_price">
+			<return type="int" />
+			<description>
+				Giá khối kế tiếp bằng xu, hoặc 0 khi đã mở hết. Các lần mua thứ hai và ba có giá cố định, những lần sau tăng theo lũy thừa.
+			</description>
+		</method>
+		<method name="restore_blocks">
+			<return type="bool" />
+			<param index="0" name="blocks" type="int" />
+			<param index="1" name="initial_blocks" type="int" default="1" />
+			<description>
+				Khôi phục số khối ban đầu và đã mở nếu hợp lệ và không có giao dịch mua. Phát [signal changed] khi khôi phục thành công.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="wallet" type="WalletComponent" />
+			<param index="1" name="expected_blocks" type="int" />
+			<description>
+				Mua khối kế tiếp nếu số khối vẫn khớp báo giá và ví đủ tiền. Trả kết quả gồm giá và chỉ số khối, hoặc lỗi khi không thể mua.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="starting_blocks" type="int" setter="" getter="" default="1">
+			Số khối được cấp ban đầu cho profile.
+		</member>
+		<member name="unlocked_blocks" type="int" setter="" getter="" default="1">
+			Tổng số khối đang mở.
+		</member>
+		<member name="_buying" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi số khối mở thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="LEGACY_REGION" value="Rect2i(9, 19, 48, 34)">
+			Vùng đất trong bố cục lưu cũ.
+		</constant>
+		<constant name="REGION" value="Rect2i(4, 19, 53, 35)">
+			Vùng đất trong bố cục hiện tại.
+		</constant>
+		<constant name="BLOCK_SIZE" value="8">
+			Chiều rộng và chiều cao khối, tính bằng ô.
+		</constant>
+		<constant name="BASE_PRICE" value="60000">
+			Giá lần mua đầu tiên.
+		</constant>
+		<constant name="BLOCK_COUNT" value="24">
+			Tổng số khối có thể mở.
+		</constant>
+		<constant name="STARTING_BLOCKS" value="1">
+			Số khối ban đầu mặc định.
+		</constant>
+		<constant name="LEGACY_X_STARTS" value="Array[int]([9, 17, 25, 33, 41, 49])">
+			Biên đầu các cột trong bố cục cũ.
+		</constant>
+		<constant name="LEGACY_X_ENDS" value="Array[int]([16, 24, 32, 40, 48, 57])">
+			Biên cuối các cột trong bố cục cũ.
+		</constant>
+		<constant name="LEGACY_Y_STARTS" value="Array[int]([19, 28, 37, 45])">
+			Biên đầu các hàng trong bố cục cũ.
+		</constant>
+		<constant name="LEGACY_Y_ENDS" value="Array[int]([27, 36, 44, 53])">
+			Biên cuối các hàng trong bố cục cũ.
+		</constant>
+	</constants>
+</class>

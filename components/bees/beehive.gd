@@ -1,16 +1,28 @@
 class_name Beehive
 extends StaticBody2D
-## Small scene shell; components are composed by type and retain independent ownership.
+## Node tổ ong kết nối trạng thái sản xuất, thụ phấn và hiệu ứng hiển thị.
+
+## Mã ổn định để lưu tổ.
 var persistent_id: StringName
+## Hệ thống ong điều phối thời gian và nguồn hoa.
 var apiary: ApiarySystem
+## Cấu hình dùng chung của tổ.
 var definition: BeehiveDefinition
+## Trạng thái mẻ mật.
 var production: BeehiveProductionComponent = BeehiveProductionComponent.new()
+## Nguồn thụ phấn đại diện.
 var pollination: PollinationComponent = PollinationComponent.new()
+## Mã vườn cố định nếu tổ thuộc bố cục vườn mật.
 var garden_id: String = ""
+## Chỉ số slot vườn, -1 cho tổ tự do.
 var garden_slot: int = -1
+## Cho biết tổ vườn đã được sửa.
 var repaired: bool = true
+## Sprite tổ.
 var sprite: Sprite2D
+## Hiển thị phạm vi hoặc ô vườn.
 var range_display: BeehiveRangeDisplay
+## Hiệu ứng ong bay.
 var bees: BeeVisualComponent
 
 func _ready() -> void:
@@ -38,11 +50,13 @@ func _ready() -> void:
 	add_to_group(&"beehives")
 	refresh_visual()
 
+## Chọn ảnh tổ đầy hoặc thường và màu theo trạng thái sửa.
 func refresh_visual() -> void:
 	if sprite != null:
 		sprite.modulate = Color.WHITE if repaired else Color(0.42,0.32,0.25)
 		sprite.texture = definition.full_texture if production.ready_item != null else definition.idle_texture
 
+## Đồng bộ đàn ong rồi thu trọn mẻ vào túi; phát sự kiện thu hoạch nếu thành công.
 func collect(bag: InventoryComponent) -> bool:
 	apiary.sync()
 	var amount: int = production.batch_amount()
@@ -52,6 +66,7 @@ func collect(bag: InventoryComponent) -> bool:
 		apiary.farming.harvest_yielded.emit(item,amount,global_position,bag)
 	return item != null
 
+## Tạo nhãn đã dịch về nhật ký, sửa chữa, tiến độ mật và điều kiện thời tiết.
 func action_text() -> String:
 	if garden_slot >= 0:
 		return tr("Bee journal") + "\n" + (tr("Repair: 15 wood + 500 coins") if not repaired else tr("Honey: {percent}%").format({"percent":floori(production.work / definition.cycle_seconds * 100)}))
@@ -70,6 +85,7 @@ func action_text() -> String:
 		source += "\n" + tr("Wind: pollination radius +50%")
 	return headline + "\n" + source + legacy_notice
 
+## Tạo bản ghi lưu gồm sản xuất, mã tổ, vị trí và thông tin slot vườn.
 func capture() -> Dictionary:
 	var result: Dictionary = production.capture()
 	# New DTO keys must remain Strings for the async repository boundary.

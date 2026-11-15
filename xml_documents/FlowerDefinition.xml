@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FlowerDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Dữ liệu dùng chung của một loài hoa, gồm năm ảnh theo giai đoạn sinh trưởng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra mã, thời gian, đủ năm ảnh khác null và vật phẩm thu hoạch.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="flower_id" type="StringName" setter="" getter="">
+			Mã ổn định của loài hoa.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="stage_textures" type="Texture2D[]" setter="" getter="" default="[]">
+			Năm ảnh tương ứng năm giai đoạn phát triển.
+		</member>
+		<member name="growth_seconds" type="float" setter="" getter="" default="120.0">
+			Thời gian sinh trưởng tính bằng giây.
+		</member>
+		<member name="harvest_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm thu được.
+		</member>
+		<member name="harvest_amount" type="int" setter="" getter="" default="1">
+			Số lượng thu được.
+		</member>
+	</members>
+</class>

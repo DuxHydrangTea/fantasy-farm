@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreeSaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kiểm tra dữ liệu cây đã lưu trước khi thay đổi thế giới hoặc túi đồ.
+	</brief_description>
+	<description>
+		Kiểm tra loại và vị trí cây, các mốc thời gian, ghép cây ăn quả và trạng thái chặt, đào gốc cây gỗ. Các thời gian sinh trưởng cũ được hỗ trợ.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="rows" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="saved_at" type="float" />
+			<description>
+				Trả true nếu toàn bộ bản ghi hợp lệ theo catalog và thời điểm lưu. Mỗi ô chỉ được có một cây và mọi ô phải thuộc vùng của loại cây đó.
+			</description>
+		</method>
+	</methods>
+</class>

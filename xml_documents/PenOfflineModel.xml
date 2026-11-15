@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenOfflineModel" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Mô hình thuần mô phỏng nhu cầu và nguồn cung chung của một chuồng theo thời gian. Các khoảng được chia tại mốc hết máng, cạn nhu cầu, hết tuổi thọ, thay đổi thời tiết hoặc con vật bắt đầu tham gia. Đơn vị nguồn cung có thể là số lẻ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="advance" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="animals" type="Dictionary[]" />
+			<param index="1" name="troughs" type="Dictionary[]" />
+			<param index="2" name="start" type="float" />
+			<param index="3" name="until" type="float" />
+			<param index="4" name="weather" type="WeatherSchedule" default="null" />
+			<description>
+				Mô phỏng bản sao đàn vật nuôi và máng từ start đến until. Bổ sung thiếu hụt theo tỉ lệ để không ưu tiên con đứng trước trong mảng. Trả animals, troughs, các steps theo con vật và updated_at. Mỗi step ghi thời lượng đủ cả thức ăn lẫn nước để hệ thống khác tính sản xuất.
+			</description>
+		</method>
+		<method name="_accepts" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="supply" type="Dictionary" />
+			<param index="1" name="row" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_top_up" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="herd" type="Dictionary[]" />
+			<param index="1" name="supplies" type="Dictionary[]" />
+			<param index="2" name="kind" type="int" />
+			<param index="3" name="field" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_rates" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="herd" type="Dictionary[]" />
+			<param index="1" name="supplies" type="Dictionary[]" />
+			<param index="2" name="kind" type="int" />
+			<param index="3" name="water_rate" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="EPSILON" value="1e-06">
+			Ngưỡng sai số dùng cho so sánh mốc và số lượng gần 0.
+		</constant>
+	</constants>
+</class>

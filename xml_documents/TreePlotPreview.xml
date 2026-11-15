@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotPreview" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bản xem trước chỉ đọc của 17 cột và 9 hàng ô trồng cây. Màu phân biệt ô mở, ô khóa và hình cây đang có.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp cây đã trồng.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="TreeDefinition.Kind">
+			Loại khu trồng được xem.
+		</member>
+		<member name="capacity" type="int" setter="" getter="" default="9">
+			Số ô đã mở để xác định số cột hiển thị.
+		</member>
+	</members>
+</class>

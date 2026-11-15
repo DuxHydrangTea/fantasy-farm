@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/animal_care_bubble.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bong bóng phản hồi chăm sóc đặt trên vật nuôi, tự mờ và biến mất sau hai giây. Mỗi vật nuôi chỉ có một bong bóng loại này; phản hồi mới làm mới bong bóng cũ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="present" qualifiers="static">
+			<return type="Node2D" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<param index="1" name="texture" type="Texture2D" />
+			<param index="2" name="message" type="String" default="&quot;Feeling healthy!&quot;" />
+			<description>
+				Hiển thị hoặc làm mới phản hồi trên vật nuôi còn sống và chưa bị xóa. Trả node bong bóng hoặc null nếu vật nuôi không còn hợp lệ.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh_feedback">
+			<return type="void" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="message" type="String" />
+			<description>
+				Cập nhật biểu tượng, thông điệp và đặt lại thời gian hiển thị.
+			</description>
+		</method>
+		<method name="_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_anchor">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="remaining" type="float" setter="" getter="" default="2.0">
+			Số giây còn hiển thị.
+		</member>
+		<member name="feedback_icon" type="Texture2D" setter="" getter="">
+			Biểu tượng phản hồi, có thể null.
+		</member>
+		<member name="text_key" type="String" setter="" getter="" default="&quot;Feeling healthy!&quot;">
+			Chuỗi nguồn cần dịch trong bong bóng.
+		</member>
+		<member name="_label" type="Label" setter="" getter="">
+		</member>
+		<member name="_icon" type="TextureRect" setter="" getter="">
+		</member>
+		<member name="_panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="_visual" type="Node2D" setter="" getter="">
+		</member>
+	</members>
+</class>

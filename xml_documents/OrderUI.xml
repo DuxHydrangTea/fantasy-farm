@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OrderUI" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng đơn hàng khai báo trong scene; giao dịch giữ nguyên kế hoạch số lượng và chất lượng đã báo giá.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_money">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_requirements">
+			<return type="void" />
+			<param index="0" name="entry" type="OrderDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="_summary">
+			<return type="String" />
+			<param index="0" name="entry" type="OrderDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refill">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_request">
+			<return type="void" />
+			<param index="0" name="kind" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_confirmation">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_confirm">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_cancel">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" default="true" />
+			<description>
+				Hủy thao tác đơn hàng đang chờ rồi đóng menu.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="board" type="OrderBoard" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="heading" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="details" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="perfect_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="deliver_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="abandon_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="refill_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirmation" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirmation_text" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="confirm_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="cancel_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="rows" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_card_icons" type="TextureRect[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_card_titles" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_card_states" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_card_rewards" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_pending_plan" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="selected_serial" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_selected_index" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_pending_serial" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_pending_kind" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_coins" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_display_serial" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_display_entry" type="OrderDefinition" setter="" getter="">
+		</member>
+		<member name="_counts" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="confirmation_items" type="VBoxContainer" setter="" getter="">
+		</member>
+	</members>
+</class>

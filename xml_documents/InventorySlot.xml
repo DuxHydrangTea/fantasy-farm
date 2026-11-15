@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventorySlot" inherits="TextureButton" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Nút hiển thị một ô kho, gồm biểu tượng, số lượng, chất lượng và trạng thái chọn. Trên thiết bị chuột có thể kéo thả giữa các ô cùng kho nếu dữ liệu nguồn còn hợp lệ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc lại ô kho và cập nhật biểu tượng, số lượng, huy hiệu chất lượng cùng chú giải.
+			</description>
+		</method>
+		<method name="style_count" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="label" type="Label" />
+			<description>
+				Áp dụng màu, viền và bóng chung cho nhãn số lượng.
+			</description>
+		</method>
+		<method name="_format_count">
+			<return type="String" />
+			<param index="0" name="count" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_icon">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_count">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_drag_data">
+			<return type="Variant" />
+			<param index="0" name="_at_position" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_can_drop_data">
+			<return type="bool" />
+			<param index="0" name="_at_position" type="Vector2" />
+			<param index="1" name="data" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="_drop_data">
+			<return type="void" />
+			<param index="0" name="_at_position" type="Vector2" />
+			<param index="1" name="data" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="set_selected">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Cập nhật hình thức chọn mà không phát tín hiệu nhấn.
+			</description>
+		</method>
+		<method name="_refresh_hotbar_frame">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_selection_frame" type="TextureRect" setter="" getter="">
+		</member>
+		<member name="_hotbar_frame" type="Panel" setter="" getter="">
+		</member>
+		<member name="hotbar_skin" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="cozy_skin" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="inventory" type="InventoryComponent" setter="" getter="">
+		</member>
+		<member name="slot_index" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="show_shortcut" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_icon" type="TextureRect" setter="" getter="">
+		</member>
+		<member name="_count" type="Label" setter="" getter="">
+		</member>
+		<member name="_star" type="Label" setter="" getter="">
+		</member>
+		<member name="_shortcut" type="Label" setter="" getter="">
+		</member>
+		<member name="_quality_badge" type="TextureRect" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="NORMAL" value="&lt;Object&gt;">
+		</constant>
+		<constant name="SELECTED" value="&lt;Object&gt;">
+		</constant>
+		<constant name="FOCUS" value="&lt;Object&gt;">
+		</constant>
+		<constant name="HOTBAR_NORMAL" value="&lt;Object&gt;">
+		</constant>
+		<constant name="HOTBAR_SELECTED" value="&lt;Object&gt;">
+		</constant>
+		<constant name="BADGE_SILVER" value="&lt;Object&gt;">
+		</constant>
+		<constant name="BADGE_GOLD" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

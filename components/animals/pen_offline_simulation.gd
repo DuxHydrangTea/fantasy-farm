@@ -1,13 +1,22 @@
 class_name PenOfflineSimulation
 extends RefCounted
-## Scene bridge: apply a whole herd catch-up once, then resume physical feeding AI.
+## Cầu nối scene cho mô phỏng offline của cả đàn trong một chuồng.
+## Chụp actor và máng thành dữ liệu thuần, chạy PenOfflineModel rồi áp kết quả
+## trước khi AI ăn uống vật lý tiếp tục.
+
+## Khoảng gián đoạn tối thiểu để tự chuyển sang mô phỏng offline, tính bằng giây.
 const SUSPENSION_GAP: float = 5.0
+## Chuồng chứa actor và máng.
 var pen: Node2D
+## Khóa tránh cập nhật lồng nhau.
 var busy: bool = false
 
 func _init(owner_pen: Node2D) -> void:
 	pen = owner_pen
 
+## Tiến đàn và nguồn cung đến timestamp khi khoảng gián đoạn đủ dài hoặc force bật.
+## Hủy đường đến máng hiện tại, khôi phục tồn máng rồi áp từng bước nhu cầu.
+## Trả false khi đang bận hoặc khoảng online ngắn cần AI vật lý xử lý.
 func advance(timestamp: float, force: bool = false) -> bool:
 	if busy:
 		return false
@@ -53,6 +62,8 @@ func advance(timestamp: float, force: bool = false) -> bool:
 	busy = false
 	return true
 
+## Chốt thời gian cũ trước khi thay đổi chuồng hoặc nguồn cung.
+## Khoảng ngắn được cập nhật qua nhu cầu từng actor thay vì mô hình đàn.
 func sync_before_change(timestamp: float) -> void:
 	if busy or advance(timestamp):
 		return

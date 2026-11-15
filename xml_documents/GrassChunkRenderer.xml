@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassChunkRenderer" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cache GPU giới hạn cho các chunk cỏ trong và quanh vùng nhìn. Các CanvasItem được gắn cùng sort root với actor; chunk không hoạt động cũ nhất được giải phóng khi cần chỗ cho chunk mới.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="select">
+			<return type="bool" />
+			<param index="0" name="index" type="GrassChunkIndex" />
+			<param index="1" name="region" type="Rect2i" />
+			<param index="2" name="parent" type="RID" />
+			<param index="3" name="catalog" type="GrassSourceCatalog" />
+			<param index="4" name="material" type="ShaderMaterial" />
+			<param index="5" name="margin" type="float" />
+			<param index="6" name="max_chunks" type="int" />
+			<param index="7" name="max_instances" type="int" />
+			<param index="8" name="max_batches" type="int" default="2048" />
+			<description>
+				Chọn và cấp phát đầy đủ các chunk trong vùng theo các giới hạn đã cho. Nếu vùng hoặc dữ liệu vượt ngân sách, xóa cache và trả false cùng last_error.
+			</description>
+		</method>
+		<method name="_fail">
+			<return type="bool" />
+			<param index="0" name="message" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_evict_oldest">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_release">
+			<return type="void" />
+			<param index="0" name="key" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="show_field">
+			<return type="void" />
+			<param index="0" name="shown" type="bool" />
+			<description>
+				Bật hoặc tắt hiển thị các chunk đang hoạt động.
+			</description>
+		</method>
+		<method name="_update_visibility">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="update_bounds">
+			<return type="void" />
+			<param index="0" name="margin" type="float" />
+			<description>
+				Cập nhật biên culling cho mọi batch đang lưu.
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Giải phóng mọi chunk và xóa danh sách đang hoạt động.
+			</description>
+		</method>
+		<method name="stats">
+			<return type="Dictionary" />
+			<description>
+				Trả bộ đếm cấp phát, chunk, instance và lỗi để kiểm tra.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="resident" type="Dictionary" setter="" getter="" default="{}">
+			Các chunk đang được cấp phát.
+		</member>
+		<member name="active" type="Vector2i[]" setter="" getter="" default="[]">
+			Tọa độ chunk đang hoạt động trong vùng chọn.
+		</member>
+		<member name="builds" type="int" setter="" getter="" default="0">
+			Số chunk đã dựng.
+		</member>
+		<member name="releases" type="int" setter="" getter="" default="0">
+			Số chunk đã giải phóng.
+		</member>
+		<member name="allocated_leaves" type="int" setter="" getter="" default="0">
+			Tổng số batch đã cấp phát.
+		</member>
+		<member name="freed_leaves" type="int" setter="" getter="" default="0">
+			Tổng số batch đã giải phóng.
+		</member>
+		<member name="instances" type="int" setter="" getter="" default="0">
+			Tổng instance đang lưu trên GPU.
+		</member>
+		<member name="lookups" type="int" setter="" getter="" default="0">
+			Số lần chọn vùng.
+		</member>
+		<member name="last_error" type="String" setter="" getter="" default="&quot;&quot;">
+			Lỗi của lần chọn gần nhất.
+		</member>
+		<member name="mesh_override" type="Mesh" setter="" getter="">
+			Mesh thay thế tùy chọn cho renderer con.
+		</member>
+		<member name="_clock" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_shown" type="bool" setter="" getter="" default="true">
+		</member>
+	</members>
+</class>

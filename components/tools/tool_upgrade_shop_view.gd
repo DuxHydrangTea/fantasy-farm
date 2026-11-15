@@ -1,6 +1,7 @@
 class_name ToolUpgradeShopView
 extends RefCounted
-## Reusable vendor view; transactions remain in the profile's upgrade service.
+## Thành phần giao diện nâng cấp công cụ tái sử dụng; dịch vụ nâng cấp chịu trách nhiệm giao dịch.
+
 const ICONS: Dictionary = {&"hoe": preload("res://items/tools/hoe.tres"), &"watering_can": preload("res://items/tools/watering_can.tres"), &"sowing": preload("res://items/seeds/carrot_seed.tres")}
 const TITLES: Dictionary = {&"hoe": "Hoe", &"watering_can": "Watering Can", &"sowing": "Sowing"}
 var shop: ShopUI
@@ -14,16 +15,19 @@ func _init(view: ShopUI, service: ToolUpgradeService, farm: FarmWorld) -> void:
 	upgrades = service
 	world = farm
 
+## Tạo các thẻ nâng cấp rồi cập nhật giao diện.
 func build() -> void:
 	for tool: StringName in ToolUpgradeState.TOOLS:
 		shop._card(ICONS[tool].icon, tr(TITLES[tool]), 0, tool, select.bind(tool))
 		(shop._buttons[tool] as Button).custom_minimum_size.y = 176
 	refresh()
 
+## Chọn loại công cụ và cập nhật báo giá.
 func select(tool: StringName) -> void:
 	selected = tool
 	refresh()
 
+## Đọc báo giá và cập nhật chi tiết, nút mua.
 func refresh() -> void:
 	shop.present_product(ICONS[selected].icon, tr(TITLES[selected]), tr("Tool upgrades"))
 	if upgrades == null:
@@ -57,6 +61,7 @@ func refresh() -> void:
 	shop.buy_button.disabled = not _quote.ok
 	shop.status.text = tr("Unlock a larger area. Each planted cell still uses one seed.") if _quote.ok else GameText.error(_quote)
 
+## Gửi giao dịch theo báo giá hiện tại và cập nhật kết quả.
 func purchase() -> void:
 	var offered: Dictionary = _quote.duplicate()
 	if upgrades == null or not offered.get("ok", false):

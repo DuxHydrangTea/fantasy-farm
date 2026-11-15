@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveProgress" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tiến độ mục tiêu tuần tự và nhận thưởng xu, độc lập scene và giao diện. Chỉ mục tiêu chưa nhận thưởng đầu tiên được ghi tiến độ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="purse" type="WalletComponent" />
+			<param index="1" name="query" type="Callable" default="Callable()" />
+			<param index="2" name="definitions" type="ObjectiveCatalog" default="&lt;Object&gt;" />
+			<description>
+			</description>
+		</method>
+		<method name="active_index">
+			<return type="int" />
+			<description>
+				Chỉ số mục tiêu đầu tiên chưa nhận thưởng, hoặc -1 nếu đã nhận hết.
+			</description>
+		</method>
+		<method name="active">
+			<return type="ObjectiveDefinition" />
+			<description>
+				Định nghĩa mục tiêu hiện hành, hoặc null nếu đã hoàn tất.
+			</description>
+		</method>
+		<method name="progress">
+			<return type="int" />
+			<description>
+				Tiến độ mục tiêu hiện hành, hoặc 0 nếu không còn mục tiêu.
+			</description>
+		</method>
+		<method name="ready_to_claim">
+			<return type="bool" />
+			<description>
+				Kiểm tra mục tiêu hiện hành đã đạt đủ tiến độ.
+			</description>
+		</method>
+		<method name="record">
+			<return type="void" />
+			<param index="0" name="condition" type="StringName" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+				Ghi sự kiện dương phù hợp điều kiện mục tiêu hiện hành, không vượt mức yêu cầu. Mục tiêu dựa trên trạng thái được cập nhật qua [method refresh_state].
+			</description>
+		</method>
+		<method name="_refresh_active">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh_state">
+			<return type="void" />
+			<description>
+				Truy vấn trạng thái và tăng tiến độ mục tiêu hiện hành nếu giá trị cao hơn.
+			</description>
+		</method>
+		<method name="claim">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Nhận thưởng của mục tiêu hiện hành đã hoàn tất nếu ví còn chỗ. Cập nhật ví và cờ nhận thưởng trước khi phát signal, rồi làm mới mục kế tiếp.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao tiến độ, mục tiêu ghim và trạng thái HUD để lưu.
+			</description>
+		</method>
+		<method name="track">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Ghim mục tiêu có mã trong catalog và phát changed.
+			</description>
+		</method>
+		<method name="set_collapsed">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Đổi trạng thái thu gọn HUD và phát changed khi giá trị đổi.
+			</description>
+		</method>
+		<method name="tracked_index">
+			<return type="int" />
+			<description>
+				Trả chỉ số mục tiêu được ghim, nếu không có thì dùng mục tiêu hiện hành.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Kiểm tra và khôi phục dữ liệu, làm mới mục tiêu trạng thái và phát signal.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="catalog" type="ObjectiveCatalog" setter="" getter="">
+			Danh sách định nghĩa mục tiêu.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví nhận thưởng.
+		</member>
+		<member name="state_query" type="Callable" setter="" getter="">
+			Hàm truy vấn trạng thái thế giới cho mục tiêu dựa trên trạng thái.
+		</member>
+		<member name="suspended" type="bool" setter="" getter="" default="false">
+			Tạm ngưng xử lý và thông báo trong quá trình khôi phục.
+		</member>
+		<member name="tracked_id" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã mục tiêu được ghim trên HUD.
+		</member>
+		<member name="hud_collapsed" type="bool" setter="" getter="" default="false">
+			Trạng thái thu gọn HUD.
+		</member>
+		<member name="_rows" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi tiến độ hoặc lựa chọn hiển thị thay đổi.
+			</description>
+		</signal>
+		<signal name="restored">
+			<description>
+				Phát sau khi khôi phục trạng thái nếu không đang tạm ngưng thông báo.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="DEFAULT_CATALOG" value="&lt;Object&gt;">
+			Catalog mục tiêu hướng dẫn mặc định.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrowthSchedule" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hàng đợi thời hạn chuyển giai đoạn cây trồng dùng min-heap. Tham chiếu yếu không giữ cây đã thu hoạch. Ticket loại bỏ lịch cũ khi một node được đặt lịch lại hoặc hủy trước khi đến hạn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="schedule">
+			<return type="void" />
+			<param index="0" name="target" type="Node" />
+			<param index="1" name="deadline" type="float" />
+			<description>
+				Đặt thời hạn mới cho node, thay thế hiệu lực của mọi lịch cũ của node đó.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<param index="0" name="target" type="Node" />
+			<description>
+				Hủy lịch hiện hành bằng cách xóa ticket; phần tử cũ được bỏ qua khi lấy ra.
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Xóa toàn bộ heap và ticket.
+			</description>
+		</method>
+		<method name="take_due">
+			<return type="Node[]" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Lấy các node còn sống có thời hạn không muộn hơn [param now]. Mỗi lịch hợp lệ chỉ được trả một lần; node bị xóa hoặc lịch cũ bị bỏ qua.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_heap" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_tickets" type="Dictionary[int, int]" setter="" getter="" default="{}">
+		</member>
+		<member name="_sequence" type="int" setter="" getter="" default="0">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmGrassField" inherits="GrassChunkField" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Gắn bộ vẽ chunk cỏ GPU vào thế giới trang trại. Kiểm tra tài nguyên và ngân sách trước khi thay các ô gốc. Khi lỗi hoặc tắt, khôi phục TileMap và material ban đầu; cỏ trang trí còn lại dùng shader riêng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_after_restore">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="render_preflight">
+			<return type="String" />
+			<description>
+				Kiểm tra renderer, atlas, số loại và các uniform cần thiết. Trả chuỗi rỗng nếu có thể thử chuyển đổi, hoặc lý do không thể.
+			</description>
+		</method>
+		<method name="set_conversion">
+			<return type="bool" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt chuyển đổi cỏ GPU. Khi bật, kiểm tra và dựng dữ liệu trước khi xóa ô nguồn; lỗi sẽ khôi phục.
+			</description>
+		</method>
+		<method name="sync_tile_materials">
+			<return type="void" />
+			<description>
+				Đồng bộ tham số gió và actor sang cỏ TileMap, trang trí và lớp phủ đất.
+			</description>
+		</method>
+		<method name="_fallback">
+			<return type="void" />
+			<param index="0" name="reason" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync_environment">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_key_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa layer nguồn, thời tiết và đất.
+		</member>
+		<member name="transfer" type="GrassSourceTransfer" setter="" getter="" default="&lt;unknown&gt;">
+			Giao dịch chuyển ô TileMap sang mẫu GPU.
+		</member>
+		<member name="tile_materials" type="GrassTileMaterials" setter="" getter="" default="&lt;unknown&gt;">
+			Material cho cỏ cần giữ trong TileMap.
+		</member>
+		<member name="decor_materials" type="RefCounted" setter="" getter="" default="&lt;unknown&gt;">
+			Material cho cây cỏ trang trí.
+		</member>
+		<member name="active" type="bool" setter="" getter="" default="false">
+			Cho biết chuyển đổi đã hoàn tất và đang hiển thị.
+		</member>
+		<member name="wanted" type="bool" setter="" getter="" default="true">
+			Trạng thái chuyển đổi được yêu cầu.
+		</member>
+		<member name="fallback_reason" type="String" setter="" getter="" default="&quot;&quot;">
+			Lý do dùng lại hiển thị gốc gần nhất.
+		</member>
+		<member name="_last_wind" type="float" setter="" getter="" default="-1.0">
+		</member>
+	</members>
+	<constants>
+		<constant name="LIT_SHADER" value="&lt;Object&gt;">
+			Shader cỏ có ánh sáng cho trang trại.
+		</constant>
+		<constant name="FARM_DATA" value="&lt;Object&gt;">
+			Dữ liệu loại cỏ và vùng atlas.
+		</constant>
+		<constant name="DECOR_MATERIALS" value="&lt;Object&gt;">
+			Script gắn hiệu ứng cho cây cỏ trang trí khác.
+		</constant>
+	</constants>
+</class>

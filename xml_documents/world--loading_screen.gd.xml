@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;world/loading_screen.gd&quot;" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Màn hình trung gian tải scene trang trại bằng ResourceLoader bất đồng bộ. Màn hình được vẽ trước khi yêu cầu tải và cho phép quay lại nếu tải thất bại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_open_world">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fail">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_progress" type="ProgressBar" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_requested" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="WORLD_PATH" value="&quot;res://world/main_world.tscn&quot;">
+			Đường dẫn scene trang trại cần tải.
+		</constant>
+	</constants>
+</class>

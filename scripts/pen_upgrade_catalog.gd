@@ -1,9 +1,14 @@
 class_name PenUpgradeCatalog
 extends Resource
-## Stable pen IDs map to independently priced upgrade tracks.
+## Bảng giá nâng cấp riêng cho ba loại chuồng, tra cứu bằng mã chuồng ổn định.
+
+## Ánh xạ mã chuồng sang loại coop, barn hoặc pond.
 @export var pen_kinds: Dictionary = {}
+## Ánh xạ loại chuồng sang năm giá cho các lần nâng cấp từ cấp 1 đến 6.
 @export var prices: Dictionary = {}
 
+## Kiểm tra đủ ba loại, mỗi loại có năm giá nguyên dương trong giới hạn ví,
+## và mỗi mã chuồng hợp lệ ánh xạ đến một loại khác nhau.
 func valid() -> bool:
 	if pen_kinds.size() != 3 or prices.size() != 3:
 		return false
@@ -21,6 +26,7 @@ func valid() -> bool:
 		kinds[pen_kinds[id]] = true
 	return true
 
+## Trả về giá nâng cấp từ cấp hiện tại, hoặc 0 khi dữ liệu, mã hay cấp không hợp lệ.
 func price(id: StringName, current_level: int) -> int:
 	if not valid() or not pen_kinds.has(String(id)) or current_level < 1 or current_level >= 6:
 		return 0

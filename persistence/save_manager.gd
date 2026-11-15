@@ -1,24 +1,42 @@
 class_name GameSaveManager
 extends Node
-## Application service adapted from the Godot skill save_manager template.
-## The repository owns IO; the adapter owns scene details. Replace repository
-## with an HTTP implementation of save_repository.gd without changing gameplay.
+## Dịch vụ điều phối chọn profile, tải, lưu tự động và lưu khi thoát.
+##
+## Repository thực hiện IO, WorldStateAdapter chụp và khôi phục scene. Các
+## thao tác được tuần tự hóa bằng trạng thái busy và revision chỉ tăng sau khi
+## backend xác nhận ghi thành công.
+
+## Resource script tạo chỉ mục profile cục bộ.
 const ProfileStore = preload("res://persistence/game_profiles.gd")
+## Mã profile sẽ gắn khi mở thế giới.
 var selected_profile_id: String = "local"
+## Cho biết profile vừa chọn cần tạo bản lưu đầu tiên.
 var pending_new_profile: bool = false
+## Thông báo lỗi khởi động được giao diện sử dụng.
 var startup_error: String = ""
 var _track_profile: bool = false
 var _require_existing_profile: bool = false
+## Phát thông báo trạng thái đã dịch và kết quả thành công.
 signal status_changed(message: String, success: bool)
+## Phát khi một thao tác lưu hoặc tải kết thúc.
 signal operation_finished
+## Khoảng giữa các lần tự lưu, tính bằng giây.
 @export var autosave_seconds: float = 30.0
+## Mã profile hiện gắn với thế giới.
 var profile_id: String = "local"
+## Revision đã được backend xác nhận gần nhất.
 var revision: int = 0
+## Cho biết thao tác lưu hoặc tải đang chạy.
 var busy: bool = false
+## Cho phép ghi khi profile đã tải thành công và không gặp lỗi cần xử lý.
 var writes_enabled: bool = false
+## Backend đọc ghi profile.
 var repository: SaveRepository
+## Thư mục dùng khi tạo backend cục bộ.
 var local_directory: String = "user://saves"
+## Catalog kiểm tra mã resource trong dữ liệu lưu.
 var catalog: SaveCatalog
+## Bộ chuyển đổi giữa snapshot và thế giới.
 var adapter: WorldStateAdapter
 var _elapsed: float = 0.0
 var _closing: bool = false
@@ -30,6 +48,9 @@ var _status_success: bool = true
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
+## Gắn thế giới với profile và backend, sau đó tải dữ liệu.
+## Nếu không truyền backend, dùng repository cục bộ. Profile mới được lưu lần
+## đầu sau khi tải thành công. Trả lỗi nếu đã gắn thế giới hoặc mã không hợp lệ.
 func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: String = "") -> Dictionary:
 	if busy or adapter != null:
 		return SaveSchema.failure("Another world is already in use.", "busy")
@@ -55,9 +76,12 @@ func bind_world(world: FarmWorld, backend: SaveRepository = null, profile: Strin
 	pending_new_profile = false
 	return result
 
+## Tạo bộ quản lý chỉ mục profile cho thư mục cục bộ hiện tại.
 func profile_store() -> RefCounted:
 	return ProfileStore.new(local_directory)
 
+## Chọn profile trước khi gắn thế giới và bắt đầu phiên đồng hồ mới.
+## Trả false nếu đang bận, đã gắn thế giới hoặc mã không hợp lệ.
 func select_profile(id: String, is_new: bool = false) -> bool:
 	if busy or adapter != null or not SaveSchema.identifier(id):
 		return false
@@ -92,6 +116,9 @@ func _process(delta: float) -> void:
 # Nếu tăng trước rồi ghi lỗi, lần sau client sẽ đòi revision không tồn tại và tự gây conflict.
 # Khi conflict/corrupt/future_version, dừng tự lưu để không âm thầm ghi đè bản cần phục hồi.
 # Không biến lỗi đọc/ghi thành game mới rồi lưu đè: đó là mất dữ liệu, không phải cách tự sửa an toàn.
+## Chụp, kiểm tra và ghi snapshot với revision kế tiếp.
+## Từ chối trong khi các giao dịch thế giới đang chạy. Lỗi xung đột, dữ liệu
+## hỏng hoặc phiên bản tương lai tắt ghi tiếp để tránh ghi đè dữ liệu cần xử lý.
 func save_game() -> Dictionary:
 	if adapter != null and adapter.world.tree_plot_upgrades != null and adapter.world.tree_plot_upgrades.state.is_busy():
 		return SaveSchema.failure("A tree plot upgrade is in progress.", "busy")
@@ -132,6 +159,9 @@ func save_game() -> Dictionary:
 	operation_finished.emit()
 	return result
 
+## Đọc, kiểm tra và khôi phục profile vào thế giới đang gắn.
+## Scene và đồng hồ tạm dừng trong quá trình khôi phục. Khi bật tiến trình
+## offline, adapter mô phỏng đến thời điểm đích trước khi cho phép ghi.
 func load_game() -> Dictionary:
 	if busy or adapter == null:
 		return SaveSchema.failure("This profile cannot be loaded yet.", "busy")

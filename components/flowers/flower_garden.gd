@@ -1,19 +1,30 @@
 @tool
 class_name FlowerGarden
 extends Node2D
+## Quản lý các chậu hoa được đặt sẵn, lịch sinh trưởng và dữ liệu lưu của vườn.
+## Các cây từ bố cục cũ không có ô tương ứng được giữ trong hàng đợi khôi phục.
+
+## Node chứa các chậu được thiết kế trong scene.
 @export var pot_container: Node2D
-## Four authored 5x4 blocks, preserving historical cell IDs.
+## Hình học bốn khối chậu và chuyển đổi tọa độ cũ.
 const Layout = preload("res://scripts/flower_garden_layout.gd")
+## Mã ổn định của vườn trong dữ liệu lưu.
 @export var persistent_id: StringName = &"flower_garden_01"
+## Đồng hồ trang trại; dùng TimeManager nếu chưa được gán.
 @export var time_manager: FarmClock
+## Hệ thống ong cần đồng bộ khi hoa thay đổi.
 var apiary: ApiarySystem
+## Ánh xạ tọa độ ô sang chậu trong scene.
 var pots: Dictionary[Vector2i, FlowerPot] = {}
 var _growth: GrowthSchedule = GrowthSchedule.new()
+## Cho biết hoa khởi đầu đã được xử lý một lần.
 var starter_flowers_added: bool = false
+## Khóa nội dung vườn cho đến khi đáp ứng điều kiện mở.
 var starter_content_locked: bool = false
 var _lock_notice: Label
 var _initial_supplies: Array[Dictionary] = []
 var _legacy_flowers: Array[Dictionary] = []
+## Kích thước vùng hiển thị vườn.
 const SIZE: Vector2 = Vector2(384, 256)
 
 func _ready() -> void:
@@ -76,6 +87,8 @@ func _register_pots(parent: Node) -> void:
 		else:
 			_register_pots(child)
 
+## Đổi trạng thái khóa vườn, cập nhật nguồn ong và thông báo trên scene.
+## Khi mở khóa, thử khôi phục hoa cũ đang chờ vào chậu trống.
 func set_starter_content_locked(value: bool) -> void:
 	starter_content_locked = value
 	if apiary != null:
@@ -99,8 +112,8 @@ func set_starter_content_locked(value: bool) -> void:
 	if not value:
 		restore_legacy_flowers()
 
-## One-time starting plants, also applied to old saves without this content flag.
-## Occupied pots are preserved; harvested starting plants never respawn on load.
+## Thêm các hoa khởi đầu một lần, kể cả save cũ chưa có cờ này.
+## Chậu đang có hoa được giữ nguyên và hoa đã thu không tự xuất hiện lại.
 func add_starter_flowers(now: float) -> void:
 	if starter_content_locked:
 		starter_flowers_added = true
@@ -122,6 +135,7 @@ func add_starter_flowers(now: float) -> void:
 		pot.restore_state({"planted_at": planted, "growth_started_at": planted if watered else -1.0,
 			"matures_at": planted + flower.growth_seconds if watered else 0.0, "progress": progress[index]}, flower, now)
 
+## Tiến đàn ong trước rồi cập nhật các chậu đến hạn chuyển giai đoạn.
 func refresh(now: float) -> void:
 	if apiary != null:
 		apiary.advance(now)
@@ -141,6 +155,7 @@ func _pot_changed(pot: FlowerPot) -> void:
 	# Legacy migration runs during load/unlock only. Harvesting or clearing must
 	# leave this pot empty; pending legacy plants remain in capture().
 
+## Khôi phục hoa vào ô tương ứng hoặc giữ bản ghi cũ để đặt sau nếu không có ô.
 func restore_flower(data: Dictionary, flower: FlowerDefinition, now: float) -> void:
 	var cell: Vector2i = Vector2i(int(data.cell[0]), int(data.cell[1]))
 	if pots.has(cell):
@@ -148,6 +163,7 @@ func restore_flower(data: Dictionary, flower: FlowerDefinition, now: float) -> v
 	else:
 		_legacy_flowers.append(data.duplicate(true))
 
+## Đặt các hoa cũ đang chờ vào chậu trống không dành riêng khi vườn đã mở.
 func restore_legacy_flowers() -> void:
 	if _legacy_flowers.is_empty() or starter_content_locked:
 		return
@@ -161,6 +177,7 @@ func restore_legacy_flowers() -> void:
 		var flower: FlowerDefinition = load(path)
 		pot.restore_state(data, flower, time_manager.now())
 
+## Chụp hoa trong chậu và hoa cũ đang chờ, cùng mã vườn và cờ nội dung khởi đầu.
 func capture(now: float) -> Dictionary:
 	var flowers: Array[Dictionary] = []
 	for pot: FlowerPot in pots.values():
@@ -169,6 +186,7 @@ func capture(now: float) -> Dictionary:
 	flowers.append_array(_legacy_flowers.duplicate(true))
 	return {"id": String(persistent_id), "flowers": flowers, "starter_flowers_added": starter_flowers_added}
 
+## Xóa lịch, hàng đợi cũ và nội dung các chậu, đặt lại cờ hoa khởi đầu.
 func reset() -> void:
 	_growth.clear()
 	_legacy_flowers.clear()
@@ -176,6 +194,7 @@ func reset() -> void:
 	for pot: FlowerPot in pots.values():
 		pot.clear()
 
+## Tạo lại các đống vật phẩm ban đầu đã ghi nhận nếu vườn không bị khóa.
 func restore_initial_supplies() -> void:
 	if starter_content_locked:
 		return
@@ -187,6 +206,7 @@ func restore_initial_supplies() -> void:
 		pickup.amount = row.amount
 		add_child(pickup)
 
+## Tìm chậu không dành riêng gần nhất trong tầm và phía trước điểm nhìn.
 func focused_pot(point: Vector2, facing: Vector2) -> FlowerPot:
 	var nearest: FlowerPot
 	var distance: float = 28.0

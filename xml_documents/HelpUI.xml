@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HelpUI" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Menu hướng dẫn người chơi, hiển thị các chủ đề và hỗ trợ khởi đầu.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="parent" type="Node" />
+			<param index="1" name="callback" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="_build">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open_help">
+			<return type="void" />
+			<description>
+				Mở menu hướng dẫn cho người chơi hiện tại.
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_skip">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_support">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="support" type="StarterSupport" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="heading" type="Label" setter="" getter="">
+		</member>
+		<member name="topics" type="Button[]" setter="" getter="" default="[]">
+		</member>
+		<member name="content" type="Label" setter="" getter="">
+		</member>
+		<member name="content_scroll" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="topic_scroll" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="toggle_button" type="Button" setter="" getter="">
+		</member>
+		<member name="skip_button" type="Button" setter="" getter="">
+		</member>
+		<member name="support_button" type="Button" setter="" getter="">
+		</member>
+		<member name="status" type="Label" setter="" getter="">
+		</member>
+		<member name="selected_topic" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_message" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+	</members>
+</class>

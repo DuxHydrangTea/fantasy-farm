@@ -1,13 +1,20 @@
 extends Node
-## A single translucent overlay follows the plant's texture and wind deformation.
+## Lớp sáng bán trong suốt theo texture và biến dạng gió của cây được nhắm.
+
+## Shader dùng cho lớp sáng.
 const SHADER: Shader = preload("res://shaders/plant_focus.gdshader")
+## Các tham số được sao chép từ shader gió của nguồn.
 const PARAMETERS: Array[StringName] = [&"plant_height", &"amplitude", &"speed", &"anchor_visible_root", &"ground_y"]
+## Sprite nguồn cần theo dõi.
 var source: Node2D
+## Sprite lớp sáng.
 var overlay: Sprite2D
+## Material của lớp sáng.
 var material: ShaderMaterial
 var _focused: bool = false
 var _fade: Tween
 
+## Tạo lớp sáng làm con của sprite cây và đồng bộ hình ảnh ban đầu.
 func setup(plant: Node2D) -> void:
 	source = plant
 	material = ShaderMaterial.new()
@@ -21,6 +28,7 @@ func setup(plant: Node2D) -> void:
 	_sync()
 	set_process(false)
 
+## Làm hiện hoặc mờ lớp sáng; tiếp tục đồng bộ trong thời gian hiệu ứng.
 func set_focused(value: bool) -> void:
 	if _focused == value:
 		return

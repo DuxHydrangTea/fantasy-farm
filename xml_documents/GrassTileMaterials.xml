@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassTileMaterials" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Gắn shader vào các tile cỏ giữ lại trong TileMap để bảo toàn thứ tự vẽ. TileSet được sao chép cục bộ và material được dùng chung theo loại tile.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="install">
+			<return type="bool" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<description>
+				Sao chép TileSet, gắn material vào các tile cỏ không có material và áp lên layer. Trả true nếu có ít nhất một material hoặc đã cài trước đó.
+			</description>
+		</method>
+		<method name="sync_from">
+			<return type="void" />
+			<param index="0" name="effect" type="ShaderMaterial" />
+			<description>
+				Đồng bộ các shader parameter gió và actor đã thay đổi từ material chung.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<description>
+				Khôi phục TileSet gốc nếu layer vẫn dùng bản sao do component cài.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="materials" type="ShaderMaterial[]" setter="" getter="" default="[]">
+			Các material đã cài.
+		</member>
+		<member name="_layer" type="WeakRef" setter="" getter="">
+		</member>
+		<member name="_original" type="TileSet" setter="" getter="">
+		</member>
+		<member name="_local" type="TileSet" setter="" getter="">
+		</member>
+		<member name="_previous" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader biến dạng cỏ trong TileMap.
+		</constant>
+		<constant name="DATA" value="&lt;Object&gt;">
+			Dữ liệu vùng nguồn và gốc cỏ.
+		</constant>
+	</constants>
+</class>

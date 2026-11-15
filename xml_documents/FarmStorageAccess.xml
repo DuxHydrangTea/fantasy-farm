@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmStorageAccess" inherits="PhysicsBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điểm tương tác vô hình mở kho tại cửa tòa nhà. Tòa nhà cha sở hữu hình ảnh và va chạm; vùng cửa kiểm tra chân người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_sprite">
+			<return type="Node2D" />
+			<description>
+				Lấy sprite của tòa nhà cha để xác định vùng nhấp.
+			</description>
+		</method>
+		<method name="interaction_action_text">
+			<return type="String" />
+			<description>
+				Nhãn mở kho đã dịch.
+			</description>
+		</method>
+		<method name="can_reach">
+			<return type="bool" />
+			<param index="0" name="player" type="FarmPlayer" />
+			<description>
+				Kiểm tra hình chân người chơi giao vùng cửa và đường nhìn không bị chặn. Kiểm tra hình trực tiếp để vẫn đúng ngay sau khi dịch chuyển hoặc tải game.
+			</description>
+		</method>
+		<method name="is_within_interaction_range">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Kiểm tra khách có thể tiếp cận cửa kho.
+			</description>
+		</method>
+		<method name="open_shop">
+			<return type="bool" />
+			<param index="0" name="player" type="FarmPlayer" />
+			<description>
+				Mở menu kho khi dịch vụ sẵn sàng và người chơi ở trong tầm.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="storage_id" type="String" setter="" getter="" default="&quot;produce_warehouse&quot;">
+			Mã kho được mở bởi cửa này.
+		</member>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa dịch vụ kho và bảng điểm tương tác.
+		</member>
+		<member name="interaction_area" type="Area2D" setter="" getter="" default="&lt;unknown&gt;">
+			Vùng tương tác tại cửa.
+		</member>
+		<member name="interaction_shape" type="CollisionShape2D" setter="" getter="" default="&lt;unknown&gt;">
+			Hình va chạm của vùng tương tác.
+		</member>
+	</members>
+</class>

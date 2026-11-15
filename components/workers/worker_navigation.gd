@@ -1,7 +1,12 @@
 class_name WorkerNavigation
 extends PlayerNavigationComponent
-## Worker-only movement adapter. Player navigation and input remain independent.
+## Điều hướng riêng cho công nhân thông qua WorkerNavigationSystem.
+## Hỗ trợ đích chính xác hoặc phạm vi tương tác, kiểm tra waypoint và lập lại
+## đường khi đoạn đường bị chặn.
+
+## Bộ lập kế hoạch đường dùng chung của công nhân.
 var system: WorkerNavigationSystem
+## Yêu cầu đến sát đích theo arrival_distance thay vì phạm vi tương tác.
 var exact_goal: bool = false
 var _check_remaining: float = 0.0
 var _checked_waypoint: Vector2 = Vector2.INF
@@ -9,9 +14,12 @@ var _checked_waypoint: Vector2 = Vector2.INF
 func _ready() -> void:
 	set_physics_process(false)
 
+## Yêu cầu đi đến phạm vi tương tác quanh điểm.
 func request_focus(point: Vector2) -> void:
 	request_worker_goal(point, false)
 
+## Hủy đường cũ và yêu cầu hệ thống lập đường đến đích với chế độ đã chọn.
+## Yêu cầu trùng với đích và chế độ hiện tại được bỏ qua.
 func request_worker_goal(point: Vector2, exact: bool) -> void:
 	if has_focus and focus_position.is_equal_approx(point) and exact_goal == exact:
 		return
@@ -27,6 +35,7 @@ func _in_focus_range(point: Vector2) -> bool:
 		return point.distance_to(focus_position) <= movement.arrival_distance
 	return super._in_focus_range(point)
 
+## Hủy yêu cầu trong hệ thống và xóa trạng thái điều hướng hiện tại.
 func cancel() -> void:
 	if system != null:
 		system.cancel(self)
@@ -37,6 +46,8 @@ func _exit_tree() -> void:
 	if is_instance_valid(system):
 		system.cancel(self)
 
+## Nhận đường đã lập và gộp các đoạn cùng hướng, giữ các điểm đổi hướng.
+## Đường rỗng kết thúc điều hướng.
 func accept_path(path: PackedVector2Array) -> void:
 	_planning = false
 	_path.clear()
@@ -49,6 +60,7 @@ func accept_path(path: PackedVector2Array) -> void:
 	if _path.is_empty():
 		_finish()
 
+## Đi theo waypoint, định kỳ kiểm tra đoạn đường và yêu cầu lập lại nếu bị chặn.
 func move(delta: float) -> void:
 	if not has_focus or not is_navigating:
 		return

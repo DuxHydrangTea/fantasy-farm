@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PlayerNavigationComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tìm đường để người chơi tiếp cận điểm nhấp hoặc mục tiêu tương tác. Lưới điều hướng dùng kích thước va chạm thực của nhân vật và cache các ô đã kiểm tra.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_connect_tile_changes">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_geometry_changed">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="invalidate_cache">
+			<return type="void" />
+			<description>
+				Xóa cache ô điều hướng để xây dựng lại khi cần.
+			</description>
+		</method>
+		<method name="invalidate_region">
+			<return type="void" />
+			<param index="0" name="world_rect" type="Rect2" />
+			<description>
+				Vô hiệu các ô điều hướng giao với vùng thế giới đã thay đổi.
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="request_focus">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Yêu cầu tìm đường đến điểm với khoảng cách tiếp cận mặc định.
+			</description>
+		</method>
+		<method name="_request">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="reach" type="float" />
+			<param index="2" name="validator" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Hủy mục tiêu, đường đi và yêu cầu tương tác đang chờ.
+			</description>
+		</method>
+		<method name="move">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Di chuyển theo đường tới mục tiêu trong bước thời gian delta.
+			</description>
+		</method>
+		<method name="_finish">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_face_focus">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_facing_point">
+			<return type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_replan">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_query">
+			<return type="PhysicsShapeQueryParameters2D" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_point_clear">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_segment_clear">
+			<return type="bool" />
+			<param index="0" name="from" type="Vector2" />
+			<param index="1" name="to" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_cell">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_point">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_in_focus_range">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_goal_valid">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_prepare_grid">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_scan_cell">
+			<return type="Vector2i" />
+			<param index="0" name="region" type="Rect2i" />
+			<param index="1" name="cursor" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_sample">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_plan">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_try_direct_path">
+			<return type="bool" />
+			<param index="0" name="origin" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_advance_plan">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_path_in_region">
+			<return type="bool" />
+			<param index="0" name="region" type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="_smooth_path">
+			<return type="void" />
+			<param index="0" name="origin" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="request_interaction">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="reach" type="float" />
+			<param index="2" name="validator" type="Callable" />
+			<description>
+				Tìm đường đến gần mục tiêu và kiểm tra lại bằng validator khi tới nơi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_interaction_goal" type="Callable" setter="" getter="">
+		</member>
+		<member name="_interaction_reach" type="float" setter="" getter="" default="20.0">
+		</member>
+		<member name="movement" type="MovementComponent" setter="" getter="">
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+		</member>
+		<member name="camera" type="Camera2D" setter="" getter="">
+		</member>
+		<member name="collision_shape" type="CollisionShape2D" setter="" getter="">
+		</member>
+		<member name="farming_actions" type="FarmingActionComponent" setter="" getter="">
+		</member>
+		<member name="cell_size" type="float" setter="" getter="" default="8.0">
+		</member>
+		<member name="interaction_distance" type="float" setter="" getter="" default="20.0">
+		</member>
+		<member name="allow_focus_cell" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="has_focus" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="is_navigating" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="focus_position" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+		<member name="sampling_budget" type="int" setter="" getter="" default="256">
+		</member>
+		<member name="_sampled" type="Dictionary[Vector2i, bool]" setter="" getter="" default="{}">
+		</member>
+		<member name="_regions" type="Rect2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_region_index" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_scan_cursor" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_background_cursor" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_planning" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_invalidate_pending" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_footprint_signature" type="Array" setter="" getter="" default="[]">
+		</member>
+		<member name="total_physics_queries" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_shared_query" type="PhysicsShapeQueryParameters2D" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_grid" type="AStarGrid2D" setter="" getter="">
+		</member>
+		<member name="_grid_sample_shape" type="RectangleShape2D" setter="" getter="">
+		</member>
+		<member name="_path" type="PackedVector2Array" setter="" getter="" default="PackedVector2Array()">
+		</member>
+		<member name="_path_index" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_needs_path" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_replans" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_blocked_cells" type="Dictionary[Vector2i, bool]" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<signals>
+		<signal name="focus_finished">
+			<param index="0" name="reached" type="bool" />
+			<description>
+			</description>
+		</signal>
+		<signal name="focus_cancelled">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

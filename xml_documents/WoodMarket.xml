@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WoodMarket" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Theo dõi hạn mức mua gỗ hằng ngày dùng chung trong profile. Báo giá chỉ đọc; giao dịch thành công mới ghi lượng đã mua.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Dữ liệu ban đầu chưa có lượt mua.
+			</description>
+		</method>
+		<method name="used">
+			<return type="int" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Số lượng đã dùng trong ngày tại thời điểm yêu cầu.
+			</description>
+		</method>
+		<method name="remaining">
+			<return type="int" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Hạn mức mua còn lại trong ngày tại thời điểm yêu cầu.
+			</description>
+		</method>
+		<method name="spend">
+			<return type="bool" />
+			<param index="0" name="amount" type="int" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Ghi lượng mua dương trong hạn mức khi khóa giao dịch đang được giữ. Khi sang ngày mới, đặt lại lượng mua trước khi ghi.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Tạo dữ liệu lưu với ngày hiện tại và lượng đã dùng tương ứng.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục ngày và lượng mua từ dữ liệu đã kiểm tra.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="saved_at" type="float" />
+			<description>
+				Kiểm tra ngày lưu không sau thời điểm lưu và lượng mua trong hạn mức.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="day" type="int" setter="" getter="" default="-1000000000">
+			Ngày gần nhất có ghi lượng mua.
+		</member>
+		<member name="bought" type="int" setter="" getter="" default="0">
+			Số lượng đã mua trong ngày được ghi.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Khóa do giao dịch mua giữ trong lúc cập nhật.
+		</member>
+	</members>
+	<constants>
+		<constant name="ITEM" value="&amp;&quot;wood&quot;">
+			Mã vật phẩm gỗ.
+		</constant>
+		<constant name="DAILY_CAP" value="30">
+			Số gỗ tối đa mua mỗi ngày thời tiết.
+		</constant>
+		<constant name="LEGACY_SELL_PRICE" value="25">
+			Giá bán cũ dùng làm cơ sở cấu hình.
+		</constant>
+		<constant name="BUY_PRICE" value="63">
+			Giá mua một đơn vị bằng xu.
+		</constant>
+	</constants>
+</class>

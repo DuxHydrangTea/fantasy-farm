@@ -1,5 +1,8 @@
 class_name FarmDebugCommands
 extends RefCounted
+## Đăng ký và thực thi lệnh debug tác động lên thế giới trang trại.
+## Kết quả dùng từ điển thành công hoặc lỗi để bảng điều khiển hiển thị.
+
 signal clear_requested
 signal perf_changed(enabled: bool)
 var world: FarmWorld
@@ -33,17 +36,21 @@ func _init(farm: FarmWorld) -> void:
 func _bind(path: String, usage: String, description: String, handler: Callable, write: bool = false) -> void:
 	registry.register(path, usage, description, handler, write)
 
+## Tạo kết quả lệnh thành công với giá trị tùy chọn.
 func ok(value: Variant = "OK") -> Dictionary:
 	return {"ok": true, "text": value if value is String else JSON.stringify(value, "  ")}
 
+## Tạo kết quả lỗi kèm thông báo.
 func fail(message: String) -> Dictionary:
 	return {"ok": false, "error": message}
 
+## Lấy hoặc khởi tạo danh mục tài nguyên cho các lệnh.
 func resources() -> SaveCatalog:
 	if catalog == null:
 		catalog = SaveCatalog.new()
 	return catalog
 
+## Phân tích và thực thi một dòng lệnh debug; trả từ điển kết quả.
 func execute(line: String) -> Dictionary:
 	if not OS.is_debug_build():
 		return fail("Debug commands are disabled in release builds.")
@@ -391,6 +398,7 @@ func _perf(args: Array) -> Dictionary:
 		perf_changed.emit(args[0] == "on")
 	return ok({"fps": Engine.get_frames_per_second(), "process_ms": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0, "physics_ms": Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0, "workers": world.workers.actors.size(), "scheduler_ms_total": world.workers.scheduler_usec / 1000.0, "commit_ms_total": world.workers.commit_usec / 1000.0, "navigation_ms_total": world.workers.navigation.profile_usec / 1000.0})
 
+## Trả các đường dẫn lệnh bắt đầu bằng tiền tố đã nhập.
 func suggestions(line: String) -> Array[String]:
 	var result: Array[String] = []
 	var prefix: String = line.trim_prefix("/").to_lower()

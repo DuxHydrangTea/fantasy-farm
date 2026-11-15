@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;scenes/buildings/houses/house_2.gd&quot;" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn và cập nhật hình ảnh biến thể công trình trong editor và khi chạy game. Setter của variant cập nhật sprite nếu node hình ảnh đã sẵn sàng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_texture">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="variant" type="Variant" setter="@variant_setter" getter="" default="0">
+			Biến thể hình ảnh đang chọn; thay đổi sẽ cập nhật sprite.
+		</member>
+	</members>
+	<constants>
+		<constant name="LIMESTONE_BLACK" value="0" enum="Variant">
+		</constant>
+		<constant name="LIMESTONE_BLUE" value="1" enum="Variant">
+		</constant>
+		<constant name="LIMESTONE_RED" value="2" enum="Variant">
+		</constant>
+		<constant name="STONE_BASE_BLACK" value="3" enum="Variant">
+		</constant>
+		<constant name="STONE_BASE_BLUE" value="4" enum="Variant">
+		</constant>
+		<constant name="STONE_BASE_RED" value="5" enum="Variant">
+		</constant>
+		<constant name="STONE_GREEN_BLACK" value="6" enum="Variant">
+		</constant>
+		<constant name="STONE_GREEN_BLUE" value="7" enum="Variant">
+		</constant>
+		<constant name="STONE_GREEN_RED" value="8" enum="Variant">
+		</constant>
+		<constant name="STONE_RED_BLACK" value="9" enum="Variant">
+		</constant>
+		<constant name="STONE_RED_BLUE" value="10" enum="Variant">
+		</constant>
+		<constant name="STONE_RED_RED" value="11" enum="Variant">
+		</constant>
+		<constant name="WOOD_BASE_BLACK" value="12" enum="Variant">
+		</constant>
+		<constant name="WOOD_BASE_BLUE" value="13" enum="Variant">
+		</constant>
+		<constant name="WOOD_BASE_RED" value="14" enum="Variant">
+		</constant>
+		<constant name="WOOD_GREEN_BLACK" value="15" enum="Variant">
+		</constant>
+		<constant name="WOOD_GREEN_BLUE" value="16" enum="Variant">
+		</constant>
+		<constant name="WOOD_GREEN_RED" value="17" enum="Variant">
+		</constant>
+		<constant name="WOOD_RED_BLACK" value="18" enum="Variant">
+		</constant>
+		<constant name="WOOD_RED_BLUE" value="19" enum="Variant">
+		</constant>
+		<constant name="WOOD_RED_RED" value="20" enum="Variant">
+		</constant>
+		<constant name="VARIANT_TEXTURES" value="{0: &lt;Object&gt;, 1: &lt;Object&gt;, 2: &lt;Object&gt;, 3: &lt;Object&gt;, 4: &lt;Object&gt;, 5: &lt;Object&gt;, 6: &lt;Object&gt;, 7: &lt;Object&gt;, 8: &lt;Object&gt;, 9: &lt;Object&gt;, 10: &lt;Object&gt;, 11: &lt;Object&gt;, 12: &lt;Object&gt;, 13: &lt;Object&gt;, 14: &lt;Object&gt;, 15: &lt;Object&gt;, 16: &lt;Object&gt;, 17: &lt;Object&gt;, 18: &lt;Object&gt;, 19: &lt;Object&gt;, 20: &lt;Object&gt;}">
+			Bảng ánh xạ biến thể sang texture và thông tin frame tương ứng.
+		</constant>
+	</constants>
+</class>

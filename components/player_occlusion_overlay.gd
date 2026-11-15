@@ -1,8 +1,13 @@
 extends AnimatedSprite2D
-## A separate transparent GPU viewport contains only real foreground occluders.
-## Screen colours, UI, grass and lighting never participate in this mask.
+## Tạo mask che khuất người chơi từ các sprite và tile tiền cảnh thực tế.
+## SubViewport trong suốt được cập nhật trước khi vẽ; UI và màu màn hình
+## không tham gia vào mask.
+
+## Sprite hoạt ảnh người chơi được sao chép.
 @export var source: AnimatedSprite2D
+## Tên TileMapLayer cây cần đưa vào mask.
 @export var tree_layer_names: Array[StringName] = [&"Tree", &"Trees"]
+## Kích thước viewport mask quanh người chơi.
 const MASK_SIZE: Vector2i = Vector2i(64, 96)
 var _mask_view: SubViewport
 var _sprites: Array[Sprite2D] = []

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmWorld" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Node gốc lắp ghép các hệ thống gameplay của trang trại.
+	</brief_description>
+	<description>
+		Player và FarmingController được gán trong scene. Các hệ thống đất, thời tiết, ong và cây được nối khi vào cây; dịch vụ phụ thuộc ví người chơi được tạo khi scene sẵn sàng.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_spawn_debug_orchard_worker">
+			<return type="WorkerActor" />
+			<description>
+				Tạo công nhân debug tuần tra quanh khu cây ăn quả để kiểm tra chuyển động.
+			</description>
+		</method>
+		<method name="_wire_weather">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi trong scene.
+		</member>
+		<member name="farming" type="FarmingController" setter="" getter="">
+			Bộ điều khiển đất và cây trồng trong scene.
+		</member>
+		<member name="atmosphere" type="FarmAtmosphere" setter="" getter="">
+			Hiệu ứng môi trường.
+		</member>
+		<member name="soundscape" type="FarmSoundscape" setter="" getter="">
+			Âm thanh môi trường.
+		</member>
+		<member name="land" type="LandExpansionComponent" setter="" getter="">
+			Mở rộng đất.
+		</member>
+		<member name="apiary" type="ApiarySystem" setter="" getter="">
+			Hệ thống tổ ong và thụ phấn.
+		</member>
+		<member name="weather" type="WeatherManager" setter="" getter="">
+			Thời tiết và ngày đêm.
+		</member>
+		<member name="trees" type="TreePlantation" setter="" getter="">
+			Quản lý khu cây lâu năm.
+		</member>
+		<member name="objectives" type="ObjectiveTracker" setter="" getter="">
+			Theo dõi mục tiêu.
+		</member>
+		<member name="objective_ui" type="ObjectiveUI" setter="" getter="">
+			Giao diện mục tiêu.
+		</member>
+		<member name="orders" type="OrderBoard" setter="" getter="">
+			Bảng đơn hàng.
+		</member>
+		<member name="tutorial" type="TutorialProgress" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái hướng dẫn.
+		</member>
+		<member name="help_ui" type="HelpUI" setter="" getter="">
+			Giao diện trợ giúp.
+		</member>
+		<member name="tutorial_hints" type="TutorialHints" setter="" getter="">
+			Gợi ý hướng dẫn theo tiến độ.
+		</member>
+		<member name="pen_boards" type="PenBoard[]" setter="" getter="" default="[]">
+			Các bảng quản lý chuồng đã đăng ký.
+		</member>
+		<member name="tree_plot_upgrades" type="TreePlotUpgradeService" setter="" getter="">
+			Dịch vụ nâng cấp khu cây.
+		</member>
+		<member name="pen_upgrades" type="PenUpgradeService" setter="" getter="">
+			Dịch vụ nâng cấp chuồng.
+		</member>
+		<member name="starter_content" type="StarterContent" setter="" getter="">
+			Điều phối nội dung khởi đầu.
+		</member>
+		<member name="seed_picker" type="FarmSeedPicker" setter="" getter="">
+			Giao diện chọn hạt từ kho.
+		</member>
+		<member name="storages" type="FarmStorageService" setter="" getter="">
+			Dịch vụ kho trang trại.
+		</member>
+		<member name="storage_accesses" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ mã kho sang điểm mở kho.
+		</member>
+		<member name="workers" type="WorkerService" setter="" getter="">
+			Dịch vụ công nhân.
+		</member>
+		<member name="grafting" type="GraftService" setter="" getter="" default="&lt;unknown&gt;">
+			Dịch vụ ghép cây ăn quả.
+		</member>
+		<member name="honey_garden" type="HoneyGardenSystem" setter="" getter="">
+			Điều phối vườn mật ong.
+		</member>
+		<member name="honey_menu" type="HoneyMenu" setter="" getter="">
+			Giao diện mật ong.
+		</member>
+		<member name="graft_menu" type="GraftMenu" setter="" getter="">
+			Giao diện ghép cây.
+		</member>
+		<member name="wood_market" type="WoodMarket" setter="" getter="" default="&lt;unknown&gt;">
+			Hạn mức mua gỗ.
+		</member>
+		<member name="cooking" type="ChefCooking" setter="" getter="" default="&lt;unknown&gt;">
+			Hàng đợi nấu ăn.
+		</member>
+		<member name="tool_upgrade_state" type="ToolUpgradeState" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái nâng cấp công cụ.
+		</member>
+		<member name="tool_upgrades" type="ToolUpgradeService" setter="" getter="">
+			Dịch vụ mua nâng cấp công cụ.
+		</member>
+		<member name="tool_upgrade_catalog" type="ToolUpgradeCatalog" setter="" getter="" default="&lt;Object&gt;">
+			Danh mục giá nâng cấp công cụ.
+		</member>
+		<member name="grass" type="FarmGrassField" setter="" getter="">
+			Hệ thống cỏ trang trại.
+		</member>
+		<member name="gpu_grass_enabled" type="bool" setter="" getter="" default="true">
+			Bật cỏ GPU khi cấu hình hệ thống cỏ.
+		</member>
+		<member name="debug_worker_enabled" type="bool" setter="" getter="" default="false">
+			Bật actor tuần tra thử nghiệm trong bản debug.
+		</member>
+		<member name="debug_worker" type="WorkerActor" setter="" getter="">
+			Actor tuần tra thử nghiệm nếu được bật.
+		</member>
+		<member name="order_board_position" type="Vector2" setter="" getter="" default="Vector2(1664, 248)">
+			Vị trí bảng đơn trong tọa độ thế giới.
+		</member>
+		<member name="night_light_positions" type="Vector2[]" setter="" getter="" default="[...]">
+			Các điểm đèn cửa sổ và cổng trong tọa độ cục bộ thế giới.
+		</member>
+	</members>
+</class>

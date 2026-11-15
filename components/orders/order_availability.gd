@@ -1,11 +1,14 @@
 class_name OrderAvailability
 extends RefCounted
-## A request is eligible only if this world can grow every requested product.
+## Kiểm tra thế giới có nguồn tạo mọi sản phẩm được yêu cầu bởi đơn hàng.
+
+## Thế giới chứa cửa hàng, chuồng, đất và vườn hoa.
 var world: FarmWorld
 
 func _init(farm: FarmWorld) -> void:
 	world = farm
 
+## Trả true nếu từng vật phẩm trong đơn đều có nguồn phù hợp trong thế giới.
 func allows(order: OrderDefinition) -> bool:
 	for item: ItemDefinition in order.items:
 		if not _has_source(item.item_id):

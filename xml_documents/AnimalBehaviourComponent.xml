@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalBehaviourComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Máy trạng thái quyết định hành vi của một vật nuôi.
+	</brief_description>
+	<description>
+		Wander quản lý đích, Movement xử lý vật lý, Foraging tìm và dùng máng. Các chuyển động nằm xuống và đứng dậy chờ hoạt ảnh hoàn thành trước khi chuyển trạng thái. Tập trung hoặc giữ để chăm sóc tạm dừng hành vi.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="data" type="AnimalDefinition" />
+			<description>
+				Gắn cấu hình, tiếp quản bước vật lý của Wander và chọn hoạt ảnh hỗ trợ. Trạng thái bắt đầu là IDLE và sẵn sàng đưa ra quyết định đầu tiên.
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt trạng thái người chơi đang tập trung vào con vật. Khi bật, hủy tìm máng và chuyển về đứng yên.
+			</description>
+		</method>
+		<method name="hold_for_care">
+			<return type="void" />
+			<param index="0" name="owner" type="Node" />
+			<param index="1" name="is_active" type="Callable" />
+			<description>
+				Giữ con vật đứng yên trong khi một owner thực hiện chăm sóc. Owner được giữ bằng weak reference và predicate xác định giữ còn hiệu lực.
+			</description>
+		</method>
+		<method name="release_care_hold">
+			<return type="void" />
+			<param index="0" name="owner" type="Node" />
+			<description>
+				Bỏ lượt giữ chăm sóc của owner.
+			</description>
+		</method>
+		<method name="_has_care_hold">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="request_behaviour">
+			<return type="bool" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+				Yêu cầu hành vi khi con vật đang đứng và không bị giữ hoặc tập trung. Con vật đang nằm cần gọi [method wake] trước. Trả false nếu hành động không được hỗ trợ hoặc không thể bắt đầu.
+			</description>
+		</method>
+		<method name="wake">
+			<return type="bool" />
+			<description>
+				Đánh thức từ trạng thái nghỉ hoặc ngủ; trên đất chờ hoạt ảnh đứng dậy. Trả false nếu hiện không nghỉ hoặc ngủ.
+			</description>
+		</method>
+		<method name="_choose_behaviour">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_enter">
+			<return type="void" />
+			<param index="0" name="next" type="int" enum="AnimalBehaviourComponent.State" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_animation_finished">
+			<return type="void" />
+			<param index="0" name="action" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_play">
+			<return type="void" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_stop">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_has_action">
+			<return type="bool" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_one_shot">
+			<return type="bool" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_can_rest">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_resolve_action">
+			<return type="StringName" />
+			<param index="0" name="configured" type="StringName" />
+			<param index="1" name="candidates" type="StringName[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_duration">
+			<return type="float" />
+			<param index="0" name="seconds" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="wander" type="AnimalWanderComponent" setter="" getter="">
+			Component di chuyển ngẫu nhiên trong chuồng.
+		</member>
+		<member name="foraging" type="AnimalForagingComponent" setter="" getter="">
+			Component tìm và nhận thức ăn, nước.
+		</member>
+		<member name="current_state" type="int" setter="" getter="" enum="AnimalBehaviourComponent.State" default="0">
+			Trạng thái hành vi hiện tại.
+		</member>
+		<member name="definition" type="AnimalDefinition" setter="" getter="">
+			Cấu hình trọng số, thời gian và hoạt ảnh của loài.
+		</member>
+		<member name="_remaining" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_rng" type="RandomNumberGenerator" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_forage_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_lie_down_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_expected_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_sleep_after_lying" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_first_decision" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_focused" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_care_holds" type="Dictionary[int, Dictionary]" setter="" getter="" default="{}">
+			Transient care holds are independent of the player's status focus. Weak owners and task predicates prevent abandoned workers freezing animals.
+		</member>
+	</members>
+	<signals>
+		<signal name="state_changed">
+			<param index="0" name="previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+				Phát tên trạng thái trước và sau mỗi chuyển đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="IDLE" value="0" enum="State">
+		</constant>
+		<constant name="WALK" value="1" enum="State">
+		</constant>
+		<constant name="FORAGE" value="2" enum="State">
+		</constant>
+		<constant name="LIE_DOWN" value="3" enum="State">
+		</constant>
+		<constant name="REST" value="4" enum="State">
+		</constant>
+		<constant name="SLEEP_START" value="5" enum="State">
+		</constant>
+		<constant name="SLEEP" value="6" enum="State">
+		</constant>
+		<constant name="STAND_UP" value="7" enum="State">
+		</constant>
+		<constant name="SEEK_RESOURCE" value="8" enum="State">
+		</constant>
+		<constant name="EAT" value="9" enum="State">
+		</constant>
+		<constant name="DRINK" value="10" enum="State">
+		</constant>
+		<constant name="STATE_NAMES" value="Array[StringName]([&amp;&quot;idle&quot;, &amp;&quot;walk&quot;, &amp;&quot;forage&quot;, &amp;&quot;lie_down&quot;, &amp;&quot;rest&quot;, &amp;&quot;sleep_start&quot;, &amp;&quot;sleep&quot;, &amp;&quot;stand_up&quot;, &amp;&quot;seek_resource&quot;, &amp;&quot;eat&quot;, &amp;&quot;drink&quot;])">
+			Tên trạng thái tương ứng thứ tự enum.
+		</constant>
+	</constants>
+</class>

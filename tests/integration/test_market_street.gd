@@ -2,6 +2,21 @@ extends GutTest
 const WORLD: PackedScene = preload("res://world/main_world.tscn")
 var world: FarmWorld
 
+func test_walking_dust_remains_visible_above_the_road() -> void:
+	var road: TileMapLayer = world.get_node("Road") as TileMapLayer
+	var dust: GPUParticles2D = world.player.state.dust_particles
+	assert_gte(world.player.z_index + dust.z_index, road.z_index, "Walking dust must draw above the paved road")
+	world.process_mode = Node.PROCESS_MODE_INHERIT
+	for start: Vector2 in [Vector2(400, 232), Vector2(2048, 320)]:
+		world.player.global_position = start
+		world.player.state.touch_direction = Vector2.RIGHT
+		await wait_physics_frames(10)
+		assert_gt(world.player.global_position.x, start.x, "Player walks on the surface")
+		assert_true(dust.emitting, "Walking emits dust on road and grass")
+		world.player.state.touch_direction = Vector2.ZERO
+		await wait_physics_frames(15)
+		assert_false(dust.emitting, "Stopping stops new dust")
+
 func before_each() -> void:
 	world = WORLD.instantiate() as FarmWorld
 	world.process_mode = Node.PROCESS_MODE_DISABLED

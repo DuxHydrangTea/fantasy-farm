@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerUpgradeState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấp nâng cấp công nhân thuộc profile, độc lập với việc thuê và công cụ người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo cấp mặc định: tốc độ 0 và các công cụ cấp 1.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra đủ các hướng và cấp nguyên trong giới hạn của từng hướng.
+			</description>
+		</method>
+		<method name="maximum" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="track" type="String" />
+			<description>
+				Cấp tối đa là 10 cho tốc độ và 3 cho các hướng còn lại.
+			</description>
+		</method>
+		<method name="level">
+			<return type="int" />
+			<param index="0" name="track" type="String" />
+			<description>
+				Lấy cấp hiện tại, trả 0 nếu không có hướng trong bảng.
+			</description>
+		</method>
+		<method name="duration">
+			<return type="float" />
+			<param index="0" name="base" type="float" />
+			<param index="1" name="kind" type="String" />
+			<description>
+				Tính thời gian thao tác sau nâng cấp tốc độ. Tuần tra giữ thời gian cơ sở; các việc khác nhân với 0,9 lũy thừa cấp tốc độ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="levels" type="Dictionary" setter="" getter="" default="fresh()">
+			Ánh xạ mã hướng nâng cấp sang cấp hiện tại.
+		</member>
+	</members>
+	<constants>
+		<constant name="TRACKS" value="Array[String]([&quot;speed&quot;, &quot;hoe&quot;, &quot;sowing&quot;, &quot;watering&quot;, &quot;harvest&quot;])">
+			Các hướng nâng cấp được lưu.
+		</constant>
+	</constants>
+</class>

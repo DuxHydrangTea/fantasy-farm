@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolRangeUI" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bộ chọn phạm vi công cụ dùng chung cho chuột và cảm ứng, dựa trên cấp nâng cấp và chính sách thao tác.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="can_cycle">
+			<return type="bool" />
+			<description>
+				Kiểm tra có thể đổi phạm vi công cụ trong trạng thái và bố cục hiện tại.
+			</description>
+		</method>
+		<method name="cycle">
+			<return type="void" />
+			<description>
+				Chuyển vòng phạm vi đã chọn của công cụ hiện tại.
+			</description>
+		</method>
+		<method name="_unhandled_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="button" type="Button" setter="" getter="">
+		</member>
+	</members>
+</class>

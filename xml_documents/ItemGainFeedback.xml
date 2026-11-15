@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemGainFeedback" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị popup và hiệu ứng khi người chơi thực sự nhận hoặc thu hoạch vật phẩm. Không dùng inventory.changed làm sự kiện nhận đồ vì mua hoặc tải cũng đổi túi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_capacity_blocked">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="_requested" type="int" />
+			<param index="2" name="available" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_pickup">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_flower_harvest">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="host" type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_harvest">
+			<return type="ItemGainPopup" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="drop_height" type="float" default="0.0" />
+			<param index="5" name="tier" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="_spawn">
+			<return type="ItemGainPopup" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="host" type="Node" />
+			<param index="3" name="at" type="Vector2" />
+			<param index="4" name="message" type="String" default="&quot;&quot;" />
+			<description>
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Xóa popup, hiệu ứng thu hoạch và trạng thái gộp thông báo hiện tại.
+			</description>
+		</method>
+		<method name="_on_quality_harvest">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="tier" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_tree_harvest">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="drop_height" type="float" default="0.0" />
+			<param index="5" name="tier" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_legacy_harvest">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+		<method name="present_animal_collection">
+			<return type="void" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Hiển thị phản hồi khi thu được sản phẩm trực tiếp từ vật nuôi.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi nhận vật phẩm.
+		</member>
+		<member name="collector" type="ItemCollector" setter="" getter="">
+			Bộ thu vật phẩm phát sự kiện nhặt đồ.
+		</member>
+		<member name="_popups" type="ItemGainPopup[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_recent" type="Dictionary[StringName, WeakRef]" setter="" getter="" default="{}">
+		</member>
+		<member name="_lane" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_bursts" type="HarvestBurst[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_last_capacity_notice" type="int" setter="" getter="" default="-1500">
+		</member>
+	</members>
+</class>

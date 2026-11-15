@@ -1,6 +1,9 @@
 @tool
 extends StaticBody2D
+## Chọn và cập nhật hình ảnh biến thể công trình trong editor và khi chạy game.
+## Setter của variant cập nhật sprite nếu node hình ảnh đã sẵn sàng.
 
+## Các biến thể hình ảnh được cấu hình cho công trình.
 enum Variant {
 	BLACK_FRAME_1,
 	BLACK_FRAME_2,
@@ -16,6 +19,7 @@ enum Variant {
 	RED_FRAME_4,
 }
 
+## Bảng ánh xạ biến thể sang texture và thông tin frame tương ứng.
 const VARIANTS = {
 	Variant.BLACK_FRAME_1: {"texture": preload("res://assets/Buildings/Buildings/Unique_Buildings/Church/Church_Black.png"), "frame": 0},
 	Variant.BLACK_FRAME_2: {"texture": preload("res://assets/Buildings/Buildings/Unique_Buildings/Church/Church_Black.png"), "frame": 1},
@@ -31,6 +35,7 @@ const VARIANTS = {
 	Variant.RED_FRAME_4: {"texture": preload("res://assets/Buildings/Buildings/Unique_Buildings/Church/Church_Red.png"), "frame": 3},
 }
 
+## Biến thể hình ảnh đang chọn; thay đổi sẽ cập nhật sprite.
 @export var variant: Variant = Variant.BLACK_FRAME_1:
 	set(value):
 		variant = value

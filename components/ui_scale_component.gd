@@ -1,12 +1,18 @@
 class_name UIScaleComponent
 extends Node
-## Canvas-only scale: preserve desktop layout proportions and keep touch UI readable.
-## Roots use virtual coordinates; engine input follows the same CanvasLayer transform.
+## Điều chỉnh tỉ lệ CanvasLayer và kích thước ảo của root cho desktop và cảm ứng.
+## Vùng an toàn được trừ khỏi kích thước khả dụng; input theo transform canvas.
+
+## Phát kích thước ảo sau khi bố cục hoặc chế độ thay đổi.
 signal layout_changed(virtual_size: Vector2)
+## Kích thước ảo nhỏ nhất dùng để giới hạn mức phóng trên desktop.
 const MINIMUM_VIEW: Vector2 = Vector2(480, 270)
 # At the original 1280x720 window, the 1920x1080 viewport scales by 2/3.
+## Hệ số bù stretch tối đa trên desktop.
 const MAX_DESKTOP_COMPENSATION: float = 4.0
+## Canvas được điều chỉnh tỉ lệ.
 var canvas: CanvasLayer
+## Control gốc được đặt kích thước và vị trí theo vùng an toàn.
 var root: Control
 var _last_view_size: Vector2
 var _last_screen_scale: Vector2
@@ -14,6 +20,7 @@ var _last_insets: Vector4
 var _last_point_scale: float = 1.0
 var _last_touch: bool = false
 
+## Áp theme, tạo component và gắn vào layer để quản lý control gốc.
 static func attach(layer: CanvasLayer, control: Control) -> UIScaleComponent:
 	FarmUI.apply(control)
 	var component: UIScaleComponent = UIScaleComponent.new()
@@ -47,6 +54,8 @@ func _check_stretch() -> void:
 	if view_changed or scale_changed or safe_changed or mode_changed:
 		refresh()
 
+## Tính lại tỉ lệ canvas, vùng an toàn và kích thước ảo theo viewport hiện tại.
+## Phát layout_changed khi bố cục hoặc chế độ cảm ứng thay đổi.
 func refresh() -> void:
 	var viewport: Viewport = get_viewport()
 	var mode_changed: bool = _last_touch != MobileLayout.is_touch(viewport)

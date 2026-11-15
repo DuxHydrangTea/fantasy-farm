@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HarvestBurst" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiệu ứng biểu tượng nông sản sau thu hoạch; giao dịch đã hoàn tất trước khi hiệu ứng chạy.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="item" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="amount" type="int" setter="" getter="" default="1">
+		</member>
+		<member name="tier" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="drop_height" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="target" type="WeakRef" setter="" getter="">
+		</member>
+		<member name="age" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="icons" type="Sprite2D[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_lands" type="Vector2[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_last_target" type="Vector2" setter="" getter="">
+		</member>
+	</members>
+</class>

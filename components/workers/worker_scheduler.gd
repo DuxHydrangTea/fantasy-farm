@@ -1,7 +1,9 @@
 class_name WorkerScheduler
 extends RefCounted
-## Advances the worker timeline and owns its frame budget and resume cursor.
+## Tiến dòng thời gian công nhân theo sự kiện với ngân sách xử lý mỗi frame.
+## Bộ lập lịch lưu vị trí dừng để tiếp tục cùng sự kiện và công nhân ở lần gọi sau.
 
+## Ngân sách xử lý online mỗi frame, tính bằng micro giây.
 const ONLINE_BUDGET_USEC: int = 2000
 var _event_open: bool = false
 var _event_row: int = 0
@@ -9,11 +11,15 @@ var _budget_frame: int = -1
 var _budget_spent_usec: int = 0
 var _online_pending: bool = false
 
+## Xóa sự kiện đang mở và trạng thái công việc online còn chờ.
 func reset_checkpoint() -> void:
 	_event_open = false
 	_event_row = 0
 	_online_pending = false
 
+## Tiến công nhân trước các hệ thống khác khi đồng hồ đã đi ít nhất 0,25 giây.
+## Khoảng gián đoạn trên năm giây được xử lý theo đường offline nếu không
+## có sự kiện đang dở.
 func before_tick(team: WorkerService, timestamp: float) -> void:
 	if not team.available() or team.records.is_empty() or timestamp - team.simulated_at < 0.25:
 		return
@@ -24,6 +30,7 @@ func before_tick(team: WorkerService, timestamp: float) -> void:
 	else:
 		advance_online(team, timestamp)
 
+## Tiến công nhân trong phần ngân sách còn lại của frame hiện tại.
 func advance_online(team: WorkerService, timestamp: float) -> void:
 	var frame: int = Engine.get_process_frames()
 	if frame != _budget_frame:
@@ -38,11 +45,15 @@ func advance_online(team: WorkerService, timestamp: float) -> void:
 	if team.profiling:
 		team.scheduler_usec += Time.get_ticks_usec() - started
 
+## Cho biết còn sự kiện đang mở hoặc công việc online chưa xử lý xong.
 func has_pending_work() -> bool:
 	return _event_open or _online_pending
 
-## A budget can pause between events or at a worker within an open event.
-## The next call resumes at that event and worker, even at the requested endpoint.
+## Tiến mô phỏng đến [param until], trả true khi đã xử lý hết.
+## Khi hết ngân sách hoặc một công nhân cần tiếp tục truy vấn, trả false và
+## lưu con trỏ. Lần sau tiếp tục cùng sự kiện và công nhân, kể cả tại điểm cuối.
+## Thứ tự công nhân theo thứ tự thuê; mốc tiếp theo xét bình minh, hoàn thành
+## công việc và thời điểm thức dậy.
 func advance(team: WorkerService, clock: FarmClock, weather: WeatherSchedule, until: float, offline: bool, budget_usec: int, started: int) -> bool:
 	if not _event_open:
 		team.records.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.hire_order) < int(b.hire_order))

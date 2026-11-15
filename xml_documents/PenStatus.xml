@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenStatus" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Các truy vấn chỉ đọc phục vụ giao diện quản lý chuồng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="members" qualifiers="static">
+			<return type="AnimalActor[]" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<description>
+				Liệt kê vật nuôi còn hợp lệ thuộc chuồng, sắp xếp theo mã ổn định.
+			</description>
+		</method>
+		<method name="troughs" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<param index="1" name="kind" type="int" enum="AnimalTrough.Kind" />
+			<description>
+				Cộng tồn kho và sức chứa các máng cùng loại thuộc chuồng. Trả [code]stock[/code], [code]capacity[/code] và phần trăm lượng khả dụng trên tổng sức chứa. Khi không có sức chứa, phần trăm bằng 0.
+			</description>
+		</method>
+		<method name="title" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<description>
+				Trả tiêu đề đã dịch theo loại ao, chuồng gà hoặc chuồng gia súc.
+			</description>
+		</method>
+		<method name="short_id" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="actor" type="AnimalActor" />
+			<description>
+				Tạo chuỗi sáu chữ số từ hash của mã ổn định để hiển thị ngắn.
+			</description>
+		</method>
+	</methods>
+</class>

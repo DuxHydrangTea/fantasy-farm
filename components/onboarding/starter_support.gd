@@ -1,12 +1,19 @@
 class_name StarterSupport
 extends RefCounted
-## One seed per profile when ordinary recovery sources in the bag/farm are gone.
+## Kiểm tra và cấp một hạt giống hỗ trợ một lần cho profile gặp khó khăn.
+## Chỉ cấp khi người chơi không đủ tiền mua hạt và không còn hạt, nông sản
+## hoặc cây đang trồng có thể dùng để phục hồi.
+
+## Hạt giống cà rốt được cấp.
 const SEED: ItemDefinition = preload("res://items/seeds/carrot_seed.tres")
+## Thế giới được kiểm tra nguồn phục hồi.
 var world: FarmWorld
 
 func _init(farm: FarmWorld) -> void:
 	world = farm
 
+## Kiểm tra điều kiện hỗ trợ, các kho, cây trên đồng và sức chứa túi.
+## Trả ok hoặc thông báo giải thích điều kiện chưa đạt.
 func quote() -> Dictionary:
 	if world.tutorial.capture().support_used:
 		return {"ok": false, "error": "Your one-time seed support has already been used."}
@@ -35,6 +42,7 @@ func quote() -> Dictionary:
 		return {"ok": false, "error": "Make room in your bag before receiving a seed."}
 	return {"ok": true}
 
+## Kiểm tra lại điều kiện rồi cấp hạt qua TutorialProgress.
 func claim() -> Dictionary:
 	var checked: Dictionary = quote()
 	if not checked.ok:

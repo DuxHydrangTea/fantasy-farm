@@ -1,12 +1,23 @@
 class_name AnimalTradeService
 extends RefCounted
-## Live animal trades belong to the same farm as the customer, outside the bag.
+## Mua bán vật nuôi sống cho trang trại của người chơi.
+##
+## Vật nuôi mua được thêm trực tiếp vào chuồng phù hợp. Trước khi giao dịch,
+## dịch vụ kiểm tra sức chứa, vị trí trống, ví và đồng bộ thời gian chuồng.
+
+## Phát lựa chọn mua, số lượng và tổng giá sau giao dịch.
 signal purchased(offer: AnimalShopOffer, quantity: int, total: int)
+## Phát mã cá thể và số xu sau khi bán.
 signal sold(animal_id: StringName, total: int)
+## Đường dẫn scene actor được tải khi mua.
 const ACTOR_PATH: String = "res://scenes/animals/animal.tscn"
+## Danh mục lựa chọn mua vật nuôi.
 var catalog: ShopCatalog
+## Ví thanh toán hoặc nhận tiền.
 var wallet: WalletComponent
+## Node trang trại chứa các chuồng.
 var farm: Node
+## Đồng hồ dùng để đồng bộ trạng thái trước giao dịch.
 var clock: FarmClock
 var _busy: bool = false
 
@@ -24,6 +35,7 @@ func _pens() -> Array[AnimalPen]:
 				result.append(child as AnimalPen)
 	return result
 
+## Liệt kê vật nuôi còn sống là con trực tiếp của các chuồng trong trang trại.
 func owned_animals() -> Array[AnimalActor]:
 	var result: Array[AnimalActor] = []
 	for pen: AnimalPen in _pens():
@@ -46,6 +58,8 @@ func _offer_for(animal: AnimalActor) -> AnimalShopOffer:
 func _owns(animal: AnimalActor) -> bool:
 	return _alive(animal) and _pens().has(animal.pen) and animal.get_parent() == animal.pen
 
+## Báo giá bán lại [param animal] mà chưa thực hiện giao dịch.
+## Trả ok và total tính bằng xu, hoặc ok false và error nếu không thể bán.
 func quote_sell(animal: AnimalActor) -> Dictionary:
 	var offer: AnimalShopOffer = _offer_for(animal)
 	if offer == null or not _owns(animal):
@@ -55,6 +69,9 @@ func quote_sell(animal: AnimalActor) -> Dictionary:
 		return {"ok": false, "error": "Your wallet has reached its coin limit."}
 	return {"ok": true, "total": total}
 
+## Đồng bộ nhu cầu rồi kiểm tra lại và bán vật nuôi còn thuộc trang trại.
+## Cộng tiền và đưa actor ra khỏi hoạt động trước khi thông báo; hoàn tiền nếu
+## không thể đưa actor ra khỏi hoạt động.
 func sell(animal: AnimalActor) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}
@@ -80,6 +97,8 @@ func sell(animal: AnimalActor) -> Dictionary:
 	_busy = false
 	return checked
 
+## Kiểm tra lựa chọn mua, số lượng 1–99, tiền và chuồng có đủ vị trí an toàn.
+## Thành công trả tổng giá, chuồng và các vị trí dự kiến.
 func quote_buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 	if catalog == null or offer == null or not catalog.animal_offers.has(offer) or not offer.is_valid() or quantity < 1 or quantity > 99:
 		return {"ok": false, "error": "Invalid animal or quantity."}
@@ -108,6 +127,8 @@ func quote_buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 		return {"ok":false, "error":"This pen is full. Open its management board to unlock more spaces."}
 	return {"ok": false, "error": "A suitable pen is full or has no free space."}
 
+## Đồng bộ chuồng, kiểm tra báo giá rồi tạo vật nuôi mới và trừ tiền.
+## Thành công trả số lượng, tổng tiền và các actor vừa tạo.
 func buy(offer: AnimalShopOffer, quantity: int) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}

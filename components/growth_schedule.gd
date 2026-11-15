@@ -1,7 +1,9 @@
 @tool
 class_name GrowthSchedule
 extends RefCounted
-## Min-heap of stage deadlines. Weak references never keep harvested plants alive.
+## Hàng đợi thời hạn chuyển giai đoạn cây trồng dùng min-heap.
+## Tham chiếu yếu không giữ cây đã thu hoạch. Ticket loại bỏ lịch cũ khi
+## một node được đặt lịch lại hoặc hủy trước khi đến hạn.
 # TỐI ƯU LỊCH LỚN CÂY — min-heap là một lựa chọn, không phải điều kiện để cây lớn đúng.
 # Điều bắt buộc là xử lý đúng deadline; có thể thay heap bằng hàng đợi khác nếu vẫn giữ
 # ngữ nghĩa đó. Heap đặt deadline nhỏ nhất ở phần tử 0: chỉ nhìn đầu là biết có việc đến hạn.
@@ -17,6 +19,7 @@ var _sequence: int = 0
 # WeakRef chỉ giữ liên kết yếu: cây đã thu hoạch/free không bị lịch giữ tham chiếu sử dụng lại.
 # Nếu bỏ ticket, một lịch cũ có thể làm cây cập nhật sớm; nếu dùng Node đã free trực tiếp
 # mà không kiểm tra, lúc đến hạn có thể gọi phương thức lên đối tượng không còn tồn tại.
+## Đặt thời hạn mới cho node, thay thế hiệu lực của mọi lịch cũ của node đó.
 func schedule(target: Node, deadline: float) -> void:
 	_sequence += 1
 	_tickets[target.get_instance_id()] = _sequence
@@ -37,13 +40,17 @@ func schedule(target: Node, deadline: float) -> void:
 # Hủy bằng cách xóa ticket, không tìm/xóa giữa heap (tìm như vậy tốn O(n)).
 # Dòng cũ sẽ bị bỏ qua khi trồi lên đầu; đổi lại nó còn chiếm chỗ đến khi được lấy ra/clear.
 # Không được bỏ kiểm tra ticket trong take_due chỉ vì cancel không trực tiếp xóa phần tử heap.
+## Hủy lịch hiện hành bằng cách xóa ticket; phần tử cũ được bỏ qua khi lấy ra.
 func cancel(target: Node) -> void:
 	_tickets.erase(target.get_instance_id())
 
+## Xóa toàn bộ heap và ticket.
 func clear() -> void:
 	_heap.clear()
 	_tickets.clear()
 
+## Lấy các node còn sống có thời hạn không muộn hơn [param now].
+## Mỗi lịch hợp lệ chỉ được trả một lần; node bị xóa hoặc lịch cũ bị bỏ qua.
 func take_due(now: float) -> Array[Node]:
 	var result: Array[Node] = []
 	while not _heap.is_empty() and float(_heap[0].at) <= now:

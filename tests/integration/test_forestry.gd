@@ -77,6 +77,38 @@ func _stump(point: Vector2i = Vector2i(68, 61)) -> TimberTree:
 		assert_true(tree.chop(world.player.selection.inventory))
 	return tree
 
+func test_player_axe_swing_commits_once_and_returns_to_idle(direction = use_parameters([Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2.UP])) -> void:
+	var tree: TimberTree = _tree(Vector2i(68, 61), true)
+	var player: FarmPlayer = world.player
+	var bag: InventoryComponent = player.selection.inventory
+	var axe: ItemDefinition = load("res://items/tools/axe.tres") as ItemDefinition
+	bag.add(axe, 1)
+	for slot: int in range(bag.slot_count):
+		if bag.get_slot_item(slot) == axe:
+			bag.move_slot(slot, 0)
+			break
+	player.selection.select_slot(0)
+	player.global_position = tree.global_position - direction * 24.0
+	player.animation.face(direction)
+	assert_true(player.state.use_selected_tool())
+	assert_eq(player.state.active_action, &"tree_chop")
+	var sprite: AnimatedSprite2D = player.animation.animated_sprite
+	var suffix: String = "right" if direction.x != 0 else "down" if direction.y > 0 else "up"
+	assert_eq(sprite.animation, StringName("chop_" + suffix))
+	assert_eq(sprite.flip_h, direction == Vector2.LEFT)
+	assert_eq(tree.hits, 0, "Starting an axe swing must not apply damage early")
+	sprite.frame = player.farming_actions.impact_frame
+	assert_eq(tree.hits, 1, "The axe swing commits at the existing impact frame")
+	player.tree_interaction._impact()
+	assert_eq(tree.hits, 1, "Repeated frame notifications cannot duplicate the hit")
+	player.state._on_action_finished("tool")
+	assert_eq(player.state.current_state, StateComponent.State.TOOL, "A stale hoe completion must not end an axe swing")
+	sprite.process_mode = Node.PROCESS_MODE_ALWAYS
+	await wait_seconds(0.6)
+	assert_eq(player.state.current_state, StateComponent.State.IDLE)
+	assert_eq(sprite.animation, StringName("idle_" + suffix))
+	assert_false(preload("res://sprite_frames/character/farmer_bob_frames.tres").has_animation(&"chop_down"), "The shared worker/NPC resource must remain unchanged")
+
 func test_shared_daily_stock_exact_limit_and_failed_purchase_spends_nothing() -> void:
 	var shop: ShopService = _shop()
 	var other: ShopService = _shop()

@@ -1,13 +1,23 @@
 class_name AnimalWanderComponent
 extends Node
-## Top-down patrol using the shared Movement/Animation components.
+## Điều khiển vật nuôi đi lang thang trong chuồng bằng Movement và Animation.
+## Với thủy cầm, component traversal cung cấp đường đi qua môi trường ao.
+
+## Component di chuyển của actor.
 @export var movement: MovementComponent
+## Component cập nhật hướng và hoạt ảnh.
 @export var animation: AnimationComponent
+## Hình va chạm dùng để kiểm tra điểm đích.
 @export var collision: CollisionShape2D
+## Chuồng giới hạn vùng đi lại.
 @export var pen: AnimalPen
+## Seed thử nghiệm; 0 tạo seed ngẫu nhiên khi bắt đầu.
 @export var random_seed: int = 0
+## Khoảng thời gian nghỉ giữa các lần chọn đích, tính bằng giây.
 var idle_seconds: Vector2 = Vector2(0.6, 1.8)
+## Khoảng chừa từ rìa chuồng.
 var margin: float = 12.0
+## Bộ điều hướng ao tùy chọn.
 var traversal: WaterfowlComponent
 var _wait_remaining: float = 0.0
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -21,7 +31,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	step(delta)
 
-## Called by AnimalBehaviourComponent when it owns the animal's state.
+## Cập nhật một bước đi lang thang, được AnimalBehaviourComponent gọi khi
+## component hành vi quản lý trạng thái. Giữ actor trong chuồng và chọn đích mới.
 func step(delta: float) -> void:
 	if not is_instance_valid(pen):
 		movement.cancel_target()
@@ -45,6 +56,7 @@ func step(delta: float) -> void:
 		if _wait_remaining <= 0.0:
 			_wait_remaining = _rng.randf_range(idle_seconds.x, idle_seconds.y)
 
+## Thử tối đa 16 điểm ngẫu nhiên trong chuồng và chọn điểm trống đi tới được.
 func choose_target() -> bool:
 	if not is_instance_valid(pen):
 		return false
@@ -55,18 +67,21 @@ func choose_target() -> bool:
 				return true
 	return false
 
+## Đặt đích trực tiếp hoặc yêu cầu bộ điều hướng ao lập đường.
 func set_destination(point: Vector2) -> bool:
 	if traversal != null:
 		return traversal.set_destination(point)
 	movement.set_target(point)
 	return true
 
+## Đi một bước theo đường ao hoặc di chuyển trực tiếp đến đích.
 func move_to_destination(delta: float) -> void:
 	if traversal != null:
 		traversal.travel(delta)
 	else:
 		movement.move_to_target(delta)
 
+## Hủy đường đi và dừng di chuyển.
 func cancel_destination() -> void:
 	if traversal != null:
 		traversal.cancel()
@@ -74,9 +89,11 @@ func cancel_destination() -> void:
 		movement.cancel_target()
 		movement.stop()
 
+## Kiểm tra đích cuối hiện tại có xấp xỉ điểm yêu cầu.
 func destination_matches(point: Vector2) -> bool:
 	return traversal.destination.is_equal_approx(point) if traversal != null else movement.target_position.is_equal_approx(point)
 
+## Trả chiều dài đường còn lại hoặc khoảng cách trực tiếp đến đích.
 func route_distance() -> float:
 	return traversal.distance_remaining() if traversal != null else movement.body.global_position.distance_to(movement.target_position)
 

@@ -59,6 +59,7 @@ func _snapshot(revision: int = 1) -> Dictionary:
 		"storage_seed": "",
 		"flower_garden_unlocked": false,
 		"pen_updated_at": {},
+		"pen_produce": [],
 		"land_starting_blocks": 1,
 		"player": {"position": [32, 64], "facing": "down", "selected_slot": 0}, "inventory": [{"item": "hoe", "count": 1}],
 		"weather": WeatherSchedule.new().capture(), "trees": [], "beehives": [], "soil": [], "crops": [], "animals": [], "troughs": [], "pickups": [], "flower_gardens": []}

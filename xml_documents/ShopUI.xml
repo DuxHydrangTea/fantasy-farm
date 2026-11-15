@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopUI" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện cửa hàng cho danh mục vật phẩm, vật nuôi và nâng cấp của thương nhân.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_species_tabs">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="show_animal_species">
+			<return type="void" />
+			<param index="0" name="species" type="int" />
+			<description>
+				Chuyển tab loài vật trong danh mục động vật.
+			</description>
+		</method>
+		<method name="_refresh_species_tabs">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_start_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_configure_categories">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="show_category">
+			<return type="void" />
+			<param index="0" name="value" type="int" />
+			<description>
+				Chuyển danh mục hợp lệ của thương nhân và làm mới lựa chọn.
+			</description>
+		</method>
+		<method name="_card">
+			<return type="void" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="title" type="String" />
+			<param index="2" name="cost" type="int" />
+			<param index="3" name="key" type="Variant" />
+			<param index="4" name="callback" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="select_animal_offer">
+			<return type="void" />
+			<param index="0" name="offer" type="AnimalShopOffer" />
+			<description>
+				Chọn mặt hàng động vật thuộc danh mục hiện tại.
+			</description>
+		</method>
+		<method name="_select_animal_card">
+			<return type="void" />
+			<param index="0" name="handle" type="WeakRef" />
+			<description>
+			</description>
+		</method>
+		<method name="select_animal">
+			<return type="void" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Chọn vật nuôi để hiển thị và giao dịch.
+			</description>
+		</method>
+		<method name="select_offer">
+			<return type="void" />
+			<param index="0" name="offer" type="ShopOffer" />
+			<description>
+				Chọn mặt hàng hợp lệ thuộc danh mục và cửa hàng hiện tại.
+			</description>
+		</method>
+		<method name="_quantity_changed">
+			<return type="void" />
+			<param index="0" name="_value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_duration">
+			<return type="String" />
+			<param index="0" name="seconds" type="float" />
+			<param index="1" name="remaining" type="bool" default="true" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_animal_purchase">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_show_purchase_error">
+			<return type="void" />
+			<param index="0" name="checked" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_animal_sale">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="void" />
+			<description>
+				Thực hiện giao dịch của lựa chọn hiện tại khi cửa hàng đang mở.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_language">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_coins">
+			<return type="String" />
+			<param index="0" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="present_product">
+			<return type="void" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="title" type="String" />
+			<param index="2" name="subtitle" type="String" />
+			<description>
+				Cập nhật biểu tượng, tên và mô tả ngắn của sản phẩm.
+			</description>
+		</method>
+		<method name="_fit_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="upgrade_view" type="ToolUpgradeShopView" setter="" getter="">
+		</member>
+		<member name="_normal_hint" type="String" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+			Inventory-style view adapted from the skill inventory_ui template.
+		</member>
+		<member name="grid" type="GridContainer" setter="" getter="">
+		</member>
+		<member name="balance_label" type="Label" setter="" getter="">
+		</member>
+		<member name="details" type="Label" setter="" getter="">
+		</member>
+		<member name="status" type="Label" setter="" getter="">
+		</member>
+		<member name="quantity" type="SpinBox" setter="" getter="">
+		</member>
+		<member name="buy_button" type="Button" setter="" getter="">
+		</member>
+		<member name="categories" type="Container" setter="" getter="">
+		</member>
+		<member name="body" type="VBoxContainer" setter="" getter="">
+		</member>
+		<member name="heading" type="Label" setter="" getter="">
+		</member>
+		<member name="hint" type="Label" setter="" getter="">
+		</member>
+		<member name="quantity_label" type="Label" setter="" getter="">
+		</member>
+		<member name="browse" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="service" type="ShopService" setter="" getter="">
+		</member>
+		<member name="animal_service" type="AnimalTradeService" setter="" getter="">
+		</member>
+		<member name="selected_animal" type="AnimalActor" setter="" getter="">
+		</member>
+		<member name="selected_animal_offer" type="AnimalShopOffer" setter="" getter="">
+		</member>
+		<member name="_animal_rows" type="AnimalActor[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_price_labels" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="selected" type="ShopOffer" setter="" getter="">
+		</member>
+		<member name="category" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_buttons" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_category_tabs" type="Dictionary[int, Button]" setter="" getter="" default="{}">
+		</member>
+		<member name="animal_species" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_species_scroll" type="ScrollContainer" setter="" getter="">
+		</member>
+		<member name="_species_tabs" type="Dictionary[int, Button]" setter="" getter="" default="{}">
+		</member>
+		<member name="product_icon" type="TextureRect" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="product_name" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="product_type" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="unit_price" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="owned_count" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="total_price" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="sidebar" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="price_row" type="HBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="owned_row" type="HBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="total_row" type="HBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_animal_text" type="AnimalStatusText" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="production_row" type="VisualValueRow" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="UPGRADES" value="5">
+		</constant>
+		<constant name="SPECIES_TITLES" value="Array[String]([&quot;Chicken&quot;, &quot;Duck&quot;, &quot;Cow&quot;, &quot;Sheep&quot;, &quot;Pig&quot;, &quot;Goose&quot;, &quot;Horse&quot;])">
+		</constant>
+	</constants>
+</class>

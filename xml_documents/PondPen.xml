@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PondPen" inherits="AnimalPen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chuồng ao có hai lưới đường đi cho vật chỉ đi đất và vật có thể bơi. Ô nước lấy từ TileMap thực, vật cản lấy từ truy vấn vật lý tĩnh.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="is_water">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Kiểm tra điểm toàn cục thuộc tile nước đã cấu hình.
+			</description>
+		</method>
+		<method name="rebuild_after_load">
+			<return type="void" />
+			<description>
+				Lên lịch dựng lại đồ thị sau hai frame vật lý khi vừa tải.
+			</description>
+		</method>
+		<method name="_grid">
+			<return type="AStarGrid2D" />
+			<description>
+			</description>
+		</method>
+		<method name="rebuild_navigation">
+			<return type="void" />
+			<description>
+				Dựng lại lưới đất và lưới lưỡng cư từ biên chuồng, nước và vật cản.
+			</description>
+		</method>
+		<method name="_cell">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_nearest_cell">
+			<return type="Vector2i" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="grid" type="AStarGrid2D" />
+			<description>
+			</description>
+		</method>
+		<method name="route">
+			<return type="PackedVector2Array" />
+			<param index="0" name="from" type="Vector2" />
+			<param index="1" name="to" type="Vector2" />
+			<param index="2" name="swimming" type="bool" />
+			<description>
+				Tìm đường lưới bốn hướng đến đích toàn cục theo khả năng bơi. Trả mảng rỗng nếu đồ thị chưa sẵn sàng, đích không hợp lệ hoặc không có đường.
+			</description>
+		</method>
+		<method name="closest_land">
+			<return type="Vector2" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Tìm điểm đất đi được gần nhất, hoặc vị trí bờ dự phòng khi chưa có đồ thị.
+			</description>
+		</method>
+		<method name="land_route">
+			<return type="PackedVector2Array" />
+			<param index="0" name="from" type="Vector2" />
+			<description>
+				Tìm đường bơi tới điểm đất gần nhất đi tới được, hoặc mảng rỗng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="water_layer" type="TileMapLayer" setter="" getter="">
+			Layer chứa tile nước.
+		</member>
+		<member name="water_source" type="int" setter="" getter="" default="1">
+			Mã nguồn tile nước.
+		</member>
+		<member name="water_terrain" type="int" setter="" getter="" default="1">
+			Mã terrain nước.
+		</member>
+		<member name="navigation_ready" type="bool" setter="" getter="" default="false">
+			Cho biết hai đồ thị đã được dựng xong.
+		</member>
+		<member name="_land" type="AStarGrid2D" setter="" getter="">
+		</member>
+		<member name="_amphibious" type="AStarGrid2D" setter="" getter="">
+		</member>
+		<member name="_dry_points" type="Vector2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_navigation_frames" type="int" setter="" getter="" default="2">
+		</member>
+	</members>
+	<constants>
+		<constant name="CELL" value="16.0">
+			Kích thước ô lưới đường đi.
+		</constant>
+	</constants>
+</class>

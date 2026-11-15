@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Biên dữ liệu lưu có phiên bản, dùng chung cho backend cục bộ và backend khác. Snapshot dùng dữ liệu cơ bản và mã resource được kiểm tra qua SaveCatalog. Các phiên bản cũ được chuyển tuần tự trước khi xác thực cấu trúc hiện hành.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="failure" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="message" type="String" />
+			<param index="1" name="code" type="String" default="&quot;invalid&quot;" />
+			<param index="2" name="values" type="Dictionary" default="{}" />
+			<description>
+				Tạo kết quả lỗi có mã, chuỗi nguồn và giá trị để định dạng sau khi dịch.
+			</description>
+		</method>
+		<method name="number" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="low" type="float" default="0.0" />
+			<param index="2" name="high" type="float" default="1000000000000.0" />
+			<param index="3" name="integer" type="bool" default="false" />
+			<description>
+				Kiểm tra số hữu hạn trong khoảng đóng; integer yêu cầu giá trị nguyên.
+			</description>
+		</method>
+		<method name="vector" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="integral" type="bool" default="false" />
+			<description>
+				Kiểm tra mảng hai tọa độ hữu hạn trong giới hạn; integral yêu cầu tọa độ nguyên.
+			</description>
+		</method>
+		<method name="identifier" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<description>
+				Kiểm tra chuỗi định danh hợp lệ, độ dài từ 1 đến 100 ký tự.
+			</description>
+		</method>
+		<method name="validate" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<description>
+				Chuyển tuần tự snapshot cũ và kiểm tra toàn bộ dữ liệu theo schema hiện tại. Trả snapshot đã kiểm tra hoặc lỗi có mã. Phiên bản mới hơn game bị từ chối; các bước chuyển tạo bản sao sâu trước khi thay đổi dữ liệu đầu vào.
+			</description>
+		</method>
+		<method name="_migrate_farmland" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<description>
+			</description>
+		</method>
+		<method name="_map_farmland_cell" qualifiers="static">
+			<return type="Array" />
+			<param index="0" name="pair" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_entity" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="row" type="Dictionary" />
+			<param index="1" name="ids" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="VERSION" value="43">
+			Phiên bản schema hiện hành.
+		</constant>
+		<constant name="CropConditions" value="&lt;Object&gt;">
+			Script kiểm tra và chuyển trạng thái sâu cỏ.
+		</constant>
+		<constant name="AnimalHealth" value="&lt;Object&gt;">
+			Script kiểm tra trạng thái bệnh vật nuôi.
+		</constant>
+		<constant name="FlowerLayout" value="&lt;Object&gt;">
+			Bố cục vườn hoa và ánh xạ tọa độ cũ.
+		</constant>
+	</constants>
+</class>

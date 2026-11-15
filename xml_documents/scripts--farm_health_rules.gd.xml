@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;scripts/farm_health_rules.gd&quot;" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Các thông số cân bằng sức khỏe dùng chung cho cây trồng và vật nuôi. Trạng thái riêng của từng cây hoặc con vật được quản lý ở nơi khác.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="pest_chance" type="float" setter="" getter="" default="0.15">
+			Xác suất phát sinh sâu bệnh ở cây trồng.
+		</member>
+		<member name="weed_chance" type="float" setter="" getter="" default="0.15">
+			Xác suất phát sinh cỏ dại.
+		</member>
+		<member name="pest_yield" type="float" setter="" getter="" default="0.8">
+			Hệ số năng suất khi bị sâu bệnh.
+		</member>
+		<member name="weed_yield" type="float" setter="" getter="" default="0.85">
+			Hệ số năng suất khi bị cỏ dại.
+		</member>
+		<member name="sick_production_rate" type="float" setter="" getter="" default="0.5">
+			Hệ số tốc độ sản xuất khi vật nuôi bị bệnh.
+		</member>
+		<member name="disease_chance" type="float" setter="" getter="" default="0.05">
+			Xác suất bệnh trong mỗi lần kiểm tra.
+		</member>
+		<member name="disease_check_seconds" type="float" setter="" getter="" default="600.0">
+			Khoảng thời gian giữa các lần kiểm tra bệnh, tính bằng giây.
+		</member>
+		<member name="protection_seconds" type="float" setter="" getter="" default="300.0">
+			Thời gian bảo vệ sau xử lý, tính bằng giây.
+		</member>
+	</members>
+</class>

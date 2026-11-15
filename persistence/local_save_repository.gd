@@ -1,23 +1,35 @@
 class_name LocalSaveRepository
 extends SaveRepository
-## Adapted from the Godot skill save_manager template: checked temp write,
-## last-good backup and revision guard. Checksum detects damage, not cheating.
+## Backend lưu profile bằng JSON trên filesystem cục bộ.
+##
+## File tạm được kiểm tra trước khi thay file chính, bản chính hợp lệ được
+## xoay thành backup và revision giúp phát hiện xung đột. SHA-256 phát hiện
+## hỏng dữ liệu; checksum không xác thực người chỉnh sửa file.
+
+## Giới hạn kích thước file đầu vào theo byte.
 const MAX_BYTES: int = 8 * 1024 * 1024
+## Thư mục chứa file profile.
 var directory: String = "user://saves"
+## Catalog dùng để kiểm tra các mã resource trong snapshot.
 var catalog: SaveCatalog
 var _async_busy: bool = false
+## Số tác vụ IO đã khởi động bằng thread.
 var worker_operations: int = 0
 
 func _init(folder: String = "user://saves", resources: SaveCatalog = null) -> void:
 	directory = folder
 	catalog = resources if resources != null else SaveCatalog.new()
 
+## Tạo đường dẫn file chính của profile.
 func path(profile: String) -> String:
 	return directory.path_join("profile_" + profile + ".json")
 
 # Phục hồi backup chỉ khi primary lỗi/mất. Nếu primary thuộc phiên bản game tương lai,
 # phải từ chối thay vì lùi về backup cũ: lưu lại bằng game cũ có thể mất dữ liệu tính năng mới.
 # Đây là bảo vệ tương thích dữ liệu, không phải tối ưu có thể bỏ mà không đổi hành vi.
+## Đọc và kiểm tra file chính, thử backup nếu file chính thiếu hoặc hỏng.
+## File phiên bản tương lai được trả lỗi thay vì lùi về backup. Khi cả hai
+## file chưa tồn tại, trả profile chưa có dữ liệu với revision 0.
 func read_profile(profile: String) -> Dictionary:
 	if not SaveSchema.identifier(profile):
 		return SaveSchema.failure("Invalid profile ID.")
@@ -69,6 +81,8 @@ func _read_raw(file_path: String) -> Dictionary:
 		return SaveSchema.failure("The save contents are corrupt.").merged({"file_hash": source.sha256_text()})
 	return {"ok": true, "snapshot": json.data, "file_hash": source.sha256_text()}
 
+## Kiểm tra snapshot và revision, ghi file tạm, xác minh rồi thay file chính.
+## Bản chính hợp lệ được giữ làm backup. Trả dictionary thành công hoặc lỗi.
 func write_profile(profile: String, snapshot: Dictionary, expected_revision: int) -> Dictionary:
 	if _async_busy:
 		return SaveSchema.failure("This profile is being saved.", "busy")
@@ -153,6 +167,11 @@ func _primitive(value: Variant, depth: int = 0) -> bool:
 		return true
 	return typeof(value) in [TYPE_NIL, TYPE_BOOL, TYPE_INT, TYPE_FLOAT, TYPE_STRING]
 
+## Ghi bất đồng bộ từ bản sao sâu của snapshot, kiểm tra revision và hash file.
+## Việc kiểm tra resource chạy trên main thread; IO và JSON có thể chạy trên
+## thread riêng. Trên web, IO chạy sau khi nhường một frame.
+## Kiểm tra hash giúp phát hiện thay đổi giữa lúc đọc và ghi nhưng không tạo
+## khóa nguyên tử giữa nhiều process.
 func write_profile_async(profile: String, snapshot: Dictionary, expected_revision: int, pre_validated: bool = false) -> Dictionary:
 	if _async_busy:
 		return SaveSchema.failure("This profile is being saved.", "busy")

@@ -1,6 +1,9 @@
 class_name TreePlotDisplay
 extends Node2D
-## Ground markers use the exact staggered planting coordinates.
+## Vẽ dấu ô khu cây trên đất theo đúng tọa độ trồng so le.
+## Màu và biểu tượng thể hiện ô đã mở hoặc còn khóa.
+
+## Plantation cung cấp tọa độ và trạng thái nâng cấp.
 var plantation: TreePlantation
 
 func _ready() -> void:

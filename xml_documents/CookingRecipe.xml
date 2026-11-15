@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="CookingRecipe" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Công thức chế biến gồm nguyên liệu, chi phí, sản phẩm và thời gian nấu.
+	</brief_description>
+	<description>
+		Các mảng nguyên liệu, số lượng và chất lượng tương ứng theo chỉ số. Mảng chất lượng rỗng biểu thị cấp mặc định cho mọi nguyên liệu.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra mã, chi phí, thời gian, loại sản phẩm và các dòng nguyên liệu. Mỗi nguyên liệu phải khác null, có số lượng 1–32.000, mã không trùng và hỗ trợ cấp chất lượng tương ứng. Thời gian phải hữu hạn và ít nhất một giây.
+			</description>
+		</method>
+		<method name="tier_at">
+			<return type="int" />
+			<param index="0" name="index" type="int" />
+			<description>
+				Trả về cấp chất lượng tại [param index], hoặc 0 nếu chỉ số ngoài mảng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="honey_recipe" type="String" setter="" getter="" default="&quot;&quot;">
+			Mã công thức mật ong liên quan, nếu có.
+		</member>
+		<member name="recipe_id" type="StringName" setter="" getter="">
+			Mã ổn định nhận diện công thức.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="ingredients" type="ItemDefinition[]" setter="" getter="" default="[]">
+			Các loại vật phẩm cần dùng.
+		</member>
+		<member name="amounts" type="int[]" setter="" getter="" default="[]">
+			Số lượng tương ứng với từng nguyên liệu.
+		</member>
+		<member name="ingredient_tiers" type="int[]" setter="" getter="" default="[]">
+			Cấp chất lượng tương ứng, hoặc để trống để dùng cấp 0.
+		</member>
+		<member name="coin_cost" type="int" setter="" getter="" default="0">
+			Chi phí bằng xu.
+		</member>
+		<member name="output" type="ItemDefinition" setter="" getter="">
+			Định nghĩa vật phẩm tạo ra.
+		</member>
+		<member name="cook_seconds" type="float" setter="" getter="" default="14400.0">
+			Thời gian nấu tính bằng giây.
+		</member>
+	</members>
+</class>

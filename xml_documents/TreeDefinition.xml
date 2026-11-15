@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreeDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Dữ liệu dùng chung của một loại cây; trạng thái từng cây được lưu riêng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="planting_item">
+			<return type="ItemDefinition" />
+			<description>
+				Tải vật phẩm cây giống theo quy ước đường dẫn từ [member tree_id]. Trả về null nếu resource không tải được hoặc không phải ItemDefinition.
+			</description>
+		</method>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra mã, các thời gian và số lần thao tác dương, sản phẩm và ảnh cần thiết. Cây lấy gỗ còn cần vật phẩm rễ, ảnh gốc và ảnh tán.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="tree_id" type="StringName" setter="" getter="">
+			Mã ổn định của loại cây.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="kind" type="int" setter="" getter="" enum="TreeDefinition.Kind" default="0">
+			Nhóm cây quyết định các tài nguyên cần thiết.
+		</member>
+		<member name="growth_seconds" type="float" setter="" getter="" default="180.0">
+			Thời gian sinh trưởng tính bằng giây.
+		</member>
+		<member name="fruit_cycle_seconds" type="float" setter="" getter="" default="90.0">
+			Thời gian giữa các chu kỳ tạo quả, tính bằng giây.
+		</member>
+		<member name="stump_seconds" type="float" setter="" getter="" default="120.0">
+			Thời gian liên quan đến gốc cây, tính bằng giây.
+		</member>
+		<member name="chop_hits" type="int" setter="" getter="" default="4">
+			Số nhát chặt cần thiết.
+		</member>
+		<member name="dig_hits" type="int" setter="" getter="" default="1">
+			Số lần đào cần thiết.
+		</member>
+		<member name="harvest_amount" type="int" setter="" getter="" default="3">
+			Số lượng sản phẩm thu hoạch.
+		</member>
+		<member name="star_harvest_item" type="ItemDefinition" setter="" getter="">
+			Sản phẩm chất lượng sao.
+		</member>
+		<member name="harvest_item" type="ItemDefinition" setter="" getter="">
+			Sản phẩm thu hoạch thông thường.
+		</member>
+		<member name="root_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm liên quan đến gốc hoặc rễ cây.
+		</member>
+		<member name="stage_textures" type="Texture2D[]" setter="" getter="" default="[]">
+			Ba ảnh cho các giai đoạn sinh trưởng.
+		</member>
+		<member name="ready_texture" type="Texture2D" setter="" getter="">
+			Ảnh cây sẵn sàng thu hoạch.
+		</member>
+		<member name="stump_texture" type="Texture2D" setter="" getter="">
+			Ảnh gốc cây sau khi chặt.
+		</member>
+		<member name="canopy_texture" type="Texture2D" setter="" getter="">
+			Ảnh tán cây.
+		</member>
+		<member name="leaf_texture" type="Texture2D" setter="" getter="">
+			Ảnh lá.
+		</member>
+	</members>
+	<constants>
+		<constant name="FRUIT" value="0" enum="Kind">
+		</constant>
+		<constant name="TIMBER" value="1" enum="Kind">
+		</constant>
+	</constants>
+</class>

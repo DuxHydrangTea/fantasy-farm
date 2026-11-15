@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotUpgradeState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lưu cấp mở rộng riêng cho khu cây ăn quả và cây lấy gỗ. Cấp quyết định số cột được dùng và sức chứa, mỗi cấp thêm chín ô.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo trạng thái mới với hai khu đều ở cấp 1.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra đủ hai khóa và cấp nguyên từ 1 đến cấp tối đa.
+			</description>
+		</method>
+		<method name="key" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Chuyển loại cây thành khóa lưu fruit hoặc timber.
+			</description>
+		</method>
+		<method name="column" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Tính chỉ số cột mở rộng của ô theo vùng trồng loại cây tương ứng.
+			</description>
+		</method>
+		<method name="allows" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="cell" type="Vector2i" />
+			<param index="2" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Kiểm tra ô hợp lệ trong vùng trồng và thuộc cột đã mở theo dữ liệu cấp.
+			</description>
+		</method>
+		<method name="migrate" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="rows" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<description>
+				Suy ra cấp tối thiểu cần mở để chứa các cây trong dữ liệu lưu cũ. Trả dictionary rỗng nếu mã cây hoặc tọa độ trong dữ liệu không hợp lệ.
+			</description>
+		</method>
+		<method name="level">
+			<return type="int" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Lấy cấp hiện tại của khu trồng.
+			</description>
+		</method>
+		<method name="capacity">
+			<return type="int" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Tính số ô được mở từ cấp hiện tại.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao sâu của cấp hai khu để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục dữ liệu hợp lệ khi không có giao dịch nâng cấp đang chạy.
+			</description>
+		</method>
+		<method name="is_busy">
+			<return type="bool" />
+			<description>
+				Cho biết giao dịch nâng cấp đang được xử lý.
+			</description>
+		</method>
+		<method name="begin_purchase">
+			<return type="bool" />
+			<description>
+				Khóa trạng thái để bắt đầu giao dịch nếu chưa có giao dịch khác.
+			</description>
+		</method>
+		<method name="commit">
+			<return type="bool" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<param index="1" name="expected_level" type="int" />
+			<description>
+				Tăng một cấp nếu giao dịch đang mở và cấp hiện tại khớp cấp dự kiến.
+			</description>
+		</method>
+		<method name="end_purchase">
+			<return type="void" />
+			<description>
+				Kết thúc khóa giao dịch.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_levels" type="Dictionary" setter="" getter="" default="fresh()">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Signal do nơi điều phối phát khi cấp của một loại thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CATALOG" value="&lt;Object&gt;">
+			Danh mục giá mở rộng.
+		</constant>
+		<constant name="MAX_LEVEL" value="17">
+			Cấp mở rộng tối đa.
+		</constant>
+		<constant name="SLOTS_PER_LEVEL" value="9">
+			Số ô được mở ở mỗi cấp.
+		</constant>
+	</constants>
+</class>

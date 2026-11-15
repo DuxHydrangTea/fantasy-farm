@@ -1,7 +1,10 @@
 extends Node2D
-## One world-space bubble per subject, with all active conditions in a stable row.
-## The node's origin is the tail tip; callers anchor it above the visible head.
+## Bong bóng trong thế giới hiển thị các tình trạng đang có theo thứ tự cố định.
+## Gốc node là đầu đuôi bong bóng; nơi gọi đặt gốc phía trên đối tượng.
+
+## Các mã trạng thái theo thứ tự biểu tượng.
 const STATUS_KEYS: Array[StringName] = [&"weeds", &"pests", &"sick", &"hungry", &"thirsty"]
+## Texture biểu tượng theo thứ tự STATUS_KEYS.
 const TEXTURES: Array[Texture2D] = [
 	preload("res://assets/Ui/status_bubbles/weeds.png"),
 	preload("res://assets/Ui/status_bubbles/worm.png"),
@@ -9,6 +12,7 @@ const TEXTURES: Array[Texture2D] = [
 	preload("res://assets/Ui/status_bubbles/hungry.png"),
 	preload("res://assets/Ui/status_bubbles/thirsty.png"),
 ]
+## Texture nền tương ứng số biểu tượng từ một đến năm.
 const PANELS: Array[Texture2D] = [
 	preload("res://assets/Ui/status_bubbles/bubble_1.png"),
 	preload("res://assets/Ui/status_bubbles/bubble_2.png"),
@@ -16,6 +20,7 @@ const PANELS: Array[Texture2D] = [
 	preload("res://assets/Ui/status_bubbles/bubble_4.png"),
 	preload("res://assets/Ui/status_bubbles/bubble_5.png"),
 ]
+## Các mã trạng thái hiện đang hiển thị.
 var active_statuses: Array[StringName] = []
 var _icons: Array[Sprite2D] = []
 var _visual: Node2D
@@ -23,6 +28,7 @@ var _background: Sprite2D
 var _entrance: Tween
 var _mask: int = -1
 
+## Biên phần bong bóng đang hiển thị, hoặc vùng rỗng khi ẩn.
 func visual_rect() -> Rect2:
 	if not visible or _background == null or _background.texture == null:
 		return Rect2()
@@ -48,6 +54,8 @@ func _ensure_visuals() -> void:
 		_visual.add_child(icon)
 		_icons.append(icon)
 
+## Cập nhật tập tình trạng và bố cục biểu tượng.
+## Chỉ phát hiệu ứng xuất hiện khi chuyển từ không có sang có tình trạng.
 func set_statuses(pests: bool, weeds: bool, sick: bool, hungry: bool = false, thirsty: bool = false) -> void:
 	var flags: Array[bool] = [weeds, pests, sick, hungry, thirsty]
 	var next_mask: int = 0

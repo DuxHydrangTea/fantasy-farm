@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/animal_healing_effect.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiệu ứng hạt pixel màu đỏ mờ dần khi chữa vật nuôi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="elapsed" type="float" setter="" getter="" default="0.0">
+			Thời gian đã chạy.
+		</member>
+		<member name="particles" type="GPUParticles2D" setter="" getter="">
+			Bộ phát hạt được tạo khi node sẵn sàng.
+		</member>
+	</members>
+	<constants>
+		<constant name="EMISSION_SECONDS" value="1.5">
+			Thời gian phát hạt tính bằng giây.
+		</constant>
+		<constant name="DURATION" value="3.0">
+			Thời gian tồn tại node hiệu ứng tính bằng giây.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Danh sách mục tiêu theo thứ tự cùng quy tắc kiểm tra dữ liệu cấu hình.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra 1–100 mục tiêu có mã hợp lệ và không trùng, nội dung không rỗng, tiến độ và phần thưởng trong giới hạn, cùng mã điều kiện được hỗ trợ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="steps" type="ObjectiveDefinition[]" setter="" getter="" default="[]">
+			Các bước mục tiêu được cấu hình.
+		</member>
+	</members>
+</class>

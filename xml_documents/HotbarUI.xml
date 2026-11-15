@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HotbarUI" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị thanh công cụ, nút túi và phản hồi tương tác của người chơi. Bố cục và phím tắt thay đổi theo kích thước màn hình và thiết bị cảm ứng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_slot">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_open_inventory">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_menu_changed">
+			<return type="void" />
+			<param index="0" name="_open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_selection_changed">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="_tool" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_controls">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_feedback">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="hint" type="Label" setter="" getter="">
+		</member>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+		</member>
+		<member name="slots" type="HBoxContainer" setter="" getter="">
+		</member>
+		<member name="selected_name" type="Label" setter="" getter="">
+		</member>
+		<member name="interactions" type="PlayerInteractionComponent" setter="" getter="">
+		</member>
+		<member name="boosters" type="BoosterInteractionComponent" setter="" getter="">
+		</member>
+		<member name="placement" type="BeehivePlacementComponent" setter="" getter="">
+		</member>
+		<member name="buttons" type="InventorySlot[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_feedback_deadline" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="inventory_button" type="Button" setter="" getter="">
+		</member>
+		<member name="wallet_hud" type="WalletHUD" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="SLOT_ACTIONS" value="Array[StringName]([&amp;&quot;hotbar_1&quot;, &amp;&quot;hotbar_2&quot;, &amp;&quot;hotbar_3&quot;, &amp;&quot;hotbar_4&quot;, &amp;&quot;hotbar_5&quot;, &amp;&quot;hotbar_6&quot;])">
+		</constant>
+	</constants>
+</class>

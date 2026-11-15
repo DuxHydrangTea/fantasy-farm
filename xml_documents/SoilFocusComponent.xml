@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SoilFocusComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị ô đất đang nhắm hoặc vùng tác động của công cụ nâng cấp. Màu thể hiện ô sẵn sàng, hợp lệ nhưng thiếu vật tư, hoặc bị chặn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Tính lại ô nhắm và điều kiện thao tác, ẩn khi menu hoặc tương tác khác ưu tiên.
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_is_farming_cell">
+			<return type="bool" />
+			<param index="0" name="farming" type="FarmingController" />
+			<param index="1" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="actions" type="FarmingActionComponent" setter="" getter="">
+			Component cung cấp ô, hành động và vùng xem trước.
+		</member>
+		<member name="available_color" type="Color" setter="" getter="" default="Color(1, 1, 1, 1)">
+			Màu ô có thể thao tác.
+		</member>
+		<member name="blocked_color" type="Color" setter="" getter="" default="Color(1, 0.35, 0.35, 0.9)">
+			Màu ô bị chặn.
+		</member>
+		<member name="focused_cell" type="Vector2i" setter="" getter="" default="Vector2i(0, 0)">
+			Tọa độ ô đang nhắm.
+		</member>
+		<member name="actionable" type="bool" setter="" getter="" default="false">
+			Cho biết có ít nhất một ô có thể thực hiện hành động.
+		</member>
+		<member name="marker" type="Sprite2D" setter="" getter="">
+			Sprite đánh dấu ô đơn.
+		</member>
+		<member name="area_preview" type="Dictionary[]" setter="" getter="" default="[]">
+			Kết quả đánh giá từng ô trong vùng công cụ.
+		</member>
+	</members>
+</class>

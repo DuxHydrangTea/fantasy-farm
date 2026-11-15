@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;persistence/pen_produce_save_schema.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kiểm tra dữ liệu lưu kho sản phẩm chuồng trước khi khôi phục. Dữ liệu chỉ chứa mã vật phẩm và số lượng. Resource thực được tra từ catalog.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="rows" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="pen_ids" type="Array" />
+			<description>
+				Kiểm tra danh sách chuồng, mã sản phẩm, số lượng và sức chứa. Không chấp nhận mã chuồng hoặc mã sản phẩm trùng trong cùng phạm vi, sản phẩm ngoài catalog, số lượng không nguyên hoặc tổng vượt sức chứa.
+			</description>
+		</method>
+		<method name="_amount" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="CAPACITY" value="3000">
+			Sức chứa tối đa dùng để kiểm tra tổng sản phẩm mỗi chuồng.
+		</constant>
+	</constants>
+</class>

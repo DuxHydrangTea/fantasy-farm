@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TouchQuantityComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Thêm nút tăng giảm lớn cho SpinBox khi dùng giao diện cảm ứng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="attach" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="spin" type="SpinBox" />
+			<param index="1" name="ui_root" type="Control" />
+			<param index="2" name="always_buttons" type="bool" default="false" />
+			<description>
+				Tạo và gắn component cho SpinBox, với root dùng để theo dõi resize.
+			</description>
+		</method>
+		<method name="refresh_for" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="spin" type="SpinBox" />
+			<description>
+				Làm mới mọi TouchQuantityComponent là con của SpinBox.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="caption" type="String" />
+			<param index="1" name="step" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_step">
+			<return type="void" />
+			<param index="0" name="direction" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_value_changed">
+			<return type="void" />
+			<param index="0" name="_value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật hiển thị, trạng thái nút và bàn phím theo chế độ cảm ứng và giá trị.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="quantity" type="SpinBox" setter="" getter="">
+			SpinBox được điều khiển.
+		</member>
+		<member name="layout_root" type="Control" setter="" getter="">
+			Root phát signal resize để cập nhật bố cục.
+		</member>
+		<member name="decrease" type="Button" setter="" getter="">
+			Nút giảm số lượng.
+		</member>
+		<member name="increase" type="Button" setter="" getter="">
+			Nút tăng số lượng.
+		</member>
+		<member name="always_show_buttons" type="bool" setter="" getter="" default="false">
+			Giữ nút hiển thị cả khi không ở chế độ cảm ứng.
+		</member>
+		<member name="_empty_arrows" type="ImageTexture" setter="" getter="">
+		</member>
+	</members>
+</class>

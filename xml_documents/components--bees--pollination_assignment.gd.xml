@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/bees/pollination_assignment.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn tổ ong cho một điểm thụ phấn dựa trên dữ liệu hình học đã cung cấp. Hàm thuần không truy cập scene, đồng hồ, inventory hoặc phần vẽ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="choose" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="garden" type="String" />
+			<param index="2" name="fixed_slot" type="int" />
+			<param index="3" name="hives" type="Dictionary[]" />
+			<param index="4" name="radius_squared" type="float" />
+			<description>
+				Trả chỉ số tổ đã sửa phù hợp ô cố định cùng vườn, hoặc tổ tự do gần nhất trong bán kính bình phương. Nếu bằng khoảng cách, ưu tiên mã tổ nhỏ hơn. Trả -1 khi không có tổ phù hợp.
+			</description>
+		</method>
+	</methods>
+</class>

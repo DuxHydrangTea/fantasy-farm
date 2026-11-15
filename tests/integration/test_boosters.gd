@@ -115,14 +115,14 @@ func test_tonic_syncs_old_time_halves_maturity_and_does_not_retroactively_produc
 	assert_eq(animal.growth.maturity_seconds, 43200.0)
 	assert_eq(animal.growth.age_seconds, 64810.0)
 	assert_eq(animal.production.progress_seconds, 0.0)
-	assert_null(animal.product_pickup(), "Old juvenile time cannot produce after the dose")
+	assert_eq(animal.pen.produce_storage.count(), 0, "Old juvenile time cannot produce after the dose")
 	assert_true(animal.growth.juvenile_tonic_used)
 	assert_eq(animal.growth.lifespan_seconds, 1209600.0)
 	assert_true(service.use(farm, cell, animal, bag, _slot(TONIC), TONIC, player).ok, "New adult may receive one production-cycle dose")
 	assert_false(service.use(farm, cell, animal, bag, _slot(TONIC), TONIC, player).ok)
 	now += 30
 	animal.needs.update_at(now)
-	assert_eq(animal.product_pickup().amount, 4, "3 cycles plus exactly one bonus")
+	assert_eq(animal.pen.produce_storage.count(), 4, "3 cycles plus exactly one bonus")
 	assert_false(animal.production.tonic_pending)
 	assert_true(service.use(farm, cell, animal, bag, _slot(TONIC), TONIC, player).ok)
 
@@ -205,19 +205,19 @@ func test_v7_disk_roundtrip_preserves_flags_and_consumes_pending_bonus_during_of
 	assert_eq(restored.growth.maturity_seconds, restored.definition.maturity_seconds * 0.5)
 	assert_eq(restored.growth.lifespan_seconds, 1209600.0)
 	restored.production.bonus_roll = func() -> float: return 0.0
+	restored.production.definition = restored.production.definition.duplicate() as AnimalProductionDefinition
+	restored.production.definition.production_amount = 1
 	var duration: float = restored.production.definition.production_seconds
 	restored.needs.configure(10000000, 10000000)
 	now += duration * 3
 	restored.needs.update_at(now)
 	assert_false(restored.production.tonic_pending)
-	assert_eq(restored.product_pickup().amount, restored.production.definition.production_amount * 3 + 1)
+	var produced: int = restored.production.definition.production_amount * 3 + 1
+	assert_eq(restored.pen.produce_storage.count(), produced)
 	var after: Dictionary = adapter.capture("booster_test", 2, now)
 	assert_true(adapter.restore(after, now).ok)
-	var pile_total: int = 0
-	for row: Dictionary in after.pickups:
-		if row.item == "chicken_egg":
-			pile_total += int(row.amount)
-	assert_gte(pile_total, 4)
+	var pen: AnimalPen = world.get_node("CoopPen") as AnimalPen
+	assert_eq(pen.produce_storage.count(), produced)
 
 func test_legacy_migration_and_bad_flags_reject_before_world_changes() -> void:
 	_crop()

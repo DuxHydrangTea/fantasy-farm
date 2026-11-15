@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/animal_health_state.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Trạng thái bệnh của một vật nuôi và lịch phát bệnh có thể lưu, khôi phục. Mốc phát bệnh được lấy mẫu một lần để tính nhanh cả khoảng offline dài.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="juvenile_seconds" type="float" default="0.0" />
+			<param index="2" name="seed_value" type="int" default="1" />
+			<description>
+				Khởi tạo trạng thái khỏe và lập lịch bệnh sau tuổi non và thời gian bảo vệ. Seed được chuẩn hóa vào miền trạng thái bộ sinh số.
+			</description>
+		</method>
+		<method name="_schedule">
+			<return type="void" />
+			<param index="0" name="protected_until" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="advance">
+			<return type="float" />
+			<param index="0" name="start" type="float" />
+			<param index="1" name="end" type="float" />
+			<param index="2" name="eligible_start" type="float" />
+			<param index="3" name="eligible_end" type="float" />
+			<description>
+				Tính số giây sản xuất hiệu dụng trong giao của hai khoảng đầu vào. Phần thời gian bị bệnh được nhân hệ số sản xuất khi bệnh. Nếu khoảng đi qua mốc phát bệnh, trạng thái chuyển sang bệnh ngay cả khi giao rỗng.
+			</description>
+		</method>
+		<method name="cure">
+			<return type="bool" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Chữa bệnh và lập lịch phát bệnh mới sau thời gian bảo vệ. Trả về false nếu vật nuôi đang khỏe.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu lưu gồm trạng thái bệnh, mốc phát bệnh và trạng thái RNG.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục từ dữ liệu đã được [method valid] kiểm tra.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra ba trường bắt buộc và miền hợp lệ của trạng thái RNG.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sick" type="bool" setter="" getter="" default="false">
+			Cho biết vật nuôi đang bệnh.
+		</member>
+		<member name="next_onset_at" type="float" setter="" getter="" default="0.0">
+			Timestamp dự kiến phát bệnh.
+		</member>
+		<member name="rng_state" type="int" setter="" getter="" default="1">
+			Trạng thái bộ sinh số dùng để lập lịch bệnh tiếp theo.
+		</member>
+	</members>
+	<constants>
+		<constant name="RULES" value="&lt;Object&gt;">
+			Cấu hình xác suất, chu kỳ kiểm tra và hệ số sản xuất khi bệnh.
+		</constant>
+	</constants>
+</class>

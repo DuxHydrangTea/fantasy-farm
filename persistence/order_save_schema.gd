@@ -1,9 +1,14 @@
 class_name OrderSaveSchema
 extends RefCounted
+## Tạo và kiểm tra trạng thái lưu của bảng đơn hàng ba ô.
 
+## Tạo bảng chưa khởi tạo với bộ đếm và ba ô trống.
 static func fresh() -> Dictionary:
 	return {"initialized": false, "next_serial": 1, "cursor": 0, "completed": 0, "slots": [{}, {}, {}]}
 
+## Kiểm tra cấu trúc, bộ đếm và các đơn trong catalog, kể cả danh mục cũ.
+## Serial và mẫu đơn đang xuất hiện phải không trùng; trạng thái chưa khởi tạo
+## phải giữ các giá trị ban đầu và không chứa đơn.
 static func valid(data: Variant, catalog: OrderCatalog) -> bool:
 	if not data is Dictionary or data.size() != 5 or not data.get("initialized") is bool or not data.get("slots") is Array or data.slots.size() != 3:
 		return false

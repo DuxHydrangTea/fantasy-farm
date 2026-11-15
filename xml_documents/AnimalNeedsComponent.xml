@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalNeedsComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Theo dõi độ no và nước của một vật nuôi theo thời gian thực và offline.
+	</brief_description>
+	<description>
+		Mỗi khoảng thời gian được chia tại ranh giới thay đổi thời tiết. Signal [signal time_advanced] cung cấp số giây còn đủ cả thức ăn lẫn nước cho các hệ thống tính sản xuất dựa trên khoảng thời gian đó.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="updated_at">
+			<return type="float" />
+			<description>
+				Trả về mốc thời gian đã tính nhu cầu gần nhất.
+			</description>
+		</method>
+		<method name="apply_offline_step">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="elapsed" type="float" />
+			<param index="2" name="supplied" type="float" />
+			<param index="3" name="food" type="float" />
+			<param index="4" name="water" type="float" />
+			<description>
+				Áp dụng một bước đã tính bởi mô phỏng offline và phát thời gian được cung cấp. Khi component đã ngừng hoạt động, bước này được bỏ qua.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="food_seconds" type="float" />
+			<param index="1" name="water_seconds" type="float" />
+			<description>
+				Đặt thời gian cạn thức ăn và nước, mỗi giá trị tối thiểu một giây.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="food" type="float" />
+			<param index="1" name="water" type="float" />
+			<param index="2" name="timestamp" type="float" />
+			<description>
+				Khôi phục chỉ số và mốc thời gian mà không tự tính lại khoảng thời gian cũ. Gọi [method update_at] để tính phần thời gian tiếp theo.
+			</description>
+		</method>
+		<method name="update_at">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Cập nhật đến timestamp, tính lượng no và nước còn lại theo từng khoảng thời tiết. Nếu chuồng xử lý được khoảng offline dài, giao việc cho mô phỏng của chuồng. Mốc thời gian không tiến lên thì không tạo thêm thời gian sản xuất.
+			</description>
+		</method>
+		<method name="feed">
+			<return type="float" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Chốt thời gian cũ rồi tăng độ no bằng lượng không âm, giới hạn tại 100. Trả về mức tăng thực tế, hoặc 0 nếu vật nuôi đã ngừng hoạt động.
+			</description>
+		</method>
+		<method name="drink">
+			<return type="float" />
+			<param index="0" name="amount" type="float" />
+			<description>
+				Chốt thời gian cũ rồi tăng lượng nước bằng lượng không âm, giới hạn tại 100. Trả về mức tăng thực tế, hoặc 0 nếu vật nuôi đã ngừng hoạt động.
+			</description>
+		</method>
+		<method name="deactivate">
+			<return type="void" />
+			<description>
+				Ngừng cập nhật và nhận thức ăn, nước sau khi actor được đưa ra khỏi hoạt động.
+			</description>
+		</method>
+		<method name="_sync">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_values">
+			<return type="void" />
+			<param index="0" name="food" type="float" />
+			<param index="1" name="water" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="time_manager" type="FarmClock" setter="" getter="">
+			Đồng hồ game, mặc định dùng TimeManager khi node sẵn sàng.
+		</member>
+		<member name="satiety" type="float" setter="" getter="" default="100.0">
+			Độ no hiện tại theo phần trăm.
+		</member>
+		<member name="hydration" type="float" setter="" getter="" default="100.0">
+			Lượng nước hiện tại theo phần trăm.
+		</member>
+		<member name="satiety_depletion_seconds" type="float" setter="" getter="" default="600.0">
+			Số giây để cạn độ no từ 100 xuống 0.
+		</member>
+		<member name="hydration_depletion_seconds" type="float" setter="" getter="" default="600.0">
+			Số giây cơ sở để cạn lượng nước từ 100 xuống 0.
+		</member>
+		<member name="_updated_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_active" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="weather" type="WeatherSchedule" setter="" getter="">
+			Lịch thời tiết điều chỉnh tốc độ tiêu thụ nước và chia bước thời gian.
+		</member>
+		<member name="pen" type="AnimalPen" setter="" getter="">
+			Chuồng có thể xử lý mô phỏng offline cho một khoảng gián đoạn dài.
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="satiety" type="float" />
+			<param index="1" name="hydration" type="float" />
+			<description>
+				Phát khi một trong hai chỉ số thay đổi, với giá trị trong khoảng 0–100.
+			</description>
+		</signal>
+		<signal name="time_advanced">
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="elapsed" type="float" />
+			<param index="2" name="supplied_seconds" type="float" />
+			<description>
+				Phát sau mỗi bước thời gian với mốc cuối, thời lượng và số giây đủ nhu cầu. Thời gian đủ nhu cầu tính trước khi trừ no và nước, kể cả phần cuối lẻ.
+			</description>
+		</signal>
+	</signals>
+</class>

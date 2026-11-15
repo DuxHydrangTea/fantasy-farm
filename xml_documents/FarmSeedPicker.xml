@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmSeedPicker" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện chọn hạt từ kho, độc lập với sáu ô thanh công cụ vật lý của người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="parent" type="Node" />
+			<param index="1" name="caption" type="String" />
+			<param index="2" name="callback" type="Callable" />
+			<description>
+			</description>
+		</method>
+		<method name="_label">
+			<return type="Label" />
+			<param index="0" name="parent" type="Node" />
+			<param index="1" name="text" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_build">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_queue_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="open_picker">
+			<return type="void" />
+			<description>
+				Mở danh sách hạt nếu game và dịch vụ kho sẵn sàng.
+			</description>
+		</method>
+		<method name="_stock_changed">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_choose">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="hud" type="Control" setter="" getter="">
+		</member>
+		<member name="launcher" type="Button" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="summary" type="Label" setter="" getter="">
+		</member>
+		<member name="list" type="VBoxContainer" setter="" getter="">
+		</member>
+		<member name="queued" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

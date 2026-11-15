@@ -1,6 +1,7 @@
 class_name LandExpansionComponent
 extends Node2D
-## World presentation and interaction. Ownership and purchase rules live in state.
+## Trình bày vùng đất mở rộng và tương tác mua; trạng thái sở hữu và giá nằm trong LandExpansionState.
+
 const DECOR: Texture2D = preload("res://assets/Outdoor decoration/Outdoor_Decor.png")
 const WEED_REGIONS: Array[Rect2] = [Rect2(64, 336, 16, 16), Rect2(64, 352, 16, 16)]
 const SIGNS: Texture2D = preload("res://assets/Outdoor decoration/Signs.png")
@@ -43,18 +44,22 @@ func _ready() -> void:
 	state.changed.connect(_state_changed)
 	_state_changed()
 
+## Tính vị trí biển tương tác ở cạnh khối đất tiếp theo.
 func interaction_position() -> Vector2:
 	var block: Rect2i = state.next_block()
 	return to_global(farming.farmland.map_to_local(Vector2i(block.position.x + floori(float(block.size.x) / 2.0), block.position.y - 1)))
 
+## Kiểm tra người chơi, trạng thái mở đất, hiển thị và khoảng cách.
 func can_interact(customer: FarmPlayer) -> bool:
 	return customer == player and not state.is_complete() and _reveal_block < 0 and is_visible_in_tree() and customer.global_position.distance_to(interaction_position()) <= REACH
 
+## Mở đề nghị mua khi người chơi có thể tương tác.
 func open_purchase(customer: FarmPlayer) -> bool:
 	if not can_interact(customer):
 		return false
 	return menu.open_offer(customer)
 
+## Mua khối kế tiếp với số khối dự kiến để phát hiện dữ liệu cũ; trả kết quả.
 func purchase(expected_blocks: int) -> Dictionary:
 	if not can_interact(player):
 		return {"ok": false, "error": "Move closer to the land sign."}
@@ -86,6 +91,7 @@ func _state_changed() -> void:
 		sign.position = to_local(interaction_position()) - Vector2(0, 8)
 	queue_redraw()
 
+## Dừng hiệu ứng và đặt lại trạng thái trình bày khi tải lại.
 func reset_presentation() -> void:
 	if _clearing != null and _clearing.is_valid():
 		_clearing.kill()
@@ -118,6 +124,7 @@ func _draw_cover(cells: Rect2i) -> void:
 			var variant: int = (x + y) % WEED_REGIONS.size()
 			draw_texture_rect_region(DECOR, Rect2(corner, tile_size), WEED_REGIONS[variant])
 
+## Cài hoặc xóa hiệu ứng vật liệu cỏ cho vùng đất.
 func set_grass_effect(effect: ShaderMaterial) -> void:
 	if effect == null:
 		grass_cover.clear()

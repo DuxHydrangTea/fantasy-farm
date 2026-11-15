@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="DebugCommandRegistry" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Danh sách lệnh debug được đăng ký tường minh, không thực thi biểu thức hoặc đường dẫn script tùy ý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="register">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="usage" type="String" />
+			<param index="2" name="description" type="String" />
+			<param index="3" name="handler" type="Callable" />
+			<param index="4" name="write" type="bool" default="false" />
+			<description>
+				Đăng ký đường dẫn lệnh, cách dùng, mô tả, handler và quyền ghi.
+			</description>
+		</method>
+		<method name="parse" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="line" type="String" />
+			<description>
+				Phân tích dòng bắt đầu bằng dấu / thành token hoặc trả lỗi cú pháp.
+			</description>
+		</method>
+		<method name="resolve">
+			<return type="Dictionary" />
+			<param index="0" name="tokens" type="Array" />
+			<description>
+				Tìm tiền tố lệnh dài nhất và trả handler cùng đối số còn lại.
+			</description>
+		</method>
+		<method name="help_text">
+			<return type="String" />
+			<param index="0" name="prefix" type="String" default="&quot;&quot;" />
+			<description>
+				Tạo danh sách trợ giúp đã sắp xếp, có thể lọc theo tiền tố.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="commands" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

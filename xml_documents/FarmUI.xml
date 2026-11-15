@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmUI" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Các kiểu dáng và tùy chọn giao diện dùng chung; cache theme theo tài nguyên nguồn.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="load_preferences" qualifiers="static">
+			<return type="void" />
+			<description>
+				Đọc tùy chọn giao diện, ngôn ngữ và âm thanh một lần.
+			</description>
+		</method>
+		<method name="save_preferences" qualifiers="static">
+			<return type="int" enum="Error" />
+			<param index="0" name="path" type="String" default="&quot;user://ui_preferences.cfg&quot;" />
+			<description>
+				Ghi tùy chọn hiện tại vào tệp cấu hình; trả mã lỗi Godot.
+			</description>
+		</method>
+		<method name="apply" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="root" type="Control" />
+			<description>
+				Áp dụng theme dùng chung cho gốc giao diện và cache theme.
+			</description>
+		</method>
+		<method name="compact_number" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+				Định dạng số lớn có hậu tố triệu hoặc tỷ.
+			</description>
+		</method>
+		<method name="box" qualifiers="static">
+			<return type="StyleBoxFlat" />
+			<param index="0" name="color" type="Color" />
+			<param index="1" name="radius" type="int" default="14" />
+			<param index="2" name="padding" type="int" default="16" />
+			<param index="3" name="border" type="Color" default="Color(0.8627451, 0.79607844, 0.6627451, 1)" />
+			<description>
+				Tạo hộp vector sắc nét ở các tỉ lệ giao diện; sprite vẫn dùng lọc điểm gần nhất.
+			</description>
+		</method>
+		<method name="_cozy_theme" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="skin" type="Theme" />
+			<description>
+			</description>
+		</method>
+		<method name="speech" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="panel" type="PanelContainer" />
+			<description>
+				Áp dụng kiểu bảng thoại không chặn chuột.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_themes" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="ui_scale" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="master_volume" type="float" setter="" getter="" default="1.0">
+		</member>
+		<member name="effects_volume" type="float" setter="" getter="" default="0.8">
+		</member>
+		<member name="interface_volume" type="float" setter="" getter="" default="0.8">
+		</member>
+		<member name="ambience_volume" type="float" setter="" getter="" default="0.7">
+		</member>
+		<member name="music_volume" type="float" setter="" getter="" default="0.45">
+		</member>
+		<member name="language" type="String" setter="" getter="" default="&quot;vi&quot;">
+		</member>
+		<member name="_preferences_loaded" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="INK" value="Color(0.2509804, 0.16078432, 0.09803922, 1)">
+		</constant>
+		<constant name="MUTED" value="Color(0.5019608, 0.4, 0.29411766, 1)">
+		</constant>
+		<constant name="GOOD" value="Color(0.27058825, 0.3882353, 0.21960784, 1)">
+		</constant>
+		<constant name="WARNING" value="Color(0.59607846, 0.3137255, 0.12941177, 1)">
+		</constant>
+		<constant name="PREFERENCES" value="&quot;user://ui_preferences.cfg&quot;">
+		</constant>
+	</constants>
+</class>

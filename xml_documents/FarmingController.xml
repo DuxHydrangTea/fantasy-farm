@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmingController" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối đất canh tác, cây trồng, độ ẩm và các thao tác gieo, tưới, chăm sóc, thu hoạch. Đồng bộ thay đổi với lịch sinh trưởng, thời tiết, đất mở khóa và hệ thống lưu.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="has_planted_crops">
+			<return type="bool" />
+			<description>
+				Cho biết có cây trồng được quản lý trên đồng.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="world_to_cell">
+			<return type="Vector2i" />
+			<param index="0" name="world_position" type="Vector2" />
+			<description>
+				Đổi tọa độ thế giới sang ô của lớp đất canh tác.
+			</description>
+		</method>
+		<method name="get_soil_state">
+			<return type="int" enum="FarmingController.Soil" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Trả trạng thái đất ướt, đất khô hoặc chưa cày tại ô.
+			</description>
+		</method>
+		<method name="can_till">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Kiểm tra ô chưa cày và các ràng buộc canh tác cho nhân vật.
+			</description>
+		</method>
+		<method name="can_water">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Kiểm tra ô đất khô có thể được tưới.
+			</description>
+		</method>
+		<method name="can_plant">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Kiểm tra ô đã cày, chưa có cây và được phép trồng.
+			</description>
+		</method>
+		<method name="get_crop">
+			<return type="Crop" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Lấy cây tại ô, hoặc null nếu không có node hợp lệ.
+			</description>
+		</method>
+		<method name="plant">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="inventory" type="InventoryComponent" />
+			<param index="2" name="slot_index" type="int" />
+			<param index="3" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Trồng hạt từ ô túi sau khi kiểm tra điều kiện và số lượng; trả kết quả.
+			</description>
+		</method>
+		<method name="harvest_amount">
+			<return type="int" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Tính số lượng thu hoạch theo cây, độ màu mỡ và tình trạng.
+			</description>
+		</method>
+		<method name="can_harvest">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Đồng bộ cây rồi kiểm tra độ chín, vùng đất và sản phẩm hợp lệ.
+			</description>
+		</method>
+		<method name="harvest">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="inventory" type="InventoryComponent" />
+			<description>
+				Thu hoạch vào kho khi cây chín và kho đủ sức chứa; trả kết quả.
+			</description>
+		</method>
+		<method name="_refresh_crops">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_schedule_crop">
+			<return type="void" />
+			<param index="0" name="crop" type="Crop" />
+			<description>
+			</description>
+		</method>
+		<method name="unschedule_crop">
+			<return type="void" />
+			<param index="0" name="crop" type="Crop" />
+			<description>
+				Hủy sự kiện sinh trưởng đã lên lịch của cây.
+			</description>
+		</method>
+		<method name="reschedule_crop">
+			<return type="void" />
+			<param index="0" name="crop" type="Crop" />
+			<description>
+				Hủy lịch cũ và lập lại sự kiện sinh trưởng theo trạng thái cây.
+			</description>
+		</method>
+		<method name="crop_cells">
+			<return type="Vector2i[]" />
+			<description>
+				Trả các ô đang có cây được quản lý.
+			</description>
+		</method>
+		<method name="capture_soil">
+			<return type="Dictionary[]" />
+			<description>
+				Ghi trạng thái đất và độ ẩm thành danh sách phục vụ lưu game.
+			</description>
+		</method>
+		<method name="can_restore_soil">
+			<return type="bool" />
+			<description>
+				Kiểm tra terrain đất khô và ướt hợp lệ trước khi khôi phục.
+			</description>
+		</method>
+		<method name="restore_soil">
+			<return type="void" />
+			<param index="0" name="records" type="Array" />
+			<description>
+				Xóa trạng thái cây và lịch cũ, sau đó khôi phục dữ liệu đất.
+			</description>
+		</method>
+		<method name="restore_crop">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="definition" type="CropDefinition" />
+			<param index="2" name="planted" type="float" />
+			<param index="3" name="deadline" type="float" />
+			<param index="4" name="progress" type="float" />
+			<param index="5" name="now" type="float" />
+			<param index="6" name="fertilized" type="bool" default="false" />
+			<param index="7" name="pollination_reduction" type="float" default="0.0" />
+			<param index="8" name="watered" type="bool" default="false" />
+			<param index="9" name="root_boost" type="bool" default="false" />
+			<param index="10" name="condition_data" type="Dictionary" default="{}" />
+			<description>
+				Tạo lại cây tại ô từ định nghĩa, thời gian sinh trưởng và trạng thái chăm sóc đã lưu.
+			</description>
+		</method>
+		<method name="cell_is_occupied">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Kiểm tra ô có được đánh dấu bị đối tượng chiếm dụng.
+			</description>
+		</method>
+		<method name="set_cell_occupied">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="occupied" type="bool" />
+			<description>
+				Đánh dấu hoặc giải phóng ô bị đối tượng chiếm dụng.
+			</description>
+		</method>
+		<method name="till">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Cày một ô hợp lệ thành đất khô và phát sự kiện thay đổi.
+			</description>
+		</method>
+		<method name="water">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Tưới một ô đất khô hợp lệ, đồng bộ thời tiết và cập nhật độ ẩm.
+			</description>
+		</method>
+		<method name="_layer_cell">
+			<return type="Vector2i" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="is_area_busy">
+			<return type="bool" />
+			<description>
+				Cho biết một thao tác theo vùng đang được áp dụng.
+			</description>
+		</method>
+		<method name="apply_area">
+			<return type="Dictionary" />
+			<param index="0" name="action" type="StringName" />
+			<param index="1" name="targets" type="Vector2i[]" />
+			<param index="2" name="inventory" type="InventoryComponent" default="null" />
+			<param index="3" name="slot" type="int" default="-1" />
+			<param index="4" name="seed" type="ItemDefinition" default="null" />
+			<param index="5" name="actor" type="PhysicsBody2D" default="null" />
+			<param index="6" name="shared" type="bool" default="false" />
+			<description>
+				Áp dụng thao tác công cụ trên nhiều ô; trả số ô thay đổi và số hạt tiêu thụ.
+			</description>
+		</method>
+		<method name="_has_terrain">
+			<return type="bool" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="cell" type="Vector2i" />
+			<param index="2" name="set_id" type="int" />
+			<param index="3" name="terrain_id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_valid_terrain">
+			<return type="bool" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="set_id" type="int" />
+			<param index="2" name="terrain_id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_farming_layer_changed">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_allowed">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="permission" type="StringName" />
+			<param index="2" name="actor" type="PhysicsBody2D" />
+			<description>
+			</description>
+		</method>
+		<method name="is_farming_blocked_by_overlay">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Kiểm tra lớp bản đồ phủ có cản canh tác tại ô.
+			</description>
+		</method>
+		<method name="fertilizer_error">
+			<return type="String" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<param index="2" name="sync_apiary" type="bool" default="true" />
+			<description>
+				Trả lý do không thể bón phân tại ô, hoặc chuỗi rỗng khi hợp lệ.
+			</description>
+		</method>
+		<method name="fertilize">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Bón phân cho cây hợp lệ và cập nhật lịch sinh trưởng.
+			</description>
+		</method>
+		<method name="rain_water">
+			<return type="void" />
+			<description>
+				Tưới theo lô các ô canh tác đã mở; mưa không tác động vùng cỏ và biên còn khóa.
+			</description>
+		</method>
+		<method name="evaporate_soil">
+			<return type="void" />
+			<param index="0" name="seconds" type="float" />
+			<description>
+				Giảm thời gian ẩm và làm khô các ô đã hết độ ẩm.
+			</description>
+		</method>
+		<method name="flush_soil_edges">
+			<return type="void" />
+			<description>
+				Cập nhật lại đường nối terrain của các ô ướt đang chờ.
+			</description>
+		</method>
+		<method name="_initialize_quality">
+			<return type="void" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="crop" type="Crop" />
+			<description>
+			</description>
+		</method>
+		<method name="root_error">
+			<return type="String" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Trả lý do không thể dùng thuốc kích rễ hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="apply_root">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Dùng thuốc kích rễ khi cây và ô hợp lệ.
+			</description>
+		</method>
+		<method name="has_tree_tool_target">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Cho biết ô có mục tiêu cây lâu năm dùng được bằng công cụ.
+			</description>
+		</method>
+		<method name="can_tool">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="actor" type="PhysicsBody2D" default="null" />
+			<param index="2" name="inventory" type="InventoryComponent" default="null" />
+			<description>
+				Kiểm tra có thể cày đất hoặc đào cây tại ô.
+			</description>
+		</method>
+		<method name="care_error">
+			<return type="String" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="pests" type="bool" />
+			<param index="2" name="actor" type="PhysicsBody2D" default="null" />
+			<description>
+				Trả lý do không thể xử lý sâu hoặc cỏ, hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="treat_crop">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="pests" type="bool" />
+			<param index="2" name="actor" type="PhysicsBody2D" default="null" />
+			<param index="3" name="show_effect" type="bool" default="true" />
+			<description>
+				Xử lý sâu hoặc cỏ của cây hợp lệ và tùy chọn hiển thị hiệu ứng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="ground" type="TileMapLayer" setter="" getter="">
+		</member>
+		<member name="farmland" type="TileMapLayer" setter="" getter="">
+		</member>
+		<member name="dry_soil" type="TileMapLayer" setter="" getter="">
+		</member>
+		<member name="wet_soil" type="TileMapLayer" setter="" getter="">
+		</member>
+		<member name="dry_terrain_set" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="dry_terrain" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="wet_terrain_set" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="wet_terrain" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="obstacle_mask" type="int" setter="" getter="" default="1">
+		</member>
+		<member name="time_manager" type="FarmClock" setter="" getter="">
+		</member>
+		<member name="fertility" type="FertileSoil" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="apiary" type="ApiarySystem" setter="" getter="">
+		</member>
+		<member name="weather" type="WeatherSchedule" setter="" getter="">
+		</member>
+		<member name="sync_weather" type="Callable" setter="" getter="">
+		</member>
+		<member name="trees" type="TreePlantation" setter="" getter="">
+		</member>
+		<member name="defer_soil_edges" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_soil_edges_dirty" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_moisture" type="Dictionary[Vector2i, float]" setter="" getter="" default="{}">
+		</member>
+		<member name="land" type="LandExpansionState" setter="" getter="">
+		</member>
+		<member name="_crops" type="Dictionary[Vector2i, Crop]" setter="" getter="" default="{}">
+		</member>
+		<member name="_growth" type="GrowthSchedule" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="_harvesting" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_area_busy" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_layers_dirty" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="_farming_layers" type="TileMapLayer[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_occupied" type="Dictionary[Vector2i, bool]" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<signals>
+		<signal name="soil_changed">
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="previous" type="int" />
+			<param index="2" name="current" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="action_committed">
+			<param index="0" name="condition" type="StringName" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="crop_planted">
+			<param index="0" name="cell" type="Vector2i" />
+			<param index="1" name="crop" type="Node2D" />
+			<description>
+			</description>
+		</signal>
+		<signal name="crop_harvested">
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</signal>
+		<signal name="crop_treated">
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+			</description>
+		</signal>
+		<signal name="quality_harvest_yielded">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<param index="4" name="tier" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="crop_lost">
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+			</description>
+		</signal>
+		<signal name="harvest_yielded">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="at" type="Vector2" />
+			<param index="3" name="inventory" type="InventoryComponent" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CROP_SCENE" value="&lt;Object&gt;">
+		</constant>
+		<constant name="UNTILLED" value="0" enum="Soil">
+		</constant>
+		<constant name="DRY" value="1" enum="Soil">
+		</constant>
+		<constant name="WET" value="2" enum="Soil">
+		</constant>
+		<constant name="SOIL_MOISTURE_SECONDS" value="21600.0">
+		</constant>
+	</constants>
+</class>

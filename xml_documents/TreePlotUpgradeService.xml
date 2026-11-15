@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotUpgradeService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Báo giá và mua mở rộng khu trồng cây ăn quả hoặc cây lấy gỗ. Tiền và cấp được cập nhật trước khi phát signal; tiền được hoàn lại nếu không thể ghi cấp sau khi trừ tiền.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục trạng thái hợp lệ và thông báo thay đổi cho cả hai loại khu.
+			</description>
+		</method>
+		<method name="_failure">
+			<return type="Dictionary" />
+			<param index="0" name="code" type="String" />
+			<param index="1" name="message" type="String" />
+			<param index="2" name="offer" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+				Báo cấp, sức chứa hiện tại, sức chứa tiếp theo và giá. Kết quả lỗi có mã và thông báo khi dữ liệu không sẵn sàng, đạt cấp tối đa, hệ thống đang bận hoặc số dư không đủ.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="kind" type="int" enum="TreeDefinition.Kind" />
+			<param index="1" name="expected_level" type="int" />
+			<param index="2" name="expected_price" type="int" />
+			<description>
+				Kiểm tra lại báo giá, trừ xu và tăng cấp nếu cấp và giá dự kiến còn khớp. Phát thay đổi ví, cấp và yêu cầu lưu sau khi giao dịch thành công.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa các hệ thống có thể đang giao dịch.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví dùng để thanh toán.
+		</member>
+		<member name="state" type="TreePlotUpgradeState" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái cấp và khóa giao dịch.
+		</member>
+		<member name="catalog" type="TreePlotUpgradeCatalog" setter="" getter="" default="&lt;Object&gt;">
+			Danh mục giá nâng cấp.
+		</member>
+		<member name="profile_ready" type="bool" setter="" getter="" default="false">
+			Cho biết profile đã sẵn sàng.
+		</member>
+	</members>
+	<signals>
+		<signal name="save_requested">
+			<description>
+				Phát sau khi mua thành công để yêu cầu lưu.
+			</description>
+		</signal>
+	</signals>
+</class>

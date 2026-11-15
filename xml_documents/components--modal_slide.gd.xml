@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/modal_slide.gd&quot;" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiệu ứng trượt vào và ra cho nội dung modal trên canvas. Thuộc tính di chuyển và giá trị gốc được chọn khi cấu hình.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="moving" type="Node" />
+			<param index="1" name="path" type="NodePath" />
+			<param index="2" name="content" type="Control" />
+			<description>
+				Gắn node, thuộc tính và lưu giá trị gốc; làm trong suốt ColorRect nội dung.
+			</description>
+		</method>
+		<method name="stop">
+			<return type="void" />
+			<description>
+				Dừng tween hiện tại và khôi phục thuộc tính về giá trị gốc.
+			</description>
+		</method>
+		<method name="enter">
+			<return type="void" />
+			<description>
+				Trượt từ vị trí lệch 12 đơn vị về giá trị gốc trong 0,16 giây.
+			</description>
+		</method>
+		<method name="leave">
+			<return type="void" />
+			<param index="0" name="done" type="Callable" />
+			<description>
+				Trượt ra 12 đơn vị trong 0,12 giây rồi gọi callback hoàn tất.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="motion" type="Tween" setter="" getter="">
+			Tween hiện tại, nếu có.
+		</member>
+		<member name="target" type="Node" setter="" getter="">
+			Node có thuộc tính được làm chuyển động.
+		</member>
+		<member name="property" type="NodePath" setter="" getter="">
+			Đường dẫn thuộc tính số trên target.
+		</member>
+		<member name="baseline" type="float" setter="" getter="">
+			Giá trị thuộc tính trước hiệu ứng.
+		</member>
+	</members>
+</class>

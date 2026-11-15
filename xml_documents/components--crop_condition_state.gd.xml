@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/crop_condition_state.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Trạng thái sâu bệnh và cỏ dại của một cây trồng. Các giá trị ngẫu nhiên được chọn khi tạo và lưu lại để mô phỏng, tải lại hoặc tính sản lượng nhiều lần đều cho cùng kết quả.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<description>
+				Đặt trạng thái sạch và chọn các giá trị ngẫu nhiên cho cây mới.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="progress" type="float" />
+			<description>
+				Kiểm tra sâu bệnh tại một phần ba và cỏ dại tại hai phần ba tiến độ. Mỗi mốc chỉ được xét một lần.
+			</description>
+		</method>
+		<method name="affected">
+			<return type="bool" />
+			<description>
+				Cho biết cây đang bị ít nhất một tình trạng bất lợi.
+			</description>
+		</method>
+		<method name="multiplier">
+			<return type="float" />
+			<description>
+				Tích hệ số năng suất của các tình trạng đang có.
+			</description>
+		</method>
+		<method name="amount">
+			<return type="int" />
+			<param index="0" name="base" type="int" />
+			<description>
+				Tính sản lượng từ giá trị cơ sở và làm tròn xác suất bằng yield_roll đã lưu.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Chụp các cờ và giá trị ngẫu nhiên để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục trạng thái từ dữ liệu đã được kiểm tra.
+			</description>
+		</method>
+		<method name="legacy" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo trạng thái sạch cho cây cũ và đánh dấu cả hai mốc đã kiểm tra.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra bảy trường, miền số ngẫu nhiên và tính nhất quán của cờ kiểm tra.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pests" type="bool" setter="" getter="" default="false">
+			Cây hiện bị sâu bệnh.
+		</member>
+		<member name="weeds" type="bool" setter="" getter="" default="false">
+			Cây hiện có cỏ dại.
+		</member>
+		<member name="pest_checked" type="bool" setter="" getter="" default="false">
+			Mốc kiểm tra sâu bệnh đã được xử lý.
+		</member>
+		<member name="weed_checked" type="bool" setter="" getter="" default="false">
+			Mốc kiểm tra cỏ dại đã được xử lý.
+		</member>
+		<member name="pest_roll" type="float" setter="" getter="" default="0.5">
+			Giá trị ngẫu nhiên dùng ở mốc sâu bệnh.
+		</member>
+		<member name="weed_roll" type="float" setter="" getter="" default="0.5">
+			Giá trị ngẫu nhiên dùng ở mốc cỏ dại.
+		</member>
+		<member name="yield_roll" type="float" setter="" getter="" default="0.5">
+			Giá trị dùng để làm tròn sản lượng kỳ vọng.
+		</member>
+	</members>
+	<constants>
+		<constant name="RULES" value="&lt;Object&gt;">
+			Cấu hình xác suất và hệ số năng suất.
+		</constant>
+	</constants>
+</class>

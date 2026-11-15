@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenUpgradeCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng giá nâng cấp riêng cho ba loại chuồng, tra cứu bằng mã chuồng ổn định.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra đủ ba loại, mỗi loại có năm giá nguyên dương trong giới hạn ví, và mỗi mã chuồng hợp lệ ánh xạ đến một loại khác nhau.
+			</description>
+		</method>
+		<method name="price">
+			<return type="int" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="current_level" type="int" />
+			<description>
+				Trả về giá nâng cấp từ cấp hiện tại, hoặc 0 khi dữ liệu, mã hay cấp không hợp lệ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pen_kinds" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ mã chuồng sang loại coop, barn hoặc pond.
+		</member>
+		<member name="prices" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ loại chuồng sang năm giá cho các lần nâng cấp từ cấp 1 đến 6.
+		</member>
+	</members>
+</class>

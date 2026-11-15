@@ -1,13 +1,24 @@
 class_name TroughInteractionComponent
 extends Node2D
+## Điều phối người chơi nạp thức ăn, nước vào máng tại frame tác động hoạt ảnh.
+## StateComponent quản lý input và trạng thái công cụ; component này giữ mục tiêu
+## và kiểm tra lại tầm, vật phẩm, menu trước khi nạp.
+
+## Phát loại thao tác và số sự kiện sau lần nạp thành công.
 signal refill_committed(condition: StringName, amount: int)
-## Player-side adapter for any AnimalTrough. StateComponent owns input/animation.
+## Lựa chọn công cụ và inventory người chơi.
 @export var selection: ToolSelectionComponent
+## Hoạt ảnh cung cấp frame tác động và hướng nhìn.
 @export var animation: AnimationComponent
+## Máy trạng thái hành động người chơi.
 @export var state: StateComponent
+## Khoảng cách tiếp cận máng tối đa.
 @export_range(8.0, 64.0) var reach: float = 30.0
+## Frame dự kiến áp dụng thao tác.
 @export var impact_frame: int = 3
+## Nhãn hiển thị hướng dẫn và kết quả.
 @export var prompt: Label
+## Máng gần nhất đang được nhắm.
 var focused_trough: AnimalTrough
 var _pending: AnimalTrough
 var _action: StringName = &""
@@ -34,6 +45,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	refresh()
 
+## Kiểm tra máng hợp lệ, trong tầm và đường nhìn không bị vật khác chặn.
 func can_reach(trough: AnimalTrough) -> bool:
 	if not is_instance_valid(trough) or trough.is_queued_for_deletion() or not trough.is_inside_tree():
 		return false
@@ -47,6 +59,7 @@ func can_reach(trough: AnimalTrough) -> bool:
 	var hit: Dictionary = get_world_2d().direct_space_state.intersect_ray(ray)
 	return hit.is_empty() or hit.collider == trough
 
+## Tìm máng gần nhất có thể tiếp cận, hoặc null.
 func find_trough() -> AnimalTrough:
 	var nearest: AnimalTrough
 	var distance: float = INF
@@ -60,19 +73,23 @@ func find_trough() -> AnimalTrough:
 			distance = candidate
 	return nearest
 
+## Kiểm tra vật phẩm đang chọn là bình tưới.
 func has_watering_can() -> bool:
 	var item: ItemDefinition = selection.get_selected_item() if selection != null else null
 	return item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.WATERING_CAN
 
 
+## Lấy inventory kho vật tư của thế giới, hoặc null nếu không có.
 func feed_inventory() -> InventoryComponent:
 	var world: FarmWorld = get_parent().get_parent() as FarmWorld
 	return world.storages.inventory("farm_supply_storage") if world != null and world.storages != null else null
 
+## Đếm gói thức ăn phù hợp máng trong kho vật tư.
 func feed_stock(trough: AnimalTrough) -> int:
 	var source: InventoryComponent = feed_inventory()
 	return source.count_item(trough.feed_item.item_id) if source != null and trough.feed_item != null else 0
 
+## Tạo hướng dẫn đã dịch cho thao tác nạp thông thường.
 func refill_hint(trough: AnimalTrough) -> String:
 	if trough.stock >= trough.capacity:
 		return tr("Trough is full")
@@ -86,11 +103,13 @@ func refill_hint(trough: AnimalTrough) -> String:
 		return tr("Not enough room for one feed pack")
 	return tr("[E] Add feed · Storage: {count}").format({"count": feed_stock(trough)})
 
+## Kiểm tra máng chưa đầy và có bình tưới hoặc gói thức ăn phù hợp.
 func can_refill(trough: AnimalTrough) -> bool:
 	if trough.stock >= trough.capacity:
 		return false
 	return has_watering_can() if trough.kind == AnimalTrough.Kind.WATER else trough.feed_items_needed(feed_inventory()) > 0
 
+## Cập nhật máng đang nhắm và vị trí, nội dung nhãn theo trạng thái hiện tại.
 func refresh() -> void:
 	if selection == null or selection.is_menu_open():
 		focused_trough = null
@@ -113,7 +132,8 @@ func refresh() -> void:
 	).round()
 	prompt.visible = not (get_parent() is FarmPlayer and (get_parent() as FarmPlayer).interactions != null)
 
-## Empty lets farming proceed; blocked consumes the input and explains the reason.
+## Chuẩn bị nạp máng đang nhắm. Chuỗi rỗng cho phép xét hành động đất,
+## blocked cho biết có máng nhưng không thể nạp, còn lại là mã hoạt ảnh.
 func prepare_action() -> StringName:
 	_auto_fill = false
 	_pending = null
@@ -166,6 +186,7 @@ func _on_frame_changed() -> void:
 	_feedback_until = Time.get_ticks_msec() + 1000
 	refresh()
 
+## Kiểm tra có bình tưới ở bất kỳ ô nào trong túi.
 func inventory_has_can() -> bool:
 	for index: int in range(selection.inventory.slot_count):
 		var item: ItemDefinition = selection.inventory.slot(index).item
@@ -173,6 +194,7 @@ func inventory_has_can() -> bool:
 			return true
 	return false
 
+## Trả lý do đã dịch khi không thể nạp đầy tự động, hoặc chuỗi rỗng.
 func auto_hint(trough: AnimalTrough) -> String:
 	if trough.stock >= trough.capacity:
 		return tr("Trough is full")
@@ -184,6 +206,7 @@ func auto_hint(trough: AnimalTrough) -> String:
 		return tr("Supply storage requires {item}").format({"item": tr(trough.feed_item.display_name)})
 	return ""
 
+## Chuẩn bị nạp đầy máng cụ thể trong tầm, hoặc trả blocked nếu không hợp lệ.
 func prepare_target(trough: AnimalTrough) -> StringName:
 	_pending = null
 	_action = &""

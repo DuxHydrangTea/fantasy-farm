@@ -1,7 +1,13 @@
 class_name WalletHUD
 extends CanvasLayer
+## HUD góc trên bên phải hiển thị số dư và nút mở cài đặt.
+## Số xu cập nhật theo signal của ví và tooltip cập nhật khi đổi ngôn ngữ.
+
+## Ví được gắn trước khi node sẵn sàng.
 var wallet: WalletComponent
+## Nhãn số xu rút gọn.
 var label: Label
+## Khung số xu chứa tooltip giá trị đầy đủ.
 var panel: PanelContainer
 
 func _ready() -> void:

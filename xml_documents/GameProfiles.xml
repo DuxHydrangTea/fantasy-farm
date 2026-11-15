@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameProfiles" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý chỉ mục profile và thông tin tóm tắt để chọn trang trại. Kiểm tra toàn bộ dữ liệu game được thực hiện bởi LocalSaveRepository.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="folder" type="String" default="&quot;user://saves&quot;" />
+			<description>
+			</description>
+		</method>
+		<method name="_index">
+			<return type="ConfigFile" />
+			<description>
+			</description>
+		</method>
+		<method name="_store">
+			<return type="int" enum="Error" />
+			<param index="0" name="data" type="ConfigFile" />
+			<description>
+			</description>
+		</method>
+		<method name="create_profile">
+			<return type="Dictionary" />
+			<param index="0" name="title" type="String" />
+			<description>
+				Tạo mã profile ngẫu nhiên và lưu tên sau khi bỏ khoảng trắng, tối đa 48 ký tự. Trả dictionary gồm trạng thái, mã và thông báo lỗi.
+			</description>
+		</method>
+		<method name="mark_played">
+			<return type="int" enum="Error" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Ghi profile vừa chơi và thời điểm hệ thống vào chỉ mục.
+			</description>
+		</method>
+		<method name="_summary">
+			<return type="Dictionary" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="list_profiles">
+			<return type="Dictionary[]" />
+			<description>
+				Liệt kê profile từ file chính hoặc backup, kèm tên và tóm tắt số xu, đất. Thử backup khi không đọc được tóm tắt chính; sắp xếp lần chơi gần nhất trước.
+			</description>
+		</method>
+		<method name="latest_profile">
+			<return type="String" />
+			<description>
+				Trả profile hợp lệ được ghi là chơi gần nhất, hoặc profile hợp lệ đầu tiên. Trả chuỗi rỗng khi không có profile hợp lệ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="directory" type="String" setter="" getter="">
+			Thư mục chứa chỉ mục và các file profile.
+		</member>
+	</members>
+</class>

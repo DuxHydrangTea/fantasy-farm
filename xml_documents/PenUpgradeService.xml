@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenUpgradeService" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối báo giá và giao dịch nâng cấp sức chứa chuồng.
+	</brief_description>
+	<description>
+		Tiền, cấp và sức chứa được cập nhật trước khi phát signal để các bên quan sát thấy trạng thái nhất quán. Nếu không ghi được cấp, tiền được hoàn lại.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="managed">
+			<return type="bool" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<description>
+				Kiểm tra chuồng còn hợp lệ, là con trực tiếp của thế giới và có mã trong catalog.
+			</description>
+		</method>
+		<method name="apply_capacities">
+			<return type="void" />
+			<description>
+				Áp dụng sức chứa từ trạng thái nâng cấp cho mọi chuồng được quản lý.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục cấp chuồng hợp lệ và cập nhật sức chứa thực tế. Trả false nếu trạng thái từ chối dữ liệu hoặc đang có giao dịch.
+			</description>
+		</method>
+		<method name="_failure">
+			<return type="Dictionary" />
+			<param index="0" name="code" type="String" />
+			<param index="1" name="message" type="String" />
+			<param index="2" name="offer" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="quote">
+			<return type="Dictionary" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<description>
+				Báo cấp, sức chứa hiện tại, sức chứa kế tiếp và giá cho chuồng. Kết quả lỗi có [code]ok[/code] false, mã [code]code[/code] và [code]error[/code]. Các điều kiện gồm catalog, profile, giới hạn cấp, giao dịch khác và số dư.
+			</description>
+		</method>
+		<method name="purchase">
+			<return type="Dictionary" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<param index="1" name="expected_level" type="int" />
+			<param index="2" name="expected_price" type="int" />
+			<description>
+				Mua nâng cấp sau khi kiểm tra lại báo giá và cấp, giá người gọi đã thấy. Khi thành công trả sức chứa và giá, phát thay đổi ví, cấp và yêu cầu lưu. Nếu cấp hoặc giá đã đổi, trả lỗi stale_offer để người gọi cập nhật báo giá.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới sở hữu các chuồng được quản lý.
+		</member>
+		<member name="wallet" type="WalletComponent" setter="" getter="">
+			Ví dùng để thanh toán.
+		</member>
+		<member name="state" type="PenUpgradeState" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái cấp và khóa giao dịch.
+		</member>
+		<member name="catalog" type="PenUpgradeCatalog" setter="" getter="" default="&lt;Object&gt;">
+			Bảng giá và ánh xạ mã chuồng.
+		</member>
+		<member name="profile_ready" type="bool" setter="" getter="" default="false">
+			Cho biết profile đã sẵn sàng cho phép nâng cấp.
+		</member>
+	</members>
+	<signals>
+		<signal name="save_requested">
+			<description>
+				Phát sau khi giao dịch thành công để yêu cầu lưu game.
+			</description>
+		</signal>
+	</signals>
+</class>

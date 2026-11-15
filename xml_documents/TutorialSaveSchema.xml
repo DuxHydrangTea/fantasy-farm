@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TutorialSaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo và kiểm tra dữ liệu trạng thái hướng dẫn người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo trạng thái mặc định: bật hướng dẫn, chưa bỏ qua và chưa xem mục nào.
+			</description>
+		</method>
+		<method name="known" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Kiểm tra mã có trong catalog mục tiêu mặc định.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra các cờ và danh sách mã đã xem không trùng, đều có trong catalog. Trạng thái bật và đã bỏ qua không được cùng đúng.
+			</description>
+		</method>
+	</methods>
+</class>

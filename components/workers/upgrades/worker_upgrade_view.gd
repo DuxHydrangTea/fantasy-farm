@@ -1,6 +1,7 @@
 class_name WorkerUpgradeView
 extends VBoxContainer
-## Container-based view; all writes go through the team's purchase command.
+## Giao diện nâng cấp đội nhân công; các thay đổi được gửi qua dịch vụ mua nâng cấp.
+
 const CAPTIONS: Dictionary = {"speed": "Work speed", "hoe": "Worker hoe", "sowing": "Worker sowing", "watering": "Worker watering", "harvest": "Worker harvesting"}
 var shop: WorkerUpgradeService
 var buttons: Dictionary = {}
@@ -40,6 +41,7 @@ func _ready() -> void:
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(message)
 
+## Đọc báo giá từng nhánh từ dịch vụ và cập nhật nút, chi tiết nâng cấp.
 func refresh(service: WorkerUpgradeService) -> void:
 	shop = service
 	for track: String in WorkerUpgradeState.TRACKS:

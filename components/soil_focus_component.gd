@@ -1,13 +1,22 @@
 class_name SoilFocusComponent
 extends Node2D
+## Hiển thị ô đất đang nhắm hoặc vùng tác động của công cụ nâng cấp.
+## Màu thể hiện ô sẵn sàng, hợp lệ nhưng thiếu vật tư, hoặc bị chặn.
 
+## Component cung cấp ô, hành động và vùng xem trước.
 @export var actions: FarmingActionComponent
+## Màu ô có thể thao tác.
 @export var available_color: Color = Color.WHITE
+## Màu ô bị chặn.
 @export var blocked_color: Color = Color(1.0, 0.35, 0.35, 0.9)
 
+## Tọa độ ô đang nhắm.
 var focused_cell: Vector2i = Vector2i.ZERO
+## Cho biết có ít nhất một ô có thể thực hiện hành động.
 var actionable: bool = false
+## Sprite đánh dấu ô đơn.
 @export var marker: Sprite2D
+## Kết quả đánh giá từng ô trong vùng công cụ.
 var area_preview: Array[Dictionary] = []
 
 func _ready() -> void:
@@ -16,6 +25,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	refresh()
 
+## Tính lại ô nhắm và điều kiện thao tác, ẩn khi menu hoặc tương tác khác ưu tiên.
 func refresh() -> void:
 	area_preview.clear()
 	marker.show()

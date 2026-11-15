@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="OrderAvailability" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kiểm tra thế giới có nguồn tạo mọi sản phẩm được yêu cầu bởi đơn hàng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="farm" type="FarmWorld" />
+			<description>
+			</description>
+		</method>
+		<method name="allows">
+			<return type="bool" />
+			<param index="0" name="order" type="OrderDefinition" />
+			<description>
+				Trả true nếu từng vật phẩm trong đơn đều có nguồn phù hợp trong thế giới.
+			</description>
+		</method>
+		<method name="_has_source">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa cửa hàng, chuồng, đất và vườn hoa.
+		</member>
+	</members>
+</class>

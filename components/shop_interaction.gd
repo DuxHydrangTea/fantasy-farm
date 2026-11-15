@@ -1,8 +1,11 @@
 class_name ShopInteraction
 extends Node
+## Tìm điểm bán hàng hoặc biển mở rộng đất gần người chơi và điều phối menu tương tác.
+
 var player: FarmPlayer
 var active_shop: TradeMenu
 
+## Tìm thương nhân gần nhất đang hiển thị và trong tầm tương tác.
 func nearest_merchant() -> ShopMerchant:
 	var nearest: ShopMerchant
 	var distance: float = INF
@@ -18,6 +21,7 @@ func nearest_merchant() -> ShopMerchant:
 			nearest = merchant
 	return nearest
 
+## Mở cửa hàng hoặc biển đất gần hơn nếu không có menu đang mở; trả kết quả mở.
 func try_interact() -> bool:
 	if player.selection.is_menu_open():
 		return false
@@ -27,10 +31,12 @@ func try_interact() -> bool:
 		return land.open_purchase(player)
 	return merchant.open_shop(player) if merchant != null else false
 
+## Đóng menu giao dịch đang hoạt động trước khi tải dữ liệu.
 func close_for_load() -> void:
 	if is_instance_valid(active_shop):
 		active_shop.close(false)
 
+## Tìm biển mở rộng đất gần nhất có thể tương tác.
 func nearest_land_sign() -> LandExpansionComponent:
 	var nearest: LandExpansionComponent
 	var distance: float = INF

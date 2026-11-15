@@ -1,0 +1,1453 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Picnic_Basket.png" id="basket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Benches.png" id="bench"]
+[ext_resource type="Texture2D" path="res://assets/Trees/OakStyle/birch_0.png" id="birch"]
+[ext_resource type="Texture2D" path="res://assets/Tiles/Picnic_Blankets.png" id="blanket"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Camp_Decor.png" id="camp"]
+[ext_resource type="PackedScene" path="res://scenes/objects/outdoor_decor/street_lamp.tscn" id="lamp"]
+[ext_resource type="Texture2D" path="res://assets/Trees/Big_Oak_Tree_PixelLab.png" id="oak"]
+[ext_resource type="Texture2D" path="res://assets/Outdoor decoration/Outdoor_Decor.png" id="plants"]
+[ext_resource type="Texture2D" path="res://assets/Trees/OakStyle/willow_1.png" id="willow"]
+[ext_resource type="Texture2D" path="res://assets/Trees/OakStyle/willow_5.png" id="willow_b"]
+
+[sub_resource type="RectangleShape2D" id="Trunk"]
+size = Vector2(10, 6)
+
+[sub_resource type="RectangleShape2D" id="RockFeet"]
+size = Vector2(13, 6)
+
+[sub_resource type="RectangleShape2D" id="BenchFeet"]
+size = Vector2(26, 6)
+
+[node name="MeadowRestDetails" type="Node2D" unique_id=2040211113]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="PicnicOak" type="StaticBody2D" parent="." unique_id=1209779705]
+position = Vector2(2080, 564)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicOak" unique_id=1393837717]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="PicnicOak" unique_id=1928009399]
+position = Vector2(0, -32)
+texture = ExtResource("oak")
+region_enabled = true
+region_rect = Rect2(64, 0, 64, 80)
+
+[node name="PicnicWillow" type="StaticBody2D" parent="." unique_id=821381507]
+position = Vector2(2144, 548)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicWillow" unique_id=1008044205]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="PicnicWillow" unique_id=1979370960]
+position = Vector2(0, -23)
+texture = ExtResource("willow_b")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="PicnicBirch" type="StaticBody2D" parent="." unique_id=1776729897]
+position = Vector2(2200, 574)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicBirch" unique_id=580316706]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="PicnicBirch" unique_id=541007203]
+position = Vector2(0, -24)
+texture = ExtResource("birch")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="WestGroveOak" type="StaticBody2D" parent="." unique_id=320895339]
+position = Vector2(2008, 680)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="WestGroveOak" unique_id=1477454076]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="WestGroveOak" unique_id=867695902]
+position = Vector2(0, -32)
+texture = ExtResource("oak")
+region_enabled = true
+region_rect = Rect2(64, 0, 64, 80)
+
+[node name="WestGroveWillow" type="StaticBody2D" parent="." unique_id=1805750042]
+position = Vector2(1984, 748)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="WestGroveWillow" unique_id=1536948345]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="WestGroveWillow" unique_id=776896850]
+position = Vector2(0, -24)
+texture = ExtResource("willow")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="WestGroveBirch" type="StaticBody2D" parent="." unique_id=384242801]
+position = Vector2(2056, 728)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="WestGroveBirch" unique_id=1315843804]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="WestGroveBirch" unique_id=1047853593]
+position = Vector2(0, -24)
+texture = ExtResource("birch")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="PicnicBlanket" type="Sprite2D" parent="." unique_id=1302761337]
+z_index = -1
+position = Vector2(2136, 612)
+texture = ExtResource("blanket")
+region_enabled = true
+region_rect = Rect2(0, 48, 48, 48)
+
+[node name="PicnicBasket" type="Sprite2D" parent="." unique_id=209075754]
+z_index = -1
+position = Vector2(2150, 624)
+texture = ExtResource("basket")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
+
+[node name="PicnicTable" type="StaticBody2D" parent="." unique_id=1356258113]
+position = Vector2(2180, 636)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicTable" unique_id=797789705]
+position = Vector2(0, -2)
+shape = SubResource("RockFeet")
+
+[node name="Stump" type="Sprite2D" parent="PicnicTable" unique_id=207073762]
+position = Vector2(0, -8)
+texture = ExtResource("camp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="PicnicBench" type="StaticBody2D" parent="." unique_id=1447377005]
+position = Vector2(2072, 636)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="PicnicBench" unique_id=228535385]
+position = Vector2(0, -2)
+shape = SubResource("BenchFeet")
+
+[node name="Seat" type="Sprite2D" parent="PicnicBench" unique_id=524538931]
+position = Vector2(0, -16)
+texture = ExtResource("bench")
+region_enabled = true
+region_rect = Rect2(32, 0, 32, 32)
+
+[node name="PicnicLamp" type="StaticBody2D" parent="." unique_id=1753953322 instance=ExtResource("lamp")]
+texture_filter = 1
+position = Vector2(2200, 632)
+metadata/object_id = "street_lamp"
+metadata/object_kind = "street_lamp"
+metadata/source_visual = "res://assets/Outdoor decoration/Lanter_Posts.png"
+
+[node name="PicnicStep0" type="Sprite2D" parent="." unique_id=790127767]
+z_index = -1
+position = Vector2(2112, 532)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="PicnicStep1" type="Sprite2D" parent="." unique_id=85456522]
+z_index = -1
+position = Vector2(2120, 548)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="PicnicStep2" type="Sprite2D" parent="." unique_id=1781994071]
+z_index = -1
+position = Vector2(2128, 568)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="PicnicStep3" type="Sprite2D" parent="." unique_id=267871578]
+z_index = -1
+position = Vector2(2132, 588)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(16, 80, 16, 16)
+
+[node name="MeadowFlower189" type="Sprite2D" parent="." unique_id=1692459004]
+z_index = -1
+position = Vector2(2091, 565)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower190" type="Sprite2D" parent="." unique_id=281583908]
+z_index = -1
+position = Vector2(2074, 562)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower191" type="Sprite2D" parent="." unique_id=50014410]
+z_index = -1
+position = Vector2(2072, 561)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower192" type="Sprite2D" parent="." unique_id=1324287008]
+z_index = -1
+position = Vector2(2082, 573)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower193" type="Sprite2D" parent="." unique_id=810840342]
+z_index = -1
+position = Vector2(2076, 559)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower194" type="Sprite2D" parent="." unique_id=2135793269]
+z_index = -1
+position = Vector2(2092, 560)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower195" type="Sprite2D" parent="." unique_id=1167151917]
+z_index = -1
+position = Vector2(2105, 561)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower196" type="Sprite2D" parent="." unique_id=446615936]
+z_index = -1
+position = Vector2(2067, 564)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower197" type="Sprite2D" parent="." unique_id=1303671355]
+z_index = -1
+position = Vector2(2100, 571)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower198" type="Sprite2D" parent="." unique_id=1913567990]
+z_index = -1
+position = Vector2(2085, 569)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower199" type="Sprite2D" parent="." unique_id=1062047594]
+z_index = -1
+position = Vector2(2075, 568)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass048" type="Sprite2D" parent="." unique_id=970649489]
+z_index = -1
+position = Vector2(2113, 567)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass049" type="Sprite2D" parent="." unique_id=635520905]
+z_index = -1
+position = Vector2(2071, 570)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass050" type="Sprite2D" parent="." unique_id=1973287611]
+z_index = -1
+position = Vector2(2083, 554)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower200" type="Sprite2D" parent="." unique_id=124131122]
+z_index = -1
+position = Vector2(2189, 555)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower201" type="Sprite2D" parent="." unique_id=579696687]
+z_index = -1
+position = Vector2(2183, 568)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower202" type="Sprite2D" parent="." unique_id=507918484]
+z_index = -1
+position = Vector2(2166, 555)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower203" type="Sprite2D" parent="." unique_id=1607849497]
+z_index = -1
+position = Vector2(2160, 558)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower204" type="Sprite2D" parent="." unique_id=707095651]
+z_index = -1
+position = Vector2(2187, 564)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower205" type="Sprite2D" parent="." unique_id=1817688664]
+z_index = -1
+position = Vector2(2164, 556)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower206" type="Sprite2D" parent="." unique_id=2054007072]
+z_index = -1
+position = Vector2(2192, 567)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower207" type="Sprite2D" parent="." unique_id=1833087863]
+z_index = -1
+position = Vector2(2169, 570)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower208" type="Sprite2D" parent="." unique_id=1606366998]
+z_index = -1
+position = Vector2(2171, 563)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="BedGrass051" type="Sprite2D" parent="." unique_id=1477973340]
+z_index = -1
+position = Vector2(2201, 565)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass052" type="Sprite2D" parent="." unique_id=1873799712]
+z_index = -1
+position = Vector2(2162, 568)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass053" type="Sprite2D" parent="." unique_id=1824760361]
+z_index = -1
+position = Vector2(2173, 552)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower209" type="Sprite2D" parent="." unique_id=471953967]
+z_index = -1
+position = Vector2(2092, 645)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower210" type="Sprite2D" parent="." unique_id=799614505]
+z_index = -1
+position = Vector2(2097, 655)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower211" type="Sprite2D" parent="." unique_id=1250131866]
+z_index = -1
+position = Vector2(2103, 641)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower212" type="Sprite2D" parent="." unique_id=1569325053]
+z_index = -1
+position = Vector2(2088, 651)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower213" type="Sprite2D" parent="." unique_id=1924965328]
+z_index = -1
+position = Vector2(2117, 643)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower214" type="Sprite2D" parent="." unique_id=1252784275]
+z_index = -1
+position = Vector2(2093, 652)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower215" type="Sprite2D" parent="." unique_id=254727218]
+z_index = -1
+position = Vector2(2113, 646)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower216" type="Sprite2D" parent="." unique_id=1676185532]
+z_index = -1
+position = Vector2(2108, 641)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower217" type="Sprite2D" parent="." unique_id=89022272]
+z_index = -1
+position = Vector2(2097, 652)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower218" type="Sprite2D" parent="." unique_id=2036382855]
+z_index = -1
+position = Vector2(2093, 654)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="BedGrass054" type="Sprite2D" parent="." unique_id=603079221]
+z_index = -1
+position = Vector2(2123, 649)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass055" type="Sprite2D" parent="." unique_id=356967298]
+z_index = -1
+position = Vector2(2088, 652)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass056" type="Sprite2D" parent="." unique_id=903626402]
+z_index = -1
+position = Vector2(2098, 636)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower219" type="Sprite2D" parent="." unique_id=1383799043]
+z_index = -1
+position = Vector2(2034, 703)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower220" type="Sprite2D" parent="." unique_id=1638702907]
+z_index = -1
+position = Vector2(2013, 688)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower221" type="Sprite2D" parent="." unique_id=228143623]
+z_index = -1
+position = Vector2(2011, 695)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower222" type="Sprite2D" parent="." unique_id=1871718908]
+z_index = -1
+position = Vector2(2039, 695)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower223" type="Sprite2D" parent="." unique_id=585068023]
+z_index = -1
+position = Vector2(2029, 698)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower224" type="Sprite2D" parent="." unique_id=1685131053]
+z_index = -1
+position = Vector2(1995, 696)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower225" type="Sprite2D" parent="." unique_id=417359168]
+z_index = -1
+position = Vector2(2033, 704)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower226" type="Sprite2D" parent="." unique_id=421549632]
+z_index = -1
+position = Vector2(2024, 686)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower227" type="Sprite2D" parent="." unique_id=609866776]
+z_index = -1
+position = Vector2(2031, 695)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower228" type="Sprite2D" parent="." unique_id=353597425]
+z_index = -1
+position = Vector2(2021, 698)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower229" type="Sprite2D" parent="." unique_id=1014851063]
+z_index = -1
+position = Vector2(2000, 696)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass057" type="Sprite2D" parent="." unique_id=1392531485]
+z_index = -1
+position = Vector2(2040, 700)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass058" type="Sprite2D" parent="." unique_id=324406266]
+z_index = -1
+position = Vector2(1996, 703)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass059" type="Sprite2D" parent="." unique_id=243306913]
+z_index = -1
+position = Vector2(2008, 685)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower230" type="Sprite2D" parent="." unique_id=1641994533]
+z_index = -1
+position = Vector2(2010, 777)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower231" type="Sprite2D" parent="." unique_id=1292878670]
+z_index = -1
+position = Vector2(1987, 774)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower232" type="Sprite2D" parent="." unique_id=1106356683]
+z_index = -1
+position = Vector2(1982, 789)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower233" type="Sprite2D" parent="." unique_id=699033127]
+z_index = -1
+position = Vector2(1988, 772)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower234" type="Sprite2D" parent="." unique_id=144966298]
+z_index = -1
+position = Vector2(2015, 773)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower235" type="Sprite2D" parent="." unique_id=646311578]
+z_index = -1
+position = Vector2(2018, 784)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower236" type="Sprite2D" parent="." unique_id=1966882684]
+z_index = -1
+position = Vector2(2014, 783)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower237" type="Sprite2D" parent="." unique_id=480599005]
+z_index = -1
+position = Vector2(1993, 778)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower238" type="Sprite2D" parent="." unique_id=1394411424]
+z_index = -1
+position = Vector2(2005, 770)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower239" type="Sprite2D" parent="." unique_id=1017849569]
+z_index = -1
+position = Vector2(2007, 788)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower240" type="Sprite2D" parent="." unique_id=1889637347]
+z_index = -1
+position = Vector2(1997, 772)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower241" type="Sprite2D" parent="." unique_id=64302095]
+z_index = -1
+position = Vector2(1993, 778)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass060" type="Sprite2D" parent="." unique_id=650179505]
+z_index = -1
+position = Vector2(2027, 784)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass061" type="Sprite2D" parent="." unique_id=2047150604]
+z_index = -1
+position = Vector2(1978, 788)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass062" type="Sprite2D" parent="." unique_id=432131961]
+z_index = -1
+position = Vector2(1991, 768)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower242" type="Sprite2D" parent="." unique_id=1746367017]
+z_index = -1
+position = Vector2(2110, 766)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower243" type="Sprite2D" parent="." unique_id=291201738]
+z_index = -1
+position = Vector2(2107, 755)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower244" type="Sprite2D" parent="." unique_id=726178029]
+z_index = -1
+position = Vector2(2109, 762)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower245" type="Sprite2D" parent="." unique_id=419575851]
+z_index = -1
+position = Vector2(2082, 748)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower246" type="Sprite2D" parent="." unique_id=1557912938]
+z_index = -1
+position = Vector2(2108, 755)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower247" type="Sprite2D" parent="." unique_id=1073943928]
+z_index = -1
+position = Vector2(2092, 762)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower248" type="Sprite2D" parent="." unique_id=1225369974]
+z_index = -1
+position = Vector2(2074, 754)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower249" type="Sprite2D" parent="." unique_id=1731868837]
+z_index = -1
+position = Vector2(2090, 760)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower250" type="Sprite2D" parent="." unique_id=1112145756]
+z_index = -1
+position = Vector2(2102, 754)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower251" type="Sprite2D" parent="." unique_id=971447823]
+z_index = -1
+position = Vector2(2091, 764)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower252" type="Sprite2D" parent="." unique_id=417047010]
+z_index = -1
+position = Vector2(2073, 762)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass063" type="Sprite2D" parent="." unique_id=2137406736]
+z_index = -1
+position = Vector2(2115, 762)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass064" type="Sprite2D" parent="." unique_id=780243933]
+z_index = -1
+position = Vector2(2073, 765)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass065" type="Sprite2D" parent="." unique_id=1882867759]
+z_index = -1
+position = Vector2(2085, 747)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower253" type="Sprite2D" parent="." unique_id=597772476]
+z_index = -1
+position = Vector2(2284, 699)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower254" type="Sprite2D" parent="." unique_id=37101801]
+z_index = -1
+position = Vector2(2302, 705)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower255" type="Sprite2D" parent="." unique_id=1137556003]
+z_index = -1
+position = Vector2(2289, 702)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower256" type="Sprite2D" parent="." unique_id=1110450716]
+z_index = -1
+position = Vector2(2284, 698)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower257" type="Sprite2D" parent="." unique_id=1954543658]
+z_index = -1
+position = Vector2(2287, 718)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower258" type="Sprite2D" parent="." unique_id=287525431]
+z_index = -1
+position = Vector2(2324, 712)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower259" type="Sprite2D" parent="." unique_id=738747872]
+z_index = -1
+position = Vector2(2297, 695)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower260" type="Sprite2D" parent="." unique_id=460638671]
+z_index = -1
+position = Vector2(2302, 707)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower261" type="Sprite2D" parent="." unique_id=1571261503]
+z_index = -1
+position = Vector2(2282, 699)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower262" type="Sprite2D" parent="." unique_id=1034092536]
+z_index = -1
+position = Vector2(2314, 705)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower263" type="Sprite2D" parent="." unique_id=88912425]
+z_index = -1
+position = Vector2(2314, 720)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower264" type="Sprite2D" parent="." unique_id=56217192]
+z_index = -1
+position = Vector2(2289, 702)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower265" type="Sprite2D" parent="." unique_id=220016517]
+z_index = -1
+position = Vector2(2304, 716)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower266" type="Sprite2D" parent="." unique_id=594261060]
+z_index = -1
+position = Vector2(2286, 714)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass066" type="Sprite2D" parent="." unique_id=2137105552]
+z_index = -1
+position = Vector2(2329, 712)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass067" type="Sprite2D" parent="." unique_id=1413731868]
+z_index = -1
+position = Vector2(2276, 716)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass068" type="Sprite2D" parent="." unique_id=959714450]
+z_index = -1
+position = Vector2(2291, 695)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower267" type="Sprite2D" parent="." unique_id=1472171073]
+z_index = -1
+position = Vector2(2234, 829)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower268" type="Sprite2D" parent="." unique_id=924817398]
+z_index = -1
+position = Vector2(2254, 846)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower269" type="Sprite2D" parent="." unique_id=1197717807]
+z_index = -1
+position = Vector2(2232, 845)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower270" type="Sprite2D" parent="." unique_id=1508267887]
+z_index = -1
+position = Vector2(2245, 828)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower271" type="Sprite2D" parent="." unique_id=936880312]
+z_index = -1
+position = Vector2(2247, 840)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower272" type="Sprite2D" parent="." unique_id=1321360956]
+z_index = -1
+position = Vector2(2240, 845)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower273" type="Sprite2D" parent="." unique_id=526646325]
+z_index = -1
+position = Vector2(2226, 845)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower274" type="Sprite2D" parent="." unique_id=1645782988]
+z_index = -1
+position = Vector2(2246, 841)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower275" type="Sprite2D" parent="." unique_id=2001787426]
+z_index = -1
+position = Vector2(2231, 835)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower276" type="Sprite2D" parent="." unique_id=554002539]
+z_index = -1
+position = Vector2(2216, 835)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower277" type="Sprite2D" parent="." unique_id=1808875255]
+z_index = -1
+position = Vector2(2223, 832)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower278" type="Sprite2D" parent="." unique_id=812165889]
+z_index = -1
+position = Vector2(2215, 834)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass069" type="Sprite2D" parent="." unique_id=1689472242]
+z_index = -1
+position = Vector2(2267, 844)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass070" type="Sprite2D" parent="." unique_id=403679819]
+z_index = -1
+position = Vector2(2218, 848)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass071" type="Sprite2D" parent="." unique_id=1674041301]
+z_index = -1
+position = Vector2(2231, 827)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="MeadowFlower279" type="Sprite2D" parent="." unique_id=1753285440]
+z_index = -1
+position = Vector2(1969, 588)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower280" type="Sprite2D" parent="." unique_id=414423356]
+z_index = -1
+position = Vector2(1960, 584)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower281" type="Sprite2D" parent="." unique_id=164221429]
+z_index = -1
+position = Vector2(1959, 574)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower282" type="Sprite2D" parent="." unique_id=453238416]
+z_index = -1
+position = Vector2(1952, 575)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower283" type="Sprite2D" parent="." unique_id=672924750]
+z_index = -1
+position = Vector2(1946, 586)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 16, 16, 16)
+
+[node name="MeadowFlower284" type="Sprite2D" parent="." unique_id=1529509781]
+z_index = -1
+position = Vector2(1974, 575)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="MeadowFlower285" type="Sprite2D" parent="." unique_id=587643849]
+z_index = -1
+position = Vector2(1973, 572)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 0, 16, 16)
+
+[node name="MeadowFlower286" type="Sprite2D" parent="." unique_id=499107210]
+z_index = -1
+position = Vector2(1961, 582)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BedGrass072" type="Sprite2D" parent="." unique_id=747906927]
+z_index = -1
+position = Vector2(1981, 583)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass073" type="Sprite2D" parent="." unique_id=1096415578]
+z_index = -1
+position = Vector2(1942, 586)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BedGrass074" type="Sprite2D" parent="." unique_id=1745064079]
+z_index = -1
+position = Vector2(1953, 570)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 32, 16, 16)
+
+[node name="BoundaryShrub0" type="Sprite2D" parent="." unique_id=548243829]
+z_index = -1
+position = Vector2(2500, 142)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryFlower0" type="Sprite2D" parent="." unique_id=1813325211]
+z_index = -1
+position = Vector2(2488, 152)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub1" type="Sprite2D" parent="." unique_id=191170455]
+z_index = -1
+position = Vector2(2500, 190)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub2" type="Sprite2D" parent="." unique_id=639182552]
+z_index = -1
+position = Vector2(2500, 238)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub3" type="Sprite2D" parent="." unique_id=1043100788]
+z_index = -1
+position = Vector2(2500, 286)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryFlower3" type="Sprite2D" parent="." unique_id=744505309]
+z_index = -1
+position = Vector2(2488, 296)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub4" type="Sprite2D" parent="." unique_id=689165145]
+z_index = -1
+position = Vector2(2500, 334)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub5" type="Sprite2D" parent="." unique_id=1961143490]
+z_index = -1
+position = Vector2(2500, 382)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub6" type="Sprite2D" parent="." unique_id=2097480339]
+z_index = -1
+position = Vector2(2500, 430)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryFlower6" type="Sprite2D" parent="." unique_id=941923440]
+z_index = -1
+position = Vector2(2488, 440)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub7" type="Sprite2D" parent="." unique_id=1279677282]
+z_index = -1
+position = Vector2(2500, 478)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub8" type="Sprite2D" parent="." unique_id=1437661777]
+z_index = -1
+position = Vector2(2500, 526)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub9" type="Sprite2D" parent="." unique_id=327099763]
+z_index = -1
+position = Vector2(2500, 574)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryFlower9" type="Sprite2D" parent="." unique_id=1763674497]
+z_index = -1
+position = Vector2(2488, 584)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub10" type="Sprite2D" parent="." unique_id=803929140]
+z_index = -1
+position = Vector2(2500, 622)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub11" type="Sprite2D" parent="." unique_id=919184416]
+z_index = -1
+position = Vector2(2500, 670)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub12" type="Sprite2D" parent="." unique_id=1901212807]
+z_index = -1
+position = Vector2(2500, 718)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryFlower12" type="Sprite2D" parent="." unique_id=747564213]
+z_index = -1
+position = Vector2(2488, 728)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub13" type="Sprite2D" parent="." unique_id=462549560]
+z_index = -1
+position = Vector2(2500, 766)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub14" type="Sprite2D" parent="." unique_id=569628567]
+z_index = -1
+position = Vector2(2500, 814)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub15" type="Sprite2D" parent="." unique_id=1157796853]
+z_index = -1
+position = Vector2(2500, 862)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryFlower15" type="Sprite2D" parent="." unique_id=479777156]
+z_index = -1
+position = Vector2(2488, 872)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub16" type="Sprite2D" parent="." unique_id=1495729719]
+z_index = -1
+position = Vector2(2500, 910)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub17" type="Sprite2D" parent="." unique_id=981788833]
+z_index = -1
+position = Vector2(2500, 958)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub18" type="Sprite2D" parent="." unique_id=720139087]
+z_index = -1
+position = Vector2(2500, 1006)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryFlower18" type="Sprite2D" parent="." unique_id=1771916862]
+z_index = -1
+position = Vector2(2488, 1016)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub19" type="Sprite2D" parent="." unique_id=1811742725]
+z_index = -1
+position = Vector2(2500, 1054)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub20" type="Sprite2D" parent="." unique_id=992323118]
+z_index = -1
+position = Vector2(2500, 1102)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub21" type="Sprite2D" parent="." unique_id=1147046834]
+z_index = -1
+position = Vector2(2500, 1150)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryFlower21" type="Sprite2D" parent="." unique_id=1052902556]
+z_index = -1
+position = Vector2(2488, 1160)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub22" type="Sprite2D" parent="." unique_id=1504122489]
+z_index = -1
+position = Vector2(2500, 1198)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub23" type="Sprite2D" parent="." unique_id=783400972]
+z_index = -1
+position = Vector2(2500, 1246)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub24" type="Sprite2D" parent="." unique_id=323847914]
+z_index = -1
+position = Vector2(2500, 1294)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryFlower24" type="Sprite2D" parent="." unique_id=531332021]
+z_index = -1
+position = Vector2(2488, 1304)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub25" type="Sprite2D" parent="." unique_id=1977124403]
+z_index = -1
+position = Vector2(2500, 1342)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryShrub26" type="Sprite2D" parent="." unique_id=1390635417]
+z_index = -1
+position = Vector2(2500, 1390)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub27" type="Sprite2D" parent="." unique_id=1483220591]
+z_index = -1
+position = Vector2(2500, 1438)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryFlower27" type="Sprite2D" parent="." unique_id=496050186]
+z_index = -1
+position = Vector2(2488, 1448)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(64, 0, 16, 16)
+
+[node name="BoundaryShrub28" type="Sprite2D" parent="." unique_id=1399817943]
+z_index = -1
+position = Vector2(2500, 1486)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(96, 144, 16, 16)
+
+[node name="BoundaryShrub29" type="Sprite2D" parent="." unique_id=1082760060]
+z_index = -1
+position = Vector2(2500, 1534)
+texture = ExtResource("plants")
+region_enabled = true
+region_rect = Rect2(80, 144, 16, 16)
+
+[node name="BoundaryTree0" type="StaticBody2D" parent="." unique_id=370094888]
+position = Vector2(2490, 158)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree0" unique_id=1701307011]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree0" unique_id=1957476908]
+position = Vector2(0, -32)
+texture = ExtResource("oak")
+region_enabled = true
+region_rect = Rect2(64, 0, 64, 80)
+
+[node name="BoundaryTree1" type="StaticBody2D" parent="." unique_id=56447096]
+position = Vector2(2478, 238)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree1" unique_id=982428087]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree1" unique_id=1277057476]
+position = Vector2(0, -23)
+texture = ExtResource("willow_b")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="BoundaryTree2" type="StaticBody2D" parent="." unique_id=1164597295]
+position = Vector2(2490, 520)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree2" unique_id=1826675363]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree2" unique_id=1680255604]
+position = Vector2(0, -24)
+texture = ExtResource("birch")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="BoundaryTree3" type="StaticBody2D" parent="." unique_id=870659241]
+position = Vector2(2488, 760)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree3" unique_id=1980182648]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree3" unique_id=808145953]
+position = Vector2(0, -32)
+texture = ExtResource("oak")
+region_enabled = true
+region_rect = Rect2(64, 0, 64, 80)
+
+[node name="BoundaryTree4" type="StaticBody2D" parent="." unique_id=1180651058]
+position = Vector2(2496, 1288)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree4" unique_id=1336819520]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree4" unique_id=1856562601]
+position = Vector2(0, -23)
+texture = ExtResource("willow_b")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="BoundaryTree5" type="StaticBody2D" parent="." unique_id=2073427550]
+position = Vector2(2472, 1384)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree5" unique_id=82491500]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree5" unique_id=48688550]
+position = Vector2(0, -24)
+texture = ExtResource("birch")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)
+
+[node name="BoundaryTree6" type="StaticBody2D" parent="." unique_id=1547492865]
+position = Vector2(2494, 1464)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree6" unique_id=613256830]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree6" unique_id=901524629]
+position = Vector2(0, -32)
+texture = ExtResource("oak")
+region_enabled = true
+region_rect = Rect2(64, 0, 64, 80)
+
+[node name="BoundaryTree7" type="StaticBody2D" parent="." unique_id=155923848]
+position = Vector2(2480, 1548)
+collision_mask = 0
+
+[node name="Feet" type="CollisionShape2D" parent="BoundaryTree7" unique_id=761216974]
+position = Vector2(0, -2)
+shape = SubResource("Trunk")
+
+[node name="Crown" type="Sprite2D" parent="BoundaryTree7" unique_id=1495085629]
+position = Vector2(0, -23)
+texture = ExtResource("willow_b")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 80)

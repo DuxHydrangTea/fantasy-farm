@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassChunkField" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối chunk cỏ, cache GPU và dữ liệu tương tác actor dùng chung. Chỉ chọn các chunk trong vùng camera và vùng dự trữ, không cập nhật từng bụi cỏ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_samples">
+			<return type="void" />
+			<param index="0" name="values" type="Dictionary[]" />
+			<description>
+				Sao chép mẫu mới và dựng lại chỉ mục nếu node đã sẵn sàng.
+			</description>
+		</method>
+		<method name="rebuild">
+			<return type="void" />
+			<description>
+				Xóa cache vẽ, dựng chỉ mục trong không gian sort và cập nhật vùng nhìn.
+			</description>
+		</method>
+		<method name="set_wind">
+			<return type="void" />
+			<param index="0" name="strength" type="float" />
+			<description>
+				Đặt cường độ gió trong khoảng 0–6 và cập nhật biên vẽ dự phòng.
+			</description>
+		</method>
+		<method name="set_enabled">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt field và cập nhật hiển thị.
+			</description>
+		</method>
+		<method name="set_interactions_enabled">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Gắn hoặc tháo nguồn tương tác actor và cập nhật biên vẽ.
+			</description>
+		</method>
+		<method name="_visibility">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="update_view">
+			<return type="void" />
+			<description>
+				Chuyển viewport sang không gian sort, chọn chunk và tính vùng actor tương tác.
+			</description>
+		</method>
+		<method name="select_view">
+			<return type="void" />
+			<param index="0" name="area" type="Rect2" />
+			<description>
+				Chọn vùng chunk cho diện tích trong không gian sort, gồm dự trữ và margin.
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="field_shader" type="Shader" setter="" getter="" default="&lt;Object&gt;">
+			Shader được dùng cho field.
+		</member>
+		<member name="sort_root" type="Node2D" setter="" getter="">
+			Node Y-sort tổ tiên chung với actor.
+		</member>
+		<member name="chunk_size" type="int" setter="" getter="" default="512">
+			Kích thước chunk theo pixel.
+		</member>
+		<member name="reserve_chunks" type="int" setter="" getter="" default="1">
+			Số lớp chunk dự trữ quanh vùng nhìn.
+		</member>
+		<member name="max_resident_chunks" type="int" setter="" getter="" default="64">
+			Giới hạn chunk lưu trên GPU.
+		</member>
+		<member name="max_resident_instances" type="int" setter="" getter="" default="100000">
+			Giới hạn instance lưu trên GPU.
+		</member>
+		<member name="max_resident_batches" type="int" setter="" getter="" default="2048">
+			Giới hạn batch lưu trên GPU.
+		</member>
+		<member name="wind_strength" type="float" setter="" getter="" default="0.85">
+			Cường độ gió được truyền vào shader.
+		</member>
+		<member name="interaction_enabled" type="bool" setter="" getter="" default="false">
+			Bật dữ liệu actor làm cỏ phản ứng.
+		</member>
+		<member name="interaction_hz" type="int" setter="" getter="" default="60">
+			Tần số cập nhật dữ liệu tương tác.
+		</member>
+		<member name="interactions" type="GrassInteractionFeed" setter="" getter="" default="&lt;unknown&gt;">
+			Nguồn dữ liệu tương tác actor.
+		</member>
+		<member name="catalog" type="GrassSourceCatalog" setter="" getter="" default="&lt;unknown&gt;">
+			Catalog hình cỏ.
+		</member>
+		<member name="index" type="GrassChunkIndex" setter="" getter="" default="&lt;unknown&gt;">
+			Chỉ mục chunk trên CPU.
+		</member>
+		<member name="renderer" type="GrassChunkRenderer" setter="" getter="" default="&lt;unknown&gt;">
+			Bộ quản lý tài nguyên vẽ GPU.
+		</member>
+		<member name="samples" type="Dictionary[]" setter="" getter="" default="[]">
+			Các mẫu cỏ đầu vào.
+		</member>
+		<member name="effect" type="ShaderMaterial" setter="" getter="">
+			Material shader dùng chung.
+		</member>
+		<member name="enabled" type="bool" setter="" getter="" default="true">
+			Cho phép hiển thị và cập nhật field.
+		</member>
+		<member name="index_builds" type="int" setter="" getter="" default="0">
+			Số lần dựng lại chỉ mục.
+		</member>
+		<member name="_last_region" type="Rect2i" setter="" getter="" default="Rect2i(0, 0, -1, -1)">
+		</member>
+		<member name="_sort_pose" type="Transform2D" setter="" getter="">
+		</member>
+		<member name="_local_pose" type="Transform2D" setter="" getter="">
+		</member>
+		<member name="_margin" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_world_view" type="Rect2" setter="" getter="">
+		</member>
+		<member name="_was_shown" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader cỏ mặc định.
+		</constant>
+	</constants>
+</class>

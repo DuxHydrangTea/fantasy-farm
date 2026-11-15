@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình dùng chung của một loại vật nuôi.
+	</brief_description>
+	<description>
+		Resource chứa các thông số di chuyển, hành vi, nhu cầu, hình ảnh, môi trường sống và vòng đời. Trạng thái của từng con được quản lý riêng.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra mã, hoạt ảnh trưởng thành, kích thước, tốc độ, nhu cầu và vòng đời. Tuổi thọ phải hữu hạn và lớn hơn tuổi trưởng thành.
+			</description>
+		</method>
+		<method name="has_movement_frames">
+			<return type="bool" />
+			<param index="0" name="frames" type="SpriteFrames" />
+			<description>
+				Kiểm tra bộ khung có ít nhất một khung cho idle_down và walk_down.
+			</description>
+		</method>
+		<method name="get_frames_for_stage">
+			<return type="SpriteFrames" />
+			<param index="0" name="is_adult" type="bool" />
+			<description>
+				Chọn bộ khung cho giai đoạn tuổi. Nếu bộ con non thiếu hoạt ảnh di chuyển hợp lệ, trả về bộ trưởng thành.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animal_id" type="StringName" setter="" getter="">
+			Mã ổn định nhận diện loại vật nuôi.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="species" type="int" setter="" getter="" enum="AnimalTypes.Species" default="0">
+			Loài vật nuôi.
+		</member>
+		<member name="move_speed" type="float" setter="" getter="" default="28.0">
+			Tốc độ di chuyển theo đơn vị thế giới mỗi giây.
+		</member>
+		<member name="idle_seconds" type="Vector2" setter="" getter="" default="Vector2(0.6, 1.8)">
+			Khoảng thời gian đứng yên tối thiểu và tối đa, tính bằng giây.
+		</member>
+		<member name="footprint" type="Vector2" setter="" getter="" default="Vector2(10, 6)">
+			Kích thước vùng chiếm chỗ của con vật.
+		</member>
+		<member name="pen_margin" type="float" setter="" getter="" default="12.0">
+			Khoảng cách chừa ở rìa chuồng khi chọn vị trí.
+		</member>
+		<member name="walk_weight" type="float" setter="" getter="" default="5.0">
+			Trọng số tương đối khi chọn hành động đi lại.
+		</member>
+		<member name="forage_weight" type="float" setter="" getter="" default="3.0">
+			Trọng số tương đối khi chọn hành động kiếm ăn.
+		</member>
+		<member name="rest_weight" type="float" setter="" getter="" default="1.0">
+			Trọng số tương đối khi chọn hành động nghỉ.
+		</member>
+		<member name="sleep_weight" type="float" setter="" getter="" default="1.0">
+			Trọng số tương đối khi chọn hành động ngủ.
+		</member>
+		<member name="forage_seconds" type="Vector2" setter="" getter="" default="Vector2(1.5, 3.5)">
+			Khoảng thời gian kiếm ăn tối thiểu và tối đa, tính bằng giây.
+		</member>
+		<member name="rest_seconds" type="Vector2" setter="" getter="" default="Vector2(2, 4)">
+			Khoảng thời gian nghỉ tối thiểu và tối đa, tính bằng giây.
+		</member>
+		<member name="sleep_seconds" type="Vector2" setter="" getter="" default="Vector2(4, 8)">
+			Khoảng thời gian ngủ tối thiểu và tối đa, tính bằng giây.
+		</member>
+		<member name="forage_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			Tên hoạt ảnh kiếm ăn. Để trống để chọn hoạt ảnh được hỗ trợ đầu tiên.
+		</member>
+		<member name="lie_down_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+			Tên hoạt ảnh nằm nghỉ. Để trống để chọn hoạt ảnh được hỗ trợ đầu tiên.
+		</member>
+		<member name="satiety_depletion_seconds" type="float" setter="" getter="" default="600.0">
+			Thời gian cạn độ no, tính bằng giây.
+		</member>
+		<member name="hydration_depletion_seconds" type="float" setter="" getter="" default="600.0">
+			Thời gian cạn độ nước, tính bằng giây.
+		</member>
+		<member name="food_per_meal" type="int" setter="" getter="" default="1">
+			Lượng thức ăn tiêu thụ mỗi bữa.
+		</member>
+		<member name="water_per_drink" type="int" setter="" getter="" default="1">
+			Lượng nước tiêu thụ mỗi lần uống.
+		</member>
+		<member name="food_seek_threshold" type="float" setter="" getter="" default="50.0">
+			Ngưỡng độ no kích hoạt tìm thức ăn.
+		</member>
+		<member name="water_seek_threshold" type="float" setter="" getter="" default="50.0">
+			Ngưỡng độ nước kích hoạt tìm nước.
+		</member>
+		<member name="adult_frames" type="SpriteFrames" setter="" getter="">
+			Bộ khung hoạt ảnh con trưởng thành.
+		</member>
+		<member name="juvenile_frames" type="SpriteFrames" setter="" getter="">
+			Bộ khung hoạt ảnh con non, có thể thiếu nếu dùng hình con trưởng thành.
+		</member>
+		<member name="faces_left" type="bool" setter="" getter="" default="true">
+			Cho biết hướng gốc của sprite là hướng trái.
+		</member>
+		<member name="can_swim" type="bool" setter="" getter="" default="false">
+			Cho phép vật nuôi bơi.
+		</member>
+		<member name="eggs_on_land" type="bool" setter="" getter="" default="false">
+			Cho biết trứng được đặt trên đất.
+		</member>
+		<member name="maturity_seconds" type="float" setter="" getter="" default="86400.0">
+			Tuổi trưởng thành tính bằng giây kể từ khi sinh.
+		</member>
+		<member name="lifespan_seconds" type="float" setter="" getter="" default="1209600.0">
+			Tuổi thọ tính bằng giây từ lúc sinh, bao gồm cả giai đoạn non và thời gian offline.
+		</member>
+		<member name="production" type="AnimalProductionDefinition" setter="" getter="">
+			Cấu hình chu kỳ và loại sản phẩm vật nuôi tạo ra.
+		</member>
+	</members>
+</class>

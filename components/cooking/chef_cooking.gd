@@ -1,25 +1,39 @@
 class_name ChefCooking
 extends RefCounted
-## One serial queue owned by the farm, independent of the Chef scene and UI.
+## Hàng đợi nấu tuần tự thuộc trang trại, độc lập scene đầu bếp và giao diện.
+## Món hoàn thành chờ nhận vẫn chiếm sức chứa cho đến khi được chuyển vào túi.
+
+## Phát khi ít nhất một món trong hàng đợi hoàn thành.
 signal batch_completed
+## Phát khi hàng đợi hoặc danh sách món sẵn sàng thay đổi.
 signal changed
+## Phát mã công thức sau khi nhận một món.
 signal crafted(recipe_id: String)
+## Tổng số món đang nấu và chờ nhận tối đa.
 const CAPACITY: int = 20
+## Các công thức được game cung cấp.
 const RECIPES: Array[CookingRecipe] = [preload("res://resources/kitchen/recipes/fried_egg.tres"), preload("res://resources/kitchen/recipes/steamed_egg.tres"), preload("res://resources/kitchen/recipes/bread.tres"), preload("res://resources/kitchen/recipes/fruit_salad.tres"), preload("res://resources/kitchen/recipes/honey_bread.tres"), preload("res://resources/kitchen/recipes/root_tonic.tres"), preload("res://resources/kitchen/recipes/grafting_wax.tres"), preload("res://resources/kitchen/recipes/star_apple_tart.tres"), preload("res://resources/kitchen/recipes/star_peach_parfait.tres"), preload("res://resources/kitchen/recipes/star_pear_compote.tres"), preload("res://resources/kitchen/recipes/star_cherry_preserve.tres"), preload("res://resources/kitchen/recipes/hybrid_01_06_custard.tres"), preload("res://resources/kitchen/recipes/hybrid_02_07_custard.tres"), preload("res://resources/kitchen/recipes/hybrid_03_08_custard.tres"), preload("res://resources/kitchen/recipes/mono_06_custard.tres"), preload("res://resources/kitchen/recipes/mono_07_custard.tres"), preload("res://resources/kitchen/recipes/star_apple_tart_batch.tres"), preload("res://resources/kitchen/recipes/star_peach_parfait_batch.tres"), preload("res://resources/kitchen/recipes/star_pear_compote_batch.tres"), preload("res://resources/kitchen/recipes/star_cherry_preserve_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_01_06_custard_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_02_07_custard_batch.tres"), preload("res://resources/kitchen/recipes/hybrid_03_08_custard_batch.tres"), preload("res://resources/kitchen/recipes/mono_06_custard_batch.tres"), preload("res://resources/kitchen/recipes/mono_07_custard_batch.tres")]
+## Các món đang chờ theo thứ tự hoàn thành, mỗi dòng có mã công thức và finish_at.
 var queue: Array[Dictionary] = []
+## Mã công thức của các món đã nấu xong chờ nhận.
 var ready: Array[String] = []
+## Timestamp đã cập nhật gần nhất.
 var updated_at: float = 0.0
+## Khóa giao dịch nấu hoặc thu.
 var busy: bool = false
 
+## Tìm công thức theo mã, hoặc null nếu không có.
 static func find(id: String) -> CookingRecipe:
 	for recipe: CookingRecipe in RECIPES:
 		if String(recipe.recipe_id) == id:
 			return recipe
 	return null
 
+## Tạo dữ liệu lưu hàng đợi rỗng.
 static func fresh() -> Dictionary:
 	return {"queue": [], "ready": [], "updated_at": 0.0}
 
+## Kiểm tra cấu trúc, sức chứa, mã công thức và thứ tự thời điểm hoàn thành.
 static func valid(data: Variant, saved_at: float) -> bool:
 	if not data is Dictionary or data.size() != 3 or not data.get("queue") is Array or not data.get("ready") is Array or not SaveSchema.number(data.get("updated_at"), 0.0, saved_at) or data.queue.size() + data.ready.size() > CAPACITY:
 		return false
@@ -35,6 +49,8 @@ static func valid(data: Variant, saved_at: float) -> bool:
 			return false
 	return true
 
+## Chuyển các món đến hạn sang ready, tùy chọn phát signal hoàn thành.
+## Thời gian không lùi và thao tác bị bỏ qua khi đang bận.
 func advance(now: float, notify: bool = true) -> void:
 	if busy or not is_finite(now) or now < 0.0:
 		return
@@ -47,10 +63,12 @@ func advance(now: float, notify: bool = true) -> void:
 		changed.emit()
 		batch_completed.emit()
 
+## Cập nhật đến now rồi sao chép dữ liệu hàng đợi và món chờ nhận để lưu.
 func capture(now: float) -> Dictionary:
 	advance(now, false)
 	return {"queue": queue.duplicate(true), "ready": ready.duplicate(), "updated_at": updated_at}
 
+## Khôi phục dữ liệu đã kiểm tra rồi tiến đến now mà không phát thông báo.
 func restore(data: Dictionary, now: float) -> void:
 	queue.clear()
 	for row: Dictionary in data.queue:
@@ -59,6 +77,8 @@ func restore(data: Dictionary, now: float) -> void:
 	updated_at = float(data.updated_at)
 	advance(now, false)
 
+## Kiểm tra công thức, sức chứa, xu và nguyên liệu đúng cấp chất lượng.
+## Trả chuỗi rỗng khi có thể bắt đầu, hoặc thông báo lỗi.
 func quote(id: String, amount: int, inventory: InventoryComponent, wallet: WalletComponent = null) -> String:
 	var recipe: CookingRecipe = find(id)
 	if busy or recipe == null or not recipe.valid() or inventory == null or amount < 1 or amount > CAPACITY:
@@ -72,6 +92,8 @@ func quote(id: String, amount: int, inventory: InventoryComponent, wallet: Walle
 			return "Not enough ingredients."
 	return ""
 
+## Đồng bộ thời gian, tiêu nguyên liệu và xu rồi thêm các món vào hàng đợi tuần tự.
+## Trả chuỗi rỗng khi thành công, hoặc thông báo lỗi.
 func start(id: String, amount: int, inventory: InventoryComponent, now: float, wallet: WalletComponent = null) -> String:
 	if busy:
 		return "Cooking is unavailable."
@@ -96,6 +118,8 @@ func start(id: String, amount: int, inventory: InventoryComponent, now: float, w
 	busy = false
 	return ""
 
+## Chuyển các món đã xong có thể chứa vào túi, trả số món thực nhận.
+## Các món không vừa vẫn chờ nhận.
 func collect(inventory: InventoryComponent, now: float) -> int:
 	if busy or inventory == null:
 		return 0

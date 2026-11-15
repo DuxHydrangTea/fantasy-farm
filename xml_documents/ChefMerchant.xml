@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ChefMerchant" inherits="ShopMerchant" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điểm tương tác đầu bếp dùng cơ chế merchant để mở menu nấu ăn. Hiển thị trạng thái hàng đợi và món sẵn sàng phía trên nhân vật.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_cooking_status">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh_cooking_status">
+			<return type="void" />
+			<description>
+				Đồng bộ hàng đợi đến thời gian hiện tại và cập nhật nhãn, thanh tiến độ. Ẩn trạng thái khi profile chưa sẵn sàng hoặc menu/bong bóng đang hiện.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="cooking_status" type="PanelContainer" setter="" getter="">
+			Khung trạng thái nấu.
+		</member>
+		<member name="cooking_label" type="Label" setter="" getter="">
+			Nhãn tên món, tiến độ và số món sẵn sàng.
+		</member>
+		<member name="cooking_progress" type="ProgressBar" setter="" getter="">
+			Thanh tiến độ món đầu hàng đợi.
+		</member>
+		<member name="_world" type="FarmWorld" setter="" getter="">
+		</member>
+		<member name="_status_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+</class>

@@ -1,14 +1,25 @@
 class_name ObjectiveProgress
 extends RefCounted
-## Sequential objective state and atomic coin claims, independent of scenes/UI.
+## Tiến độ mục tiêu tuần tự và nhận thưởng xu, độc lập scene và giao diện.
+## Chỉ mục tiêu chưa nhận thưởng đầu tiên được ghi tiến độ.
+
+## Phát khi tiến độ hoặc lựa chọn hiển thị thay đổi.
 signal changed
+## Phát sau khi khôi phục trạng thái nếu không đang tạm ngưng thông báo.
 signal restored
+## Catalog mục tiêu hướng dẫn mặc định.
 const DEFAULT_CATALOG: ObjectiveCatalog = preload("res://resources/objectives/onboarding.tres")
+## Danh sách định nghĩa mục tiêu.
 var catalog: ObjectiveCatalog
+## Ví nhận thưởng.
 var wallet: WalletComponent
+## Hàm truy vấn trạng thái thế giới cho mục tiêu dựa trên trạng thái.
 var state_query: Callable
+## Tạm ngưng xử lý và thông báo trong quá trình khôi phục.
 var suspended: bool = false
+## Mã mục tiêu được ghim trên HUD.
 var tracked_id: String = ""
+## Trạng thái thu gọn HUD.
 var hud_collapsed: bool = false
 var _rows: Array = []
 var _busy: bool = false
@@ -20,24 +31,30 @@ func _init(purse: WalletComponent, query: Callable = Callable(), definitions: Ob
 	catalog = definitions
 	_rows = ObjectiveSaveSchema.fresh(catalog).steps
 
+## Chỉ số mục tiêu đầu tiên chưa nhận thưởng, hoặc -1 nếu đã nhận hết.
 func active_index() -> int:
 	for index: int in range(_rows.size()):
 		if not _rows[index].claimed:
 			return index
 	return -1
 
+## Định nghĩa mục tiêu hiện hành, hoặc null nếu đã hoàn tất.
 func active() -> ObjectiveDefinition:
 	var index: int = active_index()
 	return catalog.steps[index] if index >= 0 else null
 
+## Tiến độ mục tiêu hiện hành, hoặc 0 nếu không còn mục tiêu.
 func progress() -> int:
 	var index: int = active_index()
 	return int(_rows[index].progress) if index >= 0 else 0
 
+## Kiểm tra mục tiêu hiện hành đã đạt đủ tiến độ.
 func ready_to_claim() -> bool:
 	var step: ObjectiveDefinition = active()
 	return step != null and progress() == step.required
 
+## Ghi sự kiện dương phù hợp điều kiện mục tiêu hiện hành, không vượt mức yêu cầu.
+## Mục tiêu dựa trên trạng thái được cập nhật qua [method refresh_state].
 func record(condition: StringName, amount: int = 1) -> void:
 	var step: ObjectiveDefinition = active()
 	if suspended or _busy or step == null or step.state_condition or step.condition != condition or amount <= 0 or ready_to_claim():
@@ -55,10 +72,13 @@ func _refresh_active() -> bool:
 	_rows[active_index()].progress = value
 	return true
 
+## Truy vấn trạng thái và tăng tiến độ mục tiêu hiện hành nếu giá trị cao hơn.
 func refresh_state() -> void:
 	if not suspended and not _busy and _refresh_active():
 		changed.emit()
 
+## Nhận thưởng của mục tiêu hiện hành đã hoàn tất nếu ví còn chỗ.
+## Cập nhật ví và cờ nhận thưởng trước khi phát signal, rồi làm mới mục kế tiếp.
 func claim(id: StringName) -> Dictionary:
 	var step: ObjectiveDefinition = active()
 	if suspended or _busy or step == null or step.objective_id != id or not ready_to_claim():
@@ -77,9 +97,11 @@ func claim(id: StringName) -> Dictionary:
 	_busy = false
 	return {"ok": true, "coins": step.reward_coins}
 
+## Tạo bản sao tiến độ, mục tiêu ghim và trạng thái HUD để lưu.
 func capture() -> Dictionary:
 	return {"steps": _rows.duplicate(true), "tracked_id": tracked_id, "hud_collapsed": hud_collapsed}
 
+## Ghim mục tiêu có mã trong catalog và phát changed.
 func track(id: String) -> void:
 	if suspended or _busy:
 		return
@@ -89,18 +111,21 @@ func track(id: String) -> void:
 			changed.emit()
 			return
 
+## Đổi trạng thái thu gọn HUD và phát changed khi giá trị đổi.
 func set_collapsed(value: bool) -> void:
 	if suspended or _busy or hud_collapsed == value:
 		return
 	hud_collapsed = value
 	changed.emit()
 
+## Trả chỉ số mục tiêu được ghim, nếu không có thì dùng mục tiêu hiện hành.
 func tracked_index() -> int:
 	for index: int in range(catalog.steps.size()):
 		if String(catalog.steps[index].objective_id) == tracked_id:
 			return index
 	return active_index()
 
+## Kiểm tra và khôi phục dữ liệu, làm mới mục tiêu trạng thái và phát signal.
 func restore(data: Dictionary) -> bool:
 	if _busy or not ObjectiveSaveSchema.valid(data, catalog):
 		return false

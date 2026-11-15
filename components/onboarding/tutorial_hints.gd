@@ -1,6 +1,7 @@
 class_name TutorialHints
 extends Node
-## A brief optional preview; the full instruction is always available in Help.
+## Hiển thị gợi ý hướng dẫn ngắn tùy chọn; nội dung đầy đủ nằm trong menu trợ giúp.
+
 var world: FarmWorld
 var button: Button
 var label: Label
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 		_elapsed = 0
 		refresh()
 
+## Cập nhật gợi ý theo mục tiêu hiện tại khi node và bộ đếm đã sẵn sàng.
 func refresh() -> void:
 	if not is_inside_tree() or not _timer.is_inside_tree():
 		return

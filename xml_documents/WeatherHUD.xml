@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WeatherHUD" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		HUD hiển thị đồng hồ và công cụ xem thử thời gian, thời tiết trong bản debug.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_debug_bar">
+			<return type="void" />
+			<param index="0" name="column" type="VBoxContainer" />
+			<param index="1" name="theme" type="Theme" />
+			<description>
+			</description>
+		</method>
+		<method name="_group_title">
+			<return type="Label" />
+			<param index="0" name="rows" type="VBoxContainer" />
+			<description>
+			</description>
+		</method>
+		<method name="_toggle_debug_panel">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_weather">
+			<return type="void" />
+			<param index="0" name="kind" type="int" enum="WeatherSchedule.Weather" />
+			<description>
+			</description>
+		</method>
+		<method name="_debug_button">
+			<return type="Button" />
+			<param index="0" name="row" type="HBoxContainer" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_debug_bar">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Cập nhật đồng hồ và trạng thái giao diện theo thời điểm hiển thị.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_key_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="manager" type="WeatherManager" setter="" getter="">
+			Bộ quản lý cung cấp thời gian và trạng thái thời tiết.
+		</member>
+		<member name="label" type="Label" setter="" getter="">
+			Nhãn hiển thị đồng hồ.
+		</member>
+		<member name="debug_bar" type="PanelContainer" setter="" getter="">
+			Bảng công cụ debug khi được tạo.
+		</member>
+		<member name="debug_toggle" type="Button" setter="" getter="">
+			Nút mở bảng debug.
+		</member>
+		<member name="time_buttons" type="Button[]" setter="" getter="" default="[]">
+			Các nút chọn giờ xem thử.
+		</member>
+		<member name="weather_buttons" type="Button[]" setter="" getter="" default="[]">
+			Các nút chọn thời tiết.
+		</member>
+		<member name="_debug_title" type="Label" setter="" getter="">
+		</member>
+		<member name="_time_title" type="Label" setter="" getter="">
+		</member>
+		<member name="_weather_title" type="Label" setter="" getter="">
+		</member>
+		<member name="_last_timestamp" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_debug_visible" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InteractionResolver" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn mục tiêu tương tác cho phím hành động hoặc vị trí nhấp trên thế giới. Mục tiêu cùng loại ưu tiên được so theo khoảng cách, rồi instance ID để kết quả ổn định trong scene. Nhấp chuột chỉ xét hình ảnh bị nhấp trúng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+			</description>
+		</method>
+		<method name="candidates">
+			<return type="InteractionTarget[]" />
+			<description>
+				Thu thập mục tiêu từ các nhóm scene cùng thế giới với người chơi. Vật nuôi chỉ được đưa vào khi có sản phẩm thu trực tiếp đang chờ.
+			</description>
+		</method>
+		<method name="_same_world">
+			<return type="bool" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_crop_candidates">
+			<return type="InteractionTarget[]" />
+			<param index="0" name="point" type="Vector2" />
+			<param index="1" name="hover" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="resolve">
+			<return type="InteractionTarget" />
+			<description>
+				Chọn mục tiêu trong tầm và hướng nhìn cho phím tương tác, hoặc null. Bổ sung cây trồng và chậu hoa quanh ô đang được nhắm.
+			</description>
+		</method>
+		<method name="clicked">
+			<return type="InteractionTarget" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Chọn mục tiêu có hình ảnh chứa điểm toàn cục, hoặc null. Điểm chọn sản phẩm trên bảng kho chuồng được ưu tiên trực tiếp.
+			</description>
+		</method>
+		<method name="_better">
+			<return type="bool" />
+			<param index="0" name="candidate" type="InteractionTarget" />
+			<param index="1" name="best" type="InteractionTarget" />
+			<param index="2" name="origin" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="texture">
+			<return type="Texture2D" />
+			<param index="0" name="sprite" type="Node2D" />
+			<description>
+				Lấy texture của Sprite2D hoặc khung hiện tại của AnimatedSprite2D.
+			</description>
+		</method>
+		<method name="visual_rect">
+			<return type="Rect2" />
+			<param index="0" name="target" type="InteractionTarget" />
+			<description>
+				Tính hình chữ nhật phần ảnh được dùng trong tọa độ node hình ảnh. Kết quả xét offset, căn giữa, lật và vùng ảnh; cache biên ảnh theo texture.
+			</description>
+		</method>
+		<method name="hit">
+			<return type="bool" />
+			<param index="0" name="target" type="InteractionTarget" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+				Kiểm tra điểm toàn cục nằm trong vùng hình ảnh mục tiêu, có đệm hai đơn vị.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi dùng để giới hạn thế giới và xác định vị trí, hướng.
+		</member>
+		<member name="_bounds" type="Dictionary[Texture2D, Rect2]" setter="" getter="" default="{}">
+		</member>
+	</members>
+</class>

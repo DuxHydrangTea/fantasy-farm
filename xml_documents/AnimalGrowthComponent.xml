@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalGrowthComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Theo dõi tuổi và các mốc trưởng thành, hết tuổi thọ của một con vật. Tuổi được cập nhật độc lập với resource loài và trạng thái đói khát.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="configure">
+			<return type="void" />
+			<param index="0" name="duration" type="float" />
+			<param index="1" name="initial_age" type="float" default="0.0" />
+			<param index="2" name="lifetime" type="float" default="1209600.0" />
+			<param index="3" name="tonic_used" type="bool" default="false" />
+			<description>
+				Thiết lập các mốc và tuổi ban đầu, giới hạn tuổi trong khoảng tuổi thọ. Nếu thuốc đã dùng, thời gian trưởng thành được giảm một nửa.
+			</description>
+		</method>
+		<method name="is_adult">
+			<return type="bool" />
+			<description>
+				Trả về true khi tuổi đã đạt mốc trưởng thành.
+			</description>
+		</method>
+		<method name="seconds_until_adult">
+			<return type="float" />
+			<description>
+				Số giây còn lại đến trưởng thành, tối thiểu bằng 0.
+			</description>
+		</method>
+		<method name="is_dead">
+			<return type="bool" />
+			<description>
+				Trả về true khi tuổi đã đạt tuổi thọ.
+			</description>
+		</method>
+		<method name="seconds_until_death">
+			<return type="float" />
+			<description>
+				Số giây còn lại đến khi hết tuổi thọ, tối thiểu bằng 0.
+			</description>
+		</method>
+		<method name="progress_ratio">
+			<return type="float" />
+			<description>
+				Tỉ lệ tiến tới trưởng thành trong khoảng 0–1.
+			</description>
+		</method>
+		<method name="advance">
+			<return type="void" />
+			<param index="0" name="elapsed" type="float" />
+			<description>
+				Tăng tuổi thêm số giây dương và phát các signal khi vượt mốc. Nếu đã hết tuổi thọ hoặc thời gian không dương, không cập nhật.
+			</description>
+		</method>
+		<method name="apply_juvenile_tonic">
+			<return type="bool" />
+			<description>
+				Dùng thuốc một lần khi còn non và còn sống, giảm một nửa mốc trưởng thành. Phát [signal matured] ngay nếu tuổi hiện tại đã đạt mốc mới. Tuổi và tuổi thọ không đổi. Trả về false nếu không thể dùng thuốc.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="juvenile_tonic_used" type="bool" setter="" getter="" default="false">
+			Cho biết thuốc tăng trưởng con non đã được dùng.
+		</member>
+		<member name="age_seconds" type="float" setter="" getter="" default="0.0">
+			Tuổi hiện tại tính bằng giây.
+		</member>
+		<member name="maturity_seconds" type="float" setter="" getter="" default="86400.0">
+			Tuổi trưởng thành sau khi tính tác dụng thuốc.
+		</member>
+		<member name="lifespan_seconds" type="float" setter="" getter="" default="1209600.0">
+			Tổng tuổi thọ tính bằng giây.
+		</member>
+	</members>
+	<signals>
+		<signal name="matured">
+			<description>
+				Phát khi tuổi vượt mốc trưởng thành.
+			</description>
+		</signal>
+		<signal name="lifespan_reached">
+			<description>
+				Phát khi tuổi chạm giới hạn tuổi thọ trong [method advance].
+			</description>
+		</signal>
+		<signal name="age_changed">
+			<param index="0" name="age_seconds" type="float" />
+			<description>
+				Phát sau khi tuổi được tăng, mang tuổi mới tính bằng giây.
+			</description>
+		</signal>
+	</signals>
+</class>

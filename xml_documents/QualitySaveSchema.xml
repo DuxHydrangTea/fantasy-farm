@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="QualitySaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kiểm tra và chuyển dữ liệu chất lượng vật phẩm trong các container lưu game.
+	</brief_description>
+	<description>
+		Mỗi ô chứa mã vật phẩm, tổng số lượng và mảng số lượng theo ba cấp chất lượng. Các hàm migrate và split thay đổi trực tiếp dữ liệu được truyền vào.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="slot_valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="slot" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="cap" type="int" default="0" />
+			<param index="3" name="allow_mixed" type="bool" default="false" />
+			<description>
+				Kiểm tra cấu trúc ô, mã trong catalog, giới hạn chồng và tổng theo cấp. Nếu [param cap] dương, giới hạn chồng còn bị chặn bởi giá trị này. [param allow_mixed] cho phép một ô chứa nhiều cấp trong dữ liệu cũ.
+			</description>
+		</method>
+		<method name="migrate_slots" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="slots" type="Variant" />
+			<description>
+				Thêm mảng cấp chất lượng mặc định vào các ô cũ chưa có trường tiers. Trả false khi danh sách hoặc số lượng không hợp lệ.
+			</description>
+		</method>
+		<method name="migrate" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Bổ sung cấp chất lượng mặc định cho túi người chơi, kho và giỏ công nhân. Dữ liệu có thể đã được sửa một phần nếu một bước sau trả false.
+			</description>
+		</method>
+		<method name="split_legacy_slots" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="slots" type="Variant" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<param index="2" name="cap" type="int" default="0" />
+			<param index="3" name="maximum" type="int" default="256" />
+			<description>
+				Tách các chồng nhiều cấp thành các ô cùng cấp, giữ nguyên tổng số vật phẩm. Ưu tiên ô trống sẵn có và thêm ô khi cần. [param maximum] giới hạn kích thước danh sách đầu vào; các ô được thêm có thể làm danh sách dài hơn giới hạn đó.
+			</description>
+		</method>
+		<method name="split_legacy" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="catalog" type="SaveCatalog" />
+			<description>
+				Tách chồng cũ trong túi, các kho và giỏ công nhân, cập nhật số ô của kho. Các thay đổi thực hiện tại chỗ, nên dữ liệu có thể đã sửa một phần khi lỗi.
+			</description>
+		</method>
+	</methods>
+</class>

@@ -1,9 +1,14 @@
 class_name TouchScrollGesture
 extends RefCounted
-## Scroll touch UI even on hybrid/preview devices, canceling the original button press.
+## Xử lý kéo cuộn cảm ứng trong UI, kể cả thiết bị lai và chế độ xem thử.
+## Khi vượt ngưỡng kéo, gửi thông báo cuộn để hủy lần nhấn nút đang chờ.
+
+## Viewport được tìm ScrollContainer.
 var viewport: Viewport
+## Trạng thái từng ngón tay theo chỉ số input.
 var fingers: Dictionary[int, Dictionary] = {}
 
+## Xử lý chạm, kéo và sự kiện chuột mô phỏng; trả true nếu sự kiện được tiêu thụ.
 func handle(event: InputEvent) -> bool:
 	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
 		if event is InputEventMouseMotion:
@@ -53,6 +58,7 @@ func handle(event: InputEvent) -> bool:
 		return true
 	return false
 
+## Hủy tất cả cử chỉ đang theo dõi và kết thúc thông báo cuộn.
 func cancel() -> void:
 	for finger: Dictionary in fingers.values():
 		_end(finger, true)

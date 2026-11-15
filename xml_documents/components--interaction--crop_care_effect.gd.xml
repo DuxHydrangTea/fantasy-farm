@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/interaction/crop_care_effect.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiệu ứng biểu tượng sâu hoặc cỏ bay lên và mờ đi sau khi chăm sóc cây.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pests" type="bool" setter="" getter="" default="false">
+			Chọn biểu tượng sâu bệnh thay vì cỏ dại.
+		</member>
+		<member name="start_position" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+			Vị trí bắt đầu trong tọa độ node cha.
+		</member>
+	</members>
+	<constants>
+		<constant name="WEEDS" value="&lt;Object&gt;">
+			Texture biểu tượng cỏ dại.
+		</constant>
+		<constant name="PESTS" value="&lt;Object&gt;">
+			Texture biểu tượng sâu bệnh.
+		</constant>
+	</constants>
+</class>

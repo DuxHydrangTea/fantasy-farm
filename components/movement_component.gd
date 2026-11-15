@@ -1,18 +1,32 @@
 class_name MovementComponent
 extends Node
+## Di chuyển CharacterBody2D cha bằng gia tốc, ma sát và đích tùy chọn.
+## Hỗ trợ tìm đường vòng ngắn quanh vật cản bằng kiểm tra va chạm của body.
 
+## Bước thử dịch ngang khi tìm đường vòng.
 const DETOUR_STEP: float = 8.0
+## Số bước dịch ngang tối đa mỗi phía.
 const DETOUR_STEPS: int = 16
+## Khoảng kiểm tra trước theo hướng di chuyển.
 const DETOUR_LOOKAHEAD: float = 10.0
+## Khoảng trống phía trước cần có tại điểm vòng.
 const DETOUR_FORWARD_CLEARANCE: float = 24.0
+## Thời gian chờ trước khi thử lại tìm đường vòng, tính bằng giây.
 const DETOUR_RETRY_DELAY: float = 0.2
 
+## Tốc độ tối đa theo đơn vị thế giới mỗi giây.
 @export var speed: float = 150.0
+## Gia tốc khi có hướng di chuyển.
 @export var acceleration: float = 1200.0
+## Tốc độ giảm vận tốc khi không có hướng.
 @export var friction: float = 1600
+## Khoảng cách tới đích được xem là đã đến.
 @export var arrival_distance: float = 2.0
+## CharacterBody2D cha, được xác định khi node sẵn sàng.
 var body: CharacterBody2D
+## Cho biết có đích di chuyển đang hoạt động.
 var has_target: bool = false
+## Tọa độ toàn cục của đích.
 var target_position: Vector2 = Vector2.ZERO
 var _blocked_time: float = 0.0
 var _detour_direction: Vector2 = Vector2.ZERO
@@ -25,6 +39,8 @@ func _ready() -> void:
 	body = get_parent() as CharacterBody2D
 	assert(body != null, "MovementComponent phai la con truc tiep cua CharacterBody2D")
 
+## Cập nhật vận tốc theo hướng, gia tốc hoặc ma sát rồi gọi move_and_slide.
+## Giới hạn tốc độ âm dùng tốc độ cấu hình; giá trị không âm đặt thêm trần.
 func move(dir: Vector2, delta: float, speed_limit: float = -1.0) -> void:
 	var allowed_speed: float = speed if speed_limit < 0.0 else minf(speed, speed_limit)
 	var target_velocity: Vector2 = dir.limit_length(1.0) * allowed_speed
@@ -34,6 +50,8 @@ func move(dir: Vector2, delta: float, speed_limit: float = -1.0) -> void:
 		body.velocity = body.velocity.limit_length(allowed_speed)
 	body.move_and_slide()
 
+## Di chuyển theo hướng và thử lệch sang bên khi đường phía trước bị chặn.
+## Nếu có [param goal], giữ hướng vòng qua góc đến khi đường thẳng tới đích thông.
 func move_with_avoidance(dir: Vector2, delta: float, speed_limit: float = -1.0, goal: Vector2 = Vector2.INF) -> void:
 	if dir.is_zero_approx():
 		clear_detour()
@@ -98,6 +116,7 @@ func _move_along_detour(remaining: Vector2, strength: float, delta: float, speed
 		step_limit = minf(step_limit, speed_limit)
 	move(remaining.normalized() * strength, delta, step_limit)
 
+## Xóa trạng thái đường vòng và thời gian chờ thử lại.
 func clear_detour() -> void:
 	_detour_direction = Vector2.ZERO
 	_detour_side = Vector2.ZERO
@@ -105,6 +124,7 @@ func clear_detour() -> void:
 	_detour_rounding_corner = false
 	_detour_retry_remaining = 0.0
 
+## Đặt đích toàn cục và đặt lại thời gian bị chặn.
 func set_target(world_position: Vector2) -> void:
 	if not world_position.is_equal_approx(target_position):
 		clear_detour()
@@ -112,10 +132,12 @@ func set_target(world_position: Vector2) -> void:
 	has_target = true
 	_blocked_time = 0.0
 
+## Hủy đích hiện tại và đặt lại thời gian bị chặn.
 func cancel_target() -> void:
 	has_target = false
 	_blocked_time = 0.0
 
+## Hướng đơn vị đến đích, hoặc vector 0 khi không có đích hay đã tới.
 func target_direction() -> Vector2:
 	if not has_target or body.global_position.distance_to(target_position) <= arrival_distance:
 		return Vector2.ZERO
@@ -126,6 +148,9 @@ func target_direction() -> Vector2:
 # Nếu vẫn dùng toàn bộ tốc độ, quán tính có thể đưa nhân vật qua đích rồi quay lại, rung liên tục.
 # max(delta, 0.0001) tránh chia cho 0; thời gian bị chặn giúp hủy đích khi mắc tường,
 # để hệ thống tìm đường được lập kế hoạch lại thay vì đẩy vào vật cản mãi.
+## Di chuyển một bước đến đích, tùy chọn tránh vật cản.
+## Giới hạn tốc độ bước cuối để không vượt đích; hủy đích khi đến nơi hoặc
+## bị chặn liên tục 0,2 giây để nơi gọi có thể lập kế hoạch lại.
 func move_to_target(delta: float, avoid_obstacles: bool = false) -> void:
 	var direction: Vector2 = target_direction()
 	if direction.is_zero_approx():
@@ -147,6 +172,7 @@ func move_to_target(delta: float, avoid_obstacles: bool = false) -> void:
 		cancel_target()
 		stop()
 
+## Xóa đường vòng và đặt vận tốc body về 0.
 func stop() -> void:
 	clear_detour()
 	body.velocity = Vector2.ZERO

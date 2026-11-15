@@ -1,24 +1,45 @@
 class_name GrassChunkField
 extends Node2D
-## G2/G3 manager: indexed chunks and one shared actor feed, never per-tuft ticks.
+## Điều phối chunk cỏ, cache GPU và dữ liệu tương tác actor dùng chung.
+## Chỉ chọn các chunk trong vùng camera và vùng dự trữ, không cập nhật từng bụi cỏ.
+
+## Shader cỏ mặc định.
 const SHADER: Shader = preload("res://shaders/grass_field.gdshader")
+## Shader được dùng cho field.
 @export var field_shader: Shader = SHADER
+## Node Y-sort tổ tiên chung với actor.
 @export var sort_root: Node2D
+## Kích thước chunk theo pixel.
 @export_enum("256:256", "512:512") var chunk_size: int = 512
+## Số lớp chunk dự trữ quanh vùng nhìn.
 @export_range(0, 2) var reserve_chunks: int = 1
+## Giới hạn chunk lưu trên GPU.
 @export_range(1, 256) var max_resident_chunks: int = 64
+## Giới hạn instance lưu trên GPU.
 @export_range(1, 500000) var max_resident_instances: int = 100000
+## Giới hạn batch lưu trên GPU.
 @export_range(1, 8192) var max_resident_batches: int = 2048
+## Cường độ gió được truyền vào shader.
 @export_range(0.0, 6.0) var wind_strength: float = 0.85
+## Bật dữ liệu actor làm cỏ phản ứng.
 @export var interaction_enabled: bool = false
+## Tần số cập nhật dữ liệu tương tác.
 @export_enum("30:30", "60:60") var interaction_hz: int = 60
+## Nguồn dữ liệu tương tác actor.
 var interactions: GrassInteractionFeed = GrassInteractionFeed.new()
+## Catalog hình cỏ.
 var catalog: GrassSourceCatalog = GrassSourceCatalog.new()
+## Chỉ mục chunk trên CPU.
 var index: GrassChunkIndex = GrassChunkIndex.new()
+## Bộ quản lý tài nguyên vẽ GPU.
 var renderer: GrassChunkRenderer = GrassChunkRenderer.new()
+## Các mẫu cỏ đầu vào.
 var samples: Array[Dictionary] = []
+## Material shader dùng chung.
 var effect: ShaderMaterial
+## Cho phép hiển thị và cập nhật field.
 var enabled: bool = true
+## Số lần dựng lại chỉ mục.
 var index_builds: int = 0
 var _last_region: Rect2i = Rect2i(0, 0, -1, -1)
 var _sort_pose: Transform2D
@@ -42,11 +63,13 @@ func _ready() -> void:
 	rebuild()
 	_visibility()
 
+## Sao chép mẫu mới và dựng lại chỉ mục nếu node đã sẵn sàng.
 func set_samples(values: Array[Dictionary]) -> void:
 	samples = values.duplicate(true)
 	if is_node_ready():
 		rebuild()
 
+## Xóa cache vẽ, dựng chỉ mục trong không gian sort và cập nhật vùng nhìn.
 func rebuild() -> void:
 	if effect == null:
 		return
@@ -59,6 +82,7 @@ func rebuild() -> void:
 	_last_region = Rect2i(0, 0, -1, -1)
 	update_view()
 
+## Đặt cường độ gió trong khoảng 0–6 và cập nhật biên vẽ dự phòng.
 func set_wind(strength: float) -> void:
 	wind_strength = clampf(strength, 0.0, 6.0)
 	if effect == null:
@@ -74,10 +98,12 @@ func set_wind(strength: float) -> void:
 	renderer.update_bounds(_margin)
 	_last_region = Rect2i(0, 0, -1, -1)
 
+## Bật hoặc tắt field và cập nhật hiển thị.
 func set_enabled(value: bool) -> void:
 	enabled = value
 	_visibility()
 
+## Gắn hoặc tháo nguồn tương tác actor và cập nhật biên vẽ.
 func set_interactions_enabled(value: bool) -> void:
 	interaction_enabled = value
 	if effect == null:
@@ -105,6 +131,7 @@ func _process(delta: float) -> void:
 		interactions.upload_hz = interaction_hz
 		interactions.tick(delta, _world_view, effect)
 
+## Chuyển viewport sang không gian sort, chọn chunk và tính vùng actor tương tác.
 func update_view() -> void:
 	if effect == null or not enabled or not is_visible_in_tree():
 		return
@@ -129,6 +156,7 @@ func update_view() -> void:
 	var extent_scale: float = maxf(absf(world_pose.x.x) + absf(world_pose.y.x), absf(world_pose.x.y) + absf(world_pose.y.y))
 	_world_view = _world_view.grow(index.extent * extent_scale + 12.0)
 
+## Chọn vùng chunk cho diện tích trong không gian sort, gồm dự trữ và margin.
 func select_view(area: Rect2) -> void:
 	var region: Rect2i = index.cell_rect(area, _margin + float(reserve_chunks * chunk_size))
 	if region == _last_region:

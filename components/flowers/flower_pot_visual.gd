@@ -1,7 +1,8 @@
 @tool
 class_name FlowerPotVisual
 extends Node2D
-## Two independent layers. PlantOffset and VisualRoot transforms stay editor-owned.
+## Hiển thị hai lớp chậu và cây hoa, giữ các biến đổi vị trí do scene và editor quản lý.
+
 @export var pot_sprite: Sprite2D
 @export var plant_socket: Node2D
 @export var plant_offset: Node2D
@@ -9,6 +10,7 @@ extends Node2D
 var _pot: PotDefinition
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 
+## Đổi định nghĩa chậu và kết nối tín hiệu thay đổi tài nguyên.
 func apply_definition(value: PotDefinition) -> void:
 	if value == _pot:
 		return
@@ -27,18 +29,21 @@ func _apply_pot() -> void:
 	plant_socket.position = _pot.plant_socket
 	_bounds.clear()
 
+## Đổi texture cây và ẩn lớp cây khi không có texture.
 func show_plant(texture: Texture2D) -> void:
 	if flower == null:
 		return
 	flower.texture = texture
 	flower.visible = texture != null
 
+## Trả sprite cây đang hiện hoặc sprite chậu làm điểm neo trạng thái.
 func status_sprite() -> Node2D:
 	return flower if flower != null and flower.visible else pot_sprite
 
 func _clear_bounds() -> void:
 	_bounds.clear()
 
+## Tính bao hình các lớp đang hiển thị trong hệ tọa độ node tham chiếu.
 func bounds_in(reference: Node2D) -> Rect2:
 	var result: Rect2 = Rect2()
 	var initialized: bool = false

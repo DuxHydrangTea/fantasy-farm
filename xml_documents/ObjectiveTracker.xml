@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveTracker" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kết nối các sự kiện gameplay của thế giới với ObjectiveProgress. Tiến độ được ghi từ sự kiện đã commit và truy vấn trạng thái, không suy ra từ thay đổi inventory.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="setup">
+			<return type="void" />
+			<description>
+				Tạo mô hình một lần và kết nối hành động, bán hàng, mở đất và bộ hẹn giờ.
+			</description>
+		</method>
+		<method name="_connect_sale">
+			<return type="void" />
+			<param index="0" name="menu" type="ProduceSalesUI" />
+			<description>
+			</description>
+		</method>
+		<method name="_farming_commit">
+			<return type="void" />
+			<param index="0" name="condition" type="StringName" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_sold">
+			<return type="void" />
+			<param index="0" name="quantity" type="int" />
+			<param index="1" name="_total" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_query">
+			<return type="int" />
+			<param index="0" name="condition" type="StringName" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cung cấp ví và sự kiện gameplay.
+		</member>
+		<member name="progress" type="ObjectiveProgress" setter="" getter="">
+			Mô hình tiến độ mục tiêu.
+		</member>
+	</members>
+</class>

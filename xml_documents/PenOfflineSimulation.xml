@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenOfflineSimulation" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cầu nối scene cho mô phỏng offline của cả đàn trong một chuồng. Chụp actor và máng thành dữ liệu thuần, chạy PenOfflineModel rồi áp kết quả trước khi AI ăn uống vật lý tiếp tục.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="owner_pen" type="Node2D" />
+			<description>
+			</description>
+		</method>
+		<method name="advance">
+			<return type="bool" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="force" type="bool" default="false" />
+			<description>
+				Tiến đàn và nguồn cung đến timestamp khi khoảng gián đoạn đủ dài hoặc force bật. Hủy đường đến máng hiện tại, khôi phục tồn máng rồi áp từng bước nhu cầu. Trả false khi đang bận hoặc khoảng online ngắn cần AI vật lý xử lý.
+			</description>
+		</method>
+		<method name="sync_before_change">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Chốt thời gian cũ trước khi thay đổi chuồng hoặc nguồn cung. Khoảng ngắn được cập nhật qua nhu cầu từng actor thay vì mô hình đàn.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pen" type="Node2D" setter="" getter="">
+			Chuồng chứa actor và máng.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Khóa tránh cập nhật lồng nhau.
+		</member>
+	</members>
+	<constants>
+		<constant name="SUSPENSION_GAP" value="5.0">
+			Khoảng gián đoạn tối thiểu để tự chuyển sang mô phỏng offline, tính bằng giây.
+		</constant>
+	</constants>
+</class>

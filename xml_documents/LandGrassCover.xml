@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LandGrassCover" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vẽ lớp cỏ phủ đất chưa mở và phần đang mở bằng bốn CanvasItem dùng chung material. Chuyển động gió và actor được xử lý trong shader.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="install">
+			<return type="bool" />
+			<param index="0" name="land" type="LandExpansionComponent" />
+			<description>
+				Tạo material và CanvasItem cho land nếu kích thước tile và texture phù hợp.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="land" type="LandExpansionComponent" />
+			<description>
+				Dựng lại phần nền hoặc phần mở khi số khối hay tiến độ hiệu ứng thay đổi.
+			</description>
+		</method>
+		<method name="_draw_cells">
+			<return type="int" />
+			<param index="0" name="land" type="LandExpansionComponent" />
+			<param index="1" name="cells" type="Rect2i" />
+			<param index="2" name="offset" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="sync_from">
+			<return type="void" />
+			<param index="0" name="effect" type="ShaderMaterial" />
+			<description>
+				Đồng bộ tham số gió và actor đã thay đổi từ material cỏ chính.
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Giải phóng RID và đặt lại trạng thái, bộ đếm lớp phủ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="active" type="bool" setter="" getter="" default="false">
+			Cho biết các tài nguyên vẽ đã được cài.
+		</member>
+		<member name="materials" type="ShaderMaterial[]" setter="" getter="" default="[]">
+			Các material dùng chung theo vùng texture.
+		</member>
+		<member name="canvases" type="RID[]" setter="" getter="" default="[]">
+			Các CanvasItem RID đã cấp phát.
+		</member>
+		<member name="base_count" type="int" setter="" getter="" default="0">
+			Số ô trong lớp nền hiện tại.
+		</member>
+		<member name="reveal_count" type="int" setter="" getter="" default="0">
+			Số ô trong lớp đang mở.
+		</member>
+		<member name="base_builds" type="int" setter="" getter="" default="0">
+			Số lần dựng lại lớp nền.
+		</member>
+		<member name="reveal_builds" type="int" setter="" getter="" default="0">
+			Số lần dựng lại lớp đang mở.
+		</member>
+		<member name="_base_key" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_reveal_key" type="Vector2i" setter="" getter="" default="Vector2i(-2, -2)">
+		</member>
+		<member name="_previous" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader tile cỏ.
+		</constant>
+		<constant name="KEYS" value="Array[StringName]([&amp;&quot;wind_strength&quot;, &amp;&quot;wind_direction&quot;, &amp;&quot;use_test_time&quot;, &amp;&quot;test_time&quot;, &amp;&quot;actor_count&quot;, &amp;&quot;actor_segments&quot;, &amp;&quot;actor_parameters&quot;, &amp;&quot;interaction_clock&quot;])">
+			Các tham số được đồng bộ từ material cỏ chính.
+		</constant>
+	</constants>
+</class>

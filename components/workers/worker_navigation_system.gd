@@ -1,25 +1,44 @@
 class_name WorkerNavigationSystem
 extends Node
-## Sparse footprint-specific walkability shared by the team. Searches expand in
-## round-robin order with a common time/query/expansion budget, including A*.
+## Lập đường đi dùng chung cho công nhân với cache ô và cạnh theo hình va chạm.
+## Các tìm kiếm được xử lý luân phiên trong ngân sách thời gian, truy vấn vật lý
+## và số bước mở rộng chung cho mỗi frame vật lý.
+
+## Số truy vấn vật lý tối đa cho một lượt xử lý.
 const QUERY_BUDGET: int = 96
+## Số bước mở rộng tìm đường tối đa cho một lượt.
 const EXPANSION_BUDGET: int = 384
+## Ngân sách thời gian một lượt, tính bằng micro giây.
 const TIME_BUDGET_USEC: int = 1500
+## Các hướng lưới được xét khi mở rộng.
 const DIRECTIONS: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
+## Thế giới chứa địa hình và vật cản.
 var world: FarmWorld
+## Cache tính đi được và cạnh cho từng hình va chạm và cấu hình lưới.
 var caches: Dictionary = {}
+## Các tìm kiếm đang chờ hoàn thành.
 var jobs: Array[Dictionary] = []
+## Vị trí luân phiên trong danh sách tìm kiếm.
 var cursor: int = 0
+## Số truy vấn của lượt xử lý gần nhất.
 var queries_last_step: int = 0
+## Số bước mở rộng của lượt gần nhất.
 var expansions_last_step: int = 0
+## Tổng truy vấn vật lý từ khi hệ thống hoạt động.
 var total_queries: int = 0
+## Số đường hoàn thành thành công.
 var completed_paths: int = 0
+## Số đường tìm thất bại.
 var failed_paths: int = 0
+## Revision tăng khi hình học thay đổi hoặc cache bị xóa.
 var geometry_revision: int = 0
 var _pumped_frame: int = -1
 var _static_areas: Dictionary = {}
+## Bật đo thời gian xử lý bộ tìm đường.
 var profiling: bool = false
+## Tổng thời gian đã đo tính bằng micro giây.
 var profile_usec: int = 0
+## Thời gian lớn nhất của một lượt đo, tính bằng micro giây.
 var profile_max_usec: int = 0
 
 func _ready() -> void:
@@ -34,6 +53,7 @@ func _connect_tiles() -> void:
 	for body: Node in world.find_children("*", "StaticBody2D", true, false):
 		_geometry_changed(body)
 
+## Xóa mọi tìm kiếm và cache, đặt lại con trỏ và tăng revision hình học.
 func reset() -> void:
 	jobs.clear()
 	caches.clear()
@@ -46,6 +66,7 @@ func _geometry_removed(node: Node) -> void:
 		invalidate_region(_static_areas[id])
 		_static_areas.erase(id)
 
+## Xóa cache và khởi động lại các tìm kiếm còn có đích sau khi địa hình thay đổi.
 func reset_cache() -> void:
 	geometry_revision += 1
 	caches.clear()
@@ -79,6 +100,7 @@ func _geometry_changed(node: Node) -> void:
 	_static_areas[body.get_instance_id()] = area
 	invalidate_region(area)
 
+## Xóa các ô và cạnh cache giao vùng thay đổi, rồi khởi động lại tìm kiếm bị ảnh hưởng.
 func invalidate_region(area: Rect2) -> void:
 	geometry_revision += 1
 	for cache: Dictionary in caches.values():
@@ -119,11 +141,13 @@ func _restart_jobs(area: Rect2 = Rect2()) -> void:
 			else:
 				jobs.append(job)
 
+## Xóa các yêu cầu tìm đường đang chờ của navigator.
 func cancel(nav: WorkerNavigation) -> void:
 	for index: int in range(jobs.size() - 1, -1, -1):
 		if jobs[index].nav.get_ref() == nav:
 			jobs.remove_at(index)
 
+## Thay yêu cầu cũ bằng một tìm kiếm mới theo hình va chạm và lưới của navigator.
 func request(nav: WorkerNavigation) -> void:
 	cancel(nav)
 	var shape: CollisionShape2D = nav.collision_shape
@@ -139,6 +163,7 @@ func request(nav: WorkerNavigation) -> void:
 func _physics_process(_delta: float) -> void:
 	pump()
 
+## Xử lý các tìm kiếm luân phiên một lần mỗi frame vật lý đến khi hết ngân sách.
 func pump() -> void:
 	var frame: int = Engine.get_physics_frames()
 	if frame == _pumped_frame:

@@ -1,7 +1,12 @@
 class_name ToolUpgradeCatalog
 extends Resource
+## Danh mục giá và điều kiện nâng cấp cho từng công cụ và cấp đích.
+
+## Các lựa chọn mua nâng cấp.
 @export var offers: Array[ToolUpgradeOffer] = []
 
+## Kiểm tra đủ một lựa chọn cho mỗi cặp công cụ và cấp, không trùng cặp,
+## cùng giới hạn hợp lệ của giá, gỗ và số cột đất đã mua.
 func valid() -> bool:
 	if offers.size() != ToolUpgradeState.TOOLS.size() * (ToolUpgradeState.MAX_LEVEL - 1):
 		return false
@@ -17,6 +22,7 @@ func valid() -> bool:
 		seen[key] = true
 	return true
 
+## Tìm lựa chọn theo mã công cụ và cấp đích, trả về null khi không tìm thấy.
 func find(tool: StringName, target_level: int) -> ToolUpgradeOffer:
 	for offer: ToolUpgradeOffer in offers:
 		if offer != null and offer.tool == tool and offer.target_level == target_level:

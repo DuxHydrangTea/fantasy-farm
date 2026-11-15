@@ -1,5 +1,10 @@
 extends RefCounted
-## Pure geometry: no Nodes, clock, inventory or rendering access.
+## Chọn tổ ong cho một điểm thụ phấn dựa trên dữ liệu hình học đã cung cấp.
+## Hàm thuần không truy cập scene, đồng hồ, inventory hoặc phần vẽ.
+
+## Trả chỉ số tổ đã sửa phù hợp ô cố định cùng vườn, hoặc tổ tự do gần nhất
+## trong bán kính bình phương. Nếu bằng khoảng cách, ưu tiên mã tổ nhỏ hơn.
+## Trả -1 khi không có tổ phù hợp.
 static func choose(point: Vector2, garden: String, fixed_slot: int, hives: Array[Dictionary], radius_squared: float) -> int:
 	var nearest: int = -1
 	var distance: float = INF

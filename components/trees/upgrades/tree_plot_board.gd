@@ -1,8 +1,14 @@
 class_name TreePlotBoard
 extends StaticBody2D
+## Bảng tương tác mở giao diện mở rộng khu trồng cây theo loại.
+
+## Thế giới sở hữu bảng.
 var world: FarmWorld
+## Loại khu cây mà bảng quản lý.
 var kind: TreeDefinition.Kind
+## Sprite bảng dùng cho tương tác.
 var sprite: Sprite2D
+## Giao diện mở rộng được tạo khi sẵn sàng.
 var menu: TreePlotMenu
 
 func _ready() -> void:
@@ -27,6 +33,7 @@ func _ready() -> void:
 	menu.board = self
 	add_child(menu)
 
+## Mở bảng nếu đúng người chơi, bảng hiển thị và khoảng cách không quá 32.
 func open_board(customer: FarmPlayer) -> bool:
 	if customer != world.player or not is_visible_in_tree() or customer.global_position.distance_to(global_position) > 32:
 		return false

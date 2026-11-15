@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="VisualValueRow" inherits="HBoxContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hàng giao diện hiển thị biểu tượng, giá trị và tooltip tên hoặc chất lượng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="make_icon" qualifiers="static">
+			<return type="TextureRect" />
+			<param index="0" name="texture" type="Texture2D" />
+			<param index="1" name="pixels" type="int" default="24" />
+			<description>
+				Tạo TextureRect giữ tỉ lệ ảnh, dùng lọc nearest và kích thước tối thiểu.
+			</description>
+		</method>
+		<method name="money" qualifiers="static">
+			<return type="void" />
+			<param index="0" name="label" type="Label" />
+			<description>
+				Đặt biểu tượng xu trước nhãn có sẵn bằng cách chuyển nhãn vào một hàng mới. Metadata trên nhãn ngăn việc bọc lặp lại khi gọi nhiều lần.
+			</description>
+		</method>
+		<method name="before" qualifiers="static">
+			<return type="VisualValueRow" />
+			<param index="0" name="label" type="Label" />
+			<description>
+				Tạo một hàng cùng node cha và đặt ngay trước nhãn đã cho.
+			</description>
+		</method>
+		<method name="show_item">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="text" type="String" />
+			<param index="2" name="tier" type="int" default="-1" />
+			<description>
+				Hiển thị biểu tượng, nội dung và tên đã dịch của vật phẩm. Cấp dương hiển thị huy hiệu chất lượng. Vật phẩm null ẩn toàn bộ hàng.
+			</description>
+		</method>
+		<method name="show_coins">
+			<return type="void" />
+			<param index="0" name="amount" type="int" />
+			<description>
+				Hiển thị số xu có phân nhóm chữ số cùng tooltip đã dịch.
+			</description>
+		</method>
+		<method name="show_production">
+			<return type="void" />
+			<param index="0" name="definition" type="AnimalProductionDefinition" />
+			<param index="1" name="duration" type="String" />
+			<description>
+				Hiển thị sản phẩm và số lượng mỗi chu kỳ với chuỗi thời gian đã định dạng. Cấu hình thiếu hoặc không hợp lệ sẽ ẩn hàng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="icon" type="TextureRect" setter="" getter="">
+			Ô hiển thị biểu tượng chính.
+		</member>
+		<member name="value" type="Label" setter="" getter="">
+			Nhãn hiển thị số lượng hoặc mô tả.
+		</member>
+	</members>
+	<constants>
+		<constant name="COIN" value="&lt;Object&gt;">
+			Biểu tượng xu dùng cho giá trị tiền.
+		</constant>
+		<constant name="SILVER" value="&lt;Object&gt;">
+			Huy hiệu chất lượng bạc.
+		</constant>
+		<constant name="GOLD" value="&lt;Object&gt;">
+			Huy hiệu chất lượng vàng.
+		</constant>
+	</constants>
+</class>

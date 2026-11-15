@@ -1,6 +1,7 @@
 class_name TouchGestureRouter
 extends RefCounted
-## Own each finger until release. UI fingers never become world gestures.
+## Phân loại và giữ quyền xử lý từng ngón chạm tới khi nhả, phân biệt điều khiển UI và cử chỉ thế giới.
+
 signal movement_changed(direction: Vector2)
 signal action_requested(role: StringName)
 signal tapped(point: Vector2)
@@ -16,6 +17,7 @@ var joystick_radius: float = 32.0
 var direction: Vector2 = Vector2.ZERO
 var _pinch_distance: float = 0.0
 
+## Ghi nhận ngón chạm và vai trò điều khiển của nó.
 func begin(index: int, point: Vector2, role: StringName) -> void:
 	if fingers.has(index):
 		return
@@ -32,6 +34,7 @@ func begin(index: int, point: Vector2, role: StringName) -> void:
 		action_requested.emit(role)
 	_update_pinch(false)
 
+## Cập nhật vị trí ngón chạm và cử chỉ đang diễn ra.
 func drag(index: int, point: Vector2) -> void:
 	if not fingers.has(index):
 		return
@@ -43,6 +46,7 @@ func drag(index: int, point: Vector2) -> void:
 		_move_joystick(point)
 	_update_pinch(true)
 
+## Kết thúc hoặc hủy ngón chạm và phát hành động tương ứng.
 func end(index: int, point: Vector2, canceled: bool = false) -> void:
 	if not fingers.has(index):
 		return
@@ -58,6 +62,7 @@ func end(index: int, point: Vector2, canceled: bool = false) -> void:
 	if tap:
 		tapped.emit(point)
 
+## Xóa toàn bộ ngón chạm và đặt lại hướng, trạng thái chụm.
 func cancel() -> void:
 	fingers.clear()
 	joystick_id = -1

@@ -1,5 +1,7 @@
 class_name HotbarUI
 extends CanvasLayer
+## Hiển thị thanh công cụ, nút túi và phản hồi tương tác của người chơi.
+## Bố cục và phím tắt thay đổi theo kích thước màn hình và thiết bị cảm ứng.
 
 const SLOT_ACTIONS: Array[StringName] = [&"hotbar_1", &"hotbar_2", &"hotbar_3", &"hotbar_4", &"hotbar_5", &"hotbar_6"]
 

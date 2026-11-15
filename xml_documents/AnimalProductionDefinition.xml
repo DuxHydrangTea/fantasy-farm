@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalProductionDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình sản phẩm và chu kỳ tạo sản phẩm của vật nuôi. Tên class được giữ để các resource sản xuất hiện có tiếp tục tham chiếu.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra vật phẩm là nông sản và số lượng, thời gian đều dương.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="production_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm nông sản được tạo ra.
+		</member>
+		<member name="production_amount" type="int" setter="" getter="" default="1">
+			Số đơn vị tạo ra trong mỗi chu kỳ.
+		</member>
+		<member name="production_seconds" type="float" setter="" getter="" default="1.0">
+			Thời gian một chu kỳ tính bằng giây.
+		</member>
+		<member name="collection_mode" type="int" setter="" getter="" enum="AnimalProductionDefinition.CollectionMode" default="0">
+			Cách người chơi nhận sản phẩm.
+		</member>
+	</members>
+	<constants>
+		<constant name="WORLD_DROP" value="0" enum="CollectionMode">
+		</constant>
+		<constant name="DIRECT_COLLECTION" value="1" enum="CollectionMode">
+		</constant>
+	</constants>
+</class>

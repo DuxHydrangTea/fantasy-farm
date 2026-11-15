@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ShopMerchant" inherits="PhysicsBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điểm tương tác thương nhân gắn vào nhân vật scene, mở menu tương ứng cho người chơi trong tầm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_position">
+			<return type="Vector2" />
+			<description>
+				Trả vị trí tương tác trong tọa độ thế giới.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_configure_bubble">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_bubble">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="open_shop">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Mở menu cho người chơi trong tầm nếu chưa có menu khác.
+			</description>
+		</method>
+		<method name="is_within_interaction_range">
+			<return type="bool" />
+			<param index="0" name="customer" type="FarmPlayer" />
+			<description>
+				Kiểm tra người chơi nằm trong bán kính tương tác.
+			</description>
+		</method>
+		<method name="thank_customer">
+			<return type="void" />
+			<description>
+				Hiển thị lời cảm ơn sau giao dịch.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_prompt">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_sprite">
+			<return type="Node2D" />
+			<description>
+				Tìm sprite con dùng để biểu diễn mục tiêu tương tác.
+			</description>
+		</method>
+		<method name="interaction_action_text">
+			<return type="String" />
+			<description>
+				Trả nhãn tương tác theo cấu hình hoặc loại menu.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="interaction_offset" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+		<member name="interaction_label" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="catalog" type="ShopCatalog" setter="" getter="">
+		</member>
+		<member name="shop_ui" type="ShopUI" setter="" getter="">
+		</member>
+		<member name="menu" type="TradeMenu" setter="" getter="">
+		</member>
+		<member name="bubble" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="bubble_text" type="Label" setter="" getter="">
+		</member>
+		<member name="prompt" type="Label" setter="" getter="">
+		</member>
+		<member name="bubble_timer" type="Timer" setter="" getter="">
+		</member>
+		<member name="create_shop_ui" type="bool" setter="" getter="" default="true">
+			Specialized merchant panels can reuse prompts without retaining an unused shop.
+		</member>
+		<member name="_player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="_bubble_entrance" type="Tween" setter="" getter="">
+		</member>
+	</members>
+</class>

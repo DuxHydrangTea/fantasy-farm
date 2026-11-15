@@ -1,6 +1,7 @@
 class_name ShopMerchant
 extends PhysicsBody2D
-## Attaches to an existing NPC body; its sprite and collision stay scene-owned.
+## Điểm tương tác thương nhân gắn vào nhân vật scene, mở menu tương ứng cho người chơi trong tầm.
+
 @export var interaction_offset: Vector2 = Vector2.ZERO
 @export var interaction_label: String = ""
 @export var catalog: ShopCatalog
@@ -38,6 +39,7 @@ func _enter_tree() -> void:
 		catalog = preload("res://resources/shops/farm_supply.tres")
 	add_child(presentation)
 
+## Trả vị trí tương tác trong tọa độ thế giới.
 func interaction_position() -> Vector2:
 	return to_global(interaction_offset)
 
@@ -91,6 +93,7 @@ func _process(_delta: float) -> void:
 		if prompt.visible:
 			_refresh_prompt()
 
+## Mở menu cho người chơi trong tầm nếu chưa có menu khác.
 func open_shop(customer: FarmPlayer) -> bool:
 	if not is_within_interaction_range(customer) or customer.selection.is_menu_open():
 		return false
@@ -99,9 +102,11 @@ func open_shop(customer: FarmPlayer) -> bool:
 	bubble_timer.stop()
 	return menu.open(self, customer)
 
+## Kiểm tra người chơi nằm trong bán kính tương tác.
 func is_within_interaction_range(customer: FarmPlayer) -> bool:
 	return customer.global_position.distance_to(interaction_position()) <= 48.0
 
+## Hiển thị lời cảm ơn sau giao dịch.
 func thank_customer() -> void:
 	bubble_text.text = tr("Thank you!\nSee you again!")
 	bubble.reset_size()
@@ -128,12 +133,14 @@ func _refresh_prompt() -> void:
 	var action: StringName = _player.state.action_harvest if is_instance_valid(_player) and is_instance_valid(_player.state) else &"harvest"
 	prompt.text = "[%s] %s" % [GameText.action_key(action), interaction_action_text()]
 
+## Tìm sprite con dùng để biểu diễn mục tiêu tương tác.
 func interaction_sprite() -> Node2D:
 	for child: Node in get_children():
 		if child is Sprite2D or child is AnimatedSprite2D:
 			return child as Node2D
 	return null
 
+## Trả nhãn tương tác theo cấu hình hoặc loại menu.
 func interaction_action_text() -> String:
 	if not interaction_label.is_empty():
 		return tr(interaction_label)

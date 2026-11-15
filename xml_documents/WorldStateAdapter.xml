@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorldStateAdapter" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chuyển đổi giữa scene FarmWorld đang chạy và snapshot dữ liệu lưu.
+	</brief_description>
+	<description>
+		Adapter đồng bộ các hệ thống theo thời gian trước khi chụp và kiểm tra khả năng áp dụng dữ liệu vào map trước khi khôi phục. Backend và schema làm việc với dữ liệu thay vì giữ tham chiếu đến các node scene.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<param index="0" name="scene" type="FarmWorld" />
+			<param index="1" name="resources" type="SaveCatalog" />
+			<description>
+			</description>
+		</method>
+		<method name="_nodes">
+			<return type="Node[]" />
+			<param index="0" name="node" type="Node" />
+			<param index="1" name="script" type="Script" />
+			<description>
+			</description>
+		</method>
+		<method name="_collect_world_entities">
+			<return type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_walk_entities">
+			<return type="void" />
+			<param index="0" name="node" type="Node" />
+			<param index="1" name="entities" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_id">
+			<return type="String" />
+			<param index="0" name="node" type="Node" />
+			<description>
+			</description>
+		</method>
+		<method name="_pair">
+			<return type="Array" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_point">
+			<return type="Vector2" />
+			<param index="0" name="pair" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="_cell">
+			<return type="Vector2i" />
+			<param index="0" name="pair" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<param index="1" name="revision" type="int" />
+			<param index="2" name="now" type="float" />
+			<description>
+				Đồng bộ công nhân, thời tiết, hệ thống ong và nhu cầu vật nuôi đến [param now], sau đó chụp trạng thái thế giới thành snapshot cho profile và revision. Việc đồng bộ có thể tạo sản phẩm hoặc kết thúc vòng đời vật nuôi trước khi chụp.
+			</description>
+		</method>
+		<method name="_index_nodes">
+			<return type="Dictionary" />
+			<param index="0" name="nodes" type="Node[]" />
+			<description>
+			</description>
+		</method>
+		<method name="_index">
+			<return type="Dictionary" />
+			<param index="0" name="script" type="Script" />
+			<description>
+			</description>
+		</method>
+		<method name="_saved_pens">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="preflight">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Kiểm tra schema và các liên kết với scene trước khi thay đổi thế giới. Bao gồm trạng thái giao dịch, các thực thể và vị trí cần tồn tại trong map. Trả snapshot đã kiểm tra hoặc dictionary lỗi.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Khôi phục checkpoint rồi tiến công nhân đồng bộ đến thời điểm yêu cầu. Không mô phỏng lùi trước thời điểm lưu.
+			</description>
+		</method>
+		<method name="restore_async">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="now" type="float" />
+			<description>
+				Khôi phục checkpoint và chờ công nhân mô phỏng bất đồng bộ đến thời điểm đích.
+			</description>
+		</method>
+		<method name="restore_without_offline">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục tại thời điểm lưu mà không chạy tiến trình công nhân offline.
+			</description>
+		</method>
+		<method name="_restore_checkpoint">
+			<return type="Dictionary" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="now" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_is_pen_product">
+			<return type="bool" />
+			<param index="0" name="pen" type="AnimalPen" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="_finish_restore">
+			<return type="Dictionary" />
+			<param index="0" name="now" type="float" />
+			<param index="1" name="previous_simulation" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới được chụp hoặc khôi phục.
+		</member>
+		<member name="catalog" type="SaveCatalog" setter="" getter="">
+			Danh mục resource đáng tin cậy dùng để giải mã các mã đã lưu.
+		</member>
+	</members>
+	<constants>
+		<constant name="ACTOR_SCENE" value="&lt;Object&gt;">
+			Scene dùng để dựng lại vật nuôi đã lưu.
+		</constant>
+	</constants>
+</class>

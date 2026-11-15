@@ -1,5 +1,6 @@
 extends RefCounted
-## Explicit preloads keep the approved P0 clips in exported builds.
+## Danh mục nạp sẵn các âm thanh cơ bản để tài nguyên được đưa vào bản xuất game.
+
 const CLIPS: Dictionary = {
 	&"footstep_dirt": [preload("res://assets/sound/movement/footstep_dirt_01.wav"), preload("res://assets/sound/movement/footstep_dirt_02.wav"), preload("res://assets/sound/movement/footstep_dirt_03.wav"), preload("res://assets/sound/movement/footstep_dirt_04.wav")],
 	&"footstep_grass": [preload("res://assets/sound/movement/footstep_grass_01.wav"), preload("res://assets/sound/movement/footstep_grass_02.wav"), preload("res://assets/sound/movement/footstep_grass_03.wav"), preload("res://assets/sound/movement/footstep_grass_04.wav")],

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmingActionComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Kết nối động tác nông nghiệp của người chơi với ô đất và kho vật phẩm. Mục tiêu và nguồn hạt được chốt lúc bắt đầu; thay đổi thế giới chỉ xảy ra ở khung hình va chạm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_state_changed">
+			<return type="void" />
+			<param index="0" name="_previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="get_farming_controller">
+			<return type="FarmingController" />
+			<description>
+				Trả bộ điều khiển nông trại nếu tham chiếu còn hợp lệ.
+			</description>
+		</method>
+		<method name="get_focused_cell">
+			<return type="Vector2i" />
+			<description>
+				Trả ô đã chốt khi đang thao tác hoặc ô phía trước người chơi.
+			</description>
+		</method>
+		<method name="_cell_ahead">
+			<return type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="upgrade_kind">
+			<return type="StringName" />
+			<param index="0" name="action" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Xác định loại công cụ dùng để tính diện tích nâng cấp cho hành động.
+			</description>
+		</method>
+		<method name="target_cells">
+			<return type="Vector2i[]" />
+			<param index="0" name="action" type="StringName" default="&amp;&quot;&quot;" />
+			<param index="1" name="frozen" type="bool" default="true" />
+			<description>
+				Trả các ô bị tác động theo hướng nhìn và cấp công cụ; có thể dùng danh sách đã chốt.
+			</description>
+		</method>
+		<method name="preview">
+			<return type="Dictionary[]" />
+			<description>
+				Đánh giá trước kết quả hành động trên các ô mà chưa áp dụng thay đổi.
+			</description>
+		</method>
+		<method name="_on_frame_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_area_sound">
+			<return type="void" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="get_action">
+			<return type="StringName" />
+			<description>
+				Trả hành động đã chốt hoặc hành động hiện tại của máy trạng thái.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+		</member>
+		<member name="state" type="StateComponent" setter="" getter="">
+		</member>
+		<member name="impact_frame" type="int" setter="" getter="" default="3">
+		</member>
+		<member name="farming" type="FarmingController" setter="" getter="">
+		</member>
+		<member name="_cell" type="Vector2i" setter="" getter="">
+		</member>
+		<member name="_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_seed" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="_slot_index" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="upgrades" type="ToolUpgradeState" setter="" getter="">
+		</member>
+		<member name="_targets" type="Vector2i[]" setter="" getter="" default="[]">
+		</member>
+		<member name="last_preview" type="Dictionary[]" setter="" getter="" default="[]">
+		</member>
+		<member name="last_result" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_storage_seed" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_selection_revision" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_plant_source" type="InventoryComponent" setter="" getter="">
+		</member>
+	</members>
+</class>

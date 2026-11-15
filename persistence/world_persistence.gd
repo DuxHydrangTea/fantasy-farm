@@ -1,6 +1,10 @@
 class_name WorldPersistence
 extends Node
-## Only the real running MainWorld binds persistence. GUT/preview instances do not.
+## Gắn dịch vụ lưu vào scene thế giới đang chạy và hiển thị thông báo lưu/tải.
+## Việc gắn được hoãn một frame và chỉ diễn ra khi world là scene hiện tại,
+## giúp các scene xem trước và kiểm thử giữ vòng đời độc lập.
+
+## Thế giới cần gắn với GameSaveManager.
 @export var world: FarmWorld
 var _service: GameSaveManager
 var _label: Label

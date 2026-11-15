@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GuideContent" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Nội dung trợ giúp có thể dịch, liên kết với mã mục tiêu hiện có.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="controls" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="touch" type="bool" />
+			<description>
+				Chuỗi nguồn hướng dẫn điều khiển phù hợp cảm ứng hoặc bàn phím, chuột.
+			</description>
+		</method>
+		<method name="current" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="goals" type="ObjectiveProgress" />
+			<param index="1" name="touch" type="bool" />
+			<description>
+				Nội dung đã dịch cho mục tiêu hiện hành và gợi ý input tương ứng.
+			</description>
+		</method>
+		<method name="topic" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="goals" type="ObjectiveProgress" />
+			<param index="2" name="touch" type="bool" />
+			<description>
+				Trả nội dung đã dịch của chủ đề theo chỉ số, mặc định là hướng dẫn phục hồi.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="TOPICS" value="Array[String]([&quot;Current step&quot;, &quot;Controls&quot;, &quot;Bag and trading&quot;, &quot;Time and animals&quot;, &quot;Orders&quot;, &quot;Getting unstuck&quot;])">
+			Các chủ đề được hiển thị trong giao diện trợ giúp.
+		</constant>
+		<constant name="SHORT" value="{&quot;first_animal&quot;: &quot;Buy an animal at the supply shop or check your pens.&quot;, &quot;first_expansion&quot;: &quot;Visit the land sign and confirm the next block.&quot;, &quot;first_feed&quot;: &quot;Deposit feed at supply storage. Stand near a food trough and interact.&quot;, &quot;first_harvest&quot;: &quot;Wait for maturity, then interact with the crop.&quot;, &quot;first_sale&quot;: &quot;Bring produce to the buyer beside the supply shop.&quot;, &quot;first_seed&quot;: &quot;Deposit crop seeds at supply storage. Choose Stored seeds and use them on prepared soil.&quot;, &quot;first_soil&quot;: &quot;Move to bare farmland. Select the hoe and use it once.&quot;, &quot;first_trough_water&quot;: &quot;Select the watering can. Interact with a water trough.&quot;, &quot;first_water&quot;: &quot;Select the watering can. Use it on the planted tile.&quot;}">
+			Hướng dẫn ngắn theo mã mục tiêu.
+		</constant>
+		<constant name="DETAILS" value="{&quot;first_animal&quot;: &quot;The supply merchant sells young animals for available pen space. Existing living animals also count. Open Objectives to claim this reward when it is ready.&quot;, &quot;first_expansion&quot;: &quot;Find the sign at the next locked farmland block. Approach and interact to see the price, then confirm if you can afford it. Existing ownership of two blocks also counts.&quot;, &quot;first_feed&quot;: &quot;Buy feed if needed and deposit it at farm supply storage. Stand beside a food trough and interact. The matching stored feed is consumed only at refill impact. A full trough does not count.&quot;, &quot;first_harvest&quot;: &quot;Keep the planted tile watered and wait for the plant to mature. Interact with the mature crop. If the bag cannot hold the full harvest, sell some produce first; the crop remains in place.&quot;, &quot;first_sale&quot;: &quot;The produce buyer stands beside the supply merchant near the market stalls. Approach, face the buyer and interact. Select produce and a quantity, then sell. Supply purchases and order deliveries do not count as this sale.&quot;, &quot;first_seed&quot;: &quot;Deposit crop seeds at the farm supply storage building. Open Stored seeds (G on keyboard), choose a variety, then face prepared empty farmland and use it. Only planting after this step unlocks counts.&quot;, &quot;first_soil&quot;: &quot;Use the first unlocked farmland block at the top right. Stand beside an untilled tile and face it. Select the hoe, then use it. Previously prepared unlocked soil also counts.&quot;, &quot;first_trough_water&quot;: &quot;Select the watering can, stand beside a water trough and interact. A successful refill counts; a full trough does not. The watering can is not consumed.&quot;, &quot;first_water&quot;: &quot;Select the watering can and use it on dry soil containing your crop. Plain soil and rain do not count as manually watering a crop. Rewater when soil dries out.&quot;}">
+			Hướng dẫn chi tiết theo mã mục tiêu.
+		</constant>
+	</constants>
+</class>

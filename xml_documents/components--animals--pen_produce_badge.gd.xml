@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/animals/pen_produce_badge.gd&quot;" inherits="PanelContainer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Bảng trên tòa nhà hiển thị tối đa bốn loại sản phẩm và sức chứa chuồng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Đọc lại kho, cập nhật biểu tượng, số lượng và thanh sức chứa. Khi kho đầy, thanh đổi màu để báo trạng thái.
+			</description>
+		</method>
+		<method name="product_at">
+			<return type="ItemDefinition" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Tìm sản phẩm có hàng tại tọa độ toàn cục trên bảng có thể chọn. Trả về null nếu bảng ẩn, không cho chọn hoặc không có mục tại vị trí đó.
+			</description>
+		</method>
+		<method name="_place">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="pen" type="AnimalPen" setter="" getter="">
+			Chuồng cung cấp dữ liệu kho.
+		</member>
+		<member name="default_product" type="ItemDefinition" setter="" getter="">
+			Sản phẩm đại diện hiển thị khi kho trống.
+		</member>
+		<member name="selectable" type="bool" setter="" getter="" default="false">
+			Cho phép xác định sản phẩm được nhấp.
+		</member>
+		<member name="counts" type="Label" setter="" getter="">
+			Nhãn tổng số đã dùng, sức chứa và chỗ trống.
+		</member>
+		<member name="meter" type="ProgressBar" setter="" getter="">
+			Thanh thể hiện mức sử dụng kho.
+		</member>
+		<member name="_chips" type="PanelContainer[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_amounts" type="Label[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_icons" type="TextureRect[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_products" type="ItemDefinition[]" setter="" getter="" default="[]">
+		</member>
+		<member name="_fill" type="StyleBoxFlat" setter="" getter="">
+		</member>
+	</members>
+</class>

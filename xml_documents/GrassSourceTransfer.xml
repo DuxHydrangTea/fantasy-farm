@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassSourceTransfer" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chuyển các ô cỏ phù hợp từ TileMapLayer sang mẫu cho bộ vẽ GPU. Chỉ xóa ô đã kiểm tra chính xác; ô chồng với nội dung cùng hàng được giữ trong TileMap để bảo toàn thứ tự vẽ. Có thể khôi phục các ô đã chuyển.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="prepare">
+			<return type="Dictionary[]" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="root" type="Node2D" />
+			<param index="2" name="region" type="Rect2" default="Rect2(0, 0, 0, 0)" />
+			<description>
+				Khôi phục đợt trước, chọn các ô phù hợp trong vùng và trả mẫu cho bộ vẽ. Vùng rỗng chọn toàn bộ layer; các tile có vật lý hoặc cấu hình riêng bị giữ lại.
+			</description>
+		</method>
+		<method name="_row_rectangles">
+			<return type="Dictionary" />
+			<param index="0" name="layer" type="TileMapLayer" />
+			<param index="1" name="space" type="Transform2D" />
+			<description>
+			</description>
+		</method>
+		<method name="_plain_visual">
+			<return type="bool" />
+			<param index="0" name="tile" type="TileData" />
+			<param index="1" name="tiles" type="TileSet" />
+			<description>
+			</description>
+		</method>
+		<method name="suppress">
+			<return type="bool" />
+			<description>
+				Kiểm tra toàn bộ ô vẫn khớp bản ghi trước khi xóa chúng khỏi layer. Trả false nếu một ô đã thay đổi và không xóa ô nào.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<description>
+				Khôi phục các ô còn trống; giữ thay đổi bên ngoài và đếm xung đột.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="records" type="Dictionary[]" setter="" getter="" default="[]">
+			Các ô đã chọn kèm tham chiếu yếu đến layer và dữ liệu gốc.
+		</member>
+		<member name="suppressed" type="bool" setter="" getter="" default="false">
+			Cho biết các ô đã được tạm xóa khỏi TileMap.
+		</member>
+		<member name="restore_conflicts" type="int" setter="" getter="" default="0">
+			Số ô không khôi phục vì đã được sửa bên ngoài.
+		</member>
+		<member name="retained_overlaps" type="int" setter="" getter="" default="0">
+			Số ô được giữ lại do yêu cầu TileMap hoặc chồng nội dung khác.
+		</member>
+	</members>
+	<constants>
+		<constant name="DATA" value="&lt;Object&gt;">
+			Dữ liệu nhận diện các tile cỏ gốc.
+		</constant>
+		<constant name="SOURCE" value="&quot;res://assets/Outdoor decoration/Outdoor_Decor.png&quot;">
+			Đường dẫn texture nguồn được phép chuyển.
+		</constant>
+	</constants>
+</class>

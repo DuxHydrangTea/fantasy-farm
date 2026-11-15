@@ -1,7 +1,11 @@
 class_name ItemGainFeedback
 extends Node2D
-## Presentation subscriber: purchases/loads never masquerade as harvested items.
+## Hiển thị popup và hiệu ứng khi người chơi thực sự nhận hoặc thu hoạch vật phẩm.
+## Không dùng inventory.changed làm sự kiện nhận đồ vì mua hoặc tải cũng đổi túi.
+
+## Người chơi nhận vật phẩm.
 var player: FarmPlayer
+## Bộ thu vật phẩm phát sự kiện nhặt đồ.
 var collector: ItemCollector
 var _popups: Array[ItemGainPopup] = []
 var _recent: Dictionary[StringName, WeakRef] = {}
@@ -107,6 +111,7 @@ func _spawn(item: ItemDefinition, amount: int, host: Node, at: Vector2, message:
 	_popups.append(popup)
 	return popup
 
+## Xóa popup, hiệu ứng thu hoạch và trạng thái gộp thông báo hiện tại.
 func clear() -> void:
 	for burst: HarvestBurst in _bursts:
 		if is_instance_valid(burst):
@@ -134,6 +139,7 @@ func _on_legacy_harvest(item: ItemDefinition, amount: int, at: Vector2, inventor
 	if item.resource_path.begins_with("res://items/honey/"):
 		_on_harvest(item, amount, at, inventory)
 
+## Hiển thị phản hồi khi thu được sản phẩm trực tiếp từ vật nuôi.
 func present_animal_collection(animal: AnimalActor, amount: int) -> void:
 	if not is_instance_valid(animal) or animal.production.definition == null or amount <= 0:
 		return

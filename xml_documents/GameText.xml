@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameText" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Các hàm định dạng và dịch chuỗi tại lớp trình bày. Mã model, khóa save và mã lỗi được giữ độc lập với ngôn ngữ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="error" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="result" type="Dictionary" />
+			<description>
+				Dịch trường error của kết quả rồi thế các giá trị error_values.
+			</description>
+		</method>
+		<method name="grouped_integer" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+				Định dạng số nguyên theo nhóm ba chữ số, dùng dấu chấm cho locale tiếng Việt.
+			</description>
+		</method>
+		<method name="action_key" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="action" type="StringName" />
+			<description>
+				Tên phím đầu tiên được gán cho action, hoặc E nếu không có phím.
+			</description>
+		</method>
+	</methods>
+</class>

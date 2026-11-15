@@ -1,8 +1,15 @@
 class_name HoneyComboCatalog
 extends RefCounted
-## Ordered recipes: hybrids beat mono flowers; opposite pairs share the hive center.
+## Xác định loại mật từ hoa quanh tổ ong theo thứ tự ưu tiên công thức.
+##
+## Công thức lai được xét trước công thức một loài. Các cặp đối diện được
+## biểu diễn bằng tọa độ tương đối trái dấu quanh tâm tổ.
+
+## Mã công thức theo thứ tự ưu tiên.
 const IDS: Array[String] = ["hybrid_01_06", "hybrid_02_07", "hybrid_03_08", "mono_06", "mono_07"]
+## Một đầu của mỗi trục đối diện trong tám ô lân cận.
 const PAIRS: Array[Vector2i] = [Vector2i(1,0), Vector2i(0,1), Vector2i(1,1), Vector2i(1,-1)]
+## Resource mật tương ứng với mã công thức, gồm cả mật hỗn hợp.
 const ITEMS: Dictionary = {
  "mixed": preload("res://items/honey/mixed_honey.tres"),
  "hybrid_01_06": preload("res://items/honey/hybrid_01_06_honey.tres"),
@@ -11,6 +18,9 @@ const ITEMS: Dictionary = {
  "mono_06": preload("res://items/honey/mono_06_honey.tres"),
  "mono_07": preload("res://items/honey/mono_07_honey.tres")}
 
+## Chọn mã công thức từ ánh xạ tọa độ tương đối sang mã loài hoa đang nở.
+## Công thức lai cần hai cặp đối diện của hai loài quy định. Nếu không khớp,
+## công thức một loài cần ít nhất bốn hoa cùng loài. Trường hợp còn lại dùng mixed.
 static func resolve(blooms: Dictionary) -> String:
 	for i: int in range(3):
 		var a: String = "flower_%02d" % (i + 1)
@@ -31,14 +41,17 @@ static func resolve(blooms: Dictionary) -> String:
 			return IDS[i + 3]
 	return "mixed"
 
+## Lấy vật phẩm mật theo mã, trả về null nếu mã không có trong bảng.
 static func item(id: String) -> ItemDefinition:
 	return ITEMS.get(id) as ItemDefinition
 
+## Tên nguồn dùng khi dịch hướng dẫn bố trí hoa.
 const FLOWER_NAMES: Array[String] = [
 	"Rose", "Carnation", "Orchid", "Lavender", "Bluebell",
 	"Hydrangea", "Marigold", "Sunflower", "Lily of the Valley", "Blue Lotus"
 ]
 
+## Tạo hướng dẫn đã dịch cho công thức, hoặc thông báo mật hỗn hợp nếu mã lạ.
 static func instruction(id: String) -> String:
 	var index: int = IDS.find(id)
 	if index < 0:

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;scenes/buildings/unique_buildings/market_stalls.gd&quot;" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Chọn và cập nhật hình ảnh biến thể công trình trong editor và khi chạy game. Setter của variant cập nhật sprite nếu node hình ảnh đã sẵn sàng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_sprite">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="variant" type="Variant" setter="@variant_setter" getter="" default="0">
+			Biến thể hình ảnh đang chọn; thay đổi sẽ cập nhật sprite.
+		</member>
+	</members>
+	<constants>
+		<constant name="RED" value="0" enum="Variant">
+		</constant>
+		<constant name="GREEN" value="1" enum="Variant">
+		</constant>
+		<constant name="BLUE" value="2" enum="Variant">
+		</constant>
+		<constant name="ORANGE" value="3" enum="Variant">
+		</constant>
+		<constant name="VARIANTS" value="{0: {&quot;frame&quot;: 0, &quot;texture&quot;: &lt;Object&gt;}, 1: {&quot;frame&quot;: 1, &quot;texture&quot;: &lt;Object&gt;}, 2: {&quot;frame&quot;: 2, &quot;texture&quot;: &lt;Object&gt;}, 3: {&quot;frame&quot;: 3, &quot;texture&quot;: &lt;Object&gt;}}">
+			Bảng ánh xạ biến thể sang texture và thông tin frame tương ứng.
+		</constant>
+	</constants>
+</class>

@@ -1,8 +1,13 @@
 extends Node2D
-## The cured status icon lifts away from its bubble and fades out.
+## Hiệu ứng biểu tượng sâu hoặc cỏ bay lên và mờ đi sau khi chăm sóc cây.
+
+## Texture biểu tượng cỏ dại.
 const WEEDS: Texture2D = preload("res://assets/Ui/status_bubbles/weeds.png")
+## Texture biểu tượng sâu bệnh.
 const PESTS: Texture2D = preload("res://assets/Ui/status_bubbles/worm.png")
+## Chọn biểu tượng sâu bệnh thay vì cỏ dại.
 var pests: bool = false
+## Vị trí bắt đầu trong tọa độ node cha.
 var start_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:

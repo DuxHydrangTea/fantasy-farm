@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PotDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình hình ảnh của chậu hoa dùng trong editor và khi chạy game.
+	</brief_description>
+	<description>
+		FlowerPot quản lý trạng thái gameplay của chậu. Khi sửa các thuộc tính, resource phát tín hiệu thay đổi để nơi sử dụng cập nhật hình ảnh.
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="pot_id" type="StringName" setter="@pot_id_setter" getter="" default="&amp;&quot;clay&quot;">
+			Mã nhận diện kiểu chậu.
+		</member>
+		<member name="texture" type="Texture2D" setter="@texture_setter" getter="">
+			Ảnh của chậu.
+		</member>
+		<member name="pot_offset" type="Vector2" setter="@pot_offset_setter" getter="" default="Vector2(-16, -24)">
+			Độ lệch ảnh chậu so với gốc hiển thị.
+		</member>
+		<member name="plant_socket" type="Vector2" setter="@plant_socket_setter" getter="" default="Vector2(0, -15)">
+			Vị trí neo hình cây tương đối với gốc chậu.
+		</member>
+	</members>
+</class>

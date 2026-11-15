@@ -1,6 +1,7 @@
 class_name TreeInteraction
 extends Node
-## Hái quả ngay; các thao tác dùng công cụ khóa mục tiêu và commit ở frame tác động.
+## Điều phối tương tác với cây lâu năm; hái quả ngay còn công cụ chốt mục tiêu tới khung hình tác động.
+
 var player: FarmPlayer
 var pending: PerennialTree
 var _cell: Vector2i
@@ -11,6 +12,7 @@ var _dig_targets: Array[Vector2i] = []
 var _selection_revision: int = -1
 var marker: Sprite2D
 
+## Trả bản sao danh sách ô mục tiêu đã chốt cho động tác đào.
 func dig_targets() -> Array[Vector2i]:
 	return _dig_targets.duplicate()
 
@@ -24,6 +26,7 @@ func _ready() -> void:
 	marker.z_index = 1
 	add_child(marker)
 
+## Lấy hệ thống vườn cây từ thế giới chứa người chơi.
 func plantation() -> TreePlantation:
 	var world: FarmWorld = player.get_parent() as FarmWorld
 	return world.trees if world != null else null
@@ -39,6 +42,7 @@ func _physics_process(_delta: float) -> void:
 	marker.modulate = Color(0.6, 1, 0.6, 0.65) if system.can_place(cell, item.crop as TreeDefinition) else Color(1, 0.3, 0.3, 0.65)
 	marker.visible = system.in_region(player.global_position) and player.global_position.distance_to(marker.global_position) <= 64
 
+## Giải mục tiêu hiện tại và chuẩn bị hành động phù hợp với cây.
 func prepare_action(requested: StringName = &"") -> StringName:
 	var system: TreePlantation = plantation()
 	if system == null:
@@ -60,6 +64,7 @@ func prepare_action(requested: StringName = &"") -> StringName:
 	# Không cho cuốc đất gieo rau bên trong khu dành riêng cho cây lâu năm.
 	return &"blocked" if system.in_region(point) else &""
 
+## Kiểm tra khoảng cách, trạng thái cây và công cụ trước khi chốt thao tác.
 func prepare_target(tree: PerennialTree, requested: StringName = &"") -> StringName:
 	_action = &""
 	if not is_instance_valid(tree) or tree.removed or player.global_position.distance_to(tree.global_position) > 32:
@@ -94,6 +99,7 @@ func _state_changed(_previous: StringName, current: StringName) -> void:
 		_action = &""
 		pending = null
 
+## Thu hoạch cây ăn quả đã chọn và xóa mục tiêu đang chờ.
 func harvest_now() -> bool:
 	var fruit: FruitTree = pending as FruitTree
 	_action = &""

@@ -1,6 +1,7 @@
 class_name CookingMenu
 extends TradeMenu
-## Scene-authored kitchen; commands continue to use the farm's serial queue.
+## Giao diện nhà bếp khai báo trong scene; các lệnh sử dụng hàng đợi chế biến của trang trại.
+
 var world: FarmWorld
 @onready var panel: PanelContainer = %Panel
 @onready var summary: Label = %Summary

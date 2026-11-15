@@ -1,12 +1,18 @@
 class_name InteractionResolver
 extends RefCounted
-## E: fixed priority, then nearest, then stable scene instance ID. Click: hit targets only.
+## Chọn mục tiêu tương tác cho phím hành động hoặc vị trí nhấp trên thế giới.
+## Mục tiêu cùng loại ưu tiên được so theo khoảng cách, rồi instance ID để
+## kết quả ổn định trong scene. Nhấp chuột chỉ xét hình ảnh bị nhấp trúng.
+
+## Người chơi dùng để giới hạn thế giới và xác định vị trí, hướng.
 var player: FarmPlayer
 var _bounds: Dictionary[Texture2D, Rect2] = {}
 
 func _init(customer: FarmPlayer) -> void:
 	player = customer
 
+## Thu thập mục tiêu từ các nhóm scene cùng thế giới với người chơi.
+## Vật nuôi chỉ được đưa vào khi có sản phẩm thu trực tiếp đang chờ.
 func candidates() -> Array[InteractionTarget]:
 	var result: Array[InteractionTarget] = []
 	for group: StringName in [&"shop_merchants", &"land_expansions", &"animal_troughs", &"animal_status_targets", &"beehives", &"perennial_trees", &"order_boards", &"pen_boards", &"tree_plot_boards"]:
@@ -57,6 +63,8 @@ func _crop_candidates(point: Vector2, hover: bool) -> Array[InteractionTarget]:
 				result.append(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, player))
 	return result
 
+## Chọn mục tiêu trong tầm và hướng nhìn cho phím tương tác, hoặc null.
+## Bổ sung cây trồng và chậu hoa quanh ô đang được nhắm.
 func resolve() -> InteractionTarget:
 	var options: Array[InteractionTarget] = candidates()
 	var farm: FarmingController = player.farming_actions.get_farming_controller()
@@ -70,12 +78,20 @@ func resolve() -> InteractionTarget:
 			best = candidate
 	return best
 
+## Chọn mục tiêu có hình ảnh chứa điểm toàn cục, hoặc null.
+## Điểm chọn sản phẩm trên bảng kho chuồng được ưu tiên trực tiếp.
 func clicked(point: Vector2) -> InteractionTarget:
 	var options: Array[InteractionTarget] = candidates()
 	options.append_array(_crop_candidates(point, true))
 	var best: InteractionTarget
 	for candidate: InteractionTarget in options:
-		if candidate.valid() and hit(candidate, point) and _better(candidate,best,point):
+		if not candidate.valid():
+			continue
+		if candidate.node is PenProduceAccess:
+			candidate.product = (candidate.node as PenProduceAccess).product_at(point)
+			if candidate.product != null:
+				return candidate
+		if hit(candidate, point) and _better(candidate,best,point):
 			best = candidate
 	return best
 
@@ -88,6 +104,7 @@ func _better(candidate: InteractionTarget, best: InteractionTarget, origin: Vect
 	var b: float = origin.distance_squared_to(best.point())
 	return a < b or (is_equal_approx(a,b) and candidate.node.get_instance_id() < best.node.get_instance_id())
 
+## Lấy texture của Sprite2D hoặc khung hiện tại của AnimatedSprite2D.
 func texture(sprite: Node2D) -> Texture2D:
 	if sprite is Sprite2D:
 		return (sprite as Sprite2D).texture
@@ -97,6 +114,8 @@ func texture(sprite: Node2D) -> Texture2D:
 			return animated.sprite_frames.get_frame_texture(animated.animation,animated.frame)
 	return null
 
+## Tính hình chữ nhật phần ảnh được dùng trong tọa độ node hình ảnh.
+## Kết quả xét offset, căn giữa, lật và vùng ảnh; cache biên ảnh theo texture.
 func visual_rect(target: InteractionTarget) -> Rect2:
 	var visual: Node2D = target.sprite()
 	if target.kind == InteractionTarget.Kind.FLOWER and visual != null:
@@ -121,6 +140,7 @@ func visual_rect(target: InteractionTarget) -> Rect2:
 	rect.position += Vector2(visual.get("offset")) - (frame_size * 0.5 if bool(visual.get("centered")) else Vector2.ZERO)
 	return rect
 
+## Kiểm tra điểm toàn cục nằm trong vùng hình ảnh mục tiêu, có đệm hai đơn vị.
 func hit(target: InteractionTarget, point: Vector2) -> bool:
 	var visual: Node2D = target.sprite()
 	return is_instance_valid(visual) and visual_rect(target).grow(2.0).has_point(visual.to_local(point))

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PenUpgradeState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Theo dõi cấp chuồng, sức chứa và trạng thái giao dịch nâng cấp.
+	</brief_description>
+	<description>
+		Mỗi cấp thêm năm chỗ. Người gọi điều phối giao dịch bằng begin_purchase, commit và end_purchase, đồng thời chịu trách nhiệm thông báo thay đổi.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu mới với mọi chuồng trong danh mục ở cấp 1.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra đủ mã chuồng và mỗi cấp là số nguyên từ 1 đến cấp tối đa.
+			</description>
+		</method>
+		<method name="migrate" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="animals" type="Variant" />
+			<description>
+				Tạo cấp chuồng từ số vật nuôi trong dữ liệu cũ, làm tròn lên theo sức chứa. Trả dictionary rỗng nếu dữ liệu vật nuôi sai cấu trúc.
+			</description>
+		</method>
+		<method name="level">
+			<return type="int" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Trả về cấp của chuồng, hoặc 0 khi mã không có trong trạng thái.
+			</description>
+		</method>
+		<method name="capacity">
+			<return type="int" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Tính sức chứa từ cấp chuồng và số chỗ mỗi cấp.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao sâu của bảng cấp để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Thay bảng cấp bằng bản sao dữ liệu hợp lệ khi không có giao dịch đang chạy.
+			</description>
+		</method>
+		<method name="is_busy">
+			<return type="bool" />
+			<description>
+				Cho biết đang có giao dịch mua nâng cấp.
+			</description>
+		</method>
+		<method name="begin_purchase">
+			<return type="bool" />
+			<description>
+				Đánh dấu bắt đầu giao dịch nếu chưa có giao dịch khác.
+			</description>
+		</method>
+		<method name="commit">
+			<return type="bool" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="expected_level" type="int" />
+			<description>
+				Tăng cấp một bậc nếu giao dịch đang mở và cấp hiện tại khớp giá trị dự kiến. Trả về false nếu điều kiện không đạt hoặc đã ở cấp tối đa.
+			</description>
+		</method>
+		<method name="end_purchase">
+			<return type="void" />
+			<description>
+				Kết thúc trạng thái giao dịch sau khi người gọi hoàn tất xử lý.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_levels" type="Dictionary" setter="" getter="" default="fresh()">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="pen_id" type="StringName" />
+			<description>
+				Signal dành cho nơi điều phối phát khi cấp chuồng thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CATALOG" value="&lt;Object&gt;">
+			Danh mục xác định các mã chuồng được hỗ trợ.
+		</constant>
+		<constant name="MAX_LEVEL" value="6">
+			Cấp chuồng tối đa.
+		</constant>
+		<constant name="SLOTS_PER_LEVEL" value="5">
+			Số chỗ vật nuôi cho mỗi cấp.
+		</constant>
+	</constants>
+</class>

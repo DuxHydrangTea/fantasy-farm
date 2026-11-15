@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="MobileControls" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều khiển cảm ứng chuyển thao tác vào hệ thống trạng thái, điều hướng và tương tác của người chơi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_button">
+			<return type="Button" />
+			<param index="0" name="caption" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_layout">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="cycle_mode">
+			<return type="void" />
+			<description>
+				Chuyển vòng giữa tự động, bật và tắt điều khiển cảm ứng.
+			</description>
+		</method>
+		<method name="mode_text">
+			<return type="String" />
+			<description>
+				Trả nhãn chế độ điều khiển cảm ứng đã dịch.
+			</description>
+		</method>
+		<method name="_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="_press_hotbar">
+			<return type="bool" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_role_at">
+			<return type="StringName" />
+			<param index="0" name="local" type="Vector2" />
+			<param index="1" name="viewport_point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_hits">
+			<return type="bool" />
+			<param index="0" name="control" type="Control" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_ui_at">
+			<return type="bool" />
+			<param index="0" name="node" type="Node" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_movement_changed">
+			<return type="void" />
+			<param index="0" name="direction" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_mouse_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEventMouse" />
+			<description>
+			</description>
+		</method>
+		<method name="_action_requested">
+			<return type="void" />
+			<param index="0" name="role" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_tap">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_pinch">
+			<return type="void" />
+			<param index="0" name="ratio" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_menu_changed">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="reset_input">
+			<return type="void" />
+			<description>
+				Hủy cử chỉ và đưa các đầu vào cảm ứng về trạng thái nghỉ.
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw_joystick">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+		</member>
+		<member name="joystick" type="Control" setter="" getter="">
+		</member>
+		<member name="tool_button" type="Button" setter="" getter="">
+		</member>
+		<member name="interact_button" type="Button" setter="" getter="">
+		</member>
+		<member name="router" type="TouchGestureRouter" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="ui_scroll" type="TouchScrollGesture" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="zoom" type="CameraZoomComponent" setter="" getter="">
+		</member>
+		<member name="_hotbar" type="HotbarUI" setter="" getter="">
+		</member>
+		<member name="_active" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_suspended" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_last_size" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_mode" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_mouse_joystick" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

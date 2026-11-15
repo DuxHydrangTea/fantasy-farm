@@ -1,14 +1,21 @@
 class_name GrassTileMaterials
 extends RefCounted
-## Preserve mixed-row draw order: overlapping grass bends inside TileMap itself.
+## Gắn shader vào các tile cỏ giữ lại trong TileMap để bảo toàn thứ tự vẽ.
+## TileSet được sao chép cục bộ và material được dùng chung theo loại tile.
+
+## Shader biến dạng cỏ trong TileMap.
 const SHADER: Shader = preload("res://shaders/grass_tilemap.gdshader")
+## Dữ liệu vùng nguồn và gốc cỏ.
 const DATA = preload("res://resources/grass/farm_grass_data.gd")
+## Các material đã cài.
 var materials: Array[ShaderMaterial] = []
 var _layer: WeakRef
 var _original: TileSet
 var _local: TileSet
 var _previous: Dictionary = {}
 
+## Sao chép TileSet, gắn material vào các tile cỏ không có material và áp lên layer.
+## Trả true nếu có ít nhất một material hoặc đã cài trước đó.
 func install(layer: TileMapLayer) -> bool:
 	if not materials.is_empty():
 		return true
@@ -38,6 +45,7 @@ func install(layer: TileMapLayer) -> bool:
 	layer.tile_set = _local
 	return not materials.is_empty()
 
+## Đồng bộ các shader parameter gió và actor đã thay đổi từ material chung.
 func sync_from(effect: ShaderMaterial) -> void:
 	# Share per species, never per cell; upload only uniforms that changed.
 	if materials.is_empty():
@@ -50,6 +58,7 @@ func sync_from(effect: ShaderMaterial) -> void:
 		for material: ShaderMaterial in materials:
 			material.set_shader_parameter(key, value)
 
+## Khôi phục TileSet gốc nếu layer vẫn dùng bản sao do component cài.
 func restore() -> void:
 	if _layer != null:
 		var layer: TileMapLayer = _layer.get_ref() as TileMapLayer

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;components/landscape/butterfly_swarm.gd&quot;" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo đàn bướm trang trí với số lượng cố định khi scene sẵn sàng. Đàn không dùng vật lý, điều hướng gameplay hoặc dữ liệu lưu.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="population" type="int" setter="" getter="" default="48">
+			Số cá thể tạo khi khởi tạo.
+		</member>
+		<member name="roam_bounds" type="Rect2" setter="" getter="" default="Rect2(24, 32, 2496, 1640)">
+			Giới hạn vùng bay.
+		</member>
+		<member name="garden_bounds" type="Rect2" setter="" getter="" default="Rect2(1432, 296, 368, 256)">
+			Vùng vườn hoa để bướm ghé.
+		</member>
+		<member name="garden_visit_seconds" type="float" setter="" getter="" default="30.0">
+			Thời gian ghé vườn, tính bằng giây.
+		</member>
+		<member name="garden_cooldown_seconds" type="float" setter="" getter="" default="300.0">
+			Thời gian chờ sau mỗi lượt ghé.
+		</member>
+		<member name="random_seed" type="int" setter="" getter="" default="0">
+			Seed bằng 0 chọn ngẫu nhiên mỗi lần chạy; giá trị khác 0 cho preview lặp lại.
+		</member>
+	</members>
+	<constants>
+		<constant name="ROAMER" value="&lt;Object&gt;">
+			Script của từng con bướm.
+		</constant>
+		<constant name="COLORS" value="Array[SpriteFrames]([&lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;, &lt;Object&gt;])">
+			Các bộ hoạt ảnh màu bướm có thể chọn.
+		</constant>
+	</constants>
+</class>

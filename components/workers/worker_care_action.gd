@@ -1,9 +1,15 @@
 extends Node2D
-## Pixel tool animation; presentation never commits work or spends supplies.
+## Vẽ hoạt ảnh dụng cụ chăm sóc dạng pixel cho công nhân.
+## Đây là hiệu ứng trình bày; commit công việc và tiêu vật tư do hệ thống khác xử lý.
+
+## Mã hành động đang hiển thị.
 var kind: String = ""
+## Thời gian hiệu ứng đã chạy.
 var elapsed: float = 0.0
+## Hướng dụng cụ.
 var direction: Vector2 = Vector2.RIGHT
 
+## Chọn hành động và hướng; hành động rỗng ẩn hiệu ứng.
 func show_action(action: String, facing: Vector2) -> void:
 	kind = action
 	direction = facing.normalized() if not facing.is_zero_approx() else Vector2.RIGHT

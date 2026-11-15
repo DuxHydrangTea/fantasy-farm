@@ -1,16 +1,25 @@
 class_name TimberTree
 extends PerennialTree
+## Cây lấy gỗ có thể chặt thành gốc, mọc lại hoặc bị đào bỏ.
+## Vật phẩm không vừa túi được thả xuống thế giới thông qua plantation.
+
+## Số nhát đã chặt trong chu kỳ hiện tại.
 var hits: int = 0
+## Cho biết cây hiện là gốc sau khi chặt.
 var stump: bool = false
+## Số lần đào gốc đã thực hiện.
 var root_hits: int = 0
+## Mốc gốc bắt đầu mọc lại.
 var regrow_at: float = 0.0
 var _busy: bool = false
 
+## Khởi tạo cây và bắt đầu sinh trưởng tại thời điểm trồng.
 func initialize(now: float) -> void:
 	super.initialize(now)
 	growth_started_at = now
 	matures_at = now + definition.growth_seconds
 
+## Cập nhật cây; khi gốc đến mốc mọc lại, chu kỳ tăng trưởng mới ngắn một nửa.
 func refresh(now: float, fruit_rate: float = 1.0) -> void:
 	if stump and maxf(now, last_at) >= regrow_at:
 		stump = false
@@ -21,6 +30,8 @@ func refresh(now: float, fruit_rate: float = 1.0) -> void:
 		regrow_at = 0.0
 	super.refresh(now, fruit_rate)
 
+## Thực hiện một nhát chặt trên cây trưởng thành.
+## Nhát cuối tạo gốc, lên lịch mọc lại và trao gỗ cùng cây giống.
 func chop(bag: InventoryComponent) -> bool:
 	if _busy or removed or stump or not is_mature() or bag == null:
 		return false
@@ -42,6 +53,8 @@ func chop(bag: InventoryComponent) -> bool:
 	_busy = false
 	return true
 
+## Đào một nhát vào gốc, hoặc nhổ cây non nếu cây chưa là gốc.
+## Nhát cuối loại bỏ gốc và trao vật phẩm rễ.
 func dig(bag: InventoryComponent) -> bool:
 	if not stump:
 		return uproot(bag)
@@ -64,6 +77,7 @@ func _reward(bag: InventoryComponent, item: ItemDefinition, amount: int) -> int:
 		plantation.drop_item(item, amount - accepted, global_position + Vector2(12, 8))
 	return accepted
 
+## Cập nhật ảnh gốc hoặc ảnh giai đoạn sinh trưởng.
 func update_visual() -> void:
 	if sprite != null and definition != null:
 		set_texture(definition.stump_texture if stump else definition.stage_textures[stage])
@@ -98,14 +112,17 @@ func _fall() -> void:
 	tween.tween_property(canopy, "modulate:a", 0.0, 0.4)
 	tween.chain().tween_callback(canopy.queue_free)
 
+## Tạo nhãn thao tác theo trạng thái gốc, trưởng thành và công cụ đang chọn.
 func action_text(_item: ItemDefinition) -> String:
 	return tr("Hoe: dig stump (1 hit)") if stump else tr("Axe: chop tree ({hits}/{total})").format({"hits": hits, "total": definition.chop_hits}) if is_mature() else tr("Uproot tree (return sapling)") if _item != null and _item.tool_type == ItemDefinition.ToolType.HOE else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
 
+## Thêm số nhát, trạng thái gốc và mốc mọc lại vào dữ liệu lưu cơ sở.
 func capture() -> Dictionary:
 	var row: Dictionary = super.capture()
 	row.merge({"hits": hits, "stump": stump, "root_hits": root_hits, "regrow_at": regrow_at})
 	return row
 
+## Khôi phục trạng thái chặt và gốc từ bản ghi đã kiểm tra.
 func restore_state(row: Dictionary) -> void:
 	hits = int(row.hits)
 	stump = bool(row.stump)
@@ -113,6 +130,7 @@ func restore_state(row: Dictionary) -> void:
 	regrow_at = float(row.regrow_at)
 	super.restore_state(row)
 
+## Nhổ cây non và trả cây giống nếu túi còn chỗ.
 func uproot(bag: InventoryComponent) -> bool:
 	if _busy or removed or stump or is_mature() or bag == null:
 		return false

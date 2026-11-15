@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmStorageService" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quản lý kho nông sản và kho vật tư của thế giới. Các lần chuyển chuẩn bị dữ liệu cả hai phía trước khi phát signal; nếu không ghi được đích, nguồn được khôi phục từ bản chụp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_create_inventory">
+			<return type="InventoryComponent" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="slots" type="int" />
+			<param index="2" name="cap" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_inventory_changed">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="import_worker_products">
+			<return type="int" />
+			<param index="0" name="source" type="InventoryComponent" />
+			<param index="1" name="supplies" type="bool" default="false" />
+			<description>
+				Chuyển sản phẩm hoặc thức ăn từ giỏ công nhân vào kho tương ứng. Chỉ chạy khi khóa công nhân được giữ; trả số đơn vị đã chuyển.
+			</description>
+		</method>
+		<method name="seed_item">
+			<return type="ItemDefinition" />
+			<param index="0" name="id" type="StringName" />
+			<description>
+				Tra hạt giống hợp lệ được kho vật tư chấp nhận, hoặc null.
+			</description>
+		</method>
+		<method name="refill_feed">
+			<return type="int" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<param index="1" name="to_full" type="bool" />
+			<param index="2" name="worker" type="bool" default="false" />
+			<description>
+				Nạp máng thức ăn từ kho vật tư, một lượt hoặc đến đầy. Người chơi cần trong tầm; công nhân cần giữ khóa dịch vụ công nhân. Trả lượng thức ăn thực tế đã thêm.
+			</description>
+		</method>
+		<method name="plant_from_storage">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="revision" type="int" />
+			<param index="2" name="targets" type="Vector2i[]" />
+			<description>
+				Gieo từ kho vật tư sau khi kiểm tra hạt và revision lựa chọn còn khớp. Trả số ô thay đổi và số hạt đã tiêu.
+			</description>
+		</method>
+		<method name="inventory">
+			<return type="InventoryComponent" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Lấy inventory của kho theo mã, hoặc null.
+			</description>
+		</method>
+		<method name="definition">
+			<return type="FarmStorageDefinition" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Lấy cấu hình kho theo mã, hoặc null.
+			</description>
+		</method>
+		<method name="available">
+			<return type="bool" />
+			<description>
+				Cho biết profile đã sẵn sàng cho thao tác kho.
+			</description>
+		</method>
+		<method name="_snapshot">
+			<return type="Dictionary[]" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+		<method name="_capacity">
+			<return type="int" />
+			<param index="0" name="slots" type="Dictionary[]" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="bag" type="InventoryComponent" />
+			<param index="3" name="tier" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="_move_tiers">
+			<return type="int" />
+			<param index="0" name="source" type="Dictionary[]" />
+			<param index="1" name="target" type="Dictionary[]" />
+			<param index="2" name="item" type="ItemDefinition" />
+			<param index="3" name="amount" type="int" />
+			<param index="4" name="bag" type="InventoryComponent" />
+			<param index="5" name="quality" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="_add">
+			<return type="void" />
+			<param index="0" name="slots" type="Dictionary[]" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="bag" type="InventoryComponent" />
+			<param index="4" name="tier" type="int" default="0" />
+			<description>
+			</description>
+		</method>
+		<method name="transfer">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="item_id" type="StringName" />
+			<param index="3" name="amount" type="int" />
+			<param index="4" name="deposit" type="bool" />
+			<param index="5" name="quality" type="int" default="-1" />
+			<description>
+				Chuyển một loại vật phẩm giữa túi và kho; quality -1 cho phép mọi cấp. deposit chọn chiều gửi vào kho. Kết quả chứa ok, moved và error.
+			</description>
+		</method>
+		<method name="transfer_all">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="deposit" type="bool" />
+			<description>
+				Chuyển tối đa các vật phẩm kho chấp nhận theo chiều đã chọn.
+			</description>
+		</method>
+		<method name="_failure">
+			<return type="Dictionary" />
+			<param index="0" name="message" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_transfer">
+			<return type="Dictionary" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="bag" type="InventoryComponent" />
+			<param index="2" name="item_id" type="StringName" />
+			<param index="3" name="amount" type="int" />
+			<param index="4" name="deposit" type="bool" />
+			<param index="5" name="all_items" type="bool" />
+			<param index="6" name="quality" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu lưu của các kho gồm số ô, giới hạn chồng, mã vật phẩm và cấp.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="resources" type="SaveCatalog" />
+			<description>
+				Dựng lại inventory kho từ dữ liệu đã kiểm tra và catalog, rồi phát changed.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới sở hữu kho và điều phối các giao dịch liên quan.
+		</member>
+		<member name="inventories" type="Dictionary" setter="" getter="" default="{}">
+			Ánh xạ mã kho sang InventoryComponent.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Cho biết dịch vụ đang thực hiện giao dịch.
+		</member>
+		<member name="catalog" type="SaveCatalog" setter="" getter="">
+			Catalog tra mã vật phẩm khi chuyển và khôi phục.
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="storage_id" type="String" />
+			<description>
+				Phát mã kho khi inventory của kho thay đổi; mã rỗng thông báo khôi phục chung.
+			</description>
+		</signal>
+	</signals>
+</class>

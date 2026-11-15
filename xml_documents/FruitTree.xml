@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FruitTree" inherits="PerennialTree" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cây ăn quả lâu năm, cần được tưới để bắt đầu lớn và tạo quả theo chu kỳ. Hướng ghép đang chờ được áp dụng sau khi thu mẻ hiện tại.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="can_water">
+			<return type="bool" />
+			<description>
+				Kiểm tra cây còn tồn tại và chưa bắt đầu sinh trưởng.
+			</description>
+		</method>
+		<method name="water">
+			<return type="bool" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Bắt đầu sinh trưởng tại mốc không sớm hơn lần cập nhật gần nhất.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<param index="1" name="fruit_rate" type="float" default="1.0" />
+			<description>
+				Cập nhật sinh trưởng và tích lũy quả chỉ cho phần thời gian sau trưởng thành.
+			</description>
+		</method>
+		<method name="has_fruit">
+			<return type="bool" />
+			<description>
+				Kiểm tra cây trưởng thành và chu kỳ quả đã hoàn thành.
+			</description>
+		</method>
+		<method name="harvest_item">
+			<return type="ItemDefinition" />
+			<description>
+				Vật phẩm thu hoạch theo hướng ghép đang hoạt động.
+			</description>
+		</method>
+		<method name="harvest_amount">
+			<return type="int" />
+			<description>
+				Số lượng thu hoạch, gấp đôi khi ghép tăng sản lượng.
+			</description>
+		</method>
+		<method name="graft_name" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="value" type="int" />
+			<description>
+				Tên hướng ghép đã dịch, giá trị ngoài miền được kẹp.
+			</description>
+		</method>
+		<method name="harvest">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Thu toàn bộ mẻ vào túi nếu đủ chỗ, sau đó áp dụng hướng ghép đang chờ. Trả false nếu cây bận, chưa có quả hoặc túi không nhận đủ mẻ.
+			</description>
+		</method>
+		<method name="uproot">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Bỏ cây và trả một cây giống vào túi nếu còn đủ chỗ.
+			</description>
+		</method>
+		<method name="update_visual">
+			<return type="void" />
+			<description>
+				Cập nhật ảnh theo giai đoạn hoặc trạng thái có quả.
+			</description>
+		</method>
+		<method name="action_text">
+			<return type="String" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+				Tạo nhãn hành động đã dịch theo tuổi cây và công cụ đang chọn.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Thêm tiến độ quả và trạng thái ghép vào dữ liệu lưu cơ sở.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Khôi phục tiến độ quả và trạng thái ghép từ bản ghi đã kiểm tra.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="active_graft" type="int" setter="" getter="" default="0">
+			Hướng ghép áp dụng cho mẻ hiện tại.
+		</member>
+		<member name="pending_graft" type="int" setter="" getter="" default="0">
+			Hướng ghép sẽ áp dụng sau khi thu mẻ hiện tại.
+		</member>
+		<member name="graft_revision" type="int" setter="" getter="" default="0">
+			Revision tăng khi lựa chọn hoặc trạng thái ghép thay đổi.
+		</member>
+		<member name="fruit_work" type="float" setter="" getter="" default="0.0">
+			Công việc tích lũy của chu kỳ quả hiện tại.
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="0" enum="Graft">
+		</constant>
+		<constant name="YIELD" value="1" enum="Graft">
+		</constant>
+		<constant name="QUALITY" value="2" enum="Graft">
+		</constant>
+	</constants>
+</class>

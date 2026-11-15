@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WeatherSchedule" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tính thời tiết theo ngày và các lần thay đổi thủ công có mốc thời gian.
+	</brief_description>
+	<description>
+		Ngày thời tiết bắt đầu lúc 06:00 theo múi giờ UTC+7. Kết quả mặc định phụ thuộc vào ngày và [member seed], nhờ đó có thể tính lại khi mô phỏng thời gian offline mà không phụ thuộc trạng thái bộ sinh số ngẫu nhiên.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="day_at">
+			<return type="int" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Trả về chỉ số ngày thời tiết chứa timestamp tính bằng giây.
+			</description>
+		</method>
+		<method name="dawn_at">
+			<return type="float" />
+			<param index="0" name="day" type="int" />
+			<description>
+				Trả về timestamp của bình minh bắt đầu ngày có chỉ số [param day].
+			</description>
+		</method>
+		<method name="weather_at">
+			<return type="int" enum="WeatherSchedule.Weather" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Trả về thời tiết tại [param timestamp]. Thay đổi thủ công gần nhất trong cùng ngày được ưu tiên. Nếu không có, lịch chọn nắng 60%, mưa 20%, nhiều mây 10% và gió 10% theo ngày và seed.
+			</description>
+		</method>
+		<method name="next_boundary">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Trả về bình minh kế tiếp hoặc mốc thay đổi thủ công gần nhất sau thời điểm này. Các mốc cách thời điểm truy vấn không quá một micro giây được bỏ qua.
+			</description>
+		</method>
+		<method name="water_rate">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Hệ số nước tại thời điểm truy vấn, bằng 0,75 khi nhiều mây và 1 ở các trạng thái khác.
+			</description>
+		</method>
+		<method name="evaporation_rate">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Hệ số bay hơi, bằng 0 khi mưa, 0,75 khi nhiều mây và 1 ở các trạng thái khác.
+			</description>
+		</method>
+		<method name="radius_multiplier">
+			<return type="float" />
+			<param index="0" name="timestamp" type="float" />
+			<description>
+				Hệ số bán kính, bằng 1,5 khi có gió và 1 ở các trạng thái khác.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu lưu gồm seed và bản sao sâu của danh sách thay đổi.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục seed và thay thế danh sách thay đổi từ dữ liệu đã được kiểm tra. Mỗi bản ghi đầu vào phải chứa các trường mà [method weather_at] sử dụng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="seed" type="int" setter="" getter="" default="0">
+			Giá trị kết hợp với số ngày để chọn thời tiết mặc định.
+		</member>
+		<member name="changes" type="Dictionary[]" setter="" getter="" default="[]">
+			Danh sách thay đổi thủ công gồm các trường [code]at[/code] và [code]weather[/code]. Các bản ghi cần được sắp theo thời gian tăng dần.
+		</member>
+	</members>
+	<constants>
+		<constant name="SUNNY" value="0" enum="Weather">
+		</constant>
+		<constant name="RAIN" value="1" enum="Weather">
+		</constant>
+		<constant name="CLOUDY" value="2" enum="Weather">
+		</constant>
+		<constant name="WINDY" value="3" enum="Weather">
+		</constant>
+		<constant name="DAY" value="86400.0">
+			Độ dài một ngày tính bằng giây.
+		</constant>
+		<constant name="UTC_OFFSET" value="25200.0">
+			Độ lệch UTC+7 tính bằng giây.
+		</constant>
+		<constant name="DAWN" value="21600.0">
+			Thời điểm bắt đầu ngày thời tiết theo giờ địa phương, tính từ nửa đêm.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InteractionPresenter" inherits="CanvasLayer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hiển thị nhãn hành động và phím tương tác gần mục tiêu hiện tại. Khi nhắm tổ ong, presenter cũng hiển thị phạm vi của tổ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Ẩn nhãn và phạm vi tổ ong, đồng thời hủy hiệu ứng xuất hiện.
+			</description>
+		</method>
+		<method name="show_target">
+			<return type="void" />
+			<param index="0" name="target" type="InteractionTarget" />
+			<param index="1" name="walking" type="bool" />
+			<param index="2" name="feedback" type="String" default="&quot;&quot;" />
+			<description>
+				Cập nhật nhãn cho mục tiêu hợp lệ, trạng thái đang đi và phản hồi tùy chọn. Khi mục tiêu không hợp lệ hoặc menu mở, ẩn phần trình bày.
+			</description>
+		</method>
+		<method name="_animate_entrance">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_place_badge">
+			<return type="Vector2" />
+			<param index="0" name="preferred" type="Vector2" />
+			<param index="1" name="anchor" type="Vector2" />
+			<param index="2" name="popup_rect" type="Rect2" default="Rect2(0, 0, 0, 0)" />
+			<description>
+			</description>
+		</method>
+		<method name="_ui_rect">
+			<return type="Rect2" />
+			<param index="0" name="control" type="Control" />
+			<param index="1" name="canvas" type="CanvasLayer" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi và cấu hình input đang sử dụng.
+		</member>
+		<member name="resolver" type="InteractionResolver" setter="" getter="">
+			Bộ cung cấp texture và biên hình ảnh của mục tiêu.
+		</member>
+		<member name="root" type="Control" setter="" getter="">
+			Control gốc của HUD.
+		</member>
+		<member name="badge" type="PanelContainer" setter="" getter="">
+			Khung nhãn hành động.
+		</member>
+		<member name="label" type="Label" setter="" getter="">
+			Nhãn mô tả hành động và phản hồi.
+		</member>
+		<member name="_range" type="BeehiveRangeDisplay" setter="" getter="">
+		</member>
+		<member name="keycap" type="Label" setter="" getter="">
+			Nhãn phím tương tác, ẩn khi đi đến mục tiêu hoặc dùng màn hình cảm ứng.
+		</member>
+		<member name="_hotbar" type="HotbarUI" setter="" getter="">
+		</member>
+		<member name="_shown_node" type="Node2D" setter="" getter="">
+		</member>
+		<member name="_shown_kind" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_entrance" type="Tween" setter="" getter="">
+		</member>
+		<member name="_plant_anchor" type="Vector2" setter="" getter="">
+		</member>
+	</members>
+</class>

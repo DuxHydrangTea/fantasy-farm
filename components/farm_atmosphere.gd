@@ -1,21 +1,34 @@
 class_name FarmAtmosphere
 extends Node
-## World-owned loop mixer. Fades use linear gain; no tweens pile up on rapid changes.
-## Two music voices adapt the Godot skill audio_manager crossfade template.
+## Trộn âm thanh môi trường và nhạc nền theo giờ và thời tiết.
+## Hai voice nhạc crossfade; âm lượng chuyển dần theo delta khi mục tiêu thay đổi.
+
+## Các bản nhạc và loop môi trường.
 const CATALOG: Dictionary = preload("res://components/p2_sound_catalog.gd").LOOPS
+## Thời gian chuyển mức môi trường tính bằng giây.
 const ENV_FADE: float = 3.0
+## Thời gian crossfade nhạc tính bằng giây.
 const MUSIC_FADE: float = 5.0
+## Mức gain cơ sở của nhạc.
 const MUSIC_GAIN: float = 0.55
+## Thế giới cung cấp thời gian và thời tiết.
 var world: FarmWorld
+## Các voice môi trường theo mã.
 var environment: Dictionary[StringName, AudioStreamPlayer] = {}
+## Mức gain hiện tại của từng loop môi trường.
 var environment_weights: Dictionary[StringName, float] = {}
+## Hai voice dùng để chuyển nhạc.
 var music_voices: Array[AudioStreamPlayer] = []
+## Mức gain nội suy của hai voice.
 var music_weights: Array[float] = [0.0, 0.0]
+## Mã bản nhạc đang gắn với từng voice.
 var music_keys: Array[StringName] = [&"", &""]
+## Mã nhạc được yêu cầu hiện tại.
 var music_target: StringName = &""
 var _music_index: int = -1
 var _music_weather_gain: float = 1.0
 
+## Chọn mã nhạc ngày, chạng vạng hoặc đêm theo giờ modulo 24.
 static func music_for_hour(hour: float) -> StringName:
 	hour = fposmod(hour, 24.0)
 	if hour < 5.0 or hour >= 19.0:
@@ -24,6 +37,7 @@ static func music_for_hour(hour: float) -> StringName:
 		return &"music_twilight"
 	return &"music_day"
 
+## Tính mức mục tiêu cho chim, dế và mưa theo giờ, thời tiết và cường độ.
 static func environment_targets(hour: float, weather: int, strength: float) -> Dictionary:
 	hour = fposmod(hour, 24.0)
 	var daylight: float = smoothstep(4.5, 7.0, hour) * (1.0 - smoothstep(17.0, 19.0, hour))
@@ -59,6 +73,7 @@ func _process(delta: float) -> void:
 	var hour: float = fposmod(timestamp + WeatherSchedule.UTC_OFFSET, WeatherSchedule.DAY) / 3600.0
 	advance_mix(hour, world.weather.effects.active_weather, world.weather.effects.strength, delta)
 
+## Tiến mức môi trường và crossfade nhạc theo delta; giảm nhạc khi trời mưa.
 func advance_mix(hour: float, weather: int, strength: float, delta: float) -> void:
 	delta = maxf(0.0, delta)
 	var targets: Dictionary = environment_targets(hour, weather, strength)

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PlayerAudioFeedback" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Phát tiếng bước chân theo quãng đường thực tế và loại mặt đất. Đứng bị chặn, mở menu hoặc dịch chuyển xa không phát bước chân.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_inventory_visibility">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="advance_position">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Tích lũy quãng đường và phát một bước sau mỗi 18 đơn vị di chuyển. Chuyển động trên 48 đơn vị trong một bước được xem là dịch chuyển xa.
+			</description>
+		</method>
+		<method name="surface_event">
+			<return type="StringName" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Chọn sự kiện bước chân đất, đá hoặc cỏ bằng cách kiểm tra các layer tại điểm. Đất canh tác đã xử lý được ưu tiên khi các layer chồng lên nhau.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="player" type="FarmPlayer" setter="" getter="">
+			Người chơi cung cấp vị trí và trạng thái.
+		</member>
+		<member name="_previous" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_distance" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+</class>

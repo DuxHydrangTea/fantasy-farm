@@ -1,9 +1,14 @@
 extends AnimatedSprite2D
-## Cosmetic flower-to-flower flight. Offsets and bounds are local to the parent.
+## Hiệu ứng bướm bay cong giữa các điểm hoa và lơ lửng khi dừng.
+## Các độ lệch và giới hạn nằm trong tọa độ node cha.
+
+## Bán kính giới hạn theo hai trục quanh vị trí ban đầu.
 @export var radius: Vector2 = Vector2(18, 9)
+## Hệ số tốc độ bay; giá trị không dương dừng cập nhật.
 @export var speed: float = 0.6
+## Pha và một phần seed của chuyển động.
 @export var phase: float = 0.0
-## Flower positions relative to the authored starting position. Empty uses local stops.
+## Điểm hoa tương đối vị trí ban đầu; khi thiếu điểm dùng điểm ngẫu nhiên.
 @export var flower_stops: PackedVector2Array = PackedVector2Array()
 var _home: Vector2
 var _elapsed: float = 0.0

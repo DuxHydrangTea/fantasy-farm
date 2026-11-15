@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TouchScrollGesture" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Xử lý kéo cuộn cảm ứng trong UI, kể cả thiết bị lai và chế độ xem thử. Khi vượt ngưỡng kéo, gửi thông báo cuộn để hủy lần nhấn nút đang chờ.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="handle">
+			<return type="bool" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+				Xử lý chạm, kéo và sự kiện chuột mô phỏng; trả true nếu sự kiện được tiêu thụ.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Hủy tất cả cử chỉ đang theo dõi và kết thúc thông báo cuộn.
+			</description>
+		</method>
+		<method name="_end">
+			<return type="void" />
+			<param index="0" name="finger" type="Dictionary" />
+			<param index="1" name="canceled" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_local">
+			<return type="Vector2" />
+			<param index="0" name="control" type="Control" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_find_scroll">
+			<return type="ScrollContainer" />
+			<param index="0" name="node" type="Node" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="viewport" type="Viewport" setter="" getter="">
+			Viewport được tìm ScrollContainer.
+		</member>
+		<member name="fingers" type="Dictionary[int, Dictionary]" setter="" getter="" default="{}">
+			Trạng thái từng ngón tay theo chỉ số input.
+		</member>
+	</members>
+</class>

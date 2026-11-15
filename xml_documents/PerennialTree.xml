@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="PerennialTree" inherits="StaticBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Lớp cơ sở cây lâu năm dùng các mốc thời gian làm trạng thái sinh trưởng; tween chỉ thay đổi hình ảnh.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="initialize">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Khởi tạo mốc trồng và đặt lại trạng thái sinh trưởng.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<param index="1" name="_fruit_rate" type="float" default="1.0" />
+			<description>
+				Cập nhật thời gian và giai đoạn phát triển rồi làm mới hình ảnh.
+			</description>
+		</method>
+		<method name="is_mature">
+			<return type="bool" />
+			<description>
+				Kiểm tra cây chưa bị xóa và đã tới hạn trưởng thành.
+			</description>
+		</method>
+		<method name="update_visual">
+			<return type="void" />
+			<description>
+				Chọn texture theo giai đoạn từ định nghĩa cây.
+			</description>
+		</method>
+		<method name="set_texture">
+			<return type="void" />
+			<param index="0" name="texture" type="Texture2D" />
+			<description>
+				Đổi texture và căn hình cây theo phần ảnh thực sự hiển thị.
+			</description>
+		</method>
+		<method name="visible_bounds" qualifiers="static">
+			<return type="Rect2i" />
+			<param index="0" name="texture" type="Texture2D" />
+			<description>
+				Lấy và cache hình chữ nhật pixel không trong suốt của texture.
+			</description>
+		</method>
+		<method name="get_status_sprite">
+			<return type="Node2D" />
+			<description>
+				Trả sprite dùng làm điểm neo hiển thị trạng thái.
+			</description>
+		</method>
+		<method name="set_status_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Bật hoặc tắt hiệu ứng tập trung trên cây chưa bị xóa.
+			</description>
+		</method>
+		<method name="react">
+			<return type="void" />
+			<description>
+				Phát phản ứng chuyển động khi cây được tác động.
+			</description>
+		</method>
+		<method name="retire">
+			<return type="void" />
+			<description>
+				Đánh dấu cây bị xóa và gỡ khỏi hệ thống vườn cây.
+			</description>
+		</method>
+		<method name="action_text">
+			<return type="String" />
+			<param index="0" name="_item" type="ItemDefinition" />
+			<description>
+				Trả tên hiển thị của cây cho tương tác.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Đóng gói định danh, ô và mốc sinh trưởng để lưu.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Khôi phục các mốc sinh trưởng từ bản ghi đã kiểm tra.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_wind_materials" type="Dictionary[Texture2D, ShaderMaterial]" setter="" getter="" default="{}">
+		</member>
+		<member name="_visible_bounds" type="Dictionary[Texture2D, Rect2i]" setter="" getter="" default="{}">
+		</member>
+		<member name="definition" type="TreeDefinition" setter="" getter="">
+		</member>
+		<member name="plantation" type="TreePlantation" setter="" getter="">
+		</member>
+		<member name="cell" type="Vector2i" setter="" getter="">
+		</member>
+		<member name="planted_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="growth_started_at" type="float" setter="" getter="" default="-1.0">
+		</member>
+		<member name="matures_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="last_at" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="stage" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="removed" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+		</member>
+		<member name="motion" type="VisualMotionComponent" setter="" getter="">
+		</member>
+		<member name="trunk" type="CollisionShape2D" setter="" getter="">
+		</member>
+		<member name="visual" type="Node2D" setter="" getter="">
+		</member>
+	</members>
+	<constants>
+		<constant name="TREE_WIND" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

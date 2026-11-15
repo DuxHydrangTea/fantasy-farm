@@ -1,11 +1,18 @@
 class_name ProduceSaleService
 extends RefCounted
-## Fixed-price produce sales; stage the complete inventory before crediting coins.
+## Bán nông sản theo bảng giá và cấp chất lượng được chọn.
+## Chuẩn bị toàn bộ nội dung túi sau giao dịch trước khi ghi ví và inventory.
+
+## Phát tổng số lượng và số xu của giao dịch thành công.
 signal sold(quantity: int, total: int)
+## Bảng giá nông sản.
 var catalog: ProducePriceCatalog
+## Ví nhận tiền bán.
 var wallet: WalletComponent
+## Túi chứa nông sản cần bán.
 var inventory: InventoryComponent
 var _busy: bool = false
+## Cấp chất lượng áp dụng cho báo giá và giao dịch.
 var tier: int = 0
 
 func _init(prices: ProducePriceCatalog, purse: WalletComponent, bag: InventoryComponent) -> void:
@@ -13,6 +20,7 @@ func _init(prices: ProducePriceCatalog, purse: WalletComponent, bag: InventoryCo
 	wallet = purse
 	inventory = bag
 
+## Đếm số nông sản trong túi khớp mục giá và cấp hiện tại.
 func quantity(entry: ProducePrice) -> int:
 	if entry == null or not entry.is_valid() or not is_instance_valid(inventory):
 		return 0
@@ -23,6 +31,7 @@ func quantity(entry: ProducePrice) -> int:
 			count += int(stack.tiers[tier]) if tier >= 0 and tier <= 2 else 0
 	return count
 
+## Liệt kê các mục giá hợp lệ có hàng trong túi ở cấp hiện tại.
 func owned_entries() -> Array[ProducePrice]:
 	var result: Array[ProducePrice] = []
 	if catalog != null and catalog.is_valid():
@@ -34,17 +43,21 @@ func owned_entries() -> Array[ProducePrice]:
 func _matches(item: ItemDefinition, entry: ProducePrice) -> bool:
 	return item != null and item.item_type == ItemDefinition.ItemType.PRODUCE and item.matches(entry.item)
 
+## Chuẩn bị báo giá cho số lượng một loại, bao gồm các ô dự kiến sau giao dịch.
 func quote(entry: ProducePrice, amount: int) -> Dictionary:
 	return _prepare(entry, amount, false)
 
+## Chuẩn bị báo giá bán tất cả nông sản có giá ở cấp hiện tại.
 func quote_all() -> Dictionary:
 	return _prepare(null, 0, true)
 
+## Kiểm tra và bán một loại với số lượng yêu cầu, trả kết quả và tổng tiền.
 func sell(entry: ProducePrice, amount: int) -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}
 	return _commit(_prepare(entry, amount, false))
 
+## Kiểm tra và bán mọi nông sản có giá ở cấp hiện tại.
 func sell_all() -> Dictionary:
 	if _busy:
 		return {"ok": false, "error": "A trade is in progress."}

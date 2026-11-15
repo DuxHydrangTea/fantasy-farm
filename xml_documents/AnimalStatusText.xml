@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalStatusText" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo chuỗi trạng thái chỉ đọc cho bảng thông tin và chi tiết bán vật nuôi. Nghỉ, ngủ và sản phẩm đang tồn không tự dừng đồng hồ sản xuất.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_available">
+			<return type="bool" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Kiểm tra actor còn trong cây scene, còn sống và có dữ liệu cần thiết.
+			</description>
+		</method>
+		<method name="remaining">
+			<return type="String" />
+			<param index="0" name="seconds" type="float" />
+			<description>
+				Định dạng khoảng thời gian không âm thành chuỗi đã dịch theo ngày, giờ, phút hoặc giây.
+			</description>
+		</method>
+		<method name="maturity">
+			<return type="String" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Mô tả trạng thái trưởng thành hoặc thời gian còn lại.
+			</description>
+		</method>
+		<method name="recipe">
+			<return type="String" />
+			<param index="0" name="definition" type="AnimalProductionDefinition" />
+			<description>
+				Mô tả số lượng, tên sản phẩm và thời gian một chu kỳ sản xuất.
+			</description>
+		</method>
+		<method name="lifetime">
+			<return type="String" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Mô tả thời gian sống còn lại.
+			</description>
+		</method>
+		<method name="produce">
+			<return type="String" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Hiển thị phần trăm tiến độ sản xuất và trạng thái thuốc đang chờ.
+			</description>
+		</method>
+		<method name="production_state">
+			<return type="String" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Giải thích trạng thái sản xuất dựa trên tuổi, thức ăn, nước, bệnh và thời tiết.
+			</description>
+		</method>
+		<method name="summary">
+			<return type="String" />
+			<param index="0" name="animal" type="AnimalActor" />
+			<description>
+				Ghép các dòng tuổi, tuổi thọ, tiến độ và trạng thái sản xuất.
+			</description>
+		</method>
+	</methods>
+</class>

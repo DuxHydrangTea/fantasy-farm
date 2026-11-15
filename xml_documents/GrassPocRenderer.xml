@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassPocRenderer" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo một batch MultiMesh cỏ và CanvasItem từ danh sách mẫu. Phân chunk và thứ tự Y-sort do GrassChunkRenderer và GrassChunkIndex quản lý.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="build">
+			<return type="void" />
+			<param index="0" name="parent" type="RID" />
+			<param index="1" name="catalog" type="GrassSourceCatalog" />
+			<param index="2" name="samples" type="Dictionary[]" />
+			<param index="3" name="effect" type="ShaderMaterial" />
+			<param index="4" name="geometry" type="Mesh" default="null" />
+			<description>
+				Giải phóng batch cũ rồi dựng batch mới dưới CanvasItem cha. Mỗi mẫu chứa loại, transform và pha tùy chọn; mesh rỗng dùng quad 16×16.
+			</description>
+		</method>
+		<method name="update_bounds">
+			<return type="void" />
+			<param index="0" name="margin" type="float" />
+			<description>
+				Đặt custom rect để culling bao gồm khoảng dự phòng cho hiệu ứng.
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
+				Giải phóng RID và tham chiếu tài nguyên batch.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="canvas" type="RID" setter="" getter="">
+			RID CanvasItem được cấp phát.
+		</member>
+		<member name="instances" type="MultiMesh" setter="" getter="">
+			MultiMesh chứa transform và dữ liệu riêng từng instance.
+		</member>
+		<member name="bounds" type="Rect2" setter="" getter="">
+			Biên hình học cục bộ của batch.
+		</member>
+		<member name="_material" type="ShaderMaterial" setter="" getter="">
+		</member>
+		<member name="_texture" type="Texture2D" setter="" getter="">
+		</member>
+	</members>
+</class>

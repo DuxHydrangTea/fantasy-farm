@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấu hình hình ảnh và tốc độ cho một loại công nhân.
+	</brief_description>
+	<description>
+		Chiến lược [WorkerRole] xử lý tìm việc, hành động và đóng góp khi offline.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra có khung hoạt ảnh và mã công nhân không rỗng.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="worker_id" type="StringName" setter="" getter="">
+			Mã công nhân dùng để nhận diện cấu hình.
+		</member>
+		<member name="display_name" type="String" setter="" getter="">
+			Tên hiển thị.
+		</member>
+		<member name="frames" type="SpriteFrames" setter="" getter="">
+			Các khung hoạt ảnh của công nhân.
+		</member>
+		<member name="move_speed" type="float" setter="" getter="" default="120.0">
+			Tốc độ di chuyển theo đơn vị thế giới mỗi giây.
+		</member>
+		<member name="work_seconds" type="float" setter="" getter="" default="2.0">
+			Thời gian làm một thao tác, tính bằng giây.
+		</member>
+		<member name="faces_left" type="bool" setter="" getter="" default="true">
+			Hướng nhìn gốc của ảnh sprite, dùng bởi AnimationComponent.
+		</member>
+	</members>
+</class>

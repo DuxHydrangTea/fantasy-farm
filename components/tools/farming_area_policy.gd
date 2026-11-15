@@ -1,9 +1,13 @@
 class_name FarmingAreaPolicy
 extends RefCounted
-## Same deterministic footprint/eligibility for preview and impact-time commit.
+## Tính cùng vùng thao tác và điều kiện ô cho xem trước và lúc công cụ tác động.
+
+## Ánh xạ hành động sang mã công cụ quyết định kích thước vùng.
 static func tool_for(action: StringName) -> StringName:
 	return &"hoe" if action in [&"tool", &"tree_dig"] else &"watering_can" if action == &"water" else &"sowing" if action == &"plant" else &""
 
+## Tạo vùng vuông phía trước ô gốc theo hướng lưới.
+## Trả mảng rỗng nếu kích thước ngoài cấp hỗ trợ hoặc hướng không phải trục đơn vị.
 static func cells(origin: Vector2i, facing: Vector2i, size: int) -> Array[Vector2i]:
 	var result: Array[Vector2i] = []
 	if size < 1 or size > ToolUpgradeState.MAX_LEVEL or absi(facing.x) + absi(facing.y) != 1:
@@ -15,6 +19,9 @@ static func cells(origin: Vector2i, facing: Vector2i, size: int) -> Array[Vector
 			result.append(origin + facing * row + right * column)
 	return result
 
+## Đánh giá từng ô theo hành động và lượng hạt giống khả dụng.
+## Mỗi kết quả có cell, valid cho điều kiện địa hình và ready khi còn đủ vật tư.
+## Chế độ shared lấy hạt theo mã trong cả inventory thay vì ô đang chọn.
 static func evaluate(farm: FarmingController, action: StringName, targets: Array[Vector2i], inventory: InventoryComponent = null, slot: int = -1, actor: PhysicsBody2D = null, planting_seed: ItemDefinition = null, shared: bool = false) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	var seeds: int = 0

@@ -1,6 +1,8 @@
 class_name PenDashboard
 extends TradeMenu
-## Read-only roster plus the existing capacity upgrade command.
+## Giao diện quản lý chuồng hiển thị danh sách vật nuôi, máng và nâng cấp sức chứa.
+
+## Bảng tương tác và chuồng đang được xem.
 var board: PenBoard
 @onready var panel: PanelContainer = %Panel
 @onready var heading: Label = %Heading
@@ -17,6 +19,7 @@ var board: PenBoard
 @onready var water_meter: ProgressBar = %WaterMeter
 var _upgrade_offer: Dictionary = {}
 var _upgrade_cooldown_until: int = 0
+## Các thẻ vật nuôi theo instance ID.
 var cards: Dictionary[int, AnimalCard] = {}
 var _compact: bool = false
 
@@ -109,6 +112,7 @@ func _level(kind: AnimalTrough.Kind) -> String:
 	var result: Dictionary = PenStatus.troughs(board.pen, kind)
 	return "%d%%" % floori(float(result.percent)) if result.capacity > 0 else tr("No troughs")
 
+## Cập nhật danh sách vật nuôi, mức máng và báo giá nâng cấp.
 func refresh() -> void:
 	if not is_open:
 		return

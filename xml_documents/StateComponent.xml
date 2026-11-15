@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StateComponent" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Máy trạng thái điều khiển di chuyển, dùng công cụ và tưới của người chơi. Ưu tiên tương tác theo ngữ cảnh và khóa điều khiển khi menu hoặc hoạt ảnh thao tác đang mở.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+		<method name="click_world">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+				Chuyển lượt nhấp qua đặt tổ ong, thuốc, tương tác rồi yêu cầu di chuyển nếu chưa được xử lý.
+			</description>
+		</method>
+		<method name="request_use">
+			<return type="void" />
+			<description>
+				Xếp yêu cầu dùng vật phẩm khi không bị menu hoặc động tác khóa.
+			</description>
+		</method>
+		<method name="request_interaction">
+			<return type="void" />
+			<description>
+				Thử tương tác gần nhất, nếu không có thì xếp yêu cầu thu hoạch.
+			</description>
+		</method>
+		<method name="cancel_input">
+			<return type="void" />
+			<description>
+				Xóa yêu cầu, hướng cảm ứng và hủy đường đi hiện tại.
+			</description>
+		</method>
+		<method name="get_selected_tool_action">
+			<return type="StringName" />
+			<description>
+				Trả hành động của công cụ được chọn, hoặc tên rỗng khi thiếu bộ chọn.
+			</description>
+		</method>
+		<method name="use_selected_tool">
+			<return type="bool" />
+			<param index="0" name="requested_action" type="StringName" default="&amp;&quot;&quot;" />
+			<description>
+				Chọn đối tượng tương tác theo ngữ cảnh rồi bắt đầu hoạt ảnh phù hợp; trả liệu đầu vào đã được xử lý.
+			</description>
+		</method>
+		<method name="_on_inventory_visibility_changed">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="reset_after_load">
+			<return type="void" />
+			<description>
+				Hủy điều khiển cũ và đưa người chơi về trạng thái đứng yên sau khi tải.
+			</description>
+		</method>
+		<method name="transition_to">
+			<return type="void" />
+			<param index="0" name="next_state" type="int" enum="StateComponent.State" />
+			<description>
+				Chuyển trạng thái và phát tín hiệu khi có thay đổi.
+			</description>
+		</method>
+		<method name="_animation_action">
+			<return type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_dust">
+			<return type="void" />
+			<param index="0" name="emitting" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_movement_direction">
+			<return type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_action_finished">
+			<return type="void" />
+			<param index="0" name="action" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="movement" type="MovementComponent" setter="" getter="">
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+		</member>
+		<member name="action_left" type="StringName" setter="" getter="" default="&amp;&quot;move_left&quot;">
+		</member>
+		<member name="action_right" type="StringName" setter="" getter="" default="&amp;&quot;move_right&quot;">
+		</member>
+		<member name="action_up" type="StringName" setter="" getter="" default="&amp;&quot;move_up&quot;">
+		</member>
+		<member name="action_down" type="StringName" setter="" getter="" default="&amp;&quot;move_down&quot;">
+		</member>
+		<member name="action_use_item" type="StringName" setter="" getter="" default="&amp;&quot;use_item&quot;">
+		</member>
+		<member name="action_harvest" type="StringName" setter="" getter="" default="&amp;&quot;harvest&quot;">
+		</member>
+		<member name="action_click_move" type="StringName" setter="" getter="" default="&amp;&quot;click_move&quot;">
+		</member>
+		<member name="tool_selection" type="ToolSelectionComponent" setter="" getter="">
+		</member>
+		<member name="trough_interaction" type="TroughInteractionComponent" setter="" getter="">
+		</member>
+		<member name="flower_interaction" type="FlowerInteraction" setter="" getter="">
+		</member>
+		<member name="dust_particles" type="GPUParticles2D" setter="" getter="">
+		</member>
+		<member name="navigation" type="PlayerNavigationComponent" setter="" getter="">
+		</member>
+		<member name="hive_placement" type="BeehivePlacementComponent" setter="" getter="">
+		</member>
+		<member name="interactions" type="PlayerInteractionComponent" setter="" getter="">
+		</member>
+		<member name="boosters" type="BoosterInteractionComponent" setter="" getter="">
+		</member>
+		<member name="shop_interaction" type="ShopInteraction" setter="" getter="">
+		</member>
+		<member name="tree_interaction" type="TreeInteraction" setter="" getter="">
+		</member>
+		<member name="current_state" type="int" setter="" getter="" enum="StateComponent.State" default="0">
+		</member>
+		<member name="_initialized" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_use_requested" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="active_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_harvest_requested" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="touch_direction" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+	</members>
+	<signals>
+		<signal name="state_changed">
+			<param index="0" name="previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="IDLE" value="0" enum="State">
+		</constant>
+		<constant name="WALK" value="1" enum="State">
+		</constant>
+		<constant name="TOOL" value="2" enum="State">
+		</constant>
+		<constant name="WATER" value="3" enum="State">
+		</constant>
+		<constant name="STATE_NAMES" value="Array[StringName]([&amp;&quot;idle&quot;, &amp;&quot;walk&quot;, &amp;&quot;tool&quot;, &amp;&quot;water&quot;])">
+		</constant>
+		<constant name="ChopFrames" value="&lt;Object&gt;">
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ObjectiveSaveSchema" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Tạo và kiểm tra tiến độ mục tiêu theo thứ tự trong catalog.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<param index="0" name="catalog" type="ObjectiveCatalog" />
+			<description>
+				Tạo một dòng tiến độ bằng 0 và chưa nhận thưởng cho mỗi mục tiêu.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<param index="1" name="catalog" type="ObjectiveCatalog" />
+			<description>
+				Kiểm tra catalog, thứ tự và mã mục tiêu, tiến độ, thưởng và mục được theo dõi. Sau mục đầu tiên chưa nhận thưởng, các mục sau phải chưa có tiến độ.
+			</description>
+		</method>
+	</methods>
+</class>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TimberTree" inherits="PerennialTree" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cây lấy gỗ có thể chặt thành gốc, mọc lại hoặc bị đào bỏ. Vật phẩm không vừa túi được thả xuống thế giới thông qua plantation.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="initialize">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<description>
+				Khởi tạo cây và bắt đầu sinh trưởng tại thời điểm trồng.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<param index="0" name="now" type="float" />
+			<param index="1" name="fruit_rate" type="float" default="1.0" />
+			<description>
+				Cập nhật cây; khi gốc đến mốc mọc lại, chu kỳ tăng trưởng mới ngắn một nửa.
+			</description>
+		</method>
+		<method name="chop">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Thực hiện một nhát chặt trên cây trưởng thành. Nhát cuối tạo gốc, lên lịch mọc lại và trao gỗ cùng cây giống.
+			</description>
+		</method>
+		<method name="dig">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Đào một nhát vào gốc, hoặc nhổ cây non nếu cây chưa là gốc. Nhát cuối loại bỏ gốc và trao vật phẩm rễ.
+			</description>
+		</method>
+		<method name="_reward">
+			<return type="int" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="update_visual">
+			<return type="void" />
+			<description>
+				Cập nhật ảnh gốc hoặc ảnh giai đoạn sinh trưởng.
+			</description>
+		</method>
+		<method name="_leaves">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fall">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="action_text">
+			<return type="String" />
+			<param index="0" name="_item" type="ItemDefinition" />
+			<description>
+				Tạo nhãn thao tác theo trạng thái gốc, trưởng thành và công cụ đang chọn.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Thêm số nhát, trạng thái gốc và mốc mọc lại vào dữ liệu lưu cơ sở.
+			</description>
+		</method>
+		<method name="restore_state">
+			<return type="void" />
+			<param index="0" name="row" type="Dictionary" />
+			<description>
+				Khôi phục trạng thái chặt và gốc từ bản ghi đã kiểm tra.
+			</description>
+		</method>
+		<method name="uproot">
+			<return type="bool" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+				Nhổ cây non và trả cây giống nếu túi còn chỗ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="hits" type="int" setter="" getter="" default="0">
+			Số nhát đã chặt trong chu kỳ hiện tại.
+		</member>
+		<member name="stump" type="bool" setter="" getter="" default="false">
+			Cho biết cây hiện là gốc sau khi chặt.
+		</member>
+		<member name="root_hits" type="int" setter="" getter="" default="0">
+			Số lần đào gốc đã thực hiện.
+		</member>
+		<member name="regrow_at" type="float" setter="" getter="" default="0.0">
+			Mốc gốc bắt đầu mọc lại.
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

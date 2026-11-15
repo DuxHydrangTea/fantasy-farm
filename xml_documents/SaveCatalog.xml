@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SaveCatalog" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Danh mục resource có sẵn trong game dùng để kiểm tra và khôi phục save. Các mã trong JSON được đối chiếu với danh mục thay vì tải đường dẫn từ save.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_init">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_scan_items">
+			<return type="void" />
+			<param index="0" name="folder" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="skin_id">
+			<return type="String" />
+			<param index="0" name="frames" type="SpriteFrames" />
+			<description>
+				Lấy mã skin từ tên file resource, bỏ hậu tố _frames.tres.
+			</description>
+		</method>
+		<method name="valid_skin">
+			<return type="bool" />
+			<param index="0" name="animal" type="String" />
+			<param index="1" name="skin" type="String" />
+			<description>
+				Kiểm tra skin rỗng hoặc skin đã biết phù hợp mã loài. Gà còn chấp nhận các skin rooster.
+			</description>
+		</method>
+		<method name="load_skin">
+			<return type="SpriteFrames" />
+			<param index="0" name="id" type="String" />
+			<description>
+				Tải SpriteFrames theo mã đã biết, trả null nếu mã không có trong catalog.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="items" type="Dictionary" setter="" getter="" default="{}">
+			Mã vật phẩm sang ItemDefinition.
+		</member>
+		<member name="crops" type="Dictionary" setter="" getter="" default="{}">
+			Mã cây trồng sang CropDefinition.
+		</member>
+		<member name="animals" type="Dictionary" setter="" getter="" default="{}">
+			Mã vật nuôi sang AnimalDefinition.
+		</member>
+		<member name="skins" type="Dictionary" setter="" getter="" default="{}">
+			Mã skin vật nuôi sang đường dẫn SpriteFrames đã quét.
+		</member>
+		<member name="flowers" type="Dictionary" setter="" getter="" default="{}">
+			Mã hoa sang FlowerDefinition.
+		</member>
+		<member name="trees" type="Dictionary" setter="" getter="" default="{}">
+			Mã cây sang TreeDefinition.
+		</member>
+	</members>
+</class>

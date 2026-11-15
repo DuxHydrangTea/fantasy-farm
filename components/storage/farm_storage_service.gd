@@ -1,10 +1,18 @@
 class_name FarmStorageService
 extends Node
-## Two world-owned inventories. All transfers stage both sides before notifying.
+## Quản lý kho nông sản và kho vật tư của thế giới.
+## Các lần chuyển chuẩn bị dữ liệu cả hai phía trước khi phát signal; nếu
+## không ghi được đích, nguồn được khôi phục từ bản chụp.
+
+## Phát mã kho khi inventory của kho thay đổi; mã rỗng thông báo khôi phục chung.
 signal changed(storage_id: String)
+## Thế giới sở hữu kho và điều phối các giao dịch liên quan.
 var world: FarmWorld
+## Ánh xạ mã kho sang InventoryComponent.
 var inventories: Dictionary = {}
+## Cho biết dịch vụ đang thực hiện giao dịch.
 var busy: bool = false
+## Catalog tra mã vật phẩm khi chuyển và khôi phục.
 var catalog: SaveCatalog
 
 func _ready() -> void:
@@ -25,6 +33,8 @@ func _create_inventory(id: String, slots: int, cap: int) -> InventoryComponent:
 func _inventory_changed(id: String) -> void:
 	changed.emit(id)
 
+## Chuyển sản phẩm hoặc thức ăn từ giỏ công nhân vào kho tương ứng.
+## Chỉ chạy khi khóa công nhân được giữ; trả số đơn vị đã chuyển.
 func import_worker_products(source: InventoryComponent, supplies: bool = false) -> int:
 	# Restore/legacy drain holds the worker lock; each item goes to its matching storage.
 	if busy or world == null or not world.workers.busy or source == null:
@@ -58,12 +68,16 @@ func import_worker_products(source: InventoryComponent, supplies: bool = false) 
 	busy = false
 	return moved
 
+## Tra hạt giống hợp lệ được kho vật tư chấp nhận, hoặc null.
 func seed_item(id: StringName) -> ItemDefinition:
 	if catalog == null:
 		catalog = SaveCatalog.new()
 	var item: ItemDefinition = catalog.items.get(String(id)) as ItemDefinition
 	return item if item != null and item.item_type == ItemDefinition.ItemType.SEED and definition("farm_supply_storage").accepts(item) else null
 
+## Nạp máng thức ăn từ kho vật tư, một lượt hoặc đến đầy.
+## Người chơi cần trong tầm; công nhân cần giữ khóa dịch vụ công nhân.
+## Trả lượng thức ăn thực tế đã thêm.
 func refill_feed(trough: AnimalTrough, to_full: bool, worker: bool = false) -> int:
 	if busy or world == null or not is_instance_valid(trough) or not world.is_ancestor_of(trough) or trough.kind != AnimalTrough.Kind.FOOD:
 		return 0
@@ -81,6 +95,8 @@ func refill_feed(trough: AnimalTrough, to_full: bool, worker: bool = false) -> i
 	busy = false
 	return added
 
+## Gieo từ kho vật tư sau khi kiểm tra hạt và revision lựa chọn còn khớp.
+## Trả số ô thay đổi và số hạt đã tiêu.
 func plant_from_storage(id: StringName, revision: int, targets: Array[Vector2i]) -> Dictionary:
 	var empty: Dictionary = {"changed": 0, "seed_spent": 0}
 	if busy or not available() or world.workers.busy or world.farming.is_area_busy():
@@ -95,12 +111,15 @@ func plant_from_storage(id: StringName, revision: int, targets: Array[Vector2i])
 	busy = false
 	return result
 
+## Lấy inventory của kho theo mã, hoặc null.
 func inventory(id: String) -> InventoryComponent:
 	return inventories.get(id) as InventoryComponent
 
+## Lấy cấu hình kho theo mã, hoặc null.
 func definition(id: String) -> FarmStorageDefinition:
 	return FarmStorageSaveSchema.DEFINITIONS.get(id) as FarmStorageDefinition
 
+## Cho biết profile đã sẵn sàng cho thao tác kho.
 func available() -> bool:
 	return world == null or (world.tool_upgrades != null and world.tool_upgrades.profile_ready)
 
@@ -153,9 +172,12 @@ func _add(slots: Array[Dictionary], item: ItemDefinition, amount: int, bag: Inve
 			stack.tiers[tier] += moved
 			left -= moved
 
+## Chuyển một loại vật phẩm giữa túi và kho; quality -1 cho phép mọi cấp.
+## deposit chọn chiều gửi vào kho. Kết quả chứa ok, moved và error.
 func transfer(id: String, bag: InventoryComponent, item_id: StringName, amount: int, deposit: bool, quality: int = -1) -> Dictionary:
 	return _transfer(id, bag, item_id, amount, deposit, false, quality)
 
+## Chuyển tối đa các vật phẩm kho chấp nhận theo chiều đã chọn.
 func transfer_all(id: String, bag: InventoryComponent, deposit: bool) -> Dictionary:
 	return _transfer(id, bag, &"", 0, deposit, true)
 
@@ -218,6 +240,7 @@ func _transfer(id: String, bag: InventoryComponent, item_id: StringName, amount:
 	busy = false
 	return {"ok": true, "moved": moved, "error": ""}
 
+## Tạo dữ liệu lưu của các kho gồm số ô, giới hạn chồng, mã vật phẩm và cấp.
 func capture() -> Dictionary:
 	var result: Dictionary = {}
 	for id: String in inventories:
@@ -228,6 +251,7 @@ func capture() -> Dictionary:
 		result[id] = {"slot_count": bag.slot_count, "stack_cap": bag.stack_cap, "slots": slots}
 	return result
 
+## Dựng lại inventory kho từ dữ liệu đã kiểm tra và catalog, rồi phát changed.
 func restore(data: Dictionary, resources: SaveCatalog) -> void:
 	busy = true
 	catalog = resources

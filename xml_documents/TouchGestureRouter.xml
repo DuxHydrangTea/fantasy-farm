@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TouchGestureRouter" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Phân loại và giữ quyền xử lý từng ngón chạm tới khi nhả, phân biệt điều khiển UI và cử chỉ thế giới.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="begin">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="point" type="Vector2" />
+			<param index="2" name="role" type="StringName" />
+			<description>
+				Ghi nhận ngón chạm và vai trò điều khiển của nó.
+			</description>
+		</method>
+		<method name="drag">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="point" type="Vector2" />
+			<description>
+				Cập nhật vị trí ngón chạm và cử chỉ đang diễn ra.
+			</description>
+		</method>
+		<method name="end">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="point" type="Vector2" />
+			<param index="2" name="canceled" type="bool" default="false" />
+			<description>
+				Kết thúc hoặc hủy ngón chạm và phát hành động tương ứng.
+			</description>
+		</method>
+		<method name="cancel">
+			<return type="void" />
+			<description>
+				Xóa toàn bộ ngón chạm và đặt lại hướng, trạng thái chụm.
+			</description>
+		</method>
+		<method name="_move_joystick">
+			<return type="void" />
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_pinch">
+			<return type="void" />
+			<param index="0" name="emit_change" type="bool" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="fingers" type="Dictionary[int, Dictionary]" setter="" getter="" default="{}">
+		</member>
+		<member name="joystick_id" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="joystick_center" type="Vector2" setter="" getter="">
+		</member>
+		<member name="joystick_radius" type="float" setter="" getter="" default="32.0">
+		</member>
+		<member name="direction" type="Vector2" setter="" getter="" default="Vector2(0, 0)">
+		</member>
+		<member name="_pinch_distance" type="float" setter="" getter="" default="0.0">
+		</member>
+	</members>
+	<signals>
+		<signal name="movement_changed">
+			<param index="0" name="direction" type="Vector2" />
+			<description>
+			</description>
+		</signal>
+		<signal name="action_requested">
+			<param index="0" name="role" type="StringName" />
+			<description>
+			</description>
+		</signal>
+		<signal name="tapped">
+			<param index="0" name="point" type="Vector2" />
+			<description>
+			</description>
+		</signal>
+		<signal name="pinched">
+			<param index="0" name="ratio" type="float" />
+			<description>
+			</description>
+		</signal>
+		<signal name="pinch_started">
+			<description>
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="TAP_DISTANCE" value="12.0">
+		</constant>
+		<constant name="TAP_TIME_MS" value="600">
+		</constant>
+	</constants>
+</class>

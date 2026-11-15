@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="BeehiveDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Quy tắc và resource dùng chung của tổ ong; trạng thái từng tổ được lưu riêng.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="is_rare_flower">
+			<return type="bool" />
+			<param index="0" name="source" type="String" />
+			<description>
+				Kiểm tra mã thuộc nhóm năm loài hoa đặc sản.
+			</description>
+		</method>
+		<method name="is_specialty">
+			<return type="bool" />
+			<param index="0" name="source" type="String" />
+			<description>
+				Kiểm tra nguồn là hướng dương hoặc hoa đặc sản.
+			</description>
+		</method>
+		<method name="honey_rate">
+			<return type="float" />
+			<param index="0" name="source" type="String" />
+			<param index="1" name="legacy" type="bool" default="false" />
+			<description>
+				Hệ số tích lũy công việc theo nguồn và quy tắc mẻ cũ nếu legacy bật.
+			</description>
+		</method>
+		<method name="honey_for">
+			<return type="ItemDefinition" />
+			<param index="0" name="source" type="String" />
+			<param index="1" name="legacy" type="bool" default="false" />
+			<description>
+				Chọn vật phẩm mật tương ứng nguồn và quy tắc mẻ cũ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="cycle_seconds" type="float" setter="" getter="" default="86400.0">
+			Lượng công việc cần để hoàn thành một mẻ, tính bằng giây cơ sở.
+		</member>
+		<member name="radius" type="float" setter="" getter="" default="80.0">
+			Bán kính tác động cơ sở.
+		</member>
+		<member name="pollen_speed" type="float" setter="" getter="" default="1.3">
+			Hệ số tốc độ thụ phấn của mẻ cũ.
+		</member>
+		<member name="sunflower_speed" type="float" setter="" getter="" default="1.3333333333333333">
+			Hệ số sản xuất với hoa hướng dương.
+		</member>
+		<member name="floral_speed" type="float" setter="" getter="" default="2.0">
+			Hệ số sản xuất với các loài hoa đặc sản.
+		</member>
+		<member name="batch_amount" type="int" setter="" getter="" default="100">
+			Số đơn vị mật trong một mẻ thông thường.
+		</member>
+		<member name="crop_bonus" type="float" setter="" getter="" default="0.1">
+			Tỉ lệ thưởng cho cây trồng được thụ phấn.
+		</member>
+		<member name="specialty_ratio" type="float" setter="" getter="" default="0.5">
+			Tỉ lệ công việc tối thiểu một nguồn phải đóng góp để thành mật đặc sản.
+		</member>
+		<member name="wild_honey" type="ItemDefinition" setter="" getter="">
+			Vật phẩm mật thường.
+		</member>
+		<member name="sunflower_honey" type="ItemDefinition" setter="" getter="">
+			Vật phẩm mật hướng dương.
+		</member>
+		<member name="floral_honey" type="ItemDefinition" setter="" getter="">
+			Vật phẩm mật hoa đặc sản.
+		</member>
+		<member name="hive_item" type="ItemDefinition" setter="" getter="">
+			Vật phẩm đặt tổ ong.
+		</member>
+		<member name="idle_texture" type="Texture2D" setter="" getter="">
+			Ảnh tổ chưa đầy.
+		</member>
+		<member name="full_texture" type="Texture2D" setter="" getter="">
+			Ảnh tổ có mẻ sẵn sàng thu.
+		</member>
+	</members>
+</class>

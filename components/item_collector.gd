@@ -1,9 +1,14 @@
 class_name ItemCollector
 extends Area2D
+## Cảm biến tìm vật phẩm rơi trong vùng hút và chuyển chúng vào inventory.
+
+## Phát vật phẩm và số lượng thực nhận khi đống đồ bay đến nơi.
 signal item_acquired(item: ItemDefinition, amount: int)
-## A reusable pickup sensor. Bind an Inventory directly or a node exposing it.
+## Inventory nhận đồ; có thể lấy từ inventory_source khi để trống.
 @export var inventory: InventoryComponent
+## Component cung cấp inventory nếu không gán trực tiếp.
 @export var inventory_source: ToolSelectionComponent
+## Bán kính phát hiện và bắt đầu hút.
 @export_range(14.0, 160.0) var attraction_radius: float = 48.0
 var _collecting: bool = false
 
@@ -28,6 +33,7 @@ func _on_area_entered(area: Area2D) -> void:
 		else:
 			pickup.attract_to(self)
 
+## Kiểm tra đống đồ còn hợp lệ và túi còn sức chứa cho ít nhất một đơn vị.
 func can_accept(pickup: ItemPickup) -> bool:
 	return inventory != null and pickup != null and not pickup.is_queued_for_deletion() and pickup.amount > 0 and pickup.item != null and inventory.capacity_for(pickup.item) > 0
 

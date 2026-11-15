@@ -1,35 +1,67 @@
 class_name AnimalActor
 extends CharacterBody2D
+## Actor vật nuôi kết nối nhu cầu, tuổi, sức khỏe, hành vi và sản xuất.
+## Thời gian đủ thức ăn, nước được giao cho vòng đời; sản phẩm hoàn thành
+## chuyển vào kho chuồng, đống vật phẩm hoặc chờ thu trực tiếp theo cấu hình.
+
+## Script bong bóng phản hồi sau chăm sóc.
 const CareBubble = preload("res://components/animals/animal_care_bubble.gd")
+## Biểu tượng phản hồi uống nước.
 const WATER_FEEDBACK: Texture2D = preload("res://assets/Ui/status_bubbles/thirsty.png")
+## Biểu tượng dự phòng khi ăn.
 const FOOD_FEEDBACK: Texture2D = preload("res://assets/Ui/status_bubbles/hungry.png")
+## Script trạng thái bệnh.
 const HealthState = preload("res://components/animals/animal_health_state.gd")
+## Script biểu tượng trạng thái.
 const HealthBadges = preload("res://components/condition_badges.gd")
+## Trạng thái bệnh của cá thể.
 var health: HealthState = HealthState.new()
+## Node hiển thị trạng thái sức khỏe và nhu cầu.
 var health_badges: Node2D
+## Phát khi cá thể hết tuổi thọ và được đưa ra khỏi hoạt động.
 signal died
+## Hình va chạm actor.
 @export var collision: CollisionShape2D
+## Node hiển thị thanh nhu cầu.
 @export var needs_display: Node2D
+## Thanh độ no.
 @export var satiety_bar: ProgressBar
+## Thanh lượng nước.
 @export var hydration_bar: ProgressBar
+## Mã ổn định của cá thể.
 @export var persistent_id: StringName
 
+## Cấu hình loài dùng chung.
 @export var definition: AnimalDefinition
+## Chuồng sở hữu cá thể.
 @export var pen: AnimalPen
+## Bộ hoạt ảnh thay thế cho giai đoạn trưởng thành.
 @export var skin_frames: SpriteFrames
+## Cấu hình hiển thị nhu cầu.
 @export var show_needs: bool = true
+## Tuổi ban đầu tính bằng giây.
 @export_range(0.0, 31536000.0) var initial_age_seconds: float = 0.0
+## Sprite hoạt ảnh.
 @export var sprite: AnimatedSprite2D
+## Component di chuyển.
 @export var movement: MovementComponent
+## Component hoạt ảnh.
 @export var animation: AnimationComponent
+## Component độ no và nước.
 @export var needs: AnimalNeedsComponent
+## Component đi lang thang trong chuồng.
 @export var wander: AnimalWanderComponent
+## Máy trạng thái hành vi.
 @export var behaviour: AnimalBehaviourComponent
+## Component tìm và dùng máng.
 @export var foraging: AnimalForagingComponent
+## Component tuổi và tuổi thọ.
 @export var growth: AnimalGrowthComponent
+## Component tích lũy sản phẩm.
 @export var production: AnimalProductionComponent
 var _product_pickup: ItemPickup
 var _stage_visual_pending: bool = false
+## Điều hướng ao và đưa trứng lên bờ khi áp dụng.
 var waterfowl: WaterfowlComponent
 var _dead: bool = false
 var _retired: bool = false
@@ -126,6 +158,7 @@ func _advance_lifecycle(timestamp: float, elapsed: float, supplied_seconds: floa
 	if growth.is_dead():
 		_die()
 
+## Cho biết actor đã xử lý hết tuổi thọ.
 func is_dead() -> bool:
 	return _dead
 
@@ -136,7 +169,8 @@ func _die() -> void:
 	_retire()
 	died.emit()
 
-## Trading retires the living actor without reporting a death.
+## Đưa actor còn sống ra khỏi hoạt động để bán mà không phát signal chết.
+## Sản phẩm đã hoàn thành được xử lý trước khi node bị xóa.
 func retire_for_sale() -> bool:
 	if _retired or is_queued_for_deletion():
 		return false
@@ -161,7 +195,12 @@ func _retire() -> void:
 	_drop_stored_output()
 
 func _on_produced(_amount: int) -> void:
-	if _retired or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.WORLD_DROP or not is_inside_tree():
+	if _retired or not is_inside_tree():
+		return
+	if is_instance_valid(pen) and pen.produce_storage_enabled:
+		_drop_stored_output()
+		return
+	if production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.WORLD_DROP:
 		return
 	if definition.eggs_on_land and pen is PondPen and (pen as PondPen).is_water(global_position):
 		return # Keep the completed eggs in production stock until physically on shore.
@@ -169,6 +208,13 @@ func _on_produced(_amount: int) -> void:
 
 func _drop_stored_output() -> void:
 	if production.definition == null or production.stored_amount <= 0 or not is_inside_tree():
+		return
+	if is_instance_valid(pen) and pen.produce_storage_enabled:
+		# Drain the entire completed batch even if the shared pen accepts none.
+		# Overflow expires now and must never become a future backlog or pickup.
+		var amount: int = production.take_output(production.stored_amount, false)
+		pen.produce_storage.deposit(production.definition.production_item, amount)
+		production.stock_changed.emit(production.stored_amount)
 		return
 	# Mỗi con giữ liên kết với đống sản phẩm của mình: các lô sau cộng vào cùng đống còn sống.
 	# queue_free chưa xóa Node ngay, nên phải kiểm tra cả is_queued_for_deletion, không chỉ is_instance_valid.
@@ -187,17 +233,23 @@ func _drop_stored_output() -> void:
 	else:
 		_product_pickup.add_amount(production.take_output(production.stored_amount))
 
+## Đồng bộ thời gian rồi thu sản phẩm trực tiếp vào inventory nếu cấu hình cho phép.
+## Trả số lượng thực nhận; chuồng dùng kho chung không thu qua actor.
 func collect_produce(inventory: InventoryComponent) -> int:
+	if is_instance_valid(pen) and pen.produce_storage_enabled:
+		return 0
 	if needs.time_manager != null:
 		needs.update_at(needs.time_manager.now())
 	if _retired or production.definition == null or production.definition.collection_mode != AnimalProductionDefinition.CollectionMode.DIRECT_COLLECTION:
 		return 0
 	return production.collect(inventory)
 
+## Trả đống sản phẩm liên kết còn tồn tại và chưa chờ xóa, hoặc null.
 func product_pickup() -> ItemPickup:
 	return _product_pickup if is_instance_valid(_product_pickup) and not _product_pickup.is_queued_for_deletion() else null
 
-## The persistence adapter validates the DTO before rebuilding this actor.
+## Khôi phục tuổi, sản xuất, sức khỏe và nhu cầu từ DTO đã được adapter kiểm tra.
+## Liên kết đống sản phẩm cũ rồi tiến đến now trước khi tiếp tục hành vi.
 func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: ItemPickup) -> void:
 	foraging.cancel()
 	wander.movement.cancel_target()
@@ -211,7 +263,7 @@ func restore_lifecycle(data: Dictionary, saved_at: float, now: float, pile: Item
 	_refresh_health_badges()
 	needs.restore_state(float(data.satiety), float(data.hydration), saved_at)
 	_product_pickup = pile
-	if production.definition != null and production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.WORLD_DROP and production.stored_amount > 0:
+	if production.definition != null and (production.definition.collection_mode == AnimalProductionDefinition.CollectionMode.WORLD_DROP or pen.produce_storage_enabled) and production.stored_amount > 0:
 		_on_produced(0)
 	needs.update_at(now)
 	if growth.is_dead():
@@ -225,13 +277,17 @@ func _update_needs_display(food: float, water: float) -> void:
 	hydration_bar.value = water
 	_refresh_health_badges()
 
+## Đặt trạng thái tập trung của hành vi và ẩn thanh nhu cầu cũ.
 func set_status_focused(value: bool) -> void:
 	behaviour.set_focused(value)
 	needs_display.hide()
 
+## Sprite dùng làm vị trí hiển thị trạng thái.
 func get_status_sprite() -> Node2D:
 	return sprite
 
+## Trả lý do không thể dùng tonic hoặc chuỗi rỗng khi có thể dùng.
+## Con non dùng tonic trưởng thành; con trưởng thành dùng tonic sản xuất.
 func tonic_error() -> String:
 	if _retired or is_queued_for_deletion() or definition == null or growth.is_dead():
 		return "Animal unavailable"
@@ -241,6 +297,7 @@ func tonic_error() -> String:
 		return "No produce configured"
 	return "A tonic is already active for the next cycle." if production.tonic_pending else ""
 
+## Đồng bộ nhu cầu rồi áp dụng tonic phù hợp giai đoạn tuổi.
 func apply_tonic() -> bool:
 	if needs.time_manager != null:
 		needs.update_at(needs.time_manager.now())
@@ -254,6 +311,7 @@ func _refresh_health_badges() -> void:
 		# These presentation flags do not alter the production eligibility rules.
 		health_badges.set_statuses(false, false, health.sick, needs.satiety <= definition.food_seek_threshold, needs.hydration <= definition.water_seek_threshold)
 
+## Đồng bộ thời gian rồi chữa bệnh nếu actor còn hoạt động.
 func cure_disease() -> bool:
 	if needs.time_manager != null:
 		needs.update_at(needs.time_manager.now())

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TroughInteractionComponent" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối người chơi nạp thức ăn, nước vào máng tại frame tác động hoạt ảnh. StateComponent quản lý input và trạng thái công cụ; component này giữ mục tiêu và kiểm tra lại tầm, vật phẩm, menu trước khi nạp.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="can_reach">
+			<return type="bool" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Kiểm tra máng hợp lệ, trong tầm và đường nhìn không bị vật khác chặn.
+			</description>
+		</method>
+		<method name="find_trough">
+			<return type="AnimalTrough" />
+			<description>
+				Tìm máng gần nhất có thể tiếp cận, hoặc null.
+			</description>
+		</method>
+		<method name="has_watering_can">
+			<return type="bool" />
+			<description>
+				Kiểm tra vật phẩm đang chọn là bình tưới.
+			</description>
+		</method>
+		<method name="feed_inventory">
+			<return type="InventoryComponent" />
+			<description>
+				Lấy inventory kho vật tư của thế giới, hoặc null nếu không có.
+			</description>
+		</method>
+		<method name="feed_stock">
+			<return type="int" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Đếm gói thức ăn phù hợp máng trong kho vật tư.
+			</description>
+		</method>
+		<method name="refill_hint">
+			<return type="String" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Tạo hướng dẫn đã dịch cho thao tác nạp thông thường.
+			</description>
+		</method>
+		<method name="can_refill">
+			<return type="bool" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Kiểm tra máng chưa đầy và có bình tưới hoặc gói thức ăn phù hợp.
+			</description>
+		</method>
+		<method name="refresh">
+			<return type="void" />
+			<description>
+				Cập nhật máng đang nhắm và vị trí, nội dung nhãn theo trạng thái hiện tại.
+			</description>
+		</method>
+		<method name="prepare_action">
+			<return type="StringName" />
+			<description>
+				Chuẩn bị nạp máng đang nhắm. Chuỗi rỗng cho phép xét hành động đất, blocked cho biết có máng nhưng không thể nạp, còn lại là mã hoạt ảnh.
+			</description>
+		</method>
+		<method name="_on_state_changed">
+			<return type="void" />
+			<param index="0" name="_previous" type="StringName" />
+			<param index="1" name="current" type="StringName" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_frame_changed">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="inventory_has_can">
+			<return type="bool" />
+			<description>
+				Kiểm tra có bình tưới ở bất kỳ ô nào trong túi.
+			</description>
+		</method>
+		<method name="auto_hint">
+			<return type="String" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Trả lý do đã dịch khi không thể nạp đầy tự động, hoặc chuỗi rỗng.
+			</description>
+		</method>
+		<method name="prepare_target">
+			<return type="StringName" />
+			<param index="0" name="trough" type="AnimalTrough" />
+			<description>
+				Chuẩn bị nạp đầy máng cụ thể trong tầm, hoặc trả blocked nếu không hợp lệ.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="selection" type="ToolSelectionComponent" setter="" getter="">
+			Lựa chọn công cụ và inventory người chơi.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Hoạt ảnh cung cấp frame tác động và hướng nhìn.
+		</member>
+		<member name="state" type="StateComponent" setter="" getter="">
+			Máy trạng thái hành động người chơi.
+		</member>
+		<member name="reach" type="float" setter="" getter="" default="30.0">
+			Khoảng cách tiếp cận máng tối đa.
+		</member>
+		<member name="impact_frame" type="int" setter="" getter="" default="3">
+			Frame dự kiến áp dụng thao tác.
+		</member>
+		<member name="prompt" type="Label" setter="" getter="">
+			Nhãn hiển thị hướng dẫn và kết quả.
+		</member>
+		<member name="focused_trough" type="AnimalTrough" setter="" getter="">
+			Máng gần nhất đang được nhắm.
+		</member>
+		<member name="_pending" type="AnimalTrough" setter="" getter="">
+		</member>
+		<member name="_action" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="_water_item" type="ItemDefinition" setter="" getter="">
+		</member>
+		<member name="_auto_fill" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_water_slot" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="_feedback" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_feedback_amount" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_feedback_until" type="int" setter="" getter="" default="0">
+		</member>
+	</members>
+	<signals>
+		<signal name="refill_committed">
+			<param index="0" name="condition" type="StringName" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Phát loại thao tác và số sự kiện sau lần nạp thành công.
+			</description>
+		</signal>
+	</signals>
+</class>

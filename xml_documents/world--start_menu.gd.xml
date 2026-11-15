@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;world/start_menu.gd&quot;" inherits="Control" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Menu khởi động để tiếp tục, tạo hoặc chọn trang trại trước khi tải thế giới.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_show">
+			<return type="void" />
+			<param index="0" name="page" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_main">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_continue">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_new_game">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_create">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_saved_games">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_launch">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="is_new" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="navigate_on_launch" type="bool" setter="" getter="" default="true">
+			Cho phép chuyển scene khi bắt đầu; có thể tắt để kiểm thử menu.
+		</member>
+		<member name="card" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+			Khung nội dung chính thay đổi kích thước theo cửa sổ.
+		</member>
+		<member name="continue_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+			Nút tiếp tục profile hợp lệ gần nhất.
+		</member>
+		<member name="new_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+			Nút mở trang tạo trang trại.
+		</member>
+		<member name="games_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+			Nút mở danh sách trang trại đã lưu.
+		</member>
+		<member name="quit_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+			Nút thoát game.
+		</member>
+		<member name="farm_name" type="LineEdit" setter="" getter="" default="&lt;unknown&gt;">
+			Ô nhập tên trang trại mới.
+		</member>
+		<member name="saves_list" type="VBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+			Danh sách profile được dựng khi mở trang đã lưu.
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+			Nhãn báo lỗi hoặc trạng thái thao tác.
+		</member>
+		<member name="_latest" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_launching" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_slide" type="Node" setter="" getter="">
+		</member>
+	</members>
+	<signals>
+		<signal name="profile_requested">
+			<param index="0" name="id" type="String" />
+			<param index="1" name="is_new" type="bool" />
+			<description>
+				Phát mã profile và cờ profile mới khi người chơi yêu cầu mở trang trại.
+			</description>
+		</signal>
+	</signals>
+</class>

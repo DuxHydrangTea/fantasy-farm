@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemPickup" inherits="Area2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Đống vật phẩm trong thế giới, có thể bay hình ảnh về collector và được nhặt. Vị trí logic giữ nguyên trong khi hình ảnh bay để dữ liệu lưu không đổi giữa chuyến; số lượng chỉ giảm khi inventory thực sự nhận vật phẩm.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create" qualifiers="static">
+			<return type="ItemPickup" />
+			<description>
+				Tải scene đống đồ và tạo instance sau khi các script toàn cục khởi tạo.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="is_attracting">
+			<return type="bool" />
+			<description>
+				Cho biết đang có collector hợp lệ hút đống đồ.
+			</description>
+		</method>
+		<method name="attract_to">
+			<return type="bool" />
+			<param index="0" name="collector" type="ItemCollector" />
+			<description>
+				Bắt đầu cho hình ảnh bay về collector nếu đống đồ và túi đủ điều kiện.
+			</description>
+		</method>
+		<method name="cancel_attraction">
+			<return type="void" />
+			<description>
+				Hủy chuyến bay và đưa hình ảnh về vị trí nghỉ.
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="add_amount">
+			<return type="void" />
+			<param index="0" name="count" type="int" />
+			<description>
+				Cộng số lượng không âm vào đống.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Chuyển tối đa số lượng còn lại vào inventory và trả số thực nhận. Phần không vừa được giữ lại; đống rỗng được xóa sau khi chuyển.
+			</description>
+		</method>
+		<method name="_update_display">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="sprite" type="Sprite2D" setter="" getter="">
+			Sprite thể hiện vật phẩm và chuyển động hút.
+		</member>
+		<member name="quantity_label" type="Label" setter="" getter="">
+			Nhãn số lượng hiển thị trên đống.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định dùng trong dữ liệu lưu.
+		</member>
+		<member name="item" type="ItemDefinition" setter="" getter="">
+			Định nghĩa vật phẩm trong đống.
+		</member>
+		<member name="amount" type="int" setter="@amount_setter" getter="" default="1">
+			Số lượng còn lại, tối thiểu 0.
+		</member>
+		<member name="_collecting" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_attractor" type="ItemCollector" setter="" getter="">
+		</member>
+		<member name="_resting_sprite_position" type="Vector2" setter="" getter="">
+		</member>
+		<member name="_flight_seconds" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="attraction_speed" type="float" setter="" getter="" default="140.0">
+			Tốc độ ban đầu của hình ảnh khi bị hút.
+		</member>
+		<member name="attraction_acceleration" type="float" setter="" getter="" default="600.0">
+			Gia tốc của hình ảnh khi bị hút.
+		</member>
+	</members>
+	<signals>
+		<signal name="collected">
+			<param index="0" name="item" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Phát vật phẩm và số lượng thực nhận sau khi chuyển vào inventory.
+			</description>
+		</signal>
+	</signals>
+</class>

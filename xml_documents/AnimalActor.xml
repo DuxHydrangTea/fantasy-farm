@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="AnimalActor" inherits="CharacterBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Actor vật nuôi kết nối nhu cầu, tuổi, sức khỏe, hành vi và sản xuất. Thời gian đủ thức ăn, nước được giao cho vòng đời; sản phẩm hoàn thành chuyển vào kho chuồng, đống vật phẩm hoặc chờ thu trực tiếp theo cấu hình.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_physics_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_apply_stage_visuals">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_matured">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_advance_lifecycle">
+			<return type="void" />
+			<param index="0" name="timestamp" type="float" />
+			<param index="1" name="elapsed" type="float" />
+			<param index="2" name="supplied_seconds" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="is_dead">
+			<return type="bool" />
+			<description>
+				Cho biết actor đã xử lý hết tuổi thọ.
+			</description>
+		</method>
+		<method name="_die">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="retire_for_sale">
+			<return type="bool" />
+			<description>
+				Đưa actor còn sống ra khỏi hoạt động để bán mà không phát signal chết. Sản phẩm đã hoàn thành được xử lý trước khi node bị xóa.
+			</description>
+		</method>
+		<method name="_retire">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_on_produced">
+			<return type="void" />
+			<param index="0" name="_amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_drop_stored_output">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="collect_produce">
+			<return type="int" />
+			<param index="0" name="inventory" type="InventoryComponent" />
+			<description>
+				Đồng bộ thời gian rồi thu sản phẩm trực tiếp vào inventory nếu cấu hình cho phép. Trả số lượng thực nhận; chuồng dùng kho chung không thu qua actor.
+			</description>
+		</method>
+		<method name="product_pickup">
+			<return type="ItemPickup" />
+			<description>
+				Trả đống sản phẩm liên kết còn tồn tại và chưa chờ xóa, hoặc null.
+			</description>
+		</method>
+		<method name="restore_lifecycle">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="saved_at" type="float" />
+			<param index="2" name="now" type="float" />
+			<param index="3" name="pile" type="ItemPickup" />
+			<description>
+				Khôi phục tuổi, sản xuất, sức khỏe và nhu cầu từ DTO đã được adapter kiểm tra. Liên kết đống sản phẩm cũ rồi tiến đến now trước khi tiếp tục hành vi.
+			</description>
+		</method>
+		<method name="_update_needs_display">
+			<return type="void" />
+			<param index="0" name="food" type="float" />
+			<param index="1" name="water" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_status_focused">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+				Đặt trạng thái tập trung của hành vi và ẩn thanh nhu cầu cũ.
+			</description>
+		</method>
+		<method name="get_status_sprite">
+			<return type="Node2D" />
+			<description>
+				Sprite dùng làm vị trí hiển thị trạng thái.
+			</description>
+		</method>
+		<method name="tonic_error">
+			<return type="String" />
+			<description>
+				Trả lý do không thể dùng tonic hoặc chuỗi rỗng khi có thể dùng. Con non dùng tonic trưởng thành; con trưởng thành dùng tonic sản xuất.
+			</description>
+		</method>
+		<method name="apply_tonic">
+			<return type="bool" />
+			<description>
+				Đồng bộ nhu cầu rồi áp dụng tonic phù hợp giai đoạn tuổi.
+			</description>
+		</method>
+		<method name="_refresh_health_badges">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="cure_disease">
+			<return type="bool" />
+			<description>
+				Đồng bộ thời gian rồi chữa bệnh nếu actor còn hoạt động.
+			</description>
+		</method>
+		<method name="_on_serving_consumed">
+			<return type="void" />
+			<param index="0" name="kind" type="int" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="health" type="&quot;components/animals/animal_health_state.gd&quot;" setter="" getter="" default="&lt;unknown&gt;">
+			Trạng thái bệnh của cá thể.
+		</member>
+		<member name="health_badges" type="Node2D" setter="" getter="">
+			Node hiển thị trạng thái sức khỏe và nhu cầu.
+		</member>
+		<member name="collision" type="CollisionShape2D" setter="" getter="">
+			Hình va chạm actor.
+		</member>
+		<member name="needs_display" type="Node2D" setter="" getter="">
+			Node hiển thị thanh nhu cầu.
+		</member>
+		<member name="satiety_bar" type="ProgressBar" setter="" getter="">
+			Thanh độ no.
+		</member>
+		<member name="hydration_bar" type="ProgressBar" setter="" getter="">
+			Thanh lượng nước.
+		</member>
+		<member name="persistent_id" type="StringName" setter="" getter="">
+			Mã ổn định của cá thể.
+		</member>
+		<member name="definition" type="AnimalDefinition" setter="" getter="">
+			Cấu hình loài dùng chung.
+		</member>
+		<member name="pen" type="AnimalPen" setter="" getter="">
+			Chuồng sở hữu cá thể.
+		</member>
+		<member name="skin_frames" type="SpriteFrames" setter="" getter="">
+			Bộ hoạt ảnh thay thế cho giai đoạn trưởng thành.
+		</member>
+		<member name="show_needs" type="bool" setter="" getter="" default="true">
+			Cấu hình hiển thị nhu cầu.
+		</member>
+		<member name="initial_age_seconds" type="float" setter="" getter="" default="0.0">
+			Tuổi ban đầu tính bằng giây.
+		</member>
+		<member name="sprite" type="AnimatedSprite2D" setter="" getter="">
+			Sprite hoạt ảnh.
+		</member>
+		<member name="movement" type="MovementComponent" setter="" getter="">
+			Component di chuyển.
+		</member>
+		<member name="animation" type="AnimationComponent" setter="" getter="">
+			Component hoạt ảnh.
+		</member>
+		<member name="needs" type="AnimalNeedsComponent" setter="" getter="">
+			Component độ no và nước.
+		</member>
+		<member name="wander" type="AnimalWanderComponent" setter="" getter="">
+			Component đi lang thang trong chuồng.
+		</member>
+		<member name="behaviour" type="AnimalBehaviourComponent" setter="" getter="">
+			Máy trạng thái hành vi.
+		</member>
+		<member name="foraging" type="AnimalForagingComponent" setter="" getter="">
+			Component tìm và dùng máng.
+		</member>
+		<member name="growth" type="AnimalGrowthComponent" setter="" getter="">
+			Component tuổi và tuổi thọ.
+		</member>
+		<member name="production" type="AnimalProductionComponent" setter="" getter="">
+			Component tích lũy sản phẩm.
+		</member>
+		<member name="_product_pickup" type="ItemPickup" setter="" getter="">
+		</member>
+		<member name="_stage_visual_pending" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="waterfowl" type="WaterfowlComponent" setter="" getter="">
+			Điều hướng ao và đưa trứng lên bờ khi áp dụng.
+		</member>
+		<member name="_dead" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_retired" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="died">
+			<description>
+				Phát khi cá thể hết tuổi thọ và được đưa ra khỏi hoạt động.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="CareBubble" value="&lt;Object&gt;">
+			Script bong bóng phản hồi sau chăm sóc.
+		</constant>
+		<constant name="WATER_FEEDBACK" value="&lt;Object&gt;">
+			Biểu tượng phản hồi uống nước.
+		</constant>
+		<constant name="FOOD_FEEDBACK" value="&lt;Object&gt;">
+			Biểu tượng dự phòng khi ăn.
+		</constant>
+		<constant name="HealthState" value="&lt;Object&gt;">
+			Script trạng thái bệnh.
+		</constant>
+		<constant name="HealthBadges" value="&lt;Object&gt;">
+			Script biểu tượng trạng thái.
+		</constant>
+	</constants>
+</class>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="HoneyGardenSystem" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điều phối bố cục tổ ong cố định, chuyển đổi vườn cũ, sửa tổ và nhật ký mật. Chuyển đổi chỉ bắt đầu sau khi kiểm tra xong vị trí, các mẻ cũ và sức chứa túi.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo dữ liệu lưu ban đầu chưa chuyển đổi và chưa có khám phá.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra cấu trúc và mã khám phá hợp lệ, không trùng.
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="garden">
+			<return type="FlowerGarden" />
+			<description>
+				Lấy vườn đầu tiên trong hệ thống ong, hoặc null.
+			</description>
+		</method>
+		<method name="inside">
+			<return type="bool" />
+			<param index="0" name="hive" type="Beehive" />
+			<description>
+				Kiểm tra tổ thuộc slot vườn hoặc nằm trong biên hình học vườn.
+			</description>
+		</method>
+		<method name="center_point">
+			<return type="Vector2" />
+			<param index="0" name="slot" type="int" />
+			<description>
+				Tọa độ toàn cục của vị trí vật lý tổ theo slot.
+			</description>
+		</method>
+		<method name="owner_slot">
+			<return type="int" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Tìm slot sở hữu ô hoa lân cận trung tâm, hoặc -1 nếu không thuộc.
+			</description>
+		</method>
+		<method name="prepare_waiting">
+			<return type="void" />
+			<description>
+				Ngăn tổ vườn cũ bắt đầu mẻ mới trong khi chờ chuyển đổi.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Sao chép trạng thái chuyển đổi và danh sách khám phá để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+				Khôi phục dữ liệu đã kiểm tra và giải phóng các ô trung tâm.
+			</description>
+		</method>
+		<method name="_release_centers">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="try_migrate">
+			<return type="bool" />
+			<description>
+				Thử chuyển các tổ cũ vào ba vị trí cố định sau khi các mẻ cũ được thu. Nếu bị chặn hoặc túi không đủ chỗ nhận tổ dư, giữ nguyên và báo lý do chờ.
+			</description>
+		</method>
+		<method name="recipe_for">
+			<return type="String" />
+			<param index="0" name="hive" type="Beehive" />
+			<param index="1" name="sources" type="Dictionary[]" />
+			<param index="2" name="timestamp" type="float" />
+			<description>
+				Chọn công thức từ các nguồn hoa đã nở quanh slot của tổ tại timestamp.
+			</description>
+		</method>
+		<method name="access_error">
+			<return type="String" />
+			<param index="0" name="hive" type="Beehive" />
+			<description>
+				Kiểm tra hệ thống sẵn sàng và người chơi tiếp cận được tổ; trả lỗi hoặc rỗng.
+			</description>
+		</method>
+		<method name="repair">
+			<return type="String" />
+			<param index="0" name="hive" type="Beehive" />
+			<description>
+				Đồng bộ công nhân và ong, rồi sửa tổ vườn bằng 15 gỗ thường và 500 xu. Trả chuỗi rỗng khi thành công hoặc thông báo lỗi.
+			</description>
+		</method>
+		<method name="collect">
+			<return type="String" />
+			<param index="0" name="hive" type="Beehive" />
+			<description>
+				Đồng bộ và thu trọn mẻ mật vào túi, trả lỗi nếu chưa sẵn sàng hoặc túi không đủ.
+			</description>
+		</method>
+		<method name="_lock">
+			<return type="void" />
+			<param index="0" name="value" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_crafted">
+			<return type="void" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới chứa vườn và các hệ thống giao dịch.
+		</member>
+		<member name="migrated" type="bool" setter="" getter="" default="false">
+			Cho biết chuyển đổi bố cục cũ đã hoàn tất.
+		</member>
+		<member name="discoveries" type="String[]" setter="" getter="" default="[]">
+			Mã công thức mật đã được khám phá qua nấu ăn.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Khóa thao tác vườn.
+		</member>
+		<member name="notice" type="String" setter="" getter="" default="&quot;&quot;">
+			Thông báo nguồn hiện tại cho giao diện.
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_notice_label" type="Label" setter="" getter="">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<description>
+				Phát khi trạng thái vườn, tổ hoặc khám phá thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="Layout" value="&lt;Object&gt;">
+			Hình học vườn hoa.
+		</constant>
+		<constant name="CENTERS" value="Array[Vector2i]([Vector2i(1, 2), Vector2i(1, 6), Vector2i(8, 2)])">
+			Các ô trung tâm xác định công thức hoa quanh ba tổ.
+		</constant>
+		<constant name="HIVE_POSITIONS" value="Array[Vector2]([Vector2(64, 280), Vector2(192, 280), Vector2(320, 280)])">
+			Vị trí vật lý của ba tổ trên lối đi trong tọa độ vườn.
+		</constant>
+	</constants>
+</class>

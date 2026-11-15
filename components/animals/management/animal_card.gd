@@ -1,6 +1,9 @@
 class_name AnimalCard
 extends PanelContainer
-## Independent animated portrait; this view never mutates world animals.
+## Thẻ chỉ đọc hiển thị chân dung, nhu cầu và sản xuất của một vật nuôi.
+## Sprite chân dung chạy độc lập với hoạt ảnh của actor trong thế giới.
+
+## Vật nuôi được hiển thị.
 var animal: AnimalActor
 @onready var caption: Label = %Caption
 @onready var food: ProgressBar = %FoodBar
@@ -10,9 +13,11 @@ var animal: AnimalActor
 @onready var produce: Label = %Produce
 @onready var preview: AnimatedSprite2D = %Preview
 @onready var portrait: Control = %Portrait
+## Mã ngắn hiển thị cạnh tên vật nuôi.
 var display_id: String
 var _compact: bool = false
 var _text: AnimalStatusText = AnimalStatusText.new()
+## Hàng biểu tượng sản phẩm và số lượng theo chu kỳ.
 var production_row: VisualValueRow
 
 func _ready() -> void:
@@ -41,6 +46,7 @@ static func _style_bar(bar: ProgressBar, color: Color) -> void:
 	background.border_width_bottom = 1
 	bar.add_theme_stylebox_override("background", background)
 
+## Chọn bố cục gọn hoặc đầy đủ và điều chỉnh kích thước các thành phần.
 func set_compact(value: bool) -> void:
 	_compact = value
 	if not is_node_ready():
@@ -70,6 +76,7 @@ func _place_portrait() -> void:
 	preview.scale = Vector2.ONE * factor
 	preview.offset = texture.get_size() * 0.5 - bounds.get_center()
 
+## Đọc lại trạng thái actor còn hợp lệ và cập nhật thông tin thẻ.
 func refresh() -> void:
 	if not _text.is_available(animal):
 		return

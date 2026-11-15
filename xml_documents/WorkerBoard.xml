@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorkerBoard" inherits="PhysicsBody2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Điểm tương tác mở bảng quản lý nhân công theo vai trò hoặc theo một nhân công cụ thể.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_enter_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="interaction_sprite">
+			<return type="Node2D" />
+			<description>
+				Trả sprite nhân công khi bảng gắn trên nhân công, còn lại dùng sprite mặc định.
+			</description>
+		</method>
+		<method name="interaction_action_text">
+			<return type="String" />
+			<description>
+				Tạo nhãn số thứ tự và công việc hoặc trạng thái nghỉ của nhân công.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="role" type="String" setter="" getter="" default="&quot;crop&quot;">
+		</member>
+		<member name="worker_access" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="worker_id" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="SaveRepository" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hợp đồng backend đọc và ghi snapshot của profile.
+	</brief_description>
+	<description>
+		Hàm triển khai có thể đồng bộ hoặc coroutine; nơi gọi dùng await. Backend online cần kiểm tra expected_revision nguyên tử tại server.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="read_profile">
+			<return type="Dictionary" />
+			<param index="0" name="_profile_id" type="String" />
+			<description>
+				Đọc profile theo mã và trả dictionary kết quả. Bản cơ sở báo không hỗ trợ.
+			</description>
+		</method>
+		<method name="write_profile">
+			<return type="Dictionary" />
+			<param index="0" name="_profile_id" type="String" />
+			<param index="1" name="_snapshot" type="Dictionary" />
+			<param index="2" name="_expected_revision" type="int" />
+			<description>
+				Ghi snapshot nếu revision hiện tại khớp giá trị dự kiến. Bản cơ sở báo không hỗ trợ.
+			</description>
+		</method>
+		<method name="write_profile_async">
+			<return type="Dictionary" />
+			<param index="0" name="profile" type="String" />
+			<param index="1" name="snapshot" type="Dictionary" />
+			<param index="2" name="expected_revision" type="int" />
+			<param index="3" name="_pre_validated" type="bool" default="false" />
+			<description>
+				Giao diện ghi bất đồng bộ; bản cơ sở chờ triển khai [method write_profile]. Tham số pre_validated được backend cụ thể sử dụng nếu hỗ trợ.
+			</description>
+		</method>
+	</methods>
+</class>

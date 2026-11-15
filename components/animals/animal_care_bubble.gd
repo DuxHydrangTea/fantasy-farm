@@ -1,13 +1,20 @@
 extends Node2D
-## A single, refreshable success bubble per subject. Never listens to restored needs.
+## Bong bóng phản hồi chăm sóc đặt trên vật nuôi, tự mờ và biến mất sau hai giây.
+## Mỗi vật nuôi chỉ có một bong bóng loại này; phản hồi mới làm mới bong bóng cũ.
+
+## Số giây còn hiển thị.
 var remaining: float = 2.0
+## Biểu tượng phản hồi, có thể null.
 var feedback_icon: Texture2D
+## Chuỗi nguồn cần dịch trong bong bóng.
 var text_key: String = "Feeling healthy!"
 var _label: Label
 var _icon: TextureRect
 var _panel: PanelContainer
 var _visual: Node2D
 
+## Hiển thị hoặc làm mới phản hồi trên vật nuôi còn sống và chưa bị xóa.
+## Trả node bong bóng hoặc null nếu vật nuôi không còn hợp lệ.
 static func present(animal: AnimalActor, texture: Texture2D, message: String = "Feeling healthy!") -> Node2D:
 	if not is_instance_valid(animal) or animal._retired or animal.is_dead() or animal.is_queued_for_deletion():
 		return null
@@ -63,6 +70,7 @@ func _ready() -> void:
 	entrance.tween_property(_visual, "scale", Vector2.ONE, 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	_anchor()
 
+## Cập nhật biểu tượng, thông điệp và đặt lại thời gian hiển thị.
 func refresh_feedback(texture: Texture2D, message: String) -> void:
 	feedback_icon = texture
 	text_key = message

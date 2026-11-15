@@ -1,6 +1,8 @@
 class_name WorkerService
 extends Node
-## One ordered event timeline for all roles. No background per-tile nodes.
+## Điều phối nhân công trên dòng thời gian sự kiện chung cho mọi vai trò.
+## Quản lý hồ sơ, nhiệm vụ đặt trước và mô phỏng trực tuyến lẫn ngoại tuyến.
+
 signal wage_paid
 signal changed
 signal catch_up_progress(fraction: float)
@@ -17,6 +19,7 @@ var busy: bool = false
 var blocked_targets: Dictionary = {}
 var waiting_reasons: Dictionary[String, String] = {}
 var trough_levels: Dictionary = {}
+var pen_produce_levels: Dictionary = {}
 var legacy_pending: bool = false
 var crop_automation: CropAutomationState = CropAutomationState.new()
 var _pending_pickups: Array[WeakRef] = []
@@ -34,8 +37,7 @@ var scheduler_usec: int = 0
 var commit_usec: int = 0
 var commit_max_usec: int = 0
 
-## Build once per query/event, rather than scanning every worker for every tile.
-## Snapshots deliberately rebuild from records: restore and test fixtures can edit them.
+## Tạo ảnh chụp các ô, mục tiêu và vật phẩm do nhân công khác đặt trước; [param except_id] loại người đang xét.
 func reservations(except_id: String = "") -> Dictionary:
 	var result: Dictionary = {"cells": {}, "targets": {}, "items": {}}
 	for other: Dictionary in records:
@@ -74,6 +76,8 @@ func _ready() -> void:
 		request_scan("crop"))
 	get_tree().node_added.connect(_node_added)
 	for pen: AnimalPen in bridge.pens():
+		pen_produce_levels[pen.get_instance_id()] = pen.produce_storage.count()
+		pen.produce_storage.changed.connect(_pen_produce_changed.bind(pen))
 		for child: Node in pen.get_children():
 			if child is AnimalTrough:
 				trough_levels[child.get_instance_id()] = int(child.stock)
@@ -84,6 +88,7 @@ func _ready() -> void:
 		pen.add_child(source)
 		source.global_position = bridge.home("ranch", String(pen.persistent_id))
 
+## Trả hồ sơ của vai trò; [param employed_only] chỉ giữ người đang được thuê.
 func records_for(role: String, employed_only: bool = false) -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	for row: Dictionary in records:
@@ -91,6 +96,7 @@ func records_for(role: String, employed_only: bool = false) -> Array[Dictionary]
 			result.append(row)
 	return result
 
+## Tìm hồ sơ theo mã nhân công; trả từ điển rỗng nếu không tồn tại.
 func record_for(id: String) -> Dictionary:
 	for row: Dictionary in records:
 		if row.id == id:
@@ -98,6 +104,7 @@ func record_for(id: String) -> Dictionary:
 	return {}
 
 # Role lookup remains for single-role callers; individual operations use IDs.
+## Tra theo mã hoặc vai trò; với vai trò ưu tiên người đang được thuê.
 func record(key: String) -> Dictionary:
 	if not key in WorkerRole.ROLES:
 		return record_for(key)
@@ -106,26 +113,32 @@ func record(key: String) -> Dictionary:
 		rows = records_for(key)
 	return rows[0] if not rows.is_empty() else {}
 
+## Lấy node nhân công theo mã hoặc vai trò, hoặc [code]null[/code] khi chưa có.
 func actor_for(key: String) -> WorkerActor:
 	var row: Dictionary = record(key)
 	return actors.get(row.get("id", "")) as WorkerActor
 
+## Lấy túi nhân công; trả [code]null[/code] nếu node không còn hợp lệ.
 func bag_for(key: String) -> InventoryComponent:
 	var actor: WorkerActor = actor_for(key)
 	return actor.basket if is_instance_valid(actor) else null
 
+## Trả số vị trí của nhân công, hoặc 0 nếu không tìm thấy.
 func worker_number(id: String) -> int:
 	var row: Dictionary = record_for(id)
 	if row.is_empty():
 		return 0
 	return int(row.slot)
 
+## Trả thời lượng riêng của nhiệm vụ, mặc định theo định nghĩa nhân công.
 func task_duration(job: Dictionary, actor: WorkerActor) -> float:
 	return float(job.get("duration", actor.definition.work_seconds))
 
+## Tạo khóa mục tiêu chuẩn hóa để phát hiện nhiệm vụ tranh cùng đối tượng.
 func target_key(job: Dictionary) -> String:
 	return WorkerRole.target_key(job)
 
+## Kiểm tra mục tiêu và các ô có bị nhân công khác đặt trước không.
 func target_available(row: Dictionary, job: Dictionary) -> bool:
 	var key: String = target_key(job)
 	if key.is_empty():
@@ -138,6 +151,7 @@ func target_available(row: Dictionary, job: Dictionary) -> bool:
 			return false
 	return true
 
+## Đếm vật phẩm được các nhiệm vụ đang chạy giữ chỗ, trừ nhân công chỉ định.
 func reserved_items(item_id: String, except_id: String = "") -> int:
 	var count: int = 0
 	for row: Dictionary in records:
@@ -145,6 +159,7 @@ func reserved_items(item_id: String, except_id: String = "") -> int:
 			count += WorkerAreaPolicy.item_count(row.task)
 	return count
 
+## Tìm vị trí trống đầu tiên của vai trò; trả 0 khi đã đủ giới hạn.
 func next_slot(role: String) -> int:
 	var used: Dictionary = {}
 	for row: Dictionary in records_for(role):
@@ -154,6 +169,7 @@ func next_slot(role: String) -> int:
 			return slot
 	return 0
 
+## Chọn vị trí gần nhà; nhân công trồng trọt thử ô lân cận để tránh chồng nhau.
 func spawn_point(role: String, zone: String, except_id: String = "") -> Vector2:
 	var base: Vector2 = bridge.home(role, zone)
 	if role != "crop":
@@ -169,9 +185,11 @@ func spawn_point(role: String, zone: String, except_id: String = "") -> Vector2:
 			return point
 	return base
 
+## Trả kho nhận nông sản của trang trại.
 func output_inventory() -> InventoryComponent:
 	return world.storages.inventory("produce_warehouse")
 
+## Trả kho vật tư trang trại dùng làm nguồn cấp.
 func feed_inventory(key: String) -> InventoryComponent:
 	return world.storages.inventory("farm_supply_storage")
 
@@ -215,12 +233,15 @@ func _drain_archived_baskets() -> void:
 		bag.free()
 	legacy_baskets = remaining
 
+## Kiểm tra thế giới sẵn sàng và kho không bận.
 func available() -> bool:
 	return world.tool_upgrades != null and world.tool_upgrades.profile_ready and not world.storages.busy
 
+## Trả thông báo khi chưa đủ điều kiện mở nhân công, hoặc chuỗi rỗng.
 func unlock_error(role: String) -> String:
 	return "Unlock at least 12 farmland blocks." if world.land.state.unlocked_blocks < 12 else ""
 
+## Thuê hoặc thuê lại sau khi đồng bộ thời gian; kiểm tra giới hạn, tiền công và lượt dùng thử.
 func hire(role: String, zone: String = "") -> String:
 	if busy or not available() or not role in WorkerRole.ROLES:
 		return "Workers are unavailable."
@@ -268,6 +289,7 @@ func hire(role: String, zone: String = "") -> String:
 	busy = false
 	return ""
 
+## Cho nhân công nghỉ sau khi đồng bộ mô phỏng.
 func dismiss(role: String) -> String:
 	if busy or not available():
 		return "Workers are unavailable."
@@ -287,6 +309,7 @@ func dismiss(role: String) -> String:
 	busy = false
 	return ""
 
+## Bật hoặc tạm dừng nhân công và đồng bộ nhiệm vụ.
 func set_active(id: String, active: bool) -> String:
 	if busy or not available(): return "Workers are unavailable."
 	settle(world.farming.time_manager.now())
@@ -302,6 +325,7 @@ func set_active(id: String, active: bool) -> String:
 	changed.emit()
 	return ""
 
+## Chuyển sản phẩm còn trong túi nhân công về kho khi có thể.
 func transfer(role: String, customer: InventoryComponent, deposit: bool, supplies: bool) -> int:
 	if busy or not available() or (deposit and supplies):
 		return 0
@@ -347,6 +371,7 @@ func _spawn(row: Dictionary) -> void:
 	access.worker_id = row.id
 	actor.add_child(access)
 
+## Xử lý tiền công theo ngày và cập nhật trạng thái thuê.
 func pay_daily_wage(row: Dictionary, day: int) -> void:
 	if not row.employed or int(row.last_wage_day) >= day:
 		return
@@ -365,6 +390,7 @@ func pay_daily_wage(row: Dictionary, day: int) -> void:
 		row.paused_at = simulated_at
 	row.wake_at = simulated_at
 
+## Thử vị trí thay thế khi nhân công bị chặn, sau đó tạm chặn mục tiêu.
 func blocked(role: String, now: float) -> void:
 	var row: Dictionary = record(role)
 	if row.is_empty() or busy:
@@ -398,9 +424,11 @@ func _process(_delta: float) -> void:
 	if _scheduler.has_pending_work() and available() and not busy:
 		_scheduler.advance_online(self, world.farming.time_manager.now())
 
+## Đồng bộ các sự kiện nhân công tới thời điểm yêu cầu.
 func settle(now: float) -> void:
 	advance(now, now - simulated_at > 5.0)
 
+## Chạy bộ lập lịch tới thời điểm đích trong ngân sách sự kiện cho phép.
 func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 	if busy or world.storages.busy or not is_finite(until) or until < simulated_at:
 		return true
@@ -419,6 +447,7 @@ func advance(until: float, offline: bool = true, budget_usec: int = 0) -> bool:
 	crop_policy.deadline_usec = 0
 	return complete
 
+## Chuẩn bị trạng thái thế giới tại thời điểm của sự kiện mô phỏng.
 func prepare_simulation_event(offline: bool) -> void:
 	if legacy_pending:
 		_drain_legacy_products()
@@ -427,6 +456,7 @@ func prepare_simulation_event(offline: bool) -> void:
 	_drain_pickups()
 	_syncing_offline = false
 
+## Đồng bộ ngoại tuyến theo từng đợt, nhường khung hình và phát tiến độ.
 func advance_async(until: float, budget_usec: int = 32000) -> void:
 	_catching_up = true
 	var old_defer_edges: bool = world.farming.defer_soil_edges
@@ -449,6 +479,7 @@ func advance_async(until: float, budget_usec: int = 32000) -> void:
 	if not old_defer_edges:
 		world.farming.flush_soil_edges()
 
+## Đóng gói hồ sơ, túi đồ và mốc thời gian để ghi bản lưu.
 func capture(now: float) -> Dictionary:
 	settle(now)
 	var rows: Array = []
@@ -468,14 +499,17 @@ func capture(now: float) -> Dictionary:
 		rows.append(copy)
 	return {"rows": rows, "trial_used": trial_used.duplicate(), "next_order": next_order, "simulated_at": simulated_at, "crop_automation": crop_automation.capture(), "upgrades": upgrades.levels.duplicate(), "legacy_baskets": legacy_baskets.duplicate(true)}
 
+## Kiểm tra mục tiêu nhiệm vụ lưu còn hợp lệ với thế giới hiện tại.
 func is_saved_task_target_valid(row: Dictionary, land_blocks: int) -> bool:
 	var task: Dictionary = row.task
 	# Patrol is allowed to cross work areas.
 	return task.is_empty() or String(task.get("kind", "")) == "patrol" or bridge.zone_contains(row, WorkerRole.point(task.point), land_blocks)
 
+## Đồng bộ node và trạng thái phụ thuộc sau khi khôi phục.
 func sync_after_restore(timestamp: float) -> void:
 	bridge.sync(timestamp)
 
+## Khôi phục hồ sơ và tạo lại nhân công từ dữ liệu lưu.
 func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	busy = true
 	_scheduler.reset_checkpoint()
@@ -515,6 +549,7 @@ func restore(data: Dictionary, catalog: SaveCatalog) -> void:
 	_drain_legacy_products()
 	busy = false
 
+## Yêu cầu nhân công thuộc vai trò kiểm tra lại công việc có thể nhận.
 func request_scan(role: String) -> void:
 	# Offline sync publishes intermediate world state at caller checkpoints too.
 	# The scheduler already planned wake boundaries for that evolving state;
@@ -561,6 +596,15 @@ func _pickup_added(node: Node) -> void:
 		if bridge.zone_contains(row, (node as ItemPickup).global_position):
 			request_scan(row.role)
 
+func _pen_produce_changed(pen: AnimalPen) -> void:
+	var key: int = pen.get_instance_id()
+	var previous: int = int(pen_produce_levels.get(key, 0))
+	var current: int = pen.produce_storage.count()
+	pen_produce_levels[key] = current
+	if previous == 0 and current > 0:
+		bridge.invalidate_ranch()
+		request_scan("crop")
+
 func _trough_changed(stock: int, trough: AnimalTrough) -> void:
 	bridge.invalidate_ranch()
 	var key: int = trough.get_instance_id()
@@ -574,9 +618,11 @@ func _trough_changed(stock: int, trough: AnimalTrough) -> void:
 	if previous > threshold and stock <= threshold:
 		request_scan("crop")
 
+## Cho biết hồ sơ hiện đủ điều kiện thực hiện nhiệm vụ hay không.
 func running(row: Dictionary) -> bool:
 	return bool(row.employed) and bool(row.active) and not (row.role == "crop" and crop_automation.paused)
 
+## Cập nhật ưu tiên công việc và yêu cầu tìm lại nhiệm vụ.
 func configure_priority(mode: String) -> bool:
 	if busy or not mode in WorkerRole.PRIORITY_MODES:
 		return false
@@ -598,6 +644,7 @@ func _resume_task(row: Dictionary, timestamp: float) -> void:
 			if LandExpansionState.REGION.has_point(prepared) and not target_available(row, crop_policy.task("plant", prepared, 4)):
 				crop_automation.remove_prepared(row.id, prepared)
 
+## Cập nhật tự gieo, tự bón và tạm dừng sau khi đồng bộ; trả lỗi hoặc chuỗi rỗng.
 func configure_crop(plant: bool, fertilizer: bool, pause: bool) -> String:
 	if busy or not available() or records_for("crop", true).is_empty():
 		return "Workers are unavailable."
@@ -639,6 +686,7 @@ func _crop_harvested(cell: Vector2i) -> void:
 	crop_automation.forget_crop(cell)
 	request_scan("crop")
 
+## Đổi tùy chọn chờ chăm sóc trước thu hoạch, hủy nhiệm vụ cũ và quét lại.
 func configure_wait_for_care(enabled: bool) -> bool:
 	if busy or not available():
 		return false

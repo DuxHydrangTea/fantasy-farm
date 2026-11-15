@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="WorldPersistence" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Gắn dịch vụ lưu vào scene thế giới đang chạy và hiển thị thông báo lưu/tải. Việc gắn được hoãn một frame và chỉ diễn ra khi world là scene hiện tại, giúp các scene xem trước và kiểm thử giữ vòng đời độc lập.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_start">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_build_notice">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notice">
+			<return type="void" />
+			<param index="0" name="message" type="String" />
+			<param index="1" name="success" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_menu_changed">
+			<return type="void" />
+			<param index="0" name="open" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="_delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_unhandled_key_input">
+			<return type="void" />
+			<param index="0" name="event" type="InputEvent" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="world" type="FarmWorld" setter="" getter="">
+			Thế giới cần gắn với GameSaveManager.
+		</member>
+		<member name="_service" type="GameSaveManager" setter="" getter="">
+		</member>
+		<member name="_label" type="Label" setter="" getter="">
+		</member>
+		<member name="_hide_at" type="int" setter="" getter="" default="0">
+		</member>
+		<member name="_notice_panel" type="PanelContainer" setter="" getter="">
+		</member>
+		<member name="_notice_timer" type="Timer" setter="" getter="">
+		</member>
+		<member name="_notice_success" type="bool" setter="" getter="" default="true">
+		</member>
+	</members>
+</class>

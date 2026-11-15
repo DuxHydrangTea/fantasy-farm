@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FarmStorageMenu" inherits="TradeMenu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Giao diện kho dùng mã vật phẩm ổn định; mọi thay đổi kho thông qua FarmStorageService.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_fit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_visit">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_storage_changed">
+			<return type="void" />
+			<param index="0" name="_id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="_queue_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_totals">
+			<return type="Dictionary" />
+			<param index="0" name="bag" type="InventoryComponent" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_select">
+			<return type="void" />
+			<param index="0" name="id" type="StringName" />
+			<param index="1" name="deposit" type="bool" />
+			<param index="2" name="quality" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+		<method name="_select_tier">
+			<return type="void" />
+			<param index="0" name="tier" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_set_quantity">
+			<return type="void" />
+			<param index="0" name="amount" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_maximum">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_quantity_changed">
+			<return type="void" />
+			<param index="0" name="_value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_update_command">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_move">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_bulk">
+			<return type="void" />
+			<param index="0" name="deposit" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_finish">
+			<return type="void" />
+			<param index="0" name="result" type="Dictionary" />
+			<param index="1" name="deposit" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="close">
+			<return type="void" />
+			<param index="0" name="show_thanks" type="bool" default="true" />
+			<description>
+				Ngắt tín hiệu kho đang theo dõi rồi đóng menu.
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_refresh_language">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="storage_id" type="String" setter="" getter="">
+		</member>
+		<member name="service" type="FarmStorageService" setter="" getter="">
+		</member>
+		<member name="panel" type="PanelContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="title" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="usage" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="status" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="grids" type="GridContainer[]" setter="" getter="" default="[...]">
+		</member>
+		<member name="scrolls" type="ScrollContainer[]" setter="" getter="" default="[...]">
+		</member>
+		<member name="quantity" type="SpinBox" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="deposit_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="withdraw_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="maximum_button" type="Button" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="item_icon" type="TextureRect" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="item_name" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="source_label" type="Label" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quality_row" type="HBoxContainer" setter="" getter="" default="&lt;unknown&gt;">
+		</member>
+		<member name="quality_buttons" type="Button[]" setter="" getter="" default="[...]">
+		</member>
+		<member name="move_button" type="Button" setter="" getter="">
+		</member>
+		<member name="selected_id" type="StringName" setter="" getter="" default="&amp;&quot;&quot;">
+		</member>
+		<member name="selected_tier" type="int" setter="" getter="" default="-1">
+		</member>
+		<member name="depositing" type="bool" setter="" getter="" default="true">
+		</member>
+		<member name="pending" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_compact" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_syncing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_capacity_blocked" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+</class>

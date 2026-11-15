@@ -1,18 +1,33 @@
 class_name GrassInteractionFeed
 extends RefCounted
-## One weak registry for the field. No grass queries or per-actor components.
+## Theo dõi actor bằng tham chiếu yếu và tải chuyển động lên shader cỏ.
+## Một registry dùng chung cho field thay vì gắn xử lý vào từng bụi cỏ.
+
+## Số actor tối đa trong dữ liệu shader.
 const CAPACITY: int = 96
+## Thời gian phục hồi chuyển động.
 const RECOVERY: float = 0.18
+## Bản ghi actor theo instance ID.
 var entries: Dictionary = {}
+## Mảng đoạn chuyển động gửi cho shader.
 var segments: PackedVector4Array = PackedVector4Array()
+## Mảng tham số tương tác gửi cho shader.
 var parameters: PackedVector4Array = PackedVector4Array()
+## Đồng hồ tương tác cục bộ.
 var clock: float = 0.0
+## Tần số tải dữ liệu lên shader.
 var upload_hz: int = 60
+## Số actor đủ điều kiện trong lần lấy mẫu.
 var eligible: int = 0
+## Số actor đã tải trong lần gần nhất.
 var uploaded: int = 0
+## Tổng số lượt tải.
 var uploads: int = 0
+## Số lần phát hiện dịch chuyển xa.
 var teleports: int = 0
+## Lỗi gần nhất.
 var last_error: String = ""
+## Thời gian lấy mẫu gần nhất theo micro giây.
 var last_sample_usec: int = 0
 var _root: Node
 var _tree: SceneTree
@@ -23,6 +38,7 @@ func _init() -> void:
 	segments.resize(CAPACITY)
 	parameters.resize(CAPACITY)
 
+## Gắn registry vào cây, theo dõi node thêm/xóa và đăng ký actor hiện có dưới root.
 func attach(root: Node) -> void:
 	detach()
 	_root = root
@@ -33,6 +49,7 @@ func attach(root: Node) -> void:
 		for node: Node in _tree.get_nodes_in_group(group):
 			_consider(node)
 
+## Ngắt theo dõi scene và xóa registry actor.
 func detach() -> void:
 	if is_instance_valid(_tree):
 		if _tree.node_added.is_connected(_added):
@@ -61,6 +78,8 @@ func _removed(node: Node) -> void:
 	if entries.erase(node.get_instance_id()):
 		_dirty = true
 
+## Đăng ký actor một lần với bán kính và lực tương tác.
+## Bán kính không dương được suy ra từ kích thước vật nuôi hoặc giá trị mặc định.
 func register_actor(actor: Node2D, radius: float = 0.0, strength: float = 6.0) -> void:
 	var key: int = actor.get_instance_id()
 	if entries.has(key):
@@ -75,6 +94,7 @@ func register_actor(actor: Node2D, radius: float = 0.0, strength: float = 6.0) -
 		"head": point, "tail": point, "observed": point, "motion_at": clock, "angle": 0.0, "present": true}
 	_dirty = true
 
+## Đặt lại vệt chuyển động tại vị trí hiện tại, dùng sau dịch chuyển hoặc tải.
 func reset_motion(actor: Node2D) -> void:
 	# Explicit teleport/restore hook, also used automatically for implausible jumps.
 	var key: int = actor.get_instance_id()
@@ -86,12 +106,15 @@ func reset_motion(actor: Node2D) -> void:
 		entries[key].motion_at = clock
 		_dirty = true
 
+## Đặt lại vệt của mọi actor còn trong cây.
 func reset_all_motion() -> void:
 	for entry: Dictionary in entries.values():
 		var actor: Node2D = entry.ref.get_ref() as Node2D
 		if actor != null and actor.is_inside_tree():
 			reset_motion(actor)
 
+## Cập nhật đồng hồ, lấy mẫu actor trong vùng và tải dữ liệu tương tác lên material.
+## Tần số tải bị giới hạn trừ khi force bật hoặc registry cần cập nhật.
 func tick(delta: float, world_view: Rect2, material: ShaderMaterial, force: bool = false) -> void:
 	clock += maxf(0.0, delta)
 	_elapsed += maxf(0.0, delta)
@@ -150,6 +173,7 @@ func tick(delta: float, world_view: Rect2, material: ShaderMaterial, force: bool
 		material.set_shader_parameter(&"actor_parameters", parameters)
 	last_sample_usec = Time.get_ticks_usec() - began
 
+## Trả số nguồn tương tác, lượt tải, giới hạn và thời gian lấy mẫu để theo dõi hiệu năng.
 func stats() -> Dictionary:
 	return {"registered": entries.size(), "eligible": eligible, "uploaded": uploaded, "capacity": CAPACITY,
 		"upload_hz": upload_hz, "uploads": uploads, "teleports": teleports, "sample_usec": last_sample_usec, "error": last_error}

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GameSaveManager" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Dịch vụ điều phối chọn profile, tải, lưu tự động và lưu khi thoát.
+	</brief_description>
+	<description>
+		Repository thực hiện IO, WorldStateAdapter chụp và khôi phục scene. Các thao tác được tuần tự hóa bằng trạng thái busy và revision chỉ tăng sau khi backend xác nhận ghi thành công.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="bind_world">
+			<return type="Dictionary" />
+			<param index="0" name="world" type="FarmWorld" />
+			<param index="1" name="backend" type="SaveRepository" default="null" />
+			<param index="2" name="profile" type="String" default="&quot;&quot;" />
+			<description>
+				Gắn thế giới với profile và backend, sau đó tải dữ liệu. Nếu không truyền backend, dùng repository cục bộ. Profile mới được lưu lần đầu sau khi tải thành công. Trả lỗi nếu đã gắn thế giới hoặc mã không hợp lệ.
+			</description>
+		</method>
+		<method name="profile_store">
+			<return type="RefCounted" />
+			<description>
+				Tạo bộ quản lý chỉ mục profile cho thư mục cục bộ hiện tại.
+			</description>
+		</method>
+		<method name="select_profile">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<param index="1" name="is_new" type="bool" default="false" />
+			<description>
+				Chọn profile trước khi gắn thế giới và bắt đầu phiên đồng hồ mới. Trả false nếu đang bận, đã gắn thế giới hoặc mã không hợp lệ.
+			</description>
+		</method>
+		<method name="_unbind_world">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_process">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="save_game">
+			<return type="Dictionary" />
+			<description>
+				Chụp, kiểm tra và ghi snapshot với revision kế tiếp. Từ chối trong khi các giao dịch thế giới đang chạy. Lỗi xung đột, dữ liệu hỏng hoặc phiên bản tương lai tắt ghi tiếp để tránh ghi đè dữ liệu cần xử lý.
+			</description>
+		</method>
+		<method name="load_game">
+			<return type="Dictionary" />
+			<description>
+				Đọc, kiểm tra và khôi phục profile vào thế giới đang gắn. Scene và đồng hồ tạm dừng trong quá trình khôi phục. Khi bật tiến trình offline, adapter mô phỏng đến thời điểm đích trước khi cho phép ghi.
+			</description>
+		</method>
+		<method name="_loading_progress">
+			<return type="void" />
+			<param index="0" name="fraction" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="_sync_upgrade_readiness">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_save_pen_upgrade">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_clock">
+			<return type="FarmClock" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_quit_with_save">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_report_status">
+			<return type="void" />
+			<param index="0" name="source" type="String" />
+			<param index="1" name="success" type="bool" />
+			<param index="2" name="error" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="_emit_status">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="selected_profile_id" type="String" setter="" getter="" default="&quot;local&quot;">
+			Mã profile sẽ gắn khi mở thế giới.
+		</member>
+		<member name="pending_new_profile" type="bool" setter="" getter="" default="false">
+			Cho biết profile vừa chọn cần tạo bản lưu đầu tiên.
+		</member>
+		<member name="startup_error" type="String" setter="" getter="" default="&quot;&quot;">
+			Thông báo lỗi khởi động được giao diện sử dụng.
+		</member>
+		<member name="_track_profile" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_require_existing_profile" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="autosave_seconds" type="float" setter="" getter="" default="30.0">
+			Khoảng giữa các lần tự lưu, tính bằng giây.
+		</member>
+		<member name="profile_id" type="String" setter="" getter="" default="&quot;local&quot;">
+			Mã profile hiện gắn với thế giới.
+		</member>
+		<member name="revision" type="int" setter="" getter="" default="0">
+			Revision đã được backend xác nhận gần nhất.
+		</member>
+		<member name="busy" type="bool" setter="" getter="" default="false">
+			Cho biết thao tác lưu hoặc tải đang chạy.
+		</member>
+		<member name="writes_enabled" type="bool" setter="" getter="" default="false">
+			Cho phép ghi khi profile đã tải thành công và không gặp lỗi cần xử lý.
+		</member>
+		<member name="repository" type="SaveRepository" setter="" getter="">
+			Backend đọc ghi profile.
+		</member>
+		<member name="local_directory" type="String" setter="" getter="" default="&quot;user://saves&quot;">
+			Thư mục dùng khi tạo backend cục bộ.
+		</member>
+		<member name="catalog" type="SaveCatalog" setter="" getter="">
+			Catalog kiểm tra mã resource trong dữ liệu lưu.
+		</member>
+		<member name="adapter" type="WorldStateAdapter" setter="" getter="">
+			Bộ chuyển đổi giữa snapshot và thế giới.
+		</member>
+		<member name="_elapsed" type="float" setter="" getter="" default="0.0">
+		</member>
+		<member name="_closing" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_quit_failed" type="bool" setter="" getter="" default="false">
+		</member>
+		<member name="_status_source" type="String" setter="" getter="" default="&quot;&quot;">
+		</member>
+		<member name="_status_error" type="Dictionary" setter="" getter="" default="{}">
+		</member>
+		<member name="_status_success" type="bool" setter="" getter="" default="true">
+		</member>
+	</members>
+	<signals>
+		<signal name="status_changed">
+			<param index="0" name="message" type="String" />
+			<param index="1" name="success" type="bool" />
+			<description>
+				Phát thông báo trạng thái đã dịch và kết quả thành công.
+			</description>
+		</signal>
+		<signal name="operation_finished">
+			<description>
+				Phát khi một thao tác lưu hoặc tải kết thúc.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="ProfileStore" value="&lt;Object&gt;">
+			Resource script tạo chỉ mục profile cục bộ.
+		</constant>
+	</constants>
+</class>

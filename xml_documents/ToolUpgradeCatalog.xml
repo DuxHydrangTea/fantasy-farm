@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolUpgradeCatalog" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Danh mục giá và điều kiện nâng cấp cho từng công cụ và cấp đích.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="valid">
+			<return type="bool" />
+			<description>
+				Kiểm tra đủ một lựa chọn cho mỗi cặp công cụ và cấp, không trùng cặp, cùng giới hạn hợp lệ của giá, gỗ và số cột đất đã mua.
+			</description>
+		</method>
+		<method name="find">
+			<return type="ToolUpgradeOffer" />
+			<param index="0" name="tool" type="StringName" />
+			<param index="1" name="target_level" type="int" />
+			<description>
+				Tìm lựa chọn theo mã công cụ và cấp đích, trả về null khi không tìm thấy.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="offers" type="ToolUpgradeOffer[]" setter="" getter="" default="[]">
+			Các lựa chọn mua nâng cấp.
+		</member>
+	</members>
+</class>

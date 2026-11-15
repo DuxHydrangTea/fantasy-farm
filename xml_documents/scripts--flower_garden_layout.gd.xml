@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="&quot;scripts/flower_garden_layout.gd&quot;" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Hình học bốn khối vườn hoa 5×4 và chuyển tọa độ lưu cũ. Bố cục giữ các mã ô lịch sử để tương thích dữ liệu đã lưu.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="position_for" qualifiers="static">
+			<return type="Vector2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Tính vị trí hiển thị cục bộ của ô trong bốn khối.
+			</description>
+		</method>
+		<method name="contains_cell" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Kiểm tra ô nằm trong vùng trồng của một khối, bỏ qua khoảng cách giữa khối.
+			</description>
+		</method>
+		<method name="soil_bounds_for" qualifiers="static">
+			<return type="Rect2" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Trả hình chữ nhật đất của khối chứa ô.
+			</description>
+		</method>
+		<method name="from_legacy" qualifiers="static">
+			<return type="Vector2i" />
+			<param index="0" name="cell" type="Vector2i" />
+			<description>
+				Chuyển tọa độ lịch sử; FlowerGarden xử lý hàng đợi cây vượt sức chứa.
+			</description>
+		</method>
+	</methods>
+	<constants>
+		<constant name="COLUMNS" value="14">
+			Số cột của lưới logic gồm khoảng cách giữa các khối.
+		</constant>
+		<constant name="ROWS" value="8">
+			Số hàng của lưới logic.
+		</constant>
+		<constant name="BLOCK_COLUMNS" value="5">
+			Số cột trồng trong mỗi khối.
+		</constant>
+		<constant name="CAPACITY" value="80">
+			Tổng số chậu trong bốn khối.
+		</constant>
+		<constant name="SPACING" value="32">
+			Khoảng cách ngang giữa các chậu trong khối.
+		</constant>
+		<constant name="ROW_SPACING" value="22">
+			Khoảng cách hàng tham chiếu.
+		</constant>
+		<constant name="ROW_POSITIONS" value="Array[int]([40, 62, 83, 106])">
+			Vị trí dọc của bốn hàng trong mỗi khối.
+		</constant>
+		<constant name="SAVE_COLUMNS" value="18">
+			Số cột dùng bởi dữ liệu lưu.
+		</constant>
+		<constant name="SAVE_ROWS" value="10">
+			Số hàng dùng bởi dữ liệu lưu.
+		</constant>
+		<constant name="SAVE_CAPACITY" value="180">
+			Giới hạn số ô theo lưới dữ liệu lưu.
+		</constant>
+	</constants>
+</class>

@@ -1,17 +1,26 @@
 class_name ItemPickup
 extends Area2D
+## Đống vật phẩm trong thế giới, có thể bay hình ảnh về collector và được nhặt.
+## Vị trí logic giữ nguyên trong khi hình ảnh bay để dữ liệu lưu không đổi giữa
+## chuyến; số lượng chỉ giảm khi inventory thực sự nhận vật phẩm.
 
+## Tải scene đống đồ và tạo instance sau khi các script toàn cục khởi tạo.
 static func create() -> ItemPickup:
 	# Resolve after script initialization; scene preloads can be incomplete in cycles.
 	var scene: PackedScene = load("res://scenes/objects/item_pickup.tscn") as PackedScene
 	return scene.instantiate() as ItemPickup
 
+## Sprite thể hiện vật phẩm và chuyển động hút.
 @export var sprite: Sprite2D
+## Nhãn số lượng hiển thị trên đống.
 @export var quantity_label: Label
+## Mã ổn định dùng trong dữ liệu lưu.
 @export var persistent_id: StringName
-## Inventory-aware adaptation of the Godot skill's collectible template.
+## Phát vật phẩm và số lượng thực nhận sau khi chuyển vào inventory.
 signal collected(item: ItemDefinition, amount: int)
+## Định nghĩa vật phẩm trong đống.
 @export var item: ItemDefinition
+## Số lượng còn lại, tối thiểu 0.
 @export_range(0, 2147483647) var amount: int = 1:
 	set(value):
 		amount = maxi(0, value)
@@ -22,7 +31,9 @@ var _attractor: ItemCollector
 var _resting_sprite_position: Vector2
 var _flight_seconds: float = 0.0
 
+## Tốc độ ban đầu của hình ảnh khi bị hút.
 @export var attraction_speed: float = 140.0
+## Gia tốc của hình ảnh khi bị hút.
 @export var attraction_acceleration: float = 600.0
 
 func _ready() -> void:
@@ -32,9 +43,11 @@ func _ready() -> void:
 		_resting_sprite_position = sprite.position
 	set_physics_process(false)
 
+## Cho biết đang có collector hợp lệ hút đống đồ.
 func is_attracting() -> bool:
 	return is_instance_valid(_attractor)
 
+## Bắt đầu cho hình ảnh bay về collector nếu đống đồ và túi đủ điều kiện.
 func attract_to(collector: ItemCollector) -> bool:
 	if is_attracting() or _collecting or is_queued_for_deletion() or collector == null or sprite == null or not collector.can_accept(self):
 		return false
@@ -45,6 +58,7 @@ func attract_to(collector: ItemCollector) -> bool:
 	set_physics_process(true)
 	return true
 
+## Hủy chuyến bay và đưa hình ảnh về vị trí nghỉ.
 func cancel_attraction() -> void:
 	_attractor = null
 	set_physics_process(false)
@@ -76,6 +90,7 @@ func _physics_process(delta: float) -> void:
 		if accepted > 0 and is_instance_valid(collector):
 			collector.item_acquired.emit(item, accepted)
 
+## Cộng số lượng không âm vào đống.
 func add_amount(count: int) -> void:
 	amount += maxi(0, count)
 
@@ -83,6 +98,8 @@ func add_amount(count: int) -> void:
 # Listener của sensor có thể thử collect lần nữa ngay trong add; nếu không khóa,
 # cả hai lời gọi đều thấy amount cũ và cùng chuyển nó vào túi.
 # Chỉ trừ accepted, không trừ lượng yêu cầu; phần không chứa được phải tiếp tục nằm trên đất.
+## Chuyển tối đa số lượng còn lại vào inventory và trả số thực nhận.
+## Phần không vừa được giữ lại; đống rỗng được xóa sau khi chuyển.
 func collect(inventory: InventoryComponent) -> int:
 	if _collecting or is_queued_for_deletion() or inventory == null or item == null or amount <= 0:
 		return 0

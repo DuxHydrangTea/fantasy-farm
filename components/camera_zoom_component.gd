@@ -1,12 +1,19 @@
 class_name CameraZoomComponent
 extends Node
-## Mouse-wheel camera zoom. UI gets first refusal through _unhandled_input.
+## Điều khiển zoom camera bằng con lăn và cử chỉ pinch.
+## Giới hạn zoom theo kích thước viewport và biên camera, chuyển mượt tới đích.
 
+## Camera được điều khiển.
 @export var camera: Camera2D
+## Lựa chọn để kiểm tra menu đang mở.
 @export var selection: ToolSelectionComponent
+## Zoom nhỏ nhất do cấu hình.
 @export_range(0.1, 5.0, 0.05) var min_zoom: float = 1.0
+## Zoom lớn nhất do cấu hình.
 @export_range(0.1, 12.0, 0.1) var max_zoom: float = 8.0
+## Hệ số nhân hoặc chia mỗi nấc con lăn.
 @export_range(1.01, 2.0, 0.01) var zoom_step: float = 1.15
+## Tốc độ nội suy tới zoom đích.
 @export_range(1.0, 30.0, 0.5) var zoom_speed: float = 12.0
 
 var _target_zoom: float = 1.2
@@ -80,6 +87,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	set_process(true)
 	get_viewport().set_input_as_handled()
 
+## Nhân zoom đích với tỉ lệ pinch dương hữu hạn nếu menu không mở.
 func pinch(ratio: float) -> void:
 	if selection.is_menu_open() or not is_finite(ratio) or ratio <= 0.0:
 		return

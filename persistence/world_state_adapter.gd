@@ -1,8 +1,16 @@
 class_name WorldStateAdapter
 extends RefCounted
-## Scene-specific bridge. Backend and schema never retain live scene objects.
+## Chuyển đổi giữa scene FarmWorld đang chạy và snapshot dữ liệu lưu.
+##
+## Adapter đồng bộ các hệ thống theo thời gian trước khi chụp và kiểm tra
+## khả năng áp dụng dữ liệu vào map trước khi khôi phục. Backend và schema
+## làm việc với dữ liệu thay vì giữ tham chiếu đến các node scene.
+
+## Scene dùng để dựng lại vật nuôi đã lưu.
 const ACTOR_SCENE: PackedScene = preload("res://scenes/animals/animal.tscn")
+## Thế giới được chụp hoặc khôi phục.
 var world: FarmWorld
+## Danh mục resource đáng tin cậy dùng để giải mã các mã đã lưu.
 var catalog: SaveCatalog
 
 func _init(scene: FarmWorld, resources: SaveCatalog) -> void:
@@ -60,6 +68,9 @@ func _point(pair: Array) -> Vector2:
 func _cell(pair: Array) -> Vector2i:
 	return Vector2i(int(pair[0]), int(pair[1]))
 
+## Đồng bộ công nhân, thời tiết, hệ thống ong và nhu cầu vật nuôi đến [param now],
+## sau đó chụp trạng thái thế giới thành snapshot cho profile và revision.
+## Việc đồng bộ có thể tạo sản phẩm hoặc kết thúc vòng đời vật nuôi trước khi chụp.
 func capture(profile: String, revision: int, now: float) -> Dictionary:
 	world.workers.settle(now)
 	world.starter_content.refresh()
@@ -101,12 +112,15 @@ func capture(profile: String, revision: int, now: float) -> Dictionary:
 	data["land_starting_blocks"] = farm.land.starting_blocks
 	data["flower_garden_unlocked"] = world.starter_content.flower_garden_unlocked
 	data["pen_updated_at"] = {}
+	data["pen_produce"] = []
 	if world.apiary != null:
 		for hive: Beehive in world.apiary.hives:
 			data.beehives.append(hive.capture())
 	for pen: AnimalPen in entities.pens:
 		data.animal_pens.append(_id(pen))
 		data.pen_updated_at[_id(pen)] = now
+		if pen.produce_storage_enabled:
+			data.pen_produce.append({"pen": _id(pen), "products": pen.produce_storage.capture()})
 	for garden: FlowerGarden in entities.gardens:
 		data.flower_gardens.append(garden.capture(now))
 	for index: int in range(selection.inventory.slot_count):
@@ -157,6 +171,9 @@ func _saved_pens(data: Dictionary) -> Dictionary:
 # Không chỉ kiểm tra kiểu JSON: còn phải có đúng pen/garden/trough, sức chứa và số ô inventory.
 # Nếu vừa xóa thế giới cũ vừa phát hiện lỗi ở giữa restore, có thể để game trong trạng thái nửa cũ nửa mới.
 # Khi cấu trúc map thay đổi có chủ ý, cần migration rõ ràng thay vì bỏ qua các check để "tải cho được".
+## Kiểm tra schema và các liên kết với scene trước khi thay đổi thế giới.
+## Bao gồm trạng thái giao dịch, các thực thể và vị trí cần tồn tại trong map.
+## Trả snapshot đã kiểm tra hoặc dictionary lỗi.
 func preflight(data: Dictionary) -> Dictionary:
 	var checked: Dictionary = SaveSchema.validate(data, catalog)
 	if not checked.ok:
@@ -201,6 +218,12 @@ func preflight(data: Dictionary) -> Dictionary:
 	for id: String in data.pen_updated_at:
 		if not pens.has(id):
 			return SaveSchema.failure("The saved simulation pen was not found.")
+	for row: Dictionary in data.pen_produce:
+		if not pens.has(row.pen) or not pens[row.pen].produce_storage_enabled:
+			return SaveSchema.failure("The saved produce pen was not found.")
+		for stack: Dictionary in row.products:
+			if not _is_pen_product(pens[row.pen], catalog.items[stack.item]):
+				return SaveSchema.failure("Invalid product for this pen.")
 	var player: FarmPlayer = world.player
 	var farm: FarmingController = world.farming
 	if pens.is_empty() or player == null or farm == null or farm.farmland == null or farm.farmland.tile_set == null or not farm.can_restore_soil():
@@ -268,6 +291,8 @@ func preflight(data: Dictionary) -> Dictionary:
 			return SaveSchema.failure("Tree ground was not found.")
 	return {"ok": true, "snapshot": data}
 
+## Khôi phục checkpoint rồi tiến công nhân đồng bộ đến thời điểm yêu cầu.
+## Không mô phỏng lùi trước thời điểm lưu.
 func restore(data: Dictionary, now: float) -> Dictionary:
 	var result: Dictionary = _restore_checkpoint(data, now)
 	if not result.ok:
@@ -275,6 +300,7 @@ func restore(data: Dictionary, now: float) -> Dictionary:
 	world.workers.advance(maxf(now, data.saved_at))
 	return _finish_restore(maxf(now, data.saved_at), float(result.previous_simulation))
 
+## Khôi phục checkpoint và chờ công nhân mô phỏng bất đồng bộ đến thời điểm đích.
 func restore_async(data: Dictionary, now: float) -> Dictionary:
 	var result: Dictionary = _restore_checkpoint(data, now)
 	if not result.ok:
@@ -282,6 +308,7 @@ func restore_async(data: Dictionary, now: float) -> Dictionary:
 	await world.workers.advance_async(maxf(now, data.saved_at))
 	return _finish_restore(maxf(now, data.saved_at), float(result.previous_simulation))
 
+## Khôi phục tại thời điểm lưu mà không chạy tiến trình công nhân offline.
 func restore_without_offline(data: Dictionary) -> Dictionary:
 	var result: Dictionary = _restore_checkpoint(data, float(data.saved_at))
 	if not result.ok:
@@ -394,11 +421,24 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	selection.select_slot(int(data.player.selected_slot))
 	selection.select_storage_seed(StringName(data.storage_seed))
 	var piles: Dictionary = {}
+	for pen: AnimalPen in pens.values():
+		pen.produce_storage.restore([], catalog.items)
+	for row: Dictionary in data.pen_produce:
+		(pens[row.pen] as AnimalPen).produce_storage.restore(row.products, catalog.items)
+	# Migrated checkpoints have no pen stock rows. Current saves always include
+	# a row for each configured pen, even when it is empty.
+	var migrate_piles: bool = data.pen_produce.is_empty()
 	for row: Dictionary in data.pickups:
+		var remaining: int = int(row.amount)
+		if migrate_piles and row.pen != "" and pens[row.pen].produce_storage_enabled and _is_pen_product(pens[row.pen], catalog.items[row.item]):
+			remaining -= pens[row.pen].produce_storage.deposit(catalog.items[row.item], remaining)
+		if remaining == 0:
+			continue
 		var pile: ItemPickup = ItemPickup.create()
 		pile.persistent_id = StringName(row.id)
 		pile.item = catalog.items[row.item]
-		pile.amount = int(row.amount)
+		# Keep legacy excess collectible instead of destroying already-earned goods.
+		pile.amount = remaining
 		var parent: Node2D = pens[row.pen] if row.pen != "" else world
 		parent.add_child(pile)
 		pile.position = _point(row.position)
@@ -416,7 +456,18 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 		actor.global_position = actor.pen.clamp_world(actor.pen.to_global(_point(row.position)), actor.wander.margin)
 		actor.animation.facing_direction = StringName(row.facing)
 		# Build the entire herd at the same checkpoint before sharing any trough stock.
-		actor.restore_lifecycle(row, float(data.pen_updated_at[row.pen]), float(data.pen_updated_at[row.pen]), piles.get(row.pickup) as ItemPickup)
+		var restored_row: Dictionary = row.duplicate(true)
+		if actor.pen.produce_storage_enabled and int(restored_row.production_stock) > 0:
+			var item: ItemDefinition = actor.definition.production.production_item
+			var excess: int = int(restored_row.production_stock) - actor.pen.produce_storage.deposit(item, int(restored_row.production_stock))
+			restored_row.production_stock = 0
+			if excess > 0:
+				var legacy: ItemPickup = ItemPickup.create()
+				legacy.item = item
+				legacy.amount = excess
+				actor.pen.add_child(legacy)
+				legacy.global_position = actor.pen.clamp_world(actor.global_position + Vector2(0, 10))
+		actor.restore_lifecycle(restored_row, float(data.pen_updated_at[row.pen]), float(data.pen_updated_at[row.pen]), piles.get(row.pickup) as ItemPickup)
 	for pen: AnimalPen in pens.values():
 		pen.advance_offline(float(data.saved_at), true)
 	if player.state.navigation != null:
@@ -427,6 +478,12 @@ func _restore_checkpoint(data: Dictionary, now: float) -> Dictionary:
 	world.objectives.progress.suspended = false
 	world.workers.restore(data.workers, catalog)
 	return {"ok": true, "previous_simulation": previous_simulation}
+
+func _is_pen_product(pen: AnimalPen, item: ItemDefinition) -> bool:
+	for definition: AnimalDefinition in catalog.animals.values():
+		if (pen.accepted_species.is_empty() or definition.species in pen.accepted_species) and definition.production != null and definition.production.production_item != null and definition.production.production_item.item_id == item.item_id:
+			return true
+	return false
 
 func _finish_restore(now: float, previous_simulation: float) -> Dictionary:
 	world.workers.sync_after_restore(now)

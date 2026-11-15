@@ -1,6 +1,12 @@
 class_name TreeSaveSchema
 extends RefCounted
-## Kiểm tra toàn bộ cây trước khi thay đổi thế giới hoặc túi đồ.
+## Kiểm tra dữ liệu cây đã lưu trước khi thay đổi thế giới hoặc túi đồ.
+##
+## Kiểm tra loại và vị trí cây, các mốc thời gian, ghép cây ăn quả và trạng
+## thái chặt, đào gốc cây gỗ. Các thời gian sinh trưởng cũ được hỗ trợ.
+
+## Trả true nếu toàn bộ bản ghi hợp lệ theo catalog và thời điểm lưu.
+## Mỗi ô chỉ được có một cây và mọi ô phải thuộc vùng của loại cây đó.
 static func valid(rows: Variant, catalog: SaveCatalog, saved_at: float) -> bool:
 	if not rows is Array or rows.size() > 1000:
 		return false

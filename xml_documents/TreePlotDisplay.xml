@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="TreePlotDisplay" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Vẽ dấu ô khu cây trên đất theo đúng tọa độ trồng so le. Màu và biểu tượng thể hiện ô đã mở hoặc còn khóa.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_changed">
+			<return type="void" />
+			<param index="0" name="_kind" type="int" enum="TreeDefinition.Kind" />
+			<description>
+			</description>
+		</method>
+		<method name="_draw">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="plantation" type="TreePlantation" setter="" getter="">
+			Plantation cung cấp tọa độ và trạng thái nâng cấp.
+		</member>
+	</members>
+</class>

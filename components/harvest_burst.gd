@@ -1,7 +1,7 @@
 class_name HarvestBurst
 extends Node2D
-## Cosmetic only: the harvest transaction already committed exactly once.
-## A few representative icons keep high yields cheap and cannot be recollected.
+## Hiệu ứng biểu tượng nông sản sau thu hoạch; giao dịch đã hoàn tất trước khi hiệu ứng chạy.
+
 var item: ItemDefinition
 var amount: int = 1
 var tier: int = 0

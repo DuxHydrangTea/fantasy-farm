@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ToolUpgradeState" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Cấp và kích thước vùng đang chọn của công cụ người chơi trong profile. Trạng thái này độc lập với vật phẩm trong túi và nâng cấp công nhân.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="fresh" qualifiers="static">
+			<return type="Dictionary" />
+			<description>
+				Tạo cấp và kích thước ban đầu bằng 1 cho mọi công cụ.
+			</description>
+		</method>
+		<method name="valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="data" type="Variant" />
+			<description>
+				Kiểm tra đủ công cụ, cấp hợp lệ và kích thước đã chọn không vượt cấp.
+			</description>
+		</method>
+		<method name="_integer" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="value" type="Variant" />
+			<param index="1" name="low" type="int" />
+			<param index="2" name="high" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="level">
+			<return type="int" />
+			<param index="0" name="tool" type="StringName" />
+			<description>
+				Lấy cấp công cụ, hoặc 0 với mã không được hỗ trợ.
+			</description>
+		</method>
+		<method name="selected_size">
+			<return type="int" />
+			<param index="0" name="tool" type="StringName" />
+			<description>
+				Lấy kích thước vùng đang chọn, hoặc 0 với mã không được hỗ trợ.
+			</description>
+		</method>
+		<method name="select_size">
+			<return type="bool" />
+			<param index="0" name="tool" type="StringName" />
+			<param index="1" name="size" type="int" />
+			<description>
+				Chọn kích thước từ 1 đến cấp hiện tại khi không có giao dịch mua. Phát changed nếu lựa chọn thực sự đổi.
+			</description>
+		</method>
+		<method name="capture">
+			<return type="Dictionary" />
+			<description>
+				Tạo bản sao sâu của tiến độ để lưu.
+			</description>
+		</method>
+		<method name="restore">
+			<return type="bool" />
+			<param index="0" name="data" type="Dictionary" />
+			<param index="1" name="notify" type="bool" default="true" />
+			<description>
+				Khôi phục dữ liệu hợp lệ khi không đang mua, tùy chọn thông báo từng công cụ.
+			</description>
+		</method>
+		<method name="notify_restored">
+			<return type="void" />
+			<description>
+				Phát changed cho từng công cụ sau khi khôi phục.
+			</description>
+		</method>
+		<method name="is_busy">
+			<return type="bool" />
+			<description>
+				Cho biết giao dịch nâng cấp đang được xử lý.
+			</description>
+		</method>
+		<method name="begin_purchase">
+			<return type="bool" />
+			<description>
+				Khóa trạng thái để bắt đầu mua nếu chưa có giao dịch.
+			</description>
+		</method>
+		<method name="commit_upgrade">
+			<return type="bool" />
+			<param index="0" name="tool" type="StringName" />
+			<param index="1" name="expected_level" type="int" />
+			<description>
+				Tăng cấp và chọn kích thước mới nếu khóa đang giữ và cấp dự kiến còn khớp.
+			</description>
+		</method>
+		<method name="end_purchase">
+			<return type="void" />
+			<description>
+				Kết thúc khóa giao dịch.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="_progress" type="Dictionary" setter="" getter="" default="fresh()">
+		</member>
+		<member name="_busy" type="bool" setter="" getter="" default="false">
+		</member>
+	</members>
+	<signals>
+		<signal name="changed">
+			<param index="0" name="tool" type="StringName" />
+			<description>
+				Phát mã công cụ khi lựa chọn hoặc cấp thay đổi.
+			</description>
+		</signal>
+	</signals>
+	<constants>
+		<constant name="TOOLS" value="Array[StringName]([&amp;&quot;hoe&quot;, &amp;&quot;watering_can&quot;, &amp;&quot;sowing&quot;])">
+			Các công cụ có thể nâng cấp vùng.
+		</constant>
+		<constant name="MAX_LEVEL" value="6">
+			Cấp tối đa của mỗi công cụ.
+		</constant>
+	</constants>
+</class>

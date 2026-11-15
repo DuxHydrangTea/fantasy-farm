@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GrassField" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Field thử nghiệm vẽ một batch cỏ GPU từ mẫu tĩnh. Mỗi bụi không có callback riêng; field này không chia chunk hoặc nhận actor.
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_ready">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="set_samples">
+			<return type="void" />
+			<param index="0" name="values" type="Dictionary[]" />
+			<description>
+				Đặt mẫu và dựng lại batch nếu material đã sẵn sàng.
+			</description>
+		</method>
+		<method name="set_wind">
+			<return type="void" />
+			<param index="0" name="strength" type="float" />
+			<param index="1" name="direction" type="Vector2" default="Vector2(1, 0)" />
+			<description>
+				Đặt gió, cập nhật shader và biên culling.
+			</description>
+		</method>
+		<method name="set_animation">
+			<return type="void" />
+			<param index="0" name="enabled" type="bool" />
+			<description>
+				Bật hoặc tắt hoạt ảnh khung hình trong shader.
+			</description>
+		</method>
+		<method name="set_test_time">
+			<return type="void" />
+			<param index="0" name="value" type="float" />
+			<param index="1" name="enabled" type="bool" default="true" />
+			<description>
+				Đặt thời gian shader cố định tùy chọn để kiểm thử.
+			</description>
+		</method>
+		<method name="_refresh_bounds">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="_notification">
+			<return type="void" />
+			<param index="0" name="what" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="_exit_tree">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="tuft_count" type="int" setter="" getter="" default="324">
+			Số bụi tạo mặc định khi chưa cung cấp mẫu.
+		</member>
+		<member name="columns" type="int" setter="" getter="" default="18">
+			Số cột của lưới mẫu mặc định.
+		</member>
+		<member name="spacing" type="Vector2" setter="" getter="" default="Vector2(24, 22)">
+			Khoảng cách giữa các mẫu mặc định.
+		</member>
+		<member name="wind_strength" type="float" setter="" getter="" default="0.85">
+			Cường độ gió từ 0 đến 6.
+		</member>
+		<member name="wind_direction" type="Vector2" setter="" getter="" default="Vector2(1, 0)">
+			Hướng gió truyền cho shader.
+		</member>
+		<member name="animate_frames" type="bool" setter="" getter="" default="true">
+			Bật hoạt ảnh khung hình cỏ.
+		</member>
+		<member name="catalog" type="GrassSourceCatalog" setter="" getter="" default="&lt;unknown&gt;">
+			Catalog texture và loại cỏ.
+		</member>
+		<member name="renderer" type="GrassPocRenderer" setter="" getter="" default="&lt;unknown&gt;">
+			Bộ vẽ một batch.
+		</member>
+		<member name="effect" type="ShaderMaterial" setter="" getter="">
+			Material shader dùng chung.
+		</member>
+		<member name="samples" type="Dictionary[]" setter="" getter="" default="[]">
+			Danh sách mẫu chứa loại, transform và pha.
+		</member>
+	</members>
+	<constants>
+		<constant name="SHADER" value="&lt;Object&gt;">
+			Shader cỏ mặc định.
+		</constant>
+	</constants>
+</class>
