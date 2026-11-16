@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://5hea1yi7jef" path="res://trees/textures/oak_stump.tres" id="stump"]
 [ext_resource type="Resource" uid="uid://bmtw2l638aakq" path="res://items/trees/wood.tres" id="wood"]
 
+[ext_resource type="Texture2D" path="res://assets/Trees/Shadows/Variants64x80/palm_shadow.png" id="ground_shadow"]
+
 [resource]
 script = ExtResource("script")
 tree_id = &"palm"
@@ -21,3 +23,5 @@ stage_textures = Array[Texture2D]([ExtResource("stage1"), ExtResource("stage2"),
 ready_texture = ExtResource("mature")
 stump_texture = ExtResource("stump")
 canopy_texture = ExtResource("mature")
+ground_shadow_texture = ExtResource("ground_shadow")
+ground_shadow_offset = Vector2(0, -3)

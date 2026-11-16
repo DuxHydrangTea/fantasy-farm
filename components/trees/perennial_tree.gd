@@ -18,6 +18,7 @@ var sprite: Sprite2D
 var motion: VisualMotionComponent
 var trunk: CollisionShape2D
 var visual: Node2D
+var ground_shadow: Sprite2D
 
 func _ready() -> void:
 	add_to_group(&"perennial_trees")
@@ -70,6 +71,7 @@ func update_visual() -> void:
 
 ## Đổi texture và căn hình cây theo phần ảnh thực sự hiển thị.
 func set_texture(texture: Texture2D) -> void:
+	_sync_ground_shadow(texture)
 	if sprite.texture == texture:
 		return
 	sprite.texture = texture
@@ -89,6 +91,22 @@ func set_texture(texture: Texture2D) -> void:
 		wind.set_shader_parameter(&"amplitude", clampf(bounds.size.y * 0.04, 0.35, 2.4))
 		_wind_materials[texture] = wind
 	sprite.material = _wind_materials[texture]
+## Bóng nằm trên mặt đất, không theo gió/tween của tán và không làm lệch neo gốc.
+func _sync_ground_shadow(texture: Texture2D) -> void:
+	var mature_texture: bool = definition.stage_textures.size() > 2 and texture == definition.stage_textures[2]
+	var show_shadow: bool = definition.ground_shadow_texture != null and (mature_texture or texture == definition.ready_texture)
+	if not show_shadow:
+		if ground_shadow != null:
+			ground_shadow.hide()
+		return
+	if ground_shadow == null:
+		ground_shadow = Sprite2D.new()
+		ground_shadow.name = "GroundShadow"
+		ground_shadow.z_index = -1
+		add_child(ground_shadow)
+	ground_shadow.texture = definition.ground_shadow_texture
+	ground_shadow.position = definition.ground_shadow_offset
+	ground_shadow.show()
 
 ## Lấy và cache hình chữ nhật pixel không trong suốt của texture.
 static func visible_bounds(texture: Texture2D) -> Rect2i:

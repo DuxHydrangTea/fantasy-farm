@@ -38,6 +38,10 @@ enum Kind { FRUIT, TIMBER }
 @export var canopy_texture: Texture2D
 ## Ảnh lá.
 @export var leaf_texture: Texture2D
+## Bóng riêng cho cây trưởng thành; để trống khi texture đã có bóng vẽ sẵn.
+@export var ground_shadow_texture: Texture2D
+## Độ lệch bóng so với gốc cây, không phụ thuộc khung ảnh của tán.
+@export var ground_shadow_offset: Vector2 = Vector2(0, -4)
 
 ## Tải vật phẩm cây giống theo quy ước đường dẫn từ [member tree_id].
 ## Trả về null nếu resource không tải được hoặc không phải ItemDefinition.

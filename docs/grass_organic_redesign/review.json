@@ -1,0 +1,71 @@
+{
+  "target": {
+    "normal_rgb": [
+      67,
+      137,
+      79
+    ],
+    "raised_main_rgb": [
+      74,
+      151,
+      87
+    ],
+    "relative_hsl_lightness_main": 1.102941176470588,
+    "accepted_mean_lightness_ratio": 1.097081801470588
+  },
+  "palette_calibration": {
+    "#397d48": "#43894f",
+    "#43894f": "#4a9757"
+  },
+  "attempts": [
+    {
+      "id": "8af8bef3-5147-4548-a2f3-1cf324439795",
+      "type": "earth A",
+      "charge": 15,
+      "assessment": "Organic edge accepted after exact palette calibration. Raw upper fill matched the game ground; calibration separates upper and lower roles at the requested brightness."
+    },
+    {
+      "id": "87652c5e-5a71-4bfc-89b9-5e5e039a2613",
+      "type": "earth B",
+      "charge": 15,
+      "assessment": "Rejected: new prompt/palette produced nearly identical dark upper and lower fills. Not integrated."
+    },
+    {
+      "id": "663bee28-ef83-4521-b82c-15996cf4f864",
+      "type": "turf A",
+      "charge": 15,
+      "assessment": "Accepted after the same palette calibration; connected base tiles make its top identical to selected earth A."
+    }
+  ],
+  "edge_measurement_pixels": {
+    "old_excursion": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "new_excursion": [
+      7,
+      4,
+      5,
+      7
+    ],
+    "old_max_flat_run": [
+      7,
+      7,
+      7,
+      8
+    ],
+    "new_max_flat_run": [
+      3,
+      4,
+      4,
+      2
+    ]
+  },
+  "cost": {
+    "total_generations": 45,
+    "keys_used_this_request": 1,
+    "remaining_paid_generations": 1230.4
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "scene": "res://world/main_world.tscn",
+  "tile_size": 16,
+  "capture_origin": [
+    -64,
+    -128
+  ],
+  "regions": [
+    {
+      "id": 1,
+      "name": "Bãi cỏ đông bắc, phía phải tiệm rèn",
+      "type": "turf",
+      "bounds": [
+        2016,
+        48,
+        224,
+        112
+      ],
+      "grass_percent": 83.1,
+      "priority": "Cao",
+      "reason": "Khoảng cỏ rộng phía trên đường đất; một gò lớn, lệch về cụm cây, sẽ tạo điểm cao cho góc đông bắc."
+    },
+    {
+      "id": 2,
+      "name": "Bãi cỏ phía nam khu kho",
+      "type": "earth",
+      "bounds": [
+        2128,
+        1280,
+        224,
+        144
+      ],
+      "grass_percent": 89.0,
+      "priority": "Cao",
+      "reason": "Đây là khoảng cỏ rỗng rõ nhất ngoài khu sản xuất. Dùng một gò mép đất có hình bất đối xứng để nối khu công trình với bờ nam; chừa hành lang thẳng từ hai cổng kho."
+    },
+    {
+      "id": 3,
+      "name": "Dải cỏ phía tây ao cảnh",
+      "type": "turf",
+      "bounds": [
+        1872,
+        640,
+        144,
+        144
+      ],
+      "grass_percent": 77.9,
+      "priority": "Cao",
+      "reason": "Tạo một doi cỏ hẹp bên cụm liễu, chỉ ở phía tây ao; thu nhỏ theo bờ thực tế để giữ ít nhất 32 px với nước và đường lát."
+    },
+    {
+      "id": 4,
+      "name": "Góc tây bắc đài phun nước",
+      "type": "earth",
+      "bounds": [
+        1920,
+        320,
+        160,
+        96
+      ],
+      "grass_percent": 62.3,
+      "priority": "Vừa",
+      "reason": "Gò nhỏ làm nền cho cụm cây phía sau quảng trường. Dừng trước nền đất, ghế và đường đi; không nâng nền đài phun nước."
+    },
+    {
+      "id": 5,
+      "name": "Dải cỏ ngoài hàng rào vườn cây, phía tây nam",
+      "type": "turf",
+      "bounds": [
+        416,
+        1472,
+        208,
+        64
+      ],
+      "grass_percent": 88.5,
+      "priority": "Vừa",
+      "reason": "Một gò dài và thấp sẽ chia nhịp dải xanh giữa đường lát và sông. Chừa khoảng thở cho cây hiện có và bờ nước; không đưa gò vào lưới trồng cây."
+    },
+    {
+      "id": 6,
+      "name": "Khoảng cỏ giữa khu cắm trại và cửa hàng hạt giống",
+      "type": "turf",
+      "bounds": [
+        368,
+        96,
+        208,
+        96
+      ],
+      "grass_percent": 85.6,
+      "priority": "Thấp",
+      "reason": "Một mảng gò nhỏ quanh cụm cây sẽ nối khu nghỉ với phố chợ. Chừa đường ngang, sân lều và lối tới cửa hàng; không làm thành một dải liên tục."
+    }
+  ]
+}

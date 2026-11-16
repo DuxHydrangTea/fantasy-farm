@@ -1,0 +1,228 @@
+{
+  "reference": "assets/Trees/Big_Oak_Tree.png",
+  "reference_rgba": [
+    0,
+    0,
+    0,
+    40
+  ],
+  "reference_shadow_size": [
+    36,
+    22
+  ],
+  "reference_canopy_width": 41,
+  "reference_offset_y": -3,
+  "assets": [
+    {
+      "sprite": "autumn_maple",
+      "texture": "assets/Trees/Shadows/Variants64x80/autumn_maple_shadow.png",
+      "size": [
+        35,
+        21
+      ],
+      "offset": [
+        3,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "1bddd9b3e4e590e75b83a4b7baa472f5aa2f9bbb71cb69f362f25611bf2a0679"
+    },
+    {
+      "sprite": "blue_conifer",
+      "texture": "assets/Trees/Shadows/Variants64x80/blue_conifer_shadow.png",
+      "size": [
+        33,
+        20
+      ],
+      "offset": [
+        0,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "dad6d7d92102897d4d201c432bd92929332ea0cc0c376d2897b605f77861109c"
+    },
+    {
+      "sprite": "brown_palm",
+      "texture": "assets/Trees/Shadows/Variants64x80/brown_palm_shadow.png",
+      "size": [
+        53,
+        32
+      ],
+      "offset": [
+        1,
+        -4
+      ],
+      "alpha": 40,
+      "source_sha256": "f32d15981c05b522e2c80fbffd21a0943ae949e7e862df84436482c550bcee0c"
+    },
+    {
+      "sprite": "flowering_cactus",
+      "texture": "assets/Trees/Shadows/Variants64x80/flowering_cactus_shadow.png",
+      "size": [
+        28,
+        17
+      ],
+      "offset": [
+        -2,
+        -2
+      ],
+      "alpha": 40,
+      "source_sha256": "2d1e760ce8986fa105c041718c090fa0eaab6cb54b2d26845714aacb56b0fbc0"
+    },
+    {
+      "sprite": "golden_aspen",
+      "texture": "assets/Trees/Shadows/Variants64x80/golden_aspen_shadow.png",
+      "size": [
+        33,
+        20
+      ],
+      "offset": [
+        0,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "a63d47d52db36ff3edb107b940766956a8a3e88638e78b3045ca04e32197f7f8"
+    },
+    {
+      "sprite": "golden_birch",
+      "texture": "assets/Trees/Shadows/Variants64x80/golden_birch_shadow.png",
+      "size": [
+        30,
+        18
+      ],
+      "offset": [
+        0,
+        -2
+      ],
+      "alpha": 40,
+      "source_sha256": "8f7d959f0fa261de1b209a85981c2129d97976357eccb54eff6ee6acdf23e910"
+    },
+    {
+      "sprite": "green_birch",
+      "texture": "assets/Trees/Shadows/Variants64x80/green_birch_shadow.png",
+      "size": [
+        43,
+        26
+      ],
+      "offset": [
+        0,
+        -4
+      ],
+      "alpha": 40,
+      "source_sha256": "9786268a7e6619f11adfd4866a2cc0d31460ac9e8ae2f7777d26b9a888b958d3"
+    },
+    {
+      "sprite": "magic_blue",
+      "texture": "assets/Trees/Shadows/Variants64x80/magic_blue_shadow.png",
+      "size": [
+        40,
+        24
+      ],
+      "offset": [
+        0,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "4c02f7ed005127a30bae49d8bc24e035f2e9bff3cd863e837a7519870ab746e5"
+    },
+    {
+      "sprite": "orange_oak",
+      "texture": "assets/Trees/Shadows/Variants64x80/orange_oak_shadow.png",
+      "size": [
+        53,
+        32
+      ],
+      "offset": [
+        0,
+        -4
+      ],
+      "alpha": 40,
+      "source_sha256": "52e877ddd911420ecab6b28da4b9b4e67caea44c5f40a0a83fe8cc1e4027a73c"
+    },
+    {
+      "sprite": "palm",
+      "texture": "assets/Trees/Shadows/Variants64x80/palm_shadow.png",
+      "size": [
+        39,
+        24
+      ],
+      "offset": [
+        0,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "ff2ded945ac0da8942e7db41e2e06f41c7931abc8f025e65e2a524511036842b"
+    },
+    {
+      "sprite": "pink_blossom",
+      "texture": "assets/Trees/Shadows/Variants64x80/pink_blossom_shadow.png",
+      "size": [
+        37,
+        23
+      ],
+      "offset": [
+        -2,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "9d4c0db61f7f76d8e9bf4dc090dff7a4e873b608df97388e2250da301f7417ee"
+    },
+    {
+      "sprite": "purple_blossom",
+      "texture": "assets/Trees/Shadows/Variants64x80/purple_blossom_shadow.png",
+      "size": [
+        53,
+        32
+      ],
+      "offset": [
+        0,
+        -4
+      ],
+      "alpha": 40,
+      "source_sha256": "6ced459bc77574eb732b44edb16ac014056a6cf02e0fee4ded379078385d2023"
+    },
+    {
+      "sprite": "red_maple",
+      "texture": "assets/Trees/Shadows/Variants64x80/red_maple_shadow.png",
+      "size": [
+        53,
+        32
+      ],
+      "offset": [
+        0,
+        -4
+      ],
+      "alpha": 40,
+      "source_sha256": "8ab15b172210243be48e15f29d5cf675527b03471a5e00f3a5cafc29cf1011e2"
+    },
+    {
+      "sprite": "spruce",
+      "texture": "assets/Trees/Shadows/Variants64x80/spruce_shadow.png",
+      "size": [
+        30,
+        18
+      ],
+      "offset": [
+        0,
+        -2
+      ],
+      "alpha": 40,
+      "source_sha256": "52ddc9cb0549ec5c8a35c262554f74a2f792e2a6c96e564e57c3de1b9276cc46"
+    },
+    {
+      "sprite": "willow",
+      "texture": "assets/Trees/Shadows/Variants64x80/willow_shadow.png",
+      "size": [
+        40,
+        24
+      ],
+      "offset": [
+        0,
+        -3
+      ],
+      "alpha": 40,
+      "source_sha256": "77d1b8ef42a46af3e2f4d48f7f97b3c891eb43bfd8581ec695a3d1ef34ff9938"
+    }
+  ],
+  "definitions_updated": 14
+}

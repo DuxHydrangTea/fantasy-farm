@@ -1,0 +1,1197 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Trees/Shadows/Variants64x80/magic_blue_shadow.png" id="1_4uidv"]
+
+[node name="DecorativeTreeShadows" type="Node2D" unique_id=2106858064]
+texture_filter = 1
+
+[node name="Shadow_000" type="Sprite2D" parent="." unique_id=1127044670]
+position = Vector2(2192, 198)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/NorthOak/Crown"
+metadata/visible_root = Vector2(2192, 202)
+
+[node name="Shadow_001" type="Sprite2D" parent="." unique_id=1193537925]
+position = Vector2(2239.5, 184)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/NorthWillow/Crown"
+metadata/visible_root = Vector2(2239.5, 188)
+
+[node name="Shadow_002" type="Sprite2D" parent="." unique_id=229072725]
+position = Vector2(2288, 220)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/NorthOakTwo/Crown"
+metadata/visible_root = Vector2(2288, 224)
+
+[node name="Shadow_003" type="Sprite2D" parent="." unique_id=312591073]
+position = Vector2(2144, 193)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/NorthAccent/Crown"
+metadata/visible_root = Vector2(2144, 196)
+
+[node name="Shadow_004" type="Sprite2D" parent="." unique_id=2146359381]
+position = Vector2(2440, 308)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/UpperBorderOak/Crown"
+metadata/visible_root = Vector2(2440, 312)
+
+[node name="Shadow_005" type="Sprite2D" parent="." unique_id=467520715]
+position = Vector2(2480, 339)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/UpperBorderMaple/Crown"
+metadata/visible_root = Vector2(2480, 342)
+
+[node name="Shadow_006" type="Sprite2D" parent="." unique_id=634355062]
+position = Vector2(2488, 398)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/UpperBorderWillow/Crown"
+metadata/visible_root = Vector2(2488, 402)
+
+[node name="Shadow_007" type="Sprite2D" parent="." unique_id=458118670]
+position = Vector2(2483.5, 582)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/MiddleWillow/Crown"
+metadata/visible_root = Vector2(2483.5, 586)
+
+[node name="Shadow_008" type="Sprite2D" parent="." unique_id=1440875178]
+position = Vector2(2452, 630)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/MiddleOak/Crown"
+metadata/visible_root = Vector2(2452, 634)
+
+[node name="Shadow_009" type="Sprite2D" parent="." unique_id=1579134722]
+position = Vector2(2490, 673)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/MiddleBirch/Crown"
+metadata/visible_root = Vector2(2490, 676)
+
+[node name="Shadow_010" type="Sprite2D" parent="." unique_id=1692067137]
+position = Vector2(2448, 840)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/LowerOak/Crown"
+metadata/visible_root = Vector2(2448, 844)
+
+[node name="Shadow_011" type="Sprite2D" parent="." unique_id=1611235180]
+position = Vector2(2480, 890)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/LowerWillow/Crown"
+metadata/visible_root = Vector2(2480, 894)
+
+[node name="Shadow_012" type="Sprite2D" parent="." unique_id=2039643587]
+position = Vector2(2408, 891)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/LowerMaple/Crown"
+metadata/visible_root = Vector2(2408, 894)
+
+[node name="Shadow_013" type="Sprite2D" parent="." unique_id=2103551041]
+position = Vector2(2032, 880)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/SouthShade/Crown"
+metadata/visible_root = Vector2(2032, 884)
+
+[node name="Shadow_014" type="Sprite2D" parent="." unique_id=1603623299]
+position = Vector2(2288, 913)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/SouthAccent/Crown"
+metadata/visible_root = Vector2(2288, 916)
+
+[node name="Shadow_015" type="Sprite2D" parent="." unique_id=2023981706]
+position = Vector2(2032, 812)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/MeadowOak/Crown"
+metadata/visible_root = Vector2(2032, 816)
+
+[node name="Shadow_016" type="Sprite2D" parent="." unique_id=1666516705]
+position = Vector2(2072, 374)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/GardenWillow/Crown"
+metadata/visible_root = Vector2(2072, 378)
+
+[node name="Shadow_017" type="Sprite2D" parent="." unique_id=1690643277]
+position = Vector2(2136, 396)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "EastMeadowDecor/GardenOak/Crown"
+metadata/visible_root = Vector2(2136, 400)
+
+[node name="Shadow_018" type="Sprite2D" parent="." unique_id=870823270]
+position = Vector2(2080, 560)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/PicnicOak/Crown"
+metadata/visible_root = Vector2(2080, 564)
+
+[node name="Shadow_019" type="Sprite2D" parent="." unique_id=1816389051]
+position = Vector2(2144, 544)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/PicnicWillow/Crown"
+metadata/visible_root = Vector2(2144, 548)
+
+[node name="Shadow_020" type="Sprite2D" parent="." unique_id=1314699528]
+position = Vector2(2200, 571)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/PicnicBirch/Crown"
+metadata/visible_root = Vector2(2200, 574)
+
+[node name="Shadow_021" type="Sprite2D" parent="." unique_id=891981285]
+position = Vector2(2008, 676)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/WestGroveOak/Crown"
+metadata/visible_root = Vector2(2008, 680)
+
+[node name="Shadow_022" type="Sprite2D" parent="." unique_id=1850061028]
+position = Vector2(1983.5, 744)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/WestGroveWillow/Crown"
+metadata/visible_root = Vector2(1983.5, 748)
+
+[node name="Shadow_023" type="Sprite2D" parent="." unique_id=909365925]
+position = Vector2(2016, 685)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/WestGroveBirch/Crown"
+metadata/visible_root = Vector2(2016, 688)
+
+[node name="Shadow_024" type="Sprite2D" parent="." unique_id=1775503418]
+position = Vector2(2490, 154)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree0/Crown"
+metadata/visible_root = Vector2(2490, 158)
+
+[node name="Shadow_025" type="Sprite2D" parent="." unique_id=1637862653]
+position = Vector2(2478, 234)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree1/Crown"
+metadata/visible_root = Vector2(2478, 238)
+
+[node name="Shadow_026" type="Sprite2D" parent="." unique_id=1247340658]
+position = Vector2(2490, 517)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree2/Crown"
+metadata/visible_root = Vector2(2490, 520)
+
+[node name="Shadow_027" type="Sprite2D" parent="." unique_id=582269697]
+position = Vector2(2488, 756)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree3/Crown"
+metadata/visible_root = Vector2(2488, 760)
+
+[node name="Shadow_028" type="Sprite2D" parent="." unique_id=1766165915]
+position = Vector2(2496, 1284)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree4/Crown"
+metadata/visible_root = Vector2(2496, 1288)
+
+[node name="Shadow_029" type="Sprite2D" parent="." unique_id=1890742375]
+position = Vector2(2472, 1381)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree5/Crown"
+metadata/visible_root = Vector2(2472, 1384)
+
+[node name="Shadow_030" type="Sprite2D" parent="." unique_id=1592148914]
+position = Vector2(2494, 1460)
+scale = Vector2(1.175, 1.2083334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree6/Crown"
+metadata/visible_root = Vector2(2494, 1464)
+
+[node name="Shadow_031" type="Sprite2D" parent="." unique_id=1649349163]
+position = Vector2(2480, 1544)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowRestDetails/BoundaryTree7/Crown"
+metadata/visible_root = Vector2(2480, 1548)
+
+[node name="Shadow_032" type="Sprite2D" parent="." unique_id=1558548902]
+position = Vector2(2223.5, 864)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "MeadowPond/SouthWillow/Crown"
+metadata/visible_root = Vector2(2223.5, 868)
+
+[node name="Shadow_033" type="Sprite2D" parent="." unique_id=689825143]
+position = Vector2(9.5, 22)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@2,0"
+metadata/visible_root = Vector2(9.5, 26)
+
+[node name="Shadow_034" type="Sprite2D" parent="." unique_id=1110430314]
+position = Vector2(54, 30)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@13,2"
+metadata/visible_root = Vector2(54, 33)
+
+[node name="Shadow_035" type="Sprite2D" parent="." unique_id=2072695356]
+position = Vector2(77.5, 18)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@19,-1"
+metadata/visible_root = Vector2(77.5, 22)
+
+[node name="Shadow_036" type="Sprite2D" parent="." unique_id=717909247]
+position = Vector2(146, 26)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@36,1"
+metadata/visible_root = Vector2(146, 29)
+
+[node name="Shadow_037" type="Sprite2D" parent="." unique_id=1766516668]
+position = Vector2(234, 18)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@58,-1"
+metadata/visible_root = Vector2(234, 21)
+
+[node name="Shadow_038" type="Sprite2D" parent="." unique_id=800065733]
+position = Vector2(455, 30)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@113,2"
+metadata/visible_root = Vector2(455, 34)
+
+[node name="Shadow_039" type="Sprite2D" parent="." unique_id=775343777]
+position = Vector2(519, 6)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@129,-4"
+metadata/visible_root = Vector2(519, 10)
+
+[node name="Shadow_040" type="Sprite2D" parent="." unique_id=152385305]
+position = Vector2(546, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@136,-3"
+metadata/visible_root = Vector2(546, 13)
+
+[node name="Shadow_041" type="Sprite2D" parent="." unique_id=1097147019]
+position = Vector2(310, 22)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@77,0"
+metadata/visible_root = Vector2(310, 25)
+
+[node name="Shadow_042" type="Sprite2D" parent="." unique_id=1446406279]
+position = Vector2(615, 14)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@153,-2"
+metadata/visible_root = Vector2(615, 18)
+
+[node name="Shadow_043" type="Sprite2D" parent="." unique_id=227867658]
+position = Vector2(802, 26)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@200,1"
+metadata/visible_root = Vector2(802, 29)
+
+[node name="Shadow_044" type="Sprite2D" parent="." unique_id=323757737]
+position = Vector2(725.5, 42)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@181,5"
+metadata/visible_root = Vector2(725.5, 46)
+
+[node name="Shadow_045" type="Sprite2D" parent="." unique_id=1996428574]
+position = Vector2(886, 38)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@221,4"
+metadata/visible_root = Vector2(886, 41)
+
+[node name="Shadow_046" type="Sprite2D" parent="." unique_id=564421776]
+position = Vector2(1091, 26)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@272,1"
+metadata/visible_root = Vector2(1091, 30)
+
+[node name="Shadow_047" type="Sprite2D" parent="." unique_id=1292217081]
+position = Vector2(1190, 30)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@297,2"
+metadata/visible_root = Vector2(1190, 33)
+
+[node name="Shadow_048" type="Sprite2D" parent="." unique_id=1792741895]
+position = Vector2(998, 38)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@249,4"
+metadata/visible_root = Vector2(998, 41)
+
+[node name="Shadow_049" type="Sprite2D" parent="." unique_id=992971199]
+position = Vector2(1141, 43)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@285,5"
+metadata/visible_root = Vector2(1141, 46)
+
+[node name="Shadow_050" type="Sprite2D" parent="." unique_id=915267738]
+position = Vector2(1314, 10)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@328,-3"
+metadata/visible_root = Vector2(1314, 13)
+
+[node name="Shadow_051" type="Sprite2D" parent="." unique_id=1970065671]
+position = Vector2(1638, 11)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@409,-3"
+metadata/visible_root = Vector2(1638, 14)
+
+[node name="Shadow_052" type="Sprite2D" parent="." unique_id=594306852]
+position = Vector2(1567, 14)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@391,-2"
+metadata/visible_root = Vector2(1567, 18)
+
+[node name="Shadow_053" type="Sprite2D" parent="." unique_id=64304976]
+position = Vector2(1455, 14)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@363,-2"
+metadata/visible_root = Vector2(1455, 18)
+
+[node name="Shadow_054" type="Sprite2D" parent="." unique_id=2129787148]
+position = Vector2(1390, 14)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@347,-2"
+metadata/visible_root = Vector2(1390, 17)
+
+[node name="Shadow_055" type="Sprite2D" parent="." unique_id=825942940]
+position = Vector2(1733, 11)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@433,-3"
+metadata/visible_root = Vector2(1733, 14)
+
+[node name="Shadow_056" type="Sprite2D" parent="." unique_id=1333723213]
+position = Vector2(2262, 14)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@565,-2"
+metadata/visible_root = Vector2(2262, 17)
+
+[node name="Shadow_057" type="Sprite2D" parent="." unique_id=1486157141]
+position = Vector2(2003, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@500,-3"
+metadata/visible_root = Vector2(2003, 14)
+
+[node name="Shadow_058" type="Sprite2D" parent="." unique_id=1471843027]
+position = Vector2(2090, 15)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@522,-2"
+metadata/visible_root = Vector2(2090, 18)
+
+[node name="Shadow_059" type="Sprite2D" parent="." unique_id=928006759]
+position = Vector2(1854, 6)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@463,-4"
+metadata/visible_root = Vector2(1854, 9)
+
+[node name="Shadow_060" type="Sprite2D" parent="." unique_id=1655428920]
+position = Vector2(1923, 2)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@480,-5"
+metadata/visible_root = Vector2(1923, 6)
+
+[node name="Shadow_061" type="Sprite2D" parent="." unique_id=1226983321]
+position = Vector2(2330, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@582,-3"
+metadata/visible_root = Vector2(2330, 13)
+
+[node name="Shadow_062" type="Sprite2D" parent="." unique_id=1764569151]
+position = Vector2(2385, 15)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@596,-2"
+metadata/visible_root = Vector2(2385, 18)
+
+[node name="Shadow_063" type="Sprite2D" parent="." unique_id=2061274106]
+position = Vector2(2441, 15)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@610,-2"
+metadata/visible_root = Vector2(2441, 18)
+
+[node name="Shadow_064" type="Sprite2D" parent="." unique_id=1876156827]
+position = Vector2(2478, 38)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@619,4"
+metadata/visible_root = Vector2(2478, 41)
+
+[node name="Shadow_065" type="Sprite2D" parent="." unique_id=968492810]
+position = Vector2(2505.5, 22)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@626,0"
+metadata/visible_root = Vector2(2505.5, 26)
+
+[node name="Shadow_066" type="Sprite2D" parent="." unique_id=919800145]
+position = Vector2(2538, 15)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@634,-2"
+metadata/visible_root = Vector2(2538, 18)
+
+[node name="Shadow_067" type="Sprite2D" parent="." unique_id=1731317872]
+position = Vector2(109.5, 34)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@27,3"
+metadata/visible_root = Vector2(109.5, 38)
+
+[node name="Shadow_068" type="Sprite2D" parent="." unique_id=1584561650]
+position = Vector2(170, 18)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@42,-1"
+metadata/visible_root = Vector2(170, 21)
+
+[node name="Shadow_069" type="Sprite2D" parent="." unique_id=1035330964]
+position = Vector2(202, 34)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@50,3"
+metadata/visible_root = Vector2(202, 37)
+
+[node name="Shadow_070" type="Sprite2D" parent="." unique_id=1305682872]
+position = Vector2(269, 35)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@67,3"
+metadata/visible_root = Vector2(269, 38)
+
+[node name="Shadow_071" type="Sprite2D" parent="." unique_id=624249270]
+position = Vector2(374, 14)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@93,-2"
+metadata/visible_root = Vector2(374, 17)
+
+[node name="Shadow_072" type="Sprite2D" parent="." unique_id=1515407978]
+position = Vector2(409, 31)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@102,2"
+metadata/visible_root = Vector2(409, 34)
+
+[node name="Shadow_073" type="Sprite2D" parent="." unique_id=2125523138]
+position = Vector2(418, 42)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@104,5"
+metadata/visible_root = Vector2(418, 45)
+
+[node name="Shadow_074" type="Sprite2D" parent="." unique_id=1317655590]
+position = Vector2(658, 26)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@164,1"
+metadata/visible_root = Vector2(658, 29)
+
+[node name="Shadow_075" type="Sprite2D" parent="." unique_id=1911735976]
+position = Vector2(686, 22)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@171,0"
+metadata/visible_root = Vector2(686, 25)
+
+[node name="Shadow_076" type="Sprite2D" parent="." unique_id=1923166572]
+position = Vector2(566, 38)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@141,4"
+metadata/visible_root = Vector2(566, 41)
+
+[node name="Shadow_077" type="Sprite2D" parent="." unique_id=1894010204]
+position = Vector2(502, 43)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@125,5"
+metadata/visible_root = Vector2(502, 46)
+
+[node name="Shadow_078" type="Sprite2D" parent="." unique_id=632875706]
+position = Vector2(919, 22)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@229,0"
+metadata/visible_root = Vector2(919, 26)
+
+[node name="Shadow_079" type="Sprite2D" parent="." unique_id=1748012204]
+position = Vector2(957.5, 34)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@239,3"
+metadata/visible_root = Vector2(957.5, 38)
+
+[node name="Shadow_080" type="Sprite2D" parent="." unique_id=2021265738]
+position = Vector2(959, 38)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@239,4"
+metadata/visible_root = Vector2(959, 42)
+
+[node name="Shadow_081" type="Sprite2D" parent="." unique_id=769383589]
+position = Vector2(946, 50)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@236,7"
+metadata/visible_root = Vector2(946, 53)
+
+[node name="Shadow_082" type="Sprite2D" parent="." unique_id=1458690867]
+position = Vector2(826, 47)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@206,6"
+metadata/visible_root = Vector2(826, 50)
+
+[node name="Shadow_083" type="Sprite2D" parent="." unique_id=1650385055]
+position = Vector2(1034, 26)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@258,1"
+metadata/visible_root = Vector2(1034, 29)
+
+[node name="Shadow_084" type="Sprite2D" parent="." unique_id=1038644506]
+position = Vector2(1069, 43)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@267,5"
+metadata/visible_root = Vector2(1069, 46)
+
+[node name="Shadow_085" type="Sprite2D" parent="." unique_id=1761367066]
+position = Vector2(1274, 15)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@318,-2"
+metadata/visible_root = Vector2(1274, 18)
+
+[node name="Shadow_086" type="Sprite2D" parent="." unique_id=870759485]
+position = Vector2(1251, 18)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@312,-1"
+metadata/visible_root = Vector2(1251, 22)
+
+[node name="Shadow_087" type="Sprite2D" parent="." unique_id=82126227]
+position = Vector2(1506, 18)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@376,-1"
+metadata/visible_root = Vector2(1506, 21)
+
+[node name="Shadow_088" type="Sprite2D" parent="." unique_id=768420772]
+position = Vector2(1530, 18)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@382,-1"
+metadata/visible_root = Vector2(1530, 21)
+
+[node name="Shadow_089" type="Sprite2D" parent="." unique_id=1053683549]
+position = Vector2(1802, 18)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@450,-1"
+metadata/visible_root = Vector2(1802, 21)
+
+[node name="Shadow_090" type="Sprite2D" parent="." unique_id=1443426362]
+position = Vector2(2170, 15)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@542,-2"
+metadata/visible_root = Vector2(2170, 18)
+
+[node name="Shadow_091" type="Sprite2D" parent="." unique_id=325330244]
+position = Vector2(2354, 31)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@588,2"
+metadata/visible_root = Vector2(2354, 34)
+
+[node name="Shadow_092" type="Sprite2D" parent="." unique_id=995086584]
+position = Vector2(2425.5, 30)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@606,2"
+metadata/visible_root = Vector2(2425.5, 34)
+
+[node name="Shadow_093" type="Sprite2D" parent="." unique_id=135273840]
+position = Vector2(2302, 22)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@575,0"
+metadata/visible_root = Vector2(2302, 25)
+
+[node name="Shadow_094" type="Sprite2D" parent="." unique_id=867726674]
+position = Vector2(2517, 43)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@629,5"
+metadata/visible_root = Vector2(2517, 46)
+
+[node name="Shadow_095" type="Sprite2D" parent="." unique_id=407578635]
+position = Vector2(2541, 43)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@635,5"
+metadata/visible_root = Vector2(2541, 46)
+
+[node name="Shadow_096" type="Sprite2D" parent="." unique_id=87739623]
+position = Vector2(2217.5, 6)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@554,-4"
+metadata/visible_root = Vector2(2217.5, 10)
+
+[node name="Shadow_097" type="Sprite2D" parent="." unique_id=1094352509]
+position = Vector2(2195, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@548,-3"
+metadata/visible_root = Vector2(2195, 14)
+
+[node name="Shadow_098" type="Sprite2D" parent="." unique_id=1763530527]
+position = Vector2(2126, 14)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@531,-2"
+metadata/visible_root = Vector2(2126, 17)
+
+[node name="Shadow_099" type="Sprite2D" parent="." unique_id=1012929667]
+position = Vector2(2031, 14)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@507,-2"
+metadata/visible_root = Vector2(2031, 18)
+
+[node name="Shadow_100" type="Sprite2D" parent="." unique_id=1658809490]
+position = Vector2(1890, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@472,-3"
+metadata/visible_root = Vector2(1890, 13)
+
+[node name="Shadow_101" type="Sprite2D" parent="." unique_id=90795423]
+position = Vector2(1690, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@422,-3"
+metadata/visible_root = Vector2(1690, 13)
+
+[node name="Shadow_102" type="Sprite2D" parent="." unique_id=1081878095]
+position = Vector2(1350, 11)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@337,-3"
+metadata/visible_root = Vector2(1350, 14)
+
+[node name="Shadow_103" type="Sprite2D" parent="." unique_id=898619627]
+position = Vector2(1109, 43)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@277,5"
+metadata/visible_root = Vector2(1109, 46)
+
+[node name="Shadow_104" type="Sprite2D" parent="." unique_id=1842095989]
+position = Vector2(755, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@188,-3"
+metadata/visible_root = Vector2(755, 14)
+
+[node name="Shadow_105" type="Sprite2D" parent="." unique_id=649302162]
+position = Vector2(782, 38)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@195,4"
+metadata/visible_root = Vector2(782, 41)
+
+[node name="Shadow_106" type="Sprite2D" parent="." unique_id=757069611]
+position = Vector2(854, 14)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@213,-2"
+metadata/visible_root = Vector2(854, 17)
+
+[node name="Shadow_107" type="Sprite2D" parent="." unique_id=536173239]
+position = Vector2(347, 26)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@86,1"
+metadata/visible_root = Vector2(347, 30)
+
+[node name="Shadow_108" type="Sprite2D" parent="." unique_id=560450504]
+position = Vector2(125.5, 18)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@31,-1"
+metadata/visible_root = Vector2(125.5, 22)
+
+[node name="Shadow_109" type="Sprite2D" parent="." unique_id=228677049]
+position = Vector2(375, 22)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@93,0"
+metadata/visible_root = Vector2(375, 26)
+
+[node name="Shadow_110" type="Sprite2D" parent="." unique_id=214810783]
+position = Vector2(474, 47)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@118,6"
+metadata/visible_root = Vector2(474, 50)
+
+[node name="Shadow_111" type="Sprite2D" parent="." unique_id=1524116963]
+position = Vector2(490, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@122,-3"
+metadata/visible_root = Vector2(490, 13)
+
+[node name="Shadow_112" type="Sprite2D" parent="." unique_id=1142798194]
+position = Vector2(591, 6)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@147,-4"
+metadata/visible_root = Vector2(591, 10)
+
+[node name="Shadow_113" type="Sprite2D" parent="." unique_id=1483164424]
+position = Vector2(637, 27)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@159,1"
+metadata/visible_root = Vector2(637, 30)
+
+[node name="Shadow_114" type="Sprite2D" parent="." unique_id=1604071701]
+position = Vector2(697.5, 38)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@174,4"
+metadata/visible_root = Vector2(697.5, 42)
+
+[node name="Shadow_115" type="Sprite2D" parent="." unique_id=1149298009]
+position = Vector2(850, 34)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@212,3"
+metadata/visible_root = Vector2(850, 37)
+
+[node name="Shadow_116" type="Sprite2D" parent="." unique_id=2009914416]
+position = Vector2(1039, 38)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@259,4"
+metadata/visible_root = Vector2(1039, 42)
+
+[node name="Shadow_117" type="Sprite2D" parent="." unique_id=1586464737]
+position = Vector2(1213, 11)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@303,-3"
+metadata/visible_root = Vector2(1213, 14)
+
+[node name="Shadow_118" type="Sprite2D" parent="." unique_id=1667740782]
+position = Vector2(1602, 10)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@400,-3"
+metadata/visible_root = Vector2(1602, 13)
+
+[node name="Shadow_119" type="Sprite2D" parent="." unique_id=59549301]
+position = Vector2(1483, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@370,-3"
+metadata/visible_root = Vector2(1483, 14)
+
+[node name="Shadow_120" type="Sprite2D" parent="." unique_id=281006963]
+position = Vector2(1417.5, 6)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@354,-4"
+metadata/visible_root = Vector2(1417.5, 10)
+
+[node name="Shadow_121" type="Sprite2D" parent="." unique_id=144462886]
+position = Vector2(1766, 3)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@441,-5"
+metadata/visible_root = Vector2(1766, 6)
+
+[node name="Shadow_122" type="Sprite2D" parent="." unique_id=242886699]
+position = Vector2(1781, 19)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@445,-1"
+metadata/visible_root = Vector2(1781, 22)
+
+[node name="Shadow_123" type="Sprite2D" parent="." unique_id=2032210218]
+position = Vector2(1963, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@490,-3"
+metadata/visible_root = Vector2(1963, 14)
+
+[node name="Shadow_124" type="Sprite2D" parent="." unique_id=1511655866]
+position = Vector2(2067, 10)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@516,-3"
+metadata/visible_root = Vector2(2067, 14)
+
+[node name="Shadow_125" type="Sprite2D" parent="." unique_id=446862509]
+position = Vector2(2397, 27)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@599,1"
+metadata/visible_root = Vector2(2397, 30)
+
+[node name="Shadow_126" type="Sprite2D" parent="." unique_id=342230655]
+position = Vector2(163, 202)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@40,45"
+metadata/visible_root = Vector2(163, 206)
+
+[node name="Shadow_127" type="Sprite2D" parent="." unique_id=1726892579]
+position = Vector2(474, 202)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@118,45"
+metadata/visible_root = Vector2(474, 205)
+
+[node name="Shadow_128" type="Sprite2D" parent="." unique_id=1069147121]
+position = Vector2(907, 266)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@226,61"
+metadata/visible_root = Vector2(907, 270)
+
+[node name="Shadow_129" type="Sprite2D" parent="." unique_id=1105695870]
+position = Vector2(53, 1043)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@13,255"
+metadata/visible_root = Vector2(53, 1046)
+
+[node name="Shadow_130" type="Sprite2D" parent="." unique_id=1968652688]
+position = Vector2(145, 1503)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@36,370"
+metadata/visible_root = Vector2(145, 1506)
+
+[node name="Shadow_131" type="Sprite2D" parent="." unique_id=216357394]
+position = Vector2(658, 1543)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@164,380"
+metadata/visible_root = Vector2(658, 1546)
+
+[node name="Shadow_132" type="Sprite2D" parent="." unique_id=1936204538]
+position = Vector2(941.5, 1466)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@235,361"
+metadata/visible_root = Vector2(941.5, 1470)
+
+[node name="Shadow_133" type="Sprite2D" parent="." unique_id=1447123480]
+position = Vector2(1378, 1490)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@344,367"
+metadata/visible_root = Vector2(1378, 1493)
+
+[node name="Shadow_134" type="Sprite2D" parent="." unique_id=971156822]
+position = Vector2(1730, 1530)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@432,377"
+metadata/visible_root = Vector2(1730, 1533)
+
+[node name="Shadow_135" type="Sprite2D" parent="." unique_id=266250615]
+position = Vector2(2326, 1494)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@581,368"
+metadata/visible_root = Vector2(2326, 1497)
+
+[node name="Shadow_136" type="Sprite2D" parent="." unique_id=887335598]
+position = Vector2(2433, 1431)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@608,352"
+metadata/visible_root = Vector2(2433, 1434)
+
+[node name="Shadow_137" type="Sprite2D" parent="." unique_id=141553064]
+position = Vector2(1954, 906)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@488,221"
+metadata/visible_root = Vector2(1954, 909)
+
+[node name="Shadow_138" type="Sprite2D" parent="." unique_id=1066416910]
+position = Vector2(1894, 854)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@473,208"
+metadata/visible_root = Vector2(1894, 857)
+
+[node name="Shadow_139" type="Sprite2D" parent="." unique_id=888097080]
+position = Vector2(1870, 555)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@467,133"
+metadata/visible_root = Vector2(1870, 558)
+
+[node name="Shadow_140" type="Sprite2D" parent="." unique_id=1432549906]
+position = Vector2(1589.5, 610)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@397,147"
+metadata/visible_root = Vector2(1589.5, 614)
+
+[node name="Shadow_141" type="Sprite2D" parent="." unique_id=99882621]
+position = Vector2(1123, 618)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@280,149"
+metadata/visible_root = Vector2(1123, 622)
+
+[node name="Shadow_142" type="Sprite2D" parent="." unique_id=700287941]
+position = Vector2(1354, 834)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@338,203"
+metadata/visible_root = Vector2(1354, 837)
+
+[node name="Shadow_143" type="Sprite2D" parent="." unique_id=929371006]
+position = Vector2(1058, 855)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@264,208"
+metadata/visible_root = Vector2(1058, 858)
+
+[node name="Shadow_144" type="Sprite2D" parent="." unique_id=1354404114]
+position = Vector2(1093.5, 530)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@273,127"
+metadata/visible_root = Vector2(1093.5, 534)
+
+[node name="Shadow_145" type="Sprite2D" parent="." unique_id=2045477529]
+position = Vector2(1257, 311)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@314,72"
+metadata/visible_root = Vector2(1257, 314)
+
+[node name="Shadow_146" type="Sprite2D" parent="." unique_id=746029827]
+position = Vector2(1137, 311)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@284,72"
+metadata/visible_root = Vector2(1137, 314)
+
+[node name="Shadow_147" type="Sprite2D" parent="." unique_id=1940181825]
+position = Vector2(1890, 167)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@472,36"
+metadata/visible_root = Vector2(1890, 170)
+
+[node name="Shadow_148" type="Sprite2D" parent="." unique_id=759401931]
+position = Vector2(1961.5, 62)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@490,10"
+metadata/visible_root = Vector2(1961.5, 66)
+
+[node name="Shadow_149" type="Sprite2D" parent="." unique_id=2079621793]
+position = Vector2(2162, 63)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@540,10"
+metadata/visible_root = Vector2(2162, 66)
+
+[node name="Shadow_150" type="Sprite2D" parent="." unique_id=855832270]
+position = Vector2(2402, 106)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@600,21"
+metadata/visible_root = Vector2(2402, 109)
+
+[node name="Shadow_151" type="Sprite2D" parent="." unique_id=1161949474]
+position = Vector2(1669, 75)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@417,13"
+metadata/visible_root = Vector2(1669, 78)
+
+[node name="Shadow_152" type="Sprite2D" parent="." unique_id=227312086]
+position = Vector2(1045.5, 122)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@261,25"
+metadata/visible_root = Vector2(1045.5, 126)
+
+[node name="Shadow_153" type="Sprite2D" parent="." unique_id=1028306771]
+position = Vector2(630, 91)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@157,17"
+metadata/visible_root = Vector2(630, 94)
+
+[node name="Shadow_154" type="Sprite2D" parent="." unique_id=595874217]
+position = Vector2(242, 114)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@60,23"
+metadata/visible_root = Vector2(242, 117)
+
+[node name="Shadow_155" type="Sprite2D" parent="." unique_id=1894781450]
+position = Vector2(274, 1538)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@68,379"
+metadata/visible_root = Vector2(274, 1541)
+
+[node name="Shadow_156" type="Sprite2D" parent="." unique_id=1457694642]
+position = Vector2(491, 1474)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@122,363"
+metadata/visible_root = Vector2(491, 1478)
+
+[node name="Shadow_157" type="Sprite2D" parent="." unique_id=755953174]
+position = Vector2(906, 1519)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@226,374"
+metadata/visible_root = Vector2(906, 1522)
+
+[node name="Shadow_158" type="Sprite2D" parent="." unique_id=1044087532]
+position = Vector2(1186, 1530)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@296,377"
+metadata/visible_root = Vector2(1186, 1533)
+
+[node name="Shadow_159" type="Sprite2D" parent="." unique_id=2090671958]
+position = Vector2(1553.5, 1502)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@388,370"
+metadata/visible_root = Vector2(1553.5, 1506)
+
+[node name="Shadow_160" type="Sprite2D" parent="." unique_id=1751011778]
+position = Vector2(1503, 1566)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@375,386"
+metadata/visible_root = Vector2(1503, 1570)
+
+[node name="Shadow_161" type="Sprite2D" parent="." unique_id=1690197306]
+position = Vector2(2198, 1443)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@549,355"
+metadata/visible_root = Vector2(2198, 1446)
+
+[node name="Shadow_162" type="Sprite2D" parent="." unique_id=1931506044]
+position = Vector2(1887, 646)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@471,156"
+metadata/visible_root = Vector2(1887, 650)
+
+[node name="Shadow_163" type="Sprite2D" parent="." unique_id=676709721]
+position = Vector2(1915, 202)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@478,45"
+metadata/visible_root = Vector2(1915, 206)
+
+[node name="Shadow_164" type="Sprite2D" parent="." unique_id=911210208]
+position = Vector2(2074, 119)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@518,24"
+metadata/visible_root = Vector2(2074, 122)
+
+[node name="Shadow_165" type="Sprite2D" parent="." unique_id=880665005]
+position = Vector2(1558, 142)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@389,30"
+metadata/visible_root = Vector2(1558, 145)
+
+[node name="Shadow_166" type="Sprite2D" parent="." unique_id=114503998]
+position = Vector2(866, 146)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@216,31"
+metadata/visible_root = Vector2(866, 149)
+
+[node name="Shadow_167" type="Sprite2D" parent="." unique_id=1771412141]
+position = Vector2(597.5, 154)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@149,33"
+metadata/visible_root = Vector2(597.5, 158)
+
+[node name="Shadow_168" type="Sprite2D" parent="." unique_id=1036825303]
+position = Vector2(314, 130)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@78,27"
+metadata/visible_root = Vector2(314, 133)
+
+[node name="Shadow_169" type="Sprite2D" parent="." unique_id=51695296]
+position = Vector2(250, 199)
+scale = Vector2(0.9, 0.9166667)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@62,44"
+metadata/visible_root = Vector2(250, 202)
+
+[node name="Shadow_170" type="Sprite2D" parent="." unique_id=888412107]
+position = Vector2(1314, 1554)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@328,383"
+metadata/visible_root = Vector2(1314, 1557)
+
+[node name="Shadow_171" type="Sprite2D" parent="." unique_id=1518933189]
+position = Vector2(494, 1558)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@123,384"
+metadata/visible_root = Vector2(494, 1561)
+
+[node name="Shadow_172" type="Sprite2D" parent="." unique_id=1877784791]
+position = Vector2(97.5, 1518)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@24,374"
+metadata/visible_root = Vector2(97.5, 1522)
+
+[node name="Shadow_173" type="Sprite2D" parent="." unique_id=90616494]
+position = Vector2(2031, 1582)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@507,390"
+metadata/visible_root = Vector2(2031, 1586)
+
+[node name="Shadow_174" type="Sprite2D" parent="." unique_id=731844807]
+position = Vector2(2002, 1570)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@500,387"
+metadata/visible_root = Vector2(2002, 1573)
+
+[node name="Shadow_175" type="Sprite2D" parent="." unique_id=1919742685]
+position = Vector2(2059, 1370)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@514,337"
+metadata/visible_root = Vector2(2059, 1374)
+
+[node name="Shadow_176" type="Sprite2D" parent="." unique_id=495515754]
+position = Vector2(2339, 1386)
+scale = Vector2(1.05, 1.0833334)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@584,341"
+metadata/visible_root = Vector2(2339, 1390)
+
+[node name="Shadow_177" type="Sprite2D" parent="." unique_id=1158743773]
+position = Vector2(558, 226)
+texture = ExtResource("1_4uidv")
+metadata/tree_anchor = "Tree@139,51"
+metadata/visible_root = Vector2(558, 229)

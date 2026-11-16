@@ -1,0 +1,70 @@
+{
+  "new_collision_shapes": 0,
+  "patches": [
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 16.0,
+        "water": 496.0
+      },
+      "name": "NortheastTurf",
+      "style": "turf",
+      "tiles": 92
+    },
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 794.380249023438,
+        "water": 96.0
+      },
+      "name": "StorageSouthEarth",
+      "style": "earth",
+      "tiles": 84
+    },
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 97.3242034912109,
+        "water": 32.0
+      },
+      "name": "PondWestTurf",
+      "style": "turf",
+      "tiles": 59
+    },
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 16.0,
+        "water": 304.420776367188
+      },
+      "name": "FountainNorthwestEarth",
+      "style": "earth",
+      "tiles": 24
+    },
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 1282.49755859375,
+        "water": 32.0
+      },
+      "name": "SouthwestRiverTurf",
+      "style": "turf",
+      "tiles": 21
+    },
+    {
+      "clearance_pixels": {
+        "paths": 32.0,
+        "plaza": 32.0,
+        "water": 288.0
+      },
+      "name": "CampsiteEastTurf",
+      "style": "turf",
+      "tiles": 56
+    }
+  ],
+  "runtime_scripts": 0,
+  "styles": {
+    "earth": 2,
+    "turf": 4
+  }
+}
