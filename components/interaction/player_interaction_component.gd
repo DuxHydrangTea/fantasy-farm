@@ -54,6 +54,12 @@ func _physics_process(delta: float) -> void:
 ## Chọn mục tiêu cần hiển thị và cập nhật presenter, ẩn mục tiêu khi mở menu.
 func refresh() -> void:
 	focused = null if player.selection.is_menu_open() else pending if pending != null and pending.valid() else resolver.resolve()
+	var world: FarmWorld = player.get_parent() as FarmWorld
+	if world != null and world.trees != null and is_instance_valid(world.trees.plot_display):
+		if focused != null and focused.kind == InteractionTarget.Kind.TREE_PLOT:
+			world.trees.plot_display.set_focused_plot(focused.cell, focused.tree_kind)
+		else:
+			world.trees.plot_display.set_focused_plot(Vector2i(-1, -1), -1)
 	presenter.show_target(focused, pending != null and player.state.navigation.is_navigating, _feedback if Time.get_ticks_msec() < _feedback_until else "")
 
 ## Hủy điều hướng và thực hiện mục tiêu có thể chạm tới theo hướng nhìn.
@@ -75,7 +81,7 @@ func click(point: Vector2) -> bool:
 		player.state.navigation.cancel()
 		player.animation.face(target.point() - player.global_position)
 		execute(target)
-	elif pending != null and pending.node == target.node and pending.kind == target.kind:
+	elif pending != null and pending.same_target(target):
 		# Click dồn cùng đối tượng giữ đường tiếp cận hiện có; tick sẽ theo đích di động.
 		pending = target
 		refresh()
@@ -123,6 +129,15 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 	if player.selection.is_menu_open() or player.state.current_state in [StateComponent.State.TOOL,StateComponent.State.WATER] or not target.reachable_from(player.global_position):
 		return false
 	match target.kind:
+		InteractionTarget.Kind.TREE_PLOT:
+			var display: TreePlotDisplay = target.node as TreePlotDisplay
+			var plantation: TreePlantation = display.plantation if display != null else null
+			if plantation == null:
+				return false
+			if plantation.is_plot_unlocked(target.cell, target.tree_kind):
+				return plantation.world.tree_plant_menu.open_plot(target.cell, target.tree_kind)
+			var board: TreePlotBoard = plantation.plot_boards.get(target.tree_kind) as TreePlotBoard
+			return board.open_menu(player) if board != null else false
 		InteractionTarget.Kind.TREE_PLOT_BOARD:
 			return (target.node as TreePlotBoard).open_board(player)
 		InteractionTarget.Kind.PEN_BOARD:

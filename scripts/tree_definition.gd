@@ -10,6 +10,8 @@ enum Kind { FRUIT, TIMBER }
 @export var display_name: String
 ## Nhóm cây quyết định các tài nguyên cần thiết.
 @export var kind: Kind = Kind.FRUIT
+## Giá mua cây trực tiếp tại ô đất, tính bằng xu.
+@export_range(1, 1000000) var price: int = 25000
 ## Thời gian sinh trưởng tính bằng giây.
 @export var growth_seconds: float = 180.0
 ## Thời gian giữa các chu kỳ tạo quả, tính bằng giây.
@@ -52,4 +54,4 @@ func planting_item() -> ItemDefinition:
 ## Kiểm tra mã, các thời gian và số lần thao tác dương, sản phẩm và ảnh cần thiết.
 ## Cây lấy gỗ còn cần vật phẩm rễ, ảnh gốc và ảnh tán.
 func is_valid() -> bool:
-	return not tree_id.is_empty() and growth_seconds > 0.0 and fruit_cycle_seconds > 0.0 and stump_seconds > 0.0 and chop_hits > 0 and dig_hits > 0 and harvest_amount > 0 and harvest_item != null and stage_textures.size() == 3 and not stage_textures.has(null) and ready_texture != null and (kind == Kind.FRUIT or (root_item != null and stump_texture != null and canopy_texture != null))
+	return not tree_id.is_empty() and price > 0 and growth_seconds > 0.0 and fruit_cycle_seconds > 0.0 and stump_seconds > 0.0 and chop_hits > 0 and dig_hits > 0 and harvest_amount > 0 and harvest_item != null and stage_textures.size() == 3 and not stage_textures.has(null) and ready_texture != null and (kind == Kind.FRUIT or (root_item != null and stump_texture != null and canopy_texture != null))

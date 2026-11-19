@@ -38,3 +38,9 @@ func open_board(customer: FarmPlayer) -> bool:
 	if customer != world.player or not is_visible_in_tree() or customer.global_position.distance_to(global_position) > 32:
 		return false
 	return menu.open(null, customer)
+
+## Mở trực tiếp menu nâng cấp khu cây cho người chơi (dùng khi tương tác ô chưa mở khóa).
+func open_menu(customer: FarmPlayer) -> bool:
+	if customer != world.player or not is_visible_in_tree():
+		return false
+	return menu.open(null, customer)

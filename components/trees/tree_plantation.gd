@@ -20,6 +20,10 @@ var definitions: Dictionary[StringName, TreeDefinition] = {}
 var _placing: bool = false
 ## Ánh xạ ô công cụ tại vị trí hiển thị sang cây gỗ.
 var tool_cells: Dictionary[Vector2i, TimberTree] = {}
+## Hiển thị ô trồng cây trên đất.
+var plot_display: TreePlotDisplay
+## Hai bảng mở rộng đất trồng theo loại cây.
+var plot_boards: Dictionary[TreeDefinition.Kind, TreePlotBoard] = {}
 
 func _ready() -> void:
 	# Khu đất mới nằm dưới giới hạn camera cũ (1080), mở cả vùng đi lại/click.
@@ -84,13 +88,97 @@ func in_region(point: Vector2) -> bool:
 	var cell: Vector2i = cell_for(point)
 	return FRUIT_REGION.has_point(cell) or TIMBER_REGION.has_point(cell)
 
-## Kiểm tra định nghĩa, ô hợp lệ đã mở, đất và tùy chọn va chạm tại vị trí trồng.
-func can_place(cell: Vector2i, definition: TreeDefinition, check_physics: bool = true) -> bool:
-	if definition == null or not definition.is_valid() or not valid_cell(cell, definition.kind) or trees.has(cell) or world.tree_plot_upgrades == null or not TreePlotUpgradeState.allows(world.tree_plot_upgrades.state.capture(), cell, definition.kind):
+## Trả hình chữ nhật nhận nhấp chuột quanh tâm ô trồng cây.
+static func plot_hit_rect(center: Vector2) -> Rect2:
+	return Rect2(center - Vector2(12.0, 10.0), Vector2(24.0, 18.0))
+
+## Trả vùng chân thân cây quanh tâm ô để nhân vật đứng bên ngoài khi mua trồng.
+static func plot_footprint_rect(center: Vector2) -> Rect2:
+	return Rect2(center + Vector2(-16.0, -10.0), Vector2(32.0, 16.0))
+
+## Kiểm tra mặt đất hợp lệ tại vị trí trồng của ô.
+func has_ground(cell: Vector2i) -> bool:
+	if world == null or world.farming == null or world.farming.ground == null:
 		return false
 	var point: Vector2 = point_for(cell)
 	var ground: TileMapLayer = world.farming.ground
-	if ground.get_cell_source_id(ground.local_to_map(ground.to_local(point))) < 0:
+	return ground.get_cell_source_id(ground.local_to_map(ground.to_local(point))) >= 0
+
+## Kiểm tra ô thuộc loại cây đã được mở khóa hay chưa.
+func is_plot_unlocked(cell: Vector2i, kind: TreeDefinition.Kind) -> bool:
+	return world != null and world.tree_plot_upgrades != null and TreePlotUpgradeState.allows(world.tree_plot_upgrades.state.capture(), cell, kind)
+
+## Trả danh sách định nghĩa cây hợp lệ theo loại, sắp xếp ổn định cho menu chọn cây.
+func definitions_for(kind: TreeDefinition.Kind) -> Array[TreeDefinition]:
+	var result: Array[TreeDefinition] = []
+	for definition: TreeDefinition in definitions.values():
+		if definition != null and definition.is_valid() and definition.kind == kind:
+			result.append(definition)
+	if kind == TreeDefinition.Kind.FRUIT:
+		result.sort_custom(func(a: TreeDefinition, b: TreeDefinition) -> bool:
+			return a.price < b.price if a.price != b.price else String(a.tree_id) < String(b.tree_id))
+	else:
+		var primary: Array[StringName] = [&"oak", &"birch", &"spruce"]
+		result.sort_custom(func(a: TreeDefinition, b: TreeDefinition) -> bool:
+			var ia: int = primary.find(a.tree_id)
+			var ib: int = primary.find(b.tree_id)
+			if ia != -1 or ib != -1:
+				return ia != -1 and (ib == -1 or ia < ib)
+			return String(a.tree_id) < String(b.tree_id))
+	return result
+
+func _any_trade_busy() -> bool:
+	if is_busy():
+		return true
+	if world == null:
+		return false
+	return (world.tree_plot_upgrades != null and world.tree_plot_upgrades.state.is_busy()) \
+		or (world.pen_upgrades != null and world.pen_upgrades.state.is_busy()) \
+		or (world.tool_upgrade_state != null and world.tool_upgrade_state.is_busy()) \
+		or (world.storages != null and world.storages.busy) \
+		or (world.wood_market != null and world.wood_market.busy) \
+		or (world.workers != null and world.workers.busy)
+
+## Kiểm tra điều kiện mua và trồng cây trực tiếp tại ô đất đã chọn.
+func quote_buy(cell: Vector2i, definition: TreeDefinition, wallet: WalletComponent) -> Dictionary:
+	if definition == null or not definition.is_valid() or wallet == null:
+		return {"ok": false, "error": "This plot is no longer available."}
+	if _any_trade_busy():
+		return {"ok": false, "error": "A trade is in progress."}
+	if not valid_cell(cell, definition.kind) or trees.has(cell) or not is_plot_unlocked(cell, definition.kind) or not has_ground(cell):
+		return {"ok": false, "error": "This plot is no longer available."}
+	if not can_place(cell, definition, true):
+		return {"ok": false, "error": "This plot is blocked."}
+	if wallet.balance < definition.price:
+		return {"ok": false, "error": "Not enough coins.", "price": definition.price}
+	return {"ok": true, "price": definition.price}
+
+## Trừ xu và trồng cây trực tiếp lên ô đất trong một giao dịch nguyên tử.
+func purchase_and_plant(cell: Vector2i, definition: TreeDefinition, wallet: WalletComponent, now: float) -> Dictionary:
+	var checked: Dictionary = quote_buy(cell, definition, wallet)
+	if not checked.ok:
+		return checked
+	_placing = true
+	var previous: int = wallet.balance
+	if not wallet.set_balance(previous - definition.price, false):
+		_placing = false
+		return {"ok": false, "error": "Unable to spend coins."}
+	advance(now)
+	var tree: PerennialTree = create_tree(cell, definition, now)
+	if tree == null:
+		wallet.set_balance(previous, false)
+		_placing = false
+		return {"ok": false, "error": "This plot is no longer available."}
+	wallet.changed.emit(wallet.balance)
+	_placing = false
+	return {"ok": true, "tree": tree, "price": definition.price}
+
+## Kiểm tra định nghĩa, ô hợp lệ đã mở, đất và tùy chọn va chạm tại vị trí trồng.
+func can_place(cell: Vector2i, definition: TreeDefinition, check_physics: bool = true) -> bool:
+	if definition == null or not definition.is_valid() or not valid_cell(cell, definition.kind) or trees.has(cell) or not is_plot_unlocked(cell, definition.kind):
+		return false
+	var point: Vector2 = point_for(cell)
+	if not has_ground(cell):
 		return false
 	if check_physics:
 		var shape: RectangleShape2D = RectangleShape2D.new()
@@ -137,6 +225,8 @@ func create_tree(cell: Vector2i, definition: TreeDefinition, now: float) -> Pere
 		tool_cells[world.farming.world_to_cell(tree.global_position)] = tree as TimberTree
 	world.farming.set_cell_occupied(cell, true)
 	world.player.state.navigation.invalidate_cache()
+	if is_instance_valid(plot_display):
+		plot_display.queue_redraw()
 	return tree
 
 ## Bỏ cây khỏi chỉ mục và ô chiếm, đồng thời vô hiệu cache điều hướng.
@@ -146,6 +236,8 @@ func remove_tree(tree: PerennialTree) -> void:
 	trees.erase(tree.cell)
 	world.farming.set_cell_occupied(tree.cell, false)
 	world.player.state.navigation.invalidate_cache()
+	if is_instance_valid(plot_display):
+		plot_display.queue_redraw()
 
 ## Tạo đống vật phẩm tại vị trí toàn cục với hiệu ứng nảy ngắn.
 func drop_item(item: ItemDefinition, count: int, point: Vector2) -> void:
@@ -218,12 +310,12 @@ func tool_target(cell: Vector2i) -> TimberTree:
 	var tree: TimberTree = tool_cells.get(cell) as TimberTree
 	return tree if is_instance_valid(tree) and not tree.removed else null
 
-## Kiểm tra có thể đào gốc hoặc nhổ cây gỗ non tại ô bằng inventory đã cho.
+## Kiểm tra có thể đào gốc hoặc nhổ cây gỗ non tại ô.
 func can_dig(cell: Vector2i, bag: InventoryComponent) -> bool:
 	var tree: TimberTree = tool_target(cell)
 	if tree == null or tree._busy or bag == null:
 		return false
-	return tree.stump or (not tree.is_mature() and bag.capacity_for(tree.definition.planting_item()) > 0)
+	return tree.stump or not tree.is_mature()
 
 ## Cho biết đang đặt cây hoặc một cây đang thực hiện giao dịch.
 func is_busy() -> bool:
@@ -239,7 +331,9 @@ func setup_plot_upgrades() -> void:
 	var display: TreePlotDisplay = TreePlotDisplay.new()
 	display.plantation = self
 	display.name = "TreePlotMarkers"
+	plot_display = display
 	world.add_child(display)
+	plot_boards.clear()
 	for kind: TreeDefinition.Kind in [TreeDefinition.Kind.FRUIT, TreeDefinition.Kind.TIMBER]:
 		var board: TreePlotBoard = TreePlotBoard.new()
 		board.world = world
@@ -248,4 +342,5 @@ func setup_plot_upgrades() -> void:
 		var region: Rect2i = region_for(kind)
 		var cell: Vector2i = Vector2i(region.position.x + 4, region.end.y + 1)
 		board.position = world.to_local(world.farming.farmland.to_global(world.farming.farmland.map_to_local(cell)))
+		plot_boards[kind] = board
 		world.add_child(board)

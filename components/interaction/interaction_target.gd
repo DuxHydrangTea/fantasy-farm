@@ -4,7 +4,7 @@ extends RefCounted
 ## Loại mục tiêu quyết định kiểm tra, vị trí và nhãn hành động.
 
 ## Các loại mục tiêu được bộ phân giải hỗ trợ.
-enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE, ORDER_BOARD, PEN_BOARD, TREE_PLOT_BOARD }
+enum Kind { MERCHANT, LAND, TROUGH, ANIMAL, CROP, FLOWER, BEEHIVE, TREE, ORDER_BOARD, PEN_BOARD, TREE_PLOT_BOARD, TREE_PLOT }
 ## Node mục tiêu.
 var node: Node2D
 ## Loại mục tiêu xác định cách tương tác.
@@ -13,11 +13,30 @@ var kind: Kind
 var player: FarmPlayer
 ## Sản phẩm được chọn trên điểm thu chuồng, nếu có.
 var product: ItemDefinition
+## Ô đất của mục tiêu TREE_PLOT.
+var cell: Vector2i = Vector2i.ZERO
+## Loại khu cây của mục tiêu TREE_PLOT.
+var tree_kind: TreeDefinition.Kind = TreeDefinition.Kind.FRUIT
 
 func _init(target: Node2D, type: Kind, customer: FarmPlayer) -> void:
 	node = target
 	kind = type
 	player = customer
+
+## Tạo mục tiêu cho ô trồng cây lâu năm theo tọa độ ô và loại khu cây.
+static func for_tree_plot(display: TreePlotDisplay, plot_cell: Vector2i, plot_kind: TreeDefinition.Kind, customer: FarmPlayer) -> InteractionTarget:
+	var target: InteractionTarget = InteractionTarget.new(display, Kind.TREE_PLOT, customer)
+	target.cell = plot_cell
+	target.tree_kind = plot_kind
+	return target
+
+## So sánh hai mục tiêu có trỏ tới cùng đối tượng hoặc cùng ô đất hay không.
+func same_target(other: InteractionTarget) -> bool:
+	return other != null and node == other.node and kind == other.kind and (kind != Kind.TREE_PLOT or (cell == other.cell and tree_kind == other.tree_kind))
+
+## Cho biết ô trồng cây có đang ở trạng thái đã mở khóa hay không.
+func is_plot_unlocked() -> bool:
+	return node is TreePlotDisplay and (node as TreePlotDisplay).plantation != null and (node as TreePlotDisplay).plantation.is_plot_unlocked(cell, tree_kind)
 
 ## Kiểm tra node còn tồn tại, hiển thị và đủ điều kiện riêng theo loại.
 func valid() -> bool:
@@ -37,18 +56,24 @@ func valid() -> bool:
 			return (node as FlowerPot).is_mature()
 		Kind.TREE:
 			return not (node as PerennialTree).removed
+		Kind.TREE_PLOT:
+			var display: TreePlotDisplay = node as TreePlotDisplay
+			var plantation: TreePlantation = display.plantation if display != null else null
+			return plantation != null and TreePlantation.valid_cell(cell, tree_kind) and not plantation.trees.has(cell) and plantation.has_ground(cell)
 	return true
 
 ## Trả thứ tự ưu tiên khi nhiều mục tiêu cùng khả dụng; số nhỏ được chọn trước.
 func priority() -> int:
-	return 0 if kind in [Kind.MERCHANT, Kind.LAND, Kind.ORDER_BOARD, Kind.PEN_BOARD, Kind.TREE_PLOT_BOARD] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3
+	return 0 if kind in [Kind.MERCHANT, Kind.LAND, Kind.ORDER_BOARD, Kind.PEN_BOARD, Kind.TREE_PLOT_BOARD] else 1 if kind in [Kind.TROUGH,Kind.BEEHIVE] else 2 if kind == Kind.ANIMAL else 3 if kind != Kind.TREE_PLOT else 4
 
 ## Khoảng cách tương tác tối đa theo loại mục tiêu.
 func reach() -> float:
-	return 48.0 if kind == Kind.MERCHANT else 30.0 if kind == Kind.TROUGH else 20.0 if kind == Kind.CROP else 28.0 if kind == Kind.FLOWER else 32.0
+	return 48.0 if kind == Kind.MERCHANT else 36.0 if kind == Kind.TREE_PLOT else 30.0 if kind == Kind.TROUGH else 20.0 if kind == Kind.CROP else 28.0 if kind == Kind.FLOWER else 32.0
 
 ## Tọa độ toàn cục dùng làm điểm tương tác, có xử lý riêng cho cây trồng.
 func point() -> Vector2:
+	if kind == Kind.TREE_PLOT:
+		return (node as TreePlotDisplay).plantation.point_for(cell)
 	if kind == Kind.MERCHANT:
 		return (node as ShopMerchant).interaction_position()
 	if kind == Kind.LAND:
@@ -83,6 +108,8 @@ func reachable_from(position: Vector2, facing: bool = false) -> bool:
 	if node is FarmStorageAccess:
 		return (node as FarmStorageAccess).can_reach(player)
 	if position.distance_to(point()) > reach():
+		return false
+	if kind == Kind.TREE_PLOT and is_plot_unlocked() and TreePlantation.plot_footprint_rect(point()).has_point(position):
 		return false
 	var offset: Vector2 = point() - position
 	if facing and not offset.is_zero_approx() and offset.normalized().dot(player.animation.facing_vector) < 0.35:
@@ -136,4 +163,8 @@ func action_text() -> String:
 			return action + (" · " + tr("Fertile soil: {amount} produce").format({"amount":farm.harvest_amount(cell)}) if farm.fertility.is_fertile(cell) else "")
 		Kind.FLOWER: return tr("Harvest flowers")
 		Kind.TREE: return (node as PerennialTree).action_text(player.selection.get_selected_item())
+		Kind.TREE_PLOT:
+			if not is_plot_unlocked():
+				return tr("Unlock tree plots")
+			return tr("Plant fruit tree") if tree_kind == TreeDefinition.Kind.FRUIT else tr("Plant timber tree")
 	return ""

@@ -79,17 +79,12 @@ func harvest(bag: InventoryComponent) -> bool:
 	_busy = false
 	return true
 
-## Bỏ cây và trả một cây giống vào túi nếu còn đủ chỗ.
-func uproot(bag: InventoryComponent) -> bool:
-	if _busy or removed or bag == null:
-		return false
-	var sapling: ItemDefinition = definition.planting_item()
-	if bag.capacity_for(sapling) < 1:
-		bag.report_capacity_blocked(sapling, 1)
+## Nhổ bỏ cây ăn quả mà không hoàn lại cây giống.
+func uproot(_bag: InventoryComponent = null) -> bool:
+	if _busy or removed:
 		return false
 	_busy = true
 	retire()
-	bag.add(sapling, 1)
 	_busy = false
 	return true
 
@@ -103,7 +98,7 @@ func action_text(item: ItemDefinition) -> String:
 	if is_mature():
 		return tr("Manage fruit tree") + (" · " + tr("Choose a graft direction") if active_graft == Graft.NONE and pending_graft == Graft.NONE else "")
 	if item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.HOE:
-		return tr("Uproot tree (return sapling)")
+		return tr("Uproot tree")
 	if can_water():
 		return tr("Water sapling to start growth")
 	return tr("Harvest fruit") if has_fruit() else tr("{tree} · growing").format({"tree": tr(definition.display_name)})

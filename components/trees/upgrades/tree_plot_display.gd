@@ -5,9 +5,21 @@ extends Node2D
 
 ## Plantation cung cấp tọa độ và trạng thái nâng cấp.
 var plantation: TreePlantation
+## Ô trống đang được nhắm tới để hiển thị viền chọn.
+var focused_cell: Vector2i = Vector2i(-1, -1)
+## Loại khu cây của ô đang được nhắm tới.
+var focused_kind: int = -1
 
 func _ready() -> void:
 	plantation.world.tree_plot_upgrades.state.changed.connect(_changed)
+	queue_redraw()
+
+## Cập nhật ô trống đang được chọn nổi bật và chỉ vẽ lại khi thay đổi.
+func set_focused_plot(cell: Vector2i, kind: int) -> void:
+	if focused_cell == cell and focused_kind == kind:
+		return
+	focused_cell = cell
+	focused_kind = kind
 	queue_redraw()
 
 func _changed(_kind: TreeDefinition.Kind) -> void:
@@ -27,3 +39,5 @@ func _draw() -> void:
 				if not unlocked:
 					draw_rect(Rect2(point - Vector2(2, 2), Vector2(4, 4)), color)
 					draw_rect(Rect2(point - Vector2(1, 4), Vector2(2, 3)), color, false, 1)
+				if kind == focused_kind and cell == focused_cell and not plantation.trees.has(cell):
+					draw_rect(Rect2(point - Vector2(9, 5), Vector2(18, 10)), Color(0.98, 0.87, 0.45, 0.95), false, 2)

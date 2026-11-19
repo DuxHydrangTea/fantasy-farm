@@ -19,6 +19,7 @@ var keycap: Label
 var _hotbar: HotbarUI
 var _shown_node: Node2D
 var _shown_kind: int = -1
+var _shown_cell: Vector2i = Vector2i(-1, -1)
 var _entrance: Tween
 var _plant_anchor: Vector2
 
@@ -71,6 +72,7 @@ func _ready() -> void:
 func clear() -> void:
 	_shown_node = null
 	_shown_kind = -1
+	_shown_cell = Vector2i(-1, -1)
 	if _entrance != null and _entrance.is_valid():
 		_entrance.kill()
 	_entrance = null
@@ -93,7 +95,7 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		_range.show()
 	var sprite: Node2D = target.sprite()
 	var texture: Texture2D = resolver.texture(sprite)
-	if sprite == null or texture == null:
+	if target.kind != InteractionTarget.Kind.TREE_PLOT and (sprite == null or texture == null):
 		clear()
 		return
 	var action: String = target.action_text()
@@ -108,9 +110,11 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 		text_width = maxf(text_width,font.get_string_size(line,HORIZONTAL_ALIGNMENT_LEFT,-1,18).x + 2)
 	label.custom_minimum_size.x = minf(root.size.x - 100.0, minf(text_width,360.0))
 	badge.reset_size()
-	var new_target: bool = not badge.visible or _shown_node != target.node or _shown_kind != target.kind
+	var new_target: bool = not badge.visible or _shown_node != target.node or _shown_kind != target.kind or (target.kind == InteractionTarget.Kind.TREE_PLOT and _shown_cell != target.cell)
 	var world_anchor: Vector2
-	if target.kind in [InteractionTarget.Kind.CROP, InteractionTarget.Kind.FLOWER] and not new_target:
+	if target.kind == InteractionTarget.Kind.TREE_PLOT:
+		world_anchor = target.point() - Vector2(0, 8)
+	elif target.kind in [InteractionTarget.Kind.CROP, InteractionTarget.Kind.FLOWER] and not new_target:
 		world_anchor = target.node.to_global(_plant_anchor)
 	else:
 		var local_rect: Rect2 = resolver.visual_rect(target)
@@ -135,6 +139,7 @@ func show_target(target: InteractionTarget, walking: bool, feedback: String = ""
 	badge.pivot_offset = Vector2(badge.size.x * 0.5, badge.size.y)
 	_shown_node = target.node
 	_shown_kind = target.kind
+	_shown_cell = target.cell if target.kind == InteractionTarget.Kind.TREE_PLOT else Vector2i(-1, -1)
 	badge.show()
 	if new_target:
 		_animate_entrance()

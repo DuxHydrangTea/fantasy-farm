@@ -31,7 +31,7 @@ func refresh(now: float, fruit_rate: float = 1.0) -> void:
 	super.refresh(now, fruit_rate)
 
 ## Thực hiện một nhát chặt trên cây trưởng thành.
-## Nhát cuối tạo gốc, lên lịch mọc lại và trao gỗ cùng cây giống.
+## Nhát cuối tạo gốc, lên lịch mọc lại và trao gỗ.
 func chop(bag: InventoryComponent) -> bool:
 	if _busy or removed or stump or not is_mature() or bag == null:
 		return false
@@ -47,7 +47,6 @@ func chop(bag: InventoryComponent) -> bool:
 		_fall()
 		update_visual()
 		var accepted: int = _reward(bag, definition.harvest_item, definition.harvest_amount)
-		accepted += _reward(bag, definition.planting_item(), 1)
 		if accepted > 0:
 			bag.changed.emit()
 	_busy = false
@@ -114,7 +113,7 @@ func _fall() -> void:
 
 ## Tạo nhãn thao tác theo trạng thái gốc, trưởng thành và công cụ đang chọn.
 func action_text(_item: ItemDefinition) -> String:
-	return tr("Hoe: dig stump (1 hit)") if stump else tr("Axe: chop tree ({hits}/{total})").format({"hits": hits, "total": definition.chop_hits}) if is_mature() else tr("Uproot tree (return sapling)") if _item != null and _item.tool_type == ItemDefinition.ToolType.HOE else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
+	return tr("Hoe: dig stump (1 hit)") if stump else tr("Axe: chop tree ({hits}/{total})").format({"hits": hits, "total": definition.chop_hits}) if is_mature() else tr("Uproot tree") if _item != null and _item.tool_type == ItemDefinition.ToolType.HOE else tr("{tree} · growing").format({"tree": tr(definition.display_name)})
 
 ## Thêm số nhát, trạng thái gốc và mốc mọc lại vào dữ liệu lưu cơ sở.
 func capture() -> Dictionary:
@@ -130,16 +129,11 @@ func restore_state(row: Dictionary) -> void:
 	regrow_at = float(row.regrow_at)
 	super.restore_state(row)
 
-## Nhổ cây non và trả cây giống nếu túi còn chỗ.
-func uproot(bag: InventoryComponent) -> bool:
-	if _busy or removed or stump or is_mature() or bag == null:
-		return false
-	var sapling: ItemDefinition = definition.planting_item()
-	if bag.capacity_for(sapling) < 1:
-		bag.report_capacity_blocked(sapling, 1)
+## Nhổ bỏ cây non mà không hoàn lại cây giống.
+func uproot(_bag: InventoryComponent = null) -> bool:
+	if _busy or removed or stump or is_mature():
 		return false
 	_busy = true
 	retire()
-	bag.add(sapling, 1)
 	_busy = false
 	return true

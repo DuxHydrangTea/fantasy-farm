@@ -57,17 +57,24 @@ func test_invalid_quantities_or_foreign_offers_cannot_purchase() -> void:
 	assert_false(service.buy(offer, 1).ok)
 	assert_eq(wallet.balance, 1000)
 
-func test_catalog_has_all_seeds_and_feed_once_with_valid_prices() -> void:
+func test_catalog_has_all_seeds_and_feed_once_with_valid_prices_and_no_saplings() -> void:
 	var stock: ShopCatalog = load("res://resources/shops/farm_supply.tres") as ShopCatalog
 	var counts: Array[int] = [0, 0, 0]
 	var ids: Dictionary = {}
 	for entry: ShopOffer in stock.offers:
 		assert_not_null(entry.item.icon)
 		assert_gt(entry.price, 0)
+		assert_false(entry.item.crop is TreeDefinition, "Tree saplings must not be sold in farm_supply")
 		assert_false(ids.has(entry.item.item_id))
 		ids[entry.item.item_id] = true
 		counts[entry.category] += 1
-	assert_eq(counts, [22, 14, 10])
+	assert_eq(counts, [22, 10, 30])
+	var seed_shop: ShopCatalog = load("res://resources/shops/seed_flower_shop.tres") as ShopCatalog
+	for entry: ShopOffer in seed_shop.offers:
+		assert_not_null(entry.item.icon)
+		assert_gt(entry.price, 0)
+		assert_false(entry.item.crop is TreeDefinition, "Tree saplings must not be sold in seed_flower_shop")
+	assert_eq(seed_shop.offers.size(), 26)
 
 func test_wallet_rejects_invalid_bounds_and_credit_overflow() -> void:
 	assert_false(wallet.set_balance(-1))

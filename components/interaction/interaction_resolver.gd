@@ -63,6 +63,31 @@ func _crop_candidates(point: Vector2, hover: bool) -> Array[InteractionTarget]:
 				result.append(InteractionTarget.new(pot, InteractionTarget.Kind.FLOWER, player))
 	return result
 
+func _tree_plot_candidates(origin: Vector2, clicked_mode: bool) -> Array[InteractionTarget]:
+	var result: Array[InteractionTarget] = []
+	if player == null:
+		return result
+	var world: FarmWorld = player.get_parent() as FarmWorld
+	if world == null or world.trees == null or world.trees.plot_display == null:
+		return result
+	var plantation: TreePlantation = world.trees
+	var display: TreePlotDisplay = plantation.plot_display
+	for kind: TreeDefinition.Kind in [TreeDefinition.Kind.FRUIT, TreeDefinition.Kind.TIMBER]:
+		var region: Rect2i = TreePlantation.region_for(kind).grow(4)
+		if not region.has_point(plantation.cell_for(origin)):
+			continue
+		var center_cell: Vector2i = plantation.planting_cell(origin, kind)
+		if clicked_mode:
+			if TreePlantation.valid_cell(center_cell, kind) and not plantation.trees.has(center_cell) and plantation.has_ground(center_cell) and TreePlantation.plot_hit_rect(plantation.point_for(center_cell)).has_point(origin):
+				result.append(InteractionTarget.for_tree_plot(display, center_cell, kind, player))
+		else:
+			for dy: int in [-1, 0, 1]:
+				for dx: int in [-1, 0, 1]:
+					var plot_cell: Vector2i = center_cell + Vector2i(dx * 3, dy * 3)
+					if TreePlantation.valid_cell(plot_cell, kind) and not plantation.trees.has(plot_cell) and plantation.has_ground(plot_cell):
+						result.append(InteractionTarget.for_tree_plot(display, plot_cell, kind, player))
+	return result
+
 ## Chọn mục tiêu trong tầm và hướng nhìn cho phím tương tác, hoặc null.
 ## Bổ sung cây trồng và chậu hoa quanh ô đang được nhắm.
 func resolve() -> InteractionTarget:
@@ -72,6 +97,7 @@ func resolve() -> InteractionTarget:
 	if farm != null:
 		point = farm.farmland.to_global(farm.farmland.map_to_local(player.farming_actions.get_focused_cell()))
 	options.append_array(_crop_candidates(point, false))
+	options.append_array(_tree_plot_candidates(player.global_position, false))
 	var best: InteractionTarget
 	for candidate: InteractionTarget in options:
 		if candidate.reachable_from(player.global_position, true) and _better(candidate,best,player.global_position):
@@ -83,6 +109,7 @@ func resolve() -> InteractionTarget:
 func clicked(point: Vector2) -> InteractionTarget:
 	var options: Array[InteractionTarget] = candidates()
 	options.append_array(_crop_candidates(point, true))
+	options.append_array(_tree_plot_candidates(point, true))
 	var best: InteractionTarget
 	for candidate: InteractionTarget in options:
 		if not candidate.valid():
@@ -142,5 +169,7 @@ func visual_rect(target: InteractionTarget) -> Rect2:
 
 ## Kiểm tra điểm toàn cục nằm trong vùng hình ảnh mục tiêu, có đệm hai đơn vị.
 func hit(target: InteractionTarget, point: Vector2) -> bool:
+	if target.kind == InteractionTarget.Kind.TREE_PLOT:
+		return TreePlantation.plot_hit_rect(target.point()).has_point(point)
 	var visual: Node2D = target.sprite()
 	return is_instance_valid(visual) and visual_rect(target).grow(2.0).has_point(visual.to_local(point))
