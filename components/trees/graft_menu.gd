@@ -233,7 +233,7 @@ func _choose(direction: int, expected_revision: int = -1) -> void:
 		Sound.play(&"graft_tree")
 		_message = "Graft scheduled for the next crop."
 		_clear_review()
-		_save.call_deferred()
+		world.grafting.save_changes.call_deferred()
 	_refresh()
 
 func _collect() -> void:
@@ -244,13 +244,8 @@ func _collect() -> void:
 	if _message.is_empty():
 		_message = "Fruit harvested."
 		_clear_review()
-		_save.call_deferred()
+		world.grafting.save_changes.call_deferred()
 	_refresh()
-
-func _save() -> void:
-	var manager: GameSaveManager = get_node_or_null("/root/SaveManager") as GameSaveManager
-	if manager != null and manager.adapter != null and manager.adapter.world == world and manager.writes_enabled and not manager.busy:
-		await manager.save_game()
 
 func _process(delta: float) -> void:
 	if not is_open:

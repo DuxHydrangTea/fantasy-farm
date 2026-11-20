@@ -58,6 +58,7 @@ var honey_garden: HoneyGardenSystem
 var honey_menu: HoneyMenu
 ## Giao diện ghép cây.
 var graft_menu: GraftMenu
+var fruit_tree_action_menu: FruitTreeActionMenu
 ## Giao diện mua và trồng cây trực tiếp trên ô đất.
 var tree_plant_menu: TreePlantMenu
 ## Hạn mức mua gỗ.
@@ -166,6 +167,10 @@ func _ready() -> void:
 	graft_menu.name = "FruitGrafting"
 	graft_menu.world = self
 	add_child(graft_menu)
+	fruit_tree_action_menu = FruitTreeActionMenu.new()
+	fruit_tree_action_menu.name = "FruitTreeActions"
+	fruit_tree_action_menu.world = self
+	add_child(fruit_tree_action_menu)
 	tree_plant_menu = preload("res://scenes/trees/tree_plant_menu.tscn").instantiate() as TreePlantMenu
 	tree_plant_menu.name = "TreePlantMenu"
 	tree_plant_menu.world = self

@@ -86,6 +86,14 @@ func _lock(value: bool) -> void:
 	world.workers.busy = value
 	world.storages.busy = value
 
+## Ghi lại những thay đổi do người chơi thực hiện trong một profile đang chạy.
+func save_changes() -> void:
+	if not is_instance_valid(world) or world.is_queued_for_deletion():
+		return
+	var manager: GameSaveManager = world.get_node_or_null("/root/SaveManager") as GameSaveManager
+	if manager != null and manager.adapter != null and manager.adapter.world == world and manager.writes_enabled and not manager.busy:
+		await manager.save_game()
+
 ## Đếm số đơn hiện hành có yêu cầu sản phẩm thu hoạch thường của cây.
 func order_demand(tree: FruitTree) -> int:
 	var count: int = 0

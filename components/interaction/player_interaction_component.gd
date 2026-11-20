@@ -147,7 +147,7 @@ func execute(target: InteractionTarget, _requested: StringName = &"") -> bool:
 		InteractionTarget.Kind.TREE:
 			var tree: PerennialTree = target.node as PerennialTree
 			if tree is FruitTree and tree.is_mature():
-				return (player.get_parent() as FarmWorld).graft_menu.open_tree(tree as FruitTree)
+				return (player.get_parent() as FarmWorld).fruit_tree_action_menu.open_tree(tree as FruitTree)
 			var tree_request: StringName = &""
 			var action: StringName = player.tree_interaction.prepare_target(tree, tree_request)
 			if action == &"tree_harvest":

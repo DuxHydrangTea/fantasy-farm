@@ -196,11 +196,13 @@ func test_snapshot_v29_migration_and_pending_roundtrip_preserve_crop_and_do_not_
 	assert_eq(world.player.selection.inventory.count_item(GraftService.WAX), 0)
 	var old: Dictionary = current.duplicate(true)
 	old.version = 29
+	old.land_columns = 1
+	old.land_starting_columns = 1
 	for key: String in ["active_graft", "pending_graft", "graft_revision"]:
 		old.trees[0].erase(key)
 	var text: String = JSON.stringify(old)
 	var migrated: Dictionary = SaveSchema.validate(old, adapter.catalog)
-	assert_true(migrated.ok)
+	assert_true(migrated.ok, str(migrated))
 	assert_eq(migrated.snapshot.version, SaveSchema.VERSION)
 	assert_eq(migrated.snapshot.trees[0].fruit_work, old.trees[0].fruit_work)
 	assert_eq(migrated.snapshot.trees[0].active_graft, 0)
@@ -211,14 +213,18 @@ func test_snapshot_v29_migration_and_pending_roundtrip_preserve_crop_and_do_not_
 	current.trees[0].pending_graft = 1.5
 	assert_false(SaveSchema.validate(current, adapter.catalog).ok)
 
-func test_e_and_click_open_shared_menu_without_harvesting_or_uprooting() -> void:
+func test_tree_interaction_opens_quick_menu_before_details() -> void:
 	var tree: FruitTree = _fruit()
 	var target: InteractionTarget = InteractionTarget.new(tree, InteractionTarget.Kind.TREE, world.player)
 	assert_true(world.player.interactions.execute(target))
-	assert_true(world.graft_menu.is_open)
+	assert_true(world.fruit_tree_action_menu.is_open)
+	assert_eq(get_viewport().gui_get_focus_owner(), world.fruit_tree_action_menu.harvest_button)
+	assert_false(world.graft_menu.is_open)
 	assert_true(world.player.selection.shop_open)
 	assert_false(tree.removed)
 	assert_true(tree.has_fruit())
+	world.fruit_tree_action_menu.details_button.pressed.emit()
+	assert_true(world.graft_menu.is_open)
 	assert_true(world.graft_menu.summary.text.contains("300"))
 	world.graft_menu._choose(FruitTree.Graft.YIELD)
 	assert_eq(tree.pending_graft, FruitTree.Graft.YIELD)
@@ -227,6 +233,21 @@ func test_e_and_click_open_shared_menu_without_harvesting_or_uprooting() -> void
 	assert_eq(world.player.selection.inventory.count_item(&"apple"), 300)
 	world.graft_menu.close(false)
 	assert_false(world.player.selection.shop_open)
+
+func test_quick_harvest_collects_without_opening_details_and_explains_unripe_crop() -> void:
+	var tree: FruitTree = _fruit()
+	var menu: FruitTreeActionMenu = world.fruit_tree_action_menu
+	assert_true(menu.open_tree(tree))
+	menu.harvest_button.pressed.emit()
+	assert_false(menu.is_open)
+	assert_false(world.graft_menu.is_open)
+	assert_eq(world.player.selection.inventory.count_item(&"apple"), 300)
+	assert_true(menu.open_tree(tree))
+	menu.harvest_button.pressed.emit()
+	assert_true(menu.is_open)
+	assert_false(menu._status.text.is_empty())
+	assert_eq(world.player.selection.inventory.count_item(&"apple"), 300)
+	menu.close(false)
 
 func test_graft_transaction_locks_reentry_and_observers_see_paid_wax_and_pending_direction() -> void:
 	var tree: FruitTree = _fruit()

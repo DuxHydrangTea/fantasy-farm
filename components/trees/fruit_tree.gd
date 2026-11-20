@@ -96,7 +96,7 @@ func update_visual() -> void:
 ## Tạo nhãn hành động đã dịch theo tuổi cây và công cụ đang chọn.
 func action_text(item: ItemDefinition) -> String:
 	if is_mature():
-		return tr("Manage fruit tree") + (" · " + tr("Choose a graft direction") if active_graft == Graft.NONE and pending_graft == Graft.NONE else "")
+		return tr("Manage fruit tree")
 	if item != null and item.item_type == ItemDefinition.ItemType.TOOL and item.tool_type == ItemDefinition.ToolType.HOE:
 		return tr("Uproot tree")
 	if can_water():
